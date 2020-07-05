@@ -7,7 +7,7 @@
 # script will get the original set working with ngspice.
 #
 # This script is a filter to be run by setting the name of this script as
-# the value to "filter=" for the model install in the s8 Makefile.
+# the value to "filter=" for the model install in the sky130 Makefile.
 
 import re
 import os

@@ -1,4 +1,4 @@
-******* SkyWater s8 model library *********
+******* SkyWater sky130 model library *********
 * Typical corner (tt)
 .lib tt
 * MOSFET

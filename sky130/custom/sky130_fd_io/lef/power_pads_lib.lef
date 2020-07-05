@@ -7,9 +7,9 @@ UNITS
    DATABASE MICRONS 1000 ;
 END UNITS
 
-MACRO s8iom0_gpiov2_pad
+MACRO sky130_fd_io__gpiov2_pad
    CLASS PAD INOUT ;
-   FOREIGN s8iom0_gpiov2_pad ;
+   FOREIGN sky130_fd_io__gpiov2_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 80.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -533,10 +533,10 @@ MACRO s8iom0_gpiov2_pad
 	    RECT 2.5650 13.0000 77.3700 16.2500 ;
 	    RECT 2.8700 0.1000 77.1300 13.0000 ;
    END
-END s8iom0_gpiov2_pad
-MACRO s8iom0_vddio_lvc_pad
+END sky130_fd_io__gpiov2_pad
+MACRO sky130_fd_io__vddio_lvc_pad
    CLASS PAD POWER ;
-   FOREIGN s8iom0_vddio_lvc_pad ;
+   FOREIGN sky130_fd_io__vddio_lvc_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 75.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -900,10 +900,10 @@ MACRO s8iom0_vddio_lvc_pad
 	    RECT 2.5650 13.0000 72.4350 16.2500 ;
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
-END s8iom0_vddio_lvc_pad
-MACRO s8iom0_vddio_hvc_pad
+END sky130_fd_io__vddio_lvc_pad
+MACRO sky130_fd_io__vddio_hvc_pad
    CLASS PAD POWER ;
-   FOREIGN s8iom0_vddio_hvc_pad ;
+   FOREIGN sky130_fd_io__vddio_hvc_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 75.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -1254,10 +1254,10 @@ MACRO s8iom0_vddio_hvc_pad
 	    RECT 2.5650 13.0000 72.4350 16.2500 ;
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
-END s8iom0_vddio_hvc_pad
-MACRO s8iom0_vccd_hvc_pad
+END sky130_fd_io__vddio_hvc_pad
+MACRO sky130_fd_io__vccd_hvc_pad
    CLASS PAD POWER ;
-   FOREIGN s8iom0_vccd_hvc_pad ;
+   FOREIGN sky130_fd_io__vccd_hvc_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 75.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -1608,10 +1608,10 @@ MACRO s8iom0_vccd_hvc_pad
 	    RECT 2.5650 13.0000 72.4350 16.2500 ;
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
-END s8iom0_vccd_hvc_pad
-MACRO s8iom0_vccd_lvc_pad
+END sky130_fd_io__vccd_hvc_pad
+MACRO sky130_fd_io__vccd_lvc_pad
    CLASS PAD POWER ;
-   FOREIGN s8iom0_vccd_lvc_pad ;
+   FOREIGN sky130_fd_io__vccd_lvc_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 75.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -1983,10 +1983,10 @@ MACRO s8iom0_vccd_lvc_pad
 	    RECT 2.5650 13.0000 72.4350 16.2500 ;
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
-END s8iom0_vccd_lvc_pad
-MACRO s8iom0_vdda_hvc_pad
+END sky130_fd_io__vccd_lvc_pad
+MACRO sky130_fd_io__vdda_hvc_pad
    CLASS PAD POWER ;
-   FOREIGN s8iom0_vdda_hvc_pad ;
+   FOREIGN sky130_fd_io__vdda_hvc_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 75.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -2345,10 +2345,10 @@ MACRO s8iom0_vdda_hvc_pad
 	    RECT 2.5650 13.0000 72.4350 16.2500 ;
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
-END s8iom0_vdda_hvc_pad
-MACRO s8iom0_vdda_lvc_pad
+END sky130_fd_io__vdda_hvc_pad
+MACRO sky130_fd_io__vdda_lvc_pad
    CLASS PAD POWER ;
-   FOREIGN s8iom0_vdda_lvc_pad ;
+   FOREIGN sky130_fd_io__vdda_lvc_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 75.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -2712,10 +2712,10 @@ MACRO s8iom0_vdda_lvc_pad
 	    RECT 2.5650 13.0000 72.4350 16.2500 ;
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
-END s8iom0_vdda_lvc_pad
-MACRO s8iom0s8_com_bus_slice_1um
+END sky130_fd_io__vdda_lvc_pad
+MACRO sky130_fd_io__com_bus_slice_1um
    CLASS PAD SPACER ;
-   FOREIGN s8iom0s8_com_bus_slice_1um ;
+   FOREIGN sky130_fd_io__com_bus_slice_1um ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 1.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -2862,10 +2862,10 @@ MACRO s8iom0s8_com_bus_slice_1um
          LAYER met4 ;
 	    RECT 0.0000 173.7500 1.0000 197.9650 ;
    END
-END s8iom0s8_com_bus_slice_1um
-MACRO s8iom0_vssio_hvc_pad
+END sky130_fd_io__com_bus_slice_1um
+MACRO sky130_fd_io__vssio_hvc_pad
    CLASS PAD GROUND ;
-   FOREIGN s8iom0_vssio_hvc_pad ;
+   FOREIGN sky130_fd_io__vssio_hvc_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 75.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -3215,10 +3215,10 @@ MACRO s8iom0_vssio_hvc_pad
 	    RECT 2.5650 13.0000 72.4350 16.2500 ;
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
-END s8iom0_vssio_hvc_pad
-MACRO s8iom0_corner_pad
+END sky130_fd_io__vssio_hvc_pad
+MACRO sky130_fd_io__corner_pad
    CLASS ENDCAP TOPRIGHT ;
-   FOREIGN s8iom0_corner_pad ;
+   FOREIGN sky130_fd_io__corner_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 200.0000 BY 204.0000 ;
    PIN amuxbus_a
@@ -3569,10 +3569,10 @@ MACRO s8iom0_corner_pad
 	    RECT 15.0350 2.8550 18.2850 2.8700 ;
 	    RECT 96.5850 0.0000 200.0000 3.4550 ;
    END
-END s8iom0_corner_pad
-MACRO s8iom0_vssio_lvc_pad
+END sky130_fd_io__corner_pad
+MACRO sky130_fd_io__vssio_lvc_pad
    CLASS PAD GROUND ;
-   FOREIGN s8iom0_vssio_lvc_pad ;
+   FOREIGN sky130_fd_io__vssio_lvc_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 75.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -3935,10 +3935,10 @@ MACRO s8iom0_vssio_lvc_pad
 	    RECT 2.5650 13.0000 72.4350 16.2500 ;
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
-END s8iom0_vssio_lvc_pad
-MACRO s8iom0_vssa_lvc_pad
+END sky130_fd_io__vssio_lvc_pad
+MACRO sky130_fd_io__vssa_lvc_pad
    CLASS PAD GROUND ;
-   FOREIGN s8iom0_vssa_lvc_pad ;
+   FOREIGN sky130_fd_io__vssa_lvc_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 75.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -4301,10 +4301,10 @@ MACRO s8iom0_vssa_lvc_pad
 	    RECT 2.5650 13.0000 72.4350 16.2500 ;
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
-END s8iom0_vssa_lvc_pad
-MACRO s8iom0_vssa_hvc_pad
+END sky130_fd_io__vssa_lvc_pad
+MACRO sky130_fd_io__vssa_hvc_pad
    CLASS PAD GROUND ;
-   FOREIGN s8iom0_vssa_hvc_pad ;
+   FOREIGN sky130_fd_io__vssa_hvc_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 75.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -4659,10 +4659,10 @@ MACRO s8iom0_vssa_hvc_pad
 	    RECT 2.5650 13.0000 72.4350 16.2500 ;
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
-END s8iom0_vssa_hvc_pad
-MACRO s8iom0_vssd_hvc_pad
+END sky130_fd_io__vssa_hvc_pad
+MACRO sky130_fd_io__vssd_hvc_pad
    CLASS PAD GROUND ;
-   FOREIGN s8iom0_vssd_hvc_pad ;
+   FOREIGN sky130_fd_io__vssd_hvc_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 75.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -5013,10 +5013,10 @@ MACRO s8iom0_vssd_hvc_pad
 	    RECT 2.5650 13.0000 72.4350 16.2500 ;
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
-END s8iom0_vssd_hvc_pad
-MACRO s8iom0_vssd_lvc_pad
+END sky130_fd_io__vssd_hvc_pad
+MACRO sky130_fd_io__vssd_lvc_pad
    CLASS PAD GROUND ;
-   FOREIGN s8iom0_vssd_lvc_pad ;
+   FOREIGN sky130_fd_io__vssd_lvc_pad ;
    ORIGIN -0.0000 -0.0000 ;
    SIZE 75.0000 BY 197.9650 ;
    PIN amuxbus_a
@@ -5387,5 +5387,5 @@ MACRO s8iom0_vssd_lvc_pad
 	    RECT 2.5650 13.0000 72.4350 16.2500 ;
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
-END s8iom0_vssd_lvc_pad
+END sky130_fd_io__vssd_lvc_pad
 END LIBRARY ;

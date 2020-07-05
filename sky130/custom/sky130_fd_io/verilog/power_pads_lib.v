@@ -1,15 +1,15 @@
 //-----------------------------------------------------------------------
-// Verilog entries for standard power pads (s8 power pads + overlays)
+// Verilog entries for standard power pads (sky130 power pads + overlays)
 // Also includes stub entries for the corner and fill cells
 // Also includes the custom gpiov2 cell (adds m5 on buses), which is a wrapper
-// for the s8 gpiov2 cell.
+// for the sky130 gpiov2 cell.
 //
 // This file is distributed as open source under the Apache 2.0 license
-// Copyright 2019 efabless, Inc.
+// Copyright 2020 efabless, Inc.
 // Written by Tim Edwards 
 //-----------------------------------------------------------------------
 
-module s8iom0_vccd_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
+module sky130_fd_io__vccd_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
 	src_bdy_hvc, vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
 );
@@ -30,7 +30,7 @@ module s8iom0_vccd_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
   inout vssio;
 
   // Instantiate the underlying power pad (connects p_pad to vccd)
-  s8iom0s8_top_power_hvc_wpad s8iom0s8_top_power_hvc_base ( 
+  sky130_fd_io__top_power_hvc_wpad sky130_fd_io__top_power_hvc_base ( 
 	.vssa(vssa),
 	.vdda(vdda),
 	.vswitch(vswitch),
@@ -51,7 +51,7 @@ module s8iom0_vccd_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
 
 endmodule
 
-module s8iom0_vccd_lvc_pad (amuxbus_a, amuxbus_b,
+module sky130_fd_io__vccd_lvc_pad (amuxbus_a, amuxbus_b,
 	drn_lvc1, drn_lvc2, src_bdy_lvc1, src_bdy_lvc2, bdy2_b2b,
 	vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
@@ -76,7 +76,7 @@ module s8iom0_vccd_lvc_pad (amuxbus_a, amuxbus_b,
   inout vssio;
 
   // Instantiate the underlying power pad (connects p_pad to vccd)
-  s8iom0s8_top_power_lvc_wpad s8iom0s8_top_power_lvc_base ( 
+  sky130_fd_io__top_power_lvc_wpad sky130_fd_io__top_power_lvc_base ( 
 	.vssa(vssa),
 	.vdda(vdda),
 	.vswitch(vswitch),
@@ -100,7 +100,7 @@ module s8iom0_vccd_lvc_pad (amuxbus_a, amuxbus_b,
 
 endmodule
 
-module s8iom0_vdda_lvc_pad (amuxbus_a, amuxbus_b,
+module sky130_fd_io__vdda_lvc_pad (amuxbus_a, amuxbus_b,
 	drn_lvc1, drn_lvc2, src_bdy_lvc1, src_bdy_lvc2, bdy2_b2b,
 	vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
@@ -125,7 +125,7 @@ module s8iom0_vdda_lvc_pad (amuxbus_a, amuxbus_b,
   inout vssio;
 
   // Instantiate the underlying power pad (connects p_pad to vdda)
-  s8iom0s8_top_power_lvc_wpad s8iom0s8_top_power_lvc_base ( 
+  sky130_fd_io__top_power_lvc_wpad sky130_fd_io__top_power_lvc_base ( 
 	.vssa(vssa),
 	.vdda(vdda),
 	.vswitch(vswitch),
@@ -149,7 +149,7 @@ module s8iom0_vdda_lvc_pad (amuxbus_a, amuxbus_b,
 
 endmodule
 
-module s8iom0_vdda_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
+module sky130_fd_io__vdda_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
 	src_bdy_hvc,vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
 );
@@ -170,7 +170,7 @@ module s8iom0_vdda_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
   inout vssio;
 
   // Instantiate the underlying power pad (connects p_pad to vdda)
-  s8iom0s8_top_power_hvc_wpad s8iom0s8_top_power_hvc_base ( 
+  sky130_fd_io__top_power_hvc_wpad sky130_fd_io__top_power_hvc_base ( 
 	.vssa(vssa),
 	.vdda(vdda),
 	.vswitch(vswitch),
@@ -191,7 +191,7 @@ module s8iom0_vdda_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
 
 endmodule
 
-module s8iom0_vddio_lvc_pad (amuxbus_a, amuxbus_b,
+module sky130_fd_io__vddio_lvc_pad (amuxbus_a, amuxbus_b,
 	drn_lvc1, drn_lvc2, src_bdy_lvc1, src_bdy_lvc2, bdy2_b2b,
 	vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
@@ -216,7 +216,7 @@ module s8iom0_vddio_lvc_pad (amuxbus_a, amuxbus_b,
   inout vssio;
 
   // Instantiate the underlying power pad (connects p_pad and vddio_q to vddio)
-  s8iom0s8_top_power_lvc_wpad s8iom0s8_top_power_lvc_base ( 
+  sky130_fd_io__top_power_lvc_wpad sky130_fd_io__top_power_lvc_base ( 
 	.vssa(vssa),
 	.vdda(vdda),
 	.vswitch(vswitch),
@@ -242,7 +242,7 @@ module s8iom0_vddio_lvc_pad (amuxbus_a, amuxbus_b,
 
 endmodule
 
-module s8iom0_vddio_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
+module sky130_fd_io__vddio_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
 	src_bdy_hvc,vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
 );
@@ -263,7 +263,7 @@ module s8iom0_vddio_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
   inout vssio;
 
   // Instantiate the underlying power pad (connects p_pad and vddio_q to vddio)
-  s8iom0s8_top_power_hvc_wpad s8iom0s8_top_power_hvc_base ( 
+  sky130_fd_io__top_power_hvc_wpad sky130_fd_io__top_power_hvc_base ( 
 	.vssa(vssa),
 	.vdda(vdda),
 	.vswitch(vswitch),
@@ -286,7 +286,7 @@ module s8iom0_vddio_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
 
 endmodule
 
-module s8iom0_vssd_lvc_pad (amuxbus_a, amuxbus_b,
+module sky130_fd_io__vssd_lvc_pad (amuxbus_a, amuxbus_b,
 	drn_lvc1, drn_lvc2, src_bdy_lvc1, src_bdy_lvc2, bdy2_b2b,
 	vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
@@ -311,7 +311,7 @@ module s8iom0_vssd_lvc_pad (amuxbus_a, amuxbus_b,
   inout vssio;
 
   // Instantiate the underlying ground pad (connects g_pad to vssd)
-  s8iom0s8_top_ground_lvc_wpad s8iom0s8_top_ground_lvc_base ( 
+  sky130_fd_io__top_ground_lvc_wpad sky130_fd_io__top_ground_lvc_base ( 
 	.vssa(vssa),
 	.vdda(vdda),
 	.vswitch(vswitch),
@@ -335,7 +335,7 @@ module s8iom0_vssd_lvc_pad (amuxbus_a, amuxbus_b,
 
 endmodule
 
-module s8iom0_vssd_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
+module sky130_fd_io__vssd_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
 	src_bdy_hvc, vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
 );
@@ -356,7 +356,7 @@ module s8iom0_vssd_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
   inout vssio;
 
   // Instantiate the underlying ground pad (connects g_pad to vssd)
-  s8iom0s8_top_ground_hvc_wpad s8iom0s8_top_ground_hvc_base ( 
+  sky130_fd_io__top_ground_hvc_wpad sky130_fd_io__top_ground_hvc_base ( 
 	.vssa(vssa),
 	.vdda(vdda),
 	.vswitch(vswitch),
@@ -377,7 +377,7 @@ module s8iom0_vssd_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
 
 endmodule
 
-module s8iom0_vssio_lvc_pad (amuxbus_a, amuxbus_b,
+module sky130_fd_io__vssio_lvc_pad (amuxbus_a, amuxbus_b,
 	drn_lvc1, drn_lvc2, src_bdy_lvc1, src_bdy_lvc2, bdy2_b2b,
 	vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
@@ -402,7 +402,7 @@ module s8iom0_vssio_lvc_pad (amuxbus_a, amuxbus_b,
   inout vssio;
 
   // Instantiate the underlying ground pad (connects g_pad and vssio_q to vssio)
-  s8iom0s8_top_ground_lvc_wpad s8iom0s8_top_ground_lvc_base ( 
+  sky130_fd_io__top_ground_lvc_wpad sky130_fd_io__top_ground_lvc_base ( 
 	.vssa(vssa),
 	.vdda(vdda),
 	.vswitch(vswitch),
@@ -429,7 +429,7 @@ module s8iom0_vssio_lvc_pad (amuxbus_a, amuxbus_b,
 endmodule
 
 
-module s8iom0_vssio_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
+module sky130_fd_io__vssio_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
 	src_bdy_hvc,vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
 );
@@ -450,7 +450,7 @@ module s8iom0_vssio_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
   inout vssio;
 
   // Instantiate the underlying ground pad (connects g_pad and vssio_q to vssio)
-  s8iom0s8_top_ground_hvc_wpad s8iom0s8_top_ground_hvc_base ( 
+  sky130_fd_io__top_ground_hvc_wpad sky130_fd_io__top_ground_hvc_base ( 
 	.vssa(vssa),
 	.vdda(vdda),
 	.vswitch(vswitch),
@@ -473,7 +473,7 @@ module s8iom0_vssio_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
 
 endmodule
 
-module s8iom0_vssa_lvc_pad (amuxbus_a, amuxbus_b,
+module sky130_fd_io__vssa_lvc_pad (amuxbus_a, amuxbus_b,
 	drn_lvc1, drn_lvc2, src_bdy_lvc1, src_bdy_lvc2, bdy2_b2b,
 	vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
@@ -498,7 +498,7 @@ module s8iom0_vssa_lvc_pad (amuxbus_a, amuxbus_b,
   inout vssio;
 
   // Instantiate the underlying ground pad (connects g_pad to vssa)
-  s8iom0s8_top_ground_lvc_wpad s8iom0s8_top_ground_lvc_base ( 
+  sky130_fd_io__top_ground_lvc_wpad sky130_fd_io__top_ground_lvc_base ( 
 	.vssa(vssa),
 	.vdda(vdda),
 	.vswitch(vswitch),
@@ -522,7 +522,7 @@ module s8iom0_vssa_lvc_pad (amuxbus_a, amuxbus_b,
 
 endmodule
 
-module s8iom0_vssa_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
+module sky130_fd_io__vssa_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
 	src_bdy_hvc,vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
 );
@@ -543,7 +543,7 @@ module s8iom0_vssa_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
   inout vssio;
 
   // Instantiate the underlying ground pad (connects g_pad to vssa)
-  s8iom0s8_top_ground_hvc_wpad s8iom0s8_top_ground_hvc_base ( 
+  sky130_fd_io__top_ground_hvc_wpad sky130_fd_io__top_ground_hvc_base ( 
 	.vssa(vssa),
 	.vdda(vdda),
 	.vswitch(vswitch),
@@ -564,7 +564,7 @@ module s8iom0_vssa_hvc_pad (amuxbus_a, amuxbus_b, drn_hvc,
 
 endmodule
 
-module s8iom0_corner_pad (amuxbus_a, amuxbus_b, 
+module sky130_fd_io__corner_pad (amuxbus_a, amuxbus_b, 
 	vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
 );
@@ -584,7 +584,7 @@ module s8iom0_corner_pad (amuxbus_a, amuxbus_b,
 
 endmodule
 
-module s8iom0s8_com_bus_slice (amuxbus_a, amuxbus_b,
+module sky130_fd_io__com_bus_slice (amuxbus_a, amuxbus_b,
 	vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
 );
@@ -604,7 +604,7 @@ module s8iom0s8_com_bus_slice (amuxbus_a, amuxbus_b,
 
 endmodule
 
-module s8iom0s8_com_bus_slice_1um (amuxbus_a, amuxbus_b,
+module sky130_fd_io__com_bus_slice_1um (amuxbus_a, amuxbus_b,
 	vssa, vdda, vswitch, vddio_q, vcchib, vddio, vccd,
 	vssio, vssd, vssio_q
 );
@@ -624,7 +624,7 @@ module s8iom0s8_com_bus_slice_1um (amuxbus_a, amuxbus_b,
 
 endmodule
 
-module s8iom0_gpiov2_pad (in_h, pad_a_noesd_h, pad_a_esd_0_h, pad_a_esd_1_h,
+module sky130_fd_io__gpiov2_pad (in_h, pad_a_noesd_h, pad_a_esd_0_h, pad_a_esd_1_h,
     pad, dm, hld_h_n, in, inp_dis, ib_mode_sel, enable_h, enable_vdda_h,
     enable_inp_h, oe_n, tie_hi_esd, tie_lo_esd, slow, vtrip_sel, hld_ovr,
     analog_en, analog_sel, enable_vddio, enable_vswitch_h, analog_pol, out,
@@ -671,7 +671,7 @@ output in_h;
 output tie_hi_esd, tie_lo_esd;
 
 // Instantiate original version with metal4-only power bus
-s8iom0s8_top_gpiov2 gpiov2_base (
+sky130_fd_io__top_gpiov2 gpiov2_base (
     .in_h(in_h),
     .pad_a_noesd_h(pad_a_noesd_h),
     .pad_a_esd_0_h(pad_a_esd_0_h),

@@ -12,7 +12,7 @@
 # This file is an Open Source foundry process describing
 # the SkyWater S8 hybrid 0.18um / 0.13um fabrication
 # process.  The file may be distributed under the terms
-# of the (Apache 2.0(?)) license agreement.
+# of the Apache 2.0 license agreement.
 #
 #----------------------------------------------------------
 # This file is designed to be used with magic versions
@@ -29,17 +29,8 @@ version
 end
 
 #----------------------------------------------------------
-# Status: 3/17/19: s8.tech created from xh018.tech
-#
-# Status: 3/20/19: Rev 0 (pre-alpha):
-# Work in progress.  Converted from original techfile to S8
-# with all sections updated with as much information as could
-# be immediately gleaned from the documentation.  Cifinput and
-# DRC sections have been checked against one standard cell
-# library.
-#
-# Status 5/5/20: Rev 1 (alpha):
-# Changed name from s8 to sky130
+# Status 7/5/20: Rev 1 (alpha):
+# First public release
 #--------------------------------------------------------------
 
 #--------------------------------------------------------------
