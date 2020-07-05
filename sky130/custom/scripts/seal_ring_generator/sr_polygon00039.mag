@@ -1,0 +1,10 @@
+magic
+tech s8seal_ring
+magscale 1 10
+timestamp 1584558827
+<< type81_1 >>
+tri 2772 6000 6000 12985 se
+tri 6000 6000 12985 12985 sw
+tri 0 0 2772 5999 se
+rect 2772 0 256000 6000
+<< end >>

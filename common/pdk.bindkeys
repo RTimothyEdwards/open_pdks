@@ -1,0 +1,186 @@
+#
+# Cadence-compatibility bindings except where marked.
+#
+macro f  "view"	     ;# zoom to fit window
+macro ^z "zoom 0.5"  ;# zoom in
+macro Z  "zoom 2"    ;# zoom out
+macro B  "popstack"  ;# up hierarchy
+macro X  {pushstack [cellname list self]}	;# down hierarchy
+macro x  "edit"		;# down hierarchy, edit-in-place
+macro b  "select top cell ; edit"  ;# up hierarchy from edit-in-place
+macro p  "tool wire; magic::trackwire %W pick"	;# path
+macro ^r "redraw"
+macro ^f "unexpand"
+macro F  "expand"
+macro ^a "select area"
+macro ^d "select clear"
+macro k  "magic::measure"
+macro K  "magic::unmeasure"
+macro i  "magic::promptload getcell"
+macro l  "magic::update_texthelper ; wm deiconify .texthelper ; raise .texthelper"
+macro O  "magic::clock"
+macro <del> "magic::delete"
+
+# Toolkit parameter dialog
+macro q "magic::gencell {} ; raise .params"
+#
+# The following should be already implemented as existing Magic bindings
+#
+macro u "undo"
+macro U "redo"
+macro m "move"
+macro c "copy"
+#
+# Compatibility with Electric;  Cadence bindings are on function keys and
+# do not work through the VNC.
+macro ^s "magic::promptsave magic"	;# save dialog menu
+
+#
+# Bertrand's bindings follow except where marked.
+#
+macro < sideways
+macro ^ upsidedown
+#
+# Set grid at 1 micron
+#
+macro 0  "grid on ; grid 1l"	;# Grid at 0.5um (1 lambda)
+# macro ^f "feedback clear"	;# conflicts with Cadence binding
+#
+# Paint/Erase macros 
+#
+macro 1 "paint m1"
+macro ! "erase m1"
+macro 2 "paint m2"
+macro @ "erase m2"
+macro 3 "paint m3"
+macro # "erase m3"
+#ifdef METAL4
+macro 4 "paint mtp"
+macro $ "erase mtp"
+#endif
+#ifdef METAL5
+macro 4 "paint m4"
+macro $ "erase m4"
+macro 5 "paint mtp"
+macro % "erase mtp"
+#endif
+#ifdef METAL6
+macro 4 "paint m4"
+macro $ "erase m4"
+macro 5 "paint m5"
+macro % "erase m5"
+macro 6 "paint mtp"
+macro ^ "erase mtp"
+#endif
+
+macro 7 "paint poly"
+# macro & "erase poly"
+# macro p "paint pdiff"
+macro n "paint ndiff"
+# macro l "erase labels"
+macro P "erase pdiff"
+macro N "erase ndiff"
+macro y "drc check; drc why"
+macro ? "select area; what"
+
+macro / "expand toggle"
+macro ^w "writeall force"
+macro ^e "edit"
+# macro ^x "quit"
+
+macro z "findbox zoom"
+# "f" conflicts with Cadence "full view", so use control-i to select cells.
+# macro f "select cell"
+macro ^i "select cell"
+
+# Leave keypad bindings as-is, further down.  However, keypad
+# keys generally don't translate through the VNC session, so
+# use the following arrow key bindings:
+#
+#                         no shift  shift
+# arrows only -> Pan       10%      100%
+# with alt    -> Move      1 lambda 1 grid
+# with ctrl   -> Stretch   1 lambda 1 grid
+# 
+# Pan 10 percent of the window size with arrows
+# macro XK_Left  "scroll l .1 w"
+# macro XK_Up    "scroll u .1 w"
+# macro XK_Right "scroll r .1 w"
+# macro XK_Down  "scroll d .1 w"
+
+# Pan 100 percent of the window size with arrows
+# macro Shift_XK_Left  "scroll l 1 w"
+# macro Shift_XK_Up    "scroll u 1 w"
+# macro Shift_XK_Right "scroll r 1 w"
+# macro Shift_XK_Down  "scroll d 1 w"
+
+# move 0.05um with arrows
+# macro Alt_XK_Left          "move l 1l"
+# macro Alt_XK_Right         "move r 1l"
+# macro Alt_XK_Up            "move u 1l"
+# macro Alt_XK_Down          "move d 1l"
+
+# move 1 grid unit with arrows
+# macro Alt_Shift_XK_Left  "move l 1g"
+# macro Alt_Shift_XK_Right "move r 1g"
+# macro Alt_Shift_XK_Up    "move u 1g"
+# macro Alt_Shift_XK_Down  "move d 1g"
+
+# stretch 0.05um with arrows
+# macro Control_XK_Left          "stretch l 1l"
+# macro Control_XK_Right         "stretch r 1l"
+# macro Control_XK_Up            "stretch u 1l"
+# macro Control_XK_Down          "stretch d 1l"
+
+# stretch 1 grid unit with arrows
+# macro Control_Shift_XK_Left  "stretch l 1g"
+# macro Control_Shift_XK_Right "stretch r 1g"
+# macro Control_Shift_XK_Up    "stretch u 1g"
+# macro Control_Shift_XK_Down  "stretch d 1g"
+
+# shift mouse wheel bindings for right-left shift
+macro Shift_XK_Pointer_Button4 "scroll r .05 w"
+macro Shift_XK_Pointer_Button5 "scroll l .05 w"
+
+# control mouse wheel bindings for zoom in/out
+macro Control_XK_Pointer_Button4 "zoom 0.70711"
+macro Control_XK_Pointer_Button5 "zoom 1.41421"
+
+# Bertrand's original arrow macros
+# move 1 grid unit with arrows
+macro XK_Left          "move l 1g"
+macro XK_Right         "move r 1g"
+macro XK_Up            "move u 1g"
+macro XK_Down          "move d 1g"
+
+# move 0.05um with arrows
+macro Control_XK_Left  "move l 1l"
+macro Control_XK_Right "move r 1l"
+macro Control_XK_Up    "move u 1l"
+macro Control_XK_Down  "move d 1l"
+
+# stretch 1 grid unit with arrows
+macro Shift_XK_Left          "stretch l 1g"
+macro Shift_XK_Right         "stretch r 1g"
+macro Shift_XK_Up            "stretch u 1g"
+macro Shift_XK_Down          "stretch d 1g"
+
+# stretch 0.05um with arrows
+macro Control_Shift_XK_Left  "stretch l 1l"
+macro Control_Shift_XK_Right "stretch r 1l"
+macro Control_Shift_XK_Up    "stretch u 1l"
+macro Control_Shift_XK_Down  "stretch d 1l"
+
+# Restore pan function on Alt-key
+# Pan 10 percent of the window size with arrows
+macro Alt_XK_Left  "scroll l .1 w"
+macro Alt_XK_Up    "scroll u .1 w"
+macro Alt_XK_Right "scroll r .1 w"
+macro Alt_XK_Down  "scroll d .1 w"
+
+# Pan 100 percent of the window size with arrows
+macro Alt_Shift_XK_Left  "scroll l 1 w"
+macro Alt_Shift_XK_Up    "scroll u 1 w"
+macro Alt_Shift_XK_Right "scroll r 1 w"
+macro Alt_Shift_XK_Down  "scroll d 1 w"
+

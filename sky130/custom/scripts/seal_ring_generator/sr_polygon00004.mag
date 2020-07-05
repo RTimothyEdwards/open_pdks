@@ -1,0 +1,21 @@
+magic
+tech s8seal_ring
+timestamp 1584558468
+<< type39 >>
+tri 0 283 117 400 se
+rect 117 320 283 400
+rect 117 283 175 320
+rect 0 225 175 283
+rect 225 283 283 320
+tri 283 283 400 400 sw
+rect 225 225 400 283
+rect 0 175 80 225
+rect 320 175 400 225
+rect 0 117 175 175
+tri 0 0 117 117 ne
+rect 117 80 175 117
+rect 225 117 400 175
+rect 225 80 283 117
+rect 117 0 283 80
+tri 283 0 400 117 nw
+<< end >>

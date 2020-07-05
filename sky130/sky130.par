@@ -1,0 +1,108 @@
+# TECHNAME.par --- Parameter file for GrayWolf
+# NOTE:  all distance units are in centimicrons unless otherwise stated
+# WARNING: this is NOT tcl syntax! No Comments on end of actual data line.
+# The vast majority of quantities here are not used (read instead from techLEF, etc.)
+
+RULES
+    # values are resistance in ohms/sq and capacitance in fF/um^2
+    # TODO: properly pick directions
+    layer metal1 0.105 0.0001 horizontal
+    layer metal2 0.105 0.0001 vertical
+    layer metal3 0.105 0.0001 horizontal
+#ifdef METAL5
+    layer metal4 0.105 0.0001 vertical
+    layer metal5 0.105 0.0001 horizontal
+#endif
+
+    via via12 metal1 metal2
+    via via23 metal2 metal3
+#ifdef METAL5
+    via via34 metal3 metal4
+    via via45 metal4 metal5
+#endif
+
+              # 0.5 um
+    width metal1 50
+    width metal2 60
+              # 0.6 um
+    width metal3 60
+#ifdef METAL5
+    width metal4 60
+    width metal5 60
+#endif
+
+    # TODO verify these two numbers
+    width via12 50
+    width via23 50
+#ifdef METAL5
+    width via34 50
+    width via45 50
+#endif
+
+    # Set spacing = track pitch - width, so that GrayWolf places pins
+    # on the right pitch.
+    # Pitches are (in um):
+    # metal1 = 200,  metal2 = 160,  metal3 = 200,  metal4 = 320
+## pitch m1: 1.3um  m2: 1.4um  m3: 1.3um
+## width m1: 0.5um  m2: 0.6um  m3: 0.6um
+## space     0.8        0.8        0.7     (pitch calc)
+## fab-space 0.45       0.5        0.6
+
+    spacing metal1 metal1 80
+    spacing metal2 metal2 80
+    spacing metal3 metal3 80
+#ifdef METAL5
+    spacing metal4 metal4 80
+    spacing metal5 metal5 80
+#endif
+
+    # (WAS:) Stacked vias allowed
+    # spacing via12 via23 0
+
+    # To disable Stacked?: give non-zero spacing (centimicrons = 10 nanometer = 1/100 of micron)
+    # TODO need real value here:
+    spacing via12 via23 0
+#ifdef METAL5
+    spacing via23 via34 0
+    spacing via34 via45 0
+#endif
+
+                       # .2um .15um
+    overhang via12 metal1 20
+    overhang via12 metal2 15
+
+    overhang via23 metal2 20
+    overhang via23 metal3 15
+
+#ifdef METAL5
+    overhang via34 metal3 14
+    overhang via34 metal4 16
+    overhang via45 metal4 14
+    overhang via45 metal5 16
+#endif
+ENDRULES
+
+*vertical_wire_weight : 1.0
+*vertical_path_weight : 1.0
+*padspacing           : variable
+*rowSep		      : 0.0   0
+# min pitch of m1,m2,m3 (FIXME):
+*track.pitch	      : 130
+*graphics.wait        : off
+*last_chance.wait     : off
+*random.seed	      : 12345
+# TODO: proper track.pitch number above, plus feedThruWidth below
+
+TWMC*chip.aspect.ratio : 1.0
+
+# FIXME:  Change width to width of minimum fill cell
+TWSC*feedThruWidth    : 280 layer 1
+TWSC*do.global.route  : on
+TWSC*ignore_feeds     : true
+TWSC*call_row_evener  : true
+TWSC*even_rows_maximally : true
+# TWSC*no.graphics    : on
+
+GENR*row_to_tile_spacing: 1
+# GENR*numrows		: 6
+GENR*flip_alternate_rows : 1

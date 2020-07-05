@@ -1,0 +1,6 @@
+* Additional subcircuits not in the vendor CDL library
+
+.SUBCKT scs8hd_diode_2 DIODE vgnd vnb vpb vpwr
+*.PININFO DIODE:I vgnd:I vnb:I vpb:I vpwr:I
+* NOTE:  Tap diode is not represented here.
+.ENDS

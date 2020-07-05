@@ -1,0 +1,65 @@
+magic
+tech EFS8A
+magscale 1 2
+timestamp 1585845698
+use s8iom0_vssd_lvc_pad  s8iom0_vssd_lvc_pad_0
+timestamp 1585845698
+transform 1 0 1268 0 1 -42858
+box 0 -61 15000 39593
+use s8iom0_vssd_hvc_pad  s8iom0_vssd_hvc_pad_0
+timestamp 1585845698
+transform 1 0 18322 0 1 -43322
+box 0 -435 15000 39593
+use s8iom0_vssa_hvc_pad  s8iom0_vssa_hvc_pad_0
+timestamp 1585845698
+transform 1 0 36302 0 1 -43582
+box 0 -435 15000 39593
+use s8iom0_vssa_lvc_pad  s8iom0_vssa_lvc_pad_0
+timestamp 1585845698
+transform 1 0 54022 0 1 -43956
+box 0 -61 15000 39593
+use s8iom0_vssio_lvc_pad  s8iom0_vssio_lvc_pad_0
+timestamp 1585845698
+transform 1 0 71611 0 1 -43826
+box 0 -7 15000 39593
+use s8iom0_corner_pad  s8iom0_corner_pad_0
+timestamp 1585845698
+transform 1 0 111407 0 1 -43193
+box -181 -114 40000 40800
+use s8iom0_vssio_hvc_pad  s8iom0_vssio_hvc_pad_0
+timestamp 1585845698
+transform 1 0 89461 0 1 -43192
+box 0 -407 15000 39593
+use s8iom0s8_com_bus_slice_1um  s8iom0s8_com_bus_slice_1um_0
+timestamp 1576684134
+transform 1 0 108518 0 1 -43389
+box 0 0 200 39593
+use s8iom0_vdda_lvc_pad  s8iom0_vdda_lvc_pad_0
+timestamp 1585845698
+transform 1 0 1952 0 1 -313
+box 0 -61 15000 39593
+use s8iom0_vdda_hvc_pad  s8iom0_vdda_hvc_pad_0
+timestamp 1585845698
+transform 1 0 20277 0 1 195
+box 0 -435 15000 39593
+use s8iom0_vccd_lvc_pad  s8iom0_vccd_lvc_pad_0
+timestamp 1585845698
+transform 1 0 37605 0 1 -49
+box 0 -61 15000 39593
+use s8iom0_vddio_hvc_pad  s8iom0_vddio_hvc_pad_0
+timestamp 1585845698
+transform 1 0 73415 0 1 258
+box 0 -435 15000 39593
+use s8iom0_vccd_hvc_pad  s8iom0_vccd_hvc_pad_0
+timestamp 1585845698
+transform 1 0 55455 0 1 325
+box 0 -435 15000 39593
+use s8iom0_gpiov2_pad  s8iom0_gpiov2_pad_0
+timestamp 1585845698
+transform 1 0 110622 0 1 590
+box -143 -466 16134 39593
+use s8iom0_vddio_lvc_pad  s8iom0_vddio_lvc_pad_0
+timestamp 1585845698
+transform 1 0 91354 0 1 -208
+box 0 -7 15000 39593
+<< end >>

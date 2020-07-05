@@ -1,0 +1,13 @@
+magic
+tech s8seal_ring
+magscale 1 2
+timestamp 1584628639
+<< checkpaint >>
+rect 6900 285 7100 355
+rect 9500 285 9700 355
+<< type22_22 >>
+rect 12000 645 12200 715
+rect 9500 525 9700 595
+rect 12000 405 12200 475
+rect 9500 285 9700 355
+<< end >>

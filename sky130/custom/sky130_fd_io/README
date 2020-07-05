@@ -1,0 +1,20 @@
+This directory contains standard format files for "power_pads_lib",
+which is an efabless addendum to the SkyWater I/O library "s8iom0".
+
+power_pads_lib does the following:
+
+(1) Changes the orientation of the corner pad from upper-right to
+    lower-left with a wrapper cell called "s8iom0_corner_pad".  Also
+    extends the power buses to make the dimensions of the corner pad
+    multiples of 1um.
+
+(2) Adds a 1um-wide spacer cell to complement the existing 5um-wide
+    spacer cell.
+
+(3) Adds wrappers for all the combinations of power pad base cell +
+    power pad overlay, to create all 12 combinations, for pads with
+    either high- or low-voltage clamps, connecting to one of the six
+    power domains vddio, vdda, vccd, vssio, vssa, or vssd.
+
+"power_pads_lib" is open source copyright 2019 efabless, Inc.
+Released under Apache 2.0 license

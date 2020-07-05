@@ -1,0 +1,114 @@
+###
+###	Source file sky130.magicrc
+###	Process this file with the m4 processor
+###
+puts stdout "Sourcing design .magicrc for technology TECHNAME ..."
+
+# Put grid on 0.005 pitch.  This is important, as some commands don't
+# rescale the grid automatically (such as lef read?).
+
+set scalefac [tech lambda]
+if {[lindex $scalefac 1] < 2} {
+    scalegrid 1 2
+}
+
+# drc off
+drc euclidean on
+
+# Allow override of PDK path from environment variable PDKPATH
+if {[catch {set PDKPATH $env(PDKPATH)}]} {
+    set PDKPATH "STAGING_PATH/TECHNAME"
+}
+
+# loading technology
+#ifdef FULLTECH
+tech load $PDKPATH/MAGIC_CURRENT/TECHNAME-F.tech
+#else
+tech load $PDKPATH/MAGIC_CURRENT/TECHNAME.tech
+#endif
+
+# load device generator
+source $PDKPATH/MAGIC_CURRENT/TECHNAME.tcl
+
+# load bind keys (optional)
+# source $PDKPATH/MAGIC_CURRENT/TECHNAME-BindKeys
+
+# set units to lambda grid 
+snap lambda
+
+# set sky130 standard power, ground, and substrate names
+set VDD VPWR
+set GND VGND
+set SUB VSUBS
+
+# Allow override of type of magic library views used, "mag" or "maglef",
+# from environment variable MAGTYPE
+
+if {[catch {set MAGTYPE $env(MAGTYPE)}]} {
+   set MAGTYPE maglef
+}
+
+# add path to reference cells
+if {[file isdir ${PDKPATH}/libs.ref/${MAGTYPE}]} {
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_pr_base
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_pr_rf
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_pr_rf2
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_io
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_hd
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_hdll
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_hs
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_hvl
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_lp
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_ls
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_ms
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_osu130
+} else {
+    addpath ${PDKPATH}/libs.ref/sky130_fd_pr_base/${MAGTYPE}
+    addpath ${PDKPATH}/libs.ref/sky130_fd_pr_rf/${MAGTYPE}
+    addpath ${PDKPATH}/libs.ref/sky130_fd_pr_rf2/${MAGTYPE}
+    addpath ${PDKPATH}/libs.ref/sky130_fd_io/${MAGTYPE}
+    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_hd/${MAGTYPE}
+    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_hdll/${MAGTYPE}
+    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_hs/${MAGTYPE}
+    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_hvl/${MAGTYPE}
+    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_lp/${MAGTYPE}
+    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_ls/${MAGTYPE}
+    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_ms/${MAGTYPE}
+    addpath ${PDKPATH}/libs.ref/sky130_osu130/${MAGTYPE}
+}
+
+# add path to GDS cells
+#ifdef FULLTECH
+if {[file isdir ${PDKPATH}/libs.ref/gds}]} {
+    path cell ${PDKPATH}/libs.ref/gds/sky130_fd_pr_base
+    path cell ${PDKPATH}/libs.ref/gds/sky130_fd_pr_rf
+    path cell ${PDKPATH}/libs.ref/gds/sky130_fd_pr_rf2
+    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_io
+    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_hd
+    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_hdll
+    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_hs
+    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_hvl
+    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_lp
+    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_ls
+    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_ms
+    path cell +${PDKPATH}/libs.ref/gds/sky130_osu130
+} else {
+    path cell ${PDKPATH}/libs.ref/sky130_fd_pr_base/gds
+    path cell ${PDKPATH}/libs.ref/sky130_fd_pr_rf/gds
+    path cell ${PDKPATH}/libs.ref/sky130_fd_pr_rf2/gds
+    path cell +${PDKPATH}/libs.ref/sky130_fd_io/gds
+    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_hd/gds
+    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_hdll/gds
+    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_hs/gds
+    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_hvl/gds
+    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_lp/gds
+    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_ls/gds
+    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_ms/gds
+    path cell +${PDKPATH}/libs.ref/sky130_osu130/gds
+}
+#endif (FULLTECH)
+
+# add path to IP from catalog.  This procedure defined in the PDK script.
+catch {magic::query_mylib_ip}
+# add path to local IP from user design space.  Defined in the PDK script.
+catch {magic::query_my_projects}

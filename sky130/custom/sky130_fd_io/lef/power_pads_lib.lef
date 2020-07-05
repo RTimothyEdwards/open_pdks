@@ -1,0 +1,5391 @@
+VERSION 5.3 ;
+   NAMESCASESENSITIVE ON ;
+   NOWIREEXTENSIONATPIN ON ;
+   DIVIDERCHAR "/" ;
+   BUSBITCHARS "[]" ;
+UNITS
+   DATABASE MICRONS 1000 ;
+END UNITS
+
+MACRO s8iom0_gpiov2_pad
+   CLASS PAD INOUT ;
+   FOREIGN s8iom0_gpiov2_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 80.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 36.4400 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 38.7600 51.0900 80.0000 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 52.1450 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 54.4650 46.3300 80.0000 49.3100 ;
+      END
+   END amuxbus_b
+   PIN analog_en
+      PORT
+         LAYER met1 ;
+	    RECT 62.4300 -2.0350 62.6900 -0.7300 ;
+      END
+   END analog_en
+   PIN analog_pol
+      PORT
+         LAYER met3 ;
+	    RECT 45.8650 -2.0350 46.1950 34.7700 ;
+      END
+   END analog_pol
+   PIN analog_sel
+      PORT
+         LAYER met2 ;
+	    RECT 30.7500 -2.0350 31.0100 0.2300 ;
+      END
+   END analog_sel
+   PIN dm<2>
+      PORT
+         LAYER met2 ;
+	    RECT 28.4900 -2.0350 28.7500 2.0350 ;
+      END
+   END dm<2>
+   PIN dm<1>
+      PORT
+         LAYER met2 ;
+	    RECT 66.8350 -2.0350 67.0950 -0.8400 ;
+      END
+   END dm<1>
+   PIN dm<0>
+      PORT
+         LAYER met2 ;
+	    RECT 49.8550 -2.0350 50.1150 -1.4900 ;
+      END
+   END dm<0>
+   PIN enable_h
+      PORT
+         LAYER met2 ;
+	    RECT 35.4600 -2.0350 35.7200 -0.4850 ;
+      END
+   END enable_h
+   PIN enable_inp_h
+      PORT
+         LAYER met2 ;
+	    RECT 38.3900 -2.0350 38.6500 1.0550 ;
+      END
+   END enable_inp_h
+   PIN enable_vdda_h
+      PORT
+         LAYER met2 ;
+	    RECT 12.7550 -2.0350 13.0150 3.3150 ;
+      END
+   END enable_vdda_h
+   PIN enable_vddio
+      PORT
+         LAYER met3 ;
+	    RECT 78.5800 -2.0350 78.9100 182.7400 ;
+      END
+   END enable_vddio
+   PIN enable_vswitch_h
+      PORT
+         LAYER met2 ;
+	    RECT 16.3100 -2.0350 16.5700 0.2850 ;
+      END
+   END enable_vswitch_h
+   PIN hld_h_n
+      PORT
+         LAYER met2 ;
+	    RECT 31.8150 -2.0350 32.0750 1.3050 ;
+      END
+   END hld_h_n
+   PIN hld_ovr
+      PORT
+         LAYER met2 ;
+	    RECT 26.6000 -2.0350 26.8600 0.6700 ;
+      END
+   END hld_ovr
+   PIN ib_mode_sel
+      PORT
+         LAYER met2 ;
+	    RECT 5.4200 -2.0350 5.6500 2.4400 ;
+      END
+   END ib_mode_sel
+   PIN in
+      PORT
+         LAYER met3 ;
+	    RECT 79.2400 -2.0350 79.5700 187.5250 ;
+      END
+   END in
+   PIN in_h
+      PORT
+         LAYER met3 ;
+	    RECT 0.4000 -2.0350 1.0200 176.4500 ;
+      END
+   END in_h
+   PIN inp_dis
+      PORT
+         LAYER met2 ;
+	    RECT 45.2450 -2.0350 45.5050 3.0550 ;
+      END
+   END inp_dis
+   PIN oe_n
+      PORT
+         LAYER met2 ;
+	    RECT 3.3750 -2.0350 3.6050 2.4400 ;
+      END
+   END oe_n
+   PIN out
+      PORT
+         LAYER met2 ;
+	    RECT 22.3550 -2.0350 22.6150 4.3900 ;
+      END
+   END out
+   PIN pad
+      PORT
+         LAYER met5 ;
+	    RECT 11.2000 102.5250 73.8000 164.9750 ;
+      END
+   END pad
+   PIN pad_a_esd_0_h
+      PORT
+         LAYER met2 ;
+	    RECT 76.2800 -2.0350 76.9200 0.0200 ;
+      END
+   END pad_a_esd_0_h
+   PIN pad_a_esd_1_h
+      PORT
+         LAYER met2 ;
+	    RECT 68.2750 -2.0350 68.9250 0.2350 ;
+      END
+   END pad_a_esd_1_h
+   PIN pad_a_noesd_h
+      PORT
+         LAYER met3 ;
+	    RECT 62.8200 -2.0350 63.8900 7.6700 ;
+      END
+   END pad_a_noesd_h
+   PIN slow
+      PORT
+         LAYER met2 ;
+	    RECT 77.6100 -2.0350 77.8700 -0.8500 ;
+      END
+   END slow
+   PIN tie_hi_esd
+      PORT
+         LAYER met2 ;
+	    RECT 78.7050 -2.0350 78.9050 -0.8200 ;
+      END
+   END tie_hi_esd
+   PIN tie_lo_esd
+      PORT
+         LAYER met2 ;
+	    RECT 79.7150 -2.0350 79.9150 175.8350 ;
+      END
+   END tie_lo_esd
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 78.7300 6.9500 80.0000 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.7300 6.8500 80.0000 11.5000 ;
+      END
+   END vccd
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 78.7300 0.1000 80.0000 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.7300 0.0000 80.0000 5.4500 ;
+      END
+   END vcchib
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 78.9700 13.0000 80.0000 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.9700 12.9000 80.0000 16.3500 ;
+      END
+   END vdda
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 78.7300 68.0000 80.0000 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 78.7300 17.8500 80.0000 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.7300 17.7500 80.0000 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.7300 68.0000 80.0000 92.9650 ;
+      END
+   END vddio
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 78.7300 62.1500 80.0000 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.7300 62.0500 80.0000 66.5000 ;
+      END
+   END vddio_q
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8050 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 2.6100 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 2.6100 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 78.7300 45.7000 80.0000 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 78.7300 34.8050 80.0000 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.7300 49.6100 80.0000 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 47.0900 54.3700 80.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 47.0900 45.7000 80.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.7300 34.7000 80.0000 38.1500 ;
+      END
+   END vssa
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 78.7300 39.6500 80.0000 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.7300 39.5500 80.0000 44.2000 ;
+      END
+   END vssd
+   PIN vssio
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 0.8100 197.9650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.9700 173.7500 80.0000 197.9650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 78.7300 23.9000 80.0000 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.7300 23.8000 80.0000 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.7300 173.7500 80.0000 197.9650 ;
+      END
+   END vssio
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 78.7300 56.3000 80.0000 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.7300 56.2000 80.0000 60.6500 ;
+      END
+   END vssio_q
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 78.7300 29.9500 80.0000 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 78.7300 29.8500 80.0000 33.3000 ;
+      END
+   END vswitch
+   PIN vtrip_sel
+      PORT
+         LAYER met2 ;
+	    RECT 6.1300 -2.0350 6.3900 -0.4850 ;
+      END
+   END vtrip_sel
+   OBS
+         LAYER li1 ;
+	    RECT -0.1600 -1.8050 80.1600 197.6700 ;
+         LAYER met1 ;
+	    RECT -0.1450 -0.4500 80.1450 197.9650 ;
+	    RECT -0.1450 -1.7750 62.1500 -0.4500 ;
+	    RECT 62.9700 -1.7750 80.1450 -0.4500 ;
+         LAYER met2 ;
+	    RECT 0.2100 176.1150 79.9150 197.9650 ;
+	    RECT 0.2100 4.6700 79.4350 176.1150 ;
+	    RECT 0.2100 3.5950 22.0750 4.6700 ;
+	    RECT 0.2100 2.7200 12.4750 3.5950 ;
+	    RECT 0.2100 -1.7850 3.0950 2.7200 ;
+	    RECT 3.8850 -1.7850 5.1400 2.7200 ;
+	    RECT 5.9300 -0.2050 12.4750 2.7200 ;
+	    RECT 6.6700 -1.7850 12.4750 -0.2050 ;
+	    RECT 13.2950 0.5650 22.0750 3.5950 ;
+	    RECT 13.2950 -1.7850 16.0300 0.5650 ;
+	    RECT 16.8500 -1.7850 22.0750 0.5650 ;
+	    RECT 22.8950 3.3350 79.4350 4.6700 ;
+	    RECT 22.8950 2.3150 44.9650 3.3350 ;
+	    RECT 22.8950 0.9500 28.2100 2.3150 ;
+	    RECT 22.8950 -1.7850 26.3200 0.9500 ;
+	    RECT 27.1400 -1.7850 28.2100 0.9500 ;
+	    RECT 29.0300 1.5850 44.9650 2.3150 ;
+	    RECT 29.0300 0.5100 31.5350 1.5850 ;
+	    RECT 29.0300 -1.7850 30.4700 0.5100 ;
+	    RECT 31.2900 -1.7850 31.5350 0.5100 ;
+	    RECT 32.3550 1.3350 44.9650 1.5850 ;
+	    RECT 32.3550 -0.2050 38.1100 1.3350 ;
+	    RECT 32.3550 -1.7850 35.1800 -0.2050 ;
+	    RECT 36.0000 -1.7850 38.1100 -0.2050 ;
+	    RECT 38.9300 -1.7850 44.9650 1.3350 ;
+	    RECT 45.7850 0.5150 79.4350 3.3350 ;
+	    RECT 45.7850 -0.5600 67.9950 0.5150 ;
+	    RECT 45.7850 -1.2100 66.5550 -0.5600 ;
+	    RECT 45.7850 -1.7850 49.5750 -1.2100 ;
+	    RECT 50.3950 -1.7850 66.5550 -1.2100 ;
+	    RECT 67.3750 -1.7850 67.9950 -0.5600 ;
+	    RECT 69.2050 0.3000 79.4350 0.5150 ;
+	    RECT 69.2050 -1.7850 76.0000 0.3000 ;
+	    RECT 77.2000 -0.5400 79.4350 0.3000 ;
+	    RECT 77.2000 -0.5700 78.4250 -0.5400 ;
+	    RECT 77.2000 -1.7850 77.3300 -0.5700 ;
+	    RECT 78.1500 -1.7850 78.4250 -0.5700 ;
+	    RECT 79.1850 -1.7850 79.4350 -0.5400 ;
+         LAYER met3 ;
+	    RECT 0.4000 187.9250 79.5700 197.9650 ;
+	    RECT 0.4000 183.1400 78.8400 187.9250 ;
+	    RECT 0.4000 176.8500 78.1800 183.1400 ;
+	    RECT 1.4200 35.1700 78.1800 176.8500 ;
+	    RECT 1.4200 -1.7900 45.4650 35.1700 ;
+	    RECT 46.5950 8.0700 78.1800 35.1700 ;
+	    RECT 46.5950 -1.7900 62.4200 8.0700 ;
+	    RECT 64.2900 -1.7900 78.1800 8.0700 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 78.3300 197.9650 ;
+	    RECT 0.9650 93.3650 78.9700 173.3500 ;
+	    RECT 1.6700 67.6000 78.3300 93.3650 ;
+	    RECT 0.9650 66.9000 78.9700 67.6000 ;
+	    RECT 1.6700 61.6500 78.3300 66.9000 ;
+	    RECT 0.9650 61.0500 78.9700 61.6500 ;
+	    RECT 1.6700 55.8000 78.3300 61.0500 ;
+	    RECT 0.9650 55.1000 78.9700 55.8000 ;
+	    RECT 3.0100 54.4700 46.6900 55.1000 ;
+	    RECT 36.8400 50.6900 38.3600 54.4700 ;
+	    RECT 1.6700 49.7100 78.3300 50.6900 ;
+	    RECT 52.5450 46.4300 54.0650 49.7100 ;
+	    RECT 3.0100 45.3000 46.6900 45.9300 ;
+	    RECT 0.9650 44.6000 78.9700 45.3000 ;
+	    RECT 1.6700 39.1500 78.3300 44.6000 ;
+	    RECT 0.9650 38.5500 78.9700 39.1500 ;
+	    RECT 1.6700 34.3000 78.3300 38.5500 ;
+	    RECT 0.9650 33.7000 78.9700 34.3000 ;
+	    RECT 1.6700 29.4500 78.3300 33.7000 ;
+	    RECT 0.9650 28.8500 78.9700 29.4500 ;
+	    RECT 1.6700 23.4000 78.3300 28.8500 ;
+	    RECT 0.9650 22.8000 78.9700 23.4000 ;
+	    RECT 1.6700 17.3500 78.3300 22.8000 ;
+	    RECT 0.9650 16.7500 78.9700 17.3500 ;
+	    RECT 1.3650 12.5000 78.5700 16.7500 ;
+	    RECT 0.9650 11.9000 78.9700 12.5000 ;
+	    RECT 1.6700 6.4500 78.3300 11.9000 ;
+	    RECT 0.9650 5.8500 78.9700 6.4500 ;
+	    RECT 1.6700 -0.4000 78.3300 5.8500 ;
+	    RECT 0.9650 -1.5000 78.9700 -0.4000 ;
+         LAYER met5 ;
+	    RECT 0.0000 166.5750 80.0000 197.9650 ;
+	    RECT 0.0000 100.9250 9.6000 166.5750 ;
+	    RECT 75.4000 100.9250 80.0000 166.5750 ;
+	    RECT 0.0000 94.5500 80.0000 100.9250 ;
+	    RECT 2.8700 16.2500 77.1300 94.5500 ;
+	    RECT 2.5650 13.0000 77.3700 16.2500 ;
+	    RECT 2.8700 0.1000 77.1300 13.0000 ;
+   END
+END s8iom0_gpiov2_pad
+MACRO s8iom0_vddio_lvc_pad
+   CLASS PAD POWER ;
+   FOREIGN s8iom0_vddio_lvc_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 75.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 75.0000 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 1.2700 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 75.0000 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 1.2700 49.3100 ;
+      END
+   END amuxbus_b
+   PIN drn_lvc1
+      PORT
+         LAYER met3 ;
+	    RECT 26.0000 -0.0350 36.8800 20.1850 ;
+      END
+   END drn_lvc1
+   PIN drn_lvc2
+      PORT
+         LAYER met3 ;
+	    RECT 38.3800 -0.0350 49.2550 22.8650 ;
+      END
+   END drn_lvc2
+   PIN src_bdy_lvc1
+      PORT
+         LAYER met2 ;
+	    RECT 0.5000 -0.0350 20.4950 1.4500 ;
+      END
+   END src_bdy_lvc1
+   PIN src_bdy_lvc2
+      PORT
+         LAYER met2 ;
+	    RECT 54.7150 -0.0350 74.7000 3.6250 ;
+      END
+   END src_bdy_lvc2
+   PIN bdy2_b2b
+      PORT
+         LAYER met2 ;
+	    RECT 34.4400 -0.0350 44.4400 0.2900 ;
+      END
+   END bdy2_b2b
+   PIN vssi
+      PORT
+         LAYER met1 ;
+	    RECT 34.3350 0.4750 35.3350 0.9750 ;
+      END
+   END vssi
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 45.7000 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 34.8050 75.0000 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8050 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 49.6100 75.0000 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 34.7000 75.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 1.2700 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 74.0350 13.0000 75.0000 16.2500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.0350 12.9000 75.0000 16.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 29.9500 75.0000 33.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 29.8500 75.0000 33.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 62.1500 75.0000 66.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 62.0500 75.0000 66.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 0.1000 75.0000 5.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 0.0000 75.0000 5.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 9.3150 100.1050 65.9550 167.5350 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 50.7550 -0.0350 74.7000 17.7650 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 0.5000 -0.0350 24.5000 17.7650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 68.0000 75.0000 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 17.8500 75.0000 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 17.7500 75.0000 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 68.0000 75.0000 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 6.9500 75.0000 11.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 6.8500 75.0000 11.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 23.9000 75.0000 28.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 23.8000 75.0000 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 39.6500 75.0000 44.1000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 39.5500 75.0000 44.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 56.3000 75.0000 60.5500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 56.2000 75.0000 60.6500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+   END vssio_q
+   OBS
+         LAYER li1 ;
+	    RECT 0.2400 0.9850 74.7550 197.7450 ;
+         LAYER met1 ;
+	    RECT 0.1200 1.2550 74.7850 197.8050 ;
+	    RECT 0.1200 0.1950 34.0550 1.2550 ;
+	    RECT 35.6150 0.1950 74.7850 1.2550 ;
+	    RECT 0.1200 -0.0350 74.7850 0.1950 ;
+         LAYER met2 ;
+	    RECT 0.4900 3.9050 74.7000 194.3950 ;
+	    RECT 0.4900 1.7300 54.4350 3.9050 ;
+	    RECT 20.7750 0.5700 54.4350 1.7300 ;
+	    RECT 20.7750 -0.0350 34.1600 0.5700 ;
+	    RECT 44.7200 -0.0350 54.4350 0.5700 ;
+         LAYER met3 ;
+	    RECT 0.4900 23.2650 74.7000 189.4800 ;
+	    RECT 0.4900 20.5850 37.9800 23.2650 ;
+	    RECT 0.4900 18.1650 25.6000 20.5850 ;
+	    RECT 24.9000 0.0000 25.6000 18.1650 ;
+	    RECT 37.2800 0.0000 37.9800 20.5850 ;
+	    RECT 49.6550 18.1650 74.7000 23.2650 ;
+	    RECT 49.6550 0.0000 50.3550 18.1650 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 73.3300 197.9650 ;
+	    RECT 0.9650 93.3650 74.0350 173.3500 ;
+	    RECT 1.6700 67.6000 73.3300 93.3650 ;
+	    RECT 0.9650 66.9000 74.0350 67.6000 ;
+	    RECT 1.6700 61.6500 73.3300 66.9000 ;
+	    RECT 0.9650 61.0500 74.0350 61.6500 ;
+	    RECT 1.6700 55.8000 73.3300 61.0500 ;
+	    RECT 0.9650 55.1000 74.0350 55.8000 ;
+	    RECT 1.6700 49.7100 73.3300 50.6900 ;
+	    RECT 0.9650 44.6000 74.0350 45.3000 ;
+	    RECT 1.6700 39.1500 73.3300 44.6000 ;
+	    RECT 0.9650 38.5500 74.0350 39.1500 ;
+	    RECT 1.6700 34.3000 73.3300 38.5500 ;
+	    RECT 0.9650 33.7000 74.0350 34.3000 ;
+	    RECT 1.6700 29.4500 73.3300 33.7000 ;
+	    RECT 0.9650 28.8500 74.0350 29.4500 ;
+	    RECT 1.6700 23.4000 73.3300 28.8500 ;
+	    RECT 0.9650 22.8000 74.0350 23.4000 ;
+	    RECT 1.6700 17.3500 73.3300 22.8000 ;
+	    RECT 0.9650 16.7500 74.0350 17.3500 ;
+	    RECT 1.3650 12.5000 73.6350 16.7500 ;
+	    RECT 0.9650 11.9000 74.0350 12.5000 ;
+	    RECT 1.6700 6.4500 73.3300 11.9000 ;
+	    RECT 0.9650 5.8500 74.0350 6.4500 ;
+	    RECT 1.6700 0.0000 73.3300 5.8500 ;
+         LAYER met5 ;
+	    RECT 0.0000 169.1350 75.0000 197.9650 ;
+	    RECT 0.0000 98.5050 7.7150 169.1350 ;
+	    RECT 67.5550 98.5050 75.0000 169.1350 ;
+	    RECT 0.0000 94.5500 75.0000 98.5050 ;
+	    RECT 2.8700 16.2500 72.1300 94.5500 ;
+	    RECT 2.5650 13.0000 72.4350 16.2500 ;
+	    RECT 2.8700 0.1000 72.1300 13.0000 ;
+   END
+END s8iom0_vddio_lvc_pad
+MACRO s8iom0_vddio_hvc_pad
+   CLASS PAD POWER ;
+   FOREIGN s8iom0_vddio_hvc_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 75.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 75.0000 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 1.2700 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 75.0000 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 1.2700 49.3100 ;
+      END
+   END amuxbus_b
+   PIN drn_hvc
+      PORT
+         LAYER met2 ;
+	    RECT 50.3900 -2.0350 74.2900 23.6250 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 37.8900 -2.0350 48.8900 10.3450 ;
+      END
+   END drn_hvc
+   PIN src_bdy_hvc
+      PORT
+         LAYER met2 ;
+	    RECT 0.4950 -2.0350 24.3950 0.0200 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 25.8950 -2.0350 36.8950 10.3900 ;
+      END
+   END src_bdy_hvc
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 45.7000 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 34.8050 75.0000 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8050 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 49.6100 75.0000 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 34.7000 75.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 1.2700 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 74.0350 13.0000 75.0000 16.2500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.0350 12.9000 75.0000 16.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 29.9500 75.0000 33.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 29.8500 75.0000 33.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 62.1500 75.0000 66.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 62.0500 75.0000 66.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 0.1000 75.0000 5.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 0.0000 75.0000 5.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 6.1000 101.9750 68.8000 164.5900 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 50.3900 -2.0350 74.2900 88.1500 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 0.4950 -2.0350 24.3950 30.4800 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 68.0000 75.0000 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 17.8500 75.0000 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 17.7500 75.0000 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 68.0000 75.0000 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 6.9500 75.0000 11.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 6.8500 75.0000 11.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2050 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.2250 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 23.9000 75.0000 28.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 23.8000 75.0000 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 39.6500 75.0000 44.1000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 39.5500 75.0000 44.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 56.3000 75.0000 60.5500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 56.2000 75.0000 60.6500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+   END vssio_q
+   OBS
+         LAYER li1 ;
+	    RECT 1.0700 -1.0350 72.7750 197.6600 ;
+         LAYER met1 ;
+	    RECT 0.1850 -1.0650 73.6200 197.6900 ;
+         LAYER met2 ;
+	    RECT 0.2650 23.9050 74.2900 193.0400 ;
+	    RECT 0.2650 0.3000 50.1100 23.9050 ;
+	    RECT 24.6750 -2.0350 50.1100 0.3000 ;
+         LAYER met3 ;
+	    RECT 0.2400 88.5500 74.2900 197.9650 ;
+	    RECT 0.2400 30.8800 49.9900 88.5500 ;
+	    RECT 24.7950 10.7900 49.9900 30.8800 ;
+	    RECT 24.7950 10.3450 25.4950 10.7900 ;
+	    RECT 37.2950 10.7450 49.9900 10.7900 ;
+	    RECT 37.2950 10.3450 37.4900 10.7450 ;
+	    RECT 49.2900 10.3450 49.9900 10.7450 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 73.3300 197.9650 ;
+	    RECT 0.9650 93.3650 74.0350 173.3500 ;
+	    RECT 1.6700 67.6000 73.3300 93.3650 ;
+	    RECT 0.9650 66.9000 74.0350 67.6000 ;
+	    RECT 1.6700 61.6500 73.3300 66.9000 ;
+	    RECT 0.9650 61.0500 74.0350 61.6500 ;
+	    RECT 1.6700 55.8000 73.3300 61.0500 ;
+	    RECT 0.9650 55.1000 74.0350 55.8000 ;
+	    RECT 1.6700 49.7100 73.3300 50.6900 ;
+	    RECT 0.9650 44.6000 74.0350 45.3000 ;
+	    RECT 1.6700 39.1500 73.3300 44.6000 ;
+	    RECT 0.9650 38.5500 74.0350 39.1500 ;
+	    RECT 1.6700 34.3000 73.3300 38.5500 ;
+	    RECT 0.9650 33.7000 74.0350 34.3000 ;
+	    RECT 1.6700 29.4500 73.3300 33.7000 ;
+	    RECT 0.9650 28.8500 74.0350 29.4500 ;
+	    RECT 1.6700 23.4000 73.3300 28.8500 ;
+	    RECT 0.9650 22.8000 74.0350 23.4000 ;
+	    RECT 1.6700 17.3500 73.3300 22.8000 ;
+	    RECT 0.9650 16.7500 74.0350 17.3500 ;
+	    RECT 1.3650 12.5000 73.6350 16.7500 ;
+	    RECT 0.9650 11.9000 74.0350 12.5000 ;
+	    RECT 1.6700 6.4500 73.3300 11.9000 ;
+	    RECT 0.9650 5.8500 74.0350 6.4500 ;
+	    RECT 1.6700 0.0000 73.3300 5.8500 ;
+         LAYER met5 ;
+	    RECT 0.0000 166.1900 75.0000 197.9650 ;
+	    RECT 0.0000 100.3750 4.5000 166.1900 ;
+	    RECT 70.4000 100.3750 75.0000 166.1900 ;
+	    RECT 0.0000 94.5500 75.0000 100.3750 ;
+	    RECT 2.8700 16.2500 72.1300 94.5500 ;
+	    RECT 2.5650 13.0000 72.4350 16.2500 ;
+	    RECT 2.8700 0.1000 72.1300 13.0000 ;
+   END
+END s8iom0_vddio_hvc_pad
+MACRO s8iom0_vccd_hvc_pad
+   CLASS PAD POWER ;
+   FOREIGN s8iom0_vccd_hvc_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 75.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 75.0000 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 1.2700 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 75.0000 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 1.2700 49.3100 ;
+      END
+   END amuxbus_b
+   PIN drn_hvc
+      PORT
+         LAYER met2 ;
+	    RECT 50.3900 -2.0350 74.2900 23.6250 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 37.8900 -2.0350 48.8900 10.3450 ;
+      END
+   END drn_hvc
+   PIN src_bdy_hvc
+      PORT
+         LAYER met2 ;
+	    RECT 0.4950 -2.0350 24.3950 0.0200 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 25.8950 -2.0350 36.8950 10.3900 ;
+      END
+   END src_bdy_hvc
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 45.7000 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 34.8050 75.0000 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8050 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 49.6100 75.0000 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 34.7000 75.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 1.2700 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 74.0350 13.0000 75.0000 16.2500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.0350 12.9000 75.0000 16.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 29.9500 75.0000 33.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 29.8500 75.0000 33.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 62.1500 75.0000 66.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 62.0500 75.0000 66.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 0.1000 75.0000 5.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 0.0000 75.0000 5.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 68.0000 75.0000 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 17.8500 75.0000 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 17.7500 75.0000 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 68.0000 75.0000 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 6.1000 101.9750 68.8000 164.5900 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 50.3900 -2.0350 74.2900 6.8650 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 0.4950 -2.0350 24.3950 6.8650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 6.9500 75.0000 11.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 6.8500 75.0000 11.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2050 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.2250 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 23.9000 75.0000 28.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 23.8000 75.0000 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 39.6500 75.0000 44.1000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 39.5500 75.0000 44.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 56.3000 75.0000 60.5500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 56.2000 75.0000 60.6500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+   END vssio_q
+   OBS
+         LAYER li1 ;
+	    RECT 1.0700 -1.0350 72.7750 197.6600 ;
+         LAYER met1 ;
+	    RECT 0.1850 -1.0650 73.6200 197.6900 ;
+         LAYER met2 ;
+	    RECT 0.2650 23.9050 74.2900 193.0400 ;
+	    RECT 0.2650 0.3000 50.1100 23.9050 ;
+	    RECT 24.6750 -2.0350 50.1100 0.3000 ;
+         LAYER met3 ;
+	    RECT 0.2400 10.7900 74.2900 197.9650 ;
+	    RECT 0.2400 7.2650 25.4950 10.7900 ;
+	    RECT 24.7950 6.8650 25.4950 7.2650 ;
+	    RECT 37.2950 10.7450 74.2900 10.7900 ;
+	    RECT 37.2950 6.8650 37.4900 10.7450 ;
+	    RECT 49.2900 7.2650 74.2900 10.7450 ;
+	    RECT 49.2900 6.8650 49.9900 7.2650 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 73.3300 197.9650 ;
+	    RECT 0.9650 93.3650 74.0350 173.3500 ;
+	    RECT 1.6700 67.6000 73.3300 93.3650 ;
+	    RECT 0.9650 66.9000 74.0350 67.6000 ;
+	    RECT 1.6700 61.6500 73.3300 66.9000 ;
+	    RECT 0.9650 61.0500 74.0350 61.6500 ;
+	    RECT 1.6700 55.8000 73.3300 61.0500 ;
+	    RECT 0.9650 55.1000 74.0350 55.8000 ;
+	    RECT 1.6700 49.7100 73.3300 50.6900 ;
+	    RECT 0.9650 44.6000 74.0350 45.3000 ;
+	    RECT 1.6700 39.1500 73.3300 44.6000 ;
+	    RECT 0.9650 38.5500 74.0350 39.1500 ;
+	    RECT 1.6700 34.3000 73.3300 38.5500 ;
+	    RECT 0.9650 33.7000 74.0350 34.3000 ;
+	    RECT 1.6700 29.4500 73.3300 33.7000 ;
+	    RECT 0.9650 28.8500 74.0350 29.4500 ;
+	    RECT 1.6700 23.4000 73.3300 28.8500 ;
+	    RECT 0.9650 22.8000 74.0350 23.4000 ;
+	    RECT 1.6700 17.3500 73.3300 22.8000 ;
+	    RECT 0.9650 16.7500 74.0350 17.3500 ;
+	    RECT 1.3650 12.5000 73.6350 16.7500 ;
+	    RECT 0.9650 11.9000 74.0350 12.5000 ;
+	    RECT 1.6700 6.4500 73.3300 11.9000 ;
+	    RECT 0.9650 5.8500 74.0350 6.4500 ;
+	    RECT 1.6700 0.0000 73.3300 5.8500 ;
+         LAYER met5 ;
+	    RECT 0.0000 166.1900 75.0000 197.9650 ;
+	    RECT 0.0000 100.3750 4.5000 166.1900 ;
+	    RECT 70.4000 100.3750 75.0000 166.1900 ;
+	    RECT 0.0000 94.5500 75.0000 100.3750 ;
+	    RECT 2.8700 16.2500 72.1300 94.5500 ;
+	    RECT 2.5650 13.0000 72.4350 16.2500 ;
+	    RECT 2.8700 0.1000 72.1300 13.0000 ;
+   END
+END s8iom0_vccd_hvc_pad
+MACRO s8iom0_vccd_lvc_pad
+   CLASS PAD POWER ;
+   FOREIGN s8iom0_vccd_lvc_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 75.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 75.0000 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 1.2700 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 75.0000 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 1.2700 49.3100 ;
+      END
+   END amuxbus_b
+   PIN drn_lvc1
+      PORT
+         LAYER met3 ;
+	    RECT 26.0000 -0.0350 36.8800 20.1850 ;
+      END
+   END drn_lvc1
+   PIN drn_lvc2
+      PORT
+         LAYER met3 ;
+	    RECT 38.3800 -0.0350 49.2550 22.8650 ;
+      END
+   END drn_lvc2
+   PIN src_bdy_lvc1
+      PORT
+         LAYER met2 ;
+	    RECT 0.5000 -0.0350 20.4950 1.4500 ;
+      END
+   END src_bdy_lvc1
+   PIN src_bdy_lvc2
+      PORT
+         LAYER met2 ;
+	    RECT 54.7150 -0.0350 74.7000 3.6250 ;
+      END
+   END src_bdy_lvc2
+   PIN bdy2_b2b
+      PORT
+         LAYER met2 ;
+	    RECT 34.4400 -0.0350 44.4400 0.2900 ;
+      END
+   END bdy2_b2b
+   PIN vssi
+      PORT
+         LAYER met1 ;
+	    RECT 34.3350 0.4750 35.3350 0.9750 ;
+      END
+   END vssi
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 45.7000 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 34.8050 75.0000 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8050 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 49.6100 75.0000 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 34.7000 75.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 1.2700 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 74.0350 13.0000 75.0000 16.2500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.0350 12.9000 75.0000 16.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 29.9500 75.0000 33.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 29.8500 75.0000 33.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 62.1500 75.0000 66.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 62.0500 75.0000 66.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 0.1000 75.0000 5.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 0.0000 75.0000 5.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 68.0000 75.0000 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 17.8500 75.0000 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 17.7500 75.0000 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 68.0000 75.0000 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 9.3150 100.1050 65.9550 167.5350 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 50.7550 -0.0350 74.7000 6.8650 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 0.5000 -0.0350 24.5000 6.8650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 6.9500 75.0000 11.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 6.8500 75.0000 11.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met4 ;
+	    RECT 74.2250 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2050 197.9650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 23.9000 75.0000 28.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 23.8000 75.0000 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 39.6500 75.0000 44.1000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 39.5500 75.0000 44.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 56.3000 75.0000 60.5500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 56.2000 75.0000 60.6500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+   END vssio_q
+   OBS
+         LAYER li1 ;
+	    RECT 0.2400 0.9850 74.7550 197.7450 ;
+         LAYER met1 ;
+	    RECT 0.1200 1.2550 74.7850 197.8050 ;
+	    RECT 0.1200 0.1950 34.0550 1.2550 ;
+	    RECT 35.6150 0.1950 74.7850 1.2550 ;
+	    RECT 0.1200 -0.0350 74.7850 0.1950 ;
+         LAYER met2 ;
+	    RECT 0.4900 3.9050 74.7000 194.3950 ;
+	    RECT 0.4900 1.7300 54.4350 3.9050 ;
+	    RECT 20.7750 0.5700 54.4350 1.7300 ;
+	    RECT 20.7750 -0.0350 34.1600 0.5700 ;
+	    RECT 44.7200 -0.0350 54.4350 0.5700 ;
+         LAYER met3 ;
+	    RECT 0.4900 23.2650 74.7000 189.4800 ;
+	    RECT 0.4900 20.5850 37.9800 23.2650 ;
+	    RECT 0.4900 7.2650 25.6000 20.5850 ;
+	    RECT 24.9000 0.0000 25.6000 7.2650 ;
+	    RECT 37.2800 0.0000 37.9800 20.5850 ;
+	    RECT 49.6550 7.2650 74.7000 23.2650 ;
+	    RECT 49.6550 0.0000 50.3550 7.2650 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 73.3300 197.9650 ;
+	    RECT 0.9650 93.3650 74.0350 173.3500 ;
+	    RECT 1.6700 67.6000 73.3300 93.3650 ;
+	    RECT 0.9650 66.9000 74.0350 67.6000 ;
+	    RECT 1.6700 61.6500 73.3300 66.9000 ;
+	    RECT 0.9650 61.0500 74.0350 61.6500 ;
+	    RECT 1.6700 55.8000 73.3300 61.0500 ;
+	    RECT 0.9650 55.1000 74.0350 55.8000 ;
+	    RECT 1.6700 49.7100 73.3300 50.6900 ;
+	    RECT 0.9650 44.6000 74.0350 45.3000 ;
+	    RECT 1.6700 39.1500 73.3300 44.6000 ;
+	    RECT 0.9650 38.5500 74.0350 39.1500 ;
+	    RECT 1.6700 34.3000 73.3300 38.5500 ;
+	    RECT 0.9650 33.7000 74.0350 34.3000 ;
+	    RECT 1.6700 29.4500 73.3300 33.7000 ;
+	    RECT 0.9650 28.8500 74.0350 29.4500 ;
+	    RECT 1.6700 23.4000 73.3300 28.8500 ;
+	    RECT 0.9650 22.8000 74.0350 23.4000 ;
+	    RECT 1.6700 17.3500 73.3300 22.8000 ;
+	    RECT 0.9650 16.7500 74.0350 17.3500 ;
+	    RECT 1.3650 12.5000 73.6350 16.7500 ;
+	    RECT 0.9650 11.9000 74.0350 12.5000 ;
+	    RECT 1.6700 6.4500 73.3300 11.9000 ;
+	    RECT 0.9650 5.8500 74.0350 6.4500 ;
+	    RECT 1.6700 0.0000 73.3300 5.8500 ;
+         LAYER met5 ;
+	    RECT 0.0000 169.1350 75.0000 197.9650 ;
+	    RECT 0.0000 98.5050 7.7150 169.1350 ;
+	    RECT 67.5550 98.5050 75.0000 169.1350 ;
+	    RECT 0.0000 94.5500 75.0000 98.5050 ;
+	    RECT 2.8700 16.2500 72.1300 94.5500 ;
+	    RECT 2.5650 13.0000 72.4350 16.2500 ;
+	    RECT 2.8700 0.1000 72.1300 13.0000 ;
+   END
+END s8iom0_vccd_lvc_pad
+MACRO s8iom0_vdda_hvc_pad
+   CLASS PAD POWER ;
+   FOREIGN s8iom0_vdda_hvc_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 75.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 75.0000 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 1.2700 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 75.0000 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 1.2700 49.3100 ;
+      END
+   END amuxbus_b
+   PIN drn_hvc
+      PORT
+         LAYER met2 ;
+	    RECT 50.3900 -2.0350 74.2900 23.6250 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 37.8900 -2.0350 48.8900 10.3450 ;
+      END
+   END drn_hvc
+   PIN src_bdy_hvc
+      PORT
+         LAYER met2 ;
+	    RECT 0.4950 -2.0350 24.3950 0.0200 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 25.8950 -2.0350 36.8950 10.3900 ;
+      END
+   END src_bdy_hvc
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 45.7000 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 34.8050 75.0000 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8050 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 49.6100 75.0000 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 34.7000 75.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 1.2700 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 6.1000 101.9750 68.8000 164.5900 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 50.3900 -2.0350 74.2900 6.8650 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 0.4950 -2.0350 24.3950 6.8650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 74.0350 13.0000 75.0000 16.2500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.0350 12.9000 75.0000 16.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 29.9500 75.0000 33.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 29.8500 75.0000 33.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 62.1500 75.0000 66.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 62.0500 75.0000 66.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 0.1000 75.0000 5.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 0.0000 75.0000 5.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 68.0000 75.0000 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 17.8500 75.0000 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 17.7500 75.0000 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 68.0000 75.0000 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 6.9500 75.0000 11.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 6.8500 75.0000 11.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met4 ;
+	    RECT 74.2250 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2050 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.6300 189.5650 0.6400 189.5750 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.3600 189.5650 74.3700 189.5750 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 23.9000 75.0000 28.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 23.8000 75.0000 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 39.6500 75.0000 44.1000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 39.5500 75.0000 44.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 56.3000 75.0000 60.5500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 56.2000 75.0000 60.6500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+   END vssio_q
+   OBS
+         LAYER li1 ;
+	    RECT 1.0700 -1.0350 72.7750 197.6600 ;
+         LAYER met1 ;
+	    RECT 0.1850 -1.0650 73.6200 197.6900 ;
+         LAYER met2 ;
+	    RECT 0.2650 23.9050 74.2900 193.0400 ;
+	    RECT 0.2650 0.3000 50.1100 23.9050 ;
+	    RECT 24.6750 -2.0350 50.1100 0.3000 ;
+         LAYER met3 ;
+	    RECT 0.2400 10.7900 74.6550 197.9650 ;
+	    RECT 0.2400 7.2650 25.4950 10.7900 ;
+	    RECT 24.7950 6.8550 25.4950 7.2650 ;
+	    RECT 37.2950 10.7450 74.6550 10.7900 ;
+	    RECT 37.2950 6.8550 37.4900 10.7450 ;
+	    RECT 49.2900 7.2650 74.6550 10.7450 ;
+	    RECT 49.2900 6.8550 49.9900 7.2650 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 73.3300 197.9650 ;
+	    RECT 0.9650 93.3650 74.0350 173.3500 ;
+	    RECT 1.6700 67.6000 73.3300 93.3650 ;
+	    RECT 0.9650 66.9000 74.0350 67.6000 ;
+	    RECT 1.6700 61.6500 73.3300 66.9000 ;
+	    RECT 0.9650 61.0500 74.0350 61.6500 ;
+	    RECT 1.6700 55.8000 73.3300 61.0500 ;
+	    RECT 0.9650 55.1000 74.0350 55.8000 ;
+	    RECT 1.6700 49.7100 73.3300 50.6900 ;
+	    RECT 0.9650 44.6000 74.0350 45.3000 ;
+	    RECT 1.6700 39.1500 73.3300 44.6000 ;
+	    RECT 0.9650 38.5500 74.0350 39.1500 ;
+	    RECT 1.6700 34.3000 73.3300 38.5500 ;
+	    RECT 0.9650 33.7000 74.0350 34.3000 ;
+	    RECT 1.6700 29.4500 73.3300 33.7000 ;
+	    RECT 0.9650 28.8500 74.0350 29.4500 ;
+	    RECT 1.6700 23.4000 73.3300 28.8500 ;
+	    RECT 0.9650 22.8000 74.0350 23.4000 ;
+	    RECT 1.6700 17.3500 73.3300 22.8000 ;
+	    RECT 0.9650 16.7500 74.0350 17.3500 ;
+	    RECT 1.3650 12.5000 73.6350 16.7500 ;
+	    RECT 0.9650 11.9000 74.0350 12.5000 ;
+	    RECT 1.6700 6.4500 73.3300 11.9000 ;
+	    RECT 0.9650 5.8500 74.0350 6.4500 ;
+	    RECT 1.6700 0.0000 73.3300 5.8500 ;
+         LAYER met5 ;
+	    RECT 0.0000 166.1900 75.0000 197.9650 ;
+	    RECT 0.0000 100.3750 4.5000 166.1900 ;
+	    RECT 70.4000 100.3750 75.0000 166.1900 ;
+	    RECT 0.0000 94.5500 75.0000 100.3750 ;
+	    RECT 2.8700 16.2500 72.1300 94.5500 ;
+	    RECT 2.5650 13.0000 72.4350 16.2500 ;
+	    RECT 2.8700 0.1000 72.1300 13.0000 ;
+   END
+END s8iom0_vdda_hvc_pad
+MACRO s8iom0_vdda_lvc_pad
+   CLASS PAD POWER ;
+   FOREIGN s8iom0_vdda_lvc_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 75.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 75.0000 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 1.2700 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 75.0000 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 1.2700 49.3100 ;
+      END
+   END amuxbus_b
+   PIN drn_lvc1
+      PORT
+         LAYER met3 ;
+	    RECT 26.0000 -0.0350 36.8800 20.1850 ;
+      END
+   END drn_lvc1
+   PIN drn_lvc2
+      PORT
+         LAYER met3 ;
+	    RECT 38.3800 -0.0350 49.2550 22.8650 ;
+      END
+   END drn_lvc2
+   PIN src_bdy_lvc1
+      PORT
+         LAYER met2 ;
+	    RECT 0.5000 -0.0350 20.4950 1.4500 ;
+      END
+   END src_bdy_lvc1
+   PIN src_bdy_lvc2
+      PORT
+         LAYER met2 ;
+	    RECT 54.7150 -0.0350 74.7000 3.6250 ;
+      END
+   END src_bdy_lvc2
+   PIN bdy2_b2b
+      PORT
+         LAYER met2 ;
+	    RECT 34.4400 -0.0350 44.4400 0.2900 ;
+      END
+   END bdy2_b2b
+   PIN vssi
+      PORT
+         LAYER met1 ;
+	    RECT 34.3350 0.4750 35.3350 0.9750 ;
+      END
+   END vssi
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 45.7000 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 34.8050 75.0000 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8050 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 49.6100 75.0000 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 34.7000 75.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 1.2700 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met3 ;
+	    RECT 50.7550 -0.0350 74.7000 12.9250 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 0.5000 -0.0350 24.5000 12.9250 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 74.0350 13.0000 75.0000 16.2500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.0350 12.9000 75.0000 16.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 9.3150 100.1050 65.9550 167.5350 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 29.9500 75.0000 33.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 29.8500 75.0000 33.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 62.1500 75.0000 66.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 62.0500 75.0000 66.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 0.1000 75.0000 5.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 0.0000 75.0000 5.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 68.0000 75.0000 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 17.8500 75.0000 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 17.7500 75.0000 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 68.0000 75.0000 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 6.9500 75.0000 11.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 6.8500 75.0000 11.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 23.9000 75.0000 28.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 23.8000 75.0000 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 39.6500 75.0000 44.1000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 39.5500 75.0000 44.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 56.3000 75.0000 60.5500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 56.2000 75.0000 60.6500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+   END vssio_q
+   OBS
+         LAYER li1 ;
+	    RECT 0.2400 0.9850 74.7550 197.7450 ;
+         LAYER met1 ;
+	    RECT 0.1200 1.2550 74.7850 197.8050 ;
+	    RECT 0.1200 0.1950 34.0550 1.2550 ;
+	    RECT 35.6150 0.1950 74.7850 1.2550 ;
+	    RECT 0.1200 -0.0350 74.7850 0.1950 ;
+         LAYER met2 ;
+	    RECT 0.4900 3.9050 74.7000 194.3950 ;
+	    RECT 0.4900 1.7300 54.4350 3.9050 ;
+	    RECT 20.7750 0.5700 54.4350 1.7300 ;
+	    RECT 20.7750 -0.0350 34.1600 0.5700 ;
+	    RECT 44.7200 -0.0350 54.4350 0.5700 ;
+         LAYER met3 ;
+	    RECT 0.4900 23.2650 74.7000 189.4800 ;
+	    RECT 0.4900 20.5850 37.9800 23.2650 ;
+	    RECT 0.4900 13.3250 25.6000 20.5850 ;
+	    RECT 24.9000 0.0000 25.6000 13.3250 ;
+	    RECT 37.2800 0.0000 37.9800 20.5850 ;
+	    RECT 49.6550 13.3250 74.7000 23.2650 ;
+	    RECT 49.6550 0.0000 50.3550 13.3250 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 73.3300 197.9650 ;
+	    RECT 0.9650 93.3650 74.0350 173.3500 ;
+	    RECT 1.6700 67.6000 73.3300 93.3650 ;
+	    RECT 0.9650 66.9000 74.0350 67.6000 ;
+	    RECT 1.6700 61.6500 73.3300 66.9000 ;
+	    RECT 0.9650 61.0500 74.0350 61.6500 ;
+	    RECT 1.6700 55.8000 73.3300 61.0500 ;
+	    RECT 0.9650 55.1000 74.0350 55.8000 ;
+	    RECT 1.6700 49.7100 73.3300 50.6900 ;
+	    RECT 0.9650 44.6000 74.0350 45.3000 ;
+	    RECT 1.6700 39.1500 73.3300 44.6000 ;
+	    RECT 0.9650 38.5500 74.0350 39.1500 ;
+	    RECT 1.6700 34.3000 73.3300 38.5500 ;
+	    RECT 0.9650 33.7000 74.0350 34.3000 ;
+	    RECT 1.6700 29.4500 73.3300 33.7000 ;
+	    RECT 0.9650 28.8500 74.0350 29.4500 ;
+	    RECT 1.6700 23.4000 73.3300 28.8500 ;
+	    RECT 0.9650 22.8000 74.0350 23.4000 ;
+	    RECT 1.6700 17.3500 73.3300 22.8000 ;
+	    RECT 0.9650 16.7500 74.0350 17.3500 ;
+	    RECT 1.3650 12.5000 73.6350 16.7500 ;
+	    RECT 0.9650 11.9000 74.0350 12.5000 ;
+	    RECT 1.6700 6.4500 73.3300 11.9000 ;
+	    RECT 0.9650 5.8500 74.0350 6.4500 ;
+	    RECT 1.6700 0.0000 73.3300 5.8500 ;
+         LAYER met5 ;
+	    RECT 0.0000 169.1350 75.0000 197.9650 ;
+	    RECT 0.0000 98.5050 7.7150 169.1350 ;
+	    RECT 67.5550 98.5050 75.0000 169.1350 ;
+	    RECT 0.0000 94.5500 75.0000 98.5050 ;
+	    RECT 2.8700 16.2500 72.1300 94.5500 ;
+	    RECT 2.5650 13.0000 72.4350 16.2500 ;
+	    RECT 2.8700 0.1000 72.1300 13.0000 ;
+   END
+END s8iom0_vdda_lvc_pad
+MACRO s8iom0s8_com_bus_slice_1um
+   CLASS PAD SPACER ;
+   FOREIGN s8iom0s8_com_bus_slice_1um ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 1.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 1.0000 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 1.0000 49.3100 ;
+      END
+   END amuxbus_b
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 1.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 1.0000 46.0300 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8000 1.0000 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.0000 50.7900 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 1.0000 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 1.0000 16.3500 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.0000 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.0000 33.3000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.0000 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.0000 66.5000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.0000 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.0000 5.4500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.0000 92.9650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.0000 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.0000 22.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.0000 92.9500 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.0000 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.0000 11.5000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.0000 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.0000 28.4500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 173.7500 1.0000 197.9650 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.0000 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.0000 44.2000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.0000 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.0000 60.6500 ;
+      END
+   END vssio_q
+   OBS
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.0000 197.9650 ;
+   END
+END s8iom0s8_com_bus_slice_1um
+MACRO s8iom0_vssio_hvc_pad
+   CLASS PAD GROUND ;
+   FOREIGN s8iom0_vssio_hvc_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 75.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 75.0000 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 1.2700 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 75.0000 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 1.2700 49.3100 ;
+      END
+   END amuxbus_b
+   PIN drn_hvc
+      PORT
+         LAYER met2 ;
+	    RECT 50.3900 -2.0350 74.2900 23.6250 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 37.8900 -2.0350 48.8900 10.3450 ;
+      END
+   END drn_hvc
+   PIN src_bdy_hvc
+      PORT
+         LAYER met2 ;
+	    RECT 0.4950 -2.0350 24.3950 0.0200 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 25.8950 -2.0350 36.8950 10.3900 ;
+      END
+   END src_bdy_hvc
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 45.7000 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 34.8050 75.0000 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8050 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 49.6100 75.0000 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 34.7000 75.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 1.2700 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 74.0350 13.0000 75.0000 16.2500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.0350 12.9000 75.0000 16.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 29.9500 75.0000 33.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 29.8500 75.0000 33.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 62.1500 75.0000 66.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 62.0500 75.0000 66.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 0.1000 75.0000 5.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 0.0000 75.0000 5.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 68.0000 75.0000 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 17.8500 75.0000 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 17.7500 75.0000 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 68.0000 75.0000 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 6.9500 75.0000 11.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 6.8500 75.0000 11.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met5 ;
+	    RECT 6.1000 101.9750 68.8000 164.5900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.6300 189.5650 0.6400 189.5750 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.2500 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 0.4950 -2.0350 24.3950 23.8150 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 50.3900 -2.0350 74.2900 23.8150 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 23.9000 75.0000 28.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 23.8000 75.0000 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 39.6500 75.0000 44.1000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 39.5500 75.0000 44.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 56.3000 75.0000 60.5500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 56.2000 75.0000 60.6500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+   END vssio_q
+   OBS
+         LAYER li1 ;
+	    RECT 1.0700 -1.0350 72.7750 197.6600 ;
+         LAYER met1 ;
+	    RECT 0.1850 -1.0650 73.6200 197.6900 ;
+         LAYER met2 ;
+	    RECT 0.2650 23.9050 74.2900 193.0400 ;
+	    RECT 0.2650 0.3000 50.1100 23.9050 ;
+	    RECT 24.6750 -2.0350 50.1100 0.3000 ;
+         LAYER met3 ;
+	    RECT 0.2400 24.2150 74.2900 197.9650 ;
+	    RECT 24.7950 10.7900 49.9900 24.2150 ;
+	    RECT 24.7950 10.3450 25.4950 10.7900 ;
+	    RECT 37.2950 10.7450 49.9900 10.7900 ;
+	    RECT 37.2950 10.3450 37.4900 10.7450 ;
+	    RECT 49.2900 10.3450 49.9900 10.7450 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 73.3300 197.9650 ;
+	    RECT 0.9650 93.3650 74.0350 173.3500 ;
+	    RECT 1.6700 67.6000 73.3300 93.3650 ;
+	    RECT 0.9650 66.9000 74.0350 67.6000 ;
+	    RECT 1.6700 61.6500 73.3300 66.9000 ;
+	    RECT 0.9650 61.0500 74.0350 61.6500 ;
+	    RECT 1.6700 55.8000 73.3300 61.0500 ;
+	    RECT 0.9650 55.1000 74.0350 55.8000 ;
+	    RECT 1.6700 49.7100 73.3300 50.6900 ;
+	    RECT 0.9650 44.6000 74.0350 45.3000 ;
+	    RECT 1.6700 39.1500 73.3300 44.6000 ;
+	    RECT 0.9650 38.5500 74.0350 39.1500 ;
+	    RECT 1.6700 34.3000 73.3300 38.5500 ;
+	    RECT 0.9650 33.7000 74.0350 34.3000 ;
+	    RECT 1.6700 29.4500 73.3300 33.7000 ;
+	    RECT 0.9650 28.8500 74.0350 29.4500 ;
+	    RECT 1.6700 23.4000 73.3300 28.8500 ;
+	    RECT 0.9650 22.8000 74.0350 23.4000 ;
+	    RECT 1.6700 17.3500 73.3300 22.8000 ;
+	    RECT 0.9650 16.7500 74.0350 17.3500 ;
+	    RECT 1.3650 12.5000 73.6350 16.7500 ;
+	    RECT 0.9650 11.9000 74.0350 12.5000 ;
+	    RECT 1.6700 6.4500 73.3300 11.9000 ;
+	    RECT 0.9650 5.8500 74.0350 6.4500 ;
+	    RECT 1.6700 0.0000 73.3300 5.8500 ;
+         LAYER met5 ;
+	    RECT 0.0000 166.1900 75.0000 197.9650 ;
+	    RECT 0.0000 100.3750 4.5000 166.1900 ;
+	    RECT 70.4000 100.3750 75.0000 166.1900 ;
+	    RECT 0.0000 94.5500 75.0000 100.3750 ;
+	    RECT 2.8700 16.2500 72.1300 94.5500 ;
+	    RECT 2.5650 13.0000 72.4350 16.2500 ;
+	    RECT 2.8700 0.1000 72.1300 13.0000 ;
+   END
+END s8iom0_vssio_hvc_pad
+MACRO s8iom0_corner_pad
+   CLASS ENDCAP TOPRIGHT ;
+   FOREIGN s8iom0_corner_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 200.0000 BY 204.0000 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 57.1250 22.9100 60.1050 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 53.1250 0.0000 56.1050 26.9100 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 52.3650 20.9350 55.3450 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 48.3650 0.0000 51.3450 20.8750 ;
+      END
+   END amuxbus_b
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 51.7350 23.1550 60.7350 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.6300 56.0200 0.6400 56.0300 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 40.8350 1.3350 44.0850 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.7350 19.5750 52.0650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 40.7350 1.3350 44.1850 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 55.6450 21.5500 56.8250 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 60.4050 23.1750 60.7350 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 36.8400 0.0000 40.0850 1.2700 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 47.7350 0.0000 56.7350 27.1550 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 51.2850 0.6300 51.2950 0.6400 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 56.4050 0.0000 56.7350 27.1750 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 51.6450 0.0000 52.8250 21.5550 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 36.7350 0.0000 40.1850 1.2700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 47.7350 0.0000 48.0650 23.5750 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 19.0350 1.4700 22.2850 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 18.9350 1.4700 22.3850 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 15.0350 0.0000 18.2850 1.2550 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 14.9350 0.0000 18.3850 1.2550 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 35.9850 1.3850 39.2350 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 35.8850 1.3850 39.3350 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 31.9850 0.0000 35.2350 1.2700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 31.8850 0.0000 35.3350 1.2700 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.1850 1.4800 72.4350 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0850 1.4800 72.5350 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 64.1850 0.0000 68.4350 1.2700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 64.0850 0.0000 68.5350 1.2700 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.1350 2.3500 11.3850 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.0350 2.3500 11.4850 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 2.1350 0.0000 7.3850 1.2700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 2.0350 0.0000 7.4850 1.2700 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 74.0350 2.6450 98.9850 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.8850 1.5250 28.3350 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.7850 1.5250 28.4350 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 74.0350 2.6450 99.0000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 19.8850 0.0000 24.3350 1.2700 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 70.0350 0.0000 94.9850 1.8550 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 70.0350 0.0000 95.0000 1.8550 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 19.7850 0.0000 24.4350 1.2700 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 12.9850 3.7850 17.4350 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.8850 3.7850 17.5350 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 8.9850 0.0000 13.4350 1.2700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 8.8850 0.0000 13.5350 1.2700 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9350 1.6000 34.3850 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8350 1.6000 34.4850 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 179.7850 1.4350 204.0000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.6300 194.8650 0.6400 194.8750 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 25.9350 0.0000 30.3850 1.2700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 25.8350 0.0000 30.4850 1.2700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 175.7850 0.0000 200.0000 1.2700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 190.8650 0.6300 190.8750 0.6400 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.6850 1.4750 50.1350 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.5850 1.4750 50.2350 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 41.6850 0.0000 46.1350 1.2700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 41.5850 0.0000 46.2350 1.2700 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.3350 1.6250 66.5850 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.2350 1.6250 66.6850 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 58.3350 0.0000 62.5850 1.2700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 58.2350 0.0000 62.6850 1.2700 ;
+      END
+   END vssio_q
+   OBS
+         LAYER met4 ;
+	    RECT 1.8350 179.3850 200.0000 204.0000 ;
+	    RECT 0.0000 99.4000 200.0000 179.3850 ;
+	    RECT 3.0450 73.6350 200.0000 99.4000 ;
+	    RECT 0.0000 72.9350 200.0000 73.6350 ;
+	    RECT 1.8800 67.6850 200.0000 72.9350 ;
+	    RECT 0.0000 67.0850 200.0000 67.6850 ;
+	    RECT 2.0250 61.8350 200.0000 67.0850 ;
+	    RECT 0.0000 61.1350 200.0000 61.8350 ;
+	    RECT 23.5750 60.0050 200.0000 61.1350 ;
+	    RECT 23.3100 56.7250 200.0000 60.0050 ;
+	    RECT 21.9500 55.2450 200.0000 56.7250 ;
+	    RECT 21.3350 51.9650 200.0000 55.2450 ;
+	    RECT 19.9750 51.3350 200.0000 51.9650 ;
+	    RECT 0.0000 50.6350 200.0000 51.3350 ;
+	    RECT 1.8750 45.1850 200.0000 50.6350 ;
+	    RECT 0.0000 44.5850 200.0000 45.1850 ;
+	    RECT 1.7350 40.3350 200.0000 44.5850 ;
+	    RECT 0.0000 39.7350 200.0000 40.3350 ;
+	    RECT 1.7850 35.4850 200.0000 39.7350 ;
+	    RECT 0.0000 34.8850 200.0000 35.4850 ;
+	    RECT 2.0000 29.4350 200.0000 34.8850 ;
+	    RECT 0.0000 28.8350 200.0000 29.4350 ;
+	    RECT 1.9250 27.5750 200.0000 28.8350 ;
+	    RECT 1.9250 27.3100 56.0050 27.5750 ;
+	    RECT 1.9250 23.9750 52.7250 27.3100 ;
+	    RECT 1.9250 23.3850 47.3350 23.9750 ;
+	    RECT 0.0000 22.7850 47.3350 23.3850 ;
+	    RECT 1.8700 18.5350 47.3350 22.7850 ;
+	    RECT 48.4650 21.9550 52.7250 23.9750 ;
+	    RECT 48.4650 21.2750 51.2450 21.9550 ;
+	    RECT 0.0000 17.9350 47.3350 18.5350 ;
+	    RECT 4.1850 12.4850 47.3350 17.9350 ;
+	    RECT 0.0000 11.8850 47.3350 12.4850 ;
+	    RECT 2.7500 5.6350 47.3350 11.8850 ;
+	    RECT 0.0000 1.6700 47.3350 5.6350 ;
+	    RECT 0.0000 1.2550 1.6350 1.6700 ;
+	    RECT 7.8850 1.2550 8.4850 1.6700 ;
+	    RECT 13.9350 1.6550 19.3850 1.6700 ;
+	    RECT 13.9350 1.2550 14.5350 1.6550 ;
+	    RECT 18.7850 1.2550 19.3850 1.6550 ;
+	    RECT 24.8350 1.2550 25.4350 1.6700 ;
+	    RECT 30.8850 1.2550 31.4850 1.6700 ;
+	    RECT 35.7350 1.2550 36.3350 1.6700 ;
+	    RECT 40.5850 1.2550 41.1850 1.6700 ;
+	    RECT 46.6350 1.2550 47.3350 1.6700 ;
+	    RECT 57.1350 2.2550 200.0000 27.5750 ;
+	    RECT 57.1350 1.6700 69.6350 2.2550 ;
+	    RECT 57.1350 1.2550 57.8350 1.6700 ;
+	    RECT 63.0850 1.2550 63.6850 1.6700 ;
+	    RECT 68.9350 1.2550 69.6350 1.6700 ;
+	    RECT 95.4000 1.6700 200.0000 2.2550 ;
+	    RECT 95.4000 1.2550 175.3850 1.6700 ;
+         LAYER met5 ;
+	    RECT 0.0000 100.5850 200.0000 204.0000 ;
+	    RECT 4.2450 72.4350 200.0000 100.5850 ;
+	    RECT 3.0800 68.1850 200.0000 72.4350 ;
+	    RECT 3.2250 62.3350 200.0000 68.1850 ;
+	    RECT 24.7550 50.1350 200.0000 62.3350 ;
+	    RECT 3.0750 44.0850 200.0000 50.1350 ;
+	    RECT 2.9350 40.8350 200.0000 44.0850 ;
+	    RECT 2.9850 35.9850 200.0000 40.8350 ;
+	    RECT 3.2000 28.7550 200.0000 35.9850 ;
+	    RECT 3.2000 28.3350 46.1350 28.7550 ;
+	    RECT 3.1250 22.2850 46.1350 28.3350 ;
+	    RECT 3.0700 19.0350 46.1350 22.2850 ;
+	    RECT 5.3850 11.3850 46.1350 19.0350 ;
+	    RECT 3.9500 4.5350 46.1350 11.3850 ;
+	    RECT 0.0000 2.8700 46.1350 4.5350 ;
+	    RECT 58.3350 3.4550 200.0000 28.7550 ;
+	    RECT 58.3350 2.8700 68.4350 3.4550 ;
+	    RECT 0.0000 0.0000 0.5350 2.8700 ;
+	    RECT 15.0350 2.8550 18.2850 2.8700 ;
+	    RECT 96.5850 0.0000 200.0000 3.4550 ;
+   END
+END s8iom0_corner_pad
+MACRO s8iom0_vssio_lvc_pad
+   CLASS PAD GROUND ;
+   FOREIGN s8iom0_vssio_lvc_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 75.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 75.0000 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 1.2700 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 75.0000 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 1.2700 49.3100 ;
+      END
+   END amuxbus_b
+   PIN drn_lvc1
+      PORT
+         LAYER met3 ;
+	    RECT 26.0000 -0.0350 36.8800 20.1850 ;
+      END
+   END drn_lvc1
+   PIN drn_lvc2
+      PORT
+         LAYER met3 ;
+	    RECT 38.3800 -0.0350 49.2550 22.8650 ;
+      END
+   END drn_lvc2
+   PIN src_bdy_lvc1
+      PORT
+         LAYER met2 ;
+	    RECT 0.5000 -0.0350 20.4950 1.4500 ;
+      END
+   END src_bdy_lvc1
+   PIN src_bdy_lvc2
+      PORT
+         LAYER met2 ;
+	    RECT 54.7150 -0.0350 74.7000 3.6250 ;
+      END
+   END src_bdy_lvc2
+   PIN bdy2_b2b
+      PORT
+         LAYER met2 ;
+	    RECT 34.4400 -0.0350 44.4400 0.2900 ;
+      END
+   END bdy2_b2b
+   PIN vssi
+      PORT
+         LAYER met1 ;
+	    RECT 34.3350 0.4750 35.3350 0.9750 ;
+      END
+   END vssi
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 45.7000 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 34.8050 75.0000 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8050 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 49.6100 75.0000 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 34.7000 75.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 1.2700 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 74.0350 13.0000 75.0000 16.2500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.0350 12.9000 75.0000 16.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 29.9500 75.0000 33.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 29.8500 75.0000 33.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 62.1500 75.0000 66.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 62.0500 75.0000 66.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 0.1000 75.0000 5.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 0.0000 75.0000 5.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 68.0000 75.0000 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 17.8500 75.0000 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 17.7500 75.0000 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 68.0000 75.0000 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 6.9500 75.0000 11.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 6.8500 75.0000 11.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met5 ;
+	    RECT 9.3150 100.1050 65.9550 167.5350 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 50.7550 -0.0350 74.7000 23.8150 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 0.5000 -0.0350 24.5000 23.8150 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 23.9000 75.0000 28.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 23.8000 75.0000 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 39.6500 75.0000 44.1000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 39.5500 75.0000 44.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 56.3000 75.0000 60.5500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 56.2000 75.0000 60.6500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+   END vssio_q
+   OBS
+         LAYER li1 ;
+	    RECT 0.2400 0.9850 74.7550 197.7450 ;
+         LAYER met1 ;
+	    RECT 0.1200 1.2550 74.7850 197.8050 ;
+	    RECT 0.1200 0.1950 34.0550 1.2550 ;
+	    RECT 35.6150 0.1950 74.7850 1.2550 ;
+	    RECT 0.1200 -0.0350 74.7850 0.1950 ;
+         LAYER met2 ;
+	    RECT 0.5000 3.9050 74.7000 194.3950 ;
+	    RECT 0.5000 1.7300 54.4350 3.9050 ;
+	    RECT 20.7750 0.5700 54.4350 1.7300 ;
+	    RECT 20.7750 -0.0350 34.1600 0.5700 ;
+	    RECT 44.7200 -0.0350 54.4350 0.5700 ;
+         LAYER met3 ;
+	    RECT 0.4900 24.2150 74.7000 197.9650 ;
+	    RECT 24.9000 23.2650 50.3550 24.2150 ;
+	    RECT 24.9000 20.5850 37.9800 23.2650 ;
+	    RECT 24.9000 1.6950 25.6000 20.5850 ;
+	    RECT 37.2800 1.6950 37.9800 20.5850 ;
+	    RECT 49.6550 1.6950 50.3550 23.2650 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 73.3300 197.9650 ;
+	    RECT 0.9650 93.3650 74.0350 173.3500 ;
+	    RECT 1.6700 67.6000 73.3300 93.3650 ;
+	    RECT 0.9650 66.9000 74.0350 67.6000 ;
+	    RECT 1.6700 61.6500 73.3300 66.9000 ;
+	    RECT 0.9650 61.0500 74.0350 61.6500 ;
+	    RECT 1.6700 55.8000 73.3300 61.0500 ;
+	    RECT 0.9650 55.1000 74.0350 55.8000 ;
+	    RECT 1.6700 49.7100 73.3300 50.6900 ;
+	    RECT 0.9650 44.6000 74.0350 45.3000 ;
+	    RECT 1.6700 39.1500 73.3300 44.6000 ;
+	    RECT 0.9650 38.5500 74.0350 39.1500 ;
+	    RECT 1.6700 34.3000 73.3300 38.5500 ;
+	    RECT 0.9650 33.7000 74.0350 34.3000 ;
+	    RECT 1.6700 29.4500 73.3300 33.7000 ;
+	    RECT 0.9650 28.8500 74.0350 29.4500 ;
+	    RECT 1.6700 23.4000 73.3300 28.8500 ;
+	    RECT 0.9650 22.8000 74.0350 23.4000 ;
+	    RECT 1.6700 17.3500 73.3300 22.8000 ;
+	    RECT 0.9650 16.7500 74.0350 17.3500 ;
+	    RECT 1.3650 12.5000 73.6350 16.7500 ;
+	    RECT 0.9650 11.9000 74.0350 12.5000 ;
+	    RECT 1.6700 6.4500 73.3300 11.9000 ;
+	    RECT 0.9650 5.8500 74.0350 6.4500 ;
+	    RECT 1.6700 0.0000 73.3300 5.8500 ;
+         LAYER met5 ;
+	    RECT 0.0000 169.1350 75.0000 197.9650 ;
+	    RECT 0.0000 98.5050 7.7150 169.1350 ;
+	    RECT 67.5550 98.5050 75.0000 169.1350 ;
+	    RECT 0.0000 94.5500 75.0000 98.5050 ;
+	    RECT 2.8700 16.2500 72.1300 94.5500 ;
+	    RECT 2.5650 13.0000 72.4350 16.2500 ;
+	    RECT 2.8700 0.1000 72.1300 13.0000 ;
+   END
+END s8iom0_vssio_lvc_pad
+MACRO s8iom0_vssa_lvc_pad
+   CLASS PAD GROUND ;
+   FOREIGN s8iom0_vssa_lvc_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 75.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 75.0000 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 51.0900 75.0000 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 75.0000 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 46.3300 75.0000 49.3100 ;
+      END
+   END amuxbus_b
+   PIN drn_lvc1
+      PORT
+         LAYER met3 ;
+	    RECT 26.0000 -0.0350 36.8800 20.1850 ;
+      END
+   END drn_lvc1
+   PIN drn_lvc2
+      PORT
+         LAYER met3 ;
+	    RECT 38.3800 -0.0350 49.2550 22.8650 ;
+      END
+   END drn_lvc2
+   PIN src_bdy_lvc1
+      PORT
+         LAYER met2 ;
+	    RECT 0.5000 -0.0350 20.4950 1.4500 ;
+      END
+   END src_bdy_lvc1
+   PIN src_bdy_lvc2
+      PORT
+         LAYER met2 ;
+	    RECT 54.7150 -0.0350 74.7000 3.6250 ;
+      END
+   END src_bdy_lvc2
+   PIN bdy2_b2b
+      PORT
+         LAYER met2 ;
+	    RECT 34.4400 -0.0350 44.4400 0.2900 ;
+      END
+   END bdy2_b2b
+   PIN vssi
+      PORT
+         LAYER met1 ;
+	    RECT 34.3350 0.4750 35.3350 0.9750 ;
+      END
+   END vssi
+   PIN vssa
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 34.7000 75.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 49.6100 75.0000 50.7900 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8000 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 34.8000 75.0000 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 45.7000 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 0.5000 -0.0350 24.5000 34.7250 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 50.7550 -0.0350 74.7000 34.7250 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 9.3150 100.1050 65.9550 167.5350 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.0350 12.9000 75.0000 16.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 74.0350 13.0000 75.0000 16.2500 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 29.8500 75.0000 33.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 29.9500 75.0000 33.2000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 62.0500 75.0000 66.5000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 62.1500 75.0000 66.4000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 0.0000 75.0000 5.4500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 0.1000 75.0000 5.3500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 68.0000 75.0000 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 17.7500 75.0000 22.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 17.8500 75.0000 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 68.0000 75.0000 92.9500 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 6.8500 75.0000 11.5000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 6.9500 75.0000 11.4000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 23.8000 75.0000 28.4500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 23.9000 75.0000 28.3500 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 39.5500 75.0000 44.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 39.6500 75.0000 44.1000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 56.2000 75.0000 60.6500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 56.3000 75.0000 60.5500 ;
+      END
+   END vssio_q
+   OBS
+         LAYER li1 ;
+	    RECT 0.2400 0.9850 74.7550 197.7450 ;
+         LAYER met1 ;
+	    RECT 0.1200 1.2550 74.7850 197.8050 ;
+	    RECT 0.1200 0.1950 34.0550 1.2550 ;
+	    RECT 35.6150 0.1950 74.7850 1.2550 ;
+	    RECT 0.1200 -0.0350 74.7850 0.1950 ;
+         LAYER met2 ;
+	    RECT 0.5000 3.9050 74.7000 194.3950 ;
+	    RECT 0.5000 1.7300 54.4350 3.9050 ;
+	    RECT 20.7750 0.5700 54.4350 1.7300 ;
+	    RECT 20.7750 -0.0350 34.1600 0.5700 ;
+	    RECT 44.7200 -0.0350 54.4350 0.5700 ;
+         LAYER met3 ;
+	    RECT 0.4900 35.1250 74.7000 189.4800 ;
+	    RECT 24.9000 23.2650 50.3550 35.1250 ;
+	    RECT 24.9000 20.5850 37.9800 23.2650 ;
+	    RECT 24.9000 1.5450 25.6000 20.5850 ;
+	    RECT 37.2800 1.5450 37.9800 20.5850 ;
+	    RECT 49.6550 1.5450 50.3550 23.2650 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 73.3300 197.9650 ;
+	    RECT 0.9650 93.3650 74.0350 173.3500 ;
+	    RECT 1.6700 67.6000 73.3300 93.3650 ;
+	    RECT 0.9650 66.9000 74.0350 67.6000 ;
+	    RECT 1.6700 61.6500 73.3300 66.9000 ;
+	    RECT 0.9650 61.0500 74.0350 61.6500 ;
+	    RECT 1.6700 55.8000 73.3300 61.0500 ;
+	    RECT 0.9650 55.1000 74.0350 55.8000 ;
+	    RECT 1.6700 49.7100 73.3300 50.6900 ;
+	    RECT 0.9650 44.6000 74.0350 45.3000 ;
+	    RECT 1.6700 39.1500 73.3300 44.6000 ;
+	    RECT 0.9650 38.5500 74.0350 39.1500 ;
+	    RECT 1.6700 34.3000 73.3300 38.5500 ;
+	    RECT 0.9650 33.7000 74.0350 34.3000 ;
+	    RECT 1.6700 29.4500 73.3300 33.7000 ;
+	    RECT 0.9650 28.8500 74.0350 29.4500 ;
+	    RECT 1.6700 23.4000 73.3300 28.8500 ;
+	    RECT 0.9650 22.8000 74.0350 23.4000 ;
+	    RECT 1.6700 17.3500 73.3300 22.8000 ;
+	    RECT 0.9650 16.7500 74.0350 17.3500 ;
+	    RECT 1.3650 12.5000 73.6350 16.7500 ;
+	    RECT 0.9650 11.9000 74.0350 12.5000 ;
+	    RECT 1.6700 6.4500 73.3300 11.9000 ;
+	    RECT 0.9650 5.8500 74.0350 6.4500 ;
+	    RECT 1.6700 0.0000 73.3300 5.8500 ;
+         LAYER met5 ;
+	    RECT 0.0000 169.1350 75.0000 197.9650 ;
+	    RECT 0.0000 98.5050 7.7150 169.1350 ;
+	    RECT 67.5550 98.5050 75.0000 169.1350 ;
+	    RECT 0.0000 94.5500 75.0000 98.5050 ;
+	    RECT 2.8700 16.2500 72.1300 94.5500 ;
+	    RECT 2.5650 13.0000 72.4350 16.2500 ;
+	    RECT 2.8700 0.1000 72.1300 13.0000 ;
+   END
+END s8iom0_vssa_lvc_pad
+MACRO s8iom0_vssa_hvc_pad
+   CLASS PAD GROUND ;
+   FOREIGN s8iom0_vssa_hvc_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 75.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 75.0000 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 1.2700 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 75.0000 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 1.2700 49.3100 ;
+      END
+   END amuxbus_b
+   PIN drn_hvc
+      PORT
+         LAYER met2 ;
+	    RECT 50.3900 -2.0350 74.2900 23.6250 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 37.8900 -2.0350 48.8900 10.3450 ;
+      END
+   END drn_hvc
+   PIN src_bdy_hvc
+      PORT
+         LAYER met2 ;
+	    RECT 0.4950 -2.0350 24.3950 0.0200 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 25.8950 -2.0350 36.8950 10.3900 ;
+      END
+   END src_bdy_hvc
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 6.1000 101.9750 68.8000 164.5900 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 0.4950 -2.0350 24.3950 30.4800 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 50.3900 -2.0350 74.2900 34.7250 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 45.7000 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 34.8050 75.0000 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8050 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 49.6100 75.0000 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 34.7000 75.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 1.2700 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 74.0350 13.0000 75.0000 16.2500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.0350 12.9000 75.0000 16.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 29.9500 75.0000 33.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 29.8500 75.0000 33.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 62.1500 75.0000 66.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 62.0500 75.0000 66.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 0.1000 75.0000 5.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 0.0000 75.0000 5.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 68.0000 75.0000 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 17.8500 75.0000 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 17.7500 75.0000 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 68.0000 75.0000 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 6.9500 75.0000 11.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 6.8500 75.0000 11.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2050 197.9650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 23.9000 75.0000 28.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 23.8000 75.0000 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 39.6500 75.0000 44.1000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 39.5500 75.0000 44.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 56.3000 75.0000 60.5500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 56.2000 75.0000 60.6500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+   END vssio_q
+   PIN vssio
+      PORT
+         LAYER met4 ;
+	    RECT 74.3600 189.5650 74.3700 189.5750 ;
+      END
+   END vssio
+   OBS
+         LAYER li1 ;
+	    RECT 1.0700 -1.0350 72.7750 197.6600 ;
+         LAYER met1 ;
+	    RECT 0.1850 -1.0650 73.6200 197.6900 ;
+         LAYER met2 ;
+	    RECT 0.2650 23.9050 74.2900 193.0400 ;
+	    RECT 0.2650 0.3000 50.1100 23.9050 ;
+	    RECT 24.6750 -2.0350 50.1100 0.3000 ;
+         LAYER met3 ;
+	    RECT 0.2400 35.1250 74.2900 193.0650 ;
+	    RECT 0.2400 30.8800 49.9900 35.1250 ;
+	    RECT 24.7950 10.7900 49.9900 30.8800 ;
+	    RECT 24.7950 10.3450 25.4950 10.7900 ;
+	    RECT 37.2950 10.7450 49.9900 10.7900 ;
+	    RECT 37.2950 10.3450 37.4900 10.7450 ;
+	    RECT 49.2900 10.3450 49.9900 10.7450 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 73.3300 197.9650 ;
+	    RECT 0.9650 93.3650 74.0350 173.3500 ;
+	    RECT 1.6700 67.6000 73.3300 93.3650 ;
+	    RECT 0.9650 66.9000 74.0350 67.6000 ;
+	    RECT 1.6700 61.6500 73.3300 66.9000 ;
+	    RECT 0.9650 61.0500 74.0350 61.6500 ;
+	    RECT 1.6700 55.8000 73.3300 61.0500 ;
+	    RECT 0.9650 55.1000 74.0350 55.8000 ;
+	    RECT 1.6700 54.4700 73.3300 55.1000 ;
+	    RECT 1.6700 49.7100 73.3300 50.6900 ;
+	    RECT 1.6700 45.3000 73.3300 45.9300 ;
+	    RECT 0.9650 44.6000 74.0350 45.3000 ;
+	    RECT 1.6700 39.1500 73.3300 44.6000 ;
+	    RECT 0.9650 38.5500 74.0350 39.1500 ;
+	    RECT 1.6700 34.3000 73.3300 38.5500 ;
+	    RECT 0.9650 33.7000 74.0350 34.3000 ;
+	    RECT 1.6700 29.4500 73.3300 33.7000 ;
+	    RECT 0.9650 28.8500 74.0350 29.4500 ;
+	    RECT 1.6700 23.4000 73.3300 28.8500 ;
+	    RECT 0.9650 22.8000 74.0350 23.4000 ;
+	    RECT 1.6700 17.3500 73.3300 22.8000 ;
+	    RECT 0.9650 16.7500 74.0350 17.3500 ;
+	    RECT 1.3650 12.5000 73.6350 16.7500 ;
+	    RECT 0.9650 11.9000 74.0350 12.5000 ;
+	    RECT 1.6700 6.4500 73.3300 11.9000 ;
+	    RECT 0.9650 5.8500 74.0350 6.4500 ;
+	    RECT 1.6700 0.0000 73.3300 5.8500 ;
+         LAYER met5 ;
+	    RECT 0.0000 166.1900 75.0000 197.9650 ;
+	    RECT 0.0000 100.3750 4.5000 166.1900 ;
+	    RECT 70.4000 100.3750 75.0000 166.1900 ;
+	    RECT 0.0000 94.5500 75.0000 100.3750 ;
+	    RECT 2.8700 16.2500 72.1300 94.5500 ;
+	    RECT 2.5650 13.0000 72.4350 16.2500 ;
+	    RECT 2.8700 0.1000 72.1300 13.0000 ;
+   END
+END s8iom0_vssa_hvc_pad
+MACRO s8iom0_vssd_hvc_pad
+   CLASS PAD GROUND ;
+   FOREIGN s8iom0_vssd_hvc_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 75.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 75.0000 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 1.2700 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 75.0000 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 1.2700 49.3100 ;
+      END
+   END amuxbus_b
+   PIN drn_hvc
+      PORT
+         LAYER met2 ;
+	    RECT 50.3900 -2.0350 74.2900 23.6250 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 37.8900 -2.0350 48.8900 10.3450 ;
+      END
+   END drn_hvc
+   PIN src_bdy_hvc
+      PORT
+         LAYER met2 ;
+	    RECT 0.4950 -2.0350 24.3950 0.0200 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 25.8950 -2.0350 36.8950 10.3900 ;
+      END
+   END src_bdy_hvc
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 45.7000 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 34.8050 75.0000 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8050 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 49.6100 75.0000 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 34.7000 75.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 1.2700 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 74.0350 13.0000 75.0000 16.2500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.0350 12.9000 75.0000 16.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 29.9500 75.0000 33.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 29.8500 75.0000 33.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 62.1500 75.0000 66.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 62.0500 75.0000 66.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 0.1000 75.0000 5.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 0.0000 75.0000 5.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 68.0000 75.0000 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 17.8500 75.0000 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 17.7500 75.0000 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 68.0000 75.0000 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 6.9500 75.0000 11.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 6.8500 75.0000 11.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2050 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.2250 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 23.9000 75.0000 28.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 23.8000 75.0000 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 6.1000 101.9750 68.8000 164.5900 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 0.4950 -2.0350 24.3950 30.4800 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 50.3900 -2.0350 74.2900 39.5650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 39.6500 75.0000 44.1000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 39.5500 75.0000 44.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 56.3000 75.0000 60.5500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 56.2000 75.0000 60.6500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+   END vssio_q
+   OBS
+         LAYER li1 ;
+	    RECT 1.0700 -1.0350 72.7750 197.6600 ;
+         LAYER met1 ;
+	    RECT 0.1850 -1.0650 73.6200 197.6900 ;
+         LAYER met2 ;
+	    RECT 0.2650 23.9050 74.2900 193.0400 ;
+	    RECT 0.2650 0.3000 50.1100 23.9050 ;
+	    RECT 24.6750 -2.0350 50.1100 0.3000 ;
+         LAYER met3 ;
+	    RECT 0.2400 39.9650 74.2900 193.0650 ;
+	    RECT 0.2400 30.8800 49.9900 39.9650 ;
+	    RECT 24.7950 10.7900 49.9900 30.8800 ;
+	    RECT 24.7950 10.3450 25.4950 10.7900 ;
+	    RECT 37.2950 10.7450 49.9900 10.7900 ;
+	    RECT 37.2950 10.3450 37.4900 10.7450 ;
+	    RECT 49.2900 10.3450 49.9900 10.7450 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 73.3300 197.9650 ;
+	    RECT 0.9650 93.3650 74.0350 173.3500 ;
+	    RECT 1.6700 67.6000 73.3300 93.3650 ;
+	    RECT 0.9650 66.9000 74.0350 67.6000 ;
+	    RECT 1.6700 61.6500 73.3300 66.9000 ;
+	    RECT 0.9650 61.0500 74.0350 61.6500 ;
+	    RECT 1.6700 55.8000 73.3300 61.0500 ;
+	    RECT 0.9650 55.1000 74.0350 55.8000 ;
+	    RECT 1.6700 49.7100 73.3300 50.6900 ;
+	    RECT 0.9650 44.6000 74.0350 45.3000 ;
+	    RECT 1.6700 39.1500 73.3300 44.6000 ;
+	    RECT 0.9650 38.5500 74.0350 39.1500 ;
+	    RECT 1.6700 34.3000 73.3300 38.5500 ;
+	    RECT 0.9650 33.7000 74.0350 34.3000 ;
+	    RECT 1.6700 29.4500 73.3300 33.7000 ;
+	    RECT 0.9650 28.8500 74.0350 29.4500 ;
+	    RECT 1.6700 23.4000 73.3300 28.8500 ;
+	    RECT 0.9650 22.8000 74.0350 23.4000 ;
+	    RECT 1.6700 17.3500 73.3300 22.8000 ;
+	    RECT 0.9650 16.7500 74.0350 17.3500 ;
+	    RECT 1.3650 12.5000 73.6350 16.7500 ;
+	    RECT 0.9650 11.9000 74.0350 12.5000 ;
+	    RECT 1.6700 6.4500 73.3300 11.9000 ;
+	    RECT 0.9650 5.8500 74.0350 6.4500 ;
+	    RECT 1.6700 0.0000 73.3300 5.8500 ;
+         LAYER met5 ;
+	    RECT 0.0000 166.1900 75.0000 197.9650 ;
+	    RECT 0.0000 100.3750 4.5000 166.1900 ;
+	    RECT 70.4000 100.3750 75.0000 166.1900 ;
+	    RECT 0.0000 94.5500 75.0000 100.3750 ;
+	    RECT 2.8700 16.2500 72.1300 94.5500 ;
+	    RECT 2.5650 13.0000 72.4350 16.2500 ;
+	    RECT 2.8700 0.1000 72.1300 13.0000 ;
+   END
+END s8iom0_vssd_hvc_pad
+MACRO s8iom0_vssd_lvc_pad
+   CLASS PAD GROUND ;
+   FOREIGN s8iom0_vssd_lvc_pad ;
+   ORIGIN -0.0000 -0.0000 ;
+   SIZE 75.0000 BY 197.9650 ;
+   PIN amuxbus_a
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 75.0000 54.0700 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 51.0900 1.2700 54.0700 ;
+      END
+   END amuxbus_a
+   PIN amuxbus_b
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 75.0000 49.3100 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 46.3300 1.2700 49.3100 ;
+      END
+   END amuxbus_b
+   PIN drn_lvc1
+      PORT
+         LAYER met3 ;
+	    RECT 26.0000 -0.0350 36.8800 20.1850 ;
+      END
+   END drn_lvc1
+   PIN drn_lvc2
+      PORT
+         LAYER met3 ;
+	    RECT 38.3800 -0.0350 49.2550 22.8650 ;
+      END
+   END drn_lvc2
+   PIN src_bdy_lvc1
+      PORT
+         LAYER met2 ;
+	    RECT 0.5000 -0.0350 20.4950 1.4500 ;
+      END
+   END src_bdy_lvc1
+   PIN src_bdy_lvc2
+      PORT
+         LAYER met2 ;
+	    RECT 54.7150 -0.0350 74.7000 3.6250 ;
+      END
+   END src_bdy_lvc2
+   PIN bdy2_b2b
+      PORT
+         LAYER met2 ;
+	    RECT 34.4400 -0.0350 44.4400 0.2900 ;
+      END
+   END bdy2_b2b
+   PIN vssi
+      PORT
+         LAYER met1 ;
+	    RECT 34.3350 0.4750 35.3350 0.9750 ;
+      END
+   END vssi
+   PIN vssa
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 45.7000 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 34.8050 75.0000 38.0500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 45.7000 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 34.8050 1.2700 38.0500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 49.6100 75.0000 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 75.0000 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 75.0000 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 34.7000 75.0000 38.1500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 45.7000 1.2700 46.0300 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 49.6100 1.2700 50.7900 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 54.3700 1.2700 54.7000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 34.7000 1.2700 38.1500 ;
+      END
+   END vssa
+   PIN vdda
+      PORT
+         LAYER met5 ;
+	    RECT 74.0350 13.0000 75.0000 16.2500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 13.0000 0.9650 16.2500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 74.0350 12.9000 75.0000 16.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 12.9000 0.9650 16.3500 ;
+      END
+   END vdda
+   PIN vswitch
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 29.9500 75.0000 33.2000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 29.9500 1.2700 33.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 29.8500 75.0000 33.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 29.8500 1.2700 33.3000 ;
+      END
+   END vswitch
+   PIN vddio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 62.1500 75.0000 66.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 62.1500 1.2700 66.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 62.0500 75.0000 66.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 62.0500 1.2700 66.5000 ;
+      END
+   END vddio_q
+   PIN vcchib
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 0.1000 75.0000 5.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 0.1000 1.2700 5.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 0.0000 75.0000 5.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 0.0000 1.2700 5.4500 ;
+      END
+   END vcchib
+   PIN vddio
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 68.0000 75.0000 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 17.8500 75.0000 22.3000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 68.0000 1.2700 92.9500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 17.8500 1.2700 22.3000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 17.7500 75.0000 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 68.0000 75.0000 92.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 17.7500 1.2700 22.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 68.0000 1.2700 92.9650 ;
+      END
+   END vddio
+   PIN vccd
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 6.9500 75.0000 11.4000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 6.9500 1.2700 11.4000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 6.8500 75.0000 11.5000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 6.8500 1.2700 11.5000 ;
+      END
+   END vccd
+   PIN vssio
+      PORT
+         LAYER met4 ;
+	    RECT 74.2250 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2050 197.9650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 23.9000 75.0000 28.3500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 23.9000 1.2700 28.3500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 23.8000 75.0000 28.4500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 173.7500 75.0000 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 173.7500 1.2700 197.9650 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 23.8000 1.2700 28.4500 ;
+      END
+   END vssio
+   PIN vssd
+      PORT
+         LAYER met5 ;
+	    RECT 9.3150 100.1050 65.9550 167.5350 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 50.7550 -0.0350 74.7000 39.5650 ;
+      END
+      PORT
+         LAYER met3 ;
+	    RECT 0.5000 -0.0350 24.5000 39.5650 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 39.6500 75.0000 44.1000 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 39.6500 1.2700 44.1000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 39.5500 75.0000 44.2000 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 39.5500 1.2700 44.2000 ;
+      END
+   END vssd
+   PIN vssio_q
+      PORT
+         LAYER met5 ;
+	    RECT 73.7300 56.3000 75.0000 60.5500 ;
+      END
+      PORT
+         LAYER met5 ;
+	    RECT 0.0000 56.3000 1.2700 60.5500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 73.7300 56.2000 75.0000 60.6500 ;
+      END
+      PORT
+         LAYER met4 ;
+	    RECT 0.0000 56.2000 1.2700 60.6500 ;
+      END
+   END vssio_q
+   OBS
+         LAYER li1 ;
+	    RECT 0.2400 0.9850 74.7550 197.7450 ;
+         LAYER met1 ;
+	    RECT 0.1200 1.2550 74.7850 197.8050 ;
+	    RECT 0.1200 0.1950 34.0550 1.2550 ;
+	    RECT 35.6150 0.1950 74.7850 1.2550 ;
+	    RECT 0.1200 -0.0350 74.7850 0.1950 ;
+         LAYER met2 ;
+	    RECT 0.5000 3.9050 74.7000 194.3950 ;
+	    RECT 0.5000 1.7300 54.4350 3.9050 ;
+	    RECT 20.7750 0.5700 54.4350 1.7300 ;
+	    RECT 20.7750 -0.0350 34.1600 0.5700 ;
+	    RECT 44.7200 -0.0350 54.4350 0.5700 ;
+         LAYER met3 ;
+	    RECT 0.5000 39.9650 74.7000 189.4800 ;
+	    RECT 24.9000 23.2650 50.3550 39.9650 ;
+	    RECT 24.9000 20.5850 37.9800 23.2650 ;
+	    RECT 24.9000 17.7550 25.6000 20.5850 ;
+	    RECT 37.2800 17.7550 37.9800 20.5850 ;
+	    RECT 49.6550 17.7550 50.3550 23.2650 ;
+         LAYER met4 ;
+	    RECT 1.6700 173.3500 73.3300 197.9650 ;
+	    RECT 0.9650 93.3650 74.0350 173.3500 ;
+	    RECT 1.6700 67.6000 73.3300 93.3650 ;
+	    RECT 0.9650 66.9000 74.0350 67.6000 ;
+	    RECT 1.6700 61.6500 73.3300 66.9000 ;
+	    RECT 0.9650 61.0500 74.0350 61.6500 ;
+	    RECT 1.6700 55.8000 73.3300 61.0500 ;
+	    RECT 0.9650 55.1000 74.0350 55.8000 ;
+	    RECT 1.6700 49.7100 73.3300 50.6900 ;
+	    RECT 0.9650 44.6000 74.0350 45.3000 ;
+	    RECT 1.6700 39.1500 73.3300 44.6000 ;
+	    RECT 0.9650 38.5500 74.0350 39.1500 ;
+	    RECT 1.6700 34.3000 73.3300 38.5500 ;
+	    RECT 0.9650 33.7000 74.0350 34.3000 ;
+	    RECT 1.6700 29.4500 73.3300 33.7000 ;
+	    RECT 0.9650 28.8500 74.0350 29.4500 ;
+	    RECT 1.6700 23.4000 73.3300 28.8500 ;
+	    RECT 0.9650 22.8000 74.0350 23.4000 ;
+	    RECT 1.6700 17.3500 73.3300 22.8000 ;
+	    RECT 0.9650 16.7500 74.0350 17.3500 ;
+	    RECT 1.3650 12.5000 73.6350 16.7500 ;
+	    RECT 0.9650 11.9000 74.0350 12.5000 ;
+	    RECT 1.6700 6.4500 73.3300 11.9000 ;
+	    RECT 0.9650 5.8500 74.0350 6.4500 ;
+	    RECT 1.6700 0.0000 73.3300 5.8500 ;
+         LAYER met5 ;
+	    RECT 0.0000 169.1350 75.0000 197.9650 ;
+	    RECT 0.0000 98.5050 7.7150 169.1350 ;
+	    RECT 67.5550 98.5050 75.0000 169.1350 ;
+	    RECT 0.0000 94.5500 75.0000 98.5050 ;
+	    RECT 2.8700 16.2500 72.1300 94.5500 ;
+	    RECT 2.5650 13.0000 72.4350 16.2500 ;
+	    RECT 2.8700 0.1000 72.1300 13.0000 ;
+   END
+END s8iom0_vssd_lvc_pad
+END LIBRARY ;

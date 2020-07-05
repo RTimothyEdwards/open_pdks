@@ -1,0 +1,584 @@
+open_pdks : A system for installing silicon foundry PDKs for open-source EDA tools
+(also maybe works for installing commercial tools)
+
+----------------------------------------------------------------------------------
+
+Written by Tim Edwards 2019 / 2020 for efabless (efabless.com)
+and Open Circuit Design (opencircuitdesign.com)
+
+----------------------------------------------------------------------------------
+
+Introduction:
+
+    Silicon foundry PDKs are notoriously non-standard, and files obtained
+    from the foundry may end up in any possibly configuration of files and
+    folders.  In addition, silicon foundries are notorious among open source
+    EDA tool enthusiasts for supplying user setups for commercial EDA tools
+    and all but ignoring open source EDA tools.  Open_pdks aims to mitigate
+    the problem by defining a standard layout of files and directories for
+    known open standard formats (e.g., SPICE, verilog, liberty, LEF, etc.)
+    and for various open source EDA tools (e.g., magic, netgen, OpenROAD,
+    klayout) using a Makefile system and a number of conversion scripts to
+    ensure that for any process, all files needed by all EDA tools can be
+    found in predictable locations.
+
+    The scripts aim to be as general-purpose as possible to allow easy
+    adaptation to new tools, formats, and foundries.  Where foundry data
+    is intractably unusable, custom install files can be added to overwrite
+    or annotate vendor data as needed.
+
+    Each foundry process is a subdirectory of the open_pdks top level and
+    has its own Makefile.  The typical install process is to cd to the
+    foundry top level and run "make" (see below for details).
+    
+    The general file structure created by open_pdks is as follows:
+
+	<foundry_root>/
+	    <name_of_pdk_variant_1>/
+	    <name_of_pdk_variant_2>/
+	    ...
+	    <name_of_pdk_variant_x>/
+		libs.tech/
+		    <name_of_EDA_tool_1>/
+		    <name_of_EDA_tool_2>/
+		    ...
+		    <name_of_EDA_tool_x>/
+			<EDA_tool_setup_files>
+		libs.ref
+		    <name_of_IP_library_1>/
+		    <name_of_IP_library_2>/
+		    ...
+		    <name_of_IP_library_x>/
+			<name_of_file_format_1>
+			<name_of_file_format_2>
+			...
+			<name_of_file_format_x>
+			    <vendor_files>
+			
+    Note that this format is very general and does not constrain the
+    EDA tools supported or file formats supported, so long as there
+    are scripts in the system to provide that support.  It is intended
+    that open_pdks can be extended as needed to support new tools or
+    new file formats.
+
+    Current EDA tools supported in this version of open_pdks:
+	Tool	    Directory name
+	--------------------------
+	ngspice	    ngspice
+	magic	    magic
+	netgen	    netgen
+	klayout	    klayout
+	qflow	    qflow
+	openlane    openlane
+		
+    Current IP library file formats supported in this version of open_pdks*:
+	Format	    Directory name
+	--------------------------
+	CDL	    cdl
+	SPICE	    spice
+	magic	    mag, maglef
+	LEF	    lef
+	GDS	    gds
+	verilog	    verilog
+	liberty	    lib
+	PDF**	    doc
+
+	(* "Supported" meaning expected/handled by conversion scripts;
+	   as noted, the install is very general purpose and any name
+	   can be used as a target for any vendor or custom files.)
+	(** or HTML or any valid document format, plus supporting files.)
+
+How to use open_pdks:
+
+    There are a seriously limited number of open foundry PDKs.  Those that
+    are known (SkyWater, MOSIS SCMOS) are included in the repository.  In
+    other cases (X-Fab XH035, XH018) it is possible to get an extension to
+    open_pdks from a known trusted source through NDA verification with
+    the foundry.  In all other cases, foundries should be berated until
+    they agree to support the open_pdks format.
+
+    Open_pdks does not attempt to keep any foundry data to the extent
+    possible.  Instead, it adapts to the file structure available from
+    whatever system each foundry uses for downloads.  Each foundry
+    directory should contain a README file that details how to obtain
+    downloads from the foundry, and what files need to be downloaded.
+    Since the download methods vary wildly, it is up to the user to obtain
+    the foundry data as instructed.  The Makefile in the open_pdks foundry
+    directory then needs to be edited to set the correct path to the
+    foundry source data.
+
+    The installation is a bootstrapping process, so needs to be done in
+    stages.  The first stage installs setup files for all the EDA tools.
+    The second stage installs IP libraries (e.g., standard cells, padframe
+    I/O, analog circuits) and depends heavily on the use of the open EDA
+    tools themselves to fill in any missing file formats.  Therefore the
+    tool setup files need to be installed first, and then the IP libraries.
+    If using a distributed install (see below), then the tool setup files
+    need to be installed and distributed (relocated to the final run-time
+    location) before the IP libraries are installed.
+
+    There are two distinct install types supported by open_pdks:
+
+    (1) Local install:  Use a local install when the EDA tools will be run
+    on a single host, and all the PDK data are on the same host.
+
+    The local install sequence is:
+
+	make
+	make install-local		Install EDA tool setup
+	make install-vendor-local	Install IP libraries
+
+    (2) Distributed install:  Use the distributed install when the PDK
+    will be run from multiple hosts, but will be installed into a
+    different location such as a git repo which is then distributed to
+    all hosts, and may not itself reside in the same root directory tree.
+
+    The distributed install sequence is:
+
+	make
+	make install-dist		Install EDA tool setup
+	make install-vendor-dist	Install IP libraries
+
+    Note that local installs may opt to make symbolic links back to the
+    foundry sources, where possible (see options for foundry_install.py,
+    below).  Distributed installs and local installs may also make
+    symbolic links from any PDK variant back to a "master" PDK variant,
+    where possible (that is, where the files are the same).  For example,
+    a standard cell library will probably be compatible with all metal
+    back-end stacks, and so only one copy of all the library files is
+    needed in one of the PDK variants.  For the other PDK variants, the
+    same files are all symbolic links to the files in the first PDK
+    variant.  But an I/O library would have different layouts for different
+    metal back-end stacks, so layout-dependent files like GDS would be
+    different for each PDK, but layout-independent files like verilog
+    might be symbolic links to files in the first PDK.
+
+Prerequisites:
+
+    The following tools/software stacks are needed to run open_pdks:
+
+	python3
+
+	magic	opencircuitdesign.com/magic or github.com/RTimothyEdwards
+
+		assumed to be installed and discoverable in the standard
+		search path as defined by the shell (version 8.2+ required)
+
+How to make or update an open PDK:
+
+    The backbone of the open_pdks system is a set of scripts found in the
+    common/ subdirectory.  The two main scripts are "preproc.py" and
+    "foundry_install.py", with a host of supporting scripts.
+
+    Creating a new PDK starts with generating a Makefile, which can be
+    done by copying a Makefile from an existing project.  The first thing
+    to do is to define the number of PDK variants (usually based on back-end
+    metal stacks available, but can also include front-end options, especially
+    if they are mutually exclusive rather than simply additional masks).
+    Then create the make and make-install targets for local and distributed
+    install, including install (plain), install-vendor, and install-custom.
+    Define the default source and target paths.
+
+    (Needed:  A "make makefile" script that generates the "local" and "dist"
+    automatically, and potentially can also make all the different PDK
+    targets automatically, from a much shorter and simpler master Makefile.)
+
+    Create the basic scripts for tools.  Since foundries do not support open
+    EDA tools, it is inevitable that these files need to be created by hand
+    unless there is an option to import other formats.  Because Magic is used
+    heavily by open_pdks to create missing file formats from other existing
+    file formats, a Magic techfile is critical.  Each of the basic scripts
+    will contain #ifdef ... #endif and similar conditionals to allow the
+    script to be parsed for each target PDK variant.  Each of these scripts
+    is passed through common/preproc.py to handle the conditionals.  Of course,
+    it is possible to make a separate file for each PDK variant as long as the
+    Makefile handles them properly, but use of the preproc.py script allows
+    all the PDK variants to be handled in the same way, simplifying the Makefile.
+
+    --------------------------------------------------------------------------
+    preproc.py Usage:
+
+        preproc.py input_file [output_file] [-D<variable> ...]
+ 
+	  Where <variable> may be a keyword or a key=value pair
+ 
+	  Syntax:  Basically like cpp.  However, this preprocessor handles
+	  only a limited set of keywords, so it does not otherwise mangle
+	  the file in the belief that it must be C code.  Handling of boolean
+	  relations is important, so these are thoroughly defined (see below)
+ 
+	        #if defined(<variable>) [...]
+	        #ifdef <variable>
+	        #ifndef <variable>
+	        #elseif <variable>
+	        #else
+	        #endif
+ 
+	        #define <variable> [...]
+	        #undef <variable>
+ 
+	        #include <filename>
+ 
+	  <variable> may be
+	        <keyword>
+	        <keyword>=<value>
+ 
+	        <keyword> without '=' is effectively the same as <keyword>=1
+	        Lack of a keyword is equivalent to <keyword>=0, in a conditional.
+ 
+	  Boolean operators (in order of precedence):
+	        !       NOT
+	        &&      AND
+	        ||      OR
+ 
+	  Comments:
+	        Most comments (C-like or Tcl-like) are output as-is.  A
+	        line beginning with "###" is treated as a preprocessor
+	        comment and is not copied to the output.
+ 
+	  Examples;
+	        #if defined(X) || defined(Y)
+	        #else
+	        #if defined(Z)
+	        #endif
+
+    --------------------------------------------------------------------------
+
+    The script common/foundry_install.py handles all the IP library processing
+    and installation.  It generates the local directory structure and populates
+    the directories with foundry vendor data, and filters or otherwise uses
+    open EDA tools to generate missing standard file formats or create file
+    formats needed by the open EDA tools.
+
+    foundry_install.py Usage:
+
+	foundry_install.py [option [option_arguments]] ...
+
+	All options begin with "-" and may be followed by one or more
+	arguments (that do not begin with "-").  The foundry_install.py
+	script may be called multiple times, although it is best to
+	group together all files for the installation of an IP library,
+	since the options given will be used to determine what files are
+	missing and need to be generated.
+
+	Global options:
+	    -link_from <type>  
+			    Make symbolic links to vendor files from target
+			    Types are: "none", "source", or a PDK name.
+			    Default "none" (copy all files from source)
+	    -source <path>
+			    Path to source data top level directory
+	    -target <path>
+			    Path to target top level directory
+	    -local <path>
+			    For distributed installs, this is the local
+	                    path to target top level directory.
+
+	    -library <type> <name>
+			    The install target is an IP library with
+			    name <name>.
+	    -ef_format
+			    Use the original efabless format for file
+			    installs.  This has several differences from
+			    then no-efabless install.  The most important
+			    is that the order of directories for IP libraries
+			    is <file_format>/<library_name> instead of
+			    <library_name>/<file_format>.  As the efabless
+			    platform migrates to the open_pdks developing
+			    standard, this use should eventually be
+			    deprecated.  In open_pdks, the option is set
+			    from the EF_FORMAT variable setting in the Makefile.
+
+	All other options represent installation into specific directories.
+	The primary rule is that if foundry_install.py is passed an option
+	"-library" (see syntax below), then all other non-global options
+	represent subdirectories of the IP library, given the same name as
+	the option word following the "-".  If the foundry_install.py command
+	line does not have an option "-library", then all non-global options
+	represent per-EDA tool subdirectories, where the name of the subdirectory
+	is the same as the option word following the "-".
+
+	Each tool install option has the syntax:
+
+		-<tool_name> <path> [<option_arguments>]
+
+	Each IP library install option has the syntax:
+
+		-<file_format_name> <path> [<option_arguments>]
+	
+	 The <path> is a directory path that is relative to the path prefix
+	 given by the -source option.  The path may be wildcarded with the
+	 character "*".  The specific text "/*/" is always replaced by the
+	 name of the IP library (if "-library" is an option).  Otherwise,
+	 "*" has the usual meaning of matching any characters in a name
+	 (see python glob.glob() command for reference).
+
+	 (Note that the INSTALL variable in the Makefile starts with "set -f"
+	 to suppress the OS from doing wildcard substitution;  otherwise the
+	 wildcards in the install options will get expanded by the OS before
+	 being passed to the install script.)
+
+	 In some cases, it may be required to process an option like "compile"
+	 (see below) on files already in the target path without adding any
+	 source files.  In that case, <path> may be any keyword that does not
+	 point to a valid directory;  "none" is a recommended choice.
+
+	 Library option:
+	
+	       -library <type> <name> [<target>]
+	
+	    <type> may be one of the following:
+
+		digital		Digital standard cells
+		primitive	Primitive devices
+		general		All others
+
+		Analog and I/O libraries fall under the category "general".
+
+	    <name> is the vendor name of the library.
+
+	    [<target>] is the (optional) local name of the library.  If omitted,
+	    then the vendor name is used for the target (there is no particular
+	    reason to specify a different local name for a library).
+
+	 Any number of libraries may be supported, and one "-library" option
+	 may be provided for each supported library.  The use of multiple
+	 libraries for a single run of foundry_install.py only works if the
+	 formats (gds, cdl, lef, etc.) happen to all work with the same wildcards.
+	 But it is generally most common to declare only one library name per
+	 call to foundry_install.py.
+	
+	 Common foundry_install.py options when used with "-library":
+	
+	       -techlef <path> [option_arguments]   Technology LEF file
+	       -doc <path> [option_arguments]	    library documentation
+	       -lef <path> [option_arguments]	    LEF file
+	       -spice <path> [option_arguments]	    SPICE netlists
+	       -cdl <path> [option_arguments]	    CDL netlists
+	       -lib <path> [option_arguments]	    Liberty timing files
+	       -gds <path> [option_arguments]	    GDS layout data
+	       -verilog <path> [option_arguments]   Verilog models
+
+	 Any name can be used after the "-" and the installation of files
+	 will be made into a directory of that name, which will be created
+	 if it does not exist.  The names used above are preferred, for
+	 the sake of compatibility between EDA tools.
+
+	 Of special note is "techlef", as technology LEF files are often
+	 associated with a PDK and not an IP library.  In this system,
+	 the technology LEF file should be associated with each standard
+	 cell library for which it is intended.
+
+	 [option_arguments] may be one of the following:
+
+	       up  <number>
+		    Any tool option can use this argument to indicate that
+		    the source hierarchy should be copied entirely, starting
+		    from <number> levels above the files indicated by <path>.
+		    For example, if liberty files are kept in multiple
+		    directories according to voltage level, then
+	
+			-liberty x/y/z/PVT_*/*.lib
+	
+		    would install all .lib files directly into
+		    libs.ref/<libname>/liberty/*.lib while
+	
+			-liberty x/y/z/PVT_*/*.lib up 1
+	
+		    would install all .lib files into
+		    libs.ref/liberty/<libname>/PVT_*/*.lib.
+	
+	       nospec
+	            Remove timing specification before installing (used with
+		    verilog files only;  could be extended to liberty files).
+
+	       compile
+	            Create a single library from all components.  Used when a
+		    foundry library has inconveniently split an IP library
+		    (LEF, CDL, verilog, etc.) into individual files.
+
+	       compile-only
+		    Same as argument "compile", except that the individual
+		    files are not copied to the target;  only the compiled
+		    library is created.
+
+	       stub
+	            Remove contents of subcircuits from CDL and SPICE netlist,
+		    or verilog files.  This is useful to LVS and other tools
+		    to know the order of pins in a circuit (for CDL or SPICE),
+		    or simply to ignore the contents of the file (any format)
+		    so that the circuit in question is treated as a "black box".
+
+	       priv
+	            Mark the contents being installed as privleged, and put
+		    them in a separate root directory libs.priv where they
+		    can be given additional read/write restrictions.
+
+	       filter <script_file_path>
+		    Process all files through the script <script_file_path>,
+		    which is given as a relative path to the directory
+		    containing the Makefile.  The filter script traditionally
+		    is put in local subdirectory custom/scripts/.  The filter
+		    script should be written to take a single argument, which
+		    is the path to a file, and process that file, and overwrite
+		    the file with the result.  Commonly used filters are found
+		    in the common/ directory.  See common/fixspice.py for an
+		    example.
+
+	       noclobber
+		    Mainly diagnostic.  When specified, any temporary files
+		    used during installation will be retained instead of
+		    deleted after use.  This includes, for example, scripts
+		    passed to magic for running extraction or file format
+		    generation.  It is useful when debugging problems with
+		    the install.
+
+	       anno
+		    Currently only supported for LEF files.  This argument
+		    indicates that the vendor LEF files should be used only
+		    for annotating GDS input with port location information,
+		    but the LEF files themselves should not be installed.
+
+	       noconvert
+		    Install files from source to target, but do not perform
+		    any additional conversions (such as CDL to SPICE, or
+		    GDS or LEF to magic).
+
+	       ignore=<keyword>[,...]
+		    Specifically for CDL and SPICE netlists, ignore any
+		    parameter found matching <keyword>
+
+	       rename=<new-name>
+		    For single files copied from source to target, the
+		    target file should be named <new-name> and not be
+		    given the same name as the source file.  When used
+		    with the "compile" or "compile-only" options, then
+		    the compiled file gets the name <new-name> rather
+		    than taking the name of the library.
+
+	       exclude=<file>[,...]
+		    When using "compile" or "compile-only", exclude any
+		    file in the target directory matching the name <file>.
+
+    File conversions handled by foundry_install.py:
+
+	The following file format conversions can be done automatically by
+	foundry_install.py:
+
+	    CDL to SPICE:  A CDL netlist or library can be converted to a
+			   general-purpose SPICE netlist that can be read
+			   by any tool that can read Berkeley SPICE 3f5
+			   syntax.
+
+	    GDS to LEF:	   An abstract view can be generated from a full
+			   layout view using Magic.
+
+	    GDS to SPICE:  In the absence of any netlist, Magic will
+			   extract a SPICE netlist from a full layout.
+
+	    SPICE (any) to SPICE (ngspice):  The fixspice.py script will
+			   attempt to convert any SPICE model file,
+			   cell library, or netlist to a form that is
+			   compatible with ngspice version 30.
+
+    open_pdks additional Makefile notes:
+
+	The "make install-local" ("make install-dist") step is generally
+	broken into individual make sections, one for each tool (e.g.,
+	magic, netgen, klayout).  There is an additional section called
+	"general" which installs a ".config" directory at the PDK top
+	level, containing a file "nodeinfo.json" which has general
+	information about the PDK that may be used by any tool that
+	understands the key:value pairs used in the JSON file.  Keys used
+	are as follows:
+
+		foundry :	Short name of the foundry, equal to the foundry
+				directory root, above the PDK variants.
+		foundry-name :  Long name of the foundry.
+		node :		The name of the PDK variant
+		feature-size :  The foundry process feature size (e.g., 130nm)
+		status :	"active" or "inactive".  May be used by tools
+				to present or hide specific PDK variants.
+		description :	Long text description of the process variant
+				(e.g., 6-metal stack + MiM caps)
+		options :	List of options, corresponding to the definitions
+				used in the Makefile and passed to preproc.py.
+		stdcells :	List of standard cell libraries available for this
+				PDK variant.
+		iocells :	List of I/O pad cell libraries available for this
+				PDK variant.
+
+	Note that the JSON file is, like other EDA tool setup files, usually a
+	master file that is parsed by preproc.py;  therefore when specifying
+	"options", use #undef before specifying each option name so that the
+	option name itself is ignored by the pre-processor.
+	
+
+Goals of the open_pdks project:
+
+    The intended goal of open_pdks is to be able to support as many open source
+    EDA tools as practical, and to be able to generate all needed files for
+    those tools from any sufficiently complete set of vendor files.
+
+    A number of file converions are not available but would be useful to have:
+
+	    SPICE to liberty:   Create timing files by running simulations
+				on SPICE netlists using ngspice.
+
+	    liberty to verilog: Use the function statements in liberty
+				format to create verilog primitives.  Maybe
+				use liberty timing information to generate
+				LEF specify sections.
+
+	    verilog to liberty: Reverse of the above.  Use verilog logic
+				tables and specify sections to generate liberty
+				functions and timing tables.
+
+    File formats that need to be supported:
+
+	    Schematic and symbol:  There are few standards, so either everyone
+				needs to agree on a good format to use, or there
+				needs to be a lot of scripts to do conversions
+				between formats.  Open EDA tools that could be
+				supported include:
+
+				electric, xcircuit, kicad, sue2
+
+    Other open source EDA tools that need to be supported:
+
+	    OpenROAD
+	    Coriolis2
+	    (add more here. . .)
+
+    Commercial EDA tools can potentially be supported under this same system,
+    provided sufficient compatibility with the file system structure.
+
+    Other scripts needed:
+
+	    Project setup script:  It would be useful to define a "standard
+	    project file structure" that is similar to the standard PDK file
+	    structure defined in open_pdks.  The preferred project setup
+	    based on the efabless model is:
+
+		<project_name>
+		    .config/
+			techdir (symbolic link to open_pdks PDK)
+		    project.json    (information file for tools)
+		    <tool_name>	    (magic, qflow, ngspice, etc.) or
+		    <format_name>   (spice, gds, verilog, etc.)
+
+	    In general, <tool_name> directories are intended to be workspaces
+	    for specific EDA tools (and may have their own nested hierarchies;
+	    e.g., qflow/<digital_block>/source,synthesis,layout) while
+	    <format_name> is a place to keep (final) files of a specific format,
+	    with the intention that any project can easily be made into an
+	    IP library and folded into the open_pdks scheme with little effort.
+
+	    The project.json file contains project information that can be used
+	    by a script to build a setup for any EDA tool.  One goal of the
+	    project.json file is to define "datasheet" (documented elsewhere)
+	    that can be used to drive characterization simulations and create
+	    a datasheet for the project.  Field "ip-name" of "datasheet" is
+	    the canonical name of the project, which can be distinguished from
+	    the project directory top-level name, such that the project can be
+	    moved or copied without affecting the tool flows.

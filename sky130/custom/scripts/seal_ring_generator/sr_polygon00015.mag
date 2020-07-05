@@ -1,0 +1,15 @@
+magic
+tech s8seal_ring
+magscale 1 2
+timestamp 1584558468
+<< type37 >>
+tri 0 1000 1099 2099 sw
+rect 0 200 200 1000
+tri 200 766 434 1000 nw
+tri 766 766 1000 1000 ne
+tri 200 200 434 434 sw
+tri 766 200 1000 434 se
+rect 1000 200 1099 1000
+rect 0 0 1099 200
+tri 1099 0 2099 1000 sw
+<< end >>

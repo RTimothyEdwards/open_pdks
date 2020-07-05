@@ -1,0 +1,15 @@
+magic
+tech s8seal_ring
+magscale 1 2
+timestamp 1584629764
+use sealring_slots  sealring_slots_Y
+array 0 7 5000 0 0 430
+timestamp 1584628639
+transform 0 -1 1000 1 0 -7000
+box 9500 285 12200 715
+use sealring_slots  sealring_slots_X
+array 0 7 5000 0 0 430
+timestamp 1584628639
+transform 1 0 -7000 0 1 0
+box 9500 285 12200 715
+<< end >>

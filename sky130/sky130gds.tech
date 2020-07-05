@@ -1,0 +1,689 @@
+tech
+    format 32
+    TECHNAME-GDS
+end
+
+version
+    version REVISION
+    description "SkyWater S8: Vendor GDS layers"
+end
+
+planes
+ p1
+ p2
+ p3
+ p4
+ p5
+ p6
+ p7
+ p8
+ p9
+ p10
+ p11
+ p12
+ p13
+ p14
+ p15
+ p16
+ p17
+ p18
+ p19
+ p20
+ p21
+ p22
+ p23
+ p24
+ p25
+ p26
+ p27
+ p28
+ p29
+ p30
+ p31
+ p32
+ p33
+ p34
+ p35
+ p36
+ p37
+ p38
+ p39
+ p40
+ p41
+ p42
+end
+
+types
+ p1  NWELL,l1
+ p1  NWELLT,l60
+ p1  NWELLP,l62
+ p2  DNWELL,l2
+ p3  DIFF,l3
+ p3  TAP,l4
+ p4  LVTN,l5
+ p4  HVTP,l6
+ p5  HVI,l7
+ p6  TUNM,l8
+ p7  POLY,l9
+ p7  POLYP,l63
+ p7  POLYT,l70
+ p8  NPC,l10
+ p9  PSDM,l11
+ p9  NSDM,l12
+ p10 LICON1,l13
+ p11 LI1,l14
+ p11 LI1T,l15
+ p11 LI1P,l16
+ p12 MCON,l17
+ p12 MET1,l18
+ p12 MET1T,l19
+ p12 MET1P,l20
+ p13 VIA1,l21
+ p13 MET2,l22
+ p13 MET2T,l23
+ p13 MET2P,l24
+ p14 VIA2,l25
+ p14 MET3,l26
+ p14 MET3T,l27
+ p14 MET3P,l28
+ p15 VIA3,l29
+ p15 MET4,l30
+ p15 MET4T,l31
+ p15 MET4P,l32
+ p16 VIA4,l33
+ p16 MET5,l34
+ p16 MET5T,l35
+ p16 MET5P,l36
+ p17 PAD,l37
+ p17 PADT,l38
+ p17 PADP,l39
+ p18 AREAID,l40
+ p19 TEXT,l41
+ p20 HVTR,l42
+ p21 NCM,l43
+ p22 RPM,l44
+ p23 NSM,l45
+ p24 RDL,l46
+ p25 VHVI,l47
+ p26 LDNTM,l48
+ p26 HVNTM,l49
+ p27 PMM,l50
+ p28 PNP,l51
+ p29 CAP,l52
+ p30 IND,l53
+ p31 PWRES,l54
+ p32 POLYRES,l55
+ p33 DIFFRES,l56
+ p34 DIODE,l57
+ p35 POLYM,l58
+ p36 COREID,l59
+ p37 PWELLT,l61
+ p37 PWELLP,l64
+ p38 CFOMDROP,l65
+ p39 CLI1MADD,l66
+ p40 CNTMADD,l67
+ p41 CP1MADD,l68
+ p42 BOUND,l69
+end
+
+contact
+end
+
+styles
+    styletype	mos
+ l1   nwell
+ l2   cwell
+ l3   ndiffusion
+ l4   pdiffusion
+ l5   implant1
+ l6   implant2
+ l7   implant3
+ l8   subcircuit
+ l9    polysilicon
+ l10   implant4
+ l11   pdop_stripes
+ l12   ndop_stripes
+ l13   obsmetal1 contact_X'es
+ l14   metal1
+ l15   metal1
+ l16   metal1
+ l17   metal1 metal2 via1
+ l18   metal2
+ l19   metal2
+ l20   metal2
+ l21   metal2 metal3 via2
+ l22   metal3
+ l23   metal3
+ l24   metal3
+ l25   metal3 metal4 via3
+ l26   metal4
+ l27   metal4
+ l28   metal4
+ l29   metal4 metal5 via4
+ l30   metal5
+ l31   metal5
+ l32   metal5
+ l33   metal5 metal6 via5
+ l34   metal6
+ l35   metal6
+ l36   metal6
+ l37   overglass
+ l38   overglass
+ l39   overglass
+ l40   subcircuit
+ l41   comment
+ l42   implant1
+ l43   mim_top
+ l44   mim_bottom
+ l45   ntransistor_stripes
+ l46   metal7
+ l47   electrode
+ l48   nwell_field_implant
+ l49   hvndiff_mask
+ l50   poly_light
+ l51   mvpdiff
+ l52   mvndiff
+ l53   hvpdiff
+ l54   cwellnsc
+ l55   poly_resist poly_resist_stripes
+ l56   ptransistor_stripes
+ l57   hvpdiff_mask
+ l58   poly_resist
+ l59   subcircuit
+ l60   nwell
+ l61   pwell
+ l62   nwell
+ l63   polysilicon
+ l64   pwell
+ l65   implant1
+ l66   implant2
+ l67   implant3
+ l68   implant4
+ l69   subcircuit
+ l70   polysilicon
+end
+
+compose
+   paint  MCON    MET1  MCON
+   paint  VIA1    MET2  VIA1
+   paint  VIA2    MET3  VIA2
+   paint  VIA3    MET4  VIA3
+   paint  VIA4    MET5  VIA4
+end
+
+connect
+end
+
+cifoutput
+style gdsii
+  scalefactor 50 nanometers
+  options calma-permissive-labels
+ layer  NWELL NWELL,NWELLT,NWELLP
+ calma 64 20
+
+ layer NWELLT
+ labels NWELLT noport
+ calma 64 16
+
+ layer NWELLP
+ labels NWELLP port
+ calma 64 5
+
+ layer  DNWELL DNWELL
+ labels DNWELL 
+ calma 64 18
+
+ layer  DIFF DIFF
+ labels DIFF 
+ calma 65 20
+
+ layer  TAP TAP
+ labels TAP 
+ calma 65 44
+
+ layer  POLY POLY,POLYP,POLYT
+ calma 66 20
+
+ layer POLYT
+ labels POLYT noport
+ calma 66 16
+
+ layer POLYP
+ labels POLYP port
+ calma 66 5
+
+ layer  LVTN LVTN
+ labels LVTN 
+ calma 125 44
+
+ layer  HVTP HVTP
+ labels HVTP 
+ calma 78 44
+
+ layer  HVI HVI
+ labels HVI 
+ calma 75 20
+
+ layer  TUNM TUNM
+ labels TUNM 
+ calma 80 20
+
+ layer  NPC NPC
+ labels NPC 
+ calma 95 20
+
+ layer  PSDM PSDM
+ labels PSDM 
+ calma 94 20
+
+ layer  NSDM NSDM
+ labels NSDM 
+ calma 93 44
+
+ layer  LICON1 LICON1
+ labels LICON1 
+ calma 66 44
+
+ # Note: LICON1 not on LI1 plane, may not be coincident with LI1.
+ layer  LI1 LI1,LI1T,LI1P
+ calma 67 20
+
+ layer  LI1T
+ labels LI1T noport
+ calma 67 16
+
+ layer  LI1P
+ labels LI1P port
+ calma 67 5
+
+ layer  MET1 MET1,MET1T,MET1P,MCON
+ calma 68 20
+
+ layer  MET1T
+ labels MET1T noport
+ calma 68 16
+
+ layer  MET1P
+ labels MET1P port
+ calma 68 5
+
+ layer  MCON MCON
+ labels MCON 
+ calma 67 44
+
+ layer  MET2 MET2,MET2T,MET2P,VIA1
+ calma 69 20
+
+ layer  MET2T
+ labels MET2T noport
+ calma 69 16
+
+ layer  MET2P
+ labels MET2P port
+ calma 69 5
+
+ layer  VIA1 VIA1
+ labels VIA1 
+ calma 68 44
+
+ layer  MET3 MET3,MET3T,MET3P,VIA2
+ calma 70 20
+
+ layer  MET3T
+ labels MET3T noport
+ calma 70 16
+
+ layer  MET3P
+ labels MET3P port
+ calma 70 5
+
+ layer  VIA2 VIA2
+ labels VIA2 
+ calma 69 44
+
+ layer  MET4 MET4,MET4T,MET4P,VIA3
+ calma 71 20
+
+ layer  MET4T
+ labels MET4T noport
+ calma 71 16
+
+ layer  MET4P
+ labels MET4P port
+ calma 71 5
+
+ layer  VIA3 VIA3
+ labels VIA3 
+ calma 70 44
+
+ layer  MET5 MET5,MET5T,MET5P,VIA4
+ calma 72 20
+
+ layer  MET5T
+ labels MET5T noport
+ calma 72 16
+
+ layer  MET5P
+ labels MET5P port
+ calma 72 5
+
+ layer  VIA4 VIA4
+ labels VIA4 
+ calma 71 44
+
+ layer  PAD PAD,PADT,PADP
+ calma 76 20
+
+ layer  PADT
+ labels PADT noport
+ calma 76 16
+
+ layer  PADP
+ labels PADP port
+ calma 76 5
+
+ layer  AREAID AREAID
+ labels AREAID
+ calma 81 4
+
+ layer  TEXT TEXT
+ labels TEXT
+ calma 83 44
+
+ layer HVTR HVTR
+ labels HVTR
+ calma 18 20
+
+ layer NCM NCM
+ labels NCM
+ calma 92 44
+
+ layer RPM RPM
+ labels RPM
+ calma 86 20
+
+ layer NSM NSM
+ labels NSM
+ calma 61 20
+
+ layer RDL RDL
+ labels RDL
+ calma 74 20
+
+ layer VHVI VHVI
+ labels VHVI
+ calma 74 21
+
+ layer LDNTM LDNTM
+ labels LDNTM
+ calma 11 44
+
+ layer HVNTM HVNTM
+ labels HVNTM
+ calma 125 20
+
+ layer PMM PMM
+ labels PMM
+ calma 85 44
+
+ layer PNP PNP
+ labels PNP
+ calma 82 44
+
+ layer CAP CAP
+ labels CAP
+ calma 82 64
+
+ layer IND IND
+ labels IND
+ calma 82 24
+
+ layer PWRES PWRES
+ labels PWRES
+ calma 64 13
+
+ layer POLYRES POLYRES
+ labels POLYRES
+ calma 66 13
+
+ layer DIFFRES DIFFRES
+ labels DIFFRES
+ calma 65 13
+
+ layer DIODE DIODE
+ labels DIODE
+ calma 81 23
+
+ layer POLYM POLYM
+ labels POLYM
+ calma 66 83
+
+ layer COREID COREID
+ labels COREID
+ calma 81 2
+
+ layer PWELLT PWELLT
+ labels PWELLT noport
+ calma 122 16
+
+ layer PWELLP PWELLP
+ labels PWELLP port
+ calma 64 59
+
+ layer CFOMDROP CFOMDROP
+ labels CFOMDROP
+ calma 22 22
+
+ layer CLI1MADD CLI1MADD
+ labels CLI1MADD
+ calma 115 43
+
+ layer CNTMADD CNTMADD
+ labels CNTMADD
+ calma 22 21
+
+ layer CP1MADD CP1MADD
+ labels CP1MADD
+ calma 33 43
+
+ layer BOUND BOUND
+ labels BOUND
+ calma 235 4
+end
+
+cifinput
+style ProgName
+  scalefactor 50 nanometers
+ layer l1  NWELL
+ layer l2  DNWELL
+ layer l3  DIFF
+ layer l4  TAP
+ layer l5  LVTN
+ layer l6  HVTP
+ layer l7  HVI
+ layer l8  TUNM
+ layer l9  POLY
+ layer l10 NPC
+ layer l11 PSDM
+ layer l12 NSDM
+ layer l13 LICON1
+ layer l14 LI1
+ layer l15 LI1T
+ layer l16 LI1P
+ layer l17 MCON
+ layer l18 MET1
+ layer l19 MET1T
+ layer l20 MET1P
+ layer l21 VIA1
+ layer l22 MET2
+ layer l23 MET2T
+ layer l24 MET2P
+ layer l25 VIA2
+ layer l26 MET3
+ layer l27 MET3T
+ layer l28 MET3P
+ layer l29 VIA3
+ layer l30 MET4
+ layer l31 MET4T
+ layer l32 MET4P
+ layer l33 VIA4
+ layer l34 MET5
+ layer l35 MET5T
+ layer l36 MET5P
+ layer l37 PAD
+ layer l38 PADT
+ layer l39 PADP
+ layer l40 AREAID
+ layer l41 TEXT
+ layer l42 HVTR
+ layer l43 NCM
+ layer l44 RPM
+ layer l45 NSM
+ layer l46 RDL
+ layer l47 VHVI
+ layer l48 LDNTM
+ layer l49 HVNTM
+ layer l50 PMM
+ layer l51 PNP
+ layer l52 CAP
+ layer l53 IND
+ layer l54 PWRES
+ layer l55 POLYRES
+ layer l56 DIFFRES
+ layer l57 DIODE
+ layer l58 POLYM
+ layer l59 COREID
+ layer l60 NWELLT
+ layer l61 PWELLT
+ layer l62 NWELLP
+ layer l63 POLYP
+ layer l64 PWELLP
+ layer l65 CFOMDROP
+ layer l66 CLI1MADD
+ layer l67 CNTMADD
+ layer l68 CP1MADD
+ layer l69 BOUND
+ layer l70 POLYT
+ calma NWELL  64 20
+ calma DNWELL 64 18
+ calma DIFF   65 20
+ calma TAP    65 44
+ calma LVTN  125 44
+ calma HVTP   78 44
+ calma HVI    75 20
+ calma TUNM   80 20
+ calma POLY   66 20
+ calma NPC    95 20
+ calma PSDM   94 20
+ calma NSDM   93 44
+ calma LICON1 66 44
+ calma LI1    67 20
+ calma LI1T   67 16
+ calma LI1P   67 5
+ calma MCON   67 44
+ calma MET1   68 20
+ calma MET1T  68 16
+ calma MET1P  68 5
+ calma VIA1   68 44
+ calma MET2   69 20
+ calma MET2T  69 16
+ calma MET2P  69 5
+ calma VIA2   69 44
+ calma MET3   70 20
+ calma MET3T  70 16
+ calma MET3P  70 5
+ calma VIA3   70 44
+ calma MET4   71 20
+ calma MET4T  71 16
+ calma MET4P  71 5
+ calma VIA4   71 44
+ calma MET5   72 20
+ calma MET5T  72 16
+ calma MET5P  72 5
+ calma PAD    76 20
+ calma PADT   76 16
+ calma PADP   76 5
+ calma AREAID 81 4
+ calma TEXT   83 44
+ calma HVTR   18 20
+ calma NCM    92 44
+ calma RPM    86 20
+ calma NSM    61 20
+ calma RDL    74 20
+ calma VHVI   74 21
+ calma LDNTM  11 44
+ calma HVNTM 125 20
+ calma PMM    85 44
+ calma PNP    82 44
+ calma CAP    82 64
+ calma IND    82 24
+ calma PWRES  64 13
+ calma POLYRES 66 13
+ calma DIFFRES 65 13
+ calma DIODE  81 23
+ calma POLYM  66 83
+ calma COREID 81 2
+ calma NWELLT  64 16
+ calma PWELLT 122 16
+ calma NWELLP  64 5
+ calma POLYP  66 5
+ calma PWELLP 64 59
+ calma CFOMDROP 22 22
+ calma CLI1MADD 115 43
+ calma CNTMADD  22 21
+ calma CP1MADD  33 43
+ calma BOUND  235 4
+ calma POLYT  66 16
+end
+ 
+mzrouter
+end
+
+drc
+end
+
+extract
+style default
+ planeorder p1 0
+ planeorder p2 1
+ planeorder p3 2
+ planeorder p4 3
+ planeorder p5 4
+ planeorder p6 5
+ planeorder p7 6
+ planeorder p8 7
+ planeorder p9 8
+ planeorder p10 9
+ planeorder p11 10
+ planeorder p12 11
+ planeorder p13 12
+ planeorder p14 13
+ planeorder p15 14
+ planeorder p16 15
+ planeorder p17 16
+ planeorder p18 17
+ planeorder p19 18
+ planeorder p20 19
+ planeorder p21 20
+ planeorder p22 21
+ planeorder p23 22
+ planeorder p24 23
+ planeorder p25 24
+ planeorder p26 25
+ planeorder p27 26
+ planeorder p28 27
+ planeorder p29 28
+ planeorder p30 29
+ planeorder p31 30
+ planeorder p32 31
+ planeorder p33 32
+ planeorder p34 33
+ planeorder p35 34
+ planeorder p36 35
+ planeorder p37 36
+ planeorder p38 37
+ planeorder p39 38
+ planeorder p40 39
+ planeorder p41 40
+ planeorder p42 41
+end

@@ -1,0 +1,506 @@
+tech
+   30
+   s8seal_ring
+end
+
+version
+   version 0.0
+   description "Auto-generated techfile for unknown GDS read-in"
+end
+
+planes
+   plane11
+   plane20
+   plane21
+   plane22
+   plane23
+   plane25
+   plane27
+   plane28
+   plane30
+   plane32
+   plane34
+   plane35
+   plane36
+   plane37
+   plane39
+   plane40
+   plane41
+   plane43
+   plane44
+   plane46
+   plane48
+   plane49
+   plane50
+   plane51
+   plane56
+   plane58
+   plane59
+   plane61
+   plane65
+   plane81
+   plane88
+   plane96
+   plane97
+   plane98
+end
+
+types
+   plane11 type11
+   plane20 type20
+   plane21 type21
+   plane22 type22
+   plane22 type22_22
+   plane23 type23
+   plane25 type25
+   plane27 type27
+   plane28 type28
+   plane30 type30
+   plane32 type32
+   plane34 type34
+   plane35 type35
+   plane36 type36
+   plane37 type37
+   plane39 type39
+   plane40 type40
+   plane41 type41
+   plane43 type43
+   plane44 type44
+   plane46 type46
+   plane48 type48
+   plane49 type49
+   plane50 type50
+   plane51 type51
+   plane56 type56
+   plane58 type58
+   plane59 type59
+   plane61 type61_20
+   plane65 type65_20
+   plane81 type81_1
+   plane81 type81_51
+   plane81 type81_52
+   plane88 type88
+   plane96 type96
+   plane97 type97
+   plane98 type98
+end 
+
+contact
+end
+
+styles
+   styletype mos
+   type11 polysilicon
+   type20 ndiffusion
+   type21 pdiffusion
+   type22 capacitor
+   type22_22 metal1
+   type23 metal2
+   type25 metal3
+   type27 metal4
+   type28 metal5
+   type30 metal6
+   type32 metal7
+   type34 metal8
+   type35 metal9
+   type36 implant1
+   type37 implant2
+   type39 implant3
+   type40 implant4
+   type41 ntransistor
+   type43 ptransistor
+   type44 electrode
+   type46 poly_light
+   type48 mvndiff
+   type49 hvndiff
+   type50 ncontact
+   type51 mvpdiff
+   type56 hvpdiff
+   type58 pcontact
+   type59 poly_resist
+   type61_20 metal10
+   type65_20 mems
+   type81_1 cwell
+   type81_51 cwellnsc
+   type81_52 highvolt_nwell
+   type88 highvolt_pwell
+   type96 nwell
+   type97 pwell
+   type98 poly_light
+end
+
+compose
+end
+
+connect
+end
+
+cifoutput
+style generic
+   scalefactor 1
+
+   layer GDS11 type11
+   labels type11
+   calma 11 0
+
+   layer GDS20 type20
+   labels type20
+   calma 20 0
+
+   layer GDS21 type21
+   labels type21
+   calma 21 0
+
+   layer GDS22 type22
+   labels type22
+   calma 22 0
+
+   layer GDS22_22 type22_22
+   labels type22_22
+   calma 22 22
+
+   layer GDS23 type23
+   labels type23
+   calma 23 0
+
+   layer GDS25 type25
+   labels type25
+   calma 25 0
+
+   layer GDS27 type27
+   labels type27
+   calma 27 0
+
+   layer GDS28 type28
+   labels type28
+   calma 28 0
+
+   layer GDS30 type30
+   labels type30
+   calma 30 0
+
+   layer GDS32 type32
+   labels type32
+   calma 32 0
+
+   layer GDS34 type34
+   labels type34
+   calma 34 0
+
+   layer GDS35 type35
+   labels type35
+   calma 35 0
+
+   layer GDS36 type36
+   labels type36
+   calma 36 0
+
+   layer GDS37 type37
+   labels type37
+   calma 37 0
+
+   layer GDS39 type39
+   labels type39
+   calma 39 0
+
+   layer GDS40 type40
+   labels type40
+   calma 40 0
+
+   layer GDS41 type41
+   labels type41
+   calma 41 0
+
+   layer GDS43 type43
+   labels type43
+   calma 43 0
+
+   layer GDS44 type44
+   labels type44
+   calma 44 0
+
+   layer GDS46 type46
+   labels type46
+   calma 46 0
+
+   layer GDS48 type48
+   labels type48
+   calma 48 0
+
+   layer GDS49 type49
+   labels type49
+   calma 49 0
+
+   layer GDS50 type50
+   labels type50
+   calma 50 0
+
+   layer GDS51 type51
+   labels type51
+   calma 51 0
+
+   layer GDS56 type56
+   labels type56
+   calma 56 0
+
+   layer GDS58 type58
+   labels type58
+   calma 58 0
+
+   layer GDS59 type59
+   labels type59
+   calma 59 0
+
+   layer GDS61_20 type61_20
+   labels type61_20
+   calma 61 20
+
+   layer GDS65_20 type65_20
+   labels type65_20
+   calma 65 20
+
+   layer GDS81_1 type81_1
+   labels type81_1
+   calma 81 1
+
+   layer GDS81_51 type81_51
+   labels type81_51
+   calma 81 51
+
+   layer GDS81_52 type81_52
+   labels type81_52
+   calma 81 52
+
+   layer GDS88 type88
+   labels type88
+   calma 88 0
+
+   layer GDS96 type96
+   labels type96
+   calma 96 0
+
+   layer GDS97 type97
+   labels type97
+   calma 97 0
+
+   layer GDS98 type98
+   labels type98
+   calma 98 0
+
+end
+
+cifinput
+style generic
+   scalefactor 1
+
+   layer type11 GDS11
+   labels GDS11
+
+   layer type20 GDS20
+   labels GDS20
+
+   layer type21 GDS21
+   labels GDS21
+
+   layer type22 GDS22
+   labels GDS22
+
+   layer type22_22 GDS22_22
+   labels GDS22_22
+
+   layer type23 GDS23
+   labels GDS23
+
+   layer type25 GDS25
+   labels GDS25
+
+   layer type27 GDS27
+   labels GDS27
+
+   layer type28 GDS28
+   labels GDS28
+
+   layer type30 GDS30
+   labels GDS30
+
+   layer type32 GDS32
+   labels GDS32
+
+   layer type34 GDS34
+   labels GDS34
+
+   layer type35 GDS35
+   labels GDS35
+
+   layer type36 GDS36
+   labels GDS36
+
+   layer type37 GDS37
+   labels GDS37
+
+   layer type39 GDS39
+   labels GDS39
+
+   layer type40 GDS40
+   labels GDS40
+
+   layer type41 GDS41
+   labels GDS41
+
+   layer type43 GDS43
+   labels GDS43
+
+   layer type44 GDS44
+   labels GDS44
+
+   layer type46 GDS46
+   labels GDS46
+
+   layer type48 GDS48
+   labels GDS48
+
+   layer type49 GDS49
+   labels GDS49
+
+   layer type50 GDS50
+   labels GDS50
+
+   layer type51 GDS51
+   labels GDS51
+
+   layer type56 GDS56
+   labels GDS56
+
+   layer type58 GDS58
+   labels GDS58
+
+   layer type59 GDS59
+   labels GDS59
+
+   layer type61_20 GDS61_20
+   labels GDS61_20
+
+   layer type65_20 GDS65_20
+   labels GDS65_20
+
+   layer type81_1 GDS81_1
+   labels GDS81_1
+
+   layer type81_51 GDS81_51
+   labels GDS81_51
+
+   layer type81_52 GDS81_52
+   labels GDS81_52
+
+   layer type88 GDS88
+   labels GDS88
+
+   layer type96 GDS96
+   labels GDS96
+
+   layer type97 GDS97
+   labels GDS97
+
+   layer type98 GDS98
+   labels GDS98
+
+   calma GDS11 11 0
+   calma GDS20 20 0
+   calma GDS21 21 0
+   calma GDS22 22 0
+   calma GDS22_22 22 22
+   calma GDS23 23 0
+   calma GDS25 25 0
+   calma GDS27 27 0
+   calma GDS28 28 0
+   calma GDS30 30 0
+   calma GDS32 32 0
+   calma GDS34 34 0
+   calma GDS35 35 0
+   calma GDS36 36 0
+   calma GDS37 37 0
+   calma GDS39 39 0
+   calma GDS40 40 0
+   calma GDS41 41 0
+   calma GDS43 43 0
+   calma GDS44 44 0
+   calma GDS46 46 0
+   calma GDS48 48 0
+   calma GDS49 49 0
+   calma GDS50 50 0
+   calma GDS51 51 0
+   calma GDS56 56 0
+   calma GDS58 58 0
+   calma GDS59 59 0
+   calma GDS61_20 61 20
+   calma GDS65_20 65 20
+   calma GDS81_1 81 1
+   calma GDS81_51 81 51
+   calma GDS81_52 81 52
+   calma GDS88 88 0
+   calma GDS96 96 0
+   calma GDS97 97 0
+   calma GDS98 98 0
+end
+
+# mzrouter
+# end
+
+drc
+end
+
+extract
+style generic
+   cscale 1
+   lambda 1
+   step 10
+   sidehalo 0
+
+  planeorder plane11 0
+  planeorder plane20 1
+  planeorder plane21 2
+  planeorder plane22 3
+  planeorder plane23 4
+  planeorder plane25 5
+  planeorder plane27 6
+  planeorder plane28 7
+  planeorder plane30 8
+  planeorder plane32 9
+  planeorder plane34 10
+  planeorder plane35 11
+  planeorder plane36 12
+  planeorder plane37 13
+  planeorder plane39 14
+  planeorder plane40 15
+  planeorder plane41 16
+  planeorder plane43 17
+  planeorder plane44 18
+  planeorder plane46 19
+  planeorder plane48 20
+  planeorder plane49 21
+  planeorder plane50 22
+  planeorder plane51 23
+  planeorder plane56 24
+  planeorder plane58 25
+  planeorder plane59 26
+  planeorder plane61 27
+  planeorder plane65 28
+  planeorder plane81 29
+  planeorder plane88 30
+  planeorder plane96 31
+  planeorder plane97 32
+  planeorder plane98 33
+end
+
+# wiring
+# end
+
+# router
+# end
+
+# plowing
+# end
+
+plot
+  style pnm
+end

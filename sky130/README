@@ -1,0 +1,180 @@
+------------------------------------
+open_pdks
+----------------------------------------
+Master PDK generator for SkyWater Sky130
+Hybrid 180nm / 130nm foundry process
+for open source EDA tools
+----------------------------------------
+
+-------------------------------------------------------------------------------
+Prerequisites:
+
+1. Foundry source files:
+
+    Obtain sources for the SkyWater sky130 130nm process from the git repository at
+    the following location:
+
+	 https://github.com/google/skywater-pdk
+
+    This repository may go in any convenient location.  The Makefile suggests
+    the target location ~/projects/foundry/skywater-pdk but any location will
+    do as long as the definition for CYPRESS_PATH in the Makefile is set
+    appropriately.
+
+    So cd to the target location parent directory (e.g., "cd ~/projects/foundry")
+    and run the following command:
+
+	 git clone https://github.com/google/skywater-pdk
+
+    Then follow the instructions below.
+
+2. EDA tools:
+
+    For installing files to use with the Magic layout tool, Magic must be installed.
+    Obtain Magic from:
+
+	https://github.com/RTimothyEdwards/magic
+
+-------------------------------------------------------------------------------
+Installation:
+
+    There are two methods for installation:  Local and Distribution.  Use Local
+    installation if you are installing on a single host computer.  Use Distribution
+    installation if you are installing into a respository (such as git) that will
+    be distributed to multiple hosts.
+
+Step 1:
+
+    Edit the Makefile to set the following definitions for your host system:
+
+	EF_STYLE = Select "1" for an efabless-style file structure, "0"
+			otherwise.  There are only minor differences in
+			these two styles, namely for version tracking of
+			the Magic setup files, and the location of the
+			technology LEF file.
+
+	LINK_TARGETS = "none" or "source".  "none" copies files from the source
+			directories to the target.  "source" makes symbolic links
+			to the source directories.  Use "source" only if doing
+			a local install, and the source foundry data will not
+			be deleted.  For distribution installations, LINK_TARGETS
+			must be set to "none".
+
+	LOCAL_PATH = The path to the target install directory.  This is used
+			in both the local and distribution installations.  For
+			a distribution installation, this is the local name of
+			the path to the PDK after it has been distributed to
+			the host computers.
+
+	DIST_PATH = The path to the location of the installed files prior to
+			distribution.  This will most likely be a git or similar
+			repo.
+
+Step 2:
+	Run:
+
+	    make
+
+	This will pre-process the setup files to create the PDK-specific files
+	for the SKY130A PDK, and process all vendor files, and place everything
+	in a local staging area.
+
+Step 3:
+	For a local install, do:
+
+	    make install-local
+
+	This copies all files from the staging area into the destination
+	as specified by the variable LOCAL_PATH in the Makefile.  All
+	pointers to absolute paths in the files are changed to match
+	LOCAL_PATH.
+
+	For a distribution install, do:
+
+	    make install-dist
+
+	This copies all files from the staging area into the destination
+	as specified by the variable DIST_PATH in the Makefile.  All
+	pointers to absolute paths in the files are changed to match
+	LOCAL_PATH.  The assumption is that DIST_PATH is a repository
+	(such as a git repo) that is cloned to multiple hosts, and
+	the destination on the hosts where it is distributed is
+	LOCAL_PATH.
+
+-------------------------------------------------------------------------------
+Summary:
+
+    The Makefile script takes the source files and generates files for local
+    PDK names "SKY130A", "SKY130B", etc.  (Note there is currently only one
+    PDK variant "A".)
+
+    The definition of each PDK is made in the Makefile using defines; e.g.,
+	-DMETAL5, etc.
+
+    The make script makes use of the python script "preproc.py" (in the ../common
+    directory) to parse each source file for "#ifdef ..."-type macros.  The syntax
+    is similar to that used by the C preprocessor (cpp) but does not assume C
+    language syntax in the input file, so is generally better to use than cpp
+    (has less unexpected/unintentional behavior).  See comments in the preproc.py
+    script for a full list of macros that it accepts (short list: #ifdef, #ifndef,
+    #define, #include, and boolean operators ||, &&, and !). 
+
+    Files generated:
+	.tech		techfile for magic (full DRC, extract, GDS)
+	-GDS.tech	techfile for magic, vendor mask layers
+	.tcl		PDK script for magic
+	-BindKeys	key binding script for magic partly matching Cadence defaults
+	.magicrc	magic startup script (copy to local directory as .magicrc)
+	_setup.tcl	netgen setup script for LVS
+	.sh		qflow master setup script, standard 1.8V digital
+	.par		graywolf setup file, standard 1.8V digital
+
+    The installation directory below LOCAL_PATH is the name of the PDK;  e.g.,
+
+	    sky130A/		5-metal stack with MiM cap and redistribution layer
+
+    The installation directory hierarchy below the PDK name looks like the following:
+
+		libs.tech/		technology and setup files
+
+		    magic/		magic techfiles, startup file, PDK script,
+					and key binding script.
+		    netgen/		netgen setup file
+		    qflow/		qflow scripts and graywolf setup files.
+		    klayout/		setup files for klayout
+		    openlane/		setup files for openlane
+
+		libs.ref/		foundry data
+
+		    cdl/		CDL netlists
+		    doc/		Foundry documentation
+		    gds/		GDS files
+		    lef/		LEF macro files
+		    lib/		Timing files
+		    mag/		Magic files derived from GDS
+		    maglef/		Magic files derived from LEF macros
+		    spice/		SPICE netlists (ngspice compatible)
+		    techlef/		LEF technology files
+		    verilog/		verilog modules
+
+    Each subdirectory of libs.ref is further divided into sections based on the
+    IP type.  The section names are largely foundry-dependent.  For SkyWater Sky130,
+    these sections include one or more of:
+
+			sky130_fd_sc_hd/		1.8V digital logic (high density)
+			sky130_fd_sc_hdll/		1.8V digital logic (high density low leakage)
+			sky130_fd_sc_hs/		1.8V digital logic (low power)
+			sky130_fd_sc_hvl/		1.8V digital logic (low speed)
+			sky130_fd_sc_lp/		1.8V digital logic (medium speed)
+			sky130_fd_sc_ls/		1.8V digital logic (high speed)
+			sky130_fd_sc_ms/		3.3V digital logic
+
+			sky130_fd_io/			Standard I/O
+
+			sky130_fd_pr_base/		Primitive devices w/fixed layout
+			sky130_fd_pr_rf/		RF primitive devices w/fixed layout
+			sky130_fd_pr_rf2/		Additional RF primitive devices w/fixed layout
+
+    The target installation destinations assume the directory structure above.  Changing
+    this requires editing the source files.
+

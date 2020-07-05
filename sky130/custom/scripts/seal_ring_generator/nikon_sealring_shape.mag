@@ -1,0 +1,130 @@
+magic
+tech s8seal_ring
+timestamp 1584558468
+<< checkpaint >>
+rect 0 0 400 400
+<< type21 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type22 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type23 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type27 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type28 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type30 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type32 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type34 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type35 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type36 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type40 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type41 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type43 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type44 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type46 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type50 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type51 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type56 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type58 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type59 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type88 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type96 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type97 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+<< type98 >>
+rect 175 225 225 320
+rect 80 175 320 225
+rect 175 80 225 175
+use sr_polygon00006  sr_polygon00006_0
+timestamp 1584558468
+transform 1 0 0 0 1 0
+box 0 0 400 400
+use sr_polygon00005  sr_polygon00005_0
+timestamp 1584558468
+transform 1 0 0 0 1 0
+box 0 0 400 400
+use sr_polygon00004  sr_polygon00004_0
+timestamp 1584558468
+transform 1 0 0 0 1 0
+box 0 0 400 400
+use sr_polygon00003  sr_polygon00003_0
+timestamp 1584558468
+transform 1 0 0 0 1 0
+box 0 0 400 400
+use sr_polygon00002  sr_polygon00002_0
+timestamp 1584558468
+transform 1 0 0 0 1 0
+box 0 0 400 400
+use sr_polygon00001  sr_polygon00001_0
+timestamp 1584558468
+transform 1 0 0 0 1 0
+box 0 0 400 400
+use sr_polygon00007  sr_polygon00007_0
+timestamp 1584558468
+transform 1 0 0 0 1 0
+box 0 0 400 400
+<< end >>

@@ -1,0 +1,53 @@
+#define DESCRIPTION Skywater 0.13um CMOS, local interconntect + high-resistance poly
+#ifdef METAL5
+#define OPTION1 + 5 metal layer backend stack
+#endif (METAL5)
+#ifdef MIM
+#define OPTION2 + MiM caps
+#endif (MIM)
+#ifdef REDISTRIBUTION
+#define OPTION3 + redistribution layer
+#endif (REDISTRIBUTION)
+{
+    "foundry" : "SW",
+    "foundry-name" : "SkyWater",
+    "node" : "TECHNAME",
+    "feature-size" : "130nm",
+    "status" : "active",
+    "description" : "DESCRIPTION OPTION1 OPTION2 OPTION3",
+    "options" : [
+#ifdef METAL5
+#undef METAL5
+#ifdef MIM || REDISTRIBUTION
+        "METAL5",
+#else (!(MIM || REDISTRIBUTION))
+        "METAL5"
+#endif (!(MIM || REDISTRIBUTION))
+#endif (METAL5)
+#ifdef MIM
+#undef MIM
+#ifdef REDISTRIBUTION
+        "MIM",
+#else
+        "MIM"
+#endif (REDISTRIBUTION)
+#endif (MIM)
+#ifdef REDISTRIBUTION
+#undef REDISTRIBUTION
+        "REDISTRIBUTION"
+#endif (REDISTRIBUTION)
+    ],
+    "stdcells" : [
+	"sky130_fd_sc_hd",
+	"sky130_fd_sc_hdll",
+	"sky130_fd_sc_hs",
+	"sky130_fd_sc_hvl",
+	"sky130_fd_sc_lp",
+	"sky130_fd_sc_ls",
+	"sky130_fd_sc_ms",
+	"sky130_osu130"
+    ],
+    "iocells" : [
+        "sky130_fd_io"
+    ]
+}
