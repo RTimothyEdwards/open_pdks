@@ -79,3 +79,7 @@ clean:
 veryclean:
 	for tech in ${TECHS}; do \
 		${MAKE} veryclean-$${tech}; done
+
+distclean:
+	for tech in ${TECHS}; do \
+		${MAKE} veryclean-$${tech}; done
