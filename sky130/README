@@ -18,7 +18,7 @@ Prerequisites:
 
     This repository may go in any convenient location.  The Makefile suggests
     the target location ~/projects/foundry/skywater-pdk but any location will
-    do as long as the definition for CYPRESS_PATH in the Makefile is set
+    do as long as the definition for SKYWATER_PATH in the Makefile is set
     appropriately.
 
     So cd to the target location parent directory (e.g., "cd ~/projects/foundry")
