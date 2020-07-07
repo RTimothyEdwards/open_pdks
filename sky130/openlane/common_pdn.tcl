@@ -7,7 +7,7 @@ set ::macro_blockage_layer_list "li1 met1 met2 met3 met4 met5"
 pdngen::specify_grid stdcell {
     name grid
     rails {
-	    met1 {width 0.48 pitch $::env(PLACE_SITE_WIDTH) offset 0}
+	    met1 {width 0.48 pitch $::env(PLACE_SITE_HEIGHT) offset 0}
     }
     straps {
 	    met4 {width 1.6 pitch $::env(FP_PDN_VPITCH) offset $::env(FP_PDN_VOFFSET)}
@@ -36,9 +36,3 @@ set ::rails_start_with "POWER" ;
 
 # POWER or GROUND #Upper metal stripes starting with power or ground rails at the left/bottom of the core area
 set ::stripes_start_with "POWER" ;
-
-proc generate_viarules {} {
-}
-
-cd $::env(TMP_DIR)/floorplan
-

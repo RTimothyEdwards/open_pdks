@@ -191,7 +191,7 @@ general-a: ${TECH}.json
 	${CPP} ${SKY130A_DEFS} ${TECH}.json > \
 		${STAGING_PATH}/${SKY130A}/${CONFIG_DIR}/nodeinfo.json
 
-magic-a: ${TECH}.tech ${TECH}gds.tech ${TECH}.magicrc ${TECH}.tcl
+magic-a: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${TECH}.tcl
 	mkdir -p ${MAGICTOP_STAGING_A}
 	mkdir -p ${MAGIC_STAGING_A}
 	rm -f ${MAGICTOP_STAGING_A}/current
@@ -202,14 +202,14 @@ magic-a: ${TECH}.tech ${TECH}gds.tech ${TECH}.magicrc ${TECH}.tcl
 	rm -f ${MAGIC_STAGING_A}/magicrc
 	(cd ${MAGICTOP_STAGING_A} ; ln -s ${REV_DIR} current)
 	cp -rp custom/scripts/seal_ring_generator ${MAGIC_STAGING_A}/.
-	${CPP} ${SKY130A_DEFS} ${TECH}.tech > ${MAGIC_STAGING_A}/${SKY130A}.tech
-	${CPP} ${SKY130A_DEFS} ${TECH}gds.tech > ${MAGIC_STAGING_A}/${SKY130A}-GDS.tech
-	${CPP} ${SKY130A_DEFS} ${TECH}.magicrc > ${MAGIC_STAGING_A}/${SKY130A}.magicrc
+	${CPP} ${SKY130A_DEFS} magic/${TECH}.tech > ${MAGIC_STAGING_A}/${SKY130A}.tech
+	${CPP} ${SKY130A_DEFS} magic/${TECH}gds.tech > ${MAGIC_STAGING_A}/${SKY130A}-GDS.tech
+	${CPP} ${SKY130A_DEFS} magic/${TECH}.magicrc > ${MAGIC_STAGING_A}/${SKY130A}.magicrc
 	${CPP} ${SKY130A_DEFS} ../common/pdk.bindkeys > ${MAGIC_STAGING_A}/${SKY130A}-BindKeys
-	${CPP} ${SKY130A_DEFS} ${TECH}.tcl > ${MAGIC_STAGING_A}/${SKY130A}.tcl
+	${CPP} ${SKY130A_DEFS} magic/${TECH}.tcl > ${MAGIC_STAGING_A}/${SKY130A}.tcl
 	${CPP} ${SKY130A_DEFS} ../common/pdk.tcl >> ${MAGIC_STAGING_A}/${SKY130A}.tcl
 
-qflow-a: ${TECH}.sh ${TECH}.par
+qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
 	mkdir -p ${QFLOWTOP_STAGING_A}
 	mkdir -p ${QFLOW_STAGING_A}
 	rm -f ${QFLOW_STAGING_A}/${SKY130A}hd.sh
@@ -226,57 +226,68 @@ qflow-a: ${TECH}.sh ${TECH}.par
 	rm -f ${QFLOW_STAGING_A}/${SKY130A}lp.par
 	rm -f ${QFLOW_STAGING_A}/${SKY130A}ms.sh
 	rm -f ${QFLOW_STAGING_A}/${SKY130A}ms.par
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hd ${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hd qflow/${TECH}.sh > \
 		${QFLOW_STAGING_A}/${SKY130A}hd.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hdll ${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hdll qflow/${TECH}.sh > \
 		${QFLOW_STAGING_A}/${SKY130A}hdll.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hvl ${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hvl qflow/${TECH}.sh > \
 		${QFLOW_STAGING_A}/${SKY130A}hvl.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hs ${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hs qflow/${TECH}.sh > \
 		${QFLOW_STAGING_A}/${SKY130A}hs.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_lp ${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_lp qflow/${TECH}.sh > \
 		${QFLOW_STAGING_A}/${SKY130A}lp.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ls ${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ls qflow/${TECH}.sh > \
 		${QFLOW_STAGING_A}/${SKY130A}ls.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ms ${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ms qflow/${TECH}.sh > \
 		${QFLOW_STAGING_A}/${SKY130A}ms.sh
-	${CPP} ${SKY130A_DEFS} ${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hd.par
-	${CPP} ${SKY130A_DEFS} ${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hdll.par
-	${CPP} ${SKY130A_DEFS} ${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hvl.par
-	${CPP} ${SKY130A_DEFS} ${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hs.par
-	${CPP} ${SKY130A_DEFS} ${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}ms.par
-	${CPP} ${SKY130A_DEFS} ${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}lp.par
-	${CPP} ${SKY130A_DEFS} ${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}ls.par
-	${CPP} ${SKY130A_DEFS} ${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}osu.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hd.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hdll.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hvl.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hs.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}ms.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}lp.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}ls.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}osu.par
 
-netgen-a: ${TECH}_setup.tcl
+netgen-a: netgen/${TECH}_setup.tcl
 	mkdir -p ${NETGENTOP_STAGING_A}
 	mkdir -p ${NETGEN_STAGING_A}
 	rm -f ${NETGEN_STAGING_A}/${SKY130A}_setup.tcl
 	rm -f ${NETGEN_STAGING_A}/setup.tcl
-	${CPP} ${SKY130A_DEFS} ${TECH}_setup.tcl > ${NETGEN_STAGING_A}/${SKY130A}_setup.tcl
+	${CPP} ${SKY130A_DEFS} netgen/${TECH}_setup.tcl > ${NETGEN_STAGING_A}/${SKY130A}_setup.tcl
 	(cd ${NETGEN_STAGING_A} ; ln -s ${SKY130A}_setup.tcl setup.tcl)
 
-klayout-a: ${TECH}.lyp ${TECH}.lyt
+klayout-a: klayout/${TECH}.lyp klayout/${TECH}.lyt
 	mkdir -p ${KLAYOUTTOP_STAGING_A}
 	mkdir -p ${KLAYOUT_STAGING_A}
 	rm -f ${KLAYOUT_STAGING_A}/${SKY130A}.lyp
 	rm -f ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
-	${CPP} ${SKY130A_DEFS} ${TECH}.lyp > ${KLAYOUT_STAGING_A}/${SKY130A}.lyp
-	${CPP} ${SKY130A_DEFS} ${TECH}.lyt > ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
+	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyp > ${KLAYOUT_STAGING_A}/${SKY130A}.lyp
+	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyt > ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
 
-openlane-a: common_pdn.tcl common_tracks.info config.tcl sky130_fd_sc_hd_config.tcl
+openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_A}
 	mkdir -p ${OPENLANE_STAGING_A}
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_hd
+	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_hs
 	rm -f ${OPENLANE_STAGING_A}/common_pdn.info
-	rm -f ${OPENLANE_STAGING_A}/common_tracks.info
 	rm -f ${OPENLANE_STAGING_A}/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
-	${CPP} ${SKY130A_DEFS} common_pdn.tcl > ${OPENLANE_STAGING_A}/common_pdn.tcl
-	${CPP} ${SKY130A_DEFS} common_tracks.info > ${OPENLANE_STAGING_A}/common_tracks.info
-	${CPP} ${SKY130A_DEFS} config.tcl > ${OPENLANE_STAGING_A}/config.tcl
-	${CPP} ${SKY130A_DEFS} sky130_fd_sc_hd_config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/tracks.info
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/no_synth.cells
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/sky130_fd_sc_hd__fakediode_2.gds
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/config.tcl
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tracks.info
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/no_synth.cells
+	${CPP} ${SKY130A_DEFS} openlane/common_pdn.tcl > ${OPENLANE_STAGING_A}/common_pdn.tcl
+	${CPP} ${SKY130A_DEFS} openlane/config.tcl > ${OPENLANE_STAGING_A}/config.tcl
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/tracks.info
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/no_synth.cells
+	cp openlane/sky130_fd_sc_hd/sky130_fd_sc_hd__fakediode_2.gds ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/sky130_fd_sc_hd__fakediode_2.gds
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/config.tcl
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tracks.info
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/no_synth.cells
 
 vendor-a:
 	# Install base device models from vendor files
