@@ -85,6 +85,9 @@ LINK_TARGETS = source
 # the scratch repo above.
 SKYWATER_PATH = ~/gits/skywater-pdk/libraries
 
+# Path to OSU standard cell library sources
+OSU_PATH = ~/gits/osu_130_pdk
+
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
 #
@@ -339,6 +342,15 @@ vendor-a:
 		-library digital sky130_fd_sc_ls \
 		-library digital sky130_fd_sc_ms \
 		-library digital sky130_fd_sc_lp |& tee -a ${SKY130A}_install.log
+        # Install OSU digital standard cells.
+	${STAGE} -source ${OSU_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef char/techfiles/scs8.lef rename sky130_osu_sc.tlef \
+		-spice lib/spice/*.spice compile-only \
+		-lef outputs/s8_osu130.lef rename sky130_osu_sc.lef \
+		-lib outputs/*.lib \
+		-gds lib/gds/*.gds compile-only \
+		-verilog outputs/VERILOG/*.v \
+		-library digital sky130_osu_sc
 	# Install additional model file (efabless)
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-ngspice models/*.lib rename ${SKY130A}.lib \

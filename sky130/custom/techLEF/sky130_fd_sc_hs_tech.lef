@@ -10,11 +10,11 @@ UNITS
 END UNITS
 MANUFACTURINGGRID 0.005 ;
 
-SITE unitehd
+SITE unit
     SYMMETRY Y  ;
     CLASS CORE  ;
-    SIZE  0.460 BY 3.400 ;
-END unitehd
+    SIZE  0.480 BY 3.400 ;
+END unit
 
 ######  Starting overlap layers #####
 # ******** Layer OverlapCheck, type blockage, number 90 **************
@@ -710,3 +710,4 @@ END M4M5_PR_MR
 #   SPACING 1.600000 BY 1.600000 ;
 # END M4M5_PR_C
 
+END LIBRARY
