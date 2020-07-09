@@ -32,9 +32,9 @@ set libertyfile=STAGING_PATH/TECHNAME/libs.ref/LIBRARY/lib/LIBRARY__ff_n40C_1v95
 
 #ifdef METAL5
 #ifdef EF_FORMAT
-set techleffile=STAGING_PATH/TECHNAME/libs.ref/techLEF/LIBRARY/LIBRARY_tech.lef
+set techleffile=STAGING_PATH/TECHNAME/libs.ref/techLEF/LIBRARY/LIBRARY.tlef
 #else (!EF_FORMAT)
-set techleffile=STAGING_PATH/TECHNAME/libs.ref/LIBRARY/techlef/LIBRARY_tech.lef
+set techleffile=STAGING_PATH/TECHNAME/libs.ref/LIBRARY/techlef/LIBRARY.tlef
 #endif (!EF_FORMAT)
 #else
 # NOTE:  There is no technology LEF file for the 3-metal stack!

@@ -332,13 +332,14 @@ vendor-a:
 		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
         # Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-spice %l/v%v/cells/*/*.spice compile-only \
-		-cdl %l/v%v/cells/*/*.cdl ignore=topography compile-only \
-		-lef %l/v%v/cells/*/*.lef compile-only \
-		-doc %l/v%v/cells/*/*.pdf \
-		-lib %l/v%v/timing/*.lib \
-		-gds %l/v%v/cells/*/*.gds compile-only \
-		-verilog %l/v%v/cells/*/*.v exclude=*.*.v compile-only \
+		-techlef %l/latest/tech/*.tlef \
+		-spice %l/latest/cells/*/*.spice compile-only \
+		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+		-lef %l/latest/cells/*/*.lef compile-only \
+		-doc %l/latest/cells/*/*.pdf \
+		-lib %l/latest/timing/*.lib \
+		-gds %l/latest/cells/*/*.gds compile-only \
+		-verilog %l/latest/cells/*/*.v exclude=*.*.v compile-only \
 		-library digital sky130_fd_sc_hd \
 		-library digital sky130_fd_sc_hdll \
 		-library digital sky130_fd_sc_hvl \
@@ -359,25 +360,6 @@ vendor-a:
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-ngspice models/*.lib rename ${SKY130A}.lib \
 		|& tee -a ${SKY130A}_install.log
-	# Install custom additions to digital libraries
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
-		-techlef techLEF/sky130_fd_sc_hd_tech.lef \
-		-library digital sky130_fd_sc_hd |& tee -a ${SKY130A}_install.log
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
-		-techlef techLEF/sky130_fd_sc_hd_tech.lef \
-			rename sky130_fd_sc_hdll_tech.lef \
-		-library digital sky130_fd_sc_hdll |& tee -a ${SKY130A}_install.log
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
-		-techlef techLEF/sky130_fd_sc_hs_tech.lef \
-		-library digital sky130_fd_sc_hs |& tee -a ${SKY130A}_install.log
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
-		-techlef techLEF/sky130_fd_sc_hs_tech.lef \
-			rename sky130_fd_sc_ms_tech.lef \
-		-library digital sky130_fd_sc_ms |& tee -a ${SKY130A}_install.log
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
-		-techlef techLEF/sky130_fd_sc_hs_tech.lef \
-			rename sky130_fd_sc_ls_tech.lef \
-		-library digital sky130_fd_sc_ls |& tee -a ${SKY130A}_install.log
 	# Install custom additions to I/O pad library
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-gds %l/gds/*.gds \
