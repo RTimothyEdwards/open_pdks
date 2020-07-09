@@ -29,9 +29,18 @@ on obtaining and building the SkyWater s8 PDK.
 
 -----------------------------------------
 
+License:
+
+Open_PDKs is open-source software distributed under the Apache-2.0 license.
+See file LICENSE for the complete license text.
+
+-----------------------------------------
+
 Instructions:
 
 There is a top-level Makefile but generally it is recommended to cd
 to the directory for the target foundry process and follow the instructions
 in the README file there.
+
+Also see the website at http://opencircuitdesign.com/open_pdks
 
