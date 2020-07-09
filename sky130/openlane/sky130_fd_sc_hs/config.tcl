@@ -1,7 +1,7 @@
 set current_folder [file dirname [file normalize [info script]]]
 # Technology lib
 
-set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hs/lib/sky130_fd_sc_hs__tt_25C_1v80.lib"
+set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hs/lib/sky130_fd_sc_hs__tt_025C_1v80.lib"
 set ::env(LIB_MAX) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hs/lib/sky130_fd_sc_hs__ff_n40C_1v95.lib"
 set ::env(LIB_MIN) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hs/lib/sky130_fd_sc_hs__ss_100C_1v60.lib"
 
@@ -24,10 +24,10 @@ set ::env(FP_ENDCAP_CELL) "sky130_fd_sc_hs__decap_4"
 
 # defaults (can be overridden by designs):
 set ::env(SYNTH_DRIVING_CELL) "sky130_fd_sc_hs__inv_8"
-#capacitance : 0.017653;
+#capacitance : 0.02104;
 set ::env(SYNTH_DRIVING_CELL_PIN) "Y"
 # update these
-set ::env(SYNTH_CAP_LOAD) "17.65" ; # femtofarad _inv_8 pin A cap
+set ::env(SYNTH_CAP_LOAD) "21.04" ; # femtofarad _inv_8 pin A cap
 set ::env(SYNTH_MIN_BUF_PORT) "sky130_fd_sc_hs__buf_2 A X"
 set ::env(SYNTH_TIEHI_PORT) "sky130_fd_sc_hs__conb_1 HI"
 set ::env(SYNTH_TIELO_PORT) "sky130_fd_sc_hs__conb_1 LO"
@@ -54,4 +54,3 @@ set ::env(ROOT_CLK_BUFFER) sky130_fd_sc_hs__clkbuf_16
 set ::env(CLK_BUFFER) sky130_fd_sc_hs__clkbuf_4
 set ::env(CLK_BUFFER_INPUT) A
 set ::env(CLK_BUFFER_OUTPUT) X
-

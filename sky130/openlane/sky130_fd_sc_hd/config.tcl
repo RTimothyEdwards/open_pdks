@@ -1,7 +1,7 @@
 set current_folder [file dirname [file normalize [info script]]]
 # Technology lib
 
-set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_25C_1v80.lib"
+set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib"
 set ::env(LIB_MAX) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ff_n40C_1v95.lib"
 set ::env(LIB_MIN) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ss_100C_1v60.lib"
 
@@ -29,7 +29,7 @@ set ::env(SYNTH_DRIVING_CELL_PIN) "Y"
 set ::env(SYNTH_CAP_LOAD) "17.65" ; # femtofarad __inv_8 pin A cap
 set ::env(SYNTH_MIN_BUF_PORT) "sky130_fd_sc_hd__buf_2 A X"
 set ::env(SYNTH_TIEHI_PORT) "sky130_fd_sc_hd__conb_1 HI"
-set ::env(SYNTH_TIELO_PORT) "sky130_fd_sc_hd_conb_1 LO"
+set ::env(SYNTH_TIELO_PORT) "sky130_fd_sc_hd__conb_1 LO"
 
 # cts defaults
 set ::env(CTS_ROOT_BUFFER) sky130_fd_sc_hd__clkbuf_16
@@ -61,4 +61,3 @@ set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_hd__clkbuf_1 sky130_fd_sc_hd__clkbu
 set ::env(CTS_SQR_CAP) 0.258e-3
 set ::env(CTS_SQR_RES) 0.125
 set ::env(CTS_MAX_CAP) 1.53169
-
