@@ -163,11 +163,11 @@ Summary:
 
 			sky130_fd_sc_hd/		1.8V digital logic (high density)
 			sky130_fd_sc_hdll/		1.8V digital logic (high density low leakage)
-			sky130_fd_sc_hs/		1.8V digital logic (low power)
-			sky130_fd_sc_hvl/		1.8V digital logic (low speed)
-			sky130_fd_sc_lp/		1.8V digital logic (medium speed)
-			sky130_fd_sc_ls/		1.8V digital logic (high speed)
-			sky130_fd_sc_ms/		3.3V digital logic
+			sky130_fd_sc_hs/		1.8V digital logic (high speed)
+			sky130_fd_sc_hvl/		3.3V digital logic
+			sky130_fd_sc_lp/		1.8V digital logic (low power)
+			sky130_fd_sc_ls/		1.8V digital logic (low speed)
+			sky130_fd_sc_ms/		3.3V digital logic (medium speed)
 
 			sky130_fd_io/			Standard I/O
 
