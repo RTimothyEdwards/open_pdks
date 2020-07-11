@@ -3694,12 +3694,12 @@ defaultareacap     nwell well 120
 # defaultareacap     allpolynonfet active  106
 # defaultperimeter   allpolynonfet active   57
 
- defaultsidewall    *poly active  15
+ defaultsidewall    *poly active  23
  defaultareacap     *poly active nwell,obswell,pwell well  106
  defaultperimeter   *poly active nwell,obswell,pwell well  55
 
 #locali
- defaultsidewall    allli locali       8
+ defaultsidewall    allli locali       33
  defaultareacap     allli locali nwell,obswell,pwell well  37
  defaultperimeter   allli locali nwell,obswell,pwell well  55
  defaultoverlap     allli locali nwell well 37
@@ -3714,7 +3714,7 @@ defaultareacap     nwell well 120
  defaultsideoverlap *poly active allli locali 25
 
 #metal1
- defaultsidewall    allm1 metal1       29
+ defaultsidewall    allm1 metal1      45
  defaultareacap     allm1 metal1 nwell,obswell,pwell well  26
  defaultperimeter   allm1 metal1 nwell,obswell,pwell well  41
  defaultoverlap     allm1 metal1 nwell well 26
@@ -3734,7 +3734,7 @@ defaultareacap     nwell well 120
  defaultsideoverlap allli locali allm1 metal1 35
 
 #metal2
- defaultsidewall    allm2 metal2      27
+ defaultsidewall    allm2 metal2      50
  defaultareacap     allm2 metal2 nwell,obswell,pwell well 17
  defaultperimeter   allm2 metal2 nwell,obswell,pwell well 41
  defaultoverlap     allm2 metal2 nwell well 38
