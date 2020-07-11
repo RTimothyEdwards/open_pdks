@@ -34,13 +34,13 @@ Prerequisites:
     each supported IP library, do:
 
 	cd skywater-pdk
-	git submodule init libraries/sky_fd_sc_hd/latest
-	git submodule init libraries/sky_fd_sc_hdll/latest
-	git submodule init libraries/sky_fd_sc_hs/latest
-	git submodule init libraries/sky_fd_sc_ms/latest
-	git submodule init libraries/sky_fd_sc_ls/latest
-	git submodule init libraries/sky_fd_sc_lp/latest
-	git submodule init libraries/sky_fd_sc_hvl/latest
+	git submodule init libraries/sky130_fd_sc_hd/latest
+	git submodule init libraries/sky130_fd_sc_hdll/latest
+	git submodule init libraries/sky130_fd_sc_hs/latest
+	git submodule init libraries/sky130_fd_sc_ms/latest
+	git submodule init libraries/sky130_fd_sc_ls/latest
+	git submodule init libraries/sky130_fd_sc_lp/latest
+	git submodule init libraries/sky130_fd_sc_hvl/latest
 	git submodule update
 
     The liberty (.lib) files are the largest of all and so individual files
