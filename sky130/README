@@ -26,7 +26,33 @@ Prerequisites:
 
 	 git clone https://github.com/google/skywater-pdk
 
-    Then follow the instructions below.
+    Note that many of the files in the PDK are too large for a single git
+    repository, and so each IP library in the PDK has been placed in a
+    submodule.  There are multiple versions of each library, and it is
+    nearly certain that you will only want to deal with the "latest" version
+    of each.  To make sure you have the submodules for the latest version of
+    each supported IP library, do:
+
+	cd skywater-pdk
+	git submodule init libraries/sky130_fd_sc_hd/latest
+	git submodule init libraries/sky130_fd_sc_hdll/latest
+	git submodule init libraries/sky130_fd_sc_hs/latest
+	git submodule init libraries/sky130_fd_sc_ms/latest
+	git submodule init libraries/sky130_fd_sc_ls/latest
+	git submodule init libraries/sky130_fd_sc_lp/latest
+	git submodule init libraries/sky130_fd_sc_hvl/latest
+	git submodule update
+
+    The liberty (.lib) files are the largest of all and so individual files
+    are too large for the git repo and need to be assembled by script.  To
+    do that, do:
+
+	make timing
+
+    That installs all of the Google/Skywater files.
+
+    Then follow the instructions below for generating the additional files
+    for supporting the open source EDA tool flows.
 
 2. EDA tools:
 
