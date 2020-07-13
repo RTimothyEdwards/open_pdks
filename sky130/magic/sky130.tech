@@ -3239,8 +3239,8 @@ variants *
  spacing v3 v3 80 touching_ok "Via3 spacing < %d (Via3 2 - 2 * Via3 4)"
  surround v3/m3 *m3 30 directional \
 	"Metal3 overlap of Via3 in one direction < %d (Via3 5 - Via3 4)"
- surround v3/m4 *m4 5 directional \
-	"Metal4 overlap of Via3 in one direction < %d (Met4 3 - Via3 4)"
+ surround v3/m4 *m4 5 absence_illegal \
+	"Metal4 overlap of Via3 < %d (Met4 3 - Via3 4)"
 
  exact_overlap v3/m3
 
@@ -3993,7 +3993,7 @@ wiring
  contact v1  260 m1 0 30 m2  0 30  
  contact v2  280 m2 0 45 m3 25  0
 #ifdef METAL5
- contact v3  320 m3 0 30 m4  0  5
+ contact v3  320 m3 0 30 m4  5  5
  contact v4 1180 m4 0    m5 120 
 #endif (METAL5)
 
