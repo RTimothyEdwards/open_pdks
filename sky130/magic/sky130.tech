@@ -3446,9 +3446,8 @@ end
 
 lef
 
- masterslice pwell  substrate
- masterslice nwell  nwell
- masterslice poly   poly
+ masterslice pwell  pwell PWELL substrate
+ masterslice nwell  nwell NWELL
 
  routing li	li1 LI1 LI li
 
