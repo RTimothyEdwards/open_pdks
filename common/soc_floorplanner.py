@@ -260,7 +260,7 @@ class SoCFloorplanner(ttk.Frame):
         self.vlogimport()
         self.readplacement(precheck=True)
         self.resolve()
-        self.generate(0)
+        self.generate()
 
     # Local routines for handling printing to the text console
 
@@ -525,7 +525,7 @@ class SoCFloorplanner(ttk.Frame):
         # position;  corners are fixed by definition.
         if padrow == self.NEpad or padrow == self.SEpad or padrow == self.SWpad or padrow == self.NWpad:
             # Easier to run generate() than to put the pad back. . .
-            self.generate(0)
+            self.generate()
             return
 
         # Find the original center point of the pad being moved
@@ -656,7 +656,7 @@ class SoCFloorplanner(ttk.Frame):
             rowbefore.insert(idx, pad)
 
         # Re-run padring
-        self.generate(0)
+        self.generate()
 
     def on_scrollwheel(self, event):
         if event.num == 4:
@@ -1923,7 +1923,7 @@ class SoCFloorplanner(ttk.Frame):
     # Generate a new padframe by writing the configuration file, running
     # padring, reading back the DEF file, and (re)poplulating the workspace
 
-    def generate(self, level):
+    def generate(self, level=0):
         self.print('Generate legal padframe using padring')
 
         # Write out the configuration file

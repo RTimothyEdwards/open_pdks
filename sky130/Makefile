@@ -335,11 +335,11 @@ vendor-a:
 		-techlef %l/latest/tech/*.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
-		-lef %l/latest/cells/*/*.lef compile-only \
+		-lef %l/latest/cells/*/*.lef exclude=*.*.v compile-only \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib \
 		-gds %l/latest/cells/*/*.gds compile-only \
-		-verilog %l/latest/cells/*/*.v exclude=*.*.v compile-only \
+		-verilog %l/latest/cells/*/*.v compile-only \
 		-library digital sky130_fd_sc_hd \
 		-library digital sky130_fd_sc_hdll \
 		-library digital sky130_fd_sc_hvl \
