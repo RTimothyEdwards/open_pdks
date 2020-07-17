@@ -614,7 +614,7 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only, exc
                 print('box move e 200', file=ofile)
                                 
             print('puts stdout "Writing GDS library ' + destlib + '"', file=ofile)
-	    print('gds library', file=ofile)
+            print('gds library', file=ofile)
             print('gds write ' + destlib, file=ofile)
             print('puts stdout "Done."', file=ofile)
             print('quit -noprompt', file=ofile)
