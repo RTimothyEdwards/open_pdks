@@ -7,11 +7,11 @@
 # should be a staging area, not a place where files are kept permanently.
 #
 # Options:
-#    -ef_format		Use efabless naming (libs.ref/techLEF),
-#			otherwise use generic naming (libs.tech/lef)
-#    -clean		Clear out and remove target directory before starting
-#    -source <path>	Path to source data top level directory
-#    -target <path>	Path to target (staging) top level directory
+#    -ef_format         Use efabless naming (libs.ref/techLEF),
+#                       otherwise use generic naming (libs.tech/lef)
+#    -clean             Clear out and remove target directory before starting
+#    -source <path>     Path to source data top level directory
+#    -target <path>     Path to target (staging) top level directory
 #
 # All other options represent paths to vendor files.  They may all be
 # wildcarded with "*", or with specific escapes like "%l" for library
@@ -22,17 +22,17 @@
 # open source tools use ngspice, CDL files are converted to ngspice
 # syntax when needed.
 #
-#	-techlef <path>	Path to technology LEF file
-#	-doc <path>	Path to technology documentation
-#	-lef <path>	Path to LEF file
-#	-spice <path>	Path to SPICE netlists
-#	-cdl <path>	Path to CDL netlists
-#	-models <path>	Path to SPICE (primitive device) models
-#	-liberty <path>	Path to Liberty timing files
-#	-gds <path>	Path to GDS data
-#	-verilog <path>	Path to verilog models
+#       -techlef <path> Path to technology LEF file
+#       -doc <path>     Path to technology documentation
+#       -lef <path>     Path to LEF file
+#       -spice <path>   Path to SPICE netlists
+#       -cdl <path>     Path to CDL netlists
+#       -models <path>  Path to SPICE (primitive device) models
+#       -liberty <path> Path to Liberty timing files
+#       -gds <path>     Path to GDS data
+#       -verilog <path> Path to verilog models
 #
-#	-library <type> <name> [<target>]	See below
+#       -library <type> <name> [<target>]       See below
 #
 # For the "-library" option, any number of libraries may be supported, and
 # one "-library" option should be provided for each supported library.
@@ -48,19 +48,19 @@
 # on the files in the target directory.
 #
 # All options "-lef", "-spice", etc., can take the additional arguments
-# 	up  <number>
+#       up  <number>
 #
 # to indicate that the source hierarchy should be copied from <number>
 # levels above the files.  For example, if liberty files are kept in
 # multiple directories according to voltage level, then
 #
-# 	-liberty x/y/z/PVT_*/*.lib
+#       -liberty x/y/z/PVT_*/*.lib
 #
 # would install all .lib files directly into libs.ref/<libname>/liberty/*.lib
 # (if "-ef_format" option specified, then: libs.ref/<libname>/liberty/*.lib)
 # while
 #
-# 	-liberty x/y/z/PVT_*/*.lib up 1
+#       -liberty x/y/z/PVT_*/*.lib up 1
 #
 # would install all .lib files into libs.ref/liberty/<libname>/PVT_*/*.lib
 # (if "-ef_format" option specified, then: libs.ref/<libname>/liberty/PVT_*/*.lib)
@@ -72,34 +72,34 @@
 #
 # Other library-specific arguments are:
 #
-#	nospec	:  Remove timing specification before installing
-#		    (used with verilog files;  needs to be extended to
-#		    liberty files)
-#	compile :  Create a single library from all components.  Used
-#		    when a foundry library has inconveniently split
-#		    an IP library (LEF, CDL, verilog, etc.) into
-#		    individual files.
-#	stub :	   Remove contents of subcircuits from CDL or SPICE
-#		    netlist files.
+#       nospec  :  Remove timing specification before installing
+#                   (used with verilog files;  needs to be extended to
+#                   liberty files)
+#       compile :  Create a single library from all components.  Used
+#                   when a foundry library has inconveniently split
+#                   an IP library (LEF, CDL, verilog, etc.) into
+#                   individual files.
+#       stub :     Remove contents of subcircuits from CDL or SPICE
+#                   netlist files.
 #
-#	priv :	   Mark the contents being installed as privleged, and
-#		    put them in a separate root directory libs.priv
-#		    where they can be given additional read/write
-#		    restrictions.
+#       priv :     Mark the contents being installed as privleged, and
+#                   put them in a separate root directory libs.priv
+#                   where they can be given additional read/write
+#                   restrictions.
 #
-#	exclude :  Followed by "=" and a comma-separated list of names.
-#		    exclude these files/modules/subcircuits.  Names may
-#		    also be wildcarded in "glob" format.
+#       exclude :  Followed by "=" and a comma-separated list of names.
+#                   exclude these files/modules/subcircuits.  Names may
+#                   also be wildcarded in "glob" format.
 #
-#	rename :   Followed by "=" and an alternative name.  For any
-#		    file that is a single entry, change the name of
-#		    the file in the target directory to this (To-do:
-#		    take regexps for multiple files).  When used with
-#		    "compile" or "compile-only", this refers to the
-# 		    name of the target compiled file.
+#       rename :   Followed by "=" and an alternative name.  For any
+#                   file that is a single entry, change the name of
+#                   the file in the target directory to this (To-do:
+#                   take regexps for multiple files).  When used with
+#                   "compile" or "compile-only", this refers to the
+#                   name of the target compiled file.
 #
-#	noconvert : Install only; do not attempt to convert to other
-#		    formats (applies only to GDS, CDL, and LEF).
+#       noconvert : Install only; do not attempt to convert to other
+#                   formats (applies only to GDS, CDL, and LEF).
 #
 # NOTE:  This script can be called once for all libraries if all file
 # types (gds, cdl, lef, etc.) happen to all work with the same wildcards.
@@ -134,7 +134,7 @@ def usage():
     print("   -liberty <path>       Path to Liberty timing files")
     print("   -gds <path>       Path to GDS data")
     print("   -verilog <path>   Path to verilog models")
-    print("   -library <type> <name> [<target>]	 See below")
+    print("   -library <type> <name> [<target>]  See below")
     print("")
     print(" All <path> names may be wild-carded with '*' ('glob'-style wild-cards)")
     print("")
@@ -143,9 +143,9 @@ def usage():
     print(" hierarchy of the source path to include when copying to the target.")
     print("")
     print(" Library <type> may be one of:")
-    print("    digital		Digital standard cell library")
-    print("    primitive	Primitive device library")
-    print("    general		All other library types (I/O, analog, etc.)")
+    print("    digital          Digital standard cell library")
+    print("    primitive        Primitive device library")
+    print("    general          All other library types (I/O, analog, etc.)")
     print("")
     print(" If <target> is unspecified then <name> is used for the target.")
 
@@ -299,8 +299,8 @@ def tfilter(targetroot, filterscript, outfile=[]):
             makeuserwritable(outfile)
 
         fproc = subprocess.run([filterscript, targetroot, outfile],
-			stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
-			stderr = subprocess.PIPE, universal_newlines = True)
+                        stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
+                        stderr = subprocess.PIPE, universal_newlines = True)
         if fproc.stdout:
             for line in fproc.stdout.splitlines():
                 print(line)
@@ -316,8 +316,8 @@ def tfilter(targetroot, filterscript, outfile=[]):
                 print('   Filtering file ' + tfile + ' with ' + filterroot)
                 sys.stdout.flush()
                 fproc = subprocess.run([filterscript, tfile, tfile],
-			stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
-			stderr = subprocess.PIPE, universal_newlines = True)
+                        stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
+                        stderr = subprocess.PIPE, universal_newlines = True)
                 if fproc.stdout:
                     for line in fproc.stdout.splitlines():
                         print(line)
@@ -614,7 +614,7 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only, exc
                 print('box move e 200', file=ofile)
                                 
             print('puts stdout "Writing GDS library ' + destlib + '"', file=ofile)
-	    print('gds library', file=ofile)
+            print('gds library', file=ofile)
             print('gds write ' + destlib, file=ofile)
             print('puts stdout "Done."', file=ofile)
             print('quit -noprompt', file=ofile)
@@ -626,11 +626,11 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only, exc
         sys.stdout.flush()
 
         mproc = subprocess.run(['magic', '-dnull', '-noconsole',
-			destlibdir + '/generate_magic.tcl'],
-			stdin = subprocess.DEVNULL,
-			stdout = subprocess.PIPE,
-			stderr = subprocess.PIPE, cwd = destlibdir,
-			universal_newlines = True)
+                        destlibdir + '/generate_magic.tcl'],
+                        stdin = subprocess.DEVNULL,
+                        stdout = subprocess.PIPE,
+                        stderr = subprocess.PIPE, cwd = destlibdir,
+                        universal_newlines = True)
 
         if mproc.stdout:
             for line in mproc.stdout.splitlines():
@@ -889,9 +889,9 @@ if __name__ == '__main__':
     have_mag_8_2 = False
     try:
         mproc = subprocess.run(['magic', '--version'],
-		stdout = subprocess.PIPE,
-		stderr = subprocess.PIPE,
-		universal_newlines = True)
+                stdout = subprocess.PIPE,
+                stderr = subprocess.PIPE,
+                universal_newlines = True)
         if mproc.stdout:
             mag_version = mproc.stdout.splitlines()[0]
             mag_version_info = mag_version.split('.')
@@ -1427,7 +1427,7 @@ if __name__ == '__main__':
                 if item.split('=')[0] == 'ignore':
                     ignorelist = item.split('=')[1].split(',')
 
-	# Option 'noconvert' is a standalone keyword.
+        # Option 'noconvert' is a standalone keyword.
         if 'noconvert' in option:
             if option[0] == 'cdl':
                 no_cdl_convert = True
@@ -1600,7 +1600,7 @@ if __name__ == '__main__':
                         tclfixedlist = '{' + ' '.join(fixedlist) + '}'
                         print('set devlist ' + tclfixedlist, file=ofile)
                         print('set topcell [lindex [cellname list top] 0]',
-				    file=ofile)
+                                    file=ofile)
 
                         print('foreach cellname $devlist {', file=ofile)
                         print('    load $cellname', file=ofile)
@@ -1769,9 +1769,9 @@ if __name__ == '__main__':
                 # Run magic to read in the GDS file and write out magic databases.
                 with open(destlibdir + '/generate_magic.tcl', 'r') as ifile:
                     mproc = subprocess.run(['magic', '-dnull', '-noconsole'],
-				stdin = ifile, stdout = subprocess.PIPE,
-				stderr = subprocess.PIPE, cwd = destlibdir,
-				universal_newlines = True)
+                                stdin = ifile, stdout = subprocess.PIPE,
+                                stderr = subprocess.PIPE, cwd = destlibdir,
+                                universal_newlines = True)
                     if mproc.stdout:
                         for line in mproc.stdout.splitlines():
                             print(line)
@@ -1960,7 +1960,7 @@ if __name__ == '__main__':
                         if pdklibrary and lefmacro in shortdevlist:
                             print('set cellname ' + lefmacro, file=ofile)
                             print('if {[lsearch $devlist $cellname] >= 0} {',
-					file=ofile)
+                                        file=ofile)
                             print('    load $cellname', file=ofile)
                             print('    property gencell $cellname', file=ofile)
                             print('    property parameter m=1', file=ofile)
@@ -1988,9 +1988,9 @@ if __name__ == '__main__':
                 # Run magic to read in the LEF file and write out magic databases.
                 with open(destlibdir + '/generate_magic.tcl', 'r') as ifile:
                     mproc = subprocess.run(['magic', '-dnull', '-noconsole'],
-				stdin = ifile, stdout = subprocess.PIPE,
-				stderr = subprocess.PIPE, cwd = destlibdir,
-				universal_newlines = True)
+                                stdin = ifile, stdout = subprocess.PIPE,
+                                stderr = subprocess.PIPE, cwd = destlibdir,
+                                universal_newlines = True)
                     if mproc.stdout:
                         for line in mproc.stdout.splitlines():
                             print(line)
@@ -2211,9 +2211,9 @@ if __name__ == '__main__':
 
                 print('Running (in ' + destlibdir + '): ' + ' '.join(procopts))
                 pproc = subprocess.run(procopts,
-			stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
-			stderr = subprocess.PIPE, cwd = destlibdir,
-			universal_newlines = True)
+                        stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
+                        stderr = subprocess.PIPE, cwd = destlibdir,
+                        universal_newlines = True)
                 if pproc.stdout:
                     for line in pproc.stdout.splitlines():
                         print(line)
@@ -2347,11 +2347,11 @@ if __name__ == '__main__':
             sys.stdout.flush()
 
             mproc = subprocess.run(['magic', '-dnull', '-noconsole',
-				destlibdir + '/generate_magic.tcl'],
-				stdin = subprocess.DEVNULL,
-				stdout = subprocess.PIPE,
-				stderr = subprocess.PIPE, cwd = destlibdir,
-				universal_newlines = True)
+                                destlibdir + '/generate_magic.tcl'],
+                                stdin = subprocess.DEVNULL,
+                                stdout = subprocess.PIPE,
+                                stderr = subprocess.PIPE, cwd = destlibdir,
+                                universal_newlines = True)
             if mproc.stdout:
                 for line in mproc.stdout.splitlines():
                     print(line)
