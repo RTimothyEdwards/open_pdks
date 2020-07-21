@@ -317,9 +317,9 @@ if __name__ == '__main__':
             # absolute pathname.
             stagingdir = os.path.abspath(stagingdir)
 
-    # If link_from is the same as localdir, then set link_from to None
-    if link_from == localdir:
-        link_from = None
+        # If link_from is the same as localdir, then set link_from to None
+        if link_from == localdir:
+            link_from = None
 
     # checkdir is the DIST target directory for the PDK pointed
     # to by link_name.  Files must be found there before creating
@@ -411,7 +411,7 @@ if __name__ == '__main__':
     # match (Note:  This is done only for ngspice model files;  other tool files are
     # generally small and deemed unnecessary to make symbolic links).
 
-    if link_from != 'source':
+    if link_from and link_from != 'source':
         thispdk = os.path.split(targetdir)[1]
 
         # Only create links for PDKs other than the one we are making links to.
@@ -472,7 +472,7 @@ if __name__ == '__main__':
     # file "sources.txt" with the name of the source directories for each
     # install directory.
 
-    if link_from == 'source':
+    if link_from and link_from == 'source':
         print('Replacing files with symbolic links to source where possible.')
         for refdir in refdirs:
             if ef_format:
