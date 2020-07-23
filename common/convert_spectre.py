@@ -62,18 +62,20 @@ def parse_param_line(line, inparam, insub):
             value = pmatch.group(2)
             rest = pmatch.group(3)
 
-            # It is not clear why spectre allows space separators
-            # in a parameter expression when there can be multiple
-            # parameters per line as well (?).
-            nmatch = parm3rex.match(rest)
-            if not nmatch:
-                value += rest.replace(' ', '').replace('\t', '')
-                rest = ''
-
             if is_number(value):
                 fmtline.append(value)
             else:
-                fmtline.append("'" + value + "'")
+                fmtline.append('{' + value + '}')
+
+            # These parameter sub-expressions are related to
+            # monte carlo simulation and are incompatible with
+            # ngspice.  So put them in an in-line comment
+
+            if rest != '':
+                nmatch = parm3rex.match(rest)
+                if not nmatch:
+                    fmtline.append(' $ ' + rest.replace(' ', '').replace('\t', ''))
+                    rest = ''
         else:
             break
 
