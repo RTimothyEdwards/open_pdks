@@ -10,7 +10,7 @@
 # Revisions:  See below
 #
 # This file is an Open Source foundry process describing
-# the SkyWater S8 hybrid 0.18um / 0.13um fabrication
+# the SkyWater sky130 hybrid 0.18um / 0.13um fabrication
 # process.  The file may be distributed under the terms
 # of the Apache 2.0 license agreement.
 #
