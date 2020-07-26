@@ -36,7 +36,7 @@ def usage():
 
 #----------------------------------------------------------------------------
 
-def create_gds_library(destlibdir, destlib, startup_script, do_compile_only, excludelist, keep):
+def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=False, excludelist=[], keep=False):
 
     alllibname = destlibdir + '/' + destlib + '.gds'
     if os.path.isfile(alllibname):
@@ -130,9 +130,6 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only, exc
             for gfile in glist:
                 if os.path.isfile(gfile):
                     os.remove(gfile)
-            if newname:
-                if os.path.isfile(newname):
-                    os.remove(newname)
         if not keep:
             os.remove(destlibdir + '/generate_magic.tcl')
     else:
@@ -163,7 +160,7 @@ if __name__ == '__main__':
             keyval = option[1:].split('=')
             if keyval[0] == 'compile-only':
                 if len(keyval) > 0:
-                    if keyval[1].tolower() == 'true' or keyval[1] == 'yes' or keyval[1] == '1':
+                    if keyval[1].tolower() == 'true' or keyval[1].tolower() == 'yes' or keyval[1] == '1':
                         do_compile_only = True
                 else:
                     do_compile_only = True

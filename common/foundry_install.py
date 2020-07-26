@@ -872,6 +872,11 @@ if __name__ == '__main__':
 
                     create_verilog_library(destlibdir, compname, do_compile_only, do_stub, excludelist)
 
+                    if do_compile_only == True:
+                        if newname:
+                            if os.path.isfile(newname):
+                                os.remove(newname)
+
                 elif option[0] == 'gds' and have_mag_8_2:
                     # If there is not a single file with all GDS cells in it,
                     # then compile one.
@@ -882,12 +887,22 @@ if __name__ == '__main__':
                         startup_script = targetdir + mag_current + pdkname + '.magicrc'
                     create_gds_library(destlibdir, compname, startup_script, do_compile_only, excludelist)
 
+                    if do_compile_only == True:
+                        if newname:
+                            if os.path.isfile(newname):
+                                os.remove(newname)
+
                 elif option[0] == 'liberty' or option[0] == 'lib':
                     # If there is not a single file with all liberty cells in it,
                     # then compile one, because one does not want to have to have
                     # an include line for every single cell used in a design.
 
                     create_lib_library(destlibdir, compname, do_compile_only, excludelist)
+
+                    if do_compile_only == True:
+                        if newname:
+                            if os.path.isfile(newname):
+                                os.remove(newname)
 
                 elif option[0] == 'spice' or option[0] == 'spi':
                     # If there is not a single file with all SPICE subcircuits in it,
@@ -918,6 +933,11 @@ if __name__ == '__main__':
                     # an include line for every single cell used in a design.
 
                     create_lef_library(destlibdir, compname, do_compile_only, excludelist)
+
+                    if do_compile_only == True:
+                        if newname:
+                            if os.path.isfile(newname):
+                                os.remove(newname)
 
         # Find any libraries/options marked as "privileged" (or "private") and
         # move the files from libs.tech or libs.ref to libs.priv, leaving a
