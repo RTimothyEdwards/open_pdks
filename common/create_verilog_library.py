@@ -35,7 +35,7 @@ def usage():
 
 #----------------------------------------------------------------------------
 
-def create_verilog_library(destlibdir, destlib, do_compile_only, do_stub, excludelist):
+def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=False, excludelist=[]):
 
     alllibname = destlibdir + '/' + destlib + '.v'
     if os.path.isfile(alllibname):

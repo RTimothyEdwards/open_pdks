@@ -14,6 +14,8 @@ import os
 import glob
 import fnmatch
 
+#----------------------------------------------------------------------------
+
 def usage():
     print('')
     print('Usage:')
@@ -29,14 +31,16 @@ def usage():
     print('    -excludelist=     is a comma-separated list of files to ignore')
     print('')
 
+#----------------------------------------------------------------------------
 # Warning:  This script is unfinished.  Needs to parse the library header
 # in each cell and generate a new library header combining the contents of
 # all cell headers.  Also:  The library name in the header needs to be
 # changed to the full library name.  Also:  There is no mechanism for
 # collecting all files belonging to a single process corner/temperature/
 # voltage.
+#----------------------------------------------------------------------------
 
-def create_lib_library(destlibdir, destlib, do_compile_only, excludelist):
+def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[]):
 
     alllibname = destlibdir + '/' + destlib + '.lib'
     if os.path.isfile(alllibname):
@@ -83,9 +87,6 @@ def create_lib_library(destlibdir, destlib, do_compile_only, excludelist):
             for lfile in llist:
                 if os.path.isfile(lfile):
                     os.remove(lfile)
-            if newname:
-                if os.path.isfile(newname):
-                    os.remove(newname)
     else:
         print('Only one file (' + str(llist) + ');  ignoring "compile" option.')
 
@@ -113,7 +114,7 @@ if __name__ == '__main__':
             keyval = option[1:].split('=')
             if keyval[0] == 'compile-only':
                 if len(keyval) > 0:
-                    if keyval[1].tolower() == 'true' or keyval[1] == 'yes' or keyval[1] == '1':
+                    if keyval[1].tolower() == 'true' or keyval[1].tolower() == 'yes' or keyval[1] == '1':
                         do_compile_only = True
                 else:
                     do_compile_only = True

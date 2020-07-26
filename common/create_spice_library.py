@@ -36,7 +36,7 @@ def usage():
 
 #----------------------------------------------------------------------------
 
-def create_spice_library(destlibdir, destlib, spiext, do_compile_only, do_stub, excludelist):
+def create_spice_library(destlibdir, destlib, spiext, do_compile_only=False, do_stub=False, excludelist=[]):
 
     fformat = 'CDL' if spiext == '.cdl' else 'SPICE'
 
