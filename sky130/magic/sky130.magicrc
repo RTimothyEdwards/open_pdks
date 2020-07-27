@@ -16,7 +16,7 @@ if {[lindex $scalefac 1] < 2} {
 drc euclidean on
 
 # Allow override of PDK path from environment variable PDKPATH
-if {[catch {set PDKPATH $::env(PDKPATH)}]} {
+if {[catch {set PDKPATH $env(PDKPATH)}]} {
     set PDKPATH "STAGING_PATH/TECHNAME"
 }
 
@@ -44,7 +44,7 @@ set SUB VSUBS
 # Allow override of type of magic library views used, "mag" or "maglef",
 # from environment variable MAGTYPE
 
-if {[catch {set MAGTYPE $::env(MAGTYPE)}]} {
+if {[catch {set MAGTYPE $env(MAGTYPE)}]} {
    set MAGTYPE maglef
 }
 
