@@ -1,15 +1,17 @@
 set current_folder [file dirname [file normalize [info script]]]
 # Technology lib
 
-set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib"
-set ::env(LIB_MAX) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ff_n40C_1v95.lib"
-set ::env(LIB_MIN) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__ss_100C_1v60.lib"
+#ifdef EF_FORMAT
+set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(PDK_VARIANT)/sky130_fd_sc_hd__tt_025C_1v80.lib"
+set ::env(LIB_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(PDK_VARIANT)/sky130_fd_sc_hd__ff_n40C_1v95.lib"
+set ::env(LIB_MIN) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(PDK_VARIANT)/sky130_fd_sc_hd__ss_100C_1v60.lib"
+#else (!EF_FORMAT)
+set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PDK_VARIANT)/lib/sky130_fd_sc_hd__tt_025C_1v80.lib"
+set ::env(LIB_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PDK_VARIANT)/lib/sky130_fd_sc_hd__ff_n40C_1v95.lib"
+set ::env(LIB_MIN) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PDK_VARIANT)/lib/sky130_fd_sc_hd__ss_100C_1v60.lib"
+#endif (!EF_FORMAT)
 
 set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
-
-# Tracks info
-set ::env(TRACKS_INFO_FILE) "$::env(PDK_ROOT)/TECHNAME/libs.tech/openlane/sky130_fd_sc_hd/tracks.info"
-
 
 # Placement site for core cells
 # This can be found in the technology lef
