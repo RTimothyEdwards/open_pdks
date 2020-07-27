@@ -418,7 +418,7 @@ if __name__ == '__main__':
     # match (Note:  This is done only for ngspice model files;  other tool files are
     # generally small and deemed unnecessary to make symbolic links).
 
-    if link_from and link_from != 'source':
+    if link_from not in ['source', None]:
         thispdk = os.path.split(targetdir)[1]
 
         # Only create links for PDKs other than the one we are making links to.
@@ -485,7 +485,7 @@ if __name__ == '__main__':
     # file "sources.txt" with the name of the source directories for each
     # install directory.
 
-    if link_from and link_from == 'source':
+    if link_from not in ['source', None]:
         print('Replacing files with symbolic links to source where possible.')
         for refdir in refdirs:
             if ef_format:
