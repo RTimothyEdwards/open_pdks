@@ -272,11 +272,12 @@ klayout-a: klayout/${TECH}.lyp klayout/${TECH}.lyt
 	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyp > ${KLAYOUT_STAGING_A}/${SKY130A}.lyp
 	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyt > ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
 
-openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl
+openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_hvl/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_A}
 	mkdir -p ${OPENLANE_STAGING_A}
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_hd
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_hs
+	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl
 	rm -f ${OPENLANE_STAGING_A}/common_pdn.info
 	rm -f ${OPENLANE_STAGING_A}/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
@@ -286,6 +287,9 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tracks.info
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/no_synth.cells
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/config.tcl
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tracks.info
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/no_synth.cells
 	${CPP} ${SKY130A_DEFS} openlane/common_pdn.tcl > ${OPENLANE_STAGING_A}/common_pdn.tcl
 	${CPP} ${SKY130A_DEFS} openlane/config.tcl > ${OPENLANE_STAGING_A}/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
@@ -295,6 +299,9 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/no_synth.cells
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/config.tcl
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tracks.info
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/no_synth.cells	
 
 vendor-a:
 	# Install base device models from vendor files
