@@ -72,9 +72,8 @@ STAGING_PATH = `pwd`
 # from source, where they don't.
 
 # LINK_TARGETS = source
-# LINK_TARGETS = none
+LINK_TARGETS = none
 # LINK_TARGETS = sky130A
-LINK_TARGETS = source
 
 # Paths:
 
