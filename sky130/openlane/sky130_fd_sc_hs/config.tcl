@@ -1,15 +1,17 @@
 set current_folder [file dirname [file normalize [info script]]]
 # Technology lib
 
-set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hs/lib/sky130_fd_sc_hs__tt_025C_1v80.lib"
-set ::env(LIB_MAX) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hs/lib/sky130_fd_sc_hs__ff_n40C_1v95.lib"
-set ::env(LIB_MIN) "$::env(PDK_ROOT)/TECHNAME/libs.ref/sky130_fd_sc_hs/lib/sky130_fd_sc_hs__ss_100C_1v60.lib"
+#ifdef EF_FORMAT
+set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(PDK_VARIANT)/sky130_fd_sc_hs__tt_025C_1v80.lib"
+set ::env(LIB_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(PDK_VARIANT)/sky130_fd_sc_hs__ff_n40C_1v95.lib"
+set ::env(LIB_MIN) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(PDK_VARIANT)/sky130_fd_sc_hs__ss_100C_1v60.lib"
+#else (!EF_FORMAT)
+set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PDK_VARIANT)/lib/sky130_fd_sc_hs__tt_025C_1v80.lib"
+set ::env(LIB_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PDK_VARIANT)/lib/sky130_fd_sc_hs__ff_n40C_1v95.lib"
+set ::env(LIB_MIN) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PDK_VARIANT)/lib/sky130_fd_sc_hs__ss_100C_1v60.lib"
+#endif (!EF_FORMAT)
 
 set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
-
-#tracks info
-set ::env(TRACKS_INFO_FILE) "$::env(PDK_ROOT)/TECHNAME/libs.tech/openlane/sky130_fd_sc_hs/tracks.info"
-
 
 # Placement site for core cells
 # This can be found in the technology lef
@@ -44,8 +46,10 @@ set ::env(FILL_CELL) "sky130_fd_sc_hs__fill_"
 set ::env(DECAP_CELL) "sky130_fd_sc_hs__decap_"
 
 # Diode insertaion
-set ::env(DIODE_CELL) "sky130_fd_sc_hs__diode_2"
-set ::env(DIODE_CELL_PIN) "DIODE"
+set ::env(DIODE_CELL) ""
+set ::env(FAKEDIODE_CELL) ""
+set ::env(DIODE_CELL_PIN) ""
+set ::env(DIODE_INSERTION_STRATEGY) 0
 
 set ::env(CELL_PAD) 8
 set ::env(CELL_PAD_EXECLUDE) "sky130_fd_sc_hs__tap* sky130_fd_sc_hs__decap* sky130_fd_sc_hs__fill*"
@@ -54,3 +58,7 @@ set ::env(ROOT_CLK_BUFFER) sky130_fd_sc_hs__clkbuf_16
 set ::env(CLK_BUFFER) sky130_fd_sc_hs__clkbuf_4
 set ::env(CLK_BUFFER_INPUT) A
 set ::env(CLK_BUFFER_OUTPUT) X
+set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_hs__clkbuf_2 sky130_fd_sc_hs__clkbuf_4 sky130_fd_sc_hs__clkbuf_8"
+set ::env(CTS_SQR_CAP) 0.469e-3
+set ::env(CTS_SQR_RES) 0.125
+set ::env(CTS_MAX_CAP) 1.8894300000
