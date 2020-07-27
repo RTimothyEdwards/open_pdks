@@ -74,10 +74,13 @@ Step 1:
     Edit the Makefile to set the following definitions for your host system:
 
 	EF_STYLE = Select "1" for an efabless-style file structure, "0"
-			otherwise.  There are only minor differences in
-			these two styles, namely for version tracking of
-			the Magic setup files, and the location of the
-			technology LEF file.
+			otherwise. There are some differences in
+			these two styles, the most important of which being
+			that the order of directories for the IP libraries
+			is <file_format>/<library_name> instead of
+			<library_name>/<file_format>. Other differences
+			include version tracking of the Magic setup files
+			and the location of the technology LEF file.
 
 	LINK_TARGETS = "none" or "source".  "none" copies files from the source
 			directories to the target.  "source" makes symbolic links
