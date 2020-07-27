@@ -335,7 +335,7 @@ vendor-a:
 		-techlef %l/latest/tech/*.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
-		-lef %l/latest/cells/*/*.lef exclude=*.*.v compile-only \
+		-lef %l/latest/cells/*/*.lef exclude=*.*.lef compile-only \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib \
 		-gds %l/latest/cells/*/*.gds compile-only \
