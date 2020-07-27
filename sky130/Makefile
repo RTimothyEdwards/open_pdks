@@ -83,7 +83,7 @@ LINK_TARGETS = source
 # SKYWATER_PATH = ~/gits/skywater-pdk-scratch/skywater-pdk/libraries
 # Version below is also from foss-eda-tools and is more recent than
 # the scratch repo above.
-SKYWATER_PATH = ~/gits/skywater-pdk/libraries
+SKYWATER_PATH = ${PDK_ROOT}/skywater-pdk/libraries
 
 # Path to OSU standard cell library sources
 OSU_PATH = ~/gits/osu_130_pdk
@@ -92,12 +92,11 @@ OSU_PATH = ~/gits/osu_130_pdk
 # Once updated in git, the git project can be distributed to all hosts.
 #
 ifeq (${EF_STYLE}, 1)
-    LOCAL_PATH = /ef/tech/SW
+    LOCAL_PATH = ${PDK_ROOT}
     CONFIG_DIR = .ef-config
     REV_DIR = ${REVISION}
 else
-    # LOCAL_PATH = /usr/local/share/vlsi/SkyWater
-    LOCAL_PATH = ~/projects/efabless/tech/SW
+    LOCAL_PATH = ${PDK_ROOT}
     CONFIG_DIR = .config
     REV_DIR = .
 endif
