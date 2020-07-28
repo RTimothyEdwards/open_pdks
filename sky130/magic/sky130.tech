@@ -3870,6 +3870,9 @@ defaultareacap     nwell well 120
  defaultsideoverlap allm4 metal4 allm5 metal5 47
 #endif (METAL5)
 
+#ifdef REDISTRIBUTION
+#endif (REDISTRIBUTION)
+
 # Devices:  Use document (...)
 
 variants (sim)

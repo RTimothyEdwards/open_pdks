@@ -117,8 +117,8 @@ SKY130A_DEFS = -DTECHNAME=sky130A -DREVISION=${REVISION}
 
 # Module definitions for each process node
 # (Note that MOS is default and therefore not used anywhere)
-# SKY130A_DEFS += -DMETAL5 -DMIM -DREDISTRIBUTION
-SKY130A_DEFS += -DMETAL5 -DMIM
+SKY130A_DEFS += -DMETAL5 -DMIM -DREDISTRIBUTION
+# SKY130A_DEFS += -DMETAL5 -DMIM
 
 # Add staging path
 SKY130A_DEFS += -DSTAGING_PATH=${STAGING_PATH}

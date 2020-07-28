@@ -499,6 +499,10 @@ if __name__ == '__main__':
             if fileext == '.v' or fileext == '.va':
                 continue
 
+            # .scs files are purely spectre and meaningless to SPICE, so ignore them.
+            if fileext == '.scs':
+                continue
+
             froot = os.path.split(filename)[1]
             convert_file(filename, spicepath + '/' + froot)
 
