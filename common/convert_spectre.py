@@ -30,14 +30,17 @@ def is_number(s):
 def parse_param_line(line, inparam, insub):
 
     # Regexp patterns
-    parm1rex = re.compile('parameters' + '[ \t]*(.*)')
-    parm2rex = re.compile('\+[ \t]*(.*)')
-    parm3rex = re.compile('[ \t]*([^= \t]+)[ \t]*=[ \t]*([^ \t]+)[ \t]*(.*)')
+    parm1rex = re.compile('[ \t]*parameters[ \t]*(.*)')
+    parm2rex = re.compile('[ \t]*params:[ \t]*(.*)')
+    parm3rex = re.compile('\+[ \t]*(.*)')
+    parm4rex = re.compile('[ \t]*([^= \t]+)[ \t]*=[ \t]*([^ \t]+)[ \t]*(.*)')
+    parm5rex = re.compile('[ \t]*([^= \t]+)[ \t]*(.*)')
 
     fmtline = []
+    iscdl = False
     
     if inparam:
-        pmatch = parm2rex.match(line)
+        pmatch = parm3rex.match(line)
         if pmatch:
             fmtline.append('+')
             rest = pmatch.group(1)
@@ -52,10 +55,19 @@ def parse_param_line(line, inparam, insub):
                 fmtline.append('.param')
             rest = pmatch.group(1)
         else:
-            return ''
+            pmatch = parm2rex.match(line)
+            if pmatch:
+                if insub:
+                    fmtline.append('+')
+                else:
+                    return ''
+                rest = pmatch.group(1)
+                iscdl = True
+            else:
+                return ''
 
     while rest != '':
-        pmatch = parm3rex.match(rest)
+        pmatch = parm4rex.match(rest)
         if pmatch:
             fmtline.append(pmatch.group(1))
             fmtline.append('=')
@@ -72,10 +84,18 @@ def parse_param_line(line, inparam, insub):
             # ngspice.  So put them in an in-line comment
 
             if rest != '':
-                nmatch = parm3rex.match(rest)
+                nmatch = parm4rex.match(rest)
                 if not nmatch:
                     fmtline.append(' $ ' + rest.replace(' ', '').replace('\t', ''))
                     rest = ''
+        elif iscdl:
+            # Match to a CDL subckt parameter that does not have an '=' and so
+            # assumes that the parameter is always passed.  That is not legal SPICE,
+            # so supply a default value of 1.
+            pmatch = parm5rex.match(rest)
+            if pmatch:
+                fmtline.append(pmatch.group(1) + '=1')
+                rest = pmatch.group(2)
         else:
             break
 
@@ -87,6 +107,7 @@ def convert_file(in_file, out_file):
     statrex = re.compile('[ \t]*statistics[ \t]*\{(.*)')
     simrex = re.compile('[ \t]*simulator[ \t]+([^= \t]+)[ \t]*=[ \t]*(.+)')
     insubrex = re.compile('[ \t]*inline[ \t]+subckt[ \t]+([^ \t]+)[ \t]*\(([^)]*)')
+    cdlsubrex = re.compile('\.subckt[ \t]+([^ \t]+)[ \t]*\(([^)]*)')
     endsubrex = re.compile('[ \t]*ends[ \t]+(.+)')
     modelrex = re.compile('[ \t]*model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+\{(.*)')
     binrex = re.compile('[ \t]*([0-9]+):[ \t]+type[ \t]*=[ \t]*(.*)')
@@ -99,6 +120,7 @@ def convert_file(in_file, out_file):
     # Devices (resistor, capacitor, subcircuit as resistor or capacitor)
     caprex = re.compile('c([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*capacitor[ \t]*(.*)', re.IGNORECASE)
     resrex = re.compile('r([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*resistor[ \t]*(.*)', re.IGNORECASE)
+    cdlrex = re.compile('[ \t]*([crdlmqx])([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
 
     with open(in_file, 'r') as ifile:
         speclines = ifile.read().splitlines()
@@ -107,7 +129,7 @@ def convert_file(in_file, out_file):
     inparam = False
     inmodel = False
     inpinlist = False
-    isspectre = True
+    isspectre = False
     spicelines = []
     calllines = []
     modellines = []
@@ -140,7 +162,7 @@ def convert_file(in_file, out_file):
                 spicelines.append(line.strip())
             continue
 
-        # Item 3.  Flag continuation lines
+        # Item 4.  Flag continuation lines
         if line.strip().startswith('+'):
             contline = True
         else:
@@ -150,7 +172,17 @@ def convert_file(in_file, out_file):
             if inpinlist:
                 inpinlist = False 
 
-        # Item 4.  Count through { ... } blocks that are not SPICE syntax
+        # Item 3.  Handle blank lines like comment lines
+        if line.strip() == '':
+            if modellines != []:
+                modellines.append(line.strip())
+            elif calllines != []:
+                calllines.append(line.strip())
+            else:
+                spicelines.append(line.strip())
+            continue
+
+        # Item 5.  Count through { ... } blocks that are not SPICE syntax
         if blockskip > 0:
             # Warning:  Assumes one brace per line, may or may not be true
             if '{' in line:
@@ -165,7 +197,7 @@ def convert_file(in_file, out_file):
             spicelines.append('* ' + line)
             continue
 
-        # Item 5.  Handle continuation lines
+        # Item 6.  Handle continuation lines
         if contline:
             if inparam:
                 # Continue handling parameters
@@ -179,7 +211,7 @@ def convert_file(in_file, out_file):
                         spicelines.append(fmtline)
                     continue
 
-        # Item 6.  Regexp matching
+        # Item 7.  Regexp matching
 
         # Catch "simulator lang="
         smatch = simrex.match(line)
@@ -213,7 +245,6 @@ def convert_file(in_file, out_file):
         else:
             mmatch = stdmodelrex.match(line)
         if mmatch:
-            modellines = []
             modname = mmatch.group(1)
             modtype = mmatch.group(2)
 
@@ -233,23 +264,23 @@ def convert_file(in_file, out_file):
             if isspectre:
                 imatch = insubrex.match(line)
             else:
-                imatch = stdsubrex.match(line)
+                # Check for CDL format .subckt lines first
+                imatch = cdlsubrex.match(line)
+                if not imatch:
+                    imatch = stdsubrex.match(line)
 
             if imatch:
                 insub = True
                 subname = imatch.group(1)
-                calllines = []
                 if isspectre:
                     devrex = re.compile(subname + '[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
-                    # If there is no close-parenthesis then we should expect it on
-                    # a continuation line
-                    inpinlist = True if ')' not in line else False
-                    # Remove parentheses groups from subcircuit arguments
-                    spicelines.append('.subckt ' + ' ' + subname + ' ' + imatch.group(2))
                 else:
                     devrex = re.compile(subname + '[ \t]*([^ \t]+)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
-                    inpinlist = True
-                    spicelines.append(line)
+                # If there is no close-parenthesis then we should expect it on
+                # a continuation line
+                inpinlist = True if ')' not in line else False
+                # Remove parentheses groups from subcircuit arguments
+                spicelines.append('.subckt ' + ' ' + subname + ' ' + imatch.group(2))
                 continue
 
         else:
@@ -300,6 +331,7 @@ def convert_file(in_file, out_file):
 
                     for line in calllines[1:]:
                         spicelines.append(line)
+                    calllines = []
 
                     spicelines.append('.ends ' + subname)
 
@@ -307,6 +339,7 @@ def convert_file(in_file, out_file):
                     spicelines.append('')
                     for line in modellines:
                         spicelines.append(line)
+                    modellines = []
                     
                     insub = False
                     inmodel = False
@@ -341,6 +374,18 @@ def convert_file(in_file, out_file):
                 else:
                     spicelines.append('r' + dmatch.group(1) + ' ' + dmatch.group(2) + ' ' + dmatch.group(3))
                     continue
+
+            if not isspectre:
+                cmatch = cdlrex.match(line)
+                if cmatch:
+                    fmtline = parse_param_line(cmatch.group(5), True, insub)
+                    if fmtline != '':
+                        inparam = True
+                        spicelines.append(cmatch.group(1) + cmatch.group(2) + ' ' + cmatch.group(3) + ' ' + cmatch.group(4) + ' ' + fmtline)
+                        continue
+                    else:
+                        spicelines.append(cmatch.group(1) + cmatch.group(2) + ' ' + cmatch.group(3) + ' ' + cmatch.group(4) + ' ' + cmatch.group(5))
+                        continue
 
             # Check for a line that begins with the subcircuit name
           
