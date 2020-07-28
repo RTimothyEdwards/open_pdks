@@ -48,6 +48,9 @@ def convert_file(in_file, out_path, out_file):
 
     for line in inplines:
 
+        if subname == 'xrdn':
+            print('handling line in xrdn, file ' + in_file + ': "' + line + '"')
+
         # Item 1.  Handle comment lines
         if line.startswith('*'):
             if subcktlines != []:
@@ -66,7 +69,17 @@ def convert_file(in_file, out_path, out_file):
             if inpinlist:
                 inpinlist = False 
 
-        # Item 3.  Handle continuation lines
+        # Item 3.  Handle blank lines like comment lines
+        if line.strip() == '':
+            if subname == 'xrdn':
+                print('blank line in xrdn subcircuit')
+            if subcktlines != []:
+                subcktlines.append(line)
+            else:
+                spicelines.append(line)
+            continue
+
+        # Item 4.  Handle continuation lines
         if contline:
             if inparam:
                 # Continue handling parameters
@@ -76,7 +89,7 @@ def convert_file(in_file, out_path, out_file):
                     spicelines.append(line)
                 continue
 
-        # Item 4.  Regexp matching
+        # Item 5.  Regexp matching
 
         # If inside a subcircuit, remove "parameters".  If outside,
         # change it to ".param"

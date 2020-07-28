@@ -270,6 +270,13 @@ def convert_file(in_file, out_file):
                     imatch = stdsubrex.match(line)
 
             if imatch:
+                # If a model block is pending, then dump it
+                if modellines != []:
+                    for line in modellines:
+                        spicelines.append(line)
+                    modellines = []
+                    inmodel = False
+
                 insub = True
                 subname = imatch.group(1)
                 if isspectre:
