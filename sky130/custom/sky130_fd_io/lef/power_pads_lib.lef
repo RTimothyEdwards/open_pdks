@@ -5388,4 +5388,4 @@ MACRO sky130_fd_io__vssd_lvc_pad
 	    RECT 2.8700 0.1000 72.1300 13.0000 ;
    END
 END sky130_fd_io__vssd_lvc_pad
-END LIBRARY ;
+END LIBRARY

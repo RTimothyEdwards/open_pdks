@@ -72,9 +72,8 @@ STAGING_PATH = `pwd`
 # from source, where they don't.
 
 # LINK_TARGETS = source
-# LINK_TARGETS = none
+LINK_TARGETS = none
 # LINK_TARGETS = sky130A
-LINK_TARGETS = source
 
 # Paths:
 
@@ -118,8 +117,8 @@ SKY130A_DEFS = -DTECHNAME=sky130A -DREVISION=${REVISION}
 
 # Module definitions for each process node
 # (Note that MOS is default and therefore not used anywhere)
-# SKY130A_DEFS += -DMETAL5 -DMIM -DREDISTRIBUTION
-SKY130A_DEFS += -DMETAL5 -DMIM
+SKY130A_DEFS += -DMETAL5 -DMIM -DREDISTRIBUTION
+# SKY130A_DEFS += -DMETAL5 -DMIM
 
 # Add staging path
 SKY130A_DEFS += -DSTAGING_PATH=${STAGING_PATH}
@@ -173,7 +172,7 @@ STAGE = set -f ; ../common/foundry_install.py ${EF_FORMAT}
 INSTALL = ../common/staging_install.py ${EF_FORMAT}
 
 # The script(s) below are used for custom changes to the vendor PDK files
-ADDPROP = ../common/insert_property.py ${EF_FORMAT} 
+ADDPROP = ../common/insert_property.py ${EF_FORMAT}
 
 # List the EDA tools to install local setup files for
 TOOLS = magic qflow netgen klayout openlane
@@ -330,12 +329,12 @@ vendor-a:
 		-cdl %l/v%v/cells/*/*.cdl ignore=topography \
 		-spice %l/v%v/cells/*/*.spice  \
 		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
-        # Install all SkyWater digital standard cells.
+	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-techlef %l/latest/tech/*.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
-		-lef %l/latest/cells/*/*.lef exclude=*.*.v compile-only \
+		-lef %l/latest/cells/*/*.lef exclude=*.*.lef compile-only \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib \
 		-gds %l/latest/cells/*/*.gds compile-only \
@@ -348,30 +347,30 @@ vendor-a:
 		-library digital sky130_fd_sc_ms \
 		-library digital sky130_fd_sc_lp |& tee -a ${SKY130A}_install.log
         # Install OSU digital standard cells.
-	${STAGE} -source ${OSU_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef char/techfiles/scs8.lef rename sky130_osu_sc.tlef \
-		-spice lib/spice/*.spice compile-only \
-		-lef outputs/s8_osu130.lef rename sky130_osu_sc.lef \
-		-lib outputs/*.lib \
-		-gds lib/gds/*.gds compile-only \
-		-verilog outputs/VERILOG/*.v \
-		-library digital sky130_osu_sc
+	# ${STAGE} -source ${OSU_PATH} -target ${STAGING_PATH}/${SKY130A} \
+	# 	-techlef char/techfiles/scs8.lef rename sky130_osu_sc.tlef \
+	# 	-spice lib/spice/*.spice compile-only \
+	# 	-lef outputs/s8_osu130.lef rename sky130_osu_sc.lef \
+	# 	-lib outputs/*.lib \
+	# 	-gds lib/gds/*.gds compile-only \
+	# 	-verilog outputs/VERILOG/*.v \
+	# 	-library digital sky130_osu_sc
 	# Install additional model file (efabless)
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
-		-ngspice models/*.lib rename ${SKY130A}.lib \
-		|& tee -a ${SKY130A}_install.log
-	# Install custom additions to I/O pad library
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
-		-gds %l/gds/*.gds \
-		-verilog %l/verilog/*.v \
-		-lef %l/lef/*.lef \
-		-spice %l/spice/*.spice \
-		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
-	# Add correct bounding boxes on Magic layouts
-	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io_top_gpio_ovtv2 \
-		"FIXED_BBOX 0 407 28000 40000"
-	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io_top_xres4v2 \
-		"FIXED_BBOX 0 407 15000 40000"
+	# ${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
+	# 	-ngspice models/*.lib rename ${SKY130A}.lib \
+	# 	|& tee -a ${SKY130A}_install.log
+	# # Install custom additions to I/O pad library
+	# ${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
+	# 	-gds %l/gds/*.gds \
+	# 	-verilog %l/verilog/*.v \
+	# 	-lef %l/lef/*.lef \
+	# 	-spice %l/spice/*.spice \
+	# 	-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
+	# # Add correct bounding boxes on Magic layouts
+	# ${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io_top_gpio_ovtv2 \
+	# 	"FIXED_BBOX 0 407 28000 40000"
+	# ${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io_top_xres4v2 \
+	# 	"FIXED_BBOX 0 407 15000 40000"
 
 install: install-local
 

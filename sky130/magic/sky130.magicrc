@@ -79,7 +79,7 @@ if {[file isdir ${PDKPATH}/libs.ref/${MAGTYPE}]} {
 
 # add path to GDS cells
 #ifdef FULLTECH
-if {[file isdir ${PDKPATH}/libs.ref/gds}]} {
+if {[file isdir ${PDKPATH}/libs.ref/gds]} {
     path cell ${PDKPATH}/libs.ref/gds/sky130_fd_pr_base
     path cell ${PDKPATH}/libs.ref/gds/sky130_fd_pr_rf
     path cell ${PDKPATH}/libs.ref/gds/sky130_fd_pr_rf2

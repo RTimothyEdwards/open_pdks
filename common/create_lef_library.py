@@ -75,13 +75,17 @@ def create_lef_library(destlibdir, destlib, do_compile_only=False, excludelist=[
                                 else:
                                     headerseen = True
                         ltok = lline.split()
-                        if ltok[0] == 'END' and ltok[1] == 'LIBRARY':
+                        if len(ltok) > 1 and ltok[0] == 'END' and ltok[1] == 'LIBRARY':
                             # Remove "END LIBRARY" line from individual files
                             pass
                         else:
                             print(lline, file=ofile)
                     headerdone = True
                 print('#--------EOF---------\n', file=ofile)
+
+            # Add "END LIBRARY" to the end of the library file
+            print('', file=ofile)
+            print('END LIBRARY', file=ofile)
 
         if do_compile_only == True:
             print('Compile-only:  Removing individual LEF files')

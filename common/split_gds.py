@@ -1,4 +1,7 @@
 #!/bin/env python3
+#
+# split_gds.py --
+#
 # Script to read a GDS library and write into individual GDS files, one per cell
 
 import os

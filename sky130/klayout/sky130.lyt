@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <technology>
- <name>EFS8A</name>
- <description>EFS8A 5-metals</description>
- <layer-properties_file>EFS8A.lyp</layer-properties_file>
+ <name>TECHNAME</name>
+ <description>TECHNAME-metals</description>
+ <layer-properties_file>TECHNAME.lyp</layer-properties_file>
  <add-other-layers>true</add-other-layers>
  <layer-map>
 '66/15 : PY_SHORT	';

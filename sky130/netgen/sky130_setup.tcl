@@ -230,18 +230,18 @@ foreach dev $devices {
 #---------------------------------------------------------------
 
 foreach cell $cells1 {
-    if {[regexp "sky130_fc_sc_hd_decap_\[0-9\]+" $cell match]} {
+    if {[regexp {sky130_fd_sc_\w\w__decap_[[:digit:]]+} $cell match]} {
         ignore class "-circuit1 $cell"
     }
-    if {[regexp "sky130_fc_sc_hd_fill_\[0-9\]+" $cell match]} {
+    if {[regexp {sky130_fd_sc_\w\w__fill_[[:digit:]]+} $cell match]} {
         ignore class "-circuit1 $cell"
     }
 }
 foreach cell $cells2 {
-    if {[regexp "sky130_fc_sc_hd_decap_\[0-9\]+" $cell match]} {
+    if {[regexp {sky130_fd_sc_\w\w__decap_[[:digit:]]+} $cell match]} {
         ignore class "-circuit2 $cell"
     }
-    if {[regexp "sky130_fc_sc_hd_fill_\[0-9\]+" $cell match]} {
+    if {[regexp {sky130_fd_sc_\w\w__fill_[[:digit:]]+} $cell match]} {
         ignore class "-circuit2 $cell"
     }
 }
@@ -257,6 +257,7 @@ foreach cell $cells2 {
 #---------------------------------------------------------------
 # e.g., hydra_spi_controller__hydra_spi_controller
 #---------------------------------------------------------------
+
 foreach cell $cells1 {
     if {[regexp "(.+)__(.+)" $cell match library cellname]} {
         if {([lsearch $cells2 $cell] < 0) && \
