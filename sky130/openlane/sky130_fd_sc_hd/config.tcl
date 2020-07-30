@@ -2,13 +2,13 @@ set current_folder [file dirname [file normalize [info script]]]
 # Technology lib
 
 #ifdef EF_FORMAT
-set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(PDK_VARIANT)/sky130_fd_sc_hd__tt_025C_1v80.lib"
-set ::env(LIB_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(PDK_VARIANT)/sky130_fd_sc_hd__ff_n40C_1v95.lib"
-set ::env(LIB_MIN) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(PDK_VARIANT)/sky130_fd_sc_hd__ss_100C_1v60.lib"
+set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(STD_CELL_LIBRARY)/sky130_fd_sc_hd__tt_025C_1v80.lib"
+set ::env(LIB_FASTEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(STD_CELL_LIBRARY)/sky130_fd_sc_hd__ff_n40C_1v95.lib"
+set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(STD_CELL_LIBRARY)/sky130_fd_sc_hd__ss_100C_1v60.lib"
 #else (!EF_FORMAT)
-set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PDK_VARIANT)/lib/sky130_fd_sc_hd__tt_025C_1v80.lib"
-set ::env(LIB_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PDK_VARIANT)/lib/sky130_fd_sc_hd__ff_n40C_1v95.lib"
-set ::env(LIB_MIN) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PDK_VARIANT)/lib/sky130_fd_sc_hd__ss_100C_1v60.lib"
+set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_fd_sc_hd__tt_025C_1v80.lib"
+set ::env(LIB_FASTEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_fd_sc_hd__ff_n40C_1v95.lib"
+set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_fd_sc_hd__ss_100C_1v60.lib"
 #endif (!EF_FORMAT)
 
 set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
