@@ -10,12 +10,12 @@ set ::env(GND_PIN) "VGND"
 
 # Technology LEF
 #ifdef EF_FORMAT
-set ::env(TECH_LEF) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/techLEF/$::env(PDK_VARIANT)/$::env(PDK_VARIANT).tlef"
-set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lef/$::env(PDK_VARIANT)/*.lef"]
+set ::env(TECH_LEF) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/techLEF/$::env(STD_CELL_LIBRARY)/$::env(STD_CELL_LIBRARY).tlef"
+set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lef/$::env(STD_CELL_LIBRARY)/*.lef"]
 set ::env(GPIO_PADS_LEF) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lef/sky130_fd_io/sky130_fd_io.lef"
 #else (!EF_FORMAT)
-set ::env(TECH_LEF) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PDK_VARIANT)/techlef/$::env(PDK_VARIANT).tlef"
-set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PDK_VARIANT)/lef/*.lef"]
+set ::env(TECH_LEF) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/$::env(STD_CELL_LIBRARY).tlef"
+set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lef/*.lef"]
 set ::env(GPIO_PADS_LEF) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lef/sky130_fd_io.lef"
 #endif (!EF_FORMAT)
 
@@ -36,6 +36,6 @@ set ::env(CTS_TECH_DIR) "N/A"
 set ::env(FP_TAPCELL_DIST) 14
 
 # Tracks info
-set ::env(TRACKS_INFO_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(PDK_VARIANT)/tracks.info"
+set ::env(TRACKS_INFO_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/tracks.info"
 
 set ::env(GLB_RT_L1_ADJUSTMENT) 0.99
