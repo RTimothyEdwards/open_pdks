@@ -40,10 +40,13 @@ end
 #-------------------------------------------------------------
 # nshort	nfet		standard nFET
 # nshort	scnfet		standard nFET in standard cell**
+# npd		npd		special nFET in SRAM cell
+# npass		npass		special nFET in SRAM cell
 # nlowvt	nfetlvt		low Vt nFET
 # sonos_p/e	nsonos		SONOS nFET
 # pshort	pfet		standard pFET
 # pshort	scpfet		standard pFET in standard cell**
+# ppu		ppu		special pFET in SRAM cell
 # plowvt	pfetlvt		low Vt pFET
 # phighvt	pfethvt		high Vt pFET
 # ntvnative	---		native nFET
@@ -163,8 +166,11 @@ types
 # Transistors
   active nmos,ntransistor,nfet
  -active scnmos,scntransistor,scnfet
+ -active npd,npdfet,sramnfet
+ -active npass,npassfet,srampassfet
   active pmos,ptransistor,pfet
  -active scpmos,scptransistor,scpfet
+ -active ppu,ppufet,srampfet
  -active nnmos,nntransistor
   active mvnmos,mvntransistor,mvnfet
   active mvpmos,mvptransistor,mvpfet
@@ -357,8 +363,8 @@ aliases
   allwellplane     nwell
   allnwell	   nwell,obswell
 
-  allnfets	   nfet,scnfet,mvnfet,mvnnfet,nfetlvt,nsonos
-  allpfets	   pfet,scpfet,mvpfet,pfethvt,pfetlvt
+  allnfets	   nfet,npass,npd,scnfet,mvnfet,mvnnfet,nfetlvt,nsonos
+  allpfets	   pfet,ppu,scpfet,mvpfet,pfethvt,pfetlvt
   allfets	   allnfets,allpfets,varactor,mvvaractor,varhvt
 
   allnactivenonfet *ndiff,*nsd,*ndiode,*nndiode,*mvndiff,*mvnsd,*mvndiode,*ndiodelvt
@@ -376,8 +382,8 @@ aliases
 
   allactiveres	   ndiffres,pdiffres,mvndiffres,mvpdiffres
 
-  allndifflv       *ndif,*nsd,*ndiode,ndiffres,nfet,scnfet,nfetlvt,nsonos
-  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,scpfet,pfetlvt,pfethvt
+  allndifflv       *ndif,*nsd,*ndiode,ndiffres,nfet,npass,npd,scnfet,nfetlvt,nsonos
+  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,ppu,scpfet,pfetlvt,pfethvt
   alldifflv        allndifflv,allpdifflv
   allndifflvnonfet *ndif,*nsd,*ndiode,*nndiode,ndiffres,*ndiodelvt
   allpdifflvnonfet *pdif,*psd,*pdiode,pdiffres,*pdiodelvt,*pdiodehvt
@@ -448,8 +454,11 @@ styles
   psd       pdiff_in_pwell
   nfet      ntransistor    ntransistor_stripes
   scnfet    ntransistor    ntransistor_stripes
+  npass	    ntransistor	   ntransistor_stripes
+  npd	    ntransistor	   ntransistor_stripes
   pfet      ptransistor    ptransistor_stripes
   scpfet    ptransistor    ptransistor_stripes
+  ppu	    ptransistor	   ptransistor_stripes
   var       polysilicon    ndiff_in_nwell
   ndc       ndiffusion     metal1  contact_X'es
   pdc       pdiffusion     metal1  contact_X'es
@@ -588,6 +597,7 @@ compose
   paint  ndiff   nwell  pdiff
   paint  psd     nwell  nsd
   paint  psc     nwell  nsc
+  paint  npd     nwell  ppu
 
   paint  pdc     pwell  ndc
   paint  pfet    pwell  nfet
@@ -595,12 +605,13 @@ compose
   paint  pdiff   pwell  ndiff
   paint  nsd     pwell  psd
   paint  nsc     pwell  psc
+  paint  ppu     pwell  npd
 
   paint  pdc	 coreli pdc
   paint  ndc	 coreli ndc
   paint  pc	 coreli pc
-  paint  nsc 	 coreli pc
-  paint  psc 	 coreli pc
+  paint  nsc 	 coreli nsc
+  paint  psc 	 coreli psc
   paint  viali 	 coreli viali
 
   paint  coreli  pdc    pdc
@@ -815,11 +826,12 @@ style gdsii
 
 #----------------------------------------------------------------
 # SONOS requires COREID around area (areaid.ce).  Also, the
-# coreli layer indicates a cell needing COREID.
+# coreli layer indicates a cell needing COREID.  Also, devices
+# npd, npass, and ppu indicate a COREID cell.
 #----------------------------------------------------------------
 
  layer COREID
-	bloat-all nsonos,coreli CELLBOUND
+	bloat-all nsonos,coreli,ppu,npd,npass CELLBOUND
 	calma 81 2
 
 #----------------------------------------------------------------
@@ -1451,6 +1463,31 @@ style paint
 
 #endif (EXPERIMENTAL)
 
+#----------------------------------------------------------------
+style wafflefill
+#----------------------------------------------------------------
+# Style used by scripts for automatically generating fill layers
+# (under development)
+#----------------------------------------------------------------
+ scalefactor 10  nanometers
+ options calma-permissive-labels
+ gridlimit 5
+
+#---------------------------------------------------
+# MET1 fill (under development)
+#---------------------------------------------------
+ templayer      slots_m1
+        bbox    top
+        slots   33400 1150 1650 46000 13350 14650
+ templayer      obstruct_m1 allm1,allpad,obsm1
+        grow    800
+        shrink  500
+        grow    500
+ layer met1fill slots_m1
+        and-not obstruct_m1
+        shrink  550
+        grow    550
+
 end
 
 #-----------------------------------------------------------------------
@@ -1678,12 +1715,19 @@ style  vendorimport
  and-not LVTN
  and-not HVTP
  and-not STDCELL
+ and-not COREID
  labels DIFF
 
  layer scpfet pfetarea
  and-not LVTN
  and-not HVTP
  and STDCELL
+ labels DIFF
+
+ layer ppu pfetarea
+ and-not LVTN
+ and-not HVTP
+ and COREID
  labels DIFF
 
  layer pfetlvt pfetarea
@@ -1757,11 +1801,28 @@ style  vendorimport
  and POLY
  and-not PPLUS
  and NPLUS
+ and-not NWELL
  and-not THKOX
  and-not LVTN
  and-not SONOS
  and STDCELL
  labels DIFF
+
+ layer npd DIFF
+ and POLY
+ and-not PPLUS
+ and NPLUS
+ and-not NWELL
+ and COREID
+ labels DIFF
+
+ # layer npass DIFF
+ # and POLY
+ # and-not PPLUS
+ # and NPLUS
+ # and-not NWELL
+ # and COREID
+ # labels DIFF
 
  layer nfetlvt DIFF
  and POLY
@@ -1781,7 +1842,7 @@ style  vendorimport
  and SONOS
  labels DIFF
 
- templayer nsdarea DIFF
+ templayer nsdarea TAP
  and NPLUS
  and NWELL
  and-not POLY
@@ -1790,10 +1851,12 @@ style  vendorimport
  copyup nsubcheck
 
  layer nsd nsdarea
- labels DIFF
+ labels TAP
 
  layer nsd TAP,TAPPIN
  and NPLUS
+ and-not POLY
+ and-not THKOX
  labels TAP
  labels TAPPIN port
 
@@ -1804,7 +1867,7 @@ style  vendorimport
  templayer xnsubcheck nsubcheck
  copyup nsubcheck
 
- templayer psdarea DIFF
+ templayer psdarea TAP
  and PPLUS
  and-not NWELL
  and-not POLY
@@ -1814,10 +1877,11 @@ style  vendorimport
  copyup psubcheck
 
  layer psd psdarea
- labels DIFF
+ labels TAP
 
  layer psd TAP,TAPPIN
  and PPLUS
+ and-not POLY
  and-not THKOX
  labels TAP
  labels TAPPIN port
@@ -1857,7 +1921,7 @@ style  vendorimport
  and THKOX
  labels DIFF
 
- templayer mvnsdarea DIFF
+ templayer mvnsdarea TAP
  and NPLUS
  and NWELL
  and-not POLY
@@ -1866,7 +1930,7 @@ style  vendorimport
  copyup mvnsubcheck
 
  layer mvnsd mvnsdarea
- labels DIFF
+ labels TAP
 
  layer mvnsd TAP,TAPPIN
  and NPLUS
@@ -1909,7 +1973,7 @@ style  vendorimport
  templayer mvxpsubcheck mvpsubcheck
  copyup mvpsubcheck
 
- layer psd DIFF
+ layer psd TAP
  and-not PPLUS
  and-not NPLUS
  and-not POLY
@@ -1917,14 +1981,14 @@ style  vendorimport
  and-not pfetexpand
  and psdexpand
 
- layer nsd DIFF
+ layer nsd TAP
  and-not PPLUS
  and-not NPLUS
  and-not POLY
  and-not THKOX
  and nsdexpand
 
- layer mvpsd DIFF
+ layer mvpsd TAP
  and-not PPLUS
  and-not NPLUS
  and-not POLY
@@ -1932,7 +1996,7 @@ style  vendorimport
  and-not mvpfetexpand
  and mvpsdexpand
 
- layer mvnsd DIFF
+ layer mvnsd TAP
  and-not PPLUS
  and-not NPLUS
  and-not POLY
@@ -2705,29 +2769,28 @@ style  vendorimport
 # MOS Varactor
 
  layer var POLY
- and DIFF
+ and TAP
  and NPLUS
  and NWELL
  and-not THKOX
  and-not HVTP
- grow 25
+ # NOTE:  Else forms a varactor that is not in the vendor netlist.
+ and-not COREID
  labels POLY
 
  layer varhvt POLY
- and DIFF
+ and TAP
  and NPLUS
  and NWELL
  and-not THKOX
  and HVTP
- grow 25
  labels POLY
 
  layer mvvar POLY
- and DIFF
+ and TAP
  and NPLUS
  and NWELL
  and THKOX
- grow 25
  labels POLY
 
  calma NWELL 64 20
@@ -2915,7 +2978,7 @@ drc
 # DIFF
 #-----------------------------
 
- width *ndiff,nfet,scnfet,*nsd,*ndiode,ndiffres,*pdiff,pfet,scpfet,*psd,*pdiode,pdiffres \
+ width *ndiff,nfet,scnfet,npd,npass,*nsd,*ndiode,ndiffres,*pdiff,pfet,scpfet,ppu,*psd,*pdiode,pdiffres \
 	150 "Diffusion width < %d (Diff/tap 1)"
  width *mvndiff,mvnfet,mvnnfet,*mvndiode,*nndiode,mvndiffres,*mvpdiff,mvpfet,*mvpdiode 290 \
 	"MV Diffusion width < %d (Diff/tap 14)"
@@ -2947,7 +3010,7 @@ drc
 	"N-well overlap of N-tap < %d (Diff/tap 10)"
  surround *mvnsd allnwell 330 absence_illegal \
 	"N-well overlap of MV N-tap < %d (Diff/tap 19)"
- surround *pdiff,*pdiode,pfet,scpfet allnwell 180 absence_illegal \
+ surround *pdiff,*pdiode,pfet,scpfet,ppu allnwell 180 absence_illegal \
 	"N-well overlap of P-Diffusion < %d (Diff/tap 8)"
  surround *mvpdiff,*mvpdiode,mvpfet allnwell 330 absence_illegal \
 	"N-well overlap of P-Diffusion < %d (Diff/tap 17)"
@@ -2997,10 +3060,10 @@ drc
 	"Poly spacing to Diffusion < %d (Poly 4a)"
  spacing npres *nsd 480 touching_illegal \
 	"Poly resistor spacing to N-tap < %d (Poly 9)"
- overhang *ndiff,rndiff nfet,scnfet 250 "N-Diffusion overhang of nmos < %d (Poly 7)"
+ overhang *ndiff,rndiff nfet,scnfet,npd,npass 250 "N-Diffusion overhang of nmos < %d (Poly 7)"
  overhang *mvndiff,mvrndiff mvnfet,mvnnfet 250 \
 	"N-Diffusion overhang of nmos < %d (Poly 7)"
- overhang *pdiff,rpdiff pfet,scpfet 250 "P-Diffusion overhang of pmos < %d (Poly 7)"
+ overhang *pdiff,rpdiff pfet,scpfet,ppu 250 "P-Diffusion overhang of pmos < %d (Poly 7)"
  overhang *mvpdiff,mvrpdiff mvpfet 250 "P-Diffusion overhang of pmos < %d (Poly 7)"
  overhang *poly allfets 130 "Poly overhang of transistor < %d (Poly 8)"
  rect_only allfets "No bends in transistors (Poly 11)"
@@ -3052,7 +3115,7 @@ drc
 
  spacing ndc,pdc nfet,pfet 55 touching_illegal \
 	"Diffusion contact to gate < %d (LIcon 11)"
- spacing ndc,pdc scnfet,scpfet 50 touching_illegal \
+ spacing ndc,pdc scnfet,npd,npass,scpfet,ppu 50 touching_illegal \
 	"Diffusion contact to standard cell gate < %d (LIcon 11)"
  spacing mvndc,mvpdc mvnfet,mvnnfet,mvpfet 55 touching_illegal \
 	"Diffusion contact to gate < %d (LIcon 11)"
@@ -3063,18 +3126,18 @@ drc
  spacing mvnsc mvvar 250 touching_illegal \
 	"Diffusion contact to varactor gate < %d (LIcon 10)"
 
- surround ndc/a *ndiff,nfet,scnfet,nfetlvt 40 absence_illegal \
+ surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt 40 absence_illegal \
 	"N-diffusion overlap of N-diffusion contact < %d (LIcon 5a)"
- surround pdc/a *pdiff,pfet,scpfet,pfethvt,pfetlvt 40 absence_illegal \
+ surround pdc/a *pdiff,pfet,scpfet,ppu,pfethvt,pfetlvt 40 absence_illegal \
 	"P-diffusion overlap of P-diffusion contact < %d (LIcon 5a)"
  surround ndic/a *ndi 40 absence_illegal \
 	"N-diode overlap of N-diode contact < %d (LIcon 5a)"
  surround pdic/a *pdi 40 absence_illegal \
 	"P-diode overlap of N-diode contact < %d (LIcon 5a)"
 
- surround ndc/a *ndiff,nfet,scnfet,nfetlvt 60 directional \
+ surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt 60 directional \
 	"N-diffusion overlap of N-diffusion contact < %d in one direction (LIcon 5c)"
- surround pdc/a *pdiff,pfet,scpfet,pfethvt,pfetlvt 60 directional \
+ surround pdc/a *pdiff,pfet,scpfet,ppu,pfethvt,pfetlvt 60 directional \
 	"P-diffusion overlap of P-diffusion contact < %d in one direction (LIcon 5c)"
  surround ndic/a *ndi 60 directional \
 	"N-diode overlap of N-diode contact < %d in one direction (LIcon 5c)"
@@ -3319,10 +3382,10 @@ variants *
 	"Butting MV N-tap spacing to MV PMOS gate < %d (Poly 6)"
 
  # No LV FETs in HV diff
- spacing pfet,scpfet,pfetlvt,pfethvt,*pdiff *mvpdiff 360 touching_illegal \
+ spacing pfet,scpfet,ppu,pfetlvt,pfethvt,*pdiff *mvpdiff 360 touching_illegal \
 	"LV P-diffusion to MV P-diffusion < %d (Diff/tap 23 + Diff/tap 22)"
 
- spacing nfet,scnfet,nfetlvt,varactor,varhvt,*ndiff *mvndiff 360 touching_illegal \
+ spacing nfet,scnfet,npd,npass,nfetlvt,varactor,varhvt,*ndiff *mvndiff 360 touching_illegal \
 	"LV N-diffusion to MV N-diffusion < %d (Diff/tap 23 + Diff/tap 22)"
 
  # No HV FETs in LV diff
@@ -3878,10 +3941,13 @@ defaultareacap     nwell well 120
 variants (sim)
 
  device msubcircuit pshort pfet,scpfet *pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
+ device msubcircuit ppu ppu *pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
  device msubcircuit plowvt pfetlvt *pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
  device msubcircuit phighvt pfethvt *pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
 
- device msubcircuit nshort nfet,scnfet *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
+ device msubcircuit nshort nfet,scnfet,npd,npass *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
+ device msubcircuit npd npd *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
+ device msubcircuit npass npass *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
  device msubcircuit nlowvt nfetlvt *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
  device msubcircuit sonos_e nsonos *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
  device subcircuit xcnwvc varactor *nndiff nwell error l=l w=w
@@ -3932,9 +3998,12 @@ variants (sim)
  variants (lvs),(si)
 
  device mosfet pshort scpfet,pfet pdiff,pdiffres,pdc nwell 
+ device mosfet ppu ppu pdiff,pdiffres,pdc nwell 
  device mosfet plowvt pfetlvt pdiff,pdiffres,pdc nwell 
  device mosfet phighvt pfethvt pdiff,pdiffres,pdc nwell 
- device mosfet nshort scnfet,nfet ndiff,ndiffres,ndc pwell,space/w
+ device mosfet nshort scnfet,npd,npass,nfet ndiff,ndiffres,ndc pwell,space/w
+ device mosfet npd npd ndiff,ndiffres,ndc pwell,space/w
+ device mosfet npass npass ndiff,ndiffres,ndc pwell,space/w
  device mosfet nlowvt nfetlvt ndiff,ndiffres,ndc pwell,space/w
  device mosfet sonos_e nsonos ndiff,ndiffres,ndc pwell,space/w
  device mosfet phv mvpfet mvpdiff,mvpdiffres,mvpdc nwell 
