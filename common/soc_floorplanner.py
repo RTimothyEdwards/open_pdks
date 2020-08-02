@@ -1258,6 +1258,7 @@ class SoCFloorplanner(ttk.Frame):
                 print('load ' + magfile + ' -force', file=ofile)
             else:
                 print('load ' + module + ' -force', file=ofile)
+            print('select top cell', file=ofile)
             print('lef write -hide', file=ofile)
             print('quit', file=ofile)
 

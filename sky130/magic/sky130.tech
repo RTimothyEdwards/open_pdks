@@ -40,10 +40,13 @@ end
 #-------------------------------------------------------------
 # nshort	nfet		standard nFET
 # nshort	scnfet		standard nFET in standard cell**
+# npd		npd		special nFET in SRAM cell
+# npass		npass		special nFET in SRAM cell
 # nlowvt	nfetlvt		low Vt nFET
 # sonos_p/e	nsonos		SONOS nFET
 # pshort	pfet		standard pFET
 # pshort	scpfet		standard pFET in standard cell**
+# ppu		ppu		special pFET in SRAM cell
 # plowvt	pfetlvt		low Vt pFET
 # phighvt	pfethvt		high Vt pFET
 # ntvnative	---		native nFET
@@ -163,8 +166,11 @@ types
 # Transistors
   active nmos,ntransistor,nfet
  -active scnmos,scntransistor,scnfet
+ -active npd,npdfet,sramnfet
+ -active npass,npassfet,srampassfet
   active pmos,ptransistor,pfet
  -active scpmos,scptransistor,scpfet
+ -active ppu,ppufet,srampfet
  -active nnmos,nntransistor
   active mvnmos,mvntransistor,mvnfet
   active mvpmos,mvptransistor,mvpfet
@@ -245,12 +251,14 @@ types
   metal1 via1,m2contact,m2cut,m2c,via,v,v1
  -metal1 obsm1
  -metal1 padl
+ -metal1 m1fill
 
 # Metal 2
   metal2 metal2,m2,met2
  -metal2 rmetal2,rm2,rmet2
   metal2 via2,m3contact,m3cut,m3c,v2
  -metal2 obsm2
+ -metal2 m2fill
 
 # Metal 3
   metal3 metal3,m3,met3
@@ -258,6 +266,7 @@ types
  -metal3 obsm3
 #ifdef METAL5
   metal3 via3,v3
+ -metal3 m3fill
 
 #ifdef MIM
  -cap1 mimcap,mim,capm
@@ -269,6 +278,7 @@ types
  -metal4 rmetal4,rm4,rmet4
  -metal4 obsm4
   metal4 via4,v4
+ -metal4 m4fill
 
 #ifdef MIM
  -cap2 mimcap2,mim2,capm2
@@ -279,6 +289,7 @@ types
   metal5 metal5,m5,met5
  -metal5 rm5,rmetal5,rmet5
  -metal5 obsm5
+ -metal5 m5fill
 #endif (METAL5)
 
 #ifdef REDISTRIBUTION
@@ -357,8 +368,8 @@ aliases
   allwellplane     nwell
   allnwell	   nwell,obswell
 
-  allnfets	   nfet,scnfet,mvnfet,mvnnfet,nfetlvt,nsonos
-  allpfets	   pfet,scpfet,mvpfet,pfethvt,pfetlvt
+  allnfets	   nfet,npass,npd,scnfet,mvnfet,mvnnfet,nfetlvt,nsonos
+  allpfets	   pfet,ppu,scpfet,mvpfet,pfethvt,pfetlvt
   allfets	   allnfets,allpfets,varactor,mvvaractor,varhvt
 
   allnactivenonfet *ndiff,*nsd,*ndiode,*nndiode,*mvndiff,*mvnsd,*mvndiode,*ndiodelvt
@@ -376,8 +387,8 @@ aliases
 
   allactiveres	   ndiffres,pdiffres,mvndiffres,mvpdiffres
 
-  allndifflv       *ndif,*nsd,*ndiode,ndiffres,nfet,scnfet,nfetlvt,nsonos
-  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,scpfet,pfetlvt,pfethvt
+  allndifflv       *ndif,*nsd,*ndiode,ndiffres,nfet,npass,npd,scnfet,nfetlvt,nsonos
+  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,ppu,scpfet,pfetlvt,pfethvt
   alldifflv        allndifflv,allpdifflv
   allndifflvnonfet *ndif,*nsd,*ndiode,*nndiode,ndiffres,*ndiodelvt
   allpdifflvnonfet *pdif,*psd,*pdiode,pdiffres,*pdiodelvt,*pdiodehvt
@@ -448,8 +459,11 @@ styles
   psd       pdiff_in_pwell
   nfet      ntransistor    ntransistor_stripes
   scnfet    ntransistor    ntransistor_stripes
+  npass	    ntransistor	   ntransistor_stripes
+  npd	    ntransistor	   ntransistor_stripes
   pfet      ptransistor    ptransistor_stripes
   scpfet    ptransistor    ptransistor_stripes
+  ppu	    ptransistor	   ptransistor_stripes
   var       polysilicon    ndiff_in_nwell
   ndc       ndiffusion     metal1  contact_X'es
   pdc       pdiffusion     metal1  contact_X'es
@@ -509,14 +523,17 @@ styles
   obslic    metal1	   metal2 via1arrow
 
   metal1    metal2
+  m1fill    metal2
   rm1       metal2         poly_resist_stripes
   obsm1     metal2
   m2c       metal2         metal3  via2arrow
   metal2    metal3
+  m2fill    metal3
   rm2       metal3         poly_resist_stripes
   obsm2     metal3
   m3c       metal3         metal4  via3alt
   metal3    metal4
+  m3fill    metal4
   rm3       metal4         poly_resist_stripes
   obsm3     metal4
 #ifdef METAL5
@@ -528,10 +545,12 @@ styles
 #endif (MIM)
   via3      metal4         metal5  via4
   metal4    metal5
+  m4fill    metal5
   rm4       metal5         poly_resist_stripes
   obsm4     metal5
   via4      metal5         metal6  via5
   metal5    metal6
+  m5fill    metal6
   rm5       metal6         poly_resist_stripes
   obsm5     metal6
 #endif (METAL5)
@@ -588,6 +607,7 @@ compose
   paint  ndiff   nwell  pdiff
   paint  psd     nwell  nsd
   paint  psc     nwell  nsc
+  paint  npd     nwell  ppu
 
   paint  pdc     pwell  ndc
   paint  pfet    pwell  nfet
@@ -595,12 +615,13 @@ compose
   paint  pdiff   pwell  ndiff
   paint  nsd     pwell  psd
   paint  nsc     pwell  psc
+  paint  ppu     pwell  npd
 
   paint  pdc	 coreli pdc
   paint  ndc	 coreli ndc
   paint  pc	 coreli pc
-  paint  nsc 	 coreli pc
-  paint  psc 	 coreli pc
+  paint  nsc 	 coreli nsc
+  paint  psc 	 coreli psc
   paint  viali 	 coreli viali
 
   paint  coreli  pdc    pdc
@@ -624,12 +645,12 @@ connect
   *nwell,*nsd,*mvnsd,dnwell *nwell,*nsd,*mvnsd,dnwell
   pwell,*psd,*mvpsd  pwell,*psd,*mvpsd
   *li,coreli	*li,coreli
-  *m1	*m1
-  *m2	*m2
-  *m3	*m3
+  *m1,m1fill	*m1,m1fill
+  *m2,m2fill	*m2,m2fill
+  *m3,m3fill	*m3,m3fill
 #ifdef METAL5
-  *m4	*m4
-  *m5	*m5
+  *m4,m4fill	*m4,m4fill
+  *m5,m5fill	*m5,m5fill
 #ifdef MIM
   *mimcap     *mimcap
   *mimcap2    *mimcap2
@@ -815,11 +836,12 @@ style gdsii
 
 #----------------------------------------------------------------
 # SONOS requires COREID around area (areaid.ce).  Also, the
-# coreli layer indicates a cell needing COREID.
+# coreli layer indicates a cell needing COREID.  Also, devices
+# npd, npass, and ppu indicate a COREID cell.
 #----------------------------------------------------------------
 
  layer COREID
-	bloat-all nsonos,coreli CELLBOUND
+	bloat-all nsonos,coreli,ppu,npd,npass CELLBOUND
 	calma 81 2
 
 #----------------------------------------------------------------
@@ -1019,7 +1041,7 @@ style gdsii
 #----------------------------------------------------------------
 # MET1
 #----------------------------------------------------------------
- layer MET1 	allm1
+ layer MET1 	allm1,m1fill
  	calma 	68 20
 
  layer MET1TXT
@@ -1044,7 +1066,7 @@ style gdsii
 #----------------------------------------------------------------
 # MET2
 #----------------------------------------------------------------
- layer MET2 	allm2
+ layer MET2 	allm2,m2fill
  	calma 	69 20
 
  layer MET2TXT
@@ -1069,7 +1091,7 @@ style gdsii
 #----------------------------------------------------------------
 # MET3
 #----------------------------------------------------------------
- layer MET3 	allm3
+ layer MET3 	allm3,m3fill
  	calma 	70 20
 
  layer MET3TXT
@@ -1098,7 +1120,7 @@ style gdsii
 #----------------------------------------------------------------
 # MET4
 #----------------------------------------------------------------
- layer MET4 	allm4
+ layer MET4 	allm4,m4fill
  	calma 	71 20
 
  layer MET4TXT
@@ -1126,7 +1148,7 @@ style gdsii
 #----------------------------------------------------------------
 # MET5
 #----------------------------------------------------------------
- layer MET5 	allm5
+ layer MET5 	allm5,m5fill
  	calma 	72 20
 
  layer MET5TXT
@@ -1451,6 +1473,361 @@ style paint
 
 #endif (EXPERIMENTAL)
 
+#----------------------------------------------------------------
+style wafflefill
+#----------------------------------------------------------------
+# Style used by scripts for automatically generating fill layers
+#----------------------------------------------------------------
+ scalefactor 10  nanometers
+ options calma-permissive-labels
+ gridlimit 5
+
+#---------------------------------------------------
+# FOM fill (under development)
+#---------------------------------------------------
+ templayer      slots_fom_pass1
+	bbox	top
+        slots   0 4080 1320 0 4080 1320 1360 0
+ templayer      obstruct_fom_pass1 alldiff,allpoly,rpw
+        grow    500
+ templayer	fomfill_pass1 slots_fom_pass1
+        and-not obstruct_fom_pass1
+        shrink  2035
+        grow    2035
+
+ templayer      slots_fom_pass2
+	bbox	top
+        slots   0 2500 1320 0 2500 1320 1360 0
+ templayer      obstruct_fom_pass2 fomfill_pass1
+        grow    820
+	or	alldiff,allpoly,rpw
+        grow    500
+ templayer	fomfill_pass2 slots_fom_pass2
+        and-not obstruct_fom_pass2
+        shrink  1245
+        grow    1245
+
+ templayer      slots_fom_coarse
+	bbox	top
+        slots   0 1500 1320 0 1500 1320 1360 0
+ templayer      obstruct_fom_coarse fomfill_pass1,fomfill_pass2
+        grow    820
+	or	alldiff,allpoly,rpw
+        grow    500
+ templayer	fomfill_coarse slots_fom_coarse
+        and-not obstruct_fom_coarse
+        shrink  745
+        grow    745
+
+ templayer      slots_fom_fine
+	bbox	top
+        slots   0 500 400 0 500 400 160 0
+ templayer      obstruct_fom_fine fomfill_pass1,fomfill_pass2,fomfill_coarse
+	grow	820
+	or	alldiff,allpoly,rpw
+        grow    500
+ templayer	fomfill_fine slots_fom_fine
+        and-not obstruct_fom_fine
+        shrink  245
+        grow    245
+
+ layer	FOMMASK    fomfill_pass1 
+	or	fomfill_pass2
+	or	fomfill_coarse
+	or	fomfill_fine
+ 	calma 	23 0
+
+#---------------------------------------------------
+# POLY fill (under development)
+#---------------------------------------------------
+ templayer      slots_poly_pass1
+	bbox	top
+        slots   0 720 360 0 720 360 240 0
+ templayer      obstruct_poly_pass1 alldiff,allpoly,rpw
+        grow    1000
+ templayer	polyfill_pass1 slots_poly_pass1
+        and-not obstruct_poly_pass1
+        shrink  355
+        grow    355
+
+ templayer      slots_poly_coarse
+	bbox	top
+        slots   0 720 360 0 720 360 240 120
+ templayer      obstruct_poly_coarse alldiff,allpoly,rpw
+        grow    640
+	or	polyfill_pass1
+	grow	360
+ templayer	polyfill_coarse slots_poly_coarse
+        and-not obstruct_poly_coarse
+        shrink  355
+        grow    355
+
+ templayer      slots_poly_medium
+	bbox	top
+        slots   0 540 360 0 540 360 240 100
+ templayer      obstruct_poly_medium alldiff,allpoly,rpw
+        grow    650
+	or	polyfill_pass1,polyfill_coarse
+	grow	360
+ templayer	polyfill_medium slots_poly_medium
+        and-not obstruct_poly_medium
+        shrink  265
+        grow    265
+
+ templayer      slots_poly_fine
+	bbox	top
+        slots   0 480 360 0 480 360 240 200
+ templayer      obstruct_poly_fine alldiff,allpoly,rpw
+        grow    650
+	or	polyfill_pass1,polyfill_coarse,polyfill_medium
+	grow	360
+ templayer	polyfill_fine slots_poly_fine
+        and-not obstruct_poly_fine
+        shrink  235
+        grow    235
+
+ layer	POLYMASK    polyfill_pass1 
+	or	polyfill_coarse
+	or	polyfill_medium
+	or	polyfill_fine
+ 	calma 	28 0
+
+#---------------------------------------------------
+# MET1 fill
+#---------------------------------------------------
+ templayer      slots_m1_coarse
+        bbox    top
+        slots   0 2000 200 0 2000 200 700 0
+ templayer      obstruct_m1_coarse allm1,allpad,obsm1,m1fill,fillblock
+        grow    3000
+ templayer	met1fill_coarse slots_m1_coarse
+        and-not obstruct_m1_coarse
+        shrink  995
+        grow    995
+
+ templayer      slots_m1_medium
+        bbox    top
+        slots   0 1000 200 0 1000 200 700 0
+ templayer      obstruct_m1_medium allm1,allpad,obsm1,m1fill,fillblock
+        grow    2800
+	or	met1fill_coarse
+        grow    200
+ templayer	met1fill_medium slots_m1_medium
+        and-not obstruct_m1_medium
+        shrink  495
+        grow    495
+
+ templayer      slots_m1_fine
+        bbox    top
+        slots   0 580 200 0 580 200 700 0
+ templayer      obstruct_m1_fine allm1,allpad,obsm1,m1fill,fillblock
+        grow    300
+	or	met1fill_coarse,met1fill_medium
+        grow    200
+ templayer	met1fill_fine slots_m1_fine
+        and-not obstruct_m1_fine
+        shrink  285
+        grow    285
+
+ templayer      slots_m1_veryfine
+        bbox    top
+        slots   0 300 200 0 300 200 100 50
+ templayer      obstruct_m1_veryfine allm1,allpad,obsm1,m1fill,fillblock
+        grow    100
+	or	met1fill_coarse,met1fill_medium,met1fill_fine
+        grow    200
+ templayer	met1fill_veryfine slots_m1_veryfine
+        and-not obstruct_m1_veryfine
+        shrink  145
+        grow    145
+
+ layer	MET1MASK met1fill_coarse
+	or	met1fill_medium
+	or	met1fill_fine
+	or	met1fill_veryfine
+ 	calma 	36 0
+
+#---------------------------------------------------
+# MET2 fill
+#---------------------------------------------------
+ templayer      slots_m2_coarse
+        bbox    top
+        slots   0 2000 200 0 2000 200 700 350
+ templayer      obstruct_m2 allm2,allpad,obsm2,m2fill,fillblock
+        grow    3000
+ templayer	met2fill_coarse slots_m2_coarse
+        and-not obstruct_m2
+        shrink  995
+        grow    995
+
+ templayer      slots_m2_medium
+        bbox    top
+        slots   0 1000 200 0 1000 200 700 350
+ templayer      obstruct_m2_medium allm2,allpad,obsm2,m2fill,fillblock
+        grow    2800
+	or	met2fill_coarse
+        grow    200
+ templayer	met2fill_medium slots_m2_medium
+        and-not obstruct_m2_medium
+        shrink  495
+        grow    495
+
+ templayer      slots_m2_fine
+        bbox    top
+        slots   0 580 200 0 580 200 700 350
+ templayer      obstruct_m2_fine allm2,allpad,obsm2,m2fill,fillblock
+        grow    300
+	or	met2fill_coarse,met2fill_medium
+        grow    200
+ templayer	met2fill_fine slots_m2_fine
+        and-not obstruct_m2_fine
+        shrink  285
+        grow    285
+
+ templayer      slots_m2_veryfine
+        bbox    top
+        slots   0 300 200 0 300 200 100 100
+ templayer      obstruct_m2_veryfine allm2,allpad,obsm2,m2fill,fillblock
+        grow    100
+	or	met2fill_coarse,met2fill_medium,met2fill_fine
+        grow    200
+ templayer	met2fill_veryfine slots_m2_veryfine
+        and-not obstruct_m2_veryfine
+        shrink  145
+        grow    145
+
+ layer	MET2MASK met2fill_coarse
+	or met2fill_medium
+	or met2fill_fine
+	or met2fill_veryfine
+ 	calma 	41 0
+
+#---------------------------------------------------
+# MET3 fill
+#---------------------------------------------------
+ templayer      slots_m3_coarse
+        bbox    top
+        slots   0 2000 300 0 2000 300 700 700
+ templayer      obstruct_m3 allm3,allpad,obsm3,m3fill,fillblock
+        grow    3000
+ templayer	met3fill_coarse slots_m3_coarse
+        and-not obstruct_m3
+        shrink  995
+        grow    995
+
+ templayer      slots_m3_medium
+        bbox    top
+        slots   0 1000 300 0 1000 300 700 700
+ templayer      obstruct_m3_medium allm3,allpad,obsm3,m3fill,fillblock
+        grow    2700
+	or	met3fill_coarse
+        grow    300
+ templayer	met3fill_medium slots_m3_medium
+        and-not obstruct_m3_medium
+        shrink  495
+        grow    495
+
+ templayer      slots_m3_fine
+        bbox    top
+        slots   0 580 300 0 580 300 700 700
+ templayer      obstruct_m3_fine allm3,allpad,obsm3,m3fill,fillblock
+        grow    200
+	or	met3fill_coarse,met3fill_medium
+        grow    300
+ templayer	met3fill_fine slots_m3_fine
+        and-not obstruct_m3_fine
+        shrink  285
+        grow    285
+
+ templayer      slots_m3_veryfine
+        bbox    top
+        slots   0 400 300 0 400 300 150 200
+ templayer      obstruct_m3_veryfine allm3,allpad,obsm3,m3fill,fillblock
+	or	met3fill_coarse,met3fill_medium,met3fill_fine
+        grow    300
+ templayer	met3fill_veryfine slots_m3_veryfine
+        and-not obstruct_m3_veryfine
+        shrink  195
+        grow    195
+
+ layer	MET3MASK met3fill_coarse
+	or	met3fill_medium
+	or	met3fill_fine
+	or	met3fill_veryfine
+ 	calma 	34 0
+
+#ifdef METAL5
+#---------------------------------------------------
+# MET4 fill
+#---------------------------------------------------
+ templayer      slots_m4_coarse
+        bbox    top
+        slots   0 2000 300 0 2000 300 700 1050
+ templayer      obstruct_m4 allm4,allpad,obsm4,m4fill,fillblock
+        grow    3000
+ templayer	met4fill_coarse slots_m4_coarse
+        and-not obstruct_m4
+        shrink  995
+        grow    995
+
+ templayer      slots_m4_medium
+        bbox    top
+        slots   0 1000 300 0 1000 300 700 1050
+ templayer      obstruct_m4_medium allm4,allpad,obsm4,m4fill,fillblock
+        grow    2700
+	or	met4fill_coarse
+        grow    300
+ templayer	met4fill_medium slots_m4_medium
+        and-not obstruct_m4_medium
+        shrink  495
+        grow    495
+
+ templayer      slots_m4_fine
+        bbox    top
+        slots   0 580 300 0 580 300 700 1050
+ templayer      obstruct_m4_fine allm4,allpad,obsm4,m4fill,fillblock
+        grow    200
+	or	met4fill_coarse,met4fill_medium
+        grow    300
+ templayer	met4fill_fine slots_m4_fine
+        and-not obstruct_m4_fine
+        shrink  285
+        grow    285
+
+ templayer      slots_m4_veryfine
+        bbox    top
+        slots   0 400 300 0 400 300 150 300
+ templayer      obstruct_m4_veryfine allm4,allpad,obsm4,m4fill,fillblock
+	or	met4fill_coarse,met4fill_medium,met4fill_fine
+        grow    300
+ templayer	met4fill_veryfine slots_m4_veryfine
+        and-not obstruct_m4_veryfine
+        shrink  195
+        grow    195
+
+ layer	MET4MASK met4fill_coarse
+	or	met4fill_medium
+	or	met4fill_fine
+	or	met4fill_veryfine
+ 	calma 	51 0
+
+#---------------------------------------------------
+# MET5 fill
+#---------------------------------------------------
+ templayer      slots_m5
+        bbox    top
+        slots   0 3000 1600 0 3000 1600 1000 100
+ templayer      obstruct_m5 allm5,allpad,obsm5,m5fill,fillblock
+        grow    3000
+ templayer	met5fill_gen slots_m5
+        and-not obstruct_m5
+        shrink  1495
+        grow    1495
+
+ layer	MET5MASK met5fill_gen
+ 	calma 	59 0
+#endif (METAL5)
+
 end
 
 #-----------------------------------------------------------------------
@@ -1678,12 +2055,19 @@ style  vendorimport
  and-not LVTN
  and-not HVTP
  and-not STDCELL
+ and-not COREID
  labels DIFF
 
  layer scpfet pfetarea
  and-not LVTN
  and-not HVTP
  and STDCELL
+ labels DIFF
+
+ layer ppu pfetarea
+ and-not LVTN
+ and-not HVTP
+ and COREID
  labels DIFF
 
  layer pfetlvt pfetarea
@@ -1757,11 +2141,28 @@ style  vendorimport
  and POLY
  and-not PPLUS
  and NPLUS
+ and-not NWELL
  and-not THKOX
  and-not LVTN
  and-not SONOS
  and STDCELL
  labels DIFF
+
+ layer npd DIFF
+ and POLY
+ and-not PPLUS
+ and NPLUS
+ and-not NWELL
+ and COREID
+ labels DIFF
+
+ # layer npass DIFF
+ # and POLY
+ # and-not PPLUS
+ # and NPLUS
+ # and-not NWELL
+ # and COREID
+ # labels DIFF
 
  layer nfetlvt DIFF
  and POLY
@@ -1781,7 +2182,7 @@ style  vendorimport
  and SONOS
  labels DIFF
 
- templayer nsdarea DIFF
+ templayer nsdarea TAP
  and NPLUS
  and NWELL
  and-not POLY
@@ -1790,10 +2191,12 @@ style  vendorimport
  copyup nsubcheck
 
  layer nsd nsdarea
- labels DIFF
+ labels TAP
 
  layer nsd TAP,TAPPIN
  and NPLUS
+ and-not POLY
+ and-not THKOX
  labels TAP
  labels TAPPIN port
 
@@ -1804,7 +2207,7 @@ style  vendorimport
  templayer xnsubcheck nsubcheck
  copyup nsubcheck
 
- templayer psdarea DIFF
+ templayer psdarea TAP
  and PPLUS
  and-not NWELL
  and-not POLY
@@ -1814,10 +2217,11 @@ style  vendorimport
  copyup psubcheck
 
  layer psd psdarea
- labels DIFF
+ labels TAP
 
  layer psd TAP,TAPPIN
  and PPLUS
+ and-not POLY
  and-not THKOX
  labels TAP
  labels TAPPIN port
@@ -1857,7 +2261,7 @@ style  vendorimport
  and THKOX
  labels DIFF
 
- templayer mvnsdarea DIFF
+ templayer mvnsdarea TAP
  and NPLUS
  and NWELL
  and-not POLY
@@ -1866,7 +2270,7 @@ style  vendorimport
  copyup mvnsubcheck
 
  layer mvnsd mvnsdarea
- labels DIFF
+ labels TAP
 
  layer mvnsd TAP,TAPPIN
  and NPLUS
@@ -1909,7 +2313,7 @@ style  vendorimport
  templayer mvxpsubcheck mvpsubcheck
  copyup mvpsubcheck
 
- layer psd DIFF
+ layer psd TAP
  and-not PPLUS
  and-not NPLUS
  and-not POLY
@@ -1917,14 +2321,14 @@ style  vendorimport
  and-not pfetexpand
  and psdexpand
 
- layer nsd DIFF
+ layer nsd TAP
  and-not PPLUS
  and-not NPLUS
  and-not POLY
  and-not THKOX
  and nsdexpand
 
- layer mvpsd DIFF
+ layer mvpsd TAP
  and-not PPLUS
  and-not NPLUS
  and-not POLY
@@ -1932,7 +2336,7 @@ style  vendorimport
  and-not mvpfetexpand
  and mvpsdexpand
 
- layer mvnsd DIFF
+ layer mvnsd TAP
  and-not PPLUS
  and-not NPLUS
  and-not POLY
@@ -2362,6 +2766,9 @@ style  vendorimport
  and MET1RES,MET1SHORT
  labels MET1RES,MET1SHORT
 
+ layer m1fill MET1FILL
+ labels MET1FILL
+
 #ifdef MIM
  layer mimcap MET3
  and CAPM
@@ -2407,6 +2814,9 @@ style  vendorimport
  and MET2RES,MET2SHORT
  labels MET2RES,MET2SHORT
 
+ layer m2fill MET2FILL
+ labels MET2FILL
+
  templayer m3cbase VIA2
  grow 40
 
@@ -2429,6 +2839,9 @@ style  vendorimport
  layer rm3 MET3
  and MET3RES,MET3SHORT
  labels MET3RES,MET3SHORT
+
+ layer m3fill MET3FILL
+ labels MET3FILL
 
 #ifdef (METAL5)
 
@@ -2458,6 +2871,9 @@ style  vendorimport
  and MET4RES,MET4SHORT
  labels MET4RES,MET4SHORT
 
+ layer m4fill MET4FILL
+ labels MET4FILL
+
  layer m5 MET5,MET5TXT,MET5PIN
  and-not MET5RES,MET5SHORT
  labels MET5
@@ -2467,6 +2883,9 @@ style  vendorimport
  layer rm5 MET5
  and MET5RES,MET5SHORT
  labels MET5RES,MET5SHORT
+
+ layer m5fill MET5FILL
+ labels MET5FILL
 
  templayer via4base VIA4
 #ifdef MIM
@@ -2705,29 +3124,28 @@ style  vendorimport
 # MOS Varactor
 
  layer var POLY
- and DIFF
+ and TAP
  and NPLUS
  and NWELL
  and-not THKOX
  and-not HVTP
- grow 25
+ # NOTE:  Else forms a varactor that is not in the vendor netlist.
+ and-not COREID
  labels POLY
 
  layer varhvt POLY
- and DIFF
+ and TAP
  and NPLUS
  and NWELL
  and-not THKOX
  and HVTP
- grow 25
  labels POLY
 
  layer mvvar POLY
- and DIFF
+ and TAP
  and NPLUS
  and NWELL
  and THKOX
- grow 25
  labels POLY
 
  calma NWELL 64 20
@@ -2827,6 +3245,14 @@ style  vendorimport
  calma MET5RES 72 13
 #endif
 
+ calma MET1FILL 68 28
+ calma MET2FILL 69 28
+ calma MET3FILL 70 28
+#ifdef METAL5
+ calma MET4FILL 71 28
+ calma MET5FILL 72 28
+#endif
+
  calma POLYSHORT 66 15
  calma LISHORT 67 15
  calma MET1SHORT 68 15
@@ -2915,7 +3341,7 @@ drc
 # DIFF
 #-----------------------------
 
- width *ndiff,nfet,scnfet,*nsd,*ndiode,ndiffres,*pdiff,pfet,scpfet,*psd,*pdiode,pdiffres \
+ width *ndiff,nfet,scnfet,npd,npass,*nsd,*ndiode,ndiffres,*pdiff,pfet,scpfet,ppu,*psd,*pdiode,pdiffres \
 	150 "Diffusion width < %d (Diff/tap 1)"
  width *mvndiff,mvnfet,mvnnfet,*mvndiode,*nndiode,mvndiffres,*mvpdiff,mvpfet,*mvpdiode 290 \
 	"MV Diffusion width < %d (Diff/tap 14)"
@@ -2947,7 +3373,7 @@ drc
 	"N-well overlap of N-tap < %d (Diff/tap 10)"
  surround *mvnsd allnwell 330 absence_illegal \
 	"N-well overlap of MV N-tap < %d (Diff/tap 19)"
- surround *pdiff,*pdiode,pfet,scpfet allnwell 180 absence_illegal \
+ surround *pdiff,*pdiode,pfet,scpfet,ppu allnwell 180 absence_illegal \
 	"N-well overlap of P-Diffusion < %d (Diff/tap 8)"
  surround *mvpdiff,*mvpdiode,mvpfet allnwell 330 absence_illegal \
 	"N-well overlap of P-Diffusion < %d (Diff/tap 17)"
@@ -2997,10 +3423,10 @@ drc
 	"Poly spacing to Diffusion < %d (Poly 4a)"
  spacing npres *nsd 480 touching_illegal \
 	"Poly resistor spacing to N-tap < %d (Poly 9)"
- overhang *ndiff,rndiff nfet,scnfet 250 "N-Diffusion overhang of nmos < %d (Poly 7)"
+ overhang *ndiff,rndiff nfet,scnfet,npd,npass 250 "N-Diffusion overhang of nmos < %d (Poly 7)"
  overhang *mvndiff,mvrndiff mvnfet,mvnnfet 250 \
 	"N-Diffusion overhang of nmos < %d (Poly 7)"
- overhang *pdiff,rpdiff pfet,scpfet 250 "P-Diffusion overhang of pmos < %d (Poly 7)"
+ overhang *pdiff,rpdiff pfet,scpfet,ppu 250 "P-Diffusion overhang of pmos < %d (Poly 7)"
  overhang *mvpdiff,mvrpdiff mvpfet 250 "P-Diffusion overhang of pmos < %d (Poly 7)"
  overhang *poly allfets 130 "Poly overhang of transistor < %d (Poly 8)"
  rect_only allfets "No bends in transistors (Poly 11)"
@@ -3052,7 +3478,7 @@ drc
 
  spacing ndc,pdc nfet,pfet 55 touching_illegal \
 	"Diffusion contact to gate < %d (LIcon 11)"
- spacing ndc,pdc scnfet,scpfet 50 touching_illegal \
+ spacing ndc,pdc scnfet,npd,npass,scpfet,ppu 50 touching_illegal \
 	"Diffusion contact to standard cell gate < %d (LIcon 11)"
  spacing mvndc,mvpdc mvnfet,mvnnfet,mvpfet 55 touching_illegal \
 	"Diffusion contact to gate < %d (LIcon 11)"
@@ -3063,18 +3489,18 @@ drc
  spacing mvnsc mvvar 250 touching_illegal \
 	"Diffusion contact to varactor gate < %d (LIcon 10)"
 
- surround ndc/a *ndiff,nfet,scnfet,nfetlvt 40 absence_illegal \
+ surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt 40 absence_illegal \
 	"N-diffusion overlap of N-diffusion contact < %d (LIcon 5a)"
- surround pdc/a *pdiff,pfet,scpfet,pfethvt,pfetlvt 40 absence_illegal \
+ surround pdc/a *pdiff,pfet,scpfet,ppu,pfethvt,pfetlvt 40 absence_illegal \
 	"P-diffusion overlap of P-diffusion contact < %d (LIcon 5a)"
  surround ndic/a *ndi 40 absence_illegal \
 	"N-diode overlap of N-diode contact < %d (LIcon 5a)"
  surround pdic/a *pdi 40 absence_illegal \
 	"P-diode overlap of N-diode contact < %d (LIcon 5a)"
 
- surround ndc/a *ndiff,nfet,scnfet,nfetlvt 60 directional \
+ surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt 60 directional \
 	"N-diffusion overlap of N-diffusion contact < %d in one direction (LIcon 5c)"
- surround pdc/a *pdiff,pfet,scpfet,pfethvt,pfetlvt 60 directional \
+ surround pdc/a *pdiff,pfet,scpfet,ppu,pfethvt,pfetlvt 60 directional \
 	"P-diffusion overlap of P-diffusion contact < %d in one direction (LIcon 5c)"
  surround ndic/a *ndi 60 directional \
 	"N-diode overlap of N-diode contact < %d in one direction (LIcon 5c)"
@@ -3231,6 +3657,7 @@ variants *
 
 
 #ifdef METAL5
+#undef METAL5
 #--------------------------------------------------
 # VIA3 - Requires METAL5 Module
 #--------------------------------------------------
@@ -3280,6 +3707,7 @@ variants *
  spacing allm5  allm5,obsm5 1600 touching_ok "Metal5 spacing < %d (Met5 2)"
  area allm5,obsm5 4000000 1600 "Metal5 minimum area < %a (Met5 4)"
 
+#define METAL5
 #endif (METAL5)
 
 #ifdef REDISTRIBUTION
@@ -3319,10 +3747,10 @@ variants *
 	"Butting MV N-tap spacing to MV PMOS gate < %d (Poly 6)"
 
  # No LV FETs in HV diff
- spacing pfet,scpfet,pfetlvt,pfethvt,*pdiff *mvpdiff 360 touching_illegal \
+ spacing pfet,scpfet,ppu,pfetlvt,pfethvt,*pdiff *mvpdiff 360 touching_illegal \
 	"LV P-diffusion to MV P-diffusion < %d (Diff/tap 23 + Diff/tap 22)"
 
- spacing nfet,scnfet,nfetlvt,varactor,varhvt,*ndiff *mvndiff 360 touching_illegal \
+ spacing nfet,scnfet,npd,npass,nfetlvt,varactor,varhvt,*ndiff *mvndiff 360 touching_illegal \
 	"LV N-diffusion to MV N-diffusion < %d (Diff/tap 23 + Diff/tap 22)"
 
  # No HV FETs in LV diff
@@ -3878,10 +4306,13 @@ defaultareacap     nwell well 120
 variants (sim)
 
  device msubcircuit pshort pfet,scpfet *pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
+ device msubcircuit ppu ppu *pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
  device msubcircuit plowvt pfetlvt *pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
  device msubcircuit phighvt pfethvt *pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
 
- device msubcircuit nshort nfet,scnfet *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
+ device msubcircuit nshort nfet,scnfet,npd,npass *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
+ device msubcircuit npd npd *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
+ device msubcircuit npass npass *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
  device msubcircuit nlowvt nfetlvt *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
  device msubcircuit sonos_e nsonos *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
  device subcircuit xcnwvc varactor *nndiff nwell error l=l w=w
@@ -3932,9 +4363,12 @@ variants (sim)
  variants (lvs),(si)
 
  device mosfet pshort scpfet,pfet pdiff,pdiffres,pdc nwell 
+ device mosfet ppu ppu pdiff,pdiffres,pdc nwell 
  device mosfet plowvt pfetlvt pdiff,pdiffres,pdc nwell 
  device mosfet phighvt pfethvt pdiff,pdiffres,pdc nwell 
- device mosfet nshort scnfet,nfet ndiff,ndiffres,ndc pwell,space/w
+ device mosfet nshort scnfet,npd,npass,nfet ndiff,ndiffres,ndc pwell,space/w
+ device mosfet npd npd ndiff,ndiffres,ndc pwell,space/w
+ device mosfet npass npass ndiff,ndiffres,ndc pwell,space/w
  device mosfet nlowvt nfetlvt ndiff,ndiffres,ndc pwell,space/w
  device mosfet sonos_e nsonos ndiff,ndiffres,ndc pwell,space/w
  device mosfet phv mvpfet mvpdiff,mvpdiffres,mvpdc nwell 
