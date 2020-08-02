@@ -128,6 +128,7 @@ How to use open_pdks:
 
     The local install sequence is:
 
+	configure			See options for setting paths
 	make				Generate local staging area
 	make install-local		Migrate to install directory
 
@@ -138,6 +139,7 @@ How to use open_pdks:
 
     The distributed install sequence is:
 
+	configure			See options for setting paths
 	make				Generate local staging area
 	make install-dist		Migrate to distribution directory
 
