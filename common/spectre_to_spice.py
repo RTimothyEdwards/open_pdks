@@ -382,34 +382,33 @@ def convert_file(in_file, out_file):
                     spicelines.append('r' + dmatch.group(1) + ' ' + dmatch.group(2) + ' ' + dmatch.group(3))
                     continue
 
-            if not isspectre:
-                cmatch = cdlrex.match(line)
-                if cmatch:
-                    devtype = cmatch.group(1)
-                    devmodel = cmatch.group(4)
+            cmatch = cdlrex.match(line)
+            if cmatch:
+                devtype = cmatch.group(1)
+                devmodel = cmatch.group(4)
 
-                    # Handle spectreisms. . .
-                    if devmodel == 'capacitor':
-                        devtype = 'c'
-                        devmodel = ''
-                    elif devmodel == 'resistor':
-                        devtype = 'r'
-                        devmodel = ''
-                    elif devmodel == 'resbody':
-                        # This is specific to the SkyWater models;  handling it
-                        # in a generic way would be difficult, as it would be
-                        # necessary to find the model and discover that the
-                        # model is a resistor and not a subcircuit.
-                        devtype = 'r'
+                # Handle spectreisms. . .
+                if devmodel == 'capacitor':
+                    devtype = 'c'
+                    devmodel = ''
+                elif devmodel == 'resistor':
+                    devtype = 'r'
+                    devmodel = ''
+                elif devmodel == 'resbody':
+                    # This is specific to the SkyWater models;  handling it
+                    # in a generic way would be difficult, as it would be
+                    # necessary to find the model and discover that the
+                    # model is a resistor and not a subcircuit.
+                    devtype = 'r'
 
-                    fmtline = parse_param_line(cmatch.group(5), True, insub)
-                    if fmtline != '':
-                        inparam = True
-                        spicelines.append(devtype + cmatch.group(2) + ' ' + cmatch.group(3) + ' ' + devmodel + ' ' + fmtline)
-                        continue
-                    else:
-                        spicelines.append(devtype + cmatch.group(2) + ' ' + cmatch.group(3) + ' ' + devmodel + ' ' + cmatch.group(5))
-                        continue
+                fmtline = parse_param_line(cmatch.group(5), True, insub)
+                if fmtline != '':
+                    inparam = True
+                    spicelines.append(devtype + cmatch.group(2) + ' ' + cmatch.group(3) + ' ' + devmodel + ' ' + fmtline)
+                    continue
+                else:
+                    spicelines.append(devtype + cmatch.group(2) + ' ' + cmatch.group(3) + ' ' + devmodel + ' ' + cmatch.group(5))
+                    continue
 
             # Check for a line that begins with the subcircuit name
           
