@@ -8,7 +8,7 @@ import re
 import glob
 
 def usage():
-    print('convert_spectre.py <path_to_spectre> <path_to_spice>')
+    print('spectre_to_spice.py <path_to_spectre> <path_to_spice>')
 
 # Check if a parameter value is a valid number (real, float, integer)
 # or is some kind of expression.
@@ -385,13 +385,30 @@ def convert_file(in_file, out_file):
             if not isspectre:
                 cmatch = cdlrex.match(line)
                 if cmatch:
+                    devtype = cmatch.group(1)
+                    devmodel = cmatch.group(4)
+
+                    # Handle spectreisms. . .
+                    if devmodel == 'capacitor':
+                        devtype = 'c'
+                        devmodel = ''
+                    elif devmodel == 'resistor':
+                        devtype = 'r'
+                        devmodel = ''
+                    elif devmodel == 'resbody':
+                        # This is specific to the SkyWater models;  handling it
+                        # in a generic way would be difficult, as it would be
+                        # necessary to find the model and discover that the
+                        # model is a resistor and not a subcircuit.
+                        devtype = 'r'
+
                     fmtline = parse_param_line(cmatch.group(5), True, insub)
                     if fmtline != '':
                         inparam = True
-                        spicelines.append(cmatch.group(1) + cmatch.group(2) + ' ' + cmatch.group(3) + ' ' + cmatch.group(4) + ' ' + fmtline)
+                        spicelines.append(devtype + cmatch.group(2) + ' ' + cmatch.group(3) + ' ' + devmodel + ' ' + fmtline)
                         continue
                     else:
-                        spicelines.append(cmatch.group(1) + cmatch.group(2) + ' ' + cmatch.group(3) + ' ' + cmatch.group(4) + ' ' + cmatch.group(5))
+                        spicelines.append(devtype + cmatch.group(2) + ' ' + cmatch.group(3) + ' ' + devmodel + ' ' + cmatch.group(5))
                         continue
 
             # Check for a line that begins with the subcircuit name
@@ -448,7 +465,7 @@ if __name__ == '__main__':
     debug = False
 
     if len(sys.argv) == 1:
-        print("No options given to convert_spectre.py.")
+        print("No options given to spectre_to_spice.py.")
         usage()
         sys.exit(0)
 
@@ -462,7 +479,7 @@ if __name__ == '__main__':
             arguments.append(option)
 
     if len(arguments) != 2:
-        print("Wrong number of arguments given to convert_spectre.py.")
+        print("Wrong number of arguments given to spectre_to_spice.py.")
         usage()
         sys.exit(0)
 
