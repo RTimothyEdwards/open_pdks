@@ -63,8 +63,7 @@ foreach dev $devices {
 
 set devices {mrl1 mrm1 mrm2 mrm3}
 #ifdef METAL5
-lappend devices mrm4
-lappend devices mrm5
+lappend devices mrm4 mrm5
 #endif (METAL5)
 
 foreach dev $devices {
@@ -101,9 +100,8 @@ foreach dev $devices {
 #-------------------------------------------
 
 set devices {nshort nlowvt sonos_e nhvnative nhv pshort plowvt phighvt phv}
-lappend devices xcnwvc
-lappend devices xcnwvc2
-lappend devices xchvnwc
+lappend devices ppu npass npd
+lappend devices xcnwvc xcnwvc2 xchvnwc
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
