@@ -71,7 +71,28 @@ Installation:
 
 Step 1:
 
-    Edit the Makefile to set the following definitions for your host system:
+    Run "configure" to set the paths to the Google/SkyWater source
+    repository and to set the path to the install location.  Note that
+    the configure script is located in the open_pdks top level directory,
+    not in the foundry subdirctory, and must be run from the top level
+    directory.  Configure options are as follows:
+
+	--with-sky130-source=/path/to/sky130/source
+                          "location of the source files for sky130"
+	--with-local-path=/path/to/install/pdks
+                          "location where the PDKs will be installed"
+
+    NOTE:  The intention of the configure file is to not have to hand-edit
+    the Makefile.  However, the development of the configure script is
+    currently ongoing and unfinished, so for now the Makefile should be
+    checked and edited after running configure.
+
+Step 2:
+
+    All other steps are run in the sky130/ subdirectory.
+
+    cd to the sky130/ subdirectory and edit the Makefile to set the following
+    definitions for your host system:
 
 	EF_STYLE = Select "1" for an efabless-style file structure, "0"
 			otherwise. There are some differences in
@@ -93,13 +114,14 @@ Step 1:
 			in both the local and distribution installations.  For
 			a distribution installation, this is the local name of
 			the path to the PDK after it has been distributed to
-			the host computers.
+			the host computers (This should have been set by the
+			option --with-local-path= passed to configure).
 
 	DIST_PATH = The path to the location of the installed files prior to
 			distribution.  This will most likely be a git or similar
 			repo.
 
-Step 2:
+Step 3:
 	Run:
 
 	    make
@@ -108,7 +130,7 @@ Step 2:
 	for the SKY130A PDK, and process all vendor files, and place everything
 	in a local staging area.
 
-Step 3:
+Step 4:
 	For a local install, do:
 
 	    make install-local

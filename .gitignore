@@ -6,3 +6,13 @@ __pycache__
 **/.DS_Store
 **/.Trashes/
 
+# script artifacts
+*_install.log
+*_migrate.log
+
+# autotools artifacts
+scripts/*
+!scripts/configure
+!scripts/configure.ac
+**/Makefile
+**/Makefile.am

@@ -1,6 +1,6 @@
 # Power nets
-set ::power_nets "VDD"
-set ::ground_nets "VSS"
+set ::power_nets $::env(VDD_PIN)
+set ::ground_nets $::env(GND_PIN)
 
 set ::macro_blockage_layer_list "li1 met1 met2 met3 met4 met5"
 
