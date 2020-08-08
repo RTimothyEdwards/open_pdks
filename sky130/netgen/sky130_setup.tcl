@@ -40,7 +40,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel {value par}
 	property "-circuit1 $dev" tolerance {l 0.01} {w 0.01}
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1 pm
+	# property "-circuit2 $dev" delete
     }
     if {[lsearch $cells2 $dev] >= 0} {
 	permute "-circuit2 $dev" 1 2
@@ -53,7 +53,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel {value par}
 	property "-circuit1 $dev" tolerance {l 0.01} {w 0.01}
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1 pm
+	# property "-circuit2 $dev" delete
     }
 }
 
@@ -78,7 +78,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel {value par}
 	property "-circuit1 $dev" tolerance {l 0.01} {w 0.01}
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1 pm
+	# property "-circuit2 $dev" delete
     }
     if {[lsearch $cells2 $dev] >= 0} {
 	permute "-circuit2 $dev" 1 2
@@ -91,7 +91,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel {value par}
 	property "-circuit1 $dev" tolerance {l 0.01} {w 0.01}
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1 pm
+	# property "-circuit2 $dev" delete
     }
 }
 
@@ -111,7 +111,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel {w add}
 	property "-circuit1 $dev" tolerance {w 0.01} {l 0.01}
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1 NRD NRS
+	property "-circuit2 $dev" delete as ad ps pd
     }
     if {[lsearch $cells2 $dev] >= 0} {
 	permute "-circuit2 $dev" 1 3
@@ -120,7 +120,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel {w add}
 	property "-circuit2 $dev" tolerance {w 0.01} {l 0.01}
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1 NRD NRS
+	property "-circuit2 $dev" delete as ad ps pd
     }
 }
 
@@ -138,7 +138,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel {value add}
 	property "-circuit1 $dev" tolerance {area 0.02}
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1 peri
+	property "-circuit2 $dev" delete perim
     }
     if {[lsearch $cells2 $dev] >= 0} {
 	property "-circuit2 $dev" parallel enable
@@ -146,7 +146,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel {value add}
 	property "-circuit2 $dev" tolerance {area 0.02}
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1 peri
+	property "-circuit2 $dev" delete perim
     }
 }
 
@@ -164,7 +164,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel {value add}
 	property "-circuit1 $dev" tolerance {l 0.01} {w 0.01}
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1 pm
+	# property "-circuit2 $dev" delete perim
     }
     if {[lsearch $cells2 $dev] >= 0} {
 	property "-circuit1 $dev" parallel enable
@@ -172,7 +172,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel {value add}
 	property "-circuit1 $dev" tolerance {l 0.01} {w 0.01}
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1 pm
+	# property "-circuit2 $dev" delete perim
     }
 }
 
@@ -211,12 +211,12 @@ foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
 	property "-circuit1 $dev" parallel enable
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1
+	# property "-circuit2 $dev" delete
     }
     if {[lsearch $cells2 $dev] >= 0} {
 	property "-circuit2 $dev" parallel enable
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1
+	# property "-circuit2 $dev" delete
     }
 }
 

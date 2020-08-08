@@ -9,19 +9,19 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS],
     # --with-pdk-source=PDK_SOURCE_PATH
     m4_foreach_w(pdk, $1, [
 	m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z" "A-Z"))])
-        pdkvar[]_SOURCE_PATH=""
+        pdkvar[]_SOURCE_PATH_=""
         AC_ARG_WITH(pdk-source,
               [AS_HELP_STRING([--with-pdk-source=/path/to/pdk/source], "location of the source files for pdk")],
-              [pdkvar[]_SOURCE_PATH=$withval]
+              [pdkvar[]_SOURCE_PATH_=$withval]
         )
 
 	# Require this argument
         AC_MSG_NOTICE([Checking whether source path is specified for 'pdk'])
-        if test "x$[]pdkvar[]_SOURCE_PATH" == "x" ; then
+        if test "x$[]pdkvar[]_SOURCE_PATH_" == "x" ; then
 	   AC_MSG_ERROR([Option --with-pdk-source=<path> not specified!])
 	fi
 
-	pdkvar[]_SOURCE_PATH=$(readlink -f $[]pdkvar[]_SOURCE_PATH)
+	pdkvar[]_SOURCE_PATH=`readlink -f $[]pdkvar[]_SOURCE_PATH_`
 
         # basic check that the PDK exists there (the path must exist in any case)
         AC_MSG_NOTICE([Checking specified path for 'pdk' at $[]pdkvar[]_SOURCE_PATH])
