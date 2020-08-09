@@ -175,9 +175,9 @@ proc sky130::addtechmenu {framename} {
 
    magic::add_toolkit_command $layoutframe "mrp1 - 48.2 Ohm/sq" \
 	    "magic::gencell sky130::mrp1" pdk2
-   magic::add_toolkit_command $layoutframe "xhrpoly - 319.8 Ohm/sq" \
+   magic::add_toolkit_command $layoutframe "xhrpoly_0p35 - 319.8 Ohm/sq" \
 	    "magic::gencell sky130::xhrpoly" pdk2
-   magic::add_toolkit_command $layoutframe "uhrpoly - 2000 Ohm/sq" \
+   magic::add_toolkit_command $layoutframe "uhrpoly_0p35 - 2000 Ohm/sq" \
 	    "magic::gencell sky130::uhrpoly" pdk2
    magic::add_toolkit_command $layoutframe "xpwres - 3050 Ohm/sq" \
 	    "magic::gencell sky130::xpwres" pdk2
@@ -2077,7 +2077,7 @@ proc sky130::xcmimc2_check {parameters} {
 proc sky130::xpwres_defaults {} {
     return {w 2.650 l 26.50 m 1 nx 1 wmin 2.650 lmin 26.50 \
 	 	rho 975 val 4875 dummy 0 dw 0.25 term 1.0 \
-		endcov 100 full_metal 1}
+		guard 1 endcov 100 full_metal 1}
 }
 
 #----------------------------------------------------------------
@@ -2088,25 +2088,93 @@ proc sky130::xpwres_defaults {} {
 proc sky130::mrp1_defaults {} {
     return {w 0.330 l 1.650 m 1 nx 1 wmin 0.330 lmin 1.650 \
 		rho 48.2 val 241 dummy 0 dw 0.0 term 0.0 \
-		sterm 0.0 caplen 0.4 snake 0 \
+		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
 		full_metal 1}
 }
 
 # "term" is rho * 0.06, the distance between xpc edge and CONT.
-proc sky130::xhrpoly_defaults {} {
+proc sky130::xhrpoly_0p35_defaults {} {
     return {w 0.350 l 0.50 m 1 nx 1 wmin 0.350 lmin 0.50 \
 		rho 319.8 val 456.857 dummy 0 dw 0.0 term 19.188 \
-		sterm 0.0 caplen 0 glc 1 grc 1 gtc 1 gbc 1 \
-		full_metal 1}
+		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
+		compatible {xhrpoly_0p35 xhrpoly_0p69 xhrpoly_1p41 \
+		xhrpoly_2p85 xhrpoly_5p73} \
+		full_metal 1 wmax 0.350}
+}
+proc sky130::xhrpoly_0p69_defaults {} {
+    return {w 0.690 l 1.00 m 1 nx 1 wmin 0.690 lmin 0.50 \
+		rho 319.8 val 463.480 dummy 0 dw 0.0 term 19.188 \
+		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
+		compatible {xhrpoly_0p35 xhrpoly_0p69 xhrpoly_1p41 \
+		xhrpoly_2p85 xhrpoly_5p73} \
+		full_metal 1 wmax 0.690}
+}
+proc sky130::xhrpoly_1p41_defaults {} {
+    return {w 1.410 l 2.00 m 1 nx 1 wmin 1.410 lmin 0.50 \
+		rho 319.8 val 453.620 dummy 0 dw 0.0 term 19.188 \
+		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
+		compatible {xhrpoly_0p35 xhrpoly_0p69 xhrpoly_1p41 \
+		xhrpoly_2p85 xhrpoly_5p73} \
+		full_metal 1 wmax 1.410}
+}
+proc sky130::xhrpoly_2p85_defaults {} {
+    return {w 2.850 l 3.00 m 1 nx 1 wmin 2.850 lmin 0.50 \
+		rho 319.8 val 336.630 dummy 0 dw 0.0 term 19.188 \
+		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
+		compatible {xhrpoly_0p35 xhrpoly_0p69 xhrpoly_1p41 \
+		xhrpoly_2p85 xhrpoly_5p73} \
+		full_metal 1 wmax 2.850}
+}
+proc sky130::xhrpoly_5p73_defaults {} {
+    return {w 5.730 l 6.00 m 1 nx 1 wmin 5.730 lmin 0.50 \
+		rho 319.8 val 334.870 dummy 0 dw 0.0 term 19.188 \
+		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
+		compatible {xhrpoly_0p35 xhrpoly_0p69 xhrpoly_1p41 \
+		xhrpoly_2p85 xhrpoly_5p73} \
+		full_metal 1 wmax 5.730}
 }
 
 # "term" is rho * 0.06, the distance between xpc edge and CONT.
-proc sky130::uhrpoly_defaults {} {
+proc sky130::uhrpoly_0p35_defaults {} {
     return {w 0.350 l 0.50 m 1 nx 1 wmin 0.350 lmin 0.50 \
 		rho 2000 val 2875.143 dummy 0 dw 0.0 term 120 \
-		sterm 0.0 caplen 0 \
-		glc 1 grc 1 gtc 1 gbc 1 full_metal 1}
+		sterm 0.0 caplen 0 wmax 0.350 \
+		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
+		compatible {uhrpoly_0p35 uhrpoly_0p69 uhrpoly_1p41 \
+		uhrpoly_2p85 uhrpoly_5p73} full_metal 1}
+}
+proc sky130::uhrpoly_0p69_defaults {} {
+    return {w 0.690 l 1.00 m 1 nx 1 wmin 0.690 lmin 0.50 \
+		rho 2000 val 2898.600 dummy 0 dw 0.0 term 120 \
+		sterm 0.0 caplen 0 wmax 0.690 \
+		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
+		compatible {uhrpoly_0p35 uhrpoly_0p69 uhrpoly_1p41 \
+		uhrpoly_2p85 uhrpoly_5p73} full_metal 1}
+}
+proc sky130::uhrpoly_1p41_defaults {} {
+    return {w 1.410 l 2.00 m 1 nx 1 wmin 1.410 lmin 0.50 \
+		rho 2000 val 2836.900 dummy 0 dw 0.0 term 120 \
+		sterm 0.0 caplen 0 wmax 1.410 \
+		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
+		compatible {uhrpoly_0p35 uhrpoly_0p69 uhrpoly_1p41 \
+		uhrpoly_2p85 uhrpoly_5p73} full_metal 1}
+}
+proc sky130::uhrpoly_2p85_defaults {} {
+    return {w 2.850 l 3.00 m 1 nx 1 wmin 2.850 lmin 0.50 \
+		rho 2000 val 2105.300 dummy 0 dw 0.0 term 120 \
+		sterm 0.0 caplen 0 wmax 2.850 \
+		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
+		compatible {uhrpoly_0p35 uhrpoly_0p69 uhrpoly_1p41 \
+		uhrpoly_2p85 uhrpoly_5p73} full_metal 1}
+}
+proc sky130::uhrpoly_5p73_defaults {} {
+    return {w 5.730 l 6.00 m 1 nx 1 wmin 5.730 lmin 0.50 \
+		rho 2000 val 2094.200 dummy 0 dw 0.0 term 120 \
+		sterm 0.0 caplen 0 wmax 5.730 \
+		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
+		compatible {uhrpoly_0p35 uhrpoly_0p69 uhrpoly_1p41 \
+		uhrpoly_2p85 uhrpoly_5p73} full_metal 1}
 }
 
 #----------------------------------------------------------------
@@ -2117,7 +2185,7 @@ proc sky130::uhrpoly_defaults {} {
 proc sky130::mrdn_defaults {} {
     return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 \
 		rho 120 val 600.0 dummy 0 dw 0.05 term 0.0 \
-		sterm 0.0 caplen 0.4 snake 0 \
+		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
 		full_metal 1}
 }
@@ -2125,7 +2193,7 @@ proc sky130::mrdn_defaults {} {
 proc sky130::mrdn_hv_defaults {} {
     return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 \
 		rho 120 val 600.0 dummy 0 dw 0.02 term 0.0 \
-		sterm 0.0 caplen 0.4 snake 0 \
+		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
 		full_metal 1}
 }
@@ -2138,7 +2206,7 @@ proc sky130::mrdn_hv_defaults {} {
 proc sky130::mrdp_defaults {} {
     return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 \
 		rho 197 val 985.0 dummy 0 dw 0.02 term 0.0 \
-		sterm 0.0 caplen 0.60 snake 0 \
+		sterm 0.0 caplen 0.60 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
 		full_metal 1}
 }
@@ -2146,7 +2214,7 @@ proc sky130::mrdp_defaults {} {
 proc sky130::mrdp_hv_defaults {} {
     return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 \
 		rho 197 val 985.0 dummy 0 dw 0.02 term 0.0 \
-		sterm 0.0 caplen 0.60 snake 0 \
+		sterm 0.0 caplen 0.60 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
 		full_metal 1}
 }
@@ -2244,11 +2312,35 @@ proc sky130::mrp1_convert {parameters} {
     return [sky130::res_convert $parameters]
 }
 
-proc sky130::xhrpoly_convert {parameters} {
+proc sky130::xhrpoly_0p35_convert {parameters} {
+    return [sky130::res_convert $parameters]
+}
+proc sky130::xhrpoly_0p69_convert {parameters} {
+    return [sky130::res_convert $parameters]
+}
+proc sky130::xhrpoly_1p41_convert {parameters} {
+    return [sky130::res_convert $parameters]
+}
+proc sky130::xhrpoly_2p85_convert {parameters} {
+    return [sky130::res_convert $parameters]
+}
+proc sky130::xhrpoly_5p73_convert {parameters} {
     return [sky130::res_convert $parameters]
 }
 
-proc sky130::uhrpoly_convert {parameters} {
+proc sky130::uhrpoly_0p35_convert {parameters} {
+    return [sky130::res_convert $parameters]
+}
+proc sky130::uhrpoly_0p69_convert {parameters} {
+    return [sky130::res_convert $parameters]
+}
+proc sky130::uhrpoly_1p41_convert {parameters} {
+    return [sky130::res_convert $parameters]
+}
+proc sky130::uhrpoly_2p85_convert {parameters} {
+    return [sky130::res_convert $parameters]
+}
+proc sky130::uhrpoly_5p73_convert {parameters} {
     return [sky130::res_convert $parameters]
 }
 
@@ -2314,6 +2406,11 @@ proc sky130::res_dialog {device parameters} {
 	magic::add_entry endcov "End contact coverage (%)" $parameters
     }
 
+    if {[dict exists $parameters compatible]} {
+	set sellist [dict get $parameters compatible]
+	magic::add_selectlist gencell "Device type" $sellist $parameters $device
+    }
+
     # magic::add_checkbox dummy "Add dummy" $parameters
 
     if {[dict exists $parameters snake]} {
@@ -2326,22 +2423,24 @@ proc sky130::res_dialog {device parameters} {
             magic::add_checkbox roverlap "Overlap at ends" $parameters
 	}
     }
-    magic::add_checkbox guard "Add guard ring" $parameters
+    if {[dict exists $parameters guard]} {
+	magic::add_checkbox guard "Add guard ring" $parameters
 
-    if {[dict exists $parameters full_metal]} {
-	magic::add_checkbox full_metal "Full metal guard ring" $parameters
-    }
-    if {[dict exists $parameters glc]} {
-	magic::add_checkbox glc "Add left guard ring contact" $parameters
-    }
-    if {[dict exists $parameters grc]} {
-	magic::add_checkbox grc "Add right guard ring contact" $parameters
-    }
-    if {[dict exists $parameters gtc]} {
-	magic::add_checkbox gtc "Add top guard ring contact" $parameters
-    }
-    if {[dict exists $parameters gbc]} {
-	magic::add_checkbox gbc "Add bottom guard ring contact" $parameters
+	if {[dict exists $parameters full_metal]} {
+	    magic::add_checkbox full_metal "Full metal guard ring" $parameters
+	}
+	if {[dict exists $parameters glc]} {
+	    magic::add_checkbox glc "Add left guard ring contact" $parameters
+	}
+	if {[dict exists $parameters grc]} {
+	    magic::add_checkbox grc "Add right guard ring contact" $parameters
+	}
+	if {[dict exists $parameters gtc]} {
+	    magic::add_checkbox gtc "Add top guard ring contact" $parameters
+	}
+	if {[dict exists $parameters gbc]} {
+	    magic::add_checkbox gbc "Add bottom guard ring contact" $parameters
+	}
     }
 
     if {[dict exists $parameters snake]} {
@@ -2361,12 +2460,36 @@ proc sky130::mrp1_dialog {parameters} {
     sky130::res_dialog mrp1 $parameters
 }
 
-proc sky130::xhrpoly_dialog {parameters} {
-    sky130::res_dialog xhrpoly $parameters
+proc sky130::xhrpoly_0p35_dialog {parameters} {
+    sky130::res_dialog xhrpoly_0p35 $parameters
+}
+proc sky130::xhrpoly_0p69_dialog {parameters} {
+    sky130::res_dialog xhrpoly_0p69 $parameters
+}
+proc sky130::xhrpoly_1p41_dialog {parameters} {
+    sky130::res_dialog xhrpoly_1p41 $parameters
+}
+proc sky130::xhrpoly_2p85_dialog {parameters} {
+    sky130::res_dialog xhrpoly_2p85 $parameters
+}
+proc sky130::xhrpoly_5p73_dialog {parameters} {
+    sky130::res_dialog xhrpoly_5p73 $parameters
 }
 
-proc sky130::uhrpoly_dialog {parameters} {
-    sky130::res_dialog uhrpoly $parameters
+proc sky130::uhrpoly_0p35_dialog {parameters} {
+    sky130::res_dialog uhrpoly_0p35 $parameters
+}
+proc sky130::uhrpoly_0p69_dialog {parameters} {
+    sky130::res_dialog uhrpoly_0p69 $parameters
+}
+proc sky130::uhrpoly_1p41_dialog {parameters} {
+    sky130::res_dialog uhrpoly_1p41 $parameters
+}
+proc sky130::uhrpoly_2p85_dialog {parameters} {
+    sky130::res_dialog uhrpoly_2p85 $parameters
+}
+proc sky130::uhrpoly_5p73_dialog {parameters} {
+    sky130::res_dialog uhrpoly_5p73 $parameters
 }
 
 proc sky130::mrdn_dialog {parameters} {
@@ -2424,6 +2547,7 @@ proc sky130::res_device {parameters} {
     set well_res_overlap 0 	;# not a well resistor
     set end_contact_type ""	;# no contacts for metal resistors
     set end_overlap_cont 0	;# additional end overlap on sides
+    set res_idtype none
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -2465,6 +2589,10 @@ proc sky130::res_device {parameters} {
 	erase ${end_type}
     }
     paint ${res_type}
+    if {"$res_idtype" != "none"} {
+	box grow c 2
+	paint ${res_idtype}
+    }
     popbox
 
     # Reduce contact sizes by (end type) surround so that
@@ -2740,10 +2868,12 @@ proc sky130::res_draw {parameters} {
     # Set defaults if they are not in parameters
     set snake 0		;# some resistors don't allow snake geometry
     set roverlap 0	;# overlap resistors at contacts
-    set guard 1		;# draw a guard ring
+    set guard 0		;# draw a guard ring
     set plus_diff_type   nsd	;# guard ring diffusion type
     set overlap_compress 0	;# special Y distance compression
     set well_res_overlap 0	;# additional well extension behind contact
+    set res_diff_spacing 0	;# spacing from resistor to diffusion
+    set res_idtype  none
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -2880,7 +3010,7 @@ proc sky130::mrp1_draw {parameters} {
 
 #----------------------------------------------------------------
 
-proc sky130::xhrpoly_draw {parameters} {
+proc sky130::xhrpoly_0p35_draw {parameters} {
 
     # Set a local variable for each rule in ruleset
     foreach key [dict keys $sky130::ruleset] {
@@ -2889,6 +3019,127 @@ proc sky130::xhrpoly_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		ppres \
+	    res_idtype		res0p35 \
+	    end_type 		xpc \
+	    end_contact_type	xpc \
+	    end_contact_size	0 \
+	    plus_diff_type	psd \
+	    plus_contact_type	psc \
+	    sub_type		psub \
+	    end_surround	$poly_surround \
+	    end_spacing		0.48 \
+	    end_to_end_space	0.52 \
+	    end_contact_size	0.19 \
+	    res_to_endcont	1.985 \
+	    res_spacing		1.24 \
+	    res_diff_spacing	0.48 \
+	    mask_clearance	0.52 \
+	    overlap_compress	0.36 \
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::res_draw $drawdict]
+}
+
+proc sky130::xhrpoly_0p69_draw {parameters} {
+
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $sky130::ruleset] {
+        set $key [dict get $sky130::ruleset $key]
+    }
+
+    set newdict [dict create \
+	    res_type		ppres \
+	    res_idtype		res0p69 \
+	    end_type 		xpc \
+	    end_contact_type	xpc \
+	    end_contact_size	0 \
+	    plus_diff_type	psd \
+	    plus_contact_type	psc \
+	    sub_type		psub \
+	    end_surround	$poly_surround \
+	    end_spacing		0.48 \
+	    end_to_end_space	0.52 \
+	    end_contact_size	0.19 \
+	    res_to_endcont	1.985 \
+	    res_spacing		1.24 \
+	    res_diff_spacing	0.48 \
+	    mask_clearance	0.52 \
+	    overlap_compress	0.36 \
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::res_draw $drawdict]
+}
+
+proc sky130::xhrpoly_1p41_draw {parameters} {
+
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $sky130::ruleset] {
+        set $key [dict get $sky130::ruleset $key]
+    }
+
+    set newdict [dict create \
+	    res_type		ppres \
+	    res_idtype		res1p41 \
+	    end_type 		xpc \
+	    end_contact_type	xpc \
+	    end_contact_size	0 \
+	    plus_diff_type	psd \
+	    plus_contact_type	psc \
+	    sub_type		psub \
+	    end_surround	$poly_surround \
+	    end_spacing		0.48 \
+	    end_to_end_space	0.52 \
+	    end_contact_size	0.19 \
+	    res_to_endcont	1.985 \
+	    res_spacing		1.24 \
+	    res_diff_spacing	0.48 \
+	    mask_clearance	0.52 \
+	    overlap_compress	0.36 \
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::res_draw $drawdict]
+}
+
+proc sky130::xhrpoly_2p85_draw {parameters} {
+
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $sky130::ruleset] {
+        set $key [dict get $sky130::ruleset $key]
+    }
+
+    set newdict [dict create \
+	    res_type		ppres \
+	    res_idtype		res2p85 \
+	    end_type 		xpc \
+	    end_contact_type	xpc \
+	    end_contact_size	0 \
+	    plus_diff_type	psd \
+	    plus_contact_type	psc \
+	    sub_type		psub \
+	    end_surround	$poly_surround \
+	    end_spacing		0.48 \
+	    end_to_end_space	0.52 \
+	    end_contact_size	0.19 \
+	    res_to_endcont	1.985 \
+	    res_spacing		1.24 \
+	    res_diff_spacing	0.48 \
+	    mask_clearance	0.52 \
+	    overlap_compress	0.36 \
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::res_draw $drawdict]
+}
+
+proc sky130::xhrpoly_5p73_draw {parameters} {
+
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $sky130::ruleset] {
+        set $key [dict get $sky130::ruleset $key]
+    }
+
+    set newdict [dict create \
+	    res_type		ppres \
+	    res_idtype		res5p73 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \
@@ -2911,7 +3162,7 @@ proc sky130::xhrpoly_draw {parameters} {
 
 #----------------------------------------------------------------
 
-proc sky130::uhrpoly_draw {parameters} {
+proc sky130::uhrpoly_0p35_draw {parameters} {
 
     # Set a local variable for each rule in ruleset
     foreach key [dict keys $sky130::ruleset] {
@@ -2920,6 +3171,127 @@ proc sky130::uhrpoly_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		xpres \
+	    res_idtype		res0p35 \
+	    end_type 		xpc \
+	    end_contact_type	xpc \
+	    end_contact_size	0 \
+	    plus_diff_type	psd \
+	    plus_contact_type	psc \
+	    sub_type		psub \
+	    end_surround	$poly_surround \
+	    end_spacing		0.48 \
+	    end_to_end_space	0.52 \
+	    end_contact_size	0.19 \
+	    res_to_endcont	1.985 \
+	    res_spacing		1.24 \
+	    res_diff_spacing	0.48 \
+	    mask_clearance	0.52 \
+	    overlap_compress	0.36 \
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::res_draw $drawdict]
+}
+
+proc sky130::uhrpoly_0p69_draw {parameters} {
+
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $sky130::ruleset] {
+        set $key [dict get $sky130::ruleset $key]
+    }
+
+    set newdict [dict create \
+	    res_type		xpres \
+	    res_idtype		res0p69 \
+	    end_type 		xpc \
+	    end_contact_type	xpc \
+	    end_contact_size	0 \
+	    plus_diff_type	psd \
+	    plus_contact_type	psc \
+	    sub_type		psub \
+	    end_surround	$poly_surround \
+	    end_spacing		0.48 \
+	    end_to_end_space	0.52 \
+	    end_contact_size	0.19 \
+	    res_to_endcont	1.985 \
+	    res_spacing		1.24 \
+	    res_diff_spacing	0.48 \
+	    mask_clearance	0.52 \
+	    overlap_compress	0.36 \
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::res_draw $drawdict]
+}
+
+proc sky130::uhrpoly_1p41_draw {parameters} {
+
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $sky130::ruleset] {
+        set $key [dict get $sky130::ruleset $key]
+    }
+
+    set newdict [dict create \
+	    res_type		xpres \
+	    res_idtype		res1p41 \
+	    end_type 		xpc \
+	    end_contact_type	xpc \
+	    end_contact_size	0 \
+	    plus_diff_type	psd \
+	    plus_contact_type	psc \
+	    sub_type		psub \
+	    end_surround	$poly_surround \
+	    end_spacing		0.48 \
+	    end_to_end_space	0.52 \
+	    end_contact_size	0.19 \
+	    res_to_endcont	1.985 \
+	    res_spacing		1.24 \
+	    res_diff_spacing	0.48 \
+	    mask_clearance	0.52 \
+	    overlap_compress	0.36 \
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::res_draw $drawdict]
+}
+
+proc sky130::uhrpoly_2p85_draw {parameters} {
+
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $sky130::ruleset] {
+        set $key [dict get $sky130::ruleset $key]
+    }
+
+    set newdict [dict create \
+	    res_type		xpres \
+	    res_idtype		res2p85 \
+	    end_type 		xpc \
+	    end_contact_type	xpc \
+	    end_contact_size	0 \
+	    plus_diff_type	psd \
+	    plus_contact_type	psc \
+	    sub_type		psub \
+	    end_surround	$poly_surround \
+	    end_spacing		0.48 \
+	    end_to_end_space	0.52 \
+	    end_contact_size	0.19 \
+	    res_to_endcont	1.985 \
+	    res_spacing		1.24 \
+	    res_diff_spacing	0.48 \
+	    mask_clearance	0.52 \
+	    overlap_compress	0.36 \
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::res_draw $drawdict]
+}
+
+proc sky130::uhrpoly_5p73_draw {parameters} {
+
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $sky130::ruleset] {
+        set $key [dict get $sky130::ruleset $key]
+    }
+
+    set newdict [dict create \
+	    res_type		xpres \
+	    res_idtype		res5p73 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \
@@ -3259,6 +3631,7 @@ proc sky130::res_check {device parameters} {
     set snake 0
     set sterm 0.0
     set caplen 0
+    set wmax 0
 
     foreach key [dict keys $parameters] {
         set $key [dict get $parameters $key]
@@ -3288,6 +3661,11 @@ proc sky130::res_check {device parameters} {
 	puts stderr "Resistor width must be >= $wmin um"
 	dict set parameters w $wmin
     } 
+    if {$wmax > 0 && $w > $wmax} {
+	puts stderr "Resistor width must be <= $wmax um"
+	dict set parameters w $wmax
+    }
+    
     # Val and W specified - no L
     if {$l == 0}  {
    	set l [expr ($w - $dw) * $val / $rho]
@@ -3380,12 +3758,36 @@ proc sky130::mrp1_check {parameters} {
     return [sky130::res_check mrp1 $parameters]
 }
 
-proc sky130::xhrpoly_check {parameters} {
-    return [sky130::res_check xhrpoly $parameters]
+proc sky130::xhrpoly_0p35_check {parameters} {
+    return [sky130::res_check xhrpoly_0p35 $parameters]
+}
+proc sky130::xhrpoly_0p69_check {parameters} {
+    return [sky130::res_check xhrpoly_0p69 $parameters]
+}
+proc sky130::xhrpoly_1p41_check {parameters} {
+    return [sky130::res_check xhrpoly_1p41 $parameters]
+}
+proc sky130::xhrpoly_2p85_check {parameters} {
+    return [sky130::res_check xhrpoly_2p85 $parameters]
+}
+proc sky130::xhrpoly_5p73_check {parameters} {
+    return [sky130::res_check xhrpoly_5p73 $parameters]
 }
 
-proc sky130::uhrpoly_check {parameters} {
-    return [sky130::res_check uhrpoly $parameters]
+proc sky130::uhrpoly_0p35_check {parameters} {
+    return [sky130::res_check uhrpoly_0p35 $parameters]
+}
+proc sky130::uhrpoly_0p69_check {parameters} {
+    return [sky130::res_check uhrpoly_0p69 $parameters]
+}
+proc sky130::uhrpoly_1p41_check {parameters} {
+    return [sky130::res_check uhrpoly_1p41 $parameters]
+}
+proc sky130::uhrpoly_2p85_check {parameters} {
+    return [sky130::res_check uhrpoly_2p85 $parameters]
+}
+proc sky130::uhrpoly_5p73_check {parameters} {
+    return [sky130::res_check uhrpoly_5p73 $parameters]
 }
 
 proc sky130::mrdn_check {parameters} {
