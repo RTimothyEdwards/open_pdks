@@ -3564,17 +3564,28 @@ proc sky130::mos_convert {parameters} {
 		dict set pdkparams [string tolower $key] $value
 	    }
 	    m {
-		# M value in an expression like '1*1' convert to
-		# M and NF
-		if {[regexp {\'([0-9]+)\*([0-9]+)\'} $value valid m nf]} {
-		    dict set pdkparams [string tolower $key] $m
-		    dict set pdkparams nf $nf
-		} else {
-		    dict set pdkparams [string tolower $key] $value
-		}
+		dict set pdkparams [string tolower $key] $value
+	    }
+	    nf {
+		# Adjustment ot W will be handled below
+		dict set pdkparams [string tolower $key] $value
 	    }
 	}
     }
+
+    # Magic does not understand "nf" as a parameter, but expands to
+    # "nf" number of devices connected horizontally.  The "w" value
+    # must be divided down accordingly, as the "nf" parameter implies
+    # that the total width "w" is divided into "nf" fingers.
+
+    catch {
+	set w [dict get $pdkparams w]
+	set nf [dict get $pdkparams nf]
+	if {$nf > 1} {
+	    dict set pdkparams w [expr $w / $nf]
+	}
+    }
+
     return $pdkparams
 }
 
