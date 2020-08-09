@@ -1721,11 +1721,11 @@ $as_echo "$as_me: Found technology directories: sky130" >&6;}
     # --with-pdk-source=PDK_SOURCE_PATH
 
 
-        SKY130_SOURCE_PATH=""
+        SKY130_SOURCE_PATH_=""
 
 # Check whether --with-sky130-source was given.
 if test "${with_sky130_source+set}" = set; then :
-  withval=$with_sky130_source; SKY130_SOURCE_PATH=$withval
+  withval=$with_sky130_source; SKY130_SOURCE_PATH_=$withval
 
 fi
 
@@ -1733,11 +1733,11 @@ fi
 	# Require this argument
         { $as_echo "$as_me:${as_lineno-$LINENO}: Checking whether source path is specified for 'sky130'" >&5
 $as_echo "$as_me: Checking whether source path is specified for 'sky130'" >&6;}
-        if test "x$SKY130_SOURCE_PATH" == "x" ; then
+        if test "x$SKY130_SOURCE_PATH_" == "x" ; then
 	   as_fn_error $? "Option --with-sky130-source=<path> not specified!" "$LINENO" 5
 	fi
 
-	SKY130_SOURCE_PATH=$(readlink -f $SKY130_SOURCE_PATH)
+	SKY130_SOURCE_PATH=`readlink -f $SKY130_SOURCE_PATH_`
 
         # basic check that the PDK exists there (the path must exist in any case)
         { $as_echo "$as_me:${as_lineno-$LINENO}: Checking specified path for 'sky130' at $SKY130_SOURCE_PATH" >&5

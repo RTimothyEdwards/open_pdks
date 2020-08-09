@@ -303,6 +303,12 @@ types
  -block  fillblock
  -comment comment
  -comment obscomment
+# fixed resistor width identifiers
+ -comment res0p35
+ -comment res0p69
+ -comment res1p41
+ -comment res2p85
+ -comment res5p73
 
 end
 
@@ -353,6 +359,12 @@ contact
 #else
   padl m1 m2 m3 glass
 #endif  (!METAL5)
+
+  res0p35   implant1
+  res0p69   implant1
+  res1p41   implant1
+  res2p85   implant1
+  res5p73   implant1
 
 #ifdef REDISTRIBUTION
   mrdlc metal5 mrdl
@@ -4333,8 +4345,19 @@ variants (sim)
  device rsubcircuit short rm5 *m5 space/w,pwell,nwell error l=l w=w
 #endif (METAL5)
 
+ device rsubcircuit xhrpoly_0p35  xhrpoly xpc pwell,space/w error +res0p35 l=l w=w
+ device rsubcircuit xhrpoly_0p69  xhrpoly xpc pwell,space/w error +res0p69 l=l w=w
+ device rsubcircuit xhrpoly_1p41  xhrpoly xpc pwell,space/w error +res1p41 l=l w=w
+ device rsubcircuit xhrpoly_2p85  xhrpoly xpc pwell,space/w error +res2p85 l=l w=w
+ device rsubcircuit xhrpoly_5p73  xhrpoly xpc pwell,space/w error +res5p73 l=l w=w
  device rsubcircuit xhrpoly  xhrpoly xpc pwell,space/w error l=l w=w
+ device rsubcircuit uhrpoly_0p35  uhrpoly xpc pwell,space/w error +res0p35 l=l w=w
+ device rsubcircuit uhrpoly_0p69  uhrpoly xpc pwell,space/w error +res0p69 l=l w=w
+ device rsubcircuit uhrpoly_1p41  uhrpoly xpc pwell,space/w error +res1p41 l=l w=w
+ device rsubcircuit uhrpoly_2p85  uhrpoly xpc pwell,space/w error +res2p85 l=l w=w
+ device rsubcircuit uhrpoly_5p73  uhrpoly xpc pwell,space/w error +res5p73 l=l w=w
  device rsubcircuit uhrpoly  uhrpoly xpc pwell,space/w error l=l w=w
+
  device rsubcircuit mrp1     mrp1    *poly pwell,space/w error 	l=l w=w
 
  device rsubcircuit mrdn     ndiffres *ndiff pwell,space/w  error l=l w=w
@@ -4390,7 +4413,17 @@ variants (sim)
  device resistor short rm5 *m5
 #endif (METAL5)
 
+ device resistor xhrpoly_0p35 xhrpoly xpc +res0p35
+ device resistor xhrpoly_0p69 xhrpoly xpc +res0p69
+ device resistor xhrpoly_1p41 xhrpoly xpc +res1p41
+ device resistor xhrpoly_2p85 xhrpoly xpc +res2p85
+ device resistor xhrpoly_5p73 xhrpoly xpc +res5p73
  device resistor xhrpoly xhrpoly xpc 
+ device resistor uhrpoly_0p35 uhrpoly xpc +res0p35
+ device resistor uhrpoly_0p69 uhrpoly xpc +res0p69
+ device resistor uhrpoly_1p41 uhrpoly xpc +res1p41
+ device resistor uhrpoly_2p85 uhrpoly xpc +res2p85
+ device resistor uhrpoly_5p73 uhrpoly xpc +res5p73
  device resistor uhrpoly uhrpoly xpc 
  device resistor mrp1 mrp1       *poly 
  device resistor mrdn  ndiffres *ndiff 
@@ -4430,11 +4463,11 @@ wiring
  scalefactor 10
 
  contact lic 170 li 0  0 m1 30 60
- contact v1  260 m1 0 30 m2  0 30  
+ contact v1  260 m1 0 30 m2  0 30
  contact v2  280 m2 0 45 m3 25  0
 #ifdef METAL5
  contact v3  320 m3 0 30 m4  5  5
- contact v4 1180 m4 0    m5 120 
+ contact v4 1180 m4 0    m5 120
 #endif (METAL5)
 
  contact pc  170  poly 50 80 li 0 80

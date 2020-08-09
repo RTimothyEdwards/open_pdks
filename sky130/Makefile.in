@@ -428,10 +428,10 @@ vendor-a:
 	# 	"FIXED_BBOX 0 407 15000 40000"
 
 install:
-	if test "x${DIST_PATH}" == "x" ; then
-	    ${MAKE} install-local
-	else
-	    ${MAKE} install-dist
+	if test "x${DIST_PATH}" == "x" ; then \
+	    ${MAKE} install-local ; \
+	else \
+	    ${MAKE} install-dist; \
 	fi
 
 install-local: install-local-a
