@@ -48,9 +48,6 @@ def convert_file(in_file, out_path, out_file):
 
     for line in inplines:
 
-        if subname == 'xrdn':
-            print('handling line in xrdn, file ' + in_file + ': "' + line + '"')
-
         # Item 1.  Handle comment lines
         if line.startswith('*'):
             if subcktlines != []:
@@ -71,8 +68,6 @@ def convert_file(in_file, out_path, out_file):
 
         # Item 3.  Handle blank lines like comment lines
         if line.strip() == '':
-            if subname == 'xrdn':
-                print('blank line in xrdn subcircuit')
             if subcktlines != []:
                 subcktlines.append(line)
             else:
@@ -150,6 +145,9 @@ def convert_file(in_file, out_path, out_file):
                         for line in subcktlines:
                             print(line, file=ofile)
                         subcktlines = []
+
+                    # Add an include statement to this file in the source
+                    spicelines.append('.include ' + subckt_file)
 
                     insubckt = False
                     inmodel = False

@@ -148,7 +148,7 @@ def convert_file(in_file, out_file):
     binrex = re.compile('[ \t]*([0-9]+):[ \t]+type[ \t]*=[ \t]*(.*)')
     shincrex = re.compile('\.inc[ \t]+')
 
-    stdsubrex = re.compile('\.subckt[ \t]+([^ \t]+)[ \t]+([^ \t]*)')
+    stdsubrex = re.compile('\.subckt[ \t]+([^ \t]+)[ \t]+(.*)')
     stdmodelrex = re.compile('\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+(.*)')
     stdendsubrex = re.compile('\.ends[ \t]+(.+)')
     stdendonlysubrex = re.compile('\.ends[ \t]*')
@@ -196,6 +196,8 @@ def convert_file(in_file, out_file):
         # Item 1b.  In-line C++-style // comments get replaced with $ comment character
         elif ' //' in line:
             line = line.replace(' //', ' $ ', 1) 
+        elif '//' in line:
+            line = line.replace('//', ' $ ', 1) 
         elif '\t//' in line:
             line = line.replace('\t//', '\t$ ', 1) 
 
@@ -293,7 +295,8 @@ def convert_file(in_file, out_file):
             mmatch = modelrex.match(line)
             if not mmatch:
                 mmatch = cdlmodelrex.match(line)
-                iscdl = True
+                if mmatch:
+                    iscdl = True
         else:
             mmatch = stdmodelrex.match(line)
 
@@ -513,6 +516,10 @@ def convert_file(in_file, out_file):
                 else:
                     convtype = type
 
+                # If there is a binned model then it replaces any original
+                # model line that was saved.
+                if modellines[-1].startswith('.model'):
+                    modellines = modellines[0:-1]
                 modellines.append('')
                 modellines.append('.model ' + modname + '.' + bin + ' ' + convtype)
                 continue
