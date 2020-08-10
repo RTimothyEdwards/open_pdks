@@ -1,6 +1,6 @@
 #!/bin/env python3
 # Script to read all files in a directory of SPECTRE-compatible device model
-# files, and convert them to a form that is compatible with ngspice. 
+# files, and convert them to a form that is compatible with ngspice.
 
 import os
 import sys
@@ -38,7 +38,7 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
     rtok = re.compile('([^ \t\n]+)[ \t]*(.*)')
 
     fmtline = []
-    
+
     if iscall:
         rest = line
     elif inparam:
@@ -122,7 +122,7 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
         else:
             # Match to a CDL subckt parameter that does not have an '=' and so
             # assumes that the parameter is always passed, and therefore must
-	    # be part of the .subckt line.  A parameter without a value is not
+            # be part of the .subckt line.  A parameter without a value is not
             # legal SPICE, so supply a default value of 1.
             pmatch = parm5rex.match(rest)
             if pmatch:
@@ -195,9 +195,9 @@ def convert_file(in_file, out_file):
 
         # Item 1b.  In-line C++-style // comments get replaced with $ comment character
         elif ' //' in line:
-            line = line.replace(' //', ' $ ', 1) 
+            line = line.replace(' //', ' $ ', 1)
         elif '//' in line:
-            line = line.replace('//', ' $ ', 1) 
+            line = line.replace('//', ' $ ', 1)
         elif '\t//' in line:
             line = line.replace('\t//', '\t$ ', 1) 
 
@@ -218,9 +218,9 @@ def convert_file(in_file, out_file):
             contline = False
             if line.strip() != '':
                 if inparam:
-                    inparam = False 
+                    inparam = False
                 if inpinlist:
-                    inpinlist = False 
+                    inpinlist = False
 
         # Item 3.  Handle blank lines like comment lines
         if line.strip() == '':
@@ -280,7 +280,7 @@ def convert_file(in_file, out_file):
             inparam = True
             spicelines.append(fmtline)
             continue
-        
+
         # statistics---not sure if it is always outside an inline subcircuit
         smatch = statrex.match(line)
         if smatch:
@@ -365,7 +365,7 @@ def convert_file(in_file, out_file):
                 else:
                     spicelines.append(line)
                 continue
-                
+
             else:
                 if isspectre:
                     ematch = endsubrex.match(line)
@@ -406,7 +406,7 @@ def convert_file(in_file, out_file):
                             line = 'D' + line
                         spicelines.append(line)
 
-                        # Will need more handling here for other component types. . . 
+                        # Will need more handling here for other component types. . .
 
                     for line in calllines[1:]:
                         spicelines.append(line)
@@ -417,7 +417,7 @@ def convert_file(in_file, out_file):
                     for line in modellines:
                         spicelines.append(line)
                     modellines = []
-                    
+
                     # Complete the subcircuit definition
                     spicelines.append('.ends ' + subname)
 
@@ -485,7 +485,7 @@ def convert_file(in_file, out_file):
                     continue
 
             # Check for a line that begins with the subcircuit name
-          
+
             dmatch = devrex.match(line)
             if dmatch:
                 fmtline, ispassed = parse_param_line(dmatch.group(3), True, insub, True, ispassed)
