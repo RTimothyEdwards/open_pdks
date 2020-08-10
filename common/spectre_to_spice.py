@@ -122,7 +122,7 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
         else:
             # Match to a CDL subckt parameter that does not have an '=' and so
             # assumes that the parameter is always passed, and therefore must
-	    # be part of the .subckt line.  A parameter without a value is not
+            # be part of the .subckt line.  A parameter without a value is not
             # legal SPICE, so supply a default value of 1.
             pmatch = parm5rex.match(rest)
             if pmatch:
