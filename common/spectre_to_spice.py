@@ -1,11 +1,12 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 # Script to read all files in a directory of SPECTRE-compatible device model
 # files, and convert them to a form that is compatible with ngspice.
 
-import os
-import sys
-import re
 import glob
+import os
+import pprint
+import re
+import sys
 
 def usage():
     print('spectre_to_spice.py <path_to_spectre> <path_to_spice>')
@@ -134,7 +135,12 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
 
     return ' '.join(fmtline), ispassed
 
-def convert_file(in_file, out_file):
+
+def convert_file(in_file, out_file, nocmt):
+    #if in_file.endswith('monte.cor') or in_file.endswith('models.all'):
+    #    print("Skipping", in_file)
+    #    return
+    print("Starting to convert", in_file)
 
     # Regexp patterns
     statrex = re.compile('[ \t]*statistics[ \t]*\{(.*)')
@@ -158,12 +164,48 @@ def convert_file(in_file, out_file):
     resrex = re.compile('r([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*resistor[ \t]*(.*)', re.IGNORECASE)
     cdlrex = re.compile('[ \t]*([crdlmqx])([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
 
+    in_dir = os.path.dirname(in_file)
+
     with open(in_file, 'r') as ifile:
-        try:
-            speclines = ifile.read().splitlines()
-        except:
-            print('Failure to read ' + in_file + '; not an ASCII file?')
-            return
+        idata = ifile.read()
+
+    def include(m):
+        incfile = m.group('file')
+        s8xfile = '../../s8x/Models/'+os.path.basename(incfile)
+        print("  Includes", s8xfile)
+        if incfile == s8xfile or s8xfile.endswith('sonos_tteol.cor'):
+            s8xpath = os.path.abspath(os.path.join(in_dir, incfile))
+            print("  Pulling", s8xfile, "into", in_file)
+            return open(s8xfile).read()
+        else:
+            return m.group(0)
+
+    idata = RE_TRAILING_WS.sub('', idata)
+    idata = RE_INCLUDE.sub(include, idata)
+
+    if nocmt:
+        idata = idata.splitlines()
+        speclines = [idata[0]]
+        comments = []
+        for l in idata[1:]:
+            if l.strip().startswith('*'):
+                if not l.startswith('*.'):
+                    comments.append(l)
+                    continue
+            speclines.append(l)
+            if comments[-1] != '...':
+                comments.append('...')
+
+        if len(comments) > 1:
+            cmt_file = out_file+'.comments'
+            print("Writing comments to:", cmt_file)
+            assert not os.path.exists(cmt_file), cmt_file
+            with open(cmt_file, 'w') as f:
+                for c in comments:
+                    f.write(c)
+                    f.write('\n')
+    else:
+        speclines = idata.splitlines()
 
     insub = False
     inparam = False
@@ -377,15 +419,11 @@ def convert_file(in_file, out_file):
                         ematch = stdendonlysubrex.match(line)
 
                 if ematch:
-                    try:
-                        endname = ematch.group(1).strip()
-                    except:
-                        pass
-                    else:
-                        if endname != subname and endname != '':
-                            print('Error:  "ends" name does not match "subckt" name!')
-                            print('"ends" name = ' + ematch.group(1).strip())
-                            print('"subckt" name = ' + subname)
+                    esubname = ematch.group(1)
+                    if not esubname or esubname.strip() != subname.strip():
+                        print('Error:  "ends" name does not match "subckt" name!')
+                        print('"ends" name = ' + esubname)
+                        print('"subckt" name = ' + subname)
                     if len(calllines) > 0:
                         line = calllines[0]
                         if modtype.startswith('bsim'):
@@ -533,12 +571,129 @@ def convert_file(in_file, out_file):
         # Copy line as-is
         spicelines.append(line)
 
+    output = '\n'.join(spicelines)
+    output = cleanup_spice_data(output)
+    if not output.strip():
+        print("Skipping empty file:", outfile)
+        return
+
     # Output the result to out_file.
+    print("Writing", out_file)
+    assert not os.path.exists(out_file), out_file
     with open(out_file, 'w') as ofile:
-        for line in spicelines:
-            print(line, file=ofile)
+        ofile.write(output)
+
+
+unitmapping = {
+    '1/c':           '1/coulomb',
+    '1/c^2':         '1/coulomb^2',
+    '1/oc':          '1/celsius',
+    '1/volt':        'volt',
+    'a':             'amper',
+    'a/m':           'amper/meter',
+    'a/m^2':         'amper/meter^2',
+    'angstrom':      'angstrom',
+    'c':             'coulomb',
+    'ev':            'electron-volt',
+    'ev/c':          'electron-volt/coulomb',
+    'ev/k':          'electron-volt/kelvin',
+    'farads/m':      'farad/meter',
+    'farads/m^2':    'farad/meter^2',
+    'f/m':           'farad/meter',
+    'f/m^2':         'farad/meter^2',
+    'm':             'meter',
+    'meter':         'meter',
+    'units: F/um':   'farad/micrometer',
+    'units: F/um^2': 'farad/micrometer^2',
+    'v':             'volt',
+    'v/c':           'volt/coulomb',
+    # Long replacements
+    'ohms (ohms/m^2 if area defined in netlist)': 'ohm (ohm/meter^2 if area defined)',
+    'temerature in oc passed from eldo *.temp statements': 'celsius',
+}
+
+
+# * <comment>
+RE_CMT_FULL_LINE    = re.compile('\\n(\\*[^\\.]*[^\\n]*\\n)+')
+
+# XXXX $ <comment>
+RE_CMT_END_LINE     = re.compile('\\$.*?$', flags=re.MULTILINE)
+
+RE_LINE_PLUS_START  = re.compile('^\\+([ \\t]*)', flags=re.MULTILINE)
+RE_LINE_EQUALS      = re.compile('[ \\t]+=[ \\t]+')
+RE_CMT_INCLUDE_IG   = re.compile('^\\*\\*Include files in.*\\n', flags=re.MULTILINE)
+RE_EXTRA_CMT        = re.compile('^(\\*\\*\\*\\n)+', flags=re.MULTILINE)
+RE_BIG_CMT          = re.compile('^\\*\\*\\*(.*)$', flags=re.MULTILINE)
+RE_SMALL_CMT        = re.compile('\\n(\\*[ \\t]*\\n)+', flags=re.MULTILINE)
+RE_MULTI_NEWLINE    = re.compile('\\n+')
+RE_INCLUDE          = re.compile('^\\.inc(lude)?[ \\t]+"(?P<file>[^"]+)"$', flags=re.MULTILINE|re.IGNORECASE)
+RE_INCLUDE_CMT      = re.compile('^\\*[ \\t]*\\.inc(lude)?[ \\t]+"(?P<file>[^"]+)"$', flags=re.MULTILINE|re.IGNORECASE)
+RE_TRAILING_WS      = re.compile('[ \\t]+$', flags=re.MULTILINE)
+
+def cleanup_comment(m):
+    return '*** ' + ' '.join(m.group(1).strip().split())
+
+
+def cleanup_spice_data(data):
+    """
+
+    >>> cleanup_spice_data('''
+    ... **Include files in ../../../s8x/ directory
+    ... .inc "../../s8x/Models/ss.cor"
+    ... ''')
+    '.include "../../s8x/Models/ss.cor"\\n'
+
+    >>> cleanup_spice_data('''
+    ... .inc "../../s8x/Models/sonos_ttteol.cor"
+    ... ''')
+    '.include "../../s8x/Models/sonos_ttteol.cor"\\n'
+
+    >>> cleanup_spice_data('''
+    ... .inc "models.a"
+    ... ''')
+    '.include "models.a"\\n'
+
+    >>> print(cleanup_spice_data('''
+    ... * RF MOS PARAMETERS
+    ... .inc "nshort_rf_base_b_fs.cor"
+    ... .inc "nlowvt_rf_base_b_fs.cor"
+    ... ''').strip())
+    * RF MOS PARAMETERS
+    .include "nshort_rf_base_b_fs.cor"
+    .include "nlowvt_rf_base_b_fs.cor"
+
+    """
+
+    # "../../s8x/Models/ss.cor"
+
+    data = RE_TRAILING_WS.sub('', data)
+
+    data = RE_LINE_PLUS_START.sub('+ ', data)
+    data = RE_LINE_EQUALS.sub(' = ', data)
+    data = RE_CMT_INCLUDE_IG.sub('', data)
+    data = RE_EXTRA_CMT.sub('', data)
+    data = RE_BIG_CMT.sub(cleanup_comment, data)
+    data = RE_MULTI_NEWLINE.sub('\n', data)
+    data = RE_INCLUDE.sub('.include "\\g<file>"', data)
+    data = RE_INCLUDE_CMT.sub('*.include "\\g<file>"', data)
+
+
+    iinc = data.find('.inc ')
+    assert iinc == -1, (iinc, data[iinc-100:iinc+100])
+
+    data = data.strip()
+    if data[-1] != '\n':
+        data += '\n'
+
+    return data
+
 
 if __name__ == '__main__':
+    import doctest
+    fails, _ = doctest.testmod()
+    if fails != 0:
+        sys.exit("Some test failed")
+
     debug = False
 
     if len(sys.argv) == 1:
@@ -556,15 +711,17 @@ if __name__ == '__main__':
             arguments.append(option)
 
     if len(arguments) != 2:
-        print("Wrong number of arguments given to spectre_to_spice.py.")
+        print("Wrong number of arguments given to convert_spectre.py.")
         usage()
         sys.exit(0)
 
     if '-debug' in optionlist:
         debug = True
 
-    specpath = arguments[0]
-    spicepath = arguments[1]
+    nocmt = '-nocmt' in optionlist
+
+    specpath = os.path.abspath(arguments[0])
+    spicepath = os.path.abspath(arguments[1])
     do_one_file = False
 
     if not os.path.exists(specpath):
@@ -575,10 +732,21 @@ if __name__ == '__main__':
         do_one_file = True
 
     if do_one_file:
+        if arguments[1].endswith('/'):
+            if not os.path.exists(spicepath):
+                print("Creating:", spicepath)
+                os.makedirs(spicepath)
+            else:
+                assert os.path.isdir(spicepath), "Not directory? " + spicepath
+
+            c = os.path.commonprefix([spicepath, specpath])
+            spicepath = os.path.join(spicepath, specpath[len(c):].replace('/', '_'))
+
         if os.path.exists(spicepath):
             print('Error:  File ' + spicepath + ' exists.')
             sys.exit(1)
-        convert_file(specpath, spicepath)
+
+        convert_file(specpath, spicepath, nocmt)
 
     else:
         if not os.path.exists(spicepath):
@@ -587,6 +755,12 @@ if __name__ == '__main__':
         specfilelist = glob.glob(specpath + '/*')
 
         for filename in specfilelist:
+            if filename.endswith('readme'):
+                continue
+            if filename.endswith('.tmp'):
+                continue
+            if filename.endswith('.comments'):
+                continue
             fileext = os.path.splitext(filename)[1]
 
             # Ignore verilog or verilog-A files that might be in a model directory
@@ -598,7 +772,8 @@ if __name__ == '__main__':
                 continue
 
             froot = os.path.split(filename)[1]
-            convert_file(filename, spicepath + '/' + froot)
+            print()
+            convert_file(filename, spicepath + '/' + froot, nocmt)
+            print()
 
-    print('Done.')
     exit(0)
