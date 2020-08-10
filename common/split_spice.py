@@ -62,9 +62,9 @@ def convert_file(in_file, out_path, out_file):
         else:
             contline = False
             if inparam:
-                inparam = False 
+                inparam = False
             if inpinlist:
-                inpinlist = False 
+                inpinlist = False
 
         # Item 3.  Handle blank lines like comment lines
         if line.strip() == '':
@@ -96,7 +96,7 @@ def convert_file(in_file, out_path, out_file):
             else:
                 spicelines.append(line)
             continue
-        
+
         # model
         mmatch = modelrex.match(line)
         if mmatch:
@@ -127,7 +127,7 @@ def convert_file(in_file, out_path, out_file):
                 # Watch for pin list continuation line.
                 subcktlines.append(line)
                 continue
-                
+
             else:
                 ematch = endsubrex.match(line)
                 if ematch:
