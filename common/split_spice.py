@@ -72,7 +72,7 @@ def convert_file(in_file, out_path, out_file):
     paramrex = re.compile('\.param[ \t]+(.*)')
     subrex = re.compile('\.subckt[ \t]+([^ \t]+)[ \t]+([^ \t]*)')
     modelrex = re.compile('\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+(.*)')
-    endsubrex = re.compile('\.ends[ \t]+(.+)')
+    endsubrex = re.compile('\.ends[ \t]*(.*)')
     increx = re.compile('\.include[ \t]+')
 
     with open(in_file, 'r') as ifile:
@@ -189,7 +189,8 @@ def convert_file(in_file, out_path, out_file):
                     subcktlines.append(line)
 
                     # Dump the contents of subcktlines into a file
-                    write_file(out_path, subname + '.spice', subcktlines, 'match')
+                    subckt_file = subname + '.spice'
+                    write_file(out_path, subckt_file, subcktlines, 'match')
 
                     subcktlines = []
                     # Add an include statement to this file in the source

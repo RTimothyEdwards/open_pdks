@@ -175,8 +175,8 @@ def convert_file(in_file, out_file, nocmt):
         print("  Includes", s8xfile)
         if incfile == s8xfile or s8xfile.endswith('sonos_tteol.cor'):
             s8xpath = os.path.abspath(os.path.join(in_dir, incfile))
-            print("  Pulling", s8xfile, "into", in_file)
-            return open(s8xfile).read()
+            print("  Pulling", s8xpath, "into", in_file)
+            return open(s8xpath).read()
         else:
             return m.group(0)
 
