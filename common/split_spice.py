@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 #
 # split_spice.py --
 #
@@ -15,16 +15,59 @@
 # files are modified in place.  Otherwise, all modified files are placed
 # in <path_to_output>.
 
-import os
-import sys
-import re
+
 import glob
+import os
+import re
+import subprocess
+import sys
+
+
+def write_file(out_path, out_file, lines, mode):
+
+    opath = os.path.join(out_path, out_file)
+    if not os.path.exists(opath):
+        with open(opath, 'w') as f:
+            for l in lines:
+                f.write(l)
+                f.write('\n')
+        print("Wrote new      file:", opath)
+    else:
+        print("Found existing file:", opath, end=" ")
+        existing = open(opath).read().splitlines()
+
+        try:
+            if mode == "include":
+                for line in lines:
+                    assert line in existing, "Line {} missing from {}".format(repr(line), opath)
+                assert "\n".join(lines) in "\n".join(existing)
+                print("included")
+            elif mode == "match":
+                assert "\n".join(lines) == "\n".join(existing)
+                print("matches")
+            else:
+                raise ValueError("unknown mode: {}".format(mode))
+        except AssertionError:
+            print(flush=True)
+            print("Wrote new      file:", opath+'.new')
+            with open(opath+'.new', 'w') as f:
+                for line in lines:
+                    f.write(line)
+                    f.write('\n')
+
+            print("-"*75)
+            subprocess.call('diff -u {0} {0}.new'.format(opath), shell=True)
+            print("="*75)
+            print(flush=True)
+            #raise
+
 
 def usage():
     print('split_spice.py <path_to_input> <path_to_output>')
 
-def convert_file(in_file, out_path, out_file):
 
+def convert_file(in_file, out_path, out_file):
+    print("Starting to split", in_file)
     # Regexp patterns
     paramrex = re.compile('\.param[ \t]+(.*)')
     subrex = re.compile('\.subckt[ \t]+([^ \t]+)[ \t]+([^ \t]*)')
@@ -33,7 +76,9 @@ def convert_file(in_file, out_path, out_file):
     increx = re.compile('\.include[ \t]+')
 
     with open(in_file, 'r') as ifile:
-        inplines = ifile.read().splitlines()
+        idata = ifile.read()
+
+    inplines = idata.splitlines()
 
     insubckt = False
     inparam = False
@@ -47,6 +92,9 @@ def convert_file(in_file, out_path, out_file):
     modtype = ''
 
     for line in inplines:
+
+        if subname == 'xrdn':
+            print('handling line in xrdn, file ' + in_file + ': "' + line + '"')
 
         # Item 1.  Handle comment lines
         if line.startswith('*'):
@@ -68,6 +116,8 @@ def convert_file(in_file, out_path, out_file):
 
         # Item 3.  Handle blank lines like comment lines
         if line.strip() == '':
+            if subname == 'xrdn':
+                print('blank line in xrdn subcircuit')
             if subcktlines != []:
                 subcktlines.append(line)
             else:
@@ -133,19 +183,15 @@ def convert_file(in_file, out_path, out_file):
                 if ematch:
                     if ematch.group(1) != subname:
                         print('Error:  "ends" name does not match "subckt" name!')
-                        print('"ends" name = ' + ematch.group(1))
-                        print('"subckt" name = ' + subname)
+                        print('    "ends" name = ' + ematch.group(1))
+                        print('  "subckt" name = ' + subname)
 
                     subcktlines.append(line)
 
                     # Dump the contents of subcktlines into a file
-                    subckt_file = subname + '.spice'
-                    with open(out_path + '/' + subckt_file, 'w') as ofile:
-                        print('* Subcircuit definition of cell ' + subname, file=ofile)
-                        for line in subcktlines:
-                            print(line, file=ofile)
-                        subcktlines = []
+                    write_file(out_path, subname + '.spice', subcktlines, 'match')
 
+                    subcktlines = []
                     # Add an include statement to this file in the source
                     spicelines.append('.include ' + subckt_file)
 
@@ -160,10 +206,11 @@ def convert_file(in_file, out_path, out_file):
         else:
             spicelines.append(line)
 
+    assert not subcktlines, "Found subcktlines at end of parsing file!\n"+'\n'.join(subcktlines)
+
     # Output the result to out_file.
-    with open(out_path + '/' + out_file, 'w') as ofile:
-        for line in spicelines:
-            print(line, file=ofile)
+    write_file(out_path, out_file, spicelines, 'include')
+
 
 if __name__ == '__main__':
     debug = False
@@ -201,16 +248,17 @@ if __name__ == '__main__':
     if os.path.isfile(inpath):
         do_one_file = True
 
+    if not os.path.exists(outpath):
+        os.makedirs(outpath)
+    else:
+        assert os.path.isdir(outpath), outpath
+
     if do_one_file:
-        if os.path.exists(outpath):
-            print('Error:  File ' + outpath + ' exists.')
-            sys.exit(1)
-        convert_file(inpath, outpath)
+        froot = os.path.basename(inpath)
+
+        convert_file(inpath, outpath, froot)
 
     else:
-        if not os.path.exists(outpath):
-            os.makedirs(outpath)
-
         infilelist = glob.glob(inpath + '/*')
 
         for filename in infilelist:
@@ -221,7 +269,8 @@ if __name__ == '__main__':
                 continue
 
             froot = os.path.split(filename)[1]
+            print()
             convert_file(filename, outpath, froot)
+            print()
 
-    print('Done.')
     exit(0)
