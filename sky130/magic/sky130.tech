@@ -360,12 +360,6 @@ contact
   padl m1 m2 m3 glass
 #endif  (!METAL5)
 
-  res0p35   implant1
-  res0p69   implant1
-  res1p41   implant1
-  res2p85   implant1
-  res5p73   implant1
-
 #ifdef REDISTRIBUTION
   mrdlc metal5 mrdl
 #endif (REDISTRIBUTION)
@@ -507,6 +501,12 @@ styles
   ppolyres  polysilicon    silicide_block pselect2
   xpc	    polysilicon	   pselect2  metal1  contact_X'es
   rmp	    polysilicon	   poly_resist_stripes
+
+  res0p35   implant1
+  res0p69   implant1
+  res1p41   implant1
+  res2p85   implant1
+  res5p73   implant1
 
   pdiode    pdiffusion     pselect2
   ndiode    ndiffusion     nselect2
@@ -1494,115 +1494,146 @@ style wafflefill
  options calma-permissive-labels
  gridlimit 5
 
+#----------------------------------------------------------------
+# Generate guard-band around nwells to keep FOM from crossing
+# Spacing from nwell = Diff/Tap 9 = 0.34um
+# Enclosure by nwell = Diff/Tap 8 = 0.18um
+#----------------------------------------------------------------
+ templayer	well_shrink nwell
+	shrink	180
+ templayer	well_guardband nwell
+	grow	340
+	and-not	well_shrink
+
 #---------------------------------------------------
-# FOM fill (under development)
+# Interleaved FOM and POLY fill
 #---------------------------------------------------
  templayer      slots_fom_pass1
 	bbox	top
         slots   0 4080 1320 0 4080 1320 1360 0
  templayer      obstruct_fom_pass1 alldiff,allpoly,rpw
         grow    500
+	or	well_guardband
  templayer	fomfill_pass1 slots_fom_pass1
         and-not obstruct_fom_pass1
         shrink  2035
         grow    2035
+
+#---------------------------------------------------
+
+ templayer      slots_poly_pass1
+	bbox	top
+        slots   0 720 360 0 720 360 240 0
+ templayer      obstruct_poly_pass1 alldiff,allpoly,rpw
+        grow    700
+	or	fomfill_pass1
+        grow    300
+	or	well_guardband
+ templayer	polyfill_pass1 slots_poly_pass1
+        and-not obstruct_poly_pass1
+        shrink  355
+        grow    355
+
+#---------------------------------------------------
 
  templayer      slots_fom_pass2
 	bbox	top
         slots   0 2500 1320 0 2500 1320 1360 0
  templayer      obstruct_fom_pass2 fomfill_pass1
         grow    820
-	or	alldiff,allpoly,rpw
-        grow    500
+        grow    200
+	or	polyfill_pass1
+        grow    300
+	or	obstruct_fom_pass1
  templayer	fomfill_pass2 slots_fom_pass2
         and-not obstruct_fom_pass2
         shrink  1245
         grow    1245
 
- templayer      slots_fom_coarse
-	bbox	top
-        slots   0 1500 1320 0 1500 1320 1360 0
- templayer      obstruct_fom_coarse fomfill_pass1,fomfill_pass2
-        grow    820
-	or	alldiff,allpoly,rpw
-        grow    500
- templayer	fomfill_coarse slots_fom_coarse
-        and-not obstruct_fom_coarse
-        shrink  745
-        grow    745
-
- templayer      slots_fom_fine
-	bbox	top
-        slots   0 500 400 0 500 400 160 0
- templayer      obstruct_fom_fine fomfill_pass1,fomfill_pass2,fomfill_coarse
-	grow	820
-	or	alldiff,allpoly,rpw
-        grow    500
- templayer	fomfill_fine slots_fom_fine
-        and-not obstruct_fom_fine
-        shrink  245
-        grow    245
-
- layer	FOMMASK    fomfill_pass1 
-	or	fomfill_pass2
-	or	fomfill_coarse
-	or	fomfill_fine
- 	calma 	23 0
-
 #---------------------------------------------------
-# POLY fill (under development)
-#---------------------------------------------------
- templayer      slots_poly_pass1
-	bbox	top
-        slots   0 720 360 0 720 360 240 0
- templayer      obstruct_poly_pass1 alldiff,allpoly,rpw
-        grow    1000
- templayer	polyfill_pass1 slots_poly_pass1
-        and-not obstruct_poly_pass1
-        shrink  355
-        grow    355
 
  templayer      slots_poly_coarse
 	bbox	top
         slots   0 720 360 0 720 360 240 120
- templayer      obstruct_poly_coarse alldiff,allpoly,rpw
-        grow    640
-	or	polyfill_pass1
-	grow	360
+ templayer      obstruct_poly_coarse polyfill_pass1
+	grow	60
+	or	fomfill_pass1,fomfill_pass2
+	grow	300
+	or	obstruct_poly_pass1
  templayer	polyfill_coarse slots_poly_coarse
         and-not obstruct_poly_coarse
         shrink  355
         grow    355
 
+#---------------------------------------------------
+
+ templayer      slots_fom_coarse
+	bbox	top
+        slots   0 1500 1320 0 1500 1320 1360 0
+ templayer      obstruct_fom_coarse fomfill_pass1,fomfill_pass2
+        grow    1020
+	or	polyfill_pass1,polyfill_coarse
+        grow    300
+	or	obstruct_fom_pass1
+ templayer	fomfill_coarse slots_fom_coarse
+        and-not obstruct_fom_coarse
+        shrink  745
+        grow    745
+
+#---------------------------------------------------
  templayer      slots_poly_medium
 	bbox	top
         slots   0 540 360 0 540 360 240 100
- templayer      obstruct_poly_medium alldiff,allpoly,rpw
-        grow    650
-	or	polyfill_pass1,polyfill_coarse
-	grow	360
+ templayer      obstruct_poly_medium polyfill_pass1,polyfill_coarse
+        grow    1010
+	or	obstruct_poly_pass1
  templayer	polyfill_medium slots_poly_medium
         and-not obstruct_poly_medium
         shrink  265
         grow    265
 
+#---------------------------------------------------
+
+ templayer      slots_fom_fine
+	bbox	top
+        slots   0 500 400 0 500 400 160 0
+ templayer      obstruct_fom_fine fomfill_pass1,fomfill_pass2,fomfill_coarse
+	grow	1320
+	or	obstruct_fom_pass1
+ templayer	fomfill_fine slots_fom_fine
+        and-not obstruct_fom_fine
+        shrink  245
+        grow    245
+
+#---------------------------------------------------
  templayer      slots_poly_fine
 	bbox	top
         slots   0 480 360 0 480 360 240 200
- templayer      obstruct_poly_fine alldiff,allpoly,rpw
+ templayer      obstruct_poly_fine polyfill_pass1,polyfill_coarse,polyfill_medium
         grow    650
 	or	polyfill_pass1,polyfill_coarse,polyfill_medium
 	grow	360
+	or	obstruct_poly_pass1
  templayer	polyfill_fine slots_poly_fine
         and-not obstruct_poly_fine
         shrink  235
         grow    235
 
- layer	POLYMASK    polyfill_pass1 
+#---------------------------------------------------
+ templayer	fomfill    fomfill_pass1 
+	or	fomfill_pass2
+	or	fomfill_coarse
+	or	fomfill_fine
+ 	calma 	23 0
+
+ templayer	polyfill    polyfill_pass1 
 	or	polyfill_coarse
 	or	polyfill_medium
 	or	polyfill_fine
  	calma 	28 0
+
+ layer	FOMMASK    fomfill
+ layer	POLYMASK    polyfill
 
 #---------------------------------------------------
 # MET1 fill

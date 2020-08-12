@@ -98,7 +98,7 @@ LATCHIQ	    function	Q=IQ	QB=IQB	enable  !E	data_in  D
 LATCHRQ	    function	Q=IQ	QB=IQB	enable  E	data_in  D	clear !R
 LATCHIRQ    function	Q=IQ	QB=IQB	enable  !E	data_in  D	clear !R
 LATCHSRQ    function	Q=IQ	QB=IQB	enable  E	data_in  D	preset !S   clear !R
-LATCHISRQ   function	Q=IQ	QB=IQB	enable  E	data_in  D	preset !S   clear !R
+LATCHISRQ   function	Q=IQ	QB=IQB	enable  !E	data_in  D	preset !S   clear !R
 
 DFF	    function	Q=IQ	clocked_on  C	    next_state  D
 DFFQ	    function	Q=IQ	function    QB=IQB   clocked_on	C   next_state	D
