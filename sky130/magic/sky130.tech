@@ -5,7 +5,7 @@
 ###	magic;  this keeps compatibility between layouts
 ###	for all process variants.
 ###
-#----------------------------------------------------------
+#------------------------------------------------------------------------
 # Copyright (c) 2020 R. Timothy Edwards
 # Revisions:  See below
 #
@@ -14,10 +14,10 @@
 # process.  The file may be distributed under the terms
 # of the Apache 2.0 license agreement.
 #
-#----------------------------------------------------------
+#------------------------------------------------------------------------
 # This file is designed to be used with magic versions
 # 8.3.24 or newer.
-#----------------------------------------------------------
+#------------------------------------------------------------------------
 tech
   format 35
   TECHNAME
@@ -28,56 +28,56 @@ version
  description "SkyWater SKY130: PRE ALPHA Vendor Open Source rules and DRC"
 end
 
-#----------------------------------------------------------
+#------------------------------------------------------------------------
 # Status 7/10/20: Rev 1 (alpha):
 # First public release
-#--------------------------------------------------------------
+# Status 8/14/20: Rev 2 (alpha):
+# Started updating with new device/model naming convention
+#------------------------------------------------------------------------
 
-#--------------------------------------------------------------
+#------------------------------------------------------------------------
 # Supported device types
-#--------------------------------------------------------------
-# device name   magic ID layer  description
-#-------------------------------------------------------------
-# nshort	nfet		standard nFET
-# nshort	scnfet		standard nFET in standard cell**
-# npd		npd		special nFET in SRAM cell
-# npass		npass		special nFET in SRAM cell
-# nlowvt	nfetlvt		low Vt nFET
-# sonos_p/e	nsonos		SONOS nFET
-# pshort	pfet		standard pFET
-# pshort	scpfet		standard pFET in standard cell**
-# ppu		ppu		special pFET in SRAM cell
-# plowvt	pfetlvt		low Vt pFET
-# phighvt	pfethvt		high Vt pFET
-# ntvnative	---		native nFET
-# phv		mvpfet		thickox pFET
-# nhv		mvnfet		thickox nFET
-# nhvnative	mvnnfet		thickox native nFET
-# ndiode	ndiode		n+ diff diode
-# ndiode_h	mvndiode	thickox n+ diff diode
-# pdiode	pdiode		p+ diff diode
-# pdiode_h	mvpdiode	thickox p+ diff diode
-# ndiode_native	nndiode		diode with nndiff
-# ndiode_lvt	ndiodelvt	low Vt n+ diff diode
-# pdiode_lvt	pdiodelvt	low Vt p+ diff diode
-# pdiode_hvt	pdiodehvt	high Vt p+ diff diode
-# nwdiode	---		nwell diode
-# dnwdiode_psub	---		deep nwell diode to substrate
-# dnwdiode_pw	---		deep nwell diode to pwell
-# xcmimc1	mimcap		MiM cap 1st plate
-# xcmimc2	mimcap2		MiM cap 2nd plate
-# mrdn		rdn		n+ diff resistor
-# mrdn_hv	mvrdn		thickox n+ diff resistor
-# mrdp		rdp		p+ diff resistor
-# mrdp_hv	mvrdp		thickox p+ diff resistor
-# mrl1		rli		local interconnect resistor
-# mrp1		npres		n+ poly resistor
-# xhrpoly_*	ppres (*)	p+ poly resistor (300 Ohms/sq)
-# uhrpoly_*	xres (*)	p+ poly resistor (2k Ohms/sq)
-# xcnwvc	varactor	varactor (low Vt?)
-# xcnwvc2	varactorhvt	high Vt varactor
-# xchvnwc	mvvaractor	thickox varactor
-# xpwres	rpw		pwell resistor (in deep nwell)
+#------------------------------------------------------------------------
+# device name			magic ID layer	description
+#------------------------------------------------------------------------
+# sky130_fd_pr__nfet_01v8	nfet		standard nFET
+# sky130_fd_pr__nfet_01v8	scnfet		standard nFET in standard cell**
+# npd				npd		special nFET in SRAM cell
+# npass				npass		special nFET in SRAM cell
+# sky130_fd_pr__nfet_01v8_lvt	nfetlvt		low Vt nFET
+# sonos_p/e			nsonos		SONOS nFET
+# sky130_fd_pr__pfet_01v8	pfet		standard pFET
+# sky130_fd_pr__pfet_01v8	scpfet		standard pFET in standard cell**
+# ppu				ppu		special pFET in SRAM cell
+# sky130_fd_pr__pfet_01v8_lvt	pfetlvt		low Vt pFET
+# sky130_fd_pr__pfet_01v8_mvt	pfetmvt		med Vt pFET
+# sky130_fd_pr__pfet_01v8_hvt	pfethvt		high Vt pFET
+# sky130_fd_pr__nfet_03v3_nvt	---		native nFET
+# sky130_fd_pr__pfet_g5v0d10v5	mvpfet		thickox pFET
+# sky130_fd_pr__nfet_g5v0d10v5	mvnfet		thickox nFET
+# sky130_fd_pr__nfet_01v8_nvt	mvnnfet		thickox native nFET
+# sky130_fd_pr__diode_pw2nd	ndiode		n+ diff diode
+# ndiode_h			mvndiode	thickox n+ diff diode
+# sky130_fd_pr__diode_pd2nw	pdiode		p+ diff diode
+# pdiode_h			mvpdiode	thickox p+ diff diode
+# sky130_fd_pr__diode_pw2nd_nvt	nndiode		diode with nndiff
+# sky130_fd_pr__diode_pw2nd_lvt	ndiodelvt	low Vt n+ diff diode
+# sky130_fd_pr__diode_pd2nw_lvt	pdiodelvt	low Vt p+ diff diode
+# sky130_fd_pr__diode_pd2nw_hvt	pdiodehvt	high Vt p+ diff diode
+# xcmimc1			mimcap		MiM cap 1st plate
+# xcmimc2			mimcap2		MiM cap 2nd plate
+# mrdn				rdn		n+ diff resistor
+# mrdn_hv			mvrdn		thickox n+ diff resistor
+# mrdp				rdp		p+ diff resistor
+# mrdp_hv			mvrdp		thickox p+ diff resistor
+# mrl1				rli		local interconnect resistor
+# mrp1				npres		n+ poly resistor
+# xhrpoly_*			ppres (*)	p+ poly resistor (300 Ohms/sq)
+# uhrpoly_*			xres (*)	p+ poly resistor (2k Ohms/sq)
+# xcnwvc			varactor	varactor (low Vt?)
+# xcnwvc2			varactorhvt	high Vt varactor
+# xchvnwc			mvvaractor	thickox varactor
+# xpwres			rpw		pwell resistor (in deep nwell)
 #
 # (*) Note that ppres may extract into some generic type
 # called "xhrpoly", but only specific sizes of xhrpoly are
@@ -179,6 +179,7 @@ types
  -active mvvaractor,mvvaract,mvvar
 
  -active pmoslvt,pfetlvt
+ -active pmosmvt,pfetmvt
  -active pmoshvt,pfethvt
  -active nmoslvt,nfetlvt
  -active varactorhvt,varacthvt,varhvt
@@ -375,7 +376,7 @@ aliases
   allnwell	   nwell,obswell
 
   allnfets	   nfet,npass,npd,scnfet,mvnfet,mvnnfet,nfetlvt,nsonos
-  allpfets	   pfet,ppu,scpfet,mvpfet,pfethvt,pfetlvt
+  allpfets	   pfet,ppu,scpfet,mvpfet,pfethvt,pfetlvt,pfetmvt
   allfets	   allnfets,allpfets,varactor,mvvaractor,varhvt
 
   allnactivenonfet *ndiff,*nsd,*ndiode,*nndiode,*mvndiff,*mvnsd,*mvndiode,*ndiodelvt
@@ -394,7 +395,7 @@ aliases
   allactiveres	   ndiffres,pdiffres,mvndiffres,mvpdiffres
 
   allndifflv       *ndif,*nsd,*ndiode,ndiffres,nfet,npass,npd,scnfet,nfetlvt,nsonos
-  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,ppu,scpfet,pfetlvt,pfethvt
+  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,ppu,scpfet,pfetlvt,pfetmvt,pfethvt
   alldifflv        allndifflv,allpdifflv
   allndifflvnonfet *ndif,*nsd,*ndiode,*nndiode,ndiffres,*ndiodelvt
   allpdifflvnonfet *pdif,*psd,*pdiode,pdiffres,*pdiodelvt,*pdiodehvt
@@ -477,6 +478,7 @@ styles
   psc       pdiff_in_pwell metal1  contact_X'es
 
   pfetlvt   ptransistor	ptransistor_stripes implant1
+  pfetmvt   ptransistor	ptransistor_stripes implant3
   pfethvt   ptransistor ptransistor_stripes implant2
   nfetlvt   ntransistor ntransistor_stripes implant1
   nsonos    ntransistor implant3
@@ -821,6 +823,18 @@ style gdsii
 	shrink	185
 	close  265000
 	calma 125 44
+
+#----------------------------------------------------------------
+# HVTR
+#----------------------------------------------------------------
+
+ layer HVTR  pfetmvt
+        grow 180
+	bridge	380 380
+	grow	185
+	shrink	185
+	close  265000
+	calma 18 20
 
 #----------------------------------------------------------------
 # HVTP
@@ -2117,6 +2131,10 @@ style  vendorimport
  and LVTN
  labels DIFF
 
+ layer pfetmvt pfetarea
+ and HVTR
+ labels DIFF
+
  layer pfethvt pfetarea
  and HVTP
  labels DIFF
@@ -3198,6 +3216,8 @@ style  vendorimport
  calma TAP  65 44
  # LVTN
  calma LVTN 125 44
+ # HVTR
+ calma HVTR 18 20
  # HVTP
  calma HVTP 78 44
  # SONOS (TUNM)
@@ -3534,7 +3554,7 @@ drc
 
  surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt 40 absence_illegal \
 	"N-diffusion overlap of N-diffusion contact < %d (LIcon 5a)"
- surround pdc/a *pdiff,pfet,scpfet,ppu,pfethvt,pfetlvt 40 absence_illegal \
+ surround pdc/a *pdiff,pfet,scpfet,ppu,pfethvt,pfetmvt,pfetlvt 40 absence_illegal \
 	"P-diffusion overlap of P-diffusion contact < %d (LIcon 5a)"
  surround ndic/a *ndi 40 absence_illegal \
 	"N-diode overlap of N-diode contact < %d (LIcon 5a)"
@@ -3543,7 +3563,7 @@ drc
 
  surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt 60 directional \
 	"N-diffusion overlap of N-diffusion contact < %d in one direction (LIcon 5c)"
- surround pdc/a *pdiff,pfet,scpfet,ppu,pfethvt,pfetlvt 60 directional \
+ surround pdc/a *pdiff,pfet,scpfet,ppu,pfethvt,pfetmvt,pfetlvt 60 directional \
 	"P-diffusion overlap of P-diffusion contact < %d in one direction (LIcon 5c)"
  surround ndic/a *ndi 60 directional \
 	"N-diode overlap of N-diode contact < %d in one direction (LIcon 5c)"
@@ -3790,7 +3810,7 @@ variants *
 	"Butting MV N-tap spacing to MV PMOS gate < %d (Poly 6)"
 
  # No LV FETs in HV diff
- spacing pfet,scpfet,ppu,pfetlvt,pfethvt,*pdiff *mvpdiff 360 touching_illegal \
+ spacing pfet,scpfet,ppu,pfetlvt,pfetmvt,pfethvt,*pdiff *mvpdiff 360 touching_illegal \
 	"LV P-diffusion to MV P-diffusion < %d (Diff/tap 23 + Diff/tap 22)"
 
  spacing nfet,scnfet,npd,npass,nfetlvt,varactor,varhvt,*ndiff *mvndiff 360 touching_illegal \
@@ -3964,14 +3984,14 @@ end
 
 
 extract
- style ngspice variants (lvs),(sim),(si)
+ style ngspice variants (),(orig),(si)
  cscale 1
  # NOTE: SkyWater SPICE libraries use .option scale 1E6 so all
  # dimensions must be in units of microns in the extract file.
  # Use extract style "ngspice(si)" to override this and produce
  # a file with SI units for length/area.
 
- variants (lvs),(sim)
+ variants (),(orig)
  lambda  1E6
  variants (si)
  lambda 1.0
@@ -4344,81 +4364,132 @@ defaultareacap     nwell well 120
 #ifdef REDISTRIBUTION
 #endif (REDISTRIBUTION)
 
-# Devices:  Use document (...)
+# Devices:  Base models (not subcircuit wrappers)
 
-variants (sim)
+variants (),(si)
 
- device msubcircuit pshort pfet,scpfet *pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
- device msubcircuit ppu ppu *pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
- device msubcircuit plowvt pfetlvt *pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
- device msubcircuit phighvt pfethvt *pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
+ device msubcircuit sky130_fd_pr__pfet_01v8 pfet,scpfet \
+	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
+ device msubcircuit ppu ppu \
+	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
+ device msubcircuit sky130_fd_pr__pfet_01v8_lvt pfetlvt \
+	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
+ device msubcircuit sky130_fd_pr__pfet_01v8_mvt pfetmvt \
+	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
+ device msubcircuit sky130_fd_pr__pfet_01v8_hvt pfethvt \
+	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w
 
- device msubcircuit nshort nfet,scnfet,npd,npass *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
- device msubcircuit npd npd *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
- device msubcircuit npass npass *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
- device msubcircuit nlowvt nfetlvt *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
- device msubcircuit sonos_e nsonos *ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
- device subcircuit xcnwvc varactor *nndiff nwell error l=l w=w
- device subcircuit xcnwvc2 varhvt *nndiff nwell error l=l w=w
- device subcircuit xchvnwc mvvaractor *mvnndiff nwell error l=l w=w
+ device msubcircuit sky130_fd_pr__nfet_01v8 nfet,scnfet,npd,npass \
+	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
+ device msubcircuit npd npd \
+	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
+ device msubcircuit npass npass \
+	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
+ device msubcircuit sky130_fd_pr__nfet_01v8_lvt nfetlvt \
+	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
+ device msubcircuit sonos_e nsonos \
+	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
+ device subcircuit xcnwvc varactor \
+	*nndiff nwell error l=l w=w
+ device subcircuit xcnwvc2 varhvt \
+	*nndiff nwell error l=l w=w
+ device subcircuit xchvnwc mvvaractor \
+	*mvnndiff nwell error l=l w=w
 
- device msubcircuit phv mvpfet *mvpdiff,mvpdiffres *mvpdiff,mvpdiffres nwell error l=l w=w
- device msubcircuit nhv mvnfet *mvndiff,mvndiffres *mvndiff,mvndiffres pwell,space/w error l=l w=w
- device msubcircuit nhvnative mvnnfet *mvndiff,mvndiffres *mvndiff,mvndiffres pwell,space/w error l=l w=w
+ device msubcircuit sky130_fd_pr__pfet_g5v0d10v5 mvpfet \
+	*mvpdiff,mvpdiffres *mvpdiff,mvpdiffres nwell error l=l w=w
+ device msubcircuit sky130_fd_pr__nfet_g5v0d10v5 mvnfet \
+	*mvndiff,mvndiffres *mvndiff,mvndiffres pwell,space/w error l=l w=w
+ device msubcircuit sky130_fd_pr__nfet_05v0_nvt mvnnfet \
+	*mvndiff,mvndiffres *mvndiff,mvndiffres pwell,space/w error l=l w=w
 
- device rsubcircuit short rmp     *poly	 space/w,pwell,nwell error l=l w=w
- device rsubcircuit short rli1    *li,coreli space/w,pwell,nwell error l=l w=w
- device rsubcircuit short rmetal1 *metal1 space/w,pwell,nwell error l=l w=w
- device rsubcircuit short rmetal2 *metal2 space/w,pwell,nwell error l=l w=w
- device rsubcircuit short rmetal3 *metal3 space/w,pwell,nwell error l=l w=w
+ device rsubcircuit short rmp \
+	*poly	 space/w,pwell,nwell error l=l w=w
+ device rsubcircuit short rli1 \
+       *li,coreli space/w,pwell,nwell error l=l w=w
+ device rsubcircuit short rmetal1 \
+	*metal1 space/w,pwell,nwell error l=l w=w
+ device rsubcircuit short rmetal2 \
+	*metal2 space/w,pwell,nwell error l=l w=w
+ device rsubcircuit short rmetal3 \
+	*metal3 space/w,pwell,nwell error l=l w=w
 #ifdef METAL5
- device rsubcircuit short rm4 *m4 space/w,pwell,nwell error l=l w=w
- device rsubcircuit short rm5 *m5 space/w,pwell,nwell error l=l w=w
+ device rsubcircuit short rm4 \
+	*m4 space/w,pwell,nwell error l=l w=w
+ device rsubcircuit short rm5 \
+	*m5 space/w,pwell,nwell error l=l w=w
 #endif (METAL5)
 
- device rsubcircuit xhrpoly_0p35  xhrpoly xpc pwell,space/w error +res0p35 l=l w=w
- device rsubcircuit xhrpoly_0p69  xhrpoly xpc pwell,space/w error +res0p69 l=l w=w
- device rsubcircuit xhrpoly_1p41  xhrpoly xpc pwell,space/w error +res1p41 l=l w=w
- device rsubcircuit xhrpoly_2p85  xhrpoly xpc pwell,space/w error +res2p85 l=l w=w
- device rsubcircuit xhrpoly_5p73  xhrpoly xpc pwell,space/w error +res5p73 l=l w=w
- device rsubcircuit xhrpoly  xhrpoly xpc pwell,space/w error l=l w=w
- device rsubcircuit uhrpoly_0p35  uhrpoly xpc pwell,space/w error +res0p35 l=l w=w
- device rsubcircuit uhrpoly_0p69  uhrpoly xpc pwell,space/w error +res0p69 l=l w=w
- device rsubcircuit uhrpoly_1p41  uhrpoly xpc pwell,space/w error +res1p41 l=l w=w
- device rsubcircuit uhrpoly_2p85  uhrpoly xpc pwell,space/w error +res2p85 l=l w=w
- device rsubcircuit uhrpoly_5p73  uhrpoly xpc pwell,space/w error +res5p73 l=l w=w
- device rsubcircuit uhrpoly  uhrpoly xpc pwell,space/w error l=l w=w
+ device rsubcircuit xhrpoly_0p35 xhrpoly \
+	xpc pwell,space/w error +res0p35 l=l w=w
+ device rsubcircuit xhrpoly_0p69  xhrpoly \
+	xpc pwell,space/w error +res0p69 l=l w=w
+ device rsubcircuit xhrpoly_1p41  xhrpoly \
+	xpc pwell,space/w error +res1p41 l=l w=w
+ device rsubcircuit xhrpoly_2p85  xhrpoly \
+	xpc pwell,space/w error +res2p85 l=l w=w
+ device rsubcircuit xhrpoly_5p73  xhrpoly \
+	xpc pwell,space/w error +res5p73 l=l w=w
+ device rsubcircuit xhrpoly  xhrpoly \
+	xpc pwell,space/w error l=l w=w
+ device rsubcircuit uhrpoly_0p35  uhrpoly \
+	xpc pwell,space/w error +res0p35 l=l w=w
+ device rsubcircuit uhrpoly_0p69  uhrpoly \
+	xpc pwell,space/w error +res0p69 l=l w=w
+ device rsubcircuit uhrpoly_1p41  uhrpoly \
+	xpc pwell,space/w error +res1p41 l=l w=w
+ device rsubcircuit uhrpoly_2p85  uhrpoly \
+	xpc pwell,space/w error +res2p85 l=l w=w
+ device rsubcircuit uhrpoly_5p73  uhrpoly \
+	xpc pwell,space/w error +res5p73 l=l w=w
+ device rsubcircuit uhrpoly  uhrpoly \
+	xpc pwell,space/w error l=l w=w
 
- device rsubcircuit mrp1     mrp1    *poly pwell,space/w error 	l=l w=w
+ device rsubcircuit mrp1     mrp1 \
+	*poly pwell,space/w error 	l=l w=w
 
- device rsubcircuit mrdn     ndiffres *ndiff pwell,space/w  error l=l w=w
- device rsubcircuit mrdp     pdiffres *pdiff nwell    error l=l w=w
- device rsubcircuit xpwres   rpw       pwell dnwell error l=l w=w
+ device rsubcircuit mrdn     ndiffres \
+	*ndiff pwell,space/w  error l=l w=w
+ device rsubcircuit mrdp     pdiffres \
+	*pdiff nwell    error l=l w=w
+ device rsubcircuit xpwres   rpw \
+        pwell dnwell error l=l w=w
 
- device rsubcircuit mrdn_hv  mvndiffres *mvndiff pwell,space/w error l=l w=w
- device rsubcircuit mrdp_hv  mvpdiffres *mvpdiff nwell   error l=l w=w
+ device rsubcircuit mrdn_hv  mvndiffres \
+	*mvndiff pwell,space/w error l=l w=w
+ device rsubcircuit mrdp_hv  mvpdiffres \
+	*mvpdiff nwell   error l=l w=w
 
- device subcircuit  pdiode *pdiode nwell a=a p=p
- device msubcircuit ndiode *ndiode pwell,space/w a=a p=p
- device subcircuit  pdiode_h *mvpdiode nwell a=a p=p
- device msubcircuit ndiode_h *mvndiode pwell,space/w a=a p=p
+ device subcircuit  sky130-fd_pr__diode_pd2nw *pdiode \
+	nwell a=a p=p
+ device msubcircuit sky130_fd_pr__diode_pw2nd *ndiode \
+	pwell,space/w a=a p=p
+ device subcircuit  pdiode_h *mvpdiode \
+	nwell a=a p=p
+ device msubcircuit ndiode_h *mvndiode \
+	pwell,space/w a=a p=p
 
  # These are parasitic devices
- device msubcircuit ndiode_lvt *ndiodelvt pwell,space/w a=a p=p
- device subcircuit  pdiode_lvt *pdiodelvt nwell a=a p=p
- device subcircuit  pdiode_hvt *pdiodehvt nwell a=a p=p
- device msubcircuit ndiode_native *nndiode pwell,space/w a=a p=p
+ device msubcircuit sky130_fd_pr__diode_pw2nd_lvt *ndiodelvt \
+	pwell,space/w a=a p=p
+ device subcircuit  sky130_fd_pr__diode_pd2nw_lvt *pdiodelvt \
+	nwell a=a p=p
+ device subcircuit  sky130_fd_pr_diode_pd2nw_hvt *pdiodehvt \
+	nwell a=a p=p
+ device msubcircuit sky130_fd_pr__diode_pw2nd_nvt *nndiode \
+	pwell,space/w a=a p=p
 
 #ifdef MIM
  device subcircuit xcmimc1 *mimcap  m3 nwell,pwell,space/w error a=a p=p s=subs
  device subcircuit xcmimc2 *mimcap2 m4,mimcc/m4 nwell,pwell,space/w error a=a p=p s=subs
 #endif (MIM)
 
- variants (lvs),(si)
+ variants (orig)
 
  device mosfet pshort scpfet,pfet pdiff,pdiffres,pdc nwell 
  device mosfet ppu ppu pdiff,pdiffres,pdc nwell 
  device mosfet plowvt pfetlvt pdiff,pdiffres,pdc nwell 
+ device mosfet pmedvt pfetmvt pdiff,pdiffres,pdc nwell 
  device mosfet phighvt pfethvt pdiff,pdiffres,pdc nwell 
  device mosfet nshort scnfet,npd,npass,nfet ndiff,ndiffres,ndc pwell,space/w
  device mosfet npd npd ndiff,ndiffres,ndc pwell,space/w
