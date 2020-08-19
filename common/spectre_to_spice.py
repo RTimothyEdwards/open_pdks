@@ -533,6 +533,13 @@ def convert_file(in_file, out_file):
         # Copy line as-is
         spicelines.append(line)
 
+    # Make sure any pending model lines are taken care of
+    if modellines != []:
+        for line in modellines:
+            spicelines.append(line)
+        modellines = []
+        inmodel = False
+
     # Output the result to out_file.
     with open(out_file, 'w') as ofile:
         for line in spicelines:
