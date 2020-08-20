@@ -103,6 +103,8 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
 
             if is_number(value):
                 fmtline.append(value)
+            elif value.strip().startswith("'"):
+                fmtline.append(value)
             else:
                 fmtline.append('{' + value + '}')
 
@@ -532,13 +534,6 @@ def convert_file(in_file, out_file):
 
         # Copy line as-is
         spicelines.append(line)
-
-    # Make sure any pending model lines are taken care of
-    if modellines != []:
-        for line in modellines:
-            spicelines.append(line)
-        modellines = []
-        inmodel = False
 
     # Output the result to out_file.
     with open(out_file, 'w') as ofile:
