@@ -103,6 +103,8 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
 
             if is_number(value):
                 fmtline.append(value)
+            elif value.strip().startswith("'"):
+                fmtline.append(value)
             else:
                 fmtline.append('{' + value + '}')
 
@@ -310,7 +312,9 @@ def convert_file(in_file, out_file):
                 # Continue to "if inmodel == 1" block below
             else:
                 fmtline, ispassed = parse_param_line(mmatch.group(3), True, False, True, ispassed)
-                modellines.append('.model ' + mmatch.group(1) + ' ' + mmatch.group(2) + ' ' + fmtline)
+                if isspectre and (modtype == 'resistor' or modtype == 'r2'):
+                    modtype = 'r'
+                modellines.append('.model ' + modname + ' ' + modtype + ' ' + fmtline)
                 if fmtline != '':
                     inparam = True
 

@@ -308,6 +308,18 @@ class SoCFloorplanner(ttk.Frame):
         else:
             projectpath = pwdname
 
+        # Also check for project below the current working directory
+
+        if not os.path.exists(projectpath + '/mag'):
+            print('No project path, checking subdirectories')
+            dlist = os.listdir(projectpath)
+            for dir in dlist:
+                print('Checking ' + projectpath + '/' + dir)
+                if os.path.exists(projectpath + '/' + dir + '/mag'):
+                    projectpath = projectpath + '/' + dir
+                    print('Found!')
+                    break
+
         projectroot = os.path.split(projectpath)[0]
         projectdirname = os.path.split(projectpath)[1]
 
