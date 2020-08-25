@@ -68,6 +68,13 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
                 return '', ispassed
 
     while rest != '':
+        if iscall:
+            # It is hard to believe that this is legal even in spectre.
+            # Parameter expression given with no braces or quotes around
+            # the expression.  Fix the expression by removing the spaces
+            # around '*'.
+            rest = re.sub('[ \t]*\*[ \t]*', '*', rest)
+
         pmatch = parm4rex.match(rest)
         if pmatch:
             if ispassed:
@@ -136,6 +143,28 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
 
     return ' '.join(fmtline), ispassed
 
+def get_param_names(line):
+    # Find parameter names in a ".param" line and return a list of them.
+    # This is used to check if a bare word parameter name is passed to
+    # a capacitor or resistor device in the position of a value but
+    # without delimiters, so that it cannot be distinguished from a
+    # model name.  There are only a few instances of this, so this
+    # routine is not rigorously checking all parameters, just entries
+    # on lines with ".param".
+    parmrex = re.compile('[ \t]*([^= \t]+)[ \t]*=[ \t]*([^ \t]+)[ \t]*(.*)')
+    rest = line
+    paramnames = []
+    while rest != '':
+        pmatch = parmrex.match(rest)
+        if pmatch:
+            paramnames.append(pmatch.group(1))
+            rest = pmatch.group(3)
+        else:
+            break
+    return paramnames
+
+# Run the spectre-to-ngspice conversion
+
 def convert_file(in_file, out_file):
 
     # Regexp patterns
@@ -149,6 +178,8 @@ def convert_file(in_file, out_file):
     cdlmodelrex = re.compile('[ \t]*model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+(.*)')
     binrex = re.compile('[ \t]*([0-9]+):[ \t]+type[ \t]*=[ \t]*(.*)')
     shincrex = re.compile('\.inc[ \t]+')
+    isexprrex = re.compile('[^0-9a-zA-Z_]')
+    paramrex = re.compile('\.param[ \t]+(.*)')
 
     stdsubrex = re.compile('\.subckt[ \t]+([^ \t]+)[ \t]+(.*)')
     stdmodelrex = re.compile('\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+(.*)')
@@ -158,7 +189,8 @@ def convert_file(in_file, out_file):
     # Devices (resistor, capacitor, subcircuit as resistor or capacitor)
     caprex = re.compile('c([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*capacitor[ \t]*(.*)', re.IGNORECASE)
     resrex = re.compile('r([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*resistor[ \t]*(.*)', re.IGNORECASE)
-    cdlrex = re.compile('[ \t]*([crdlmqx])([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
+    cdlrex = re.compile('[ \t]*([npcrdlmqx])([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
+    stddevrex = re.compile('[ \t]*([cr])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
 
     with open(in_file, 'r') as ifile:
         try:
@@ -176,9 +208,11 @@ def convert_file(in_file, out_file):
     spicelines = []
     calllines = []
     modellines = []
+    paramnames = []
     savematch = None
     blockskip = 0
     subname = ''
+    subnames = []
     modname = ''
     modtype = ''
 
@@ -345,6 +379,7 @@ def convert_file(in_file, out_file):
                 insub = True
                 ispassed = True
                 subname = imatch.group(1)
+                subnames.append(subname)
                 if isspectre:
                     devrex = re.compile(subname + '[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
                 else:
@@ -428,6 +463,7 @@ def convert_file(in_file, out_file):
                     insub = False
                     inmodel = False
                     subname = ''
+                    paramnames = []
                     continue
 
             # Check for close of model
@@ -460,6 +496,10 @@ def convert_file(in_file, out_file):
                     continue
 
             cmatch = cdlrex.match(line)
+            if not cmatch:
+                if not isspectre:
+                    cmatch = stddevrex.match(line)
+
             if cmatch:
                 ispassed = False
                 devtype = cmatch.group(1)
@@ -478,6 +518,20 @@ def convert_file(in_file, out_file):
                     # necessary to find the model and discover that the
                     # model is a resistor and not a subcircuit.
                     devtype = 'r'
+                elif devtype.lower() == 'n' or devtype.lower() == 'p':
+                    # May be specific to SkyWater models, or is it a spectreism?
+                    devtype = 'x' + devtype
+
+                # If a capacitor or resistor value is a parameter or expression,
+                # it must be enclosed in single quotes.  Otherwise, if the named
+                # device model is a subcircuit, then the devtype must be "x".
+
+                elif devtype.lower() == 'c' or devtype.lower() == 'r':
+                    if devmodel in subnames:
+                        devtype = 'x' + devtype
+                    elif devmodel in paramnames or isexprrex.search(devmodel):
+                        if devmodel.strip("'") == devmodel:
+                            devmodel = "'" + devmodel + "'"
 
                 fmtline, ispassed = parse_param_line(cmatch.group(5), True, insub, True, ispassed)
                 if fmtline != '':
@@ -487,6 +541,11 @@ def convert_file(in_file, out_file):
                 else:
                     spicelines.append(devtype + cmatch.group(2) + ' ' + cmatch.group(3) + ' ' + devmodel + ' ' + cmatch.group(5))
                     continue
+
+            # Check for a .param line and collect parameter names
+            pmatch = paramrex.match(line)
+            if pmatch:
+                paramnames.extend(get_param_names(pmatch.group(1)))
 
             # Check for a line that begins with the subcircuit name
 
