@@ -41,3 +41,8 @@ set ::env(FP_TAPCELL_DIST) 14
 set ::env(TRACKS_INFO_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/tracks.info"
 
 set ::env(GLB_RT_L1_ADJUSTMENT) 0.99
+
+# Extra PDN configs
+set ::env(PDN_RAIL_OFFSET) 0
+set ::env(PDN_STRAP_VWIDTH) 1.6
+set ::env(PDN_STRAP_HWIDTH) 1.6
