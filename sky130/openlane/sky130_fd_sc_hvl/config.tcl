@@ -66,4 +66,4 @@ set ::env(CLK_BUFFER_OUTPUT) X
 set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_hvl__buf_1 sky130_fd_sc_hvl__buf_2 sky130_fd_sc_hvl__buf_4 sky130_fd_sc_hvl__buf_8"
 set ::env(CTS_MAX_CAP) 5.57100
 
-set ::env(PDN_RAIL_WIDTH) 0.51
+set ::env(FP_PDN_RAIL_WIDTH) 0.51
