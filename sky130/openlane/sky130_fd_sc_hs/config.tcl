@@ -63,4 +63,4 @@ set ::env(CTS_SQR_CAP) 0.469e-3
 set ::env(CTS_SQR_RES) 0.125
 set ::env(CTS_MAX_CAP) 1.8894300000
 
-set ::env(PDN_RAIL_WIDTH) 0.48
+set ::env(FP_PDN_RAIL_WIDTH) 0.48

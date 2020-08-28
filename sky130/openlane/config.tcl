@@ -43,6 +43,6 @@ set ::env(TRACKS_INFO_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::
 set ::env(GLB_RT_L1_ADJUSTMENT) 0.99
 
 # Extra PDN configs
-set ::env(PDN_RAIL_OFFSET) 0
-set ::env(PDN_STRAP_VWIDTH) 1.6
-set ::env(PDN_STRAP_HWIDTH) 1.6
+set ::env(FP_PDN_RAIL_OFFSET) 0
+set ::env(FP_PDN_VWIDTH) 1.6
+set ::env(FP_PDN_HWIDTH) 1.6
