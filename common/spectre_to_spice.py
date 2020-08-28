@@ -35,6 +35,7 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
     parm3rex = re.compile('[ \t]*\+[ \t]*(.*)')
     parm4rex = re.compile('[ \t]*([^= \t]+)[ \t]*=[ \t]*([^ \t]+)[ \t]*(.*)')
     parm5rex = re.compile('[ \t]*([^= \t]+)[ \t]*(.*)')
+    parm6rex = re.compile('[ \t]*([^= \t]+)[ \t]*=[ \t]*([\'{][^\'}]+[\'}])[ \t]*(.*)')
     rtok = re.compile('([^ \t\n]+)[ \t]*(.*)')
 
     fmtline = []
@@ -81,6 +82,13 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
                 # End of passed parameters.  Break line and generate ".param"
                 ispassed = False
                 fmtline.append('\n.param ')
+
+            # If expression is already in single quotes or braces, then catch
+            # everything inside the delimiters, including any spaces.
+            if pmatch.group(2).startswith("'") or pmatch.group(2).startswith('{'):
+                pmatchx = parm6rex.match(rest)
+                if pmatchx:
+                    pmatch = pmatchx
 
             fmtline.append(pmatch.group(1))
             fmtline.append('=')
@@ -182,7 +190,7 @@ def convert_file(in_file, out_file):
     paramrex = re.compile('\.param[ \t]+(.*)')
 
     stdsubrex = re.compile('\.subckt[ \t]+([^ \t]+)[ \t]+(.*)')
-    stdmodelrex = re.compile('\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+(.*)')
+    stdmodelrex = re.compile('\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)')
     stdendsubrex = re.compile('\.ends[ \t]+(.+)')
     stdendonlysubrex = re.compile('\.ends[ \t]*')
 
@@ -191,6 +199,10 @@ def convert_file(in_file, out_file):
     resrex = re.compile('r([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*resistor[ \t]*(.*)', re.IGNORECASE)
     cdlrex = re.compile('[ \t]*([npcrdlmqx])([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
     stddevrex = re.compile('[ \t]*([cr])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
+    stddevrex = re.compile('[ \t]*([cr])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
+    stddev2rex = re.compile('[ \t]*([cr])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t\'{]+[\'{][^\'}]+[\'}])[ \t]*(.*)', re.IGNORECASE)
+    stddev3rex = re.compile('[ \t]*([npcrdlmqx])([^ \t]+)[ \t]+(.*)', re.IGNORECASE)
+
 
     with open(in_file, 'r') as ifile:
         try:
@@ -445,11 +457,36 @@ def convert_file(in_file, out_file):
                             line = 'D' + line
                         spicelines.append(line)
 
-                        # Will need more handling here for other component types. . .
-
                     for line in calllines[1:]:
                         spicelines.append(line)
                     calllines = []
+
+                    # Last check:  Do any model types confict with the way they
+                    # are called within the subcircuit?  Spectre makes it very
+                    # hard to know what type of device is being instantiated. . .
+   
+                    for modelline in modellines:
+                        mmatch = stdmodelrex.match(modelline)
+                        if mmatch:
+                            modelname = mmatch.group(1)
+                            modeltype = mmatch.group(2).lower()
+                            newspicelines = []
+                            for line in spicelines:
+                                cmatch = stddev3rex.match(line)
+                                if cmatch:
+                                    devtype = cmatch.group(1).lower()
+                                    if modelname in cmatch.group(3):
+                                        if devtype == 'x':
+                                            if modeltype == 'pnp' or modeltype == 'npn':
+                                                line = 'q' + line[1:]
+                                            elif modeltype == 'c' or modeltype == 'r':
+                                                line = modeltype + line[1:]
+                                            elif modeltype == 'd':
+                                                line = modeltype + line[1:]
+                                            elif modeltype == 'nmos' or modeltype == 'pmos':
+                                                line = 'm' + line[1:]
+                                newspicelines.append(line)
+                            spicelines = newspicelines
 
                     # Now add any in-circuit models
                     spicelines.append('')
@@ -529,9 +566,26 @@ def convert_file(in_file, out_file):
                 elif devtype.lower() == 'c' or devtype.lower() == 'r':
                     if devmodel in subnames:
                         devtype = 'x' + devtype
-                    elif devmodel in paramnames or isexprrex.search(devmodel):
-                        if devmodel.strip("'") == devmodel:
-                            devmodel = "'" + devmodel + "'"
+                    else:
+                        devvalue = devmodel.split('=')
+                        if len(devvalue) > 1:
+                            if "'" in devvalue[1] or "{" in devvalue[1]:
+                                # Re-parse this catching everything in delimiters,
+                                # including spaces.
+                                cmatch2 = stddev2rex.match(line)
+                                if cmatch2:
+                                    cmatch = cmatch2
+                                    devtype = cmatch.group(1)
+                                    devmodel = cmatch.group(4)
+                                    devvalue = devmodel.split('=')
+
+                            if  isexprrex.search(devvalue[1]):
+                                if devvalue[1].strip("'") == devvalue[1]:
+                                    devmodel = devvalue[0] + "='" + devvalue[1] + "'"
+                        else:
+                            if devmodel in paramnames or isexprrex.search(devmodel):
+                                if devmodel.strip("'") == devmodel:
+                                    devmodel = "'" + devmodel + "'"
 
                 fmtline, ispassed = parse_param_line(cmatch.group(5), True, insub, True, ispassed)
                 if fmtline != '':
