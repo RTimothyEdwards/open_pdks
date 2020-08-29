@@ -199,7 +199,6 @@ def convert_file(in_file, out_file):
     resrex = re.compile('r([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*resistor[ \t]*(.*)', re.IGNORECASE)
     cdlrex = re.compile('[ \t]*([npcrdlmqx])([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
     stddevrex = re.compile('[ \t]*([cr])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
-    stddevrex = re.compile('[ \t]*([cr])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
     stddev2rex = re.compile('[ \t]*([cr])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t\'{]+[\'{][^\'}]+[\'}])[ \t]*(.*)', re.IGNORECASE)
     stddev3rex = re.compile('[ \t]*([npcrdlmqx])([^ \t]+)[ \t]+(.*)', re.IGNORECASE)
 
@@ -358,7 +357,7 @@ def convert_file(in_file, out_file):
                 # Continue to "if inmodel == 1" block below
             else:
                 fmtline, ispassed = parse_param_line(mmatch.group(3), True, False, True, ispassed)
-                if isspectre and (modtype == 'resistor' or modtype == 'r2'):
+                if isspectre and (modtype == 'resistor'):
                     modtype = 'r'
                 modellines.append('.model ' + modname + ' ' + modtype + ' ' + fmtline)
                 if fmtline != '':
@@ -435,7 +434,7 @@ def convert_file(in_file, out_file):
                     else:
                         if endname != subname and endname != '':
                             print('Error:  "ends" name does not match "subckt" name!')
-                            print('"ends" name = ' + ematch.group(1).strip())
+                            print('"ends" name = ' + endname)
                             print('"subckt" name = ' + subname)
                     if len(calllines) > 0:
                         line = calllines[0]
@@ -457,9 +456,9 @@ def convert_file(in_file, out_file):
                             line = 'D' + line
                         spicelines.append(line)
 
-                    for line in calllines[1:]:
-                        spicelines.append(line)
-                    calllines = []
+                        for line in calllines[1:]:
+                            spicelines.append(line)
+                        calllines = []
 
                     # Last check:  Do any model types confict with the way they
                     # are called within the subcircuit?  Spectre makes it very
@@ -468,7 +467,7 @@ def convert_file(in_file, out_file):
                     for modelline in modellines:
                         mmatch = stdmodelrex.match(modelline)
                         if mmatch:
-                            modelname = mmatch.group(1)
+                            modelname = mmatch.group(1).lower().split('.')[0]
                             modeltype = mmatch.group(2).lower()
                             newspicelines = []
                             for line in spicelines:
@@ -557,6 +556,8 @@ def convert_file(in_file, out_file):
                     devtype = 'r'
                 elif devtype.lower() == 'n' or devtype.lower() == 'p':
                     # May be specific to SkyWater models, or is it a spectreism?
+                    # NOTE:  There is a check, below, to revisit this assignment
+                    # and ensure that it matches the model type.
                     devtype = 'x' + devtype
 
                 # If a capacitor or resistor value is a parameter or expression,
