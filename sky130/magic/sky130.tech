@@ -1638,16 +1638,16 @@ style wafflefill
 	or	fomfill_pass2
 	or	fomfill_coarse
 	or	fomfill_fine
- 	calma 	23 0
 
  templayer	polyfill    polyfill_pass1 
 	or	polyfill_coarse
 	or	polyfill_medium
 	or	polyfill_fine
- 	calma 	28 0
 
  layer	FOMMASK    fomfill
+ 	calma 	23 0
  layer	POLYMASK    polyfill
+ 	calma 	28 0
 
 #---------------------------------------------------
 # MET1 fill
