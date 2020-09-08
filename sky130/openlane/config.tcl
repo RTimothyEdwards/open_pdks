@@ -33,9 +33,16 @@ set ::env(NETGEN_SETUP_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/netgen/TECH
 # CTS luts
 set ::env(CTS_TECH_DIR) "N/A"
 
+set ::env(CTS_SQR_CAP) 0.258e-3
+set ::env(CTS_SQR_RES) 0.125
 set ::env(FP_TAPCELL_DIST) 14
 
 # Tracks info
 set ::env(TRACKS_INFO_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/tracks.info"
 
 set ::env(GLB_RT_L1_ADJUSTMENT) 0.99
+
+# Extra PDN configs
+set ::env(FP_PDN_RAIL_OFFSET) 0
+set ::env(FP_PDN_VWIDTH) 1.6
+set ::env(FP_PDN_HWIDTH) 1.6
