@@ -64,6 +64,9 @@ end
 # sky130_fd_pr__diode_pw2nd_lvt	ndiodelvt	low Vt n+ diff diode
 # sky130_fd_pr__diode_pd2nw_lvt	pdiodelvt	low Vt p+ diff diode
 # sky130_fd_pr__diode_pd2nw_hvt	pdiodehvt	high Vt p+ diff diode
+# sky130_fd_pr__npn_05v0	pbase		NPN in deep nwell
+# sky130_fd_pr__npn_11v0	mvpbase		thick oxide gated NPN
+# sky130_fd_pr__pnp_05v0	nbase		PNP
 # xcmimc1			mimcap		MiM cap 1st plate
 # xcmimc2			mimcap2		MiM cap 2nd plate
 # mrdn				rdn		n+ diff resistor
@@ -104,10 +107,6 @@ end
 # nhvnativeesd			ESD native nFET
 # phvesd			ESD thickox pFET
 # fnpass			flash nFET device
-# npnpar1x*			parasitic NPN
-# npn_1x1_2p0_hv		thickox gated parasitic NPN
-# pnppar			parasitic PNP
-# pnppar5x			parasitic PNP
 # xesd_ndiode_h_***		ESD n+ diode
 # xesd_pdiode_h_***		ESD p+ diode
 # reslocsub			local substrate island indicator
@@ -162,6 +161,9 @@ types
  -well pwell,pw
  -well rpw,rpwell
  -well obswell
+ -well pbase,npn
+ -well mvpbase,mvnpn
+ -well nbase,pnp
 
 # Transistors
   active nmos,ntransistor,nfet
@@ -373,7 +375,7 @@ end
 aliases
 
   allwellplane     nwell
-  allnwell	   nwell,obswell
+  allnwell	   nwell,obswell,pnp
 
   allnfets	   nfet,npass,npd,scnfet,mvnfet,mvnnfet,nfetlvt,nsonos
   allpfets	   pfet,ppu,scpfet,mvpfet,pfethvt,pfetlvt,pfetmvt
@@ -476,6 +478,10 @@ styles
   pdc       pdiffusion     metal1  contact_X'es
   nsc       ndiff_in_nwell metal1  contact_X'es
   psc       pdiff_in_pwell metal1  contact_X'es
+
+  pnp	    nwell ntransistor_stripes
+  npn	    pwell ptransistor_stripes
+  mvnpn	    pwell hvpdiff_mask
 
   pfetlvt   ptransistor	ptransistor_stripes implant1
   pfetmvt   ptransistor	ptransistor_stripes implant3
@@ -656,8 +662,8 @@ end
 #-----------------------------------------------------
 
 connect
-  *nwell,*nsd,*mvnsd,dnwell *nwell,*nsd,*mvnsd,dnwell
-  pwell,*psd,*mvpsd  pwell,*psd,*mvpsd
+  *nwell,*nsd,*mvnsd,dnwell,pnp *nwell,*nsd,*mvnsd,dnwell,pnp
+  pwell,*psd,*mvpsd,npn  pwell,*psd,*mvpsd,npn
   *li,coreli	*li,coreli
   *m1,m1fill	*m1,m1fill
   *m2,m2fill	*m2,m2fill
@@ -724,7 +730,7 @@ style gdsii
 # DNWELL
 #----------------------------------------------------------------
 
- layer DNWELL	dnwell
+ layer DNWELL	dnwell,pnp
 	calma	64 18
 
  layer PWRES    rpw
@@ -877,6 +883,22 @@ style gdsii
  layer STDCELL scnfet
 	bloat-all scpfet,scnfet CELLBOUND
 	calma 81 4
+
+#----------------------------------------------------------------
+# NPNID and PNPID apply to bipolar transistors
+#----------------------------------------------------------------
+
+ layer NPNID
+	bloat-all npn,mvnpn dnwell
+	calma	82 20
+
+ templayer pnparea pnp
+	grow 400
+
+ layer PNPID
+	bloat-all pnparea *psd
+	or pnparea
+	calma	82 44
 
 #----------------------------------------------------------------
 # RPM
@@ -1910,8 +1932,6 @@ style  sky130
 #endif
  ignore NPC
  ignore SEALID
- ignore NPNID
- ignore PNPID
  ignore CAPID
  ignore LDNTM
  ignore HVNTM
@@ -1919,6 +1939,13 @@ style  sky130
  ignore LOWTAPDENSITY
 
  layer nwell NWELL,WELLTXT,WELLPIN
+ and-not PNPID
+ labels NWELL
+ labels WELLTXT text
+ labels WELLPIN port
+
+ layer pnp NWELL,WELLTXT,WELLPIN
+ and PNPID
  labels NWELL
  labels WELLTXT text
  labels WELLPIN port
@@ -1929,6 +1956,10 @@ style  sky130
 
  layer dnwell DNWELL
  labels DNWELL
+
+ layer npn DNWELL
+ and-not NWELL
+ and NPNID
 
  layer rpw PWRES
  and DNWELL
@@ -3246,7 +3277,7 @@ style  sky130
  # Bipolar NPN mark
  calma NPNID 82 20
  # Bipolar PNP mark
- calma PNPID 82 20
+ calma PNPID 82 44
  # Capacitor ID
  calma CAPID 82 64
  # Core area ID mark
@@ -3357,8 +3388,6 @@ style  sky130
  calma FILLOBSM3  107 24
  calma FILLOBSM4  112 4
 
-end
-
 #-----------------------------------------------------------------------
 
 style  vendorimport
@@ -3377,8 +3406,6 @@ style  vendorimport
 #endif
  ignore NPC
  ignore SEALID
- ignore NPNID
- ignore PNPID
  ignore CAPID
  ignore LDNTM
  ignore HVNTM
@@ -3386,6 +3413,13 @@ style  vendorimport
  ignore LOWTAPDENSITY
 
  layer nwell NWELL,WELLTXT,WELLPIN
+ and-not PNPID
+ labels NWELL
+ labels WELLTXT port
+ labels WELLPIN port
+
+ layer pnp NWELL,WELLTXT,WELLPIN
+ and PNPID
  labels NWELL
  labels WELLTXT port
  labels WELLPIN port
@@ -3396,6 +3430,10 @@ style  vendorimport
 
  layer dnwell DNWELL
  labels DNWELL
+
+ layer npn DNWELL
+ and-not NWELL
+ and NPNID
 
  layer rpw PWRES
  and DNWELL
@@ -4713,7 +4751,7 @@ style  vendorimport
  # Bipolar NPN mark
  calma NPNID 82 20
  # Bipolar PNP mark
- calma PNPID 82 20
+ calma PNPID 82 44
  # Capacitor ID
  calma CAPID 82 64
  # Core area ID mark
@@ -5870,6 +5908,9 @@ variants (),(si)
  device msubcircuit sky130_fd_pr__nfet_05v0_nvt mvnnfet \
 	*mvndiff,mvndiffres *mvndiff,mvndiffres pwell,space/w error l=l w=w
 
+ device msubcircuit sky130_fd_pr__npn_05v0 npn dnwell *ndiff space/w error a1=area
+ device msubcircuit sky130_fd_pr__pnp_05v0 pnp pwell,space/w *pdiff a1=area
+
  device rsubcircuit short rmp \
 	*poly	 space/w,pwell,nwell error l=l w=w
  device rsubcircuit short rli1 \
@@ -5928,27 +5969,27 @@ variants (),(si)
 	*mvpdiff nwell   error l=l w=w
 
  device subcircuit  sky130-fd_pr__diode_pd2nw *pdiode \
-	nwell a=a p=p
+	nwell a=area
  device msubcircuit sky130_fd_pr__diode_pw2nd *ndiode \
-	pwell,space/w a=a p=p
+	pwell,space/w a=area
  device subcircuit  pdiode_h *mvpdiode \
-	nwell a=a p=p
+	nwell a=area
  device msubcircuit ndiode_h *mvndiode \
-	pwell,space/w a=a p=p
+	pwell,space/w a=area
 
  # These are parasitic devices
  device msubcircuit sky130_fd_pr__diode_pw2nd_lvt *ndiodelvt \
-	pwell,space/w a=a p=p
+	pwell,space/w a=area
  device subcircuit  sky130_fd_pr__diode_pd2nw_lvt *pdiodelvt \
-	nwell a=a p=p
+	nwell a=area
  device subcircuit  sky130_fd_pr_diode_pd2nw_hvt *pdiodehvt \
-	nwell a=a p=p
+	nwell a=area
  device msubcircuit sky130_fd_pr__diode_pw2nd_nvt *nndiode \
-	pwell,space/w a=a p=p
+	pwell,space/w a=area
 
 #ifdef MIM
- device subcircuit xcmimc1 *mimcap  m3 nwell,pwell,space/w error a=a p=p s=subs
- device subcircuit xcmimc2 *mimcap2 m4,mimcc/m4 nwell,pwell,space/w error a=a p=p s=subs
+ device subcircuit xcmimc1 *mimcap  m3 nwell,pwell,space/w error a=area s=subs
+ device subcircuit xcmimc2 *mimcap2 m4,mimcc/m4 nwell,pwell,space/w error a=area s=subs
 #endif (MIM)
 
  variants (orig)
@@ -6001,20 +6042,22 @@ variants (),(si)
  device resistor mrdp_hv   mvpdiffres *mvpdiff 
  device resistor xpwres   rpw    pwell
 
- device pdiode pdiode *pdiode nwell a=a p=p
- device ndiode ndiode *ndiode pwell,space/w a=a p=p
- device pdiode pdiode_h *mvpdiode nwell a=a p=p
- device ndiode ndiode_h *mvndiode pwell,space/w a=a p=p
+ device pdiode pdiode *pdiode nwell a=area
+ device ndiode ndiode *ndiode pwell,space/w a=area
+ device pdiode pdiode_h *mvpdiode nwell a=area
+ device ndiode ndiode_h *mvndiode pwell,space/w a=area
 
  # These are parasitic devices
- device ndiode ndiode_lvt *ndiodelvt pwell,space/w a=a p=p
- device pdiode pdiode_lvt *pdiodelvt nwell a=a p=p
- device pdiode pdiode_hvt *pdiodehvt nwell a=a p=p
- device ndiode ndiode_native *nndiode pwell,space/w a=a p=p
+ device ndiode ndiode_lvt *ndiodelvt pwell,space/w a=area
+ device pdiode pdiode_lvt *pdiodelvt nwell a=area
+ device pdiode pdiode_hvt *pdiodehvt nwell a=area
+ device ndiode ndiode_native *nndiode pwell,space/w a=area
 
- device subcircuit  pdiode_h *mvpdiode nwell a=a p=p
- device msubcircuit ndiode_h *mvndiode pwell,space/w a=a p=p
+ device bjt sky130_fd_pr__npn_05v0 npn dnwell *ndiff space/w error a1=area
+ device bjt sky130_fd_pr__pnp_05v0 pnp pwell,space/w *pdiff a1=area
 
+ device subcircuit  pdiode_h *mvpdiode nwell a=area
+ device msubcircuit ndiode_h *mvndiode pwell,space/w a=area
 
 #ifdef MIM
  device capacitor xcmimc1 *mimcap  *m3 1

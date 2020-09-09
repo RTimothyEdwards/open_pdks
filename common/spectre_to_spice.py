@@ -104,14 +104,17 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
                 rmatch = rtok.match(rest)
                 if rmatch:
                     expch = rmatch.group(1)[0]
-                    if (expch.isalpha() or expch == '$') and not needmore:
+                    if expch == '$':
+                        break
+                    elif expch.isalpha() and not needmore:
                         break
                     else:
                         needmore = False
                         value += rmatch.group(1)
                         rest = rmatch.group(2)
-                        expch = rmatch.group(1).strip()
-                        if expch in '+-*/(){}^~!':
+                        if any((c in '+-*/({^~!') for c in rmatch.group(1)[-1]):
+                            needmore = True
+                        if rest != '' and any((c in '+-*/(){}^~!') for c in rest[0]):
                             needmore = True
                 else:
                     break
@@ -121,7 +124,14 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
             elif value.strip().startswith("'"):
                 fmtline.append(value)
             else:
-                fmtline.append('{' + value + '}')
+                # It is not possible to know if a spectre expression continues
+                # on another line without some kind of look-ahead, but check
+                # if the parameter ends in an operator.
+                lastc = value.strip()[-1]
+                if any((c in '*+-/,(') for c in lastc):
+                    fmtline.append('{' + value)
+                else:
+                    fmtline.append('{' + value + '}')
 
             # These parameter sub-expressions are related to monte carlo
             # simulation and are incompatible with ngspice.  So put them
@@ -141,15 +151,39 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
             # assumes that the parameter is always passed, and therefore must
             # be part of the .subckt line.  A parameter without a value is not
             # legal SPICE, so supply a default value of 1.
+
             pmatch = parm5rex.match(rest)
             if pmatch:
-                fmtline.append(pmatch.group(1) + '=1')
-                ispassed = True
-                rest = pmatch.group(2)
+                # NOTE: Something that is not a parameters name should be
+                # extended from the previous line.  Note that this parsing
+                # is not rigorous and is possible to break. . .
+                if any((c in '+-*/(){}^~!') for c in pmatch.group(1).strip()):
+                    fmtline.append(rest)
+                    if not any((c in '*+-/,(') for c in rest.strip()[-1]):
+                        fmtline.append('}')
+                    rest = ''
+                else:
+                    fmtline.append(pmatch.group(1) + '=1')
+                    ispassed = True
+                    rest = pmatch.group(2)
             else:
                 break
 
-    return ' '.join(fmtline), ispassed
+    finalline = ' '.join(fmtline)
+
+    # ngspice does not understand round(), so replace it with the equivalent
+    # floor() expression.
+
+    finalline = re.sub('round\(', 'floor(0.5+', finalline)
+
+    # use of "no" and "yes" as parameter values is not allowed in ngspice.
+
+    finalline = re.sub('sw_et[ \t]*=[ \t]*{no}', 'sw_et=0', finalline)
+    finalline = re.sub('sw_et[ \t]*=[ \t]*{yes}', 'sw_et=1', finalline)
+    finalline = re.sub('isnoisy[ \t]*=[ \t]*{no}', 'isnoisy=0', finalline)
+    finalline = re.sub('isnoisy[ \t]*=[ \t]*{yes}', 'isnoisy=1', finalline)
+
+    return finalline, ispassed
 
 def get_param_names(line):
     # Find parameter names in a ".param" line and return a list of them.
@@ -357,7 +391,7 @@ def convert_file(in_file, out_file):
                 # Continue to "if inmodel == 1" block below
             else:
                 fmtline, ispassed = parse_param_line(mmatch.group(3), True, False, True, ispassed)
-                if isspectre and (modtype == 'resistor'):
+                if isspectre and (modtype == 'resistor' or modtype == 'r2'):
                     modtype = 'r'
                 modellines.append('.model ' + modname + ' ' + modtype + ' ' + fmtline)
                 if fmtline != '':
@@ -533,7 +567,7 @@ def convert_file(in_file, out_file):
 
             cmatch = cdlrex.match(line)
             if not cmatch:
-                if not isspectre:
+                if not isspectre or 'capacitor' in line or 'resistor' in line:
                     cmatch = stddevrex.match(line)
 
             if cmatch:
@@ -548,12 +582,6 @@ def convert_file(in_file, out_file):
                 elif devmodel == 'resistor':
                     devtype = 'r'
                     devmodel = ''
-                elif devmodel == 'resbody':
-                    # This is specific to the SkyWater models;  handling it
-                    # in a generic way would be difficult, as it would be
-                    # necessary to find the model and discover that the
-                    # model is a resistor and not a subcircuit.
-                    devtype = 'r'
                 elif devtype.lower() == 'n' or devtype.lower() == 'p':
                     # May be specific to SkyWater models, or is it a spectreism?
                     # NOTE:  There is a check, below, to revisit this assignment
@@ -650,6 +678,13 @@ def convert_file(in_file, out_file):
 
         # Copy line as-is
         spicelines.append(line)
+
+    # If any model lines remain at end, append them before output
+    if modellines != []:
+        for line in modellines:
+            spicelines.append(line)
+        modellines = []
+        inmodel = False
 
     # Output the result to out_file.
     with open(out_file, 'w') as ofile:
