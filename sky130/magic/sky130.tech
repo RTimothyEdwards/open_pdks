@@ -2337,20 +2337,31 @@ style  sky130
  and-not mvrdpioedge
  labels DIFF
 
- layer mvnfet DIFF
+ templayer mvnfetarea DIFF
  and POLY
  and-not PPLUS
  and NPLUS
  and-not LVTN
  and THKOX
- labels DIFF
+ grow 1000
 
- layer mvnnfet DIFF
+ templayer mvnnfetarea DIFF,TAP
  and POLY
  and-not PPLUS
  and NPLUS
  and LVTN
  and THKOX
+ and-not mvnfetarea
+
+ layer mvnfet DIFF
+ and POLY
+ and-not PPLUS
+ and NPLUS
+ and THKOX
+ and-not mvnnfetarea
+ labels DIFF
+
+ layer mvnnfet mvnnfetarea
  labels DIFF
 
  templayer mvnsdarea TAP
@@ -3811,20 +3822,31 @@ style  vendorimport
  and-not mvrdpioedge
  labels DIFF
 
- layer mvnfet DIFF
+ templayer mvnfetarea DIFF
  and POLY
  and-not PPLUS
  and NPLUS
  and-not LVTN
  and THKOX
- labels DIFF
+ grow 1000
 
- layer mvnnfet DIFF
+ templayer mvnnfetarea DIFF,TAP
  and POLY
  and-not PPLUS
  and NPLUS
  and LVTN
  and THKOX
+ and-not mvnfetarea
+
+ layer mvnfet DIFF
+ and POLY
+ and-not PPLUS
+ and NPLUS
+ and THKOX
+ and-not mvnnfetarea
+ labels DIFF
+
+ layer mvnnfet mvnnfetarea
  labels DIFF
 
  templayer mvnsdarea TAP
@@ -5914,7 +5936,7 @@ variants (),(si)
  # Extended drain devices
  device msubcircuit sky130_fd_pr__nfet_20v0_nvt mvnnfet *mvndiff dnwell \
 	pwell,space/w error l=l w=w
- device msubcircuit sky130_fd_pr__nfet_20v0 mvnfet *mvnndiff dnwell \
+ device msubcircuit sky130_fd_pr__nfet_20v0 mvnfet *mvndiff dnwell \
 	pwell,space/w error l=l w=w
  device msubcircuit sky130_fd_pr__pfet_20v0 mvpfet *mvpdiff pwell,space/w \
 	nwell error l=l w=w
