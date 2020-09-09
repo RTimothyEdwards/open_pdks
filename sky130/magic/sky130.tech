@@ -5911,6 +5911,14 @@ variants (),(si)
  device msubcircuit sky130_fd_pr__npn_05v0 npn dnwell *ndiff space/w error a1=area
  device msubcircuit sky130_fd_pr__pnp_05v0 pnp pwell,space/w *pdiff a1=area
 
+ # Extended drain devices
+ device msubcircuit sky130_fd_pr__nfet_20v0_nvt mvnnfet *mvndiff dnwell \
+	pwell,space/w error l=l w=w
+ device msubcircuit sky130_fd_pr__nfet_20v0 mvnfet *mvnndiff dnwell \
+	pwell,space/w error l=l w=w
+ device msubcircuit sky130_fd_pr__pfet_20v0 mvpfet *mvpdiff pwell,space/w \
+	nwell error l=l w=w
+
  device rsubcircuit short rmp \
 	*poly	 space/w,pwell,nwell error l=l w=w
  device rsubcircuit short rli1 \
@@ -6055,6 +6063,14 @@ variants (),(si)
 
  device bjt sky130_fd_pr__npn_05v0 npn dnwell *ndiff space/w error a1=area
  device bjt sky130_fd_pr__pnp_05v0 pnp pwell,space/w *pdiff a1=area
+
+ # Extended drain devices
+ device mosfet sky130_fd_pr__nfet_20v0_nvt mvnnfet *mvndiff dnwell \
+	pwell,space/w error
+ device mosfet sky130_fd_pr__nfet_20v0 mvnfet *mvnndiff dnwell \
+	pwell,space/w error
+ device mosfet sky130_fd_pr__pfet_20v0 mvpfet *mvpdiff pwell,space/w \
+	nwell error
 
  device subcircuit  pdiode_h *mvpdiode nwell a=area
  device msubcircuit ndiode_h *mvndiode pwell,space/w a=area
