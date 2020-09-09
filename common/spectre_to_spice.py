@@ -183,6 +183,12 @@ def parse_param_line(line, inparam, insub, iscall, ispassed):
     finalline = re.sub('isnoisy[ \t]*=[ \t]*{no}', 'isnoisy=0', finalline)
     finalline = re.sub('isnoisy[ \t]*=[ \t]*{yes}', 'isnoisy=1', finalline)
 
+    # Use of "m" in parameters is forbidden.  Specifically look for "{N*m}".
+    # e.g., replace "mult = {2*m}" with "mult = 2".  Note that this usage
+    # is most likely an error in the source.
+
+    finalline = re.sub('\{([0-9]+)\*[mM]\}', r'\1', finalline)
+
     return finalline, ispassed
 
 def get_param_names(line):
