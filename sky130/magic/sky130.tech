@@ -5930,8 +5930,8 @@ variants (),(si)
  device msubcircuit sky130_fd_pr__nfet_05v0_nvt mvnnfet \
 	*mvndiff,mvndiffres *mvndiff,mvndiffres pwell,space/w error l=l w=w
 
- device msubcircuit sky130_fd_pr__npn_05v0 npn dnwell *ndiff space/w error a1=area
- device msubcircuit sky130_fd_pr__pnp_05v0 pnp pwell,space/w *pdiff a1=area
+ device msubcircuit sky130_fd_pr__npn_05v0 npn dnwell *ndiff space/w error a2=area
+ device msubcircuit sky130_fd_pr__pnp_05v0 pnp pwell,space/w *pdiff a2=area
 
  device rsubcircuit sky130_fd_pr__res_generic_po rmp \
 	*poly	 space/w,pwell,nwell error l=l w=w
@@ -6010,8 +6010,10 @@ variants (),(si)
 	pwell,space/w a=area
 
 #ifdef MIM
- device subcircuit sky130_fd_pr__cap_mim_m3_1 *mimcap  m3 nwell,pwell,space/w error a=area s=subs
- device subcircuit sky130_fd_pr__cap_mim_m3_2 *mimcap2 m4,mimcc/m4 nwell,pwell,space/w error a=area s=subs
+ device subcircuit sky130_fd_pr__cap_mim_m3_1 *mimcap  m3 \
+	nwell,pwell,space/w error w=w l=l
+ device subcircuit sky130_fd_pr__cap_mim_m3_2 *mimcap2 m4,mimcc/m4 \
+	nwell,pwell,space/w error w=w l=l
 #endif (MIM)
 
  variants (orig)
@@ -6086,8 +6088,8 @@ variants (),(si)
  device pdiode sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area
  device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area
 
- device bjt sky130_fd_pr__npn_05v5 npn dnwell *ndiff space/w error a1=area
- device bjt sky130_fd_pr__pnp_05v5 pnp pwell,space/w *pdiff a1=area
+ device bjt sky130_fd_pr__npn_05v5 npn dnwell *ndiff space/w error a2=area
+ device bjt sky130_fd_pr__pnp_05v5 pnp pwell,space/w *pdiff a2=area
 
 #ifdef MIM
  device capacitor sky130_fd_pr__cap_mim_m3_1 *mimcap  *m3 1
