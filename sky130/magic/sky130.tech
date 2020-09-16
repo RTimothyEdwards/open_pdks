@@ -145,12 +145,12 @@ types
 
 # Wells
   well nwell,nw
- -well pwell,pw
- -well rpw,rpwell
+  well pwell,pw
+  well rpw,rpwell
  -well obswell
- -well pbase,npn
- -well mvpbase,mvnpn
- -well nbase,pnp
+  well pbase,npn
+  well mvpbase,mvnpn
+  well nbase,pnp
 
 # Transistors
   active nmos,ntransistor,nfet
@@ -160,37 +160,37 @@ types
   active pmos,ptransistor,pfet
  -active scpmos,scptransistor,scpfet
  -active ppu,ppufet,srampfet
- -active nnmos,nntransistor
+  active nnmos,nntransistor
   active mvnmos,mvntransistor,mvnfet
   active mvpmos,mvptransistor,mvpfet
- -active mvnnmos,mvnntransistor,mvnnfet,nnfet
- -active varactor,varact,var
- -active mvvaractor,mvvaract,mvvar
+  active mvnnmos,mvnntransistor,mvnnfet,nnfet
+  active varactor,varact,var
+  active mvvaractor,mvvaract,mvvar
 
- -active pmoslvt,pfetlvt
- -active pmosmvt,pfetmvt
- -active pmoshvt,pfethvt
- -active nmoslvt,nfetlvt
- -active varactorhvt,varacthvt,varhvt
+  active pmoslvt,pfetlvt
+  active pmosmvt,pfetmvt
+  active pmoshvt,pfethvt
+  active nmoslvt,nfetlvt
+  active varactorhvt,varacthvt,varhvt
  -active nsonos,sonos
 
 # Diffusions
   active ndiff,ndiffusion,ndif
   active pdiff,pdiffusion,pdif
- -active mvndiff,mvndiffusion,mvndif
- -active mvpdiff,mvpdiffusion,mvpdif
+  active mvndiff,mvndiffusion,mvndif
+  active mvpdiff,mvpdiffusion,mvpdif
   active ndiffc,ndcontact,ndc
   active pdiffc,pdcontact,pdc
- -active mvndiffc,mvndcontact,mvndc
- -active mvpdiffc,mvpdcontact,mvpdc
+  active mvndiffc,mvndcontact,mvndc
+  active mvpdiffc,mvpdcontact,mvpdc
   active psubdiff,psubstratepdiff,ppdiff,ppd,psd
   active nsubdiff,nsubstratendiff,nndiff,nnd,nsd
- -active mvpsubdiff,mvpsubstratepdiff,mvppdiff,mvppd,mvpsd
- -active mvnsubdiff,mvnsubstratendiff,mvnndiff,mvnnd,mvnsd
+  active mvpsubdiff,mvpsubstratepdiff,mvppdiff,mvppd,mvpsd
+  active mvnsubdiff,mvnsubstratendiff,mvnndiff,mvnnd,mvnsd
   active psubdiffcont,psubstratepcontact,psc
   active nsubdiffcont,nsubstratencontact,nsc
- -active mvpsubdiffcont,mvpsubstratepcontact,mvpsc
- -active mvnsubdiffcont,mvnsubstratencontact,mvnsc
+  active mvpsubdiffcont,mvpsubstratepcontact,mvpsc
+  active mvnsubdiffcont,mvnsubstratencontact,mvnsc
  -active obsactive
  -active mvobsactive
 
@@ -200,98 +200,98 @@ types
   active xpolycontact,xpolyc,xpc
 
 # Resistors
- -active npolyres,npres,mrp1
- -active ppolyres,ppres,xhrpoly
- -active xpolyres,xpres,xres,uhrpoly
- -active ndiffres,rnd,rdn,rndiff
- -active pdiffres,rpd,rdp,rpdiff
- -active mvndiffres,mvrnd,mvrdn,mvrndiff
- -active mvpdiffres,mvrpd,mvrdp,mvrpdiff
- -active rmp
+  active npolyres,npres,mrp1
+  active ppolyres,ppres,xhrpoly
+  active xpolyres,xpres,xres,uhrpoly
+  active ndiffres,rnd,rdn,rndiff
+  active pdiffres,rpd,rdp,rpdiff
+  active mvndiffres,mvrnd,mvrdn,mvrndiff
+  active mvpdiffres,mvrpd,mvrdp,mvrpdiff
+  active rmp
 
 # Diodes
- -active pdiode,pdi
- -active ndiode,ndi
- -active nndiode,nndi
- -active pdiodec,pdic
- -active ndiodec,ndic
- -active nndiodec,nndic
- -active mvpdiode,mvpdi
- -active mvndiode,mvndi
- -active mvpdiodec,mvpdic
- -active mvndiodec,mvndic
- -active pdiodelvt,pdilvt
- -active pdiodehvt,pdihvt
- -active ndiodelvt,ndilvt
- -active pdiodelvtc,pdilvtc
- -active pdiodehvtc,pdihvtc
- -active ndiodelvtc,ndilvtc
+  active pdiode,pdi
+  active ndiode,ndi
+  active nndiode,nndi
+  active pdiodec,pdic
+  active ndiodec,ndic
+  active nndiodec,nndic
+  active mvpdiode,mvpdi
+  active mvndiode,mvndi
+  active mvpdiodec,mvpdic
+  active mvndiodec,mvndic
+  active pdiodelvt,pdilvt
+  active pdiodehvt,pdihvt
+  active ndiodelvt,ndilvt
+  active pdiodelvtc,pdilvtc
+  active pdiodehvtc,pdihvtc
+  active ndiodelvtc,ndilvtc
 
 # Local Interconnect 
   locali locali,li1,li
  -locali corelocali,coreli1,coreli
- -locali rlocali,rli1,rli
+  locali rlocali,rli1,rli
   locali viali,vial,lic,licon,m1c,v0
  -locali obsli1,obsli
  -locali obsli1c,obslic,obslicon
 
 # Metal 1
   metal1 metal1,m1,met1
- -metal1 rmetal1,rm1,rmet1
+  metal1 rmetal1,rm1,rmet1
   metal1 via1,m2contact,m2cut,m2c,via,v,v1
  -metal1 obsm1
- -metal1 padl
+  metal1 padl
  -metal1 m1fill
 
 # Metal 2
   metal2 metal2,m2,met2
- -metal2 rmetal2,rm2,rmet2
+  metal2 rmetal2,rm2,rmet2
   metal2 via2,m3contact,m3cut,m3c,v2
  -metal2 obsm2
  -metal2 m2fill
 
 # Metal 3
   metal3 metal3,m3,met3
- -metal3 rmetal3,rm3,rmet3
+  metal3 rmetal3,rm3,rmet3
  -metal3 obsm3
 #ifdef METAL5
   metal3 via3,v3
  -metal3 m3fill
 
 #ifdef MIM
- -cap1 mimcap,mim,capm
- -cap1 mimcapcontact,mimcapc,mimcc,capmc
+  cap1 mimcap,mim,capm
+  cap1 mimcapcontact,mimcapc,mimcc,capmc
 #endif
 
 # Metal 4
   metal4 metal4,m4,met4
- -metal4 rmetal4,rm4,rmet4
+  metal4 rmetal4,rm4,rmet4
  -metal4 obsm4
   metal4 via4,v4
  -metal4 m4fill
 
 #ifdef MIM
- -cap2 mimcap2,mim2,capm2
- -cap2 mimcap2contact,mimcap2c,mim2cc,capm2c
+  cap2 mimcap2,mim2,capm2
+  cap2 mimcap2contact,mimcap2c,mim2cc,capm2c
 #endif
 
 # Metal 5
   metal5 metal5,m5,met5
- -metal5 rm5,rmetal5,rmet5
+  metal5 rm5,rmetal5,rmet5
  -metal5 obsm5
  -metal5 m5fill
 #endif (METAL5)
 
 #ifdef REDISTRIBUTION
- -metal5 mrdlcontact,mrdlc
- -metali metalrdl,mrdl,metrdl
+  metal5 mrdlcontact,mrdlc
+  metali metalrdl,mrdl,metrdl
  -metali obsmrdl
 #endif (REDISTRIBUTION)
 
 # Miscellaneous
  -block  glass
  -block  fillblock
- -comment comment
+  comment comment
  -comment obscomment
 # fixed resistor width identifiers
  -comment res0p35
@@ -3264,7 +3264,7 @@ style  sky130
  calma URPM 79 20
  calma LDNTM 11 44
  calma HVNTM 125 20
- # Poly resistor ID mark
+ # poly.resistor ID mark
  calma POLYRES 66 13
  # Diffusion resistor ID mark
  calma DIFFRES 65 13
@@ -4749,7 +4749,7 @@ style  vendorimport
  calma URPM 79 20
  calma LDNTM 11 44
  calma HVNTM 125 20
- # Poly resistor ID mark
+ # poly.resistor ID mark
  calma POLYRES 66 13
  # Diffusion resistor ID mark
  calma DIFFRES 65 13
@@ -4887,9 +4887,7 @@ end
 drc
 
  style drc variants (fast),(full),(routing)
-
  scalefactor 10 
-
  cifstyle drc
 
  variants (fast),(full)
@@ -4898,66 +4896,66 @@ drc
 # DNWELL
 #-----------------------------
 
- width dnwell 3000 "Deep N-well width < %d (Dnwell 2)"
- spacing dnwell dnwell 6300 touching_ok "Deep N-well spacing < %d (Dnwell 3)"
+ width dnwell 3000 "Deep N-well width < %d (dnwell.2)"
+ spacing dnwell dnwell 6300 touching_ok "Deep N-well spacing < %d (dnwell.3)"
  spacing dnwell allnwell 4500 surround_ok \
-	"Deep N-well spacing to N-well < %d (Nwell 7)"
+	"Deep N-well spacing to N-well < %d (nwell.7)"
  cifmaxwidth nwell_missing 0 bend_illegal \
-	"N-well overlap of Deep N-well < 0.4um outside, 1.03um inside (Nwell 5a, 7)"
+	"N-well overlap of Deep N-well < 0.4um outside, 1.03um inside (nwell.5a, 7)"
  cifmaxwidth dnwell_missing 0 bend_illegal \
-	"SONOS nFET must be in Deep N-well (Tunm 6a)"
+	"SONOS nFET must be in Deep N-well (tunm.6a)"
 
 #-----------------------------
 # NWELL
 #-----------------------------
 
- width allnwell 840 "N-well width < %d (Nwell 1)"
- spacing allnwell allnwell 1270 touching_ok "N-well spacing < %d (Nwell 2a)"
+ width allnwell 840 "N-well width < %d (nwell.1)"
+ spacing allnwell allnwell 1270 touching_ok "N-well spacing < %d (nwell.2a)"
 
 #-----------------------------
 # DIFF
 #-----------------------------
 
  width *ndiff,nfet,scnfet,npd,npass,*nsd,*ndiode,ndiffres,*pdiff,pfet,scpfet,ppu,*psd,*pdiode,pdiffres \
-	150 "Diffusion width < %d (Diff/tap 1)"
+	150 "Diffusion width < %d (diff/tap.1)"
  width *mvndiff,mvnfet,mvnnfet,*mvndiode,*nndiode,mvndiffres,*mvpdiff,mvpfet,*mvpdiode 290 \
-	"MV Diffusion width < %d (Diff/tap 14)"
- width *mvnsd,*mvpsd 150 "MV Tap width < %d (Diff/tap 1)"
- extend *mvpsd *mvndiff 700 "MV Butting tap length < %d (Diff/tap 16)"
- extend *mvnsd *mvpdiff 700 "MV Butting tap length < %d (Diff/tap 16)"
- extend *psd *ndiff 290 "Butting tap length < %d (Diff/tap 4)"
- extend *nsd *pdiff 290 "Butting tap length < %d (Diff/tap 4)"
- width mvpdiffres 150 "MV P-Diffusion resistor width < %d (Diff/tap 14a)"
+	"MV Diffusion width < %d (diff/tap.14)"
+ width *mvnsd,*mvpsd 150 "MV Tap width < %d (diff/tap.1)"
+ extend *mvpsd *mvndiff 700 "MV Butting tap length < %d (diff/tap.16)"
+ extend *mvnsd *mvpdiff 700 "MV Butting tap length < %d (diff/tap.16)"
+ extend *psd *ndiff 290 "Butting tap length < %d (diff/tap.4)"
+ extend *nsd *pdiff 290 "Butting tap length < %d (diff/tap.4)"
+ width mvpdiffres 150 "MV P-Diffusion resistor width < %d (diff/tap.14a)"
  spacing alldifflv,var,varhvt alldifflv,var,varhvt 270 touching_ok \
-	"Diffusion spacing < %d (Diff/tap 3)"
+	"Diffusion spacing < %d (diff/tap.3)"
  spacing alldiffmvnontap,mvvar alldiffmvnontap,mvvar 300 touching_ok \
-	"MV Diffusion spacing < %d (Diff/tap 15a)"
+	"MV Diffusion spacing < %d (diff/tap.15a)"
  spacing alldiffmv *mvnsd,*mvpsd 270 touching_ok \
-	"MV Diffusion to MV tap spacing < %d (Diff/tap 3)"
+	"MV Diffusion to MV tap spacing < %d (diff/tap.3)"
  spacing *mvndiff,mvnfet,mvnnfet,*mvndiode,*nndiode,mvndiffres,mvvar *mvpsd 370 \
-	touching_ok "MV P-Diffusion to MV N-tap spacing < %d (Diff/tap 15b)"
+	touching_ok "MV P-Diffusion to MV N-tap spacing < %d (diff/tap.15b)"
  spacing *mvnsd,*mvpdiff,mvpfet,mvvar,*mvpdiode *mvpsd,*psd 760 touching_illegal \
-	"MV Diffusion in N-well to P-tap spacing < %d (Diff/tap 20 + Diff/tap 17,19)"
+	"MV Diffusion in N-well to P-tap spacing < %d (diff/tap.20 + diff/tap.17,19)"
  spacing *ndiff,*ndiode,nfet allnwell 340 touching_illegal \
-	"N-Diffusion spacing to N-well < %d (Diff/tap 9)"
+	"N-Diffusion spacing to N-well < %d (diff/tap.9)"
  spacing *mvndiff,*mvndiode,mvnfet,mvnnfet allnwell 340 touching_illegal \
-	"N-Diffusion spacing to N-well < %d (Diff/tap 9)"
+	"N-Diffusion spacing to N-well < %d (diff/tap.9)"
  spacing *psd allnwell 130 touching_illegal \
-	"P-tap spacing to N-well < %d (Diff/tap 11)"
+	"P-tap spacing to N-well < %d (diff/tap.11)"
  spacing *mvpsd allnwell 130 touching_illegal \
-	"P-tap spacing to N-well < %d (Diff/tap 11)"
+	"P-tap spacing to N-well < %d (diff/tap.11)"
  surround *nsd allnwell 180 absence_illegal \
-	"N-well overlap of N-tap < %d (Diff/tap 10)"
+	"N-well overlap of N-tap < %d (diff/tap.10)"
  surround *mvnsd allnwell 330 absence_illegal \
-	"N-well overlap of MV N-tap < %d (Diff/tap 19)"
+	"N-well overlap of MV N-tap < %d (diff/tap.19)"
  surround *pdiff,*pdiode,pfet,scpfet,ppu allnwell 180 absence_illegal \
-	"N-well overlap of P-Diffusion < %d (Diff/tap 8)"
+	"N-well overlap of P-Diffusion < %d (diff/tap.8)"
  surround *mvpdiff,*mvpdiode,mvpfet allnwell 330 absence_illegal \
-	"N-well overlap of P-Diffusion < %d (Diff/tap 17)"
+	"N-well overlap of P-Diffusion < %d (diff/tap.17)"
  surround mvvar allnwell 560 absence_illegal \
-	"N-well overlap of MV varactor < %d (LVTN 10 + LVTN 4b)"
+	"N-well overlap of MV varactor < %d (lvtn.10 + lvtn.4b)"
  spacing *mvndiode *mvndiode 1070 touching_ok \
-	"MV N-diode spacing < %d (HVNTM.2 + 2 * HVNTM.3)"
+	"MV N-diode spacing < %d (hvntm.2 + 2 * hvntm.3)"
 
  # Butting junction rules
  edge4way (*psd)/a ~(*ndiff,*psd)/a 125 ~(*ndiff)/a (*ndiff)/a 125 \
@@ -4982,11 +4980,11 @@ drc
 
  # Latchup rules
  cifmaxwidth ptap_missing 0 bend_illegal \
-	"N-diff distance to P-tap must be < 15.0um (LU 2)"
+	"N-diff distance to P-tap must be < 15.0um (LU.2)"
  cifmaxwidth dptap_missing 0 bend_illegal \
-	"N-diff distance to P-tap in deep Nwell must be < 15.0um (LU 2.1)"
+	"N-diff distance to P-tap in deep nwell.must be < 15.0um (LU.2.1)"
  cifmaxwidth ntap_missing 0 bend_illegal \
-	"P-diff distance to N-tap must be < 15.0um (LU 3)"
+	"P-diff distance to N-tap must be < 15.0um (LU.3)"
 
  variants *
 
@@ -4994,27 +4992,27 @@ drc
 # POLY
 #-----------------------------
 
- width allpoly 150 "Poly width < %d (Poly 1a)"
- spacing allpoly allpoly 210 touching_ok "Poly spacing < %d (Poly 2)"
+ width allpoly 150 "poly.width < %d (poly.1a)"
+ spacing allpoly allpoly 210 touching_ok "poly.spacing < %d (poly.2)"
  spacing allpolynonfet alldifflvnonfet 75 corner_ok allfets \
-	"Poly spacing to Diffusion < %d (Poly 4a)"
+	"poly.spacing to Diffusion < %d (poly.4a)"
  spacing npres *nsd 480 touching_illegal \
-	"Poly resistor spacing to N-tap < %d (Poly 9)"
- overhang *ndiff,rndiff nfet,scnfet,npd,npass 250 "N-Diffusion overhang of nmos < %d (Poly 7)"
+	"poly.resistor spacing to N-tap < %d (poly.9)"
+ overhang *ndiff,rndiff nfet,scnfet,npd,npass 250 "N-Diffusion overhang of nmos < %d (poly.7)"
  overhang *mvndiff,mvrndiff mvnfet,mvnnfet 250 \
-	"N-Diffusion overhang of nmos < %d (Poly 7)"
- overhang *pdiff,rpdiff pfet,scpfet,ppu 250 "P-Diffusion overhang of pmos < %d (Poly 7)"
- overhang *mvpdiff,mvrpdiff mvpfet 250 "P-Diffusion overhang of pmos < %d (Poly 7)"
- overhang *poly allfets 130 "Poly overhang of transistor < %d (Poly 8)"
- rect_only allfets "No bends in transistors (Poly 11)"
- rect_only xhrpoly,uhrpoly "No bends in poly resistors (Poly 11)"
+	"N-Diffusion overhang of nmos < %d (poly.7)"
+ overhang *pdiff,rpdiff pfet,scpfet,ppu 250 "P-Diffusion overhang of pmos < %d (poly.7)"
+ overhang *mvpdiff,mvrpdiff mvpfet 250 "P-Diffusion overhang of pmos < %d (poly.7)"
+ overhang *poly allfets 130 "poly.overhang of transistor < %d (poly.8)"
+ rect_only allfets "No bends in transistors (poly.11)"
+ rect_only xhrpoly,uhrpoly "No bends in poly resistors (poly.11)"
  extend  xpc/a xhrpoly,uhrpoly 2160 \
- 	"Poly contact extends poly resistor by < %d (LIcon 1c + LI 5)"
+ 	"poly.contact extends poly resistor by < %d (licon.1c + li.5)"
  spacing xhrpoly,uhrpoly xhrpoly,uhrpoly 1240 touching_illegal \
-	"Distance between precision resistors < %d (RPM 2 + 2 * RPM 3)"
+	"Distance between precision resistors < %d (rpm.2 + 2 * rpm.3)"
 
 #--------------------------------------------------------------------
-# NPC (Nitride Poly Cut)
+# NPC (Nitride poly.Cut)
 #--------------------------------------------------------------------
 
 # Layer NPC is defined automatically around poly contacts (grow 0.1um)
@@ -5023,99 +5021,99 @@ drc
 # CONT (LICON, contact between poly/diff and LI)
 #--------------------------------------------------------------------
 
- width ndc/li 170 "N-diffusion contact width < %d (LIcon 1)"
- width nsc/li 170 "N-tap contact width     < %d (LIcon 1)"
- width pdc/li 170 "P-diffusion contact width < %d (LIcon 1)"
- width psc/li 170 "P-tap contact width     < %d (LIcon 1)"
- width ndic/li 170 "N-diode contact width < %d (LIcon 1)"
- width pdic/li 170 "P-diode contact width < %d (LIcon 1)"
- width pc/li  170 "Poly contact width        < %d (LIcon 1)"
+ width ndc/li 170 "N-diffusion contact width < %d (licon.1)"
+ width nsc/li 170 "N-tap contact width     < %d (licon.1)"
+ width pdc/li 170 "P-diffusion contact width < %d (licon.1)"
+ width psc/li 170 "P-tap contact width     < %d (licon.1)"
+ width ndic/li 170 "N-diode contact width < %d (licon.1)"
+ width pdic/li 170 "P-diode contact width < %d (licon.1)"
+ width pc/li  170 "poly.contact width        < %d (licon.1)"
 
- width xpc/li  350 "Poly resistor contact width < %d (LIcon 1b + 2 * LI 5)"
+ width xpc/li  350 "poly.resistor contact width < %d (licon.1b + 2 * li.5)"
 
- width mvndc/li 170 "N-diffusion contact width < %d (LIcon 1)"
- width mvnsc/li 170 "N-tap contact width     < %d (LIcon 1)"
- width mvpdc/li 170 "P-diffusion contact width < %d (LIcon 1)"
- width mvpsc/li 170 "P-tap contact width     < %d (LIcon 1)"
- width mvndic/li 170 "N-diode contact width < %d (LIcon 1)"
- width mvpdic/li 170 "P-diode contact width < %d (LIcon 1)"
+ width mvndc/li 170 "N-diffusion contact width < %d (licon.1)"
+ width mvnsc/li 170 "N-tap contact width     < %d (licon.1)"
+ width mvpdc/li 170 "P-diffusion contact width < %d (licon.1)"
+ width mvpsc/li 170 "P-tap contact width     < %d (licon.1)"
+ width mvndic/li 170 "N-diode contact width < %d (licon.1)"
+ width mvpdic/li 170 "P-diode contact width < %d (licon.1)"
 
  spacing allpdiffcont allndiffcont 170 touching_illegal \
-	"Diffusion contact spacing < %d (LIcon 2)"
+	"Diffusion contact spacing < %d (licon.2)"
  spacing allndiffcont allndiffcont 170 touching_ok \
-	"Diffusion contact spacing < %d (LIcon 2)"
+	"Diffusion contact spacing < %d (licon.2)"
  spacing allpdiffcont allpdiffcont 170 touching_ok \
-	"Diffusion contact spacing < %d (LIcon 2)"
- spacing pc pc 170 touching_ok "Poly1 contact spacing < %d (LIcon 2)"
+	"Diffusion contact spacing < %d (licon.2)"
+ spacing pc pc 170 touching_ok "Poly1 contact spacing < %d (licon.2)"
 
  spacing pc alldiff 190 touching_illegal \
-	"Poly contact spacing to diffusion < %d (LIcon 14)"
+	"poly.contact spacing to diffusion < %d (licon.14)"
  spacing pc allpfets 235 touching_illegal \
-	"Poly contact spacing to pFET < %d (LIcon 9 + PSDM 5a)"
+	"poly.contact spacing to pFET < %d (licon.9 + psdm.5a)"
 
  spacing ndc,pdc nfet,pfet 55 touching_illegal \
-	"Diffusion contact to gate < %d (LIcon 11)"
+	"Diffusion contact to gate < %d (licon.11)"
  spacing ndc,pdc scnfet,npd,npass,scpfet,ppu 50 touching_illegal \
-	"Diffusion contact to standard cell gate < %d (LIcon 11)"
+	"Diffusion contact to standard cell gate < %d (licon.11)"
  spacing mvndc,mvpdc mvnfet,mvnnfet,mvpfet 55 touching_illegal \
-	"Diffusion contact to gate < %d (LIcon 11)"
+	"Diffusion contact to gate < %d (licon.11)"
  spacing ndc,mvndc rnd,mvrnd 60 touching_illegal "Diffusion contact to rndiff < %d ()"
  spacing pdc,mvpdc rdp,mvrdp 60 touching_illegal "Diffusion contact to rndiff < %d ()"
  spacing nsc varactor,varhvt 250 touching_illegal \
-	"Diffusion contact to varactor gate < %d (LIcon 10)"
+	"Diffusion contact to varactor gate < %d (licon.10)"
  spacing mvnsc mvvar 250 touching_illegal \
-	"Diffusion contact to varactor gate < %d (LIcon 10)"
+	"Diffusion contact to varactor gate < %d (licon.10)"
 
  surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt 40 absence_illegal \
-	"N-diffusion overlap of N-diffusion contact < %d (LIcon 5a)"
+	"N-diffusion overlap of N-diffusion contact < %d (licon.5a)"
  surround pdc/a *pdiff,pfet,scpfet,ppu,pfethvt,pfetmvt,pfetlvt 40 absence_illegal \
-	"P-diffusion overlap of P-diffusion contact < %d (LIcon 5a)"
+	"P-diffusion overlap of P-diffusion contact < %d (licon.5a)"
  surround ndic/a *ndi 40 absence_illegal \
-	"N-diode overlap of N-diode contact < %d (LIcon 5a)"
+	"N-diode overlap of N-diode contact < %d (licon.5a)"
  surround pdic/a *pdi 40 absence_illegal \
-	"P-diode overlap of N-diode contact < %d (LIcon 5a)"
+	"P-diode overlap of N-diode contact < %d (licon.5a)"
 
  surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt 60 directional \
-	"N-diffusion overlap of N-diffusion contact < %d in one direction (LIcon 5c)"
+	"N-diffusion overlap of N-diffusion contact < %d in one direction (licon.5c)"
  surround pdc/a *pdiff,pfet,scpfet,ppu,pfethvt,pfetmvt,pfetlvt 60 directional \
-	"P-diffusion overlap of P-diffusion contact < %d in one direction (LIcon 5c)"
+	"P-diffusion overlap of P-diffusion contact < %d in one direction (licon.5c)"
  surround ndic/a *ndi 60 directional \
-	"N-diode overlap of N-diode contact < %d in one direction (LIcon 5c)"
+	"N-diode overlap of N-diode contact < %d in one direction (licon.5c)"
  surround pdic/a *pdi 60 directional \
-	"P-diode overlap of N-diode contact < %d in one direction (LIcon 5c)"
+	"P-diode overlap of N-diode contact < %d in one direction (licon.5c)"
 
  surround nsc/a *nsd 120 directional \
-	"N-tap overlap of N-tap contact < %d in one direction (LIcon 7)"
+	"N-tap overlap of N-tap contact < %d in one direction (licon.7)"
  surround psc/a *psd 120 directional \
-	"P-tap overlap of P-tap contact < %d in one direction (LIcon 7)"
+	"P-tap overlap of P-tap contact < %d in one direction (licon.7)"
 
  surround mvndc/a *mvndiff,mvnfet 40 absence_illegal \
-	"N-diffusion overlap of N-diffusion contact < %d (LIcon 5a)"
+	"N-diffusion overlap of N-diffusion contact < %d (licon.5a)"
  surround mvpdc/a *mvpdiff,mvpfet 40 absence_illegal \
-	"P-diffusion overlap of P-diffusion contact < %d (LIcon 5a)"
+	"P-diffusion overlap of P-diffusion contact < %d (licon.5a)"
  surround mvndic/a *mvndi 40 absence_illegal \
-	"N-diode overlap of N-diode contact < %d (LIcon 5a)"
+	"N-diode overlap of N-diode contact < %d (licon.5a)"
  surround mvpdic/a *mvpdi 40 absence_illegal \
-	"P-diode overlap of N-diode contact < %d (LIcon 5a)"
+	"P-diode overlap of N-diode contact < %d (licon.5a)"
 
  surround mvndc/a *mvndiff,mvnfet 60 directional \
-	"N-diffusion overlap of N-diffusion contact < %d in one direction (LIcon 5c)"
+	"N-diffusion overlap of N-diffusion contact < %d in one direction (licon.5c)"
  surround mvpdc/a *mvpdiff,mvpfet 60 directional \
-	"P-diffusion overlap of P-diffusion contact < %d in one direction (LIcon 5c)"
+	"P-diffusion overlap of P-diffusion contact < %d in one direction (licon.5c)"
  surround mvndic/a *mvndi 60 directional \
-	"N-diode overlap of N-diode contact < %d in one direction (LIcon 5c)"
+	"N-diode overlap of N-diode contact < %d in one direction (licon.5c)"
  surround mvpdic/a *mvpdi 60 directional \
-	"P-diode overlap of N-diode contact < %d in one direction (LIcon 5c)"
+	"P-diode overlap of N-diode contact < %d in one direction (licon.5c)"
 
  surround mvnsc/a *mvnsd 120 directional \
-	"N-tap overlap of N-tap contact < %d in one direction (LIcon 7)"
+	"N-tap overlap of N-tap contact < %d in one direction (licon.7)"
  surround mvpsc/a *mvpsd 120 directional \
-	"P-tap overlap of P-tap contact < %d in one direction (LIcon 7)"
+	"P-tap overlap of P-tap contact < %d in one direction (licon.7)"
 
  surround pc/a *poly,mrp1,xhrpoly,uhrpoly 50 absence_illegal \
-	"Poly overlap of poly contact < %d (LIcon 8)"
+	"poly.overlap of poly contact < %d (licon.8)"
  surround pc/a *poly,mrp1,xhrpoly,uhrpoly 80 directional \
-	"Poly overlap of poly contact < %d in one direction (LIcon 8a)"
+	"poly.overlap of poly contact < %d in one direction (licon.8a)"
 
  exact_overlap ndc/a,pdc/a,psc/a,nsc/a,pc/a,ndic/a,pdic/a
  exact_overlap mvndc/a,mvpdc/a,mvpsc/a,mvnsc/a,mvndic/a,mvpdic/a
@@ -5124,26 +5122,26 @@ drc
 # LI - Local interconnect layer
 #-------------------------------------------------------------
 
- width *li,rli 170 "Local interconnect width < %d (LI 1)"
- width coreli 140 "Core local interconnect width < %d (LI c1)"
- spacing allli allli,*obsli 170 touching_ok  "Local interconnect spacing < %d (LI 3)"
- spacing coreli allli,*obsli 140 touching_ok  "Core local interconnect spacing < %d (LI c2)"
+ width *li,rli 170 "Local interconnect width < %d (li.1)"
+ width coreli 140 "Core local interconnect width < %d (li.c1)"
+ spacing allli allli,*obsli 170 touching_ok  "Local interconnect spacing < %d (li.3)"
+ spacing coreli allli,*obsli 140 touching_ok  "Core local interconnect spacing < %d (li.c2)"
 
  surround pc/li *li 80 directional \
-	"Local interconnect overlap of poly contact < %d in one direction (LI 5)"
+	"Local interconnect overlap of poly contact < %d in one direction (li.5)"
 
  surround ndc/li,nsc/li,pdc/li,psc/li,ndic/li,pdic/li,mvndc/li,mvnsc/li,mvpdc/li,mvpsc/li,mvndic/li,mvpdic/li \
 	*li,rli 80 directional \
-	"Local interconnect overlap of diffusion contact < %d in one direction (LI 5)"
+	"Local interconnect overlap of diffusion contact < %d in one direction (li.5)"
 
- area allli,*obsli 56100 170 "Local interconnect minimum area < %a (LI 6)"
+ area allli,*obsli 56100 170 "Local interconnect minimum area < %a (li.6)"
 
 #-------------------------------------------------------------
 # MCON - Contact between local interconnect and metal1
 #-------------------------------------------------------------
 
- width lic/m1 170 "Mcon width < %d (Mcon 1)"
- spacing lic/m1 lic/m1,obslic/m1 170 touching_ok "Mcon spacing < %d (Mcon 2)"
+ width lic/m1 170 "mcon.width < %d (mcon.1)"
+ spacing lic/m1 lic/m1,obslic/m1 170 touching_ok "mcon.spacing < %d (mcon.2)"
 
  exact_overlap lic/m1
 
@@ -5151,36 +5149,36 @@ drc
 # METAL1 -
 #-------------------------------------------------------------
 
- width *m1,rm1 140 "Metal1 width < %d (Met1 1)"
- spacing allm1 allm1,*obsm1 140 touching_ok "Metal1 spacing < %d (Met1 2)"
- area allm1,*obsm1 83000 140 "Metal1 minimum area < %a (Met1 6)"
+ width *m1,rm1 140 "Metal1 width < %d (met1.1)"
+ spacing allm1 allm1,*obsm1 140 touching_ok "Metal1 spacing < %d (met1.2)"
+ area allm1,*obsm1 83000 140 "Metal1 minimum area < %a (met1.6)"
 
  surround lic/m1 *met1 30 absence_illegal \
-	"Metal1 overlap of local interconnect contact < %d (Met1 4)"
+	"Metal1 overlap of local interconnect contact < %d (met1.4)"
  surround lic/m1 *met1 60 directional \
-	"Metal1 overlap of local interconnect contact < %d in one direction (Met1 5)"
+	"Metal1 overlap of local interconnect contact < %d in one direction (met1.5)"
 
 variants (fast),(full)
  widespacing allm1 3000 allm1,*obsm1 280 touching_ok \
-	"Metal1 > 3um spacing to unrelated m1 < %d (Met1 3a)"
+	"Metal1 > 3um spacing to unrelated m1 < %d (met1.3a)"
  widespacing *obsm1 3000 allm1 280 touching_ok \
-	"Metal1 > 3um spacing to unrelated m1 < %d (Met1 3a)"
+	"Metal1 > 3um spacing to unrelated m1 < %d (met1.3a)"
 
 variants (full)
  cifmaxwidth m1_hole_empty 0 bend_illegal \
-	"Min area of metal1 holes > 0.14um^2 (Met1 7)"
+	"Min area of metal1 holes > 0.14um^2 (met1.7)"
 variants *
 
 #--------------------------------------------------
 # VIA1
 #--------------------------------------------------
 
- width v1/m1 260 "Via1 width < %d (Via 1a + 2 * Via 4a)"
- spacing v1 v1 60 touching_ok "Via1 spacing < %d (Via 2 - 2 * Via 4a)"
+ width v1/m1 260 "Via1 width < %d (via.1a + 2 * via.4a)"
+ spacing v1 v1 60 touching_ok "Via1 spacing < %d (via.2 - 2 * via.4a)"
  surround v1/m1 *m1 30 directional \
-	"Metal1 overlap of Via1 < %d in one direction (Via 5a - Via 4a)"
+	"Metal1 overlap of Via1 < %d in one direction (via.5a - via.4a)"
  surround v1/m2 *m2 30 directional \
-	"Metal2 overlap of Via1 < %d in one direction (Met2 5 - Met2 4)"
+	"Metal2 overlap of Via1 < %d in one direction (met2.5 - met2.4)"
 
  exact_overlap v1/m2
 
@@ -5188,32 +5186,32 @@ variants *
 # METAL2 - 
 #--------------------------------------------------
 
- width allm2 140 "Metal2 width < %d (Met2 1)"
- spacing allm2  allm2,obsm2 140 touching_ok       "Metal2 spacing < %d (Met2 2)"
- area allm2,obsm2 67600 140 "Metal2 minimum area < %a (Met2 6)"
+ width allm2 140 "Metal2 width < %d (met2.1)"
+ spacing allm2  allm2,obsm2 140 touching_ok       "Metal2 spacing < %d (met2.2)"
+ area allm2,obsm2 67600 140 "Metal2 minimum area < %a (met2.6)"
 
 variants (fast),(full)
  widespacing allm2 3000 allm2,obsm2  280 touching_ok \
-	"Metal2 > 3um spacing to unrelated m2 < %d (Met2 3)"
+	"Metal2 > 3um spacing to unrelated m2 < %d (met2.3)"
  widespacing obsm2 3000 allm2  280 touching_ok \
-	"Metal2 > 3um spacing to unrelated m2 < %d (Met2 3)"
+	"Metal2 > 3um spacing to unrelated m2 < %d (met2.3)"
 
 variants (full)
  cifmaxwidth m2_hole_empty 0 bend_illegal \
-	"Min area of metal2 holes > 0.14um^2 (Met2 7)"
+	"Min area of metal2 holes > 0.14um^2 (met2.7)"
 variants *
 
 #--------------------------------------------------
 # VIA2
 #--------------------------------------------------
 
- width v2/m2 280 "Via2 width < %d (Via2 1a + 2 * Via2 4)"
+ width v2/m2 280 "via2.width < %d (via2.1a + 2 * via2.4)"
 
- spacing v2 v2 120 touching_ok "Via2 spacing < 0.24um (Via2 2 - 2 * Via2 4)"
+ spacing v2 v2 120 touching_ok "via2.spacing < 0.24um (via2.2 - 2 * via2.4)"
 
  surround v2/m2 *m2 45 directional \
-	"Metal2 overlap of Via2 < %d in one direction (Via2 4a - Via2 4)"
- surround v2/m3 *m3 25 absence_illegal "Metal3 overlap of Via2 < %d (Met3 4)"
+	"Metal2 overlap of via2.< %d in one direction (via2.4a - via2.4)"
+ surround v2/m3 *m3 25 absence_illegal "Metal3 overlap of via2.< %d (met3.4)"
 
  exact_overlap v2/m2
 
@@ -5221,15 +5219,15 @@ variants *
 # METAL3 - 
 #--------------------------------------------------
 
- width allm3 300 "Metal3 width < %d (Met3 1)"
- spacing allm3 allm3,obsm3  300 touching_ok "Metal3 spacing < %d (Met3 2)"
- area allm3,obsm3 240000 300 "Metal3 minimum area < %a (Met3 6)"
+ width allm3 300 "Metal3 width < %d (met3.1)"
+ spacing allm3 allm3,obsm3  300 touching_ok "Metal3 spacing < %d (met3.2)"
+ area allm3,obsm3 240000 300 "Metal3 minimum area < %a (met3.6)"
 
 variants (fast),(full)
  widespacing allm3 3000 allm3,obsm3  400 touching_ok \
-	"Metal3 > 3um spacing to unrelated m3 < %d (Met3 3d)"
+	"Metal3 > 3um spacing to unrelated m3 < %d (met3.3d)"
  widespacing obsm3 3000 allm3  400 touching_ok \
-	"Metal3 > 3um spacing to unrelated m3 < %d (Met3 3d)"
+	"Metal3 > 3um spacing to unrelated m3 < %d (met3.3d)"
 variants *
 
 
@@ -5239,12 +5237,12 @@ variants *
 # VIA3 - Requires METAL5 Module
 #--------------------------------------------------
 
- width v3/m3 320 "Via3 width < %d (Via3 1 + 2 * Via3 4)"
- spacing v3 v3 80 touching_ok "Via3 spacing < %d (Via3 2 - 2 * Via3 4)"
+ width v3/m3 320 "via3.width < %d (via3.1 + 2 * via3.4)"
+ spacing v3 v3 80 touching_ok "via3.spacing < %d (via3.2 - 2 * via3.4)"
  surround v3/m3 *m3 30 directional \
-	"Metal3 overlap of Via3 in one direction < %d (Via3 5 - Via3 4)"
+	"Metal3 overlap of via3.in one direction < %d (via3.5 - via3.4)"
  surround v3/m4 *m4 5 absence_illegal \
-	"Metal4 overlap of Via3 < %d (Met4 3 - Via3 4)"
+	"Metal4 overlap of via3.< %d (met4.3 - via3.4)"
 
  exact_overlap v3/m3
 
@@ -5254,25 +5252,25 @@ variants *
 
 variants *
 
- width allm4 300 "Metal4 width < %d (Met4 1)"
- spacing allm4  allm4,obsm4 300 touching_ok      "Metal4 spacing < %d (Met4 2)"
- area allm4,obsm4 240000 300 "Metal4 minimum area < %a (Met4 4a)"
+ width allm4 300 "Metal4 width < %d (met4.1)"
+ spacing allm4  allm4,obsm4 300 touching_ok      "Metal4 spacing < %d (met4.2)"
+ area allm4,obsm4 240000 300 "Metal4 minimum area < %a (met4.4a)"
 
 variants (fast),(full)
  widespacing allm4 3000 allm4,obsm4  400 touching_ok \
-	"Metal4 > 3um spacing to unrelated m4 < %d (S2M4)"
+	"Metal4 > 3um spacing to unrelated m4 < %d (met4.5b)"
  widespacing obsm4 3000 allm4  400 touching_ok \
-	"Metal4 > 3um spacing to unrelated m4 < %d (S2M4)"
+	"Metal4 > 3um spacing to unrelated m4 < %d (met4.5b)"
 variants *
 
 #--------------------------------------------------
 # VIA4 - Requires METAL5 Module
 #--------------------------------------------------
 
- width v4/m4 1180 "Via4 width < %d (Via4 1 + 2 * Via4 4)"
- spacing v4 v4 420 touching_ok "Via4 spacing < %d (Via4 2 - 2 * Via4 4)"
+ width v4/m4 1180 "via4.width < %d (via4.1 + 2 * via4.4)"
+ spacing v4 v4 420 touching_ok "via4.spacing < %d (via4.2 - 2 * via4.4)"
  surround v4/m5 *m5 120 absence_illegal \
-	"Metal5 overlap of Via4 < %d (Met5 3 - Via4 4)"
+	"Metal5 overlap of via4.< %d (met5.3 - via4.4)"
 
  exact_overlap v4/m4
 
@@ -5280,9 +5278,9 @@ variants *
 # METAL5 - METAL5 Module
 #-----------------------------
 
- width allm5 1600 "Metal5 width < %d (Met5 1)"
- spacing allm5  allm5,obsm5 1600 touching_ok "Metal5 spacing < %d (Met5 2)"
- area allm5,obsm5 4000000 1600 "Metal5 minimum area < %a (Met5 4)"
+ width allm5 1600 "Metal5 width < %d (met5.1)"
+ spacing allm5  allm5,obsm5 1600 touching_ok "Metal5 spacing < %d (met5.2)"
+ area allm5,obsm5 4000000 1600 "Metal5 minimum area < %a (met5.4)"
 
 #define METAL5
 #endif (METAL5)
@@ -5291,10 +5289,10 @@ variants *
 
 variants (full)
 
- width metrdl 10000 "RDL width < %d (Rdl 1)"
- spacing metrdl metrdl 10000 touching_ok "RDL spacing < %d (Rdl 2)"
- surround glass metrdl 10750 absence_ok "RDL must surround glass cut by %d (Rdl 3)"
- spacing metrdl padl 19660 surround_ok "RDL spacing to unrelated pad < %d (Rdl 6)"
+ width metrdl 10000 "RDL width < %d (rdl.1)"
+ spacing metrdl metrdl 10000 touching_ok "RDL spacing < %d (rdl.2)"
+ surround glass metrdl 10750 absence_ok "RDL must surround glass cut by %d (rdl.3)"
+ spacing metrdl padl 19660 surround_ok "RDL spacing to unrelated pad < %d (rdl.6)"
 
 variants *
 
@@ -5304,62 +5302,62 @@ variants *
 # NMOS, PMOS
 #--------------------------------------------------
 
- extend allfets *poly 420 "Transistor width < %d (Diff/tap 2)"
+ extend allfets *poly 420 "Transistor width < %d (diff/tap.2)"
  # Except:  Note that standard cells allow transistor width minimum 0.36um
- width pfetlvt 350 "LVT PMOS gate length < %d (Poly 1b)"
+ width pfetlvt 350 "LVT PMOS gate length < %d (poly.1b)"
 
  spacing *nsd,*mvnsd allpolynonfet 55 touching_illegal \
-	"N-tap spacing to field poly < %d (Poly 5)"
+	"N-tap spacing to field poly < %d (poly.5)"
  spacing *psd,*mvpsd allpolynonfet 55 touching_illegal \
-	"P-tap spacing to field poly < %d (Poly 5)"
+	"P-tap spacing to field poly < %d (poly.5)"
 
  # Full edge rule required to describe FET to butted tap distance
  edge4way *psd *ndiff 300 *ndiff *psd 300 \
-	"Butting P-tap spacing to NMOS gate < %d (Poly 6)"
+	"Butting P-tap spacing to NMOS gate < %d (poly.6)"
  edge4way *nsd *pdiff 300 *pdiff *nsd 300 \
-	"Butting N-tap spacing to PMOS gate < %d (Poly 6)"
+	"Butting N-tap spacing to PMOS gate < %d (poly.6)"
  edge4way *mvpsd *mvndiff 300 *mvndiff *mvpsd 300 \
-	"Butting MV P-tap spacing to MV NMOS gate < %d (Poly 6)"
+	"Butting MV P-tap spacing to MV NMOS gate < %d (poly.6)"
  edge4way *mvnsd *mvpdiff 300 *mvpdiff *mvnsd 300 \
-	"Butting MV N-tap spacing to MV PMOS gate < %d (Poly 6)"
+	"Butting MV N-tap spacing to MV PMOS gate < %d (poly.6)"
 
  # No LV FETs in HV diff
  spacing pfet,scpfet,ppu,pfetlvt,pfetmvt,pfethvt,*pdiff *mvpdiff 360 touching_illegal \
-	"LV P-diffusion to MV P-diffusion < %d (Diff/tap 23 + Diff/tap 22)"
+	"LV P-diffusion to MV P-diffusion < %d (diff/tap.23 + diff/tap.22)"
 
  spacing nfet,scnfet,npd,npass,nfetlvt,varactor,varhvt,*ndiff *mvndiff 360 touching_illegal \
-	"LV N-diffusion to MV N-diffusion < %d (Diff/tap 23 + Diff/tap 22)"
+	"LV N-diffusion to MV N-diffusion < %d (diff/tap.23 + diff/tap.22)"
 
  # No HV FETs in LV diff
  spacing mvpfet,*mvpdiff *pdiff 360 touching_illegal \
-	"MV P-diffusion to LV P-diffusion < %d (Diff/tap 23 + Diff/tap 22)"
+	"MV P-diffusion to LV P-diffusion < %d (diff/tap.23 + diff/tap.22)"
 
  spacing mvnfet,mvvaractor,*mvndiff *ndiff 360 touching_illegal \
-	"MV N-diffusion to LV N-diffusion < %d (Diff/tap 23 + Diff/tap 22)"
+	"MV N-diffusion to LV N-diffusion < %d (diff/tap.23 + diff/tap.22)"
 
  # Minimum length of MV FETs.  Note that this is larger than the minimum
  # width (0.29um), so an edge rule is required
 
  edge4way mvndiff mvnfet 500 mvnfet 0 0 \
-	"MV NMOS minimum length < %d (Poly 13)"
+	"MV NMOS minimum length < %d (poly.13)"
 
  edge4way mvnsd mvvaractor 500 mvvaractor 0 0 \
-	"MV Varactor minimum length < %d (Poly 13)"
+	"MV Varactor minimum length < %d (poly.13)"
 
  edge4way mvpdiff mvpfet 500 mvpfet 0 0 \
-	"MV PMOS minimum length < %d (Poly 13)"
+	"MV PMOS minimum length < %d (poly.13)"
 
 #--------------------------------------------------
 # mrp1 (N+ poly resistor)
 #--------------------------------------------------
 
-  width mrp1 330 "mrp1 resistor width < %d (Poly 3)"
+  width mrp1 330 "mrp1 resistor width < %d (poly.3)"
 
 #--------------------------------------------------
 # xhrpoly (P+ poly resistor)
 #--------------------------------------------------
 
-  width xhrpoly 350 "xhrpoly resistor width < %d (P+ Poly 1a)"
+  width xhrpoly 350 "xhrpoly resistor width < %d (P+ poly.1a)"
   # NOTE: xhrpoly resistor requires choice of discrete widths 0.35, 0.69, ... up to 1.27.
 
 #--------------------------------------------------
@@ -5368,73 +5366,73 @@ variants *
 
   width uhrpoly 350 "uhrpoly resistor width < %d"
   spacing xhrpoly,uhrpoly,xpc alldiff 480 touching_illegal \
-	"xhrpoly/uhrpoly resistor spacing to diffusion < %d (Poly 9)"
+	"xhrpoly/uhrpoly resistor spacing to diffusion < %d (poly.9)"
 
 #------------------------------------
 # MOS Varactor device rules
 #------------------------------------
 
  overhang *nsd var,varhvt 250 \
- "N-Tap overhang of Varactor < %d (Var 4)"
+ "N-Tap overhang of Varactor < %d (var.4)"
 
  overhang *mvnsd mvvar 250 \
- "N-Tap overhang of Varactor < %d (Var 4)"
+ "N-Tap overhang of Varactor < %d (var.4)"
 
- width var,varhvt,mvvar 180 "Varactor length < %d (Var 1)"
- extend var,varhvt,mvvar *poly 1000 "Varactor width < %d (Var 2)"
+ width var,varhvt,mvvar 180 "Varactor length < %d (var.1)"
+ extend var,varhvt,mvvar *poly 1000 "Varactor width < %d (var.2)"
 
 #ifdef MIM
 #-----------------------------------------------------------
 # MiM CAP (CAPM) - 
 #-----------------------------------------------------------
 
- width *mimcap 2000 "MiM cap width < %d (Capm 1)"
- spacing *mimcap *mimcap 840 touching_ok "MiM cap spacing < %d (Capm 2a)"
+ width *mimcap 2000 "MiM cap width < %d (capm.1)"
+ spacing *mimcap *mimcap 840 touching_ok "MiM cap spacing < %d (capm.2a)"
  spacing *mimcap via2/m3 1270 touching_illegal \
-	"MiM cap spacing to via2 < %d (Capm 5)"
+	"MiM cap spacing to via2 < %d (capm.5)"
  surround *mimcc *mimcap 200 absence_illegal \
-	"MiM cap must surround MiM cap contact by %d (Capm 4)"
- rect_only *mimcap "MiM cap must be rectangular (Capm 7)
+	"MiM cap must surround MiM cap contact by %d (capm.4)"
+ rect_only *mimcap "MiM cap must be rectangular (capm.7)
 
  surround *mimcap *metal3/m3 140 absence_illegal \
-	"Metal3 must surround MiM cap by %d (Capm 3)"
- spacing via2 *mimcap 50 touching_illegal "MiM cap cannot overlap via2 (Capm 8)"
- spacing via3 *mimcap 50 touching_illegal "MiM cap cannot overlap via3 (Capm 8)"
+	"Metal3 must surround MiM cap by %d (capm.3)"
+ spacing via2 *mimcap 50 touching_illegal "MiM cap cannot overlap via2 (capm.8)"
+ spacing via3 *mimcap 50 touching_illegal "MiM cap cannot overlap via3 (capm.8)"
  # (resolve scaling issue!)
  # cifspacing mim_bottom mim_bottom 1200 touching_ok \
- #	"MiM cap bottom plate spacing < %d (Capm 2b)"
+ #	"MiM cap bottom plate spacing < %d (capm.2b)"
 
  # MiM cap contact rules (VIA3)
 
- width mimcc/m3 320 "MiM cap contact width < %d (Via3 1 + 2 * Via3 4)"
- spacing mimcc mimcc 80 touching_ok "MiM cap contact spacing < %d (Via3 2 - 2 * Via3 4)"
+ width mimcc/m3 320 "MiM cap contact width < %d (via3.1 + 2 * via3.4)"
+ spacing mimcc mimcc 80 touching_ok "MiM cap contact spacing < %d (via3.2 - 2 * via3.4)"
  surround mimcc/m4 *m4 5 directional \
-	"Metal4 overlap of MiM cap contact in one direction < %d (Met4 3 - Via3 4)"
+	"Metal4 overlap of MiM cap contact in one direction < %d (met4.3 - via3.4)"
  exact_overlap mimcc/m3
 
- width *mimcap2 2000 "MiM cap width < %d (Cap2m 1)"
- spacing *mimcap2 *mimcap2 840 touching_ok "MiM cap spacing < %d (Cap2m 2a)"
+ width *mimcap2 2000 "MiM cap width < %d (cap2m.1)"
+ spacing *mimcap2 *mimcap2 840 touching_ok "MiM cap spacing < %d (cap2m.2a)"
  spacing *mimcap2 via3/m4 1270 touching_illegal \
-	"MiM cap spacing to via3 < %d (Cap2m 5)"
+	"MiM cap spacing to via3 < %d (cap2m.5)"
  surround *mim2cc *mimcap2 200 absence_illegal \
-	"MiM cap must surround MiM cap contact by %d (Cap2m 4)"
- rect_only *mimcap2 "MiM cap must be rectangular (Cap2m 7)
+	"MiM cap must surround MiM cap contact by %d (cap2m.4)"
+ rect_only *mimcap2 "MiM cap must be rectangular (cap2m.7)
 
  surround *mimcap2 *metal4/m4 140 absence_illegal \
-	"Metal4 must surround MiM cap by %d (Cap2m 3)"
- spacing via3 *mimcap2 50 touching_illegal "MiM cap cannot overlap via3 (Cap2m 8)"
- spacing via4 *mimcap2 50 touching_illegal "MiM cap cannot overlap via4 (Cap2m 8)"
+	"Metal4 must surround MiM cap by %d (cap2m.3)"
+ spacing via3 *mimcap2 50 touching_illegal "MiM cap cannot overlap via3 (cap2m.8)"
+ spacing via4 *mimcap2 50 touching_illegal "MiM cap cannot overlap via4 (cap2m.8)"
  # (resolve scaling issue!)
  # cifspacing mim2_bottom mim2_bottom 1200 touching_ok \
- #	"MiM2 cap bottom plate spacing < %d (Cap2m 2b)"
+ #	"MiM2 cap bottom plate spacing < %d (cap2m.2b)"
 
  # MiM cap contact rules (VIA4)
 
- width mim2cc/m4 1180 "MiM2 cap contact width < %d (Via4 1 + 2 * Via4 4)"
+ width mim2cc/m4 1180 "MiM2 cap contact width < %d (via4.1 + 2 * via4.4)"
  spacing mim2cc mim2cc 420 touching_ok \
-	"MiM2 cap contact spacing < %d (Via4 2 - 2 * Via4 4)"
+	"MiM2 cap contact spacing < %d (via4.2 - 2 * via4.4)"
  surround mim2cc/m5 *m5 120 absence_illegal \
-	"Metal5 overlap of MiM2 cap contact < %d (Met5 3 - Via4 4)"
+	"Metal5 overlap of MiM2 cap contact < %d (met5.3 - via4.4)"
  exact_overlap mim2cc/m4
 
 #endif (MIM)
