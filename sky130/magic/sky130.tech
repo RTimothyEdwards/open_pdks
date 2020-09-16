@@ -4749,7 +4749,7 @@ style  vendorimport
  calma URPM 79 20
  calma LDNTM 11 44
  calma HVNTM 125 20
- # poly.resistor ID mark
+ # Poly resistor ID mark
  calma POLYRES 66 13
  # Diffusion resistor ID mark
  calma DIFFRES 65 13
