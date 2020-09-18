@@ -1463,17 +1463,17 @@ style drc
  and dnwell
  and-not dptap_reach
 
- templayer m1_small_hole *m1
+ templayer m1_small_hole allm1,obsm1,obslic
  close   140000
 
  templayer m1_hole_empty m1_small_hole
- and-not *m1
+ and-not allm1,obsm1,obslic
 
- templayer m2_small_hole *m2
+ templayer m2_small_hole allm2,obsm2
  close   140000
 
  templayer m2_hole_empty m2_small_hole
- and-not *m2
+ and-not allm2,obsm2
 
 #ifdef EXPERIMENTAL
 #----------------------------------------------------------------
