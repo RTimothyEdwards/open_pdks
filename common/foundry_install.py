@@ -557,7 +557,7 @@ if __name__ == '__main__':
                         filter_scripts.append(item.split('=')[1])
                         break
 
-                print('Diagnostic:  installing ' + option[0] + '.')
+                print('Diagnostic:  installing to ' + option[0] + '.')
                 tooldir = targetdir + '/libs.tech/' + option[0]
                 os.makedirs(tooldir, exist_ok=True)
 
@@ -569,6 +569,8 @@ if __name__ == '__main__':
                 for toolname in toollist:
                     toolfile = os.path.split(toolname)[1]
                     targname = tooldir + '/' + toolfile
+
+                    print('    installing from ' + toolfile + ' to ' + targname)
 
                     if os.path.isdir(toolname):
                         # Remove any existing directory, and its contents
@@ -582,18 +584,21 @@ if __name__ == '__main__':
                         alltoollist = glob.glob(toolname + '/**', recursive=True)
                         commonpart = os.path.commonpath(alltoollist)
                         for subtoolname in alltoollist:
-                            if os.path.isdir(subtoolname):
-                                continue
                             # Get the path part that is not common between toollist and
                             # alltoollist.
                             subpart = os.path.relpath(subtoolname, commonpart)
                             subtargname = targname + '/' + subpart
-                            os.makedirs(os.path.split(subtargname)[0], exist_ok=True)
 
                             if os.path.isfile(subtoolname):
+                                os.makedirs(os.path.split(subtargname)[0], exist_ok=True)
                                 shutil.copy(subtoolname, subtargname)
                             else:
-                                shutil.copytree(subtoolname, subtargname)
+                                print('   copy tree from ' + subtoolname + ' to ' + subtargname)
+                                # emulate Python3.8 dirs_exist_ok option
+                                try:
+                                    shutil.copytree(subtoolname, subtargname)
+                                except FileExistsError:
+                                    pass
 
                             for filter_script in filter_scripts:
                                 # Apply filter script to all files in the target directory
