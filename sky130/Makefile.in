@@ -351,45 +351,36 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/no_synth.cells	
 
 vendor-a:
-	# Install base device models from vendor files
-	# (NOTE: .mod and .pm3 files should not be in /cells/?)
+	# Install device subcircuits from vendor files
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-ngspice sky130_fd_pr_base/v%v/models/* filter=custom/scripts/fixspice.py \
-		-ngspice sky130_fd_pr_base/v%v/cells/*.mod filter=custom/scripts/fixspice.py \
-		-ngspice sky130_fd_pr_base/v%v/cells/*.pm3 filter=custom/scripts/fixspice.py \
-		|& tee -a ${SKY130A}_install.log
-	# Install RF device models from vendor files
-	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-ngspice sky130_fd_pr_rf/v%v/models/* filter=custom/scripts/fixspice.py \
-		|& tee -a ${SKY130A}_install.log
-	# Install additional RF device models from vendor files
-	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-ngspice sky130_fd_pr_rf2/v%v/models/* filter=custom/scripts/fixspice.py \
+		-ngspice sky130_fd_pr/latest/models/*.spice \
+		-ngspice sky130_fd_pr/latest/models/*/*.spice up 1 \
+		-ngspice sky130_fd_pr/latest/models/*/*/*.spice up 2 \
+		-ngspice sky130_fd_pr/latest/models/*/*/*/*.spice up 3 \
 		|& tee -a ${SKY130A}_install.log
 	# Install base device library from vendor files
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-gds %l/v%v/cells/*/*.gds \
-		-spice %l/v%v/cells/*/*.spice ignore=topography \
-		-spice %l/v%v/cells/*/*.sp \
-		-library primitive sky130_fd_pr_base \
-		-library primitive sky130_fd_pr_rf \
-		-library primitive sky130_fd_pr_rf2 |& tee -a ${SKY130A}_install.log
+		-gds %l/latest/cells/*/*.gds compile-only \
+		-cdl %l/latest/cells/*/*.cdl compile-only \
+		-lef %l/latest/cells/*/*.magic.lef compile-only \
+		-spice %l/latest/cells/*/*.spice compile-only \
+		-library primitive sky130_fd_pr |& tee -a ${SKY130A}_install.log
 	# Install SkyWater I/O pad library
-	# Purposely ignoring "-lef sky130_fd_io/v%v/lef/*.lef" and making our own LEF views
+	# Purposely ignoring "-lef sky130_fd_io/latest/lef/*.lef" and making our own LEF views
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-gds %l/v%v/cells/*/*.gds \
-		-verilog %l/v%v/cells/*/*.v \
-		-lib %l/v%v/cells/*/*.lib \
-		-doc %l/v%v/cells/*/*.doc \
-		-cdl %l/v%v/cells/*/*.cdl ignore=topography \
-		-spice %l/v%v/cells/*/*.spice  \
+		-gds %l/latest/cells/*/*.gds \
+		-verilog %l/latest/cells/*/*.v \
+		-lib %l/latest/cells/*/*.lib \
+		-doc %l/latest/cells/*/*.doc \
+		-cdl %l/latest/cells/*/*.cdl ignore=topography \
+		-spice %l/latest/cells/*/*.spice  \
 		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-techlef %l/latest/tech/*.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
-		-lef %l/latest/cells/*/*.lef exclude=*.*.lef compile-only \
+		-lef %l/latest/cells/*/*.magic.lef compile-only \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib \
 		-gds %l/latest/cells/*/*.gds compile-only \
