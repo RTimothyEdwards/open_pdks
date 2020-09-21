@@ -362,6 +362,10 @@ vendor-a:
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
 		-spice %l/latest/cells/*/*.spice filter=custom/scripts/rename_cells.py \
 		-library primitive sky130_fd_pr |& tee -a ${SKY130A}_install.log
+	# Custom:  Add "short" resistor model to the r+c models file
+	cat ./custom/models/short.spice >> \
+		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice 
+
 	# Install SkyWater I/O pad library
 	# Purposely ignoring "-lef sky130_fd_io/latest/lef/*.lef" and making our own LEF views
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \

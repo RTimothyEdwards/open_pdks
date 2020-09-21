@@ -1,0 +1,2 @@
+* Resistor model "short" defined with a fixed resistance of 0.01 ohms.
+.model short r r=0.01

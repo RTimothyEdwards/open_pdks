@@ -328,7 +328,7 @@ contact
   mvpdic  mvpdiode  locali
 
   lic locali metal1
-  obslic obsli obsm1
+  obslic obsli metal1
 
   via1   metal1 metal2
   via2   metal2 metal3
@@ -607,6 +607,10 @@ compose
   compose  mvnfet  poly  mvndiff
   compose  mvpfet  poly  mvpdiff
   compose  mvvar   poly  mvnsd
+
+  paint	 obslic	 locali	 via1
+  paint	 obslic	 obsm1	 obsm1
+  paint	 obslic	 obsm1	 obsli
   
   paint  ndc     nwell  pdc
   paint  nfet    nwell  pfet
@@ -5486,6 +5490,7 @@ lef
  obs obsmrdl met6
 #endif
 
+ # NOTE: obslic only used with li1, not obsli.
  obs obslic mcon
 
 end
