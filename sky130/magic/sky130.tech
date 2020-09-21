@@ -70,9 +70,9 @@ end
 # sky130_fd_pr__cap_mim_m3_1	mimcap		MiM cap 1st plate
 # sky130_fd_pr__cap_mim_m3_2	mimcap2		MiM cap 2nd plate
 # sky130_fd_pr__res_generic_nd	rdn		n+ diff resistor
-# mrdn_hv			mvrdn		thickox n+ diff resistor
+# sky130_fd_pr__res_generic_nd__hv mvrdn	thickox n+ diff resistor
 # sky130_fd_pr__res_generic_pd	rdp		p+ diff resistor
-# mrdp_hv			mvrdp		thickox p+ diff resistor
+# sky130_fd_pr__res_generic_pd__nv mvrdp	thickox p+ diff resistor
 # sky130_fd_pr__res_generic_l1	rli		local interconnect resistor
 # sky130_fd_pr__res_generic_po	npres		n+ poly resistor
 # sky130_fd_pr__res_high_po_*	ppres (*)	p+ poly resistor (300 Ohms/sq)
@@ -5936,20 +5936,18 @@ variants (),(si)
  device msubcircuit sky130_fd_pr__npn_05v0 npn dnwell *ndiff space/w error a2=area
  device msubcircuit sky130_fd_pr__pnp_05v0 pnp pwell,space/w *pdiff a2=area
 
- device rsubcircuit sky130_fd_pr__res_generic_po rmp \
-	*poly	 space/w,pwell,nwell error l=l w=w
- device rsubcircuit sky130_fd_pr__res_generic_l1 rli1 \
+ device resistor sky130_fd_pr__res_generic_l1 rli1 \
        *li,coreli space/w,pwell,nwell error l=l w=w
- device rsubcircuit sky130_fd_pr__res_generic_m1 rmetal1 \
+ device resistor sky130_fd_pr__res_generic_m1 rmetal1 \
 	*metal1 space/w,pwell,nwell error l=l w=w
- device rsubcircuit sky130_fd_pr__res_generic_m2 rmetal2 \
+ device resistor sky130_fd_pr__res_generic_m2 rmetal2 \
 	*metal2 space/w,pwell,nwell error l=l w=w
- device rsubcircuit sky130_fd_pr__res_generic_m3 rmetal3 \
+ device resistor sky130_fd_pr__res_generic_m3 rmetal3 \
 	*metal3 space/w,pwell,nwell error l=l w=w
 #ifdef METAL5
- device rsubcircuit sky130_fd_pr__res_generic_m4 rm4 \
+ device resistor sky130_fd_pr__res_generic_m4 rm4 \
 	*m4 space/w,pwell,nwell error l=l w=w
- device rsubcircuit sky130_fd_pr__res_generic_m5 rm5 \
+ device resistor sky130_fd_pr__res_generic_m5 rm5 \
 	*m5 space/w,pwell,nwell error l=l w=w
 #endif (METAL5)
 
@@ -5978,9 +5976,6 @@ variants (),(si)
  device rsubcircuit sky130_fd_pr__res_xhigh_po	     uhrpoly \
 	xpc pwell,space/w error l=l w=w
 
- device rsubcircuit sky130_fd_pr__res_generic_po     mrp1 \
-	*poly pwell,space/w error 	l=l w=w
-
  device rsubcircuit sky130_fd_pr_res_generic_nd     ndiffres \
 	*ndiff pwell,space/w  error l=l w=w
  device rsubcircuit sky130_fd_pr_res_generic_pd     pdiffres \
@@ -5988,10 +5983,12 @@ variants (),(si)
  device rsubcircuit sky130_fd_pr__res_iso_pw   rpw \
         pwell dnwell error l=l w=w
 
- device rsubcircuit mrdn_hv  mvndiffres \
-	*mvndiff pwell,space/w error l=l w=w
- device rsubcircuit mrdp_hv  mvpdiffres \
-	*mvpdiff nwell   error l=l w=w
+ device resistor sky130_fd_pr__res_generic_po     mrp1 \
+	*poly pwell,space/w error
+ device resistor sky130_fd_pr__res_generic_nd__hv  mvndiffres \
+	*mvndiff pwell,space/w error
+ device resistor sky130_fd_pr__res_generic_pd__hv  mvpdiffres \
+	*mvpdiff nwell   error
 
  device subcircuit  sky130_fd_pr__diode_pd2nw_05v5 *pdiode \
 	nwell a=area
