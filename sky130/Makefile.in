@@ -353,14 +353,14 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 vendor-a:
 	# Install device subcircuits from vendor files
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-ngspice sky130_fd_pr/latest/models/* filter=custom/scripts/rename.py \
+		-ngspice sky130_fd_pr/latest/models/* filter=custom/scripts/rename_models.py \
 		|& tee -a ${SKY130A}_install.log
 	# Install base device library from vendor files
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-gds %l/latest/cells/*/*.gds compile-only \
 		-cdl %l/latest/cells/*/*.cdl compile-only \
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
-		-spice %l/latest/cells/*/*.spice \
+		-spice %l/latest/cells/*/*.spice filter=custom/scripts/rename_cells.py \
 		-library primitive sky130_fd_pr |& tee -a ${SKY130A}_install.log
 	# Install SkyWater I/O pad library
 	# Purposely ignoring "-lef sky130_fd_io/latest/lef/*.lef" and making our own LEF views

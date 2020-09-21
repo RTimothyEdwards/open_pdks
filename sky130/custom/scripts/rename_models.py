@@ -1,6 +1,6 @@
 #!/bin/env python3
 #
-# rename ---
+# rename_models ---
 #
 # This script renames include paths from SPICE files in the models
 # (libs.tech/ngspice) directory that point to the original ../cells/
@@ -22,7 +22,7 @@ def filter(inname, outname):
             spitext = inFile.read()
             spilines = spitext.splitlines()
     except:
-        print('rename.py: failed to open ' + fnmIn + ' for reading.', file=sys.stderr)
+        print('rename_models.py: failed to open ' + fnmIn + ' for reading.', file=sys.stderr)
         return 1
 
     # Process input with regexp
@@ -33,8 +33,7 @@ def filter(inname, outname):
     for line in spilines:
 
         # Fix: Replace "../cells/<name>/" with "../../libs.ref/sky130_fd_pr/spice/"
-        fixedline = re.sub('../cells/[^/]+/', '../../libs.ref/sky130_fd_pr/spice/', line)
-
+        fixedline = re.sub('\.\./cells/[^/]+/', '../../libs.ref/sky130_fd_pr/spice/', line)
         fixedlines.append(fixedline)
         if fixedline != line:
             modified = True
@@ -57,7 +56,7 @@ def filter(inname, outname):
                 for i in fixedlines:
                     print(i, file=outFile)
         except:
-            print('rename.py: failed to open ' + outname + ' for writing.', file=sys.stderr)
+            print('rename_models.py: failed to open ' + outname + ' for writing.', file=sys.stderr)
             return 1
 
 
