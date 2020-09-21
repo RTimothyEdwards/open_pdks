@@ -5404,11 +5404,11 @@ variants *
 
  # MiM cap contact rules (VIA3)
 
- width mimcc/m3 320 "MiM cap contact width < %d (via3.1 + 2 * via3.4)"
+ width mimcc/c1 320 "MiM cap contact width < %d (via3.1 + 2 * via3.4)"
  spacing mimcc mimcc 80 touching_ok "MiM cap contact spacing < %d (via3.2 - 2 * via3.4)"
  surround mimcc/m4 *m4 5 directional \
 	"Metal4 overlap of MiM cap contact in one direction < %d (met4.3 - via3.4)"
- exact_overlap mimcc/m3
+ exact_overlap mimcc/c1
 
  width *mimcap2 2000 "MiM cap width < %d (cap2m.1)"
  spacing *mimcap2 *mimcap2 840 touching_ok "MiM cap spacing < %d (cap2m.2a)"
@@ -5428,12 +5428,12 @@ variants *
 
  # MiM cap contact rules (VIA4)
 
- width mim2cc/m4 1180 "MiM2 cap contact width < %d (via4.1 + 2 * via4.4)"
+ width mim2cc/c2 1180 "MiM2 cap contact width < %d (via4.1 + 2 * via4.4)"
  spacing mim2cc mim2cc 420 touching_ok \
 	"MiM2 cap contact spacing < %d (via4.2 - 2 * via4.4)"
  surround mim2cc/m5 *m5 120 absence_illegal \
 	"Metal5 overlap of MiM2 cap contact < %d (met5.3 - via4.4)"
- exact_overlap mim2cc/m4
+ exact_overlap mim2cc/c2
 
 #endif (MIM)
 
@@ -6008,10 +6008,8 @@ variants (),(si)
 	pwell,space/w a=area
 
 #ifdef MIM
- device subcircuit sky130_fd_pr__cap_mim_m3_1 *mimcap  m3 \
-	nwell,pwell,space/w error w=w l=l
- device subcircuit sky130_fd_pr__cap_mim_m3_2 *mimcap2 m4,mimcc/m4 \
-	nwell,pwell,space/w error w=w l=l
+ device subcircuit sky130_fd_pr__cap_mim_m3_1 *mimcap  *m3 w=w l=l
+ device subcircuit sky130_fd_pr__cap_mim_m3_2 *mimcap2 *m4 w=w l=l
 #endif (MIM)
 
  variants (orig)
