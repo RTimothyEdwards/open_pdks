@@ -45,14 +45,13 @@ set ::env(FILL_CELL) "sky130_fd_sc_hd__fill_"
 set ::env(DECAP_CELL) "sky130_fd_sc_hd__decap_"
 set ::env(RE_BUFFER_CELL) "sky130_fd_sc_hd__buf_4"
 
-
 # Diode insertaion
 set ::env(DIODE_CELL) "sky130_fd_sc_hd__diode_2"
 set ::env(FAKEDIODE_CELL) "sky130_fd_sc_hd__fakediode_2"
 set ::env(DIODE_CELL_PIN) "DIODE"
 
 set ::env(CELL_PAD) 8
-set ::env(CELL_PAD_EXECLUDE) "sky130_fd_sc_hd__tap* sky130_fd_sc_hd__decap* sky130_fd_sc_hd__fill*"
+set ::env(CELL_PAD_EXCLUDE) "sky130_fd_sc_hd__tap* sky130_fd_sc_hd__decap* sky130_fd_sc_hd__fill*"
 
 # Clk Buffers info CTS data
 set ::env(ROOT_CLK_BUFFER) sky130_fd_sc_hd__clkbuf_16
@@ -60,8 +59,5 @@ set ::env(CLK_BUFFER) sky130_fd_sc_hd__clkbuf_4
 set ::env(CLK_BUFFER_INPUT) A
 set ::env(CLK_BUFFER_OUTPUT) X
 set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_hd__clkbuf_1 sky130_fd_sc_hd__clkbuf_2 sky130_fd_sc_hd__clkbuf_4 sky130_fd_sc_hd__clkbuf_8"
-set ::env(CTS_SQR_CAP) 0.258e-3
-set ::env(CTS_SQR_RES) 0.125
 set ::env(CTS_MAX_CAP) 1.53169
-
 set ::env(FP_PDN_RAIL_WIDTH) 0.48

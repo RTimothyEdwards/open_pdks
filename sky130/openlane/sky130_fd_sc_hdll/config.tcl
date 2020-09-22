@@ -11,7 +11,6 @@ set ::env(LIB_FASTEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LI
 set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_fd_sc_hdll__ss_100C_1v60.lib"
 #endif (!EF_FORMAT)
 
-
 set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
 
 # Placement site for core cells
@@ -19,8 +18,6 @@ set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
 set ::env(PLACE_SITE) "unithd"
 set ::env(PLACE_SITE_WIDTH) 0.460
 set ::env(PLACE_SITE_HEIGHT) 2.720
-
-
 
 # welltap and endcap cells
 #set ::env(FP_WELLTAP_CELL) "sky130_fd_sc_hd__tapvpwrvgnd_1"
@@ -48,14 +45,13 @@ set ::env(FILL_CELL) "sky130_fd_sc_hdll__fill_"
 set ::env(DECAP_CELL) "sky130_fd_sc_hdll__decap_"
 set ::env(RE_BUFFER_CELL) "sky130_fd_sc_hdll__buf_4"
 
-
 # Diode insertaion
 set ::env(DIODE_CELL) "sky130_fd_sc_hdll__diode_2"
 set ::env(FAKEDIODE_CELL) "sky130_fd_sc_hdll__fakediode_2"
 set ::env(DIODE_CELL_PIN) "DIODE"
 
 set ::env(CELL_PAD) 8
-set ::env(CELL_PAD_EXECLUDE) "$::env(STD_CELL_LIBRARY)__tap* $::env(STD_CELL_LIBRARY)__decap* $::env(STD_CELL_LIBRARY)__fill*"
+set ::env(CELL_PAD_EXCLUDE) "$::env(STD_CELL_LIBRARY)__tap* $::env(STD_CELL_LIBRARY)__decap* $::env(STD_CELL_LIBRARY)__fill*"
 
 # Clk Buffers info CTS data
 set ::env(ROOT_CLK_BUFFER) $::env(STD_CELL_LIBRARY)__clkbuf_16
@@ -63,7 +59,5 @@ set ::env(CLK_BUFFER) $::env(STD_CELL_LIBRARY)__clkbuf_4
 set ::env(CLK_BUFFER_INPUT) A
 set ::env(CLK_BUFFER_OUTPUT) X
 set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_hdll__clkbuf_1 sky130_fd_sc_hdll__clkbuf_2 sky130_fd_sc_hdll__clkbuf_4 sky130_fd_sc_hdll__clkbuf_8"
-set ::env(CTS_SQR_CAP) 0.258e-3
-set ::env(CTS_SQR_RES) 0.125
 set ::env(CTS_MAX_CAP) 1.53169
 set ::env(FP_PDN_RAIL_WIDTH) 0.48

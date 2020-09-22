@@ -19,8 +19,6 @@ set ::env(PLACE_SITE) "unit"
 set ::env(PLACE_SITE_WIDTH) 0.480
 set ::env(PLACE_SITE_HEIGHT) 3.330
 
-
-
 # welltap and endcap cells
 set ::env(FP_WELLTAP_CELL) "sky130_fd_sc_ms__tapvpwrvgnd_1"
 set ::env(FP_ENDCAP_CELL) "sky130_fd_sc_ms__decap_4"
@@ -47,7 +45,6 @@ set ::env(FILL_CELL) "sky130_fd_sc_ms__fill_"
 set ::env(DECAP_CELL) "sky130_fd_sc_ms__decap_"
 set ::env(RE_BUFFER_CELL) "sky130_fd_sc_ms__buf_4"
 
-
 # Diode insertaion
 set ::env(DIODE_CELL) ""
 set ::env(FAKEDIODE_CELL) ""
@@ -55,7 +52,7 @@ set ::env(DIODE_CELL_PIN) ""
 set ::env(DIODE_INSERTION_STRATEGY) 0 
 
 set ::env(CELL_PAD) 8
-set ::env(CELL_PAD_EXECLUDE) "$::env(STD_CELL_LIBRARY)__tap* $::env(STD_CELL_LIBRARY)__decap* $::env(STD_CELL_LIBRARY)__fill*"
+set ::env(CELL_PAD_EXCLUDE) "$::env(STD_CELL_LIBRARY)__tap* $::env(STD_CELL_LIBRARY)__decap* $::env(STD_CELL_LIBRARY)__fill*"
 
 # Clk Buffers info CTS data
 set ::env(ROOT_CLK_BUFFER) $::env(STD_CELL_LIBRARY)__clkbuf_16
@@ -63,8 +60,5 @@ set ::env(CLK_BUFFER) $::env(STD_CELL_LIBRARY)__clkbuf_4
 set ::env(CLK_BUFFER_INPUT) A
 set ::env(CLK_BUFFER_OUTPUT) X
 set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_ms__clkbuf_2 sky130_fd_sc_ms__clkbuf_4 sky130_fd_sc_ms__clkbuf_8"
-set ::env(CTS_SQR_CAP) 0.258e-3
-set ::env(CTS_SQR_RES) 0.125
 set ::env(CTS_MAX_CAP) 1.53169
-
 set ::env(FP_PDN_RAIL_WIDTH) 0.48
