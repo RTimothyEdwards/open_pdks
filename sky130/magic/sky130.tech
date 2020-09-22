@@ -609,8 +609,7 @@ compose
   compose  mvvar   poly  mvnsd
 
   paint	 obslic	 locali	 via1
-  paint	 obslic	 obsm1	 obsm1
-  paint	 obslic	 obsm1	 obsli
+  paint	 obslic	 obsm1	 obsli,obsm1
   
   paint  ndc     nwell  pdc
   paint  nfet    nwell  pfet
