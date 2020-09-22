@@ -26,7 +26,24 @@ set cells2 [cells list -all -circuit2]
 # Resistors (except metal)
 #-------------------------------------------
 
-set devices {xpwres mrp1 xhrpoly uhrpoly mrdn mrdp mrdn_hv mrdp_hv}
+set devices {}
+lappend devices sky130_fd_pr__res_iso_pw
+lappend devices sky130_fd_pr__res_generic_po
+lappend devices sky130_fd_pr__res_high_po_0p35
+lappend devices sky130_fd_pr__res_high_po_0p69
+lappend devices sky130_fd_pr__res_high_po_1p41
+lappend devices sky130_fd_pr__res_high_po_2p85
+lappend devices sky130_fd_pr__res_high_po_5p73
+lappend devices sky130_fd_pr__res_high_po
+lappend devices sky130_fd_pr__res_xhigh_po_0p35
+lappend devices sky130_fd_pr__res_xhigh_po_0p69
+lappend devices sky130_fd_pr__res_xhigh_po_1p41
+lappend devices sky130_fd_pr__res_xhigh_po_2p85
+lappend devices sky130_fd_pr__res_xhigh_po_5p73
+lappend devices sky130_fd_pr__res_xhigh_po
+lappend devices sky130_fd_pr__res_generic_nd
+lappend devices sky130_fd_pr__res_generic_pd
+lappend devices mrdn_hv mrdp_hv
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -61,9 +78,14 @@ foreach dev $devices {
 # MRM (metal) resistors
 #-------------------------------------------
 
-set devices {mrl1 mrm1 mrm2 mrm3}
+set devices {}
+lappend devices sky130_fd_pr__res_generic_l1
+lappend devices sky130_fd_pr__res_generic_m1
+lappend devices sky130_fd_pr__res_generic_m2
+lappend devices sky130_fd_pr__res_generic_m3
 #ifdef METAL5
-lappend devices mrm4 mrm5
+lappend devices sky130_fd_pr__res_generic_m4
+lappend devices sky130_fd_pr__res_generic_m5
 #endif (METAL5)
 
 foreach dev $devices {
@@ -99,9 +121,22 @@ foreach dev $devices {
 # (MOS) transistors
 #-------------------------------------------
 
-set devices {nshort nlowvt sonos_e nhvnative nhv pshort plowvt phighvt phv}
-lappend devices ppu npass npd
-lappend devices xcnwvc xcnwvc2 xchvnwc
+set devices {}
+lappend devices sky130_fd_pr__nfet_01v8
+lappend devices sky130_fd_pr__nfet_01v8_lvt
+lappend devices sky130_fd_bs_flash__special_sonosfet_star
+lappend devices sky130_fd_pr__nfet_g5v9d10v5
+lappend devices sky130_fd_pr__pfet_01v8
+lappend devices sky130_fd_pr__pfet_01v8_lvt
+lappend devices sky130_fd_pr__pfet_01v8_mvt
+lappend devices sky130_fd_pr__pfet_01v8_hvt
+lappend devices sky130_fd_pr__pfet_g5v9d10v5
+lappend devices sky130_fd_pr__special_pfet_pass
+lappend devices sky130_fd_pr__special_nfet_pass
+lappend devices sky130_fd_pr__special_nfet_latch
+lappend devices sky130_fd_pr__cap_var_lvt
+lappend devices sky130_fd_pr__cap_var_hvt
+lappend devices sky130_fd_pr__cap_var
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -128,8 +163,15 @@ foreach dev $devices {
 # diodes
 #-------------------------------------------
 
-set devices {ndiode ndiode_lvt pdiode pdiode_lvt pdiode_hvt ndiode_h pdiode_h}
-lappend devices ndiode_native
+set devices {}
+lappend devices sky130_fd_pr__diode_pw2nd_05v5
+lappend devices sky130_fd_pr__diode_pw2nd_05v5_lvt
+lappend devices sky130_fd_pr__diode_pw2nd_05v5_nvt
+lappend devices sky130_fd_pr__diode_pd2nw_05v5
+lappend devices sky130_fd_pr__diode_pd2nw_05v5_lvt
+lappend devices sky130_fd_pr__diode_pd2nw_05v5_hvt
+lappend devices sky130_fd_pr__diode_pw2nd_11v0
+lappend devices sky130_fd_pr__diode_pd2nw_11v0
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -155,7 +197,9 @@ foreach dev $devices {
 # MiM capacitors
 #-------------------------------------------
 
-set devices {xcmimc1 xcmimc2}
+set devices {}
+lappend devices sky130_fd_pr__cap_mim_m3_1
+lappend devices sky130_fd_pr__cap_mim_m3_2
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -182,30 +226,34 @@ foreach dev $devices {
 # VPP capacitors
 #-------------------------------------------
 
-set devices {sky130rf_npn_1x1 sky130rf_npn_1x2 sky130rf_pnp5x}
+set devices {}
+lappend devices sky130_fd_pr__npn_05v5_W1p00L1p00
+lappend devices sky130_fd_pr__npn_05v5_W1p00L2p00
+lappend devices sky130_fd_pr__php_05v5_W0p68L0p68
+lappend devices sky130_fd_pr__php_05v5_W3p40L3p40
+
 #ifdef METAL5
-lappend devices balun xint4_011 xind4_02
-lappend devices sky130rf2_xcmvpp11p5x11p7_lim5shield
-lappend devices sky130rf2_xcmvpp11p5x11p7_m3_lim5shield
-lappend devices sky130rf2_xcmvpp11p5x11p7_m4shield
-lappend devices sky130rf2_xcmvpp11p5x11p7_polym4shield
-lappend devices sky130rf2_xcmvpp11p5x11p7_polym50p4shield
-lappend devices sky130rf2_xcmvpp4p4x4p6_m3_lim5shield
-lappend devices sky130rf2_xcmvpp6p8x6p1_lim4shield
-lappend devices sky130rf2_xcmvpp6p8x6p1_polym4shield
+lappend devices sky130_fd_pr__cap_vpp_11p5x11p7_lim5_shield
+lappend devices sky130_fd_pr__cap_vpp_11p5x11p7_m3_lim5_shield
+lappend devices sky130_fd_pr__cap_vpp_11p5x11p7_m4_shield
+lappend devices sky130_fd_pr__cap_vpp_11p5x11p7_pom4_shield
+lappend devices sky130_fd_pr__cap_vpp_4p4x4p6_m3_lim5_shield
+lappend devices sky130_fd_pr__cap_vpp_6p8x6p1_lim4_shield
+lappend devices sky130_fd_pr__cap_vpp_6p8x6p1_polym4_shield
 #endif (METAL5)
-lappend devices sky130rf2_xcmvpp8p6x7p9_m3_lim5shield
-lappend devices sky130rf2_xcmvppx4_2xnhvnative10x4
-lappend devices sky130rf_xcmvpp11p5x11p7_m3_lishield
-lappend devices sky130rf_xcmvpp11p5x11p7_m3shield
-lappend devices sky130rf_xcmvpp1p8x1p8_lishield
-lappend devices sky130rf_xcmvpp1p8x1p8_m3shield
-lappend devices sky130rf_xcmvpp2
-lappend devices sky130rf_xcmvpp2_nwell
-lappend devices sky130rf_xcmvpp4p4x4p6_m3_lishield
-lappend devices sky130rf_xcmvpp4p4x4p6_m3shield
-lappend devices sky130rf_xcmvpp8p6x7p9_m3_lishield
-lappend devices sky130rf_xcmvpp8p6x7p9_m3shield
+lappend devices sky130_fd_pr__cap_vpp_8p6x7p9_m3_lim5_shield
+lappend devices sky130_fd_pr__cap_vpp_11p5x11p7_m3_li_shield
+lappend devices sky130_fd_pr__cap_vpp_11p5x11p7_m3_shield
+lappend devices sky130_fd_pr__cap_vpp_1p8x1p8_li_shield
+lappend devices sky130_fd_pr__cap_vpp_1p8x1p8_m3_shield
+lappend devices sky130_fd_pr__cap_vpp_4p4x4p6_m3_li_shield
+lappend devices sky130_fd_pr__cap_vpp_4p4x4p6_m3_shield
+lappend devices sky130_fd_pr__cap_vpp_8p6x7p9_m3_li_shield
+lappend devices sky130_fd_pr__cap_vpp_8p6x7p9_m3_shield
+#ifdef REDISTRIBUTION
+lappend devices sky130_fd_pr__ind_04_01
+lappend devices sky130_fd_pr__ind_04_02
+#endif (REDISTRIBUTION)
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {

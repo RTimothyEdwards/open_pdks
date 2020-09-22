@@ -294,10 +294,13 @@ def convert_file(in_file, out_path):
     # All comment lines that are surrounded by lines marked -3 should
     # also be marked -3.  This keeps comments that are completely inside
     # blocks that are only in the common file out of the individual files.
+    # ignore "* statistics" and "* mismatch" lines.
 
     lineno = 0
     for line in inplines[1:]:
         lineno += 1
+        if line.startswith('*') and ('statistics' in line or 'mismatch' in line):
+            continue
         if linedest[lineno] == -1 and linedest[lineno - 1] == -3:
             testline = lineno + 1
             while linedest[testline] == -1:

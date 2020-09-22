@@ -63,7 +63,7 @@ veryclean-sky130:
 
 install:	${TECHS}	
 	for tech in ${TECHS}; do \
-		${MAKE} install-$${tech}-local; done
+		${MAKE} install-$${tech}; done
 
 clean:		${TECHS}
 	for tech in ${TECHS}; do \
