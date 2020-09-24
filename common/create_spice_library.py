@@ -38,10 +38,13 @@ def usage():
 
 def create_spice_library(destlibdir, destlib, spiext, do_compile_only=False, do_stub=False, excludelist=[]):
 
+    # destlib should not have a file extension
+    destlibroot = os.path.splitext(destlib)[0]
+
     fformat = 'CDL' if spiext == '.cdl' else 'SPICE'
 
     allstubname = destlibdir + '/stub' + spiext
-    alllibname = destlibdir + '/' + destlib + spiext
+    alllibname = destlibdir + '/' + destlibroot + spiext
     if do_stub:
         outputname = allstubname
     else:

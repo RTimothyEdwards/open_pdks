@@ -805,7 +805,23 @@ if __name__ == '__main__':
                 destpathcomp.reverse()
                 destpath = ''.join(destpathcomp)
 
+                if option[0] == 'verilog':
+                    fileext = '.v'
+                elif option[0] == 'gds':
+                    fileext = '.gds'
+                elif option[0] == 'liberty' or option[0] == 'lib':
+                    fileext = '.lib'
+                elif option[0] == 'spice' or option[0] == 'spi':
+                    fileext = '.spice' if not ef_format else '.spi'
+                elif option[0] == 'cdl':
+                    fileext = '.cdl'
+                elif option[0] == 'lef':
+                    fileext = '.lef'
+
                 if newname:
+                    if os.path.splitext(newname)[1] == '':
+                        newname = newname + fileext
+
                     if len(liblist) == 1:
                         destfile = newname
                     else:
@@ -864,7 +880,7 @@ if __name__ == '__main__':
             if do_compile == True or do_compile_only == True:
                 # NOTE:  The purpose of "rename" is to put a destlib-named
                 # library elsewhere so that it can be merged with another
-                # library into a compiled <destlib>.<ext>
+                # library into a compiled <destlib>.<ext> on another pass.
 
                 compname = destlib
                     
@@ -877,11 +893,6 @@ if __name__ == '__main__':
 
                     create_verilog_library(destlibdir, compname, do_compile_only, do_stub, excludelist)
 
-                    if do_compile_only == True:
-                        if newname:
-                            if os.path.isfile(newname):
-                                os.remove(newname)
-
                 elif option[0] == 'gds' and have_mag_8_2:
                     # If there is not a single file with all GDS cells in it,
                     # then compile one.
@@ -892,22 +903,12 @@ if __name__ == '__main__':
                         startup_script = targetdir + mag_current + pdkname + '.magicrc'
                     create_gds_library(destlibdir, compname, startup_script, do_compile_only, excludelist)
 
-                    if do_compile_only == True:
-                        if newname:
-                            if os.path.isfile(newname):
-                                os.remove(newname)
-
                 elif option[0] == 'liberty' or option[0] == 'lib':
                     # If there is not a single file with all liberty cells in it,
                     # then compile one, because one does not want to have to have
                     # an include line for every single cell used in a design.
 
                     create_lib_library(destlibdir, compname, do_compile_only, excludelist)
-
-                    if do_compile_only == True:
-                        if newname:
-                            if os.path.isfile(newname):
-                                os.remove(newname)
 
                 elif option[0] == 'spice' or option[0] == 'spi':
                     # If there is not a single file with all SPICE subcircuits in it,
@@ -916,10 +917,6 @@ if __name__ == '__main__':
 
                     spiext = '.spice' if not ef_format else '.spi'
                     create_spice_library(destlibdir, compname, spiext, do_compile_only, do_stub, excludelist)
-                    if do_compile_only == True:
-                        if newname:
-                            if os.path.isfile(newname):
-                                os.remove(newname)
 
                 elif option[0] == 'cdl':
                     # If there is not a single file with all CDL subcircuits in it,
@@ -927,10 +924,6 @@ if __name__ == '__main__':
                     # an include line for every single cell used in a design.
 
                     create_spice_library(destlibdir, compname, '.cdl', do_compile_only, do_stub, excludelist)
-                    if do_compile_only == True:
-                        if newname:
-                            if os.path.isfile(newname):
-                                os.remove(newname)
 
                 elif option[0] == 'lef':
                     # If there is not a single file with all LEF cells in it,
@@ -939,10 +932,20 @@ if __name__ == '__main__':
 
                     create_lef_library(destlibdir, compname, do_compile_only, excludelist)
 
-                    if do_compile_only == True:
-                        if newname:
-                            if os.path.isfile(newname):
-                                os.remove(newname)
+                if do_compile_only == True:
+                    if newname:
+                        if os.path.isfile(targname):
+                            os.remove(targname)
+
+                # "rename" with "compile" or "compile-only":  Change the name
+                # of the compiled file.
+
+                if newname:
+                    print('   Renaming ' + compname + fileext + ' to ' + newname)
+                    origname = destlibdir + '/' + compname + fileext
+                    targrename = destlibdir + destpath + '/' + newname
+                    if os.path.isfile(origname):
+                        os.rename(origname, targrename)
 
         # Find any libraries/options marked as "privileged" (or "private") and
         # move the files from libs.tech or libs.ref to libs.priv, leaving a

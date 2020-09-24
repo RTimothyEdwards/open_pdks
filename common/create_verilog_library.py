@@ -37,11 +37,14 @@ def usage():
 
 def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=False, excludelist=[]):
 
-    alllibname = destlibdir + '/' + destlib + '.v'
+    # 'destlib' should not have an extension, because one will be generated.
+    destlibroot = os.path.splitext(destlib)[0]
+
+    alllibname = destlibdir + '/' + destlibroot + '.v'
     if os.path.isfile(alllibname):
         os.remove(alllibname)
 
-    print('Diagnostic:  Creating consolidated verilog library ' + destlib + '.v')
+    print('Diagnostic:  Creating consolidated verilog library ' + destlibroot + '.v')
     vlist = glob.glob(destlibdir + '/*.v')
     if alllibname in vlist:
         vlist.remove(alllibname)

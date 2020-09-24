@@ -35,11 +35,14 @@ def usage():
 
 def create_lef_library(destlibdir, destlib, do_compile_only=False, excludelist=[]):
 
-    alllibname = destlibdir + '/' + destlib + '.lef'
+    # destlib should not have a file extension
+    destlibroot = os.path.splitext(destlib)[0]
+
+    alllibname = destlibdir + '/' + destlibroot + '.lef'
     if os.path.isfile(alllibname):
         os.remove(alllibname)
 
-    print('Diagnostic:  Creating consolidated LEF library ' + destlib + '.lef')
+    print('Diagnostic:  Creating consolidated LEF library ' + destlibroot + '.lef')
     llist = glob.glob(destlibdir + '/*.lef')
     if alllibname in llist:
         llist.remove(alllibname)

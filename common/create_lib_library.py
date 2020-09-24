@@ -42,11 +42,14 @@ def usage():
 
 def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[]):
 
-    alllibname = destlibdir + '/' + destlib + '.lib'
+    # destlib should not have a file extension
+    destlibrooot = os.path.splitext(destlib)[0]
+
+    alllibname = destlibdir + '/' + destlibroot + '.lib'
     if os.path.isfile(alllibname):
         os.remove(alllibname)
 
-    print('Diagnostic:  Creating consolidated liberty library ' + destlib + '.lib')
+    print('Diagnostic:  Creating consolidated liberty library ' + destlibroot + '.lib')
 
     # Create exclude list with glob-style matching using fnmatch
     if len(llist) > 0:
