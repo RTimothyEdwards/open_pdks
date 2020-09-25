@@ -55,16 +55,24 @@ def create_spice_library(destlibdir, destlib, spiext, do_compile_only=False, do_
     if os.path.isfile(outputname):
         os.remove(outputname)
 
-    if fformat == 'CDL':
-        slist = glob.glob(destlibdir + '/*.cdl')
+    # If file "filelist.txt" exists in the directory, get the list of files from it
+    if os.path.exists(destlibdir + '/filelist.txt'):
+        with open(destlibdir + '/filelist.txt', 'r') as ifile:
+            rlist = ifile.read().splitlines()
+            slist = []
+            for rfile in rlist:
+                slist.append(destlibdir + '/' + rfile)
     else:
-        # Sadly, there is no consensus on what a SPICE file extension should be.
-        slist = glob.glob(destlibdir + '/*.spc')
-        slist.extend(glob.glob(destlibdir + '/*.spice'))
-        slist.extend(glob.glob(destlibdir + '/*.spi'))
-        slist.extend(glob.glob(destlibdir + '/*.ckt'))
-        slist.extend(glob.glob(destlibdir + '/*.cir'))
-        slist.extend(glob.glob(destlibdir + '/*' + spiext))
+        if fformat == 'CDL':
+            slist = glob.glob(destlibdir + '/*.cdl')
+        else:
+            # Sadly, there is no consensus on what a SPICE file extension should be.
+            slist = glob.glob(destlibdir + '/*.spc')
+            slist.extend(glob.glob(destlibdir + '/*.spice'))
+            slist.extend(glob.glob(destlibdir + '/*.spi'))
+            slist.extend(glob.glob(destlibdir + '/*.ckt'))
+            slist.extend(glob.glob(destlibdir + '/*.cir'))
+            slist.extend(glob.glob(destlibdir + '/*' + spiext))
 
     if alllibname in slist:
         slist.remove(alllibname)

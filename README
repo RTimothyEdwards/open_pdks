@@ -382,7 +382,7 @@ How to make or update an open PDK:
 
 	 [option_arguments] may be one of the following:
 
-	       up  <number>
+	       up=<number>
 		    Any tool option can use this argument to indicate that
 		    the source hierarchy should be copied entirely, starting
 		    from <number> levels above the files indicated by <path>.
@@ -394,7 +394,7 @@ How to make or update an open PDK:
 		    would install all .lib files directly into
 		    libs.ref/<libname>/liberty/*.lib while
 	
-			-liberty x/y/z/PVT_*/*.lib up 1
+			-liberty x/y/z/PVT_*/*.lib up=1
 	
 		    would install all .lib files into
 		    libs.ref/liberty/<libname>/PVT_*/*.lib.
@@ -425,13 +425,13 @@ How to make or update an open PDK:
 		    them in a separate root directory libs.priv where they
 		    can be given additional read/write restrictions.
 
-	       rename <file_name>
+	       rename=<file_name>
 		    Rename the file being copied to the name of the argument.
 		    This can be used to copy one file into multiple destination
 		    libraries and give each copy a name related to the
 		    destination library.
 
-	       filter <script_file_path>
+	       filter=<script_file_path>
 		    Process all files through the script <script_file_path>,
 		    which is given as a relative path to the directory
 		    containing the Makefile.  The filter script traditionally
@@ -441,6 +441,13 @@ How to make or update an open PDK:
 		    the file with the result.  Commonly used filters are found
 		    in the common/ directory.  See common/fixspice.py for an
 		    example.
+
+	       sort=<script_file_path>
+		    Generate a list of all files to combine in a library,
+		    called "filelist.txt", then call the script.  The
+		    script should read the "filelist.txt" file and sort
+		    the files according to the order in which they should
+		    appear in the library.
 
 	       noclobber
 		    Mainly diagnostic.  When specified, any temporary files

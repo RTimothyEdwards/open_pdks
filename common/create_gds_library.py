@@ -45,9 +45,18 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=Fals
     if os.path.isfile(alllibname):
         os.remove(alllibname)
 
-    glist = glob.glob(destlibdir + '/*.gds')
-    glist.extend(glob.glob(destlibdir + '/*.gdsii'))
-    glist.extend(glob.glob(destlibdir + '/*.gds2'))
+    # If file "filelist.txt" exists in the directory, get the list of files from it
+    if os.path.exists(destlibdir + '/filelist.txt'):
+        with open(destlibdir + '/filelist.txt', 'r') as ifile:
+            rlist = ifile.read().splitlines()
+            glist = []
+            for rfile in rlist:
+                glist.append(destlibdir + '/' + rfile)
+    else:
+        glist = glob.glob(destlibdir + '/*.gds')
+        glist.extend(glob.glob(destlibdir + '/*.gdsii'))
+        glist.extend(glob.glob(destlibdir + '/*.gds2'))
+
     if alllibname in glist:
         glist.remove(alllibname)
 

@@ -45,7 +45,18 @@ def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=F
         os.remove(alllibname)
 
     print('Diagnostic:  Creating consolidated verilog library ' + destlibroot + '.v')
-    vlist = glob.glob(destlibdir + '/*.v')
+
+    # If file "filelist.txt" exists in the directory, get the list of files from it
+    if os.path.exists(destlibdir + '/filelist.txt'):
+        print('Diagnostic:  Reading sorted verilog file list.')
+        with open(destlibdir + '/filelist.txt', 'r') as ifile:
+            rlist = ifile.read().splitlines()
+            vlist = []
+            for rfile in rlist:
+                vlist.append(destlibdir + '/' + rfile)
+    else:
+        vlist = glob.glob(destlibdir + '/*.v')
+
     if alllibname in vlist:
         vlist.remove(alllibname)
 

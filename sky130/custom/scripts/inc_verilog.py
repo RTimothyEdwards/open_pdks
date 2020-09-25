@@ -47,11 +47,23 @@ def filter(inname, outname):
                 # NOTE:  These files are assumed not to need in-line
                 # includes, but includes of primitives need to be ignored.
 
+                # Quick hack:  Remove this when the filenames are corrected
+                if not os.path.exists(inpath + '/' + incfilename):
+                    print('Detected incorrect filename')
+                    print('   Old filename was: ' + incfilename)
+                    dlist = incfilename.split('.')
+                    ilist = dlist[0:-3]
+                    ilist.append(dlist[-2])
+                    ilist.append(dlist[-3])
+                    ilist.append(dlist[-1])
+                    print('   New filename is: ' + incfilename)
+                    incfilename = '.'.join(ilist)
+
                 with open(inpath + '/' + incfilename, 'r') as incfile:
                     v2text = incfile.read()
                     v2lines = v2text.splitlines()
                     for line2 in v2lines:
-                        i2match = imatch.match(line2)
+                        i2match = increx.match(line2)
                         if not i2match:
                             fixedlines.append(line2)
             else:

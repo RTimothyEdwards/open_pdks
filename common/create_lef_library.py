@@ -43,7 +43,17 @@ def create_lef_library(destlibdir, destlib, do_compile_only=False, excludelist=[
         os.remove(alllibname)
 
     print('Diagnostic:  Creating consolidated LEF library ' + destlibroot + '.lef')
-    llist = glob.glob(destlibdir + '/*.lef')
+
+    # If file "filelist.txt" exists in the directory, get the list of files from it
+    if os.path.exists(destlibdir + '/filelist.txt'):
+        with open(destlibdir + '/filelist.txt', 'r') as ifile:
+            rlist = ifile.read().splitlines()
+            llist = []
+            for rfile in rlist:
+                llist.append(destlibdir + '/' + rfile)
+    else:
+        llist = glob.glob(destlibdir + '/*.lef')
+
     if alllibname in llist:
         llist.remove(alllibname)
 
