@@ -40,6 +40,9 @@ set ::env(FP_TAPCELL_DIST) 14
 # Tracks info
 set ::env(TRACKS_INFO_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/tracks.info"
 
+# Latch mapping
+set ::env(SYNTH_LATCH_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/latch_map.v"
+
 set ::env(GLB_RT_L1_ADJUSTMENT) 0.99
 
 # Extra PDN configs
