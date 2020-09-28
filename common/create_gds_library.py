@@ -38,13 +38,25 @@ def usage():
 
 def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=False, excludelist=[], keep=False):
 
-    alllibname = destlibdir + '/' + destlib + '.gds'
+    # destlib should not have a file extension
+    destlibroot = os.path.splitext(destlib)[0]
+
+    alllibname = destlibdir + '/' + destlibroot + '.gds'
     if os.path.isfile(alllibname):
         os.remove(alllibname)
 
-    glist = glob.glob(destlibdir + '/*.gds')
-    glist.extend(glob.glob(destlibdir + '/*.gdsii'))
-    glist.extend(glob.glob(destlibdir + '/*.gds2'))
+    # If file "filelist.txt" exists in the directory, get the list of files from it
+    if os.path.exists(destlibdir + '/filelist.txt'):
+        with open(destlibdir + '/filelist.txt', 'r') as ifile:
+            rlist = ifile.read().splitlines()
+            glist = []
+            for rfile in rlist:
+                glist.append(destlibdir + '/' + rfile)
+    else:
+        glist = glob.glob(destlibdir + '/*.gds')
+        glist.extend(glob.glob(destlibdir + '/*.gdsii'))
+        glist.extend(glob.glob(destlibdir + '/*.gds2'))
+
     if alllibname in glist:
         glist.remove(alllibname)
 
@@ -86,8 +98,8 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=Fals
             for gdsfile in glist:
                 print('gds read ' + gdsfile, file=ofile)
 
-            print('puts stdout "Creating cell ' + destlib + '"', file=ofile)
-            print('load ' + destlib, file=ofile)
+            print('puts stdout "Creating cell ' + destlibroot + '"', file=ofile)
+            print('load ' + destlibroot, file=ofile)
             print('puts stdout "Adding cells to library"', file=ofile)
             print('box values 0 0 0 0', file=ofile)
             for gdsfile in glist:
@@ -97,9 +109,9 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=Fals
                 # Could properly make space for the cell here. . . 
                 print('box move e 200', file=ofile)
                                 
-            print('puts stdout "Writing GDS library ' + destlib + '"', file=ofile)
+            print('puts stdout "Writing GDS library ' + destlibroot + '"', file=ofile)
             print('gds library true', file=ofile)
-            print('gds write ' + destlib, file=ofile)
+            print('gds write ' + destlibroot, file=ofile)
             print('puts stdout "Done."', file=ofile)
             print('quit -noprompt', file=ofile)
 

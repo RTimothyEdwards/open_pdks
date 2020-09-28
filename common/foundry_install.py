@@ -79,6 +79,10 @@
 #		    when a foundry library has inconveniently split
 #		    an IP library (LEF, CDL, verilog, etc.) into
 #		    individual files.
+#	compile-only:	Like "compile" except that the individual
+#		    files are removed after the library file has been
+#		    created.
+#
 #	stub :	   Remove contents of subcircuits from CDL or SPICE
 #		    netlist files.
 #
@@ -97,6 +101,20 @@
 #		    take regexps for multiple files).  When used with
 #		    "compile" or "compile-only", this refers to the
 # 		    name of the target compiled file.
+#
+#	filter:	   Followed by "=" and the name of a script.
+#		    Each file is passed through the filter script
+#		    before writing into the staging area.
+#
+#	sort:	   Optionally followed by "=" and the name of a script.
+#		    The list of files to process (after applying items
+#		    from "exclude") will be written to a file
+#		    "filelist.txt", which will be used by the
+#		    library compile routines, if present.  If a script
+#		    name is specified, then the sort script will rewrite
+#		    the file with the order in which entries should
+#		    appear in the compiled library.  Only useful when
+#		    used with "compile" or "compile-only".
 #
 #	noconvert : Install only; do not attempt to convert to other
 #		    formats (applies only to GDS, CDL, and LEF).
@@ -669,16 +687,11 @@ if __name__ == '__main__':
         # the source should be copied (or linked) from <number> levels up
         # in the hierarchy (see below).
 
-        if 'up' in option:
-            uparg = option.index('up') 
-            try:
-                hier_up = int(option[uparg + 1])
-            except:
-                print("Non-numeric option to 'up': " + option[uparg + 1])
-                print("Ignoring 'up' option.")
-                hier_up = 0
-        else:
-            hier_up = 0
+        hier_up = 0
+        for item in option:
+            if item.split('=')[0] == 'up':
+                hier_up = int(item.split('=')[1])
+                break
 
         filter_scripts = []
         for item in option:
@@ -712,6 +725,17 @@ if __name__ == '__main__':
             newname = None
         else:
             print('Renaming file to: ' + newname)
+
+        # Option 'sort' may have an argument. . .
+        try:
+            sortscript = list(item.split('=')[1] for item in option if item.startswith('sort'))[0]
+        except IndexError:
+            sortscript = None
+        else:
+            print('Sorting files with script ' + sortscript)
+        # . . . or not.
+        if 'sort' in option:
+            sortscript = True
 
         # 'anno' may be specified for LEF, in which case the LEF is used only
         # to annotate GDS and is not itself installed;  this allows LEF to
@@ -791,6 +815,7 @@ if __name__ == '__main__':
                     print('   ' + item)
                 print('(' + str(len(liblist)) + ' files total)')
 
+            destfilelist = []
             for libname in liblist:
                 # Note that there may be a hierarchy to the files in option[1],
                 # say for liberty timing files under different conditions, so
@@ -805,7 +830,23 @@ if __name__ == '__main__':
                 destpathcomp.reverse()
                 destpath = ''.join(destpathcomp)
 
+                if option[0] == 'verilog':
+                    fileext = '.v'
+                elif option[0] == 'gds':
+                    fileext = '.gds'
+                elif option[0] == 'liberty' or option[0] == 'lib':
+                    fileext = '.lib'
+                elif option[0] == 'spice' or option[0] == 'spi':
+                    fileext = '.spice' if not ef_format else '.spi'
+                elif option[0] == 'cdl':
+                    fileext = '.cdl'
+                elif option[0] == 'lef':
+                    fileext = '.lef'
+
                 if newname:
+                    if os.path.splitext(newname)[1] == '':
+                        newname = newname + fileext
+
                     if len(liblist) == 1:
                         destfile = newname
                     else:
@@ -861,10 +902,23 @@ if __name__ == '__main__':
                     # Apply filter script to all files in the target directory
                     tfilter(targname, filter_script)
 
+                destfilelist.append(os.path.split(targname)[1])
+
+            if sortscript:
+                print('Diagnostic:  Sorting files to compile.')
+                with open(destlibdir + '/filelist.txt', 'w') as ofile:
+                    for destfile in destfilelist:
+                        print(destfile, file=ofile)
+                if os.path.isfile(sortscript):
+                    print('Diagnostic:  Sorting files with ' + sortscript)
+                    subprocess.run([sortscript, destlibdir],
+				stdout = subprocess.DEVNULL,
+				stderr = subprocess.DEVNULL)
+
             if do_compile == True or do_compile_only == True:
                 # NOTE:  The purpose of "rename" is to put a destlib-named
                 # library elsewhere so that it can be merged with another
-                # library into a compiled <destlib>.<ext>
+                # library into a compiled <destlib>.<ext> on another pass.
 
                 compname = destlib
                     
@@ -877,11 +931,6 @@ if __name__ == '__main__':
 
                     create_verilog_library(destlibdir, compname, do_compile_only, do_stub, excludelist)
 
-                    if do_compile_only == True:
-                        if newname:
-                            if os.path.isfile(newname):
-                                os.remove(newname)
-
                 elif option[0] == 'gds' and have_mag_8_2:
                     # If there is not a single file with all GDS cells in it,
                     # then compile one.
@@ -892,22 +941,12 @@ if __name__ == '__main__':
                         startup_script = targetdir + mag_current + pdkname + '.magicrc'
                     create_gds_library(destlibdir, compname, startup_script, do_compile_only, excludelist)
 
-                    if do_compile_only == True:
-                        if newname:
-                            if os.path.isfile(newname):
-                                os.remove(newname)
-
                 elif option[0] == 'liberty' or option[0] == 'lib':
                     # If there is not a single file with all liberty cells in it,
                     # then compile one, because one does not want to have to have
                     # an include line for every single cell used in a design.
 
                     create_lib_library(destlibdir, compname, do_compile_only, excludelist)
-
-                    if do_compile_only == True:
-                        if newname:
-                            if os.path.isfile(newname):
-                                os.remove(newname)
 
                 elif option[0] == 'spice' or option[0] == 'spi':
                     # If there is not a single file with all SPICE subcircuits in it,
@@ -916,10 +955,6 @@ if __name__ == '__main__':
 
                     spiext = '.spice' if not ef_format else '.spi'
                     create_spice_library(destlibdir, compname, spiext, do_compile_only, do_stub, excludelist)
-                    if do_compile_only == True:
-                        if newname:
-                            if os.path.isfile(newname):
-                                os.remove(newname)
 
                 elif option[0] == 'cdl':
                     # If there is not a single file with all CDL subcircuits in it,
@@ -927,10 +962,6 @@ if __name__ == '__main__':
                     # an include line for every single cell used in a design.
 
                     create_spice_library(destlibdir, compname, '.cdl', do_compile_only, do_stub, excludelist)
-                    if do_compile_only == True:
-                        if newname:
-                            if os.path.isfile(newname):
-                                os.remove(newname)
 
                 elif option[0] == 'lef':
                     # If there is not a single file with all LEF cells in it,
@@ -939,10 +970,25 @@ if __name__ == '__main__':
 
                     create_lef_library(destlibdir, compname, do_compile_only, excludelist)
 
-                    if do_compile_only == True:
-                        if newname:
-                            if os.path.isfile(newname):
-                                os.remove(newname)
+                if do_compile_only == True:
+                    if newname:
+                        if os.path.isfile(targname):
+                            os.remove(targname)
+
+                # "rename" with "compile" or "compile-only":  Change the name
+                # of the compiled file.
+
+                if newname:
+                    print('   Renaming ' + compname + fileext + ' to ' + newname)
+                    origname = destlibdir + '/' + compname + fileext
+                    targrename = destlibdir + destpath + '/' + newname
+                    if os.path.isfile(origname):
+                        os.rename(origname, targrename)
+      
+            # If "filelist.txt" was created, remove it
+            if sortscript:
+                if os.path.isfile(destlibdir + '/filelist.txt'):
+                    os.remove(destlibdir + '/filelist.txt')
 
         # Find any libraries/options marked as "privileged" (or "private") and
         # move the files from libs.tech or libs.ref to libs.priv, leaving a

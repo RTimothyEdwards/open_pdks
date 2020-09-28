@@ -16,3 +16,7 @@ scripts/*
 !scripts/configure.ac
 **/Makefile
 **/Makefile.am
+
+# staged PDKs
+sky130/sky130A
+sky130/sky130A/*

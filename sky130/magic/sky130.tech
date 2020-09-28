@@ -609,8 +609,7 @@ compose
   compose  mvvar   poly  mvnsd
 
   paint	 obslic	 locali	 via1
-  paint	 obslic	 obsm1	 obsm1
-  paint	 obslic	 obsm1	 obsli
+  paint	 obslic	 obsm1	 obsli,obsm1
   
   paint  ndc     nwell  pdc
   paint  nfet    nwell  pfet
@@ -656,7 +655,7 @@ connect
   *nwell,*nsd,*mvnsd,dnwell,pnp *nwell,*nsd,*mvnsd,dnwell,pnp
   pwell,*psd,*mvpsd,npn  pwell,*psd,*mvpsd,npn
   *li,coreli	*li,coreli
-  *m1,m1fill	*m1,m1fill
+  *m1,m1fill,obslic	*m1,m1fill,obslic
   *m2,m2fill	*m2,m2fill
   *m3,m3fill	*m3,m3fill
 #ifdef METAL5
