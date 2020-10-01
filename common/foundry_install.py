@@ -106,15 +106,16 @@
 #		    Each file is passed through the filter script
 #		    before writing into the staging area.
 #
-#	sort:	   Optionally followed by "=" and the name of a script.
+#	sort:	   Followed by "=" and the name of a script.
 #		    The list of files to process (after applying items
 #		    from "exclude") will be written to a file
 #		    "filelist.txt", which will be used by the
-#		    library compile routines, if present.  If a script
-#		    name is specified, then the sort script will rewrite
-#		    the file with the order in which entries should
-#		    appear in the compiled library.  Only useful when
-#		    used with "compile" or "compile-only".
+#		    library compile routines, if present.  The sort
+#		    script will rewrite the file with the order in
+#		    which entries should appear in the compiled library.
+#		    Only useful when used with "compile" or "compile-only".
+#		    If not specified, files are sorted by "natural sort"
+#		    order.
 #
 #	noconvert : Install only; do not attempt to convert to other
 #		    formats (applies only to GDS, CDL, and LEF).
@@ -458,6 +459,9 @@ if __name__ == '__main__':
     # Create the target directory
     os.makedirs(targetdir, exist_ok=True)
 
+    # Here's where common scripts are found:
+    scriptdir = os.path.split(os.getcwd())[0] + '/common'
+
     #----------------------------------------------------------------
     # Installation part 1:  Install files into the staging directory
     #----------------------------------------------------------------
@@ -726,16 +730,14 @@ if __name__ == '__main__':
         else:
             print('Renaming file to: ' + newname)
 
-        # Option 'sort' may have an argument. . .
+        # Option 'sort' has an argument. . .
         try:
             sortscript = list(item.split('=')[1] for item in option if item.startswith('sort'))[0]
         except IndexError:
-            sortscript = None
+            # If option 'sort' is not specified, then use the "natural sort" script
+            sortscript = scriptdir + '/sort_pdkfiles.py'
         else:
             print('Sorting files with script ' + sortscript)
-        # . . . or not.
-        if 'sort' in option:
-            sortscript = True
 
         # 'anno' may be specified for LEF, in which case the LEF is used only
         # to annotate GDS and is not itself installed;  this allows LEF to
@@ -890,12 +892,10 @@ if __name__ == '__main__':
                     vfilter(targname)
 
                     if do_remove_spec:
-                        scriptdir = os.path.split(os.getcwd())[0] + '/common'
                         local_filter_scripts.append(scriptdir + '/remove_specify.py')
 
                 elif option[0] == 'cdl' or option[0] == 'spi' or option[0] == 'spice':
                     if do_stub:
-                        scriptdir = os.path.split(os.getcwd())[0] + '/common'
                         local_filter_scripts.append(scriptdir + '/makestub.py')
 
                 for filter_script in local_filter_scripts:
@@ -905,7 +905,6 @@ if __name__ == '__main__':
                 destfilelist.append(os.path.split(targname)[1])
 
             if sortscript:
-                print('Diagnostic:  Sorting files to compile.')
                 with open(destlibdir + '/filelist.txt', 'w') as ofile:
                     for destfile in destfilelist:
                         print(destfile, file=ofile)
@@ -1841,7 +1840,6 @@ if __name__ == '__main__':
 
             # The directory with scripts should be in ../common with respect
             # to the Makefile that determines the cwd.
-            scriptdir = os.path.split(os.getcwd())[0] + '/common'
 
             # Run cdl2spi.py script to read in the CDL file and write out SPICE
             for cdlfile in cdlfiles:

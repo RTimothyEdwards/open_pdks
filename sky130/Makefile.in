@@ -73,7 +73,7 @@
 # This Makefile contains bash-isms
 SHELL = bash
 
-REVISION    = 20200508
+REVISION    = 20200927
 TECH        = sky130
 
 # If EF_STYLE is set to 1, then efabless naming conventions are
