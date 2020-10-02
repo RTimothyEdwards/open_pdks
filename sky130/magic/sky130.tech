@@ -6009,8 +6009,8 @@ variants (),(si)
 	pwell,space/w a=area
 
 #ifdef MIM
- device subcircuit sky130_fd_pr__cap_mim_m3_1 *mimcap  *m3 w=w l=l
- device subcircuit sky130_fd_pr__cap_mim_m3_2 *mimcap2 *m4 w=w l=l
+ device csubcircuit sky130_fd_pr__cap_mim_m3_1 *mimcap  *m3 w=w l=l
+ device csubcircuit sky130_fd_pr__cap_mim_m3_2 *mimcap2 *m4 w=w l=l
 #endif (MIM)
 
  variants (orig)

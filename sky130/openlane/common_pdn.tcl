@@ -7,7 +7,7 @@ set ::macro_blockage_layer_list "li1 met1 met2 met3 met4 met5"
 pdngen::specify_grid stdcell {
     name grid
     rails {
-	    met1 {width $::env(FP_PDN_RAIL_WIDTH) pitch $::env(PLACE_SITE_HEIGHT) offset $::env(FP_PDN_RAIL_OFFSET)}
+	    met1 {width $::env(PDN_RAIL_WIDTH) pitch $::env(PLACE_SITE_HEIGHT) offset 0}
     }
     straps {
 	    met4 {width $::env(FP_PDN_VWIDTH) pitch $::env(FP_PDN_VPITCH) offset $::env(FP_PDN_VOFFSET)}
