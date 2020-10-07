@@ -26,16 +26,27 @@ libraries = ['sky130_fd_sc_hd','sky130_fd_sc_hdll','sky130_fd_sc_hs','sky130_fd_
 
 if modify_vnb_vpb:
     for lib in libraries:
+        revert_modify_vpb_result_cmd = "sed -i 's/PIN VPB\\nDIRECTION INOUT ;\\nUSE POWER ;/PIN VPB/g' {lef} ".format(
+            lef= skywater_path+"/"+lib+"/*/cells/*/*.magic.lef"
+            )
+        print(revert_modify_vpb_result_cmd)
+        subprocess.call([revert_modify_vpb_result_cmd], shell=True)
+        
         modify_vpb_result_cmd = "sed -i 's/PIN VPB/PIN VPB\\nDIRECTION INOUT ;\\nUSE POWER ;/g' {lef} ".format(
             lef= skywater_path+"/"+lib+"/*/cells/*/*.magic.lef"
             )
         print(modify_vpb_result_cmd)
-        #subprocess.call(modify_vpb_result_cmd.split(""))
         subprocess.call([modify_vpb_result_cmd], shell=True)
+
+        revert_modify_vnb_result_cmd = "sed -i 's/PIN VNB\\nDIRECTION INOUT ;\\nUSE GROUND ;/PIN VNB/g' {lef} ".format(
+            lef= skywater_path+"/"+lib+"/*/cells/*/*.magic.lef"
+            )
+        print(revert_modify_vnb_result_cmd)
+        subprocess.call([revert_modify_vnb_result_cmd], shell=True)
+        
         modify_vnb_result_cmd = "sed -i 's/PIN VNB/PIN VNB\\nDIRECTION INOUT ;\\nUSE GROUND ;/g' {lef} ".format(
             lef= skywater_path+"/"+lib+"/*/cells/*/*.magic.lef"
             )
-        #subprocess.call(modify_vnb_result_cmd.split())
         print(modify_vnb_result_cmd)
         subprocess.call([modify_vnb_result_cmd], shell=True)
 
@@ -48,8 +59,10 @@ if modify_hs_ms_diodes:
             hs_lef_Content = hs_lef_FileOpener.read()
         hs_lef_FileOpener.close()
         hs_lef_Content = hs_lef_Content.replace("CLASS BLOCK","CLASS CORE ANTENNACELL")
-        hs_lef_Content = hs_lef_Content.replace("MACRO sky130_fd_sc_hs__diode_2","MACRO sky130_fd_sc_hs__diode_2\nSYMMETRY X Y ;\nSITE unit ;\n")
-        hs_lef_Content = hs_lef_Content.replace("PIN DIODE","PIN DIODE\nDIRECTION INPUT ;\nUSE SIGNAL ;\n")
+        if hs_lef_Content.find("SYMMETRY X Y ;") == -1:
+            hs_lef_Content = hs_lef_Content.replace("MACRO sky130_fd_sc_hs__diode_2","MACRO sky130_fd_sc_hs__diode_2\nSYMMETRY X Y ;\nSITE unit ;\n")
+        if hs_lef_Content.find("PIN DIODE\nDIRECTION INPUT ;") == -1:
+            hs_lef_Content = hs_lef_Content.replace("PIN DIODE","PIN DIODE\nDIRECTION INPUT ;\nUSE SIGNAL ;\n")
         hs_lef_FileOpener = open(hs_lef,"w")
         hs_lef_FileOpener.write(hs_lef_Content)
         hs_lef_FileOpener.close()
@@ -62,10 +75,11 @@ if modify_hs_ms_diodes:
         if ms_lef_FileOpener.mode == 'r':
             ms_lef_Content = ms_lef_FileOpener.read()
         ms_lef_FileOpener.close()
-        # now sections[1] contains diode info;
         ms_lef_Content = ms_lef_Content.replace("CLASS BLOCK","CLASS CORE ANTENNACELL")
-        ms_lef_Content = ms_lef_Content.replace("MACRO sky130_fd_sc_ms__diode_2","MACRO sky130_fd_sc_ms__diode_2\nSYMMETRY X Y ;\nSITE unit ;\n")
-        ms_lef_Content = ms_lef_Content.replace("PIN DIODE","PIN DIODE\nDIRECTION INPUT ;\nUSE SIGNAL ;\n")
+        if ms_lef_Content.find("SYMMETRY X Y ;") == -1:
+            ms_lef_Content = ms_lef_Content.replace("MACRO sky130_fd_sc_ms__diode_2","MACRO sky130_fd_sc_ms__diode_2\nSYMMETRY X Y ;\nSITE unit ;\n")
+        if ms_lef_Content.find("PIN DIODE\nDIRECTION INPUT ;") == -1:
+            ms_lef_Content = ms_lef_Content.replace("PIN DIODE","PIN DIODE\nDIRECTION INPUT ;\nUSE SIGNAL ;\n")
         ms_lef_FileOpener = open(ms_lef,"w")
         ms_lef_FileOpener.write(ms_lef_Content)
         ms_lef_FileOpener.close()
