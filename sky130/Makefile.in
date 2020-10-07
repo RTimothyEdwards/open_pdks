@@ -357,6 +357,8 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	${CPP} ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/tracks.info > ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/tracks.info
 
 vendor-a:
+	# Modify the LEF files to update hs and ms libraries
+	python3 ../common/foundry_install.py --modify_hs_ms_diodes --modify_vnb_vpb --skywater_path ${SKYWATER_PATH}
 	# Install device subcircuits from vendor files
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-ngspice sky130_fd_pr/latest/models/* \
