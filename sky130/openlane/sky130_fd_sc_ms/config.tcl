@@ -46,10 +46,8 @@ set ::env(DECAP_CELL) "sky130_fd_sc_ms__decap_"
 set ::env(RE_BUFFER_CELL) "sky130_fd_sc_ms__buf_4"
 
 # Diode insertaion
-set ::env(DIODE_CELL) ""
-set ::env(FAKEDIODE_CELL) ""
-set ::env(DIODE_CELL_PIN) ""
-set ::env(DIODE_INSERTION_STRATEGY) 0 
+set ::env(DIODE_CELL) "sky130_fd_sc_ms__diode_2"
+set ::env(DIODE_CELL_PIN) "DIODE"
 
 set ::env(CELL_PAD) 8
 set ::env(CELL_PAD_EXCLUDE) "$::env(STD_CELL_LIBRARY)__tap* $::env(STD_CELL_LIBRARY)__decap* $::env(STD_CELL_LIBRARY)__fill*"
