@@ -1944,6 +1944,10 @@ style  sky130
  labels SUBTXT text
  labels SUBPIN port
 
+ # Always draw pwell under p-tap
+ layer pwell TAP
+ and-not NWELL
+
  layer dnwell DNWELL
  labels DNWELL
 
@@ -3428,6 +3432,10 @@ style  vendorimport
  layer pwell SUBTXT,SUBPIN
  labels SUBTXT port
  labels SUBPIN port
+
+ # Always draw pwell under p-tap
+ layer pwell TAP
+ and-not NWELL
 
  layer dnwell DNWELL
  labels DNWELL
