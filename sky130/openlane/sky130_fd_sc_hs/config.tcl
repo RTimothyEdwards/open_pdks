@@ -46,10 +46,8 @@ set ::env(FILL_CELL) "sky130_fd_sc_hs__fill_"
 set ::env(DECAP_CELL) "sky130_fd_sc_hs__decap_"
 
 # Diode insertaion
-set ::env(DIODE_CELL) ""
-set ::env(FAKEDIODE_CELL) ""
-set ::env(DIODE_CELL_PIN) ""
-set ::env(DIODE_INSERTION_STRATEGY) 0
+set ::env(DIODE_CELL) "sky130_fd_sc_hs__diode_2"
+set ::env(DIODE_CELL_PIN) "DIODE"
 
 set ::env(CELL_PAD) 8
 set ::env(CELL_PAD_EXECLUDE) "sky130_fd_sc_hs__tap* sky130_fd_sc_hs__decap* sky130_fd_sc_hs__fill*"
