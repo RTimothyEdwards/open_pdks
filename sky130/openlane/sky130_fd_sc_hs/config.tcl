@@ -19,7 +19,6 @@ set ::env(PLACE_SITE) "unit"
 set ::env(PLACE_SITE_WIDTH) 0.480
 set ::env(PLACE_SITE_HEIGHT) 3.330
 
-
 # welltap and endcap cells
 set ::env(FP_WELLTAP_CELL) "sky130_fd_sc_hs__tapvpwrvgnd_1"
 set ::env(FP_ENDCAP_CELL) "sky130_fd_sc_hs__decap_4"
@@ -52,15 +51,12 @@ set ::env(DIODE_CELL_PIN) ""
 set ::env(DIODE_INSERTION_STRATEGY) 0
 
 set ::env(CELL_PAD) 8
-set ::env(CELL_PAD_EXECLUDE) "sky130_fd_sc_hs__tap* sky130_fd_sc_hs__decap* sky130_fd_sc_hs__fill*"
+set ::env(CELL_PAD_EXCLUDE) "sky130_fd_sc_hs__tap* sky130_fd_sc_hs__decap* sky130_fd_sc_hs__fill*"
 
 set ::env(ROOT_CLK_BUFFER) sky130_fd_sc_hs__clkbuf_16
 set ::env(CLK_BUFFER) sky130_fd_sc_hs__clkbuf_4
 set ::env(CLK_BUFFER_INPUT) A
 set ::env(CLK_BUFFER_OUTPUT) X
 set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_hs__clkbuf_2 sky130_fd_sc_hs__clkbuf_4 sky130_fd_sc_hs__clkbuf_8"
-set ::env(CTS_SQR_CAP) 0.469e-3
-set ::env(CTS_SQR_RES) 0.125
 set ::env(CTS_MAX_CAP) 1.8894300000
-
-set ::env(PDN_RAIL_WIDTH) 0.48
+set ::env(FP_PDN_RAIL_WIDTH) 0.48
