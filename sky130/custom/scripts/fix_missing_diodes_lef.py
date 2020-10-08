@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+# This script can be removed when GitHub issue #141 (https://github.com/google/skywater-pdk/issues/141) is fixed.
 from os import path
 import argparse
 import subprocess
