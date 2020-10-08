@@ -313,42 +313,54 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/tracks.info
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/no_synth.cells
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/sky130_fd_sc_hd__fakediode_2.gds
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/latch_map.v
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tracks.info
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/no_synth.cells
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/latch_map.v
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/tracks.info
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/no_synth.cells
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/latch_map.v
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/tracks.info
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/no_synth.cells
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/latch_map.v
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/tracks.info
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/no_synth.cells
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/latch_map.v
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tracks.info
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/no_synth.cells
+	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/latch_map.v
 	${CPP} ${SKY130A_DEFS} openlane/common_pdn.tcl > ${OPENLANE_STAGING_A}/common_pdn.tcl
 	${CPP} ${SKY130A_DEFS} openlane/config.tcl > ${OPENLANE_STAGING_A}/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/no_synth.cells
 	cp openlane/sky130_fd_sc_hd/sky130_fd_sc_hd__fakediode_2.gds ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/sky130_fd_sc_hd__fakediode_2.gds
+	cp openlane/sky130_fd_sc_hd/latch_map.v ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/latch_map.v
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/no_synth.cells
+	cp openlane/sky130_fd_sc_hs/latch_map.v ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/latch_map.v
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/no_synth.cells
+	cp openlane/sky130_fd_sc_ms/latch_map.v ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/latch_map.v
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/no_synth.cells
+	cp openlane/sky130_fd_sc_ls/latch_map.v ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/latch_map.v
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/no_synth.cells
+	cp openlane/sky130_fd_sc_hdll/latch_map.v ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/latch_map.v
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/no_synth.cells	
+	cp openlane/sky130_fd_sc_hvl/latch_map.v ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/latch_map.v
 
 vendor-a:
 	# Install device subcircuits from vendor files
