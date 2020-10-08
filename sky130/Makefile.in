@@ -352,7 +352,7 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 
 vendor-a:
 	# Modify the LEF files to update hs and ms libraries
-	python3 ../common/fix_missing_lef.py --modify_hs_ms_diodes --modify_vnb_vpb --skywater_path ${SKYWATER_PATH}
+	python3 ./custom/scripts/fix_missing_diodes_lef.py --skywater_path ${SKYWATER_PATH}
 	# Install device subcircuits from vendor files
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-ngspice sky130_fd_pr/latest/models/* \
