@@ -49,3 +49,11 @@ set ::env(GLB_RT_L1_ADJUSTMENT) 0.99
 set ::env(FP_PDN_RAIL_OFFSET) 0
 set ::env(FP_PDN_VWIDTH) 1.6
 set ::env(FP_PDN_HWIDTH) 1.6
+
+# Core Ring PDN defaults
+set ::env(FP_PDN_CORE_RING_VWIDTH) 20
+set ::env(FP_PDN_CORE_RING_HWIDTH) 20
+set ::env(FP_PDN_CORE_RING_VSPACING) 5
+set ::env(FP_PDN_CORE_RING_HSPACING) 5
+set ::env(FP_PDN_CORE_RING_VOFFSET) 20
+set ::env(FP_PDN_CORE_RING_HOFFSET) 20

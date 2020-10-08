@@ -11,11 +11,7 @@ set ::env(LIB_FASTEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LI
 set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_fd_sc_hvl__ss_150C_1v65.lib"
 #endif (!EF_FORMAT)
 
-
-
 set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
-
-
 
 # Placement site for core cells
 # This can be found in the technology lef
@@ -49,21 +45,18 @@ set ::env(FILL_CELL) "sky130_fd_sc_hvl__fill_"
 set ::env(DECAP_CELL) "sky130_fd_sc_hvl__decap_"
 set ::env(RE_BUFFER_CELL) "sky130_fd_sc_hvl__buf_1"
 
-
 # Diode insertaion
 set ::env(DIODE_CELL) "sky130_fd_sc_hvl__diode_2"
 set ::env(DIODE_CELL_PIN) "DIODE"
 
 set ::env(CELL_PAD) 8
-set ::env(CELL_PAD_EXECLUDE) "sky130_fd_sc_hvl__tap* sky130_fd_sc_hvl__decap* sky130_fd_sc_hvl__fill*"
+set ::env(CELL_PAD_EXCLUDE) "sky130_fd_sc_hvl__tap* sky130_fd_sc_hvl__decap* sky130_fd_sc_hvl__fill*"
 
 # Clk Buffers info CTS data
 set ::env(ROOT_CLK_BUFFER) sky130_fd_sc_hvl__buf_16
 set ::env(CLK_BUFFER) sky130_fd_sc_hvl__buf_4
 set ::env(CLK_BUFFER_INPUT) A
 set ::env(CLK_BUFFER_OUTPUT) X
-
 set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_hvl__buf_1 sky130_fd_sc_hvl__buf_2 sky130_fd_sc_hvl__buf_4 sky130_fd_sc_hvl__buf_8"
 set ::env(CTS_MAX_CAP) 5.57100
-
-set ::env(PDN_RAIL_WIDTH) 0.51
+set ::env(FP_PDN_RAIL_WIDTH) 0.51
