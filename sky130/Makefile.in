@@ -390,6 +390,8 @@ vendor-a:
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-verilog %l/verilog/*.v \
 		-cdl %l/cdl/*.cdl \
+		-gds %l/gds/*.gds \
+		-lef %l/lef/*.lef compile-only \
 		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \

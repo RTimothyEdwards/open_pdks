@@ -1,92 +1,101 @@
-* Power pads library (sky130 power pads + overlays)
+* Power pads library (sky130 power pads + overlays) sky130_ef_io
 * Includes corner and fill cell subcircuits
 
 .SUBCKT sky130_ef_io__vdda_hvc_pad
-+ amuxbus_a amuxbus_b drn_hvc src_bdy_hvc
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B DRN_HVC SRC_BDY_HVC
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__vdda_lvc_pad
-+ amuxbus_a amuxbus_b drn_lvc1 drn_lvc2 src_bdy_lvc1 src_bdy_lvc2
-+ bdy2_b2b vssi
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B DRN_LVC1 DRN_LVC2 SRC_BDY_LVC1 SRC_BDY_LVC2
++ BDY2_B2B VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__vddio_hvc_pad
-+ amuxbus_a amuxbus_b drn_hvc src_bdy_hvc
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B DRN_HVC SRC_BDY_HVC
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__vddio_lvc_pad
-+ amuxbus_a amuxbus_b drn_lvc1 drn_lvc2 src_bdy_lvc1 src_bdy_lvc2
-+ bdy2_b2b vssi
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B DRN_LVC1 DRN_LVC2 SRC_BDY_LVC1 SRC_BDY_LVC2
++ BDY2_B2B VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__vccd_hvc_pad
-+ amuxbus_a amuxbus_b drn_hvc src_bdy_hvc
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B DRN_HVC SRC_BDY_HVC
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__vccd_lvc_pad
-+ amuxbus_a amuxbus_b drn_lvc1 drn_lvc2 src_bdy_lvc1 src_bdy_lvc2
-+ bdy2_b2b vssi
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B DRN_LVC1 DRN_LVC2 SRC_BDY_LVC1 SRC_BDY_LVC2
++ BDY2_B2B VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__vssa_hvc_pad
-+ amuxbus_a amuxbus_b drn_hvc src_bdy_hvc
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B DRN_HVC SRC_BDY_HVC
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__vssa_lvc_pad
-+ amuxbus_a amuxbus_b drn_lvc1 drn_lvc2 src_bdy_lvc1 src_bdy_lvc2
-+ bdy2_b2b vssi
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B DRN_LVC1 DRN_LVC2 SRC_BDY_LVC1 SRC_BDY_LVC2
++ BDY2_B2B VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__vssio_hvc_pad
-+ amuxbus_a amuxbus_b drn_hvc src_bdy_hvc
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B DRN_HVC SRC_BDY_HVC
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__vssio_lvc_pad
-+ amuxbus_a amuxbus_b drn_lvc1 drn_lvc2 src_bdy_lvc1 src_bdy_lvc2
-+ bdy2_b2b vssi
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B DRN_LVC1 DRN_LVC2 SRC_BDY_LVC1 SRC_BDY_LVC2
++ BDY2_B2B VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__vssd_hvc_pad
-+ amuxbus_a amuxbus_b drn_hvc src_bdy_hvc
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B DRN_HVC SRC_BDY_HVC
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__vssd_lvc_pad
-+ amuxbus_a amuxbus_b drn_lvc1 drn_lvc2 src_bdy_lvc1 src_bdy_lvc2
-+ bdy2_b2b vssi
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B DRN_LVC1 DRN_LVC2 SRC_BDY_LVC1 SRC_BDY_LVC2
++ BDY2_B2B VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__corner_pad
-+ amuxbus_a amuxbus_b 
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B 
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__com_bus_slice
-+ amuxbus_a amuxbus_b
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__com_bus_slice_1um
-+ amuxbus_a amuxbus_b
-+ vssa vdda vswitch vddio_q vcchib vddio vccd vssio vssd vssio_q
++ AMUXBUS_A AMUXBUS_B
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
+.ENDS
+
+.SUBCKT sky130_ef_io__com_bus_slice_5um
++ AMUXBUS_A AMUXBUS_B
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
+.ENDS
+
+.SUBCKT sky130_ef_io__com_bus_slice_10um
++ AMUXBUS_A AMUXBUS_B
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
+.ENDS
+
+.SUBCKT sky130_ef_io__com_bus_slice_20um
++ AMUXBUS_A AMUXBUS_B
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
 .ENDS
 
 .SUBCKT sky130_ef_io__gpiov2_pad
-+ in_h pad_a_noesd_h pad_a_esd_0_h pad_a_esd_1_h
-+ pad dm<2> dm<1> dm<0> hld_h_n in inp_dis ib_mode_sel enable_h enable_vdda_h
-+ enable_inp_h oe_n tie_hi_esd tie_lo_esd slow vtrip_sel hld_ovr
-+ analog_en analog_sel enable_vddio enable_vswitch_h analog_pol out
-+ amuxbus_a amuxbus_b vssa vdda vswitch vddio_q vcchib vddio vccd vssio
-+ vssd vssio_q
++ IN_H PAD_A_NOESD_H PAD_A_ESD_0_H PAD_A_ESD_1_H
++ PAD DM[2] DM[1] DM[0] HLD_H_N IN INP_DIS IB_MODE_SEL ENABLE_H ENABLE_VDDA_H
++ ENABLE_INP_H OE_N TIE_HI_ESD TIE_LO_ESD SLOW VTRIP_SEL HLD_OVR
++ ANALOG_EN ANALOG_SEL ENABLE_VDDIO ENABLE_VSWITCH_H ANALOG_POL OUT
++ AMUXBUS_A AMUXBUS_B VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD VSSIO
++ VSSD VSSIO_Q
 .ENDS
