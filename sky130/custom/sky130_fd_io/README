@@ -1,7 +1,7 @@
-This directory contains standard format files for "power_pads_lib",
+This directory contains standard format files for "sky130_ef_io",
 which is an efabless addendum to the SkyWater I/O library "sky130_fd_io".
 
-power_pads_lib does the following:
+sky130_ef_io does the following:
 
 (1) Changes the orientation of the corner pad from upper-right to
     lower-left with a wrapper cell called "sky130_fd_io__corner_pad".  Also
@@ -16,5 +16,5 @@ power_pads_lib does the following:
     either high- or low-voltage clamps, connecting to one of the six
     power domains vddio, vdda, vccd, vssio, vssa, or vssd.
 
-"power_pads_lib" is open source copyright 2020 efabless, Inc.
+"sky130_ef_io" is open source copyright 2020 efabless, Inc.
 Released under Apache 2.0 license

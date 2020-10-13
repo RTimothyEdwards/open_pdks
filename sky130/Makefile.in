@@ -366,16 +366,30 @@ vendor-a:
 	# Custom:  Add "short" resistor model to the r+c models file
 	cat ./custom/models/short.spice >> \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice 
-
 	# Install SkyWater I/O pad library
-	# Purposely ignoring "-lef sky130_fd_io/latest/lef/*.lef" and making our own LEF views
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-gds %l/latest/cells/*/*.gds \
-		-verilog %l/latest/cells/*/*.v \
-		-lib %l/latest/cells/*/*.lib \
-		-doc %l/latest/cells/*/*.doc \
-		-cdl %l/latest/cells/*/*.cdl ignore=topography \
-		-spice %l/latest/cells/*/*.spice  \
+		-spice %l/latest/cells/*/*.spice compile-only \
+			sort=custom/scripts/sort_pdkfiles.py \
+		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+			sort=custom/scripts/sort_pdkfiles.py \
+		-lef %l/latest/cells/*/*.magic.lef compile-only \
+			sort=custom/scripts/sort_pdkfiles.py \
+		-doc %l/latest/cells/*/*.pdf \
+		-lib %l/latest/timing/*.lib \
+		-gds %l/latest/cells/*/*.gds compile-only \
+			sort=custom/scripts/sort_pdkfiles.py \
+		-verilog %l/latest/cells/*/*.*.v \
+		-verilog %l/latest/cells/*/*.v exclude=*.*.v \
+			compile-only filter=custom/scripts/inc_verilog.py \
+			sort=custom/scripts/sort_pdkfiles.py \
+		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
+	# Remove the base verilog files which have already been included into
+	# the libraries
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_io/verilog/*.*.v
+	# Install custom additions to I/O pad library
+	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
+		-verilog %l/verilog/*.v \
+		-cdl %l/cdl/*.cdl \
 		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
@@ -422,17 +436,6 @@ vendor-a:
 	# 	-gds lib/gds/*.gds compile-only \
 	# 	-verilog outputs/VERILOG/*.v \
 	# 	-library digital sky130_osu_sc
-	# Install additional model file (efabless)
-	# ${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
-	# 	-ngspice models/*.lib rename ${SKY130A}.lib \
-	# 	|& tee -a ${SKY130A}_install.log
-	# # Install custom additions to I/O pad library
-	# ${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
-	# 	-gds %l/gds/*.gds \
-	# 	-verilog %l/verilog/*.v \
-	# 	-lef %l/lef/*.lef \
-	# 	-spice %l/spice/*.spice \
-	# 	-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
 	# # Add correct bounding boxes on Magic layouts
 	# ${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io_top_gpio_ovtv2 \
 	# 	"FIXED_BBOX 0 407 28000 40000"

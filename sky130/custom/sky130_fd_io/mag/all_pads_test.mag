@@ -8424,67 +8424,67 @@ rect 112405 45257 112455 46257
 rect 114055 45257 114105 46257
 rect 89425 44702 89751 44703
 rect 86297 44472 86383 44508
-use sky130_fd_io__vdda_lvc_pad  sky130_fd_io__vdda_lvc_pad_0
+use sky130_ef_io__vdda_lvc_pad  sky130_ef_io__vdda_lvc_pad_0
 timestamp 1584383356
 transform 1 0 -868 0 1 91931
 box 0 -61 15000 39593
-use sky130_fd_io__vdda_hvc_pad  sky130_fd_io__vdda_hvc_pad_0
+use sky130_ef_io__vdda_hvc_pad  sky130_ef_io__vdda_hvc_pad_0
 timestamp 1584383356
 transform 1 0 19686 0 1 92471
 box 0 -407 15000 39593
-use sky130_fd_io__vccd_lvc_pad  sky130_fd_io__vccd_lvc_pad_0
+use sky130_ef_io__vccd_lvc_pad  sky130_ef_io__vccd_lvc_pad_0
 timestamp 1584383356
 transform 1 0 38106 0 1 91155
 box 0 -61 15000 39593
-use sky130_fd_io__vccd_hvc_pad  sky130_fd_io__vccd_hvc_pad_0
+use sky130_ef_io__vccd_hvc_pad  sky130_ef_io__vccd_hvc_pad_0
 timestamp 1584383356
 transform 1 0 56526 0 1 91335
 box 0 -435 15000 39593
-use sky130_fd_io__vddio_hvc_pad  sky130_fd_io__vddio_hvc_pad_0
+use sky130_ef_io__vddio_hvc_pad  sky130_ef_io__vddio_hvc_pad_0
 timestamp 1584383356
 transform 1 0 77078 0 1 92305
 box 0 -435 15000 39593
-use sky130_fd_io__vddio_lvc_pad  sky130_fd_io__vddio_lvc_pad_0
+use sky130_ef_io__vddio_lvc_pad  sky130_ef_io__vddio_lvc_pad_0
 timestamp 1584383356
 transform 1 0 97048 0 1 92319
 box 0 -61 15000 39593
-use sky130_fd_io__gpiov2_pad  sky130_fd_io__gpiov2_pad_0
+use sky130_ef_io__gpiov2_pad  sky130_ef_io__gpiov2_pad_0
 timestamp 1584383356
 transform 1 0 119295 0 1 92724
 box -143 -466 16134 39593
-use sky130_fd_io__top_xres4v2  sky130_fd_io__top_xres4v2_0 ~/projects/efabless/tech/SW/EFS8A/libs.ref/sky130_fd_io/mag
+use sky130_ef_io__top_xres4v2  sky130_ef_io__top_xres4v2_0 ~/projects/efabless/tech/SW/sky130A/libs.ref/sky130_fd_io/mag
 timestamp 1584046481
 transform 1 0 140197 0 1 92452
 box -103 0 15124 40000
-use sky130_fd_io__top_gpio_ovtv2  sky130_fd_io__top_gpio_ovtv2_0 ~/projects/efabless/tech/SW/EFS8A/libs.ref/sky130_fd_io/mag
+use sky130_ef_io__top_gpio_ovtv2  sky130_ef_io__top_gpio_ovtv2_0 ~/projects/efabless/tech/SW/sky130A/libs.ref/sky130_fd_io/mag
 timestamp 1584046481
 transform 1 0 160920 0 1 92540
 box -80 -88 28211 40076
-use sky130_fd_io__vssd_lvc_pad  sky130_fd_io__vssd_lvc_pad_0
+use sky130_ef_io__vssd_lvc_pad  sky130_ef_io__vssd_lvc_pad_0
 timestamp 1584383356
 transform 1 0 -480 0 1 46173
 box 0 -61 15000 39593
-use sky130_fd_io__vssd_hvc_pad  sky130_fd_io__vssd_hvc_pad_0
+use sky130_ef_io__vssd_hvc_pad  sky130_ef_io__vssd_hvc_pad_0
 timestamp 1584383356
 transform 1 0 18134 0 1 46741
 box 0 -435 15000 39593
-use sky130_fd_io__vssa_hvc_pad  sky130_fd_io__vssa_hvc_pad_0
+use sky130_ef_io__vssa_hvc_pad  sky130_ef_io__vssa_hvc_pad_0
 timestamp 1584383356
 transform 1 0 37912 0 1 46935
 box 0 -435 15000 39593
-use sky130_fd_io__vssa_lvc_pad  sky130_fd_io__vssa_lvc_pad_0
+use sky130_ef_io__vssa_lvc_pad  sky130_ef_io__vssa_lvc_pad_0
 timestamp 1584383356
 transform 1 0 60016 0 1 44427
 box 0 -61 15000 39593
-use sky130_fd_io__vssio_lvc_pad  sky130_fd_io__vssio_lvc_pad_0
+use sky130_ef_io__vssio_lvc_pad  sky130_ef_io__vssio_lvc_pad_0
 timestamp 1584383356
 transform 1 0 79018 0 1 44233
 box 0 -61 15000 39593
-use sky130_fd_io__vssio_hvc_pad  sky130_fd_io__vssio_hvc_pad_0
+use sky130_ef_io__vssio_hvc_pad  sky130_ef_io__vssio_hvc_pad_0
 timestamp 1584383356
 transform 1 0 100540 0 1 44967
 box 0 -407 15000 39593
-use sky130_fd_io__corner_pad  sky130_fd_io__corner_pad_0
+use sky130_ef_io__corner_pad  sky130_ef_io__corner_pad_0
 timestamp 1584383356
 transform 1 0 123795 0 1 46420
 box -181 -114 40000 40800

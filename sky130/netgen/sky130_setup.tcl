@@ -146,7 +146,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel {w add}
 	property "-circuit1 $dev" tolerance {w 0.01} {l 0.01}
 	# Ignore these properties
-	property "-circuit1 $dev" delete as ad ps pd mult sa sb sd nf
+	property "-circuit1 $dev" delete as ad ps pd mult sa sb sd nf nrd nrs
     }
     if {[lsearch $cells2 $dev] >= 0} {
 	permute "-circuit2 $dev" 1 3
@@ -155,7 +155,7 @@ foreach dev $devices {
 	property "-circuit2 $dev" parallel {w add}
 	property "-circuit2 $dev" tolerance {w 0.01} {l 0.01}
 	# Ignore these properties
-	property "-circuit2 $dev" delete as ad ps pd mult sa sb sd nf
+	property "-circuit2 $dev" delete as ad ps pd mult sa sb sd nf nrd nrs
     }
 }
 
