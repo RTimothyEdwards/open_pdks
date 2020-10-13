@@ -231,7 +231,12 @@ def mapCDLtermModel(tok):
     cdlModel=""
     for i in range(len(tok)-1, 0, -1):
         if not tok[i].startswith("$"):
-            continue
+	    if '=' in tok[i]:
+                continue
+            elif cdlModel == '':
+                cdlModel = tok[i]
+                del tok[i]
+                break
         tokl = tok[i].lower()
         if tokl.startswith("$sub="):
             if cdlTerm == "":
