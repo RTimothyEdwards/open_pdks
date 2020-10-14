@@ -1255,6 +1255,39 @@ if __name__ == '__main__':
                         print('}', file=ofile)
                         print('load $topcell', file=ofile)
 
+                    else:
+                        # Use LEF files to set the port properties
+                        if have_lefanno or have_lef:
+                            if have_lefanno:
+                                lefdirname = 'lefanno'
+                            else:
+                                lefdirname = 'lef'
+
+                            # Find LEF file names in the source
+                            if ef_format:
+                                lefsrcdir = targetdir + lef_reflib + lefdirname
+                                lefsrclibdir = lefsrcdir + '/' + destlib
+                            else:
+                                lefsrcdir = targetdir + lef_reflib + destlib + '/' + lefdirname
+                                lefsrclibdir = lefsrcdir
+
+                            leffiles = os.listdir(lefsrclibdir)
+                            leffiles = list(item for item in leffiles if os.path.splitext(item)[1] == '.lef')
+                            for leffile in leffiles:
+                                print('lef read ' + lefsrclibdir + '/' + leffile, file=ofile)
+                     
+                        # Use CDL or SPICE netlists to set the port order
+                        if have_cdl or have_spice:
+                            if have_cdl:
+                                netdir = clibdir
+                            else:
+                                netdir = slibdir
+
+                            # Find CDL/SPICE file names in the source
+                            netfiles = os.listdir(netdir)
+                            for netfile in netfiles:
+                                print('readspice ' + netdir + '/' + netfile, file=ofile)
+
                     print('cellname delete \(UNNAMED\)', file=ofile)
                     print('writeall force', file=ofile)
 

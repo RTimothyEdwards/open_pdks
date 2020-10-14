@@ -231,7 +231,7 @@ def mapCDLtermModel(tok):
     cdlModel=""
     for i in range(len(tok)-1, 0, -1):
         if not tok[i].startswith("$"):
-	    if '=' in tok[i]:
+            if '=' in tok[i]:
                 continue
             elif cdlModel == '':
                 cdlModel = tok[i]
