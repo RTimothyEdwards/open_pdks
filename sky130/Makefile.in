@@ -72,6 +72,7 @@
 #--------------------------------------------------------------------
 # This Makefile contains bash-isms
 SHELL = bash
+MV = mv
 
 REVISION    = 20200927
 TECH        = sky130
@@ -271,7 +272,7 @@ qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
 		${QFLOW_STAGING_A}/${SKY130A}ls.sh
 	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ms qflow/${TECH}.sh > \
 		${QFLOW_STAGING_A}/${SKY130A}ms.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc qflow/sky130osu.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_t18 qflow/sky130osu.sh > \
 		${QFLOW_STAGING_A}/${SKY130A}osu.sh
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hd.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hdll.par
@@ -298,7 +299,7 @@ klayout-a: klayout/${TECH}.lyp klayout/${TECH}.lyt
 	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyp > ${KLAYOUT_STAGING_A}/${SKY130A}.lyp
 	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyt > ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
 
-openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl
+openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_A}
 	mkdir -p ${OPENLANE_STAGING_A}
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_hd
@@ -307,6 +308,7 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_ms
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl
+	mkdir -p ${OPENLANE_STAGING_A}/sky130_osu_sc_t18
 	rm -f ${OPENLANE_STAGING_A}/common_pdn.info
 	rm -f ${OPENLANE_STAGING_A}/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
@@ -328,6 +330,8 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tracks.info
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/no_synth.cells
+	rm -f ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/config.tcl
+	rm -f ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/common_pdn.tcl > ${OPENLANE_STAGING_A}/common_pdn.tcl
 	${CPP} ${SKY130A_DEFS} openlane/config.tcl > ${OPENLANE_STAGING_A}/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
@@ -349,6 +353,8 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/no_synth.cells	
+	${CPP} ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/config.tcl > ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/config.tcl
+	${CPP} ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/tracks.info > ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/tracks.info
 
 vendor-a:
 	# Install device subcircuits from vendor files
@@ -429,6 +435,16 @@ vendor-a:
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_ms/verilog/*.*.v
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_ls/verilog/*.*.v
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_lp/verilog/*.*.v
+	# Install OSU digital standard cells.
+	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef %l/latest/lef/sky130_osu_sc.tlef \
+		-cdl %l/latest/cdl/*.cdl ignore=topography compile-only \
+		-lef %l/latest/lef/*.lef compile-only \
+		-lib %l/latest/lib/*.lib \
+		-gds %l/latest/gds/*.gds compile-only \
+		-library digital sky130_osu_sc_t18 |& tee -a ${SKY130A}_install.log
+	# Renaming.  Can it be avoided or simplified ?
+	${MV} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_osu_sc_t18/techlef/sky130_osu_sc.tlef ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_osu_sc_t18/techlef/sky130_osu_sc_t18.tlef
         # Install OSU digital standard cells.
 	# ${STAGE} -source ${OSU_PATH} -target ${STAGING_PATH}/${SKY130A} \
 	# 	-techlef char/techfiles/scs8.lef rename sky130_osu_sc.tlef \

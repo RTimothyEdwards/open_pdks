@@ -60,6 +60,7 @@ if {[file isdir ${PDKPATH}/libs.ref/${MAGTYPE}]} {
     addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_ls
     addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_ms
     addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_osu_sc
+    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_osu_sc_t18
 } else {
     addpath ${PDKPATH}/libs.ref/sky130_fd_pr/${MAGTYPE}
     addpath ${PDKPATH}/libs.ref/sky130_fd_io/${MAGTYPE}
@@ -71,6 +72,7 @@ if {[file isdir ${PDKPATH}/libs.ref/${MAGTYPE}]} {
     addpath ${PDKPATH}/libs.ref/sky130_fd_sc_ls/${MAGTYPE}
     addpath ${PDKPATH}/libs.ref/sky130_fd_sc_ms/${MAGTYPE}
     addpath ${PDKPATH}/libs.ref/sky130_osu_sc/${MAGTYPE}
+    addpath ${PDKPATH}/libs.ref/sky130_osu_sc_t18/${MAGTYPE}
 }
 
 # add path to GDS cells
@@ -86,6 +88,7 @@ if {[file isdir ${PDKPATH}/libs.ref/gds]} {
     path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_ls
     path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_ms
     path cell +${PDKPATH}/libs.ref/gds/sky130_osu130
+    path cell +${PDKPATH}/libs.ref/gds/sky130_osu130_t18
 } else {
     path cell ${PDKPATH}/libs.ref/sky130_fd_pr/gds
     path cell +${PDKPATH}/libs.ref/sky130_fd_io/gds
@@ -97,6 +100,7 @@ if {[file isdir ${PDKPATH}/libs.ref/gds]} {
     path cell +${PDKPATH}/libs.ref/sky130_fd_sc_ls/gds
     path cell +${PDKPATH}/libs.ref/sky130_fd_sc_ms/gds
     path cell +${PDKPATH}/libs.ref/sky130_osu130/gds
+    path cell +${PDKPATH}/libs.ref/sky130_osu130_t18/gds
 }
 #endif (FULLTECH)
 
