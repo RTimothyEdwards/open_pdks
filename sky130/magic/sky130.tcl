@@ -4943,6 +4943,7 @@ proc sky130::sky130_fd_pr__pfet_01v8_draw {parameters} {
 	    poly_type		poly \
 	    poly_contact_type	pc \
 	    sub_type		nwell \
+	    dev_sub_type	nwell \
 	    gate_to_polycont	0.32 \
 	    min_effl		0.185 \
 	    min_allc		0.26 \
@@ -4961,6 +4962,7 @@ proc sky130::sky130_fd_pr__pfet_01v8_lvt_draw {parameters} {
 	    poly_type		poly \
 	    poly_contact_type	pc \
 	    sub_type		nwell \
+	    dev_sub_type	nwell \
 	    gate_to_polycont	0.32 \
 	    min_effl		0.185 \
 	    min_allc		0.26 \
@@ -4979,6 +4981,7 @@ proc sky130::sky130_fd_pr__pfet_01v8_hvt_draw {parameters} {
 	    poly_type		poly \
 	    poly_contact_type	pc \
 	    sub_type		nwell \
+	    dev_sub_type	nwell \
 	    gate_to_polycont	0.32 \
 	    min_effl		0.185 \
 	    min_allc		0.26 \
@@ -5001,6 +5004,7 @@ proc sky130::sky130_fd_pr__pfet_g5v0d10v5_draw {parameters} {
 	    poly_type		poly \
 	    poly_contact_type	pc \
 	    sub_type		nwell \
+	    dev_sub_type	nwell \
 	    guard_sub_surround	0.33 \
 	    gate_to_polycont	0.32 \
 	    diff_spacing	0.31 \

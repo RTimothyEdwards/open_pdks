@@ -5397,21 +5397,22 @@ variants *
 # MiM CAP (CAPM) - 
 #-----------------------------------------------------------
 
- width *mimcap 2000 "MiM cap width < %d (capm.1)"
+ width *mimcap 1000 "MiM cap width < %d (capm.1)"
  spacing *mimcap *mimcap 840 touching_ok "MiM cap spacing < %d (capm.2a)"
- spacing *mimcap via2/m3 1270 touching_illegal \
-	"MiM cap spacing to via2 < %d (capm.5)"
+ spacing *mimcap via3/m3 140 touching_illegal \
+	"MiM cap spacing to via3 < %d (capm.5)"
  surround *mimcc *mimcap 200 absence_illegal \
 	"MiM cap must surround MiM cap contact by %d (capm.4)"
  rect_only *mimcap "MiM cap must be rectangular (capm.7)
 
  surround *mimcap *metal3/m3 140 absence_illegal \
 	"Metal3 must surround MiM cap by %d (capm.3)"
- spacing via2 *mimcap 50 touching_illegal "MiM cap cannot overlap via2 (capm.8)"
- spacing via3 *mimcap 50 touching_illegal "MiM cap cannot overlap via3 (capm.8)"
- # (resolve scaling issue!)
- # cifspacing mim_bottom mim_bottom 1200 touching_ok \
- #	"MiM cap bottom plate spacing < %d (capm.2b)"
+ spacing via2 *mimcap 140 touching_illegal "MiM cap spacing to via2 < %d (capm.8)"
+ spacing via3 *mimcap 140 touching_illegal "MiM cap spacing to via3 < %d (capm.8)"
+ spacing *mimcap *metal3/m3 500 surround_ok \
+	"MiM cap spacing to unrelated metal3 < %d (capm.11)"
+ cifspacing mim_bottom mim_bottom 120 touching_ok \
+	 "MiM cap bottom plate spacing < %d (capm.2b)"
 
  # MiM cap contact rules (VIA3)
 
@@ -5421,21 +5422,22 @@ variants *
 	"Metal4 overlap of MiM cap contact in one direction < %d (met4.3 - via3.4)"
  exact_overlap mimcc/c1
 
- width *mimcap2 2000 "MiM cap width < %d (cap2m.1)"
+ width *mimcap2 1000 "MiM cap width < %d (cap2m.1)"
  spacing *mimcap2 *mimcap2 840 touching_ok "MiM cap spacing < %d (cap2m.2a)"
- spacing *mimcap2 via3/m4 1270 touching_illegal \
-	"MiM cap spacing to via3 < %d (cap2m.5)"
+ spacing *mimcap via4/m4 140 touching_illegal \
+	"MiM cap spacing to via4 < %d (cap2m.5)"
  surround *mim2cc *mimcap2 200 absence_illegal \
 	"MiM cap must surround MiM cap contact by %d (cap2m.4)"
  rect_only *mimcap2 "MiM cap must be rectangular (cap2m.7)
 
  surround *mimcap2 *metal4/m4 140 absence_illegal \
 	"Metal4 must surround MiM cap by %d (cap2m.3)"
- spacing via3 *mimcap2 50 touching_illegal "MiM cap cannot overlap via3 (cap2m.8)"
- spacing via4 *mimcap2 50 touching_illegal "MiM cap cannot overlap via4 (cap2m.8)"
- # (resolve scaling issue!)
- # cifspacing mim2_bottom mim2_bottom 1200 touching_ok \
- #	"MiM2 cap bottom plate spacing < %d (cap2m.2b)"
+ spacing via3 *mimcap2 140 touching_illegal "MiM cap spacing to via3 < %d (cap2m.8)"
+ spacing via4 *mimcap2 140 touching_illegal "MiM cap spacing to via4 < %d (cap2m.8)"
+ spacing *mimcap *metal4/m4 500 surround_ok \
+	"MiM cap spacing to unrelated metal4 < %d (cap2m.11)"
+ cifspacing mim2_bottom mim2_bottom 120 touching_ok \
+ 	"MiM2 cap bottom plate spacing < %d (cap2m.2b)"
 
  # MiM cap contact rules (VIA4)
 
