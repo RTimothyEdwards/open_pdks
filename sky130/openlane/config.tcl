@@ -57,3 +57,6 @@ set ::env(FP_PDN_CORE_RING_VSPACING) 5
 set ::env(FP_PDN_CORE_RING_HSPACING) 5
 set ::env(FP_PDN_CORE_RING_VOFFSET) 20
 set ::env(FP_PDN_CORE_RING_HOFFSET) 20
+
+# Used for estimate_parasitics
+set ::env(WIRE_RC_LAYER) "met1"; 
