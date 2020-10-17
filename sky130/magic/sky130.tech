@@ -782,26 +782,24 @@ style gdsii
 	grow	110
 	bloat-or allpactivetap * 125 allnactivenontap 0
 	bloat-or allpactivenontap * 125 allnactivetap 0
-	bridge	380 380
+
+ templayer baseNPLUS ndiffres,mvndiffres
+ 	grow	125
+	bloat-or allnactivetap * 125 allpactivenontap 0
+	bloat-or allnactivenontap * 125 allpactivetap 0
 
  templayer extendPPLUS  basePPLUS,CELLRING
-	grow	185
-	shrink	185
+	bridge	380 380
+	and-not baseNPLUS
 	and-not	CELLRING
 
  layer PPLUS basePPLUS,extendPPLUS 
 	close   265000
 	calma	94 20
 
- templayer baseNPLUS ndiffres,mvndiffres
- 	grow	125
-	bloat-or allnactivetap * 125 allpactivenontap 0
-	bloat-or allnactivenontap * 125 allpactivetap 0
-	bridge	380 380
-
  templayer extendNPLUS  baseNPLUS,CELLRING
- 	grow	185
- 	shrink	185
+	bridge	380 380
+	and-not basePPLUS
 	and-not	CELLRING
 
  layer NPLUS baseNPLUS,extendNPLUS
@@ -5411,7 +5409,7 @@ variants *
  spacing via3 *mimcap 140 touching_illegal "MiM cap spacing to via3 < %d (capm.8)"
  spacing *mimcap *metal3/m3 500 surround_ok \
 	"MiM cap spacing to unrelated metal3 < %d (capm.11)"
- cifspacing mim_bottom mim_bottom 120 touching_ok \
+ cifspacing mim_bottom mim_bottom 1200 touching_ok \
 	 "MiM cap bottom plate spacing < %d (capm.2b)"
 
  # MiM cap contact rules (VIA3)
@@ -5436,7 +5434,7 @@ variants *
  spacing via4 *mimcap2 140 touching_illegal "MiM cap spacing to via4 < %d (cap2m.8)"
  spacing *mimcap *metal4/m4 500 surround_ok \
 	"MiM cap spacing to unrelated metal4 < %d (cap2m.11)"
- cifspacing mim2_bottom mim2_bottom 120 touching_ok \
+ cifspacing mim2_bottom mim2_bottom 1200 touching_ok \
  	"MiM2 cap bottom plate spacing < %d (cap2m.2b)"
 
  # MiM cap contact rules (VIA4)
