@@ -1324,7 +1324,7 @@ style drc
 
  # Make sure nwell covers varactor poly
  templayer var_poly_no_nwell
-	bloat-all *poly varactor,mvvaractor
+	bloat-all varactor,mvvaractor *poly
 	grow 150
 	and-not nwell
 
@@ -5487,14 +5487,13 @@ variants (fast),(full)
  spacing allpolynonfet *mvnsd 55 corner_ok mvvaractor \
 	"poly spacing to diffusion tap < %d (poly.5)"
 
- # Full edge rule required to describe FET to butted tap distance
- edge4way *psd *ndiff 300 *ndiff *psd 300 \
+ edge4way *psd *ndiff 300 ~(nfet,npass,npd,scnfet,nfetlvt,nsonos)/a *psd 300 \
 	"Butting P-tap spacing to NMOS gate < %d (poly.6)"
- edge4way *nsd *pdiff 300 *pdiff *nsd 300 \
+ edge4way *nsd *pdiff 300 ~(pfet,ppu,scpfet,pfetlvt,pfetmvt)/a *nsd 300 \
 	"Butting N-tap spacing to PMOS gate < %d (poly.6)"
- edge4way *mvpsd *mvndiff 300 *mvndiff *mvpsd 300 \
+ edge4way *mvpsd *mvndiff 300 ~(mvnfet,mvnnfet)/a *mvpsd 300 \
 	"Butting MV P-tap spacing to MV NMOS gate < %d (poly.6)"
- edge4way *mvnsd *mvpdiff 300 *mvpdiff *mvnsd 300 \
+ edge4way *mvnsd *mvpdiff 300 ~mvpfet/a *mvnsd 300 \
 	"Butting MV N-tap spacing to MV PMOS gate < %d (poly.6)"
 
  # No LV FETs in HV diff
