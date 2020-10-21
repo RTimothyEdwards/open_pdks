@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 # Script to read a GDS file, modify the given string, and rewrite the GDS file.
 # The string may be a substring;  the GDS file will be parsed completely for
 # library name, structure name, instance name, and other strings, and the

@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 # Script to read a GDS file, modify the timestamp(s), and rewrite the GDS file.
 
 import os

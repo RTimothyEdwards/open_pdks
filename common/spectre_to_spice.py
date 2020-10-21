@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 # Script to read all files in a directory of SPECTRE-compatible device model
 # files, and convert them to a form that is compatible with ngspice.
 
