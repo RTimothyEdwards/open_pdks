@@ -446,7 +446,7 @@ vendor-a:
 		-gds %l/latest/gds/*.gds compile-only \
 		-library digital sky130_osu_sc_t18 |& tee -a ${SKY130A}_install.log
 	# Renaming.  Can it be avoided or simplified ?
-	${MV} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_osu_sc_t18/techlef/sky130_osu_sc.tlef ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_osu_sc_t18/techlef/sky130_osu_sc_t18.tlef
+	[[ -f ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_osu_sc_t18/techlef/sky130_osu_sc.tlef ]] && ${MV} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_osu_sc_t18/techlef/sky130_osu_sc.tlef ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_osu_sc_t18/techlef/sky130_osu_sc_t18.tlef || true
         # Install OSU digital standard cells.
 	# ${STAGE} -source ${OSU_PATH} -target ${STAGING_PATH}/${SKY130A} \
 	# 	-techlef char/techfiles/scs8.lef rename sky130_osu_sc.tlef \
