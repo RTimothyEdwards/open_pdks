@@ -1218,6 +1218,20 @@ style gdsii
 	labels  *metrdl port
 	calma	74 5
 
+  layer PI1	*metrdl
+	and	padl,glass
+	# Test only---needs GDS layer number
+
+  layer	UBM	*metrdl
+	shrink	50000
+	grow	40000
+	# Test only---needs GDS layer number
+	
+  layer	PI2	*metrdl
+	shrink	50000
+	grow	25000
+	# Test only---needs GDS layer number
+
 #endif REDISTRIBUTION
 
 #----------------------------------------------------------------
