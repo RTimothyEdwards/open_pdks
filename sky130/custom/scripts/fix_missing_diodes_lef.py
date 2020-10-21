@@ -18,8 +18,8 @@ skywater_path = args.skywater_path
 
 hs_lef =  str(skywater_path)+"/sky130_fd_sc_hs/latest/cells/diode/sky130_fd_sc_hs__diode_2.magic.lef"
 
-hs_lef_FileOpener = open(hs_lef, "r")
 if(path.exists(hs_lef)):
+    hs_lef_FileOpener = open(hs_lef, "r")
     if hs_lef_FileOpener.mode == 'r':
         hs_lef_Content = hs_lef_FileOpener.read()
     hs_lef_FileOpener.close()
@@ -33,8 +33,8 @@ if(path.exists(hs_lef)):
 
 ms_lef =  str(skywater_path)+"/sky130_fd_sc_ms/latest/cells/diode/sky130_fd_sc_ms__diode_2.magic.lef"
 
-ms_lef_FileOpener = open(ms_lef, "r")
 if(path.exists(ms_lef)):
+    ms_lef_FileOpener = open(ms_lef, "r")
     if ms_lef_FileOpener.mode == 'r':
         ms_lef_Content = ms_lef_FileOpener.read()
     ms_lef_FileOpener.close()
