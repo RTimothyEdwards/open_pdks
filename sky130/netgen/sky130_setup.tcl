@@ -272,22 +272,22 @@ foreach dev $devices {
 # Digital cells (ignore decap, fill, and tap cells)
 # Make a separate list for each supported library
 #---------------------------------------------------------------
-# e.g., ignore class "-circuit2 sky130_fc_sc_hd_decap_3"
+# e.g., ignore class "-circuit2 sky130_fc_sc_hd__decap_3"
 #---------------------------------------------------------------
 
 foreach cell $cells1 {
-    if {[regexp {sky130_fd_sc_\w\w__decap_[[:digit:]]+} $cell match]} {
+    if {[regexp {sky130_fd_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
         ignore class "-circuit1 $cell"
     }
-    if {[regexp {sky130_fd_sc_\w\w__fill_[[:digit:]]+} $cell match]} {
+    if {[regexp {sky130_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
         ignore class "-circuit1 $cell"
     }
 }
 foreach cell $cells2 {
-    if {[regexp {sky130_fd_sc_\w\w__decap_[[:digit:]]+} $cell match]} {
+    if {[regexp {sky130_fd_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
         ignore class "-circuit2 $cell"
     }
-    if {[regexp {sky130_fd_sc_\w\w__fill_[[:digit:]]+} $cell match]} {
+    if {[regexp {sky130_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
         ignore class "-circuit2 $cell"
     }
 }
