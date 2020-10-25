@@ -22,10 +22,10 @@ ports, bounding boxes, etc.
 
 -----------------------------------------
 
-This distribution contains sources for building out the SkyWater s8
+This distribution contains sources for building out the SkyWater SKY130
 130nm process.  Sources for the foundry process data must be obtained
-separately.  Read the README file in subdirectory s8/ for instructions
-on obtaining and building the SkyWater s8 PDK.
+separately.  Read the README file in subdirectory sky130/ for instructions
+on obtaining and building the SkyWater sky130A PDK.
 
 -----------------------------------------
 
@@ -40,7 +40,7 @@ Instructions:
 
 There is a top-level Makefile but generally it is recommended to cd
 to the directory for the target foundry process and follow the instructions
-in the README file there.
+in the README file there (e.g., sky130/README).
 
 Also see the website at http://opencircuitdesign.com/open_pdks
 
