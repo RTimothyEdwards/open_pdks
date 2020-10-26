@@ -65,7 +65,7 @@ end
 # sky130_fd_pr__diode_pd2nw_lvt	pdiodelvt	low Vt p+ diff diode
 # sky130_fd_pr__diode_pd2nw_hvt	pdiodehvt	high Vt p+ diff diode
 # sky130_fd_pr__npn_05v0	pbase		NPN in deep nwell
-# sky130_fd_pr__npn_11v0	mvpbase		thick oxide gated NPN
+# sky130_fd_pr__npn_11v0	pbase		thick oxide gated NPN
 # sky130_fd_pr__pnp_05v0	nbase		PNP
 # sky130_fd_pr__cap_mim_m3_1	mimcap		MiM cap 1st plate
 # sky130_fd_pr__cap_mim_m3_2	mimcap2		MiM cap 2nd plate
@@ -149,7 +149,6 @@ types
   well rpw,rpwell
  -well obswell
   well pbase,npn
-  well mvpbase,mvnpn
   well nbase,pnp
 
 # Transistors
@@ -470,7 +469,6 @@ styles
 
   pnp	    nwell ntransistor_stripes
   npn	    pwell ptransistor_stripes
-  mvnpn	    pwell hvpdiff_mask
 
   pfetlvt   ptransistor	ptransistor_stripes implant1
   pfetmvt   ptransistor	ptransistor_stripes implant3
@@ -879,7 +877,7 @@ style gdsii
 #----------------------------------------------------------------
 
  layer NPNID
-	bloat-all npn,mvnpn dnwell
+	bloat-all npn dnwell
 	calma	82 20
 
  templayer pnparea pnp
@@ -6131,6 +6129,11 @@ variants (),(si)
  device subcircuit sky130_fd_pr__cap_var mvvaractor \
 	*mvnndiff nwell error l=l w=w
 
+ # Bipolars
+ device msubcircuit sky130_fd_pr__npn_05v0 npn dnwell *ndiff space/w error a2=area
+ device msubcircuit sky130_fd_pr__pnp_05v0 pnp pwell,space/w *pdiff a2=area
+ device msubcircuit sky130_fd_pr__npn_11v0 npn dnwell *mvndiff space/w error a2=area
+
  # Extended drain devices (must appear before the regular devices)
  device msubcircuit sky130_fd_pr__nfet_20v0_nvt mvnnfet *mvndiff,mvndiffres \
 	dnwell pwell,space/w error l=l w=w
@@ -6145,9 +6148,6 @@ variants (),(si)
 	*mvndiff,mvndiffres *mvndiff,mvndiffres pwell,space/w error l=l w=w
  device msubcircuit sky130_fd_pr__nfet_05v0_nvt mvnnfet \
 	*mvndiff,mvndiffres *mvndiff,mvndiffres pwell,space/w error l=l w=w
-
- device msubcircuit sky130_fd_pr__npn_05v0 npn dnwell *ndiff space/w error a2=area
- device msubcircuit sky130_fd_pr__pnp_05v0 pnp pwell,space/w *pdiff a2=area
 
  device resistor sky130_fd_pr__res_generic_l1 rli1 \
        *li,coreli space/w,pwell,nwell error l=l w=w
@@ -6301,6 +6301,7 @@ variants (),(si)
 
  device bjt sky130_fd_pr__npn_05v5 npn dnwell *ndiff space/w error a2=area
  device bjt sky130_fd_pr__pnp_05v5 pnp pwell,space/w *pdiff a2=area
+ device bjt sky130_fd_pr__npn_11v0 npn dnwell *mvndiff space/w error a2=area
 
 #ifdef MIM
  device capacitor sky130_fd_pr__cap_mim_m3_1 *mimcap  *m3 1
