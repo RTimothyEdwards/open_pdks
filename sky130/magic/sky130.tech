@@ -6136,10 +6136,8 @@ variants (),(si)
 
  # Ignore the extended-drain FET geometry that forms part of the high-voltage
  # bipolar devices.
- device msubcircuit Ignore mvnfet *mvndiff,mvndiffres \
-	dnwell pwell,space/w error +npn,pnp l=l w=w
- device msubcircuit Ignore mvpfet *mvpdiff,mvpdiffres \
-	pwell,space/w nwell error +npn,pnp l=l w=w
+ device msubcircuit Ignore mvnfet *mvndiff,mvndiffres dnwell pwell,space/w error +npn,pnp
+ device msubcircuit Ignore mvpfet *mvpdiff,mvpdiffres pwell,space/w nwell error +npn,pnp
 
  # Extended drain devices (must appear before the regular devices)
  device msubcircuit sky130_fd_pr__nfet_20v0_nvt mvnnfet *mvndiff,mvndiffres \
