@@ -22,10 +22,10 @@ ports, bounding boxes, etc.
 
 -----------------------------------------
 
-This distribution contains sources for building out the SkyWater s8
+This distribution contains sources for building out the SkyWater SKY130
 130nm process.  Sources for the foundry process data must be obtained
-separately.  Read the README file in subdirectory s8/ for instructions
-on obtaining and building the SkyWater s8 PDK.
+separately.  Read the README file in subdirectory sky130/ for instructions
+on obtaining and building the SkyWater sky130A PDK.
 
 -----------------------------------------
 
@@ -38,9 +38,30 @@ See file LICENSE for the complete license text.
 
 Instructions:
 
-There is a top-level Makefile but generally it is recommended to cd
-to the directory for the target foundry process and follow the instructions
-in the README file there.
+    git clone https://github.com/RTimothyEdwards/open_pdks.git
+    cd open_pdks
+    ./configure [options]
+    make
+    make install
 
-Also see the website at http://opencircuitdesign.com/open_pdks
+where the configure [options] are specific to each foundry PDK supported
+by open_pdks and can be queried using
+
+    ./configure --help
+
+At a minimum you will want to pass a configure option to declare the location
+of the PDK vendor source distribution (which can be obtained separately),
+
+    ./configure --with-[PDK_name]-source=[path]
+
+The open_pdks version of the PDK can be built locally within open_pdks without
+the need to declare an install target or run "make install".  However, it is
+recommended to declare a target location and install there, using
+
+    ./configure --with-[PDK_name]-source=[path] --with-[PDK_name]-local-path=[path]
+
+followed by "make" and "make install".
+
+Also see the website at http://opencircuitdesign.com/open_pdks/.  The "Install"
+page has full instructions for configuring and installing open_pdks.
 
