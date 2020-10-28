@@ -1,11 +1,11 @@
 tech
    30
-   s8seal_ring
+   sky130seal_ring
 end
 
 version
    version 0.0
-   description "Auto-generated techfile for unknown GDS read-in"
+   description "Auto-generated techfile for sky130 seal ring GDS read-in"
 end
 
 planes

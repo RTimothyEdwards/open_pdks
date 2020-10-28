@@ -1,5 +1,5 @@
 # Tcl script input to magic to generate seal ring GDS
-tech load s8seal_ring -noprompt
+tech load sky130seal_ring -noprompt
 drc off
 load advSeal_6um_gen
 select top cell
