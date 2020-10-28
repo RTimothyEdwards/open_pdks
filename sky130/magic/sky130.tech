@@ -5224,11 +5224,6 @@ drc
  surround pdic/a *pdi 40 absence_illegal \
 	"P-diode overlap of N-diode contact < %d (licon.5a)"
 
- surround nsc/a *nsd 40 absence_illegal \
-	"N-tap overlap of N-tap contact < %d (licon.5a)"
- surround psc/a *psd 40 absence_illegal \
-	"P-tap overlap of P-tap contact < %d (licon.5a)"
-
  spacing psc/a allnactivenontap 60 touching_illegal \
 	"Min. space between P-tap contact and butting N diffusion < %d (licon.5b)"
  spacing nsc/a allpactivenontap 60 touching_illegal \
@@ -5256,11 +5251,6 @@ drc
 	"N-diode overlap of N-diode contact < %d (licon.5a)"
  surround mvpdic/a *mvpdi 40 absence_illegal \
 	"P-diode overlap of N-diode contact < %d (licon.5a)"
-
- surround mvnsc/a *mvnsd 40 absence_illegal \
-	"N-tap overlap of N-tap contact < %d (licon.5a)"
- surround mvpsc/a *mvpsd 40 absence_illegal \
-	"P-tap overlap of P-tap contact < %d (licon.5a)"
 
  spacing mvpsc/a allndiffmvnontap 60 touching_illegal \
 	"Min. space between P-tap contact and butting N diffusion < %d (licon.5b)"
