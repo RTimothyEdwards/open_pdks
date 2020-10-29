@@ -439,28 +439,12 @@ vendor-a:
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_lp/verilog/*.*.v
 	# Install OSU digital standard cells.
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef %l/latest/lef/sky130_osu_sc.tlef \
+		-techlef %l/latest/lef/sky130_osu_sc.tlef rename=sky130_osu_sc_t18 \
 		-cdl %l/latest/cdl/*.cdl ignore=topography compile-only \
 		-lef %l/latest/lef/*.lef compile-only \
 		-lib %l/latest/lib/*.lib \
 		-gds %l/latest/gds/*.gds compile-only \
 		-library digital sky130_osu_sc_t18 |& tee -a ${SKY130A}_install.log
-	# Renaming.  Can it be avoided or simplified ?
-	${MV} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_osu_sc_t18/techlef/sky130_osu_sc.tlef ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_osu_sc_t18/techlef/sky130_osu_sc_t18.tlef
-	# Install OSU digital standard cells.
-	# ${STAGE} -source ${OSU_PATH} -target ${STAGING_PATH}/${SKY130A} \
-	# 	-techlef char/techfiles/scs8.lef rename sky130_osu_sc.tlef \
-	# 	-spice lib/spice/*.spice compile-only \
-	# 	-lef outputs/s8_osu130.lef rename sky130_osu_sc.lef \
-	# 	-lib outputs/*.lib \
-	# 	-gds lib/gds/*.gds compile-only \
-	# 	-verilog outputs/VERILOG/*.v \
-	# 	-library digital sky130_osu_sc
-	# # Add correct bounding boxes on Magic layouts
-	# ${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io_top_gpio_ovtv2 \
-	# 	"FIXED_BBOX 0 407 28000 40000"
-	# ${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io_top_xres4v2 \
-	# 	"FIXED_BBOX 0 407 15000 40000"
 
 install:
 	if test "x${DIST_PATH}" == "x" ; then \
