@@ -374,6 +374,13 @@ vendor-a:
 	# Custom:  Add "short" resistor model to the r+c models file
 	cat ./custom/models/short.spice >> \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice 
+	# Install custom additions to I/O pad library
+	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
+		-verilog %l/verilog/*.v \
+		-cdl %l/cdl/*.cdl \
+		-gds %l/gds/*.gds \
+		-lef %l/lef/*.lef compile-only rename=sky130_ef_io \
+		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
 	# Install SkyWater I/O pad library
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-spice %l/latest/cells/*/*.spice compile-only \
@@ -394,13 +401,6 @@ vendor-a:
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_io/verilog/*.*.v
-	# Install custom additions to I/O pad library
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
-		-verilog %l/verilog/*.v \
-		-cdl %l/cdl/*.cdl \
-		-gds %l/gds/*.gds \
-		-lef %l/lef/*.lef compile-only \
-		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-techlef %l/latest/tech/*.tlef \
@@ -447,7 +447,7 @@ vendor-a:
 		-library digital sky130_osu_sc_t18 |& tee -a ${SKY130A}_install.log
 	# Renaming.  Can it be avoided or simplified ?
 	${MV} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_osu_sc_t18/techlef/sky130_osu_sc.tlef ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_osu_sc_t18/techlef/sky130_osu_sc_t18.tlef
-        # Install OSU digital standard cells.
+	# Install OSU digital standard cells.
 	# ${STAGE} -source ${OSU_PATH} -target ${STAGING_PATH}/${SKY130A} \
 	# 	-techlef char/techfiles/scs8.lef rename sky130_osu_sc.tlef \
 	# 	-spice lib/spice/*.spice compile-only \
