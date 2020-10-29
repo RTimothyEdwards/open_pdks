@@ -57,13 +57,13 @@ end
 # sky130_fd_pr__nfet_g5v0d10v5	mvnfet		thickox nFET
 # sky130_fd_pr__nfet_01v8_nvt	mvnnfet		thickox native nFET
 # sky130_fd_pr__diode_pw2nd_05v5 ndiode		n+ diff diode
+# sky130_fd_pr__diode_pw2nd_05v5_lvt ndiodelvt	low Vt n+ diff diode
+# sky130_fd_pr__diode_pw2nd_05v5_nvt nndiode	diode with nndiff
 # sky130_fd_pr__diode_pw2nd_11v0 mvndiode	thickox n+ diff diode
 # sky130_fd_pr__diode_pd2nw_05v5 pdiode		p+ diff diode
+# sky130_fd_pr__diode_pd2nw_05v5_lvt pdiodelvt	low Vt p+ diff diode
+# sky130_fd_pr__diode_pd2nw_05v5_hvt pdiodehvt	high Vt p+ diff diode
 # sky130_fd_pr__diode_pd2nw_11v0 mvpdiode	thickox p+ diff diode
-# sky130_fd_pr__diode_pw2nd_nvt	nndiode		diode with nndiff
-# sky130_fd_pr__diode_pw2nd_lvt	ndiodelvt	low Vt n+ diff diode
-# sky130_fd_pr__diode_pd2nw_lvt	pdiodelvt	low Vt p+ diff diode
-# sky130_fd_pr__diode_pd2nw_hvt	pdiodehvt	high Vt p+ diff diode
 # sky130_fd_pr__npn_05v0	pbase		NPN in deep nwell
 # sky130_fd_pr__npn_11v0	pbase		thick oxide gated NPN
 # sky130_fd_pr__pnp_05v0	nbase		PNP
@@ -6200,22 +6200,22 @@ variants (),(si)
 
  device subcircuit  sky130_fd_pr__diode_pd2nw_05v5 *pdiode \
 	nwell a=area
- device msubcircuit sky130_fd_pr__diode_pw2nd_05v5 *ndiode \
-	pwell,space/w a=area
+ device subcircuit  sky130_fd_pr__diode_pd2nw_05v5_lvt *pdiodelvt \
+	nwell a=area
+ device subcircuit  sky130_fd_pr_diode_pd2nw_05v5_hvt *pdiodehvt \
+	nwell a=area
  device subcircuit  sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode \
 	nwell a=area
+
+ device msubcircuit sky130_fd_pr__diode_pw2nd_05v5 *ndiode \
+	pwell,space/w a=area
+ device msubcircuit sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt \
+	pwell,space/w a=area
+ device msubcircuit sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode \
+	pwell,space/w a=area
  device msubcircuit sky130_fd_pr__diode_pw2nd_11v0 *mvndiode \
 	pwell,space/w a=area
 
- # These are parasitic devices
- device msubcircuit sky130_fd_pr__diode_pw2nd_lvt *ndiodelvt \
-	pwell,space/w a=area
- device subcircuit  sky130_fd_pr__diode_pd2nw_lvt *pdiodelvt \
-	nwell a=area
- device subcircuit  sky130_fd_pr_diode_pd2nw_hvt *pdiodehvt \
-	nwell a=area
- device msubcircuit sky130_fd_pr__diode_pw2nd_nvt *nndiode \
-	pwell,space/w a=area
 
 #ifdef MIM
  device csubcircuit sky130_fd_pr__cap_mim_m3_1 *mimcap  *m3 w=w l=l
@@ -6283,16 +6283,15 @@ variants (),(si)
  device resistor mrdp_hv   mvpdiffres *mvpdiff 
  device resistor sky130_fd_pr__res_iso_pw   rpw    pwell
 
- device pdiode sky130_fd_pr__diode_pd2nw_05v5 *pdiode nwell a=area
  device ndiode sky130_fd_pr__diode_pw2nd_05v5 *ndiode pwell,space/w a=area
- device pdiode sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area
+ device ndiode sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area
+ device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area
  device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area
 
- # These are parasitic devices
- device ndiode sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area
+ device pdiode sky130_fd_pr__diode_pd2nw_05v5 *pdiode nwell a=area
  device pdiode sky130_fd_pr__diode_pd2nw_05v5_lvt *pdiodelvt nwell a=area
  device pdiode sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area
- device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area
+ device pdiode sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area
 
  device bjt sky130_fd_pr__npn_05v5 npn dnwell *ndiff space/w error a2=area
  device bjt sky130_fd_pr__pnp_05v5 pnp pwell,space/w *pdiff a2=area
