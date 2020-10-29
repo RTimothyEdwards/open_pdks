@@ -844,6 +844,8 @@ if __name__ == '__main__':
                     fileext = '.cdl'
                 elif option[0] == 'lef':
                     fileext = '.lef'
+                elif option[0] == 'techlef':
+                    fileext = '.tlef'
 
                 if newname:
                     if os.path.splitext(newname)[1] == '':
