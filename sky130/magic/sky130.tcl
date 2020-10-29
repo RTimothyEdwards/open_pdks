@@ -734,13 +734,17 @@ proc sky130::sky130_fd_pr__diode_pw2nd_05v5_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
-	compatible {ndiode sky130_fd_pr__diode_pw2nd_11v0} full_metal 1}
+	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
+	sky130_fd_pr__diode_pw2nd_11v0 sky130_fd_pr__diode_pw2nd_05v5_nvt} \
+	full_metal 1}
 }
 
 proc sky130::sky130_fd_pr__diode_pw2nd_05v5_lvt_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
+	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
+	sky130_fd_pr__diode_pw2nd_11v0 sky130_fd_pr__diode_pw2nd_05v5_nvt} \
 	full_metal 1}
 }
 
@@ -749,7 +753,9 @@ proc sky130::sky130_fd_pr__pd2nw_05v5_defaults {} {
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
-	compatible {pdiode sky130_fd_pr__pd2nw_11v0} full_metal 1}
+	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
+	sky130_fd_pr__diode_pd2nw_11v0 sky130_fd_pr__diode_pd2nw_11v0} \ 
+	full_metal 1}
 }
 
 proc sky130::sky130_fd_pr__pd2nw_05v5_lvt_defaults {} {
@@ -757,6 +763,8 @@ proc sky130::sky130_fd_pr__pd2nw_05v5_lvt_defaults {} {
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
+	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
+	sky130_fd_pr__diode_pd2nw_11v0 sky130_fd_pr__diode_pd2nw_11v0} \
 	full_metal 1}
 }
 
@@ -765,29 +773,37 @@ proc sky130::sky130_fd_pr__pd2nw_11v0_defaults {} {
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
+	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
+	sky130_fd_pr__diode_pd2nw_11v0 sky130_fd_pr__diode_pd2nw_11v0} \
 	full_metal 1}
 }
+
 
 proc sky130::sky130_fd_pr__diode_pw2nd_11v0_defaults {} {
     return {w 0.45 l 0.45 area 0.2024 peri 1.8 \
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
-	compatible {ndiode sky130_fd_pr__diode_pw2nd_11v0} full_metal 1}
+	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
+	sky130_fd_pr__diode_pw2nd_11v0 sky130_fd_pr__diode_pw2nd_05v5_nvt} \
+	full_metal 1}
 }
 
 proc sky130::sky130_fd_pr__diode_pw2nd_05v5_nvt_defaults {} {
     return {w 0.45 l 0.45 area 0.2024 peri 1.8 \
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
+	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
+	sky130_fd_pr__diode_pw2nd_11v0 sky130_fd_pr__diode_pw2nd_05v5_nvt} \
 	full_metal 1}
-}
 
 proc sky130::sky130_fd_pr__pd2nw_11v0_defaults {} {
     return {w 0.45 l 0.45 area 0.2024 peri 1.8 \
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
-	compatible {pdiode sky130_fd_pr__pd2nw_11v0} full_metal 1}
+	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
+	sky130_fd_pr__diode_pd2nw_11v0 sky130_fd_pr__diode_pd2nw_11v0} \
+	full_metal 1}
 }
 
 #----------------------------------------------------------------
@@ -827,7 +843,7 @@ proc sky130::sky130_fd_pr__pd2nw_11v0_convert {parameters} {
 #----------------------------------------------------------------
 
 proc sky130::sky130_fd_pr__diode_pw2nd_05v5_dialog {parameters} {
-    sky130::diode_dialog ndiode $parameters
+    sky130::diode_dialog sky130_fd_pr__diode_pw2nd_05v5 $parameters
 }
 
 proc sky130::sky130_fd_pr__diode_pw2nd_05v5_lvt_dialog {parameters} {
@@ -835,7 +851,7 @@ proc sky130::sky130_fd_pr__diode_pw2nd_05v5_lvt_dialog {parameters} {
 }
 
 proc sky130::sky130_fd_pr__pd2nw_05v5_dialog {parameters} {
-    sky130::diode_dialog pdiode $parameters
+    sky130::diode_dialog sky130_fd_pr__pd2nw_05v5 $parameters
 }
 
 proc sky130::sky130_fd_pr__pd2nw_05v5_lvt_dialog {parameters} {
@@ -1290,7 +1306,7 @@ proc sky130::sky130_fd_pr__pd2nw_11v0_draw {parameters} {
 }
 
 #----------------------------------------------------------------
-# Drawn capactitor routines
+# Drawn capacitor routines
 # NOTE:  Work in progress.  These values need to be corrected.
 #----------------------------------------------------------------
 
