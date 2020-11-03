@@ -439,7 +439,7 @@ vendor-a:
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_lp/verilog/*.*.v
 	# Install OSU digital standard cells.
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef %l/latest/lef/sky130_osu_sc.tlef rename=sky130_osu_sc_t18 \
+		-techlef %l/latest/lef/sky130_osu_sc.tlef rename=sky130_osu_sc_t18.tlef \
 		-cdl %l/latest/cdl/*.cdl ignore=topography compile-only \
 		-lef %l/latest/lef/*.lef compile-only \
 		-lib %l/latest/lib/*.lib \

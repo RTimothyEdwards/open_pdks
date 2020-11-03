@@ -834,16 +834,14 @@ if __name__ == '__main__':
 
                 if option[0] == 'verilog':
                     fileext = '.v'
-                elif option[0] == 'gds':
-                    fileext = '.gds'
                 elif option[0] == 'liberty' or option[0] == 'lib':
                     fileext = '.lib'
                 elif option[0] == 'spice' or option[0] == 'spi':
                     fileext = '.spice' if not ef_format else '.spi'
-                elif option[0] == 'cdl':
-                    fileext = '.cdl'
-                elif option[0] == 'lef':
+                elif option[0] == 'techlef':
                     fileext = '.lef'
+                else:
+                    fileext = '.' + option[0]
 
                 if newname:
                     if os.path.splitext(newname)[1] == '':
