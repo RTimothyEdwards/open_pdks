@@ -219,7 +219,7 @@ def generate_sealring(width, height, target_dir, force, keep):
         print('<< end >>', file=ofile)
     
     # Create a new abstract layout TO BE called 'advSeal_6um_gen.mag'
-    # This is the view in technology EFS8A.  Since there is already
+    # This is the view in technology sky130A.  Since there is already
     # a cell with this name that is used to generate GDS, the cell
     # will be called "seal_ring.mag" and copied to "advSeal_6um_gen.mag"
     # in the target directory.
@@ -229,7 +229,7 @@ def generate_sealring(width, height, target_dir, force, keep):
 
     with open('seal_ring.mag', 'w') as ofile:
         print('magic', file=ofile)
-        print('tech EFS8A', file=ofile)
+        print('tech sky130A', file=ofile)
         print('timestamp 1584566829', file=ofile)
 
         # Lower left original
