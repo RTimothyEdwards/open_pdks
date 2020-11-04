@@ -5118,8 +5118,10 @@ drc
 	"MV P-Diffusion to MV N-tap spacing < %d across butted junction (nsd.5a)"
 
  # Sandwiched butting junction restrictions
- edge4way (*pdiff)/a (*nsd)/a 400 ~(*pdiff)/a 0 0 "NSDM width < %d (diff/tap.5)
- edge4way (*ndiff)/a (*psd)/a 400 ~(*ndiff)/a 0 0 "PSDM width < %d (diff/tap.5)
+ edge4way (*pdiff)/a (*nsd)/a 400 ~(*pdiff)/a 0 0 "NSDM width < %d (diff/tap.5)"
+ edge4way (*ndiff)/a (*psd)/a 400 ~(*ndiff)/a 0 0 "PSDM width < %d (diff/tap.5)"
+
+ angles allactive 90 "Only 90 degree angles permitted on diff and tap (x.2)"
 
  variants (full)
 
@@ -5165,6 +5167,8 @@ drc
 	"Distance from precision resistor to unrelated poly < %d (rpm.3 + rpm.7)"
  spacing xhrpoly,uhrpoly,xpc allndiffmvnontap 830 touching_illegal \
 	"Distance from precision resistor to MV N+ diffusion < %d (rpm.3 + rpm.9)"
+
+ angles allpoly 90 "Only 90 degree angles permitted on poly (x.2)"
 
 #--------------------------------------------------------------------
 # HVTP
@@ -5310,8 +5314,7 @@ drc
  surround pc/a *poly,mrp1,xhrpoly,uhrpoly 80 directional \
 	"poly overlap of poly contact < %d in one direction (licon.8a)"
 
- exact_overlap ndc/a,pdc/a,psc/a,nsc/a,pc/a,ndic/a,pdic/a
- exact_overlap mvndc/a,mvpdc/a,mvpsc/a,mvnsc/a,mvndic/a,mvpdic/a
+ exact_overlap (allcont)/a
 
 #-------------------------------------------------------------
 # LI - Local interconnect layer
@@ -5334,6 +5337,8 @@ variants *
 
  area allli,*obsli 56100 170 "Local interconnect minimum area < %a (li.6)"
 
+ angles allli 90 "Only 90 degree angles permitted on local interconnect (x.2)"
+
 #-------------------------------------------------------------
 # MCON - Contact between local interconnect and metal1
 #-------------------------------------------------------------
@@ -5341,7 +5346,7 @@ variants *
  width lic/m1 170 "mcon.width < %d (mcon.1)"
  spacing lic/m1 lic/m1,obslic/m1 190 touching_ok "mcon.spacing < %d (mcon.2)"
 
- exact_overlap lic/m1
+ exact_overlap lic/li
 
 #-------------------------------------------------------------
 # METAL1 -
@@ -5355,6 +5360,8 @@ variants *
 	"Metal1 overlap of local interconnect contact < %d (met1.4)"
  surround lic/m1 *met1 60 directional \
 	"Metal1 overlap of local interconnect contact < %d in one direction (met1.5)"
+
+ angles allm1 45 "Only 45 and 90 degree angles permitted on metal1 (x.3a)"
 
 variants (fast),(full)
  widespacing allm1 3000 allm1,*obsm1 280 touching_ok \
@@ -5381,7 +5388,7 @@ variants *
  surround v1/m2 *m2 30 directional \
 	"Metal2 overlap of Via1 < %d in one direction (met2.5 - met2.4)"
 
- exact_overlap v1/m2
+ exact_overlap v1/m1
 
 #--------------------------------------------------
 # METAL2 - 
@@ -5390,6 +5397,8 @@ variants *
  width allm2 140 "Metal2 width < %d (met2.1)"
  spacing allm2  allm2,obsm2 140 touching_ok       "Metal2 spacing < %d (met2.2)"
  area allm2,obsm2 67600 140 "Metal2 minimum area < %a (met2.6)"
+
+ angles allm2 45 "Only 45 and 90 degree angles permitted on metal2 (x.3a)"
 
 variants (fast),(full)
  widespacing allm2 3000 allm2,obsm2  280 touching_ok \
@@ -5427,6 +5436,8 @@ variants *
  spacing allm3 allm3,obsm3  300 touching_ok "Metal3 spacing < %d (met3.2)"
  area allm3,obsm3 240000 300 "Metal3 minimum area < %a (met3.6)"
 
+ angles allm3 45 "Only 45 and 90 degree angles permitted on metal3 (x.3a)"
+
 variants (fast),(full)
  widespacing allm3 3000 allm3,obsm3  400 touching_ok \
 	"Metal3 > 3um spacing to unrelated m3 < %d (met3.3d)"
@@ -5462,6 +5473,8 @@ variants *
  spacing allm4  allm4,obsm4 300 touching_ok      "Metal4 spacing < %d (met4.2)"
  area allm4,obsm4 240000 300 "Metal4 minimum area < %a (met4.4a)"
 
+ angles allm4 45 "Only 45 and 90 degree angles permitted on metal4 (x.3a)"
+
 variants (fast),(full)
  widespacing allm4 3000 allm4,obsm4  400 touching_ok \
 	"Metal4 > 3um spacing to unrelated m4 < %d (met4.5b)"
@@ -5489,6 +5502,8 @@ variants *
  width allm5 1600 "Metal5 width < %d (met5.1)"
  spacing allm5  allm5,obsm5 1600 touching_ok "Metal5 spacing < %d (met5.2)"
  area allm5,obsm5 4000000 1600 "Metal5 minimum area < %a (met5.4)"
+
+ angles allm5 45 "Only 45 and 90 degree angles permitted on metal5 (x.3a)"
 
 #define METAL5
 #endif (METAL5)
