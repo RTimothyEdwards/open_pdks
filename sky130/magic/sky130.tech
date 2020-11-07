@@ -940,6 +940,7 @@ style gdsii
         grow 185
  	grow 	345
  	shrink 	345
+	and-not hvntm_block
 	calma 125 20
 
 #----------------------------------------------------------------
@@ -966,7 +967,9 @@ style gdsii
 	or alldiffmv,mvvar
 	grow	185
         bloat-all alldiffmv nwell
-	grow-min 600
+	# (HVI min width rule is 0.6 but CNTM min width rule is 0.84um)
+	grow-min 840
+	# grow-min 600
 	bridge	700 600
 
  templayer extendTHKOX	baseTHKOX,CELLRING
@@ -2011,14 +2014,14 @@ style  sky130
  ignore POLYMOD
  ignore LOWTAPDENSITY
 
- layer nwell NWELL,WELLTXT,WELLPIN
- and-not PNPID
+ layer pnp NWELL,WELLTXT,WELLPIN
+ and PNPID
  labels NWELL
  labels WELLTXT text
  labels WELLPIN port
 
- layer pnp NWELL,WELLTXT,WELLPIN
- and PNPID
+ layer nwell NWELL,WELLTXT,WELLPIN
+ and-not PNPID
  labels NWELL
  labels WELLTXT text
  labels WELLPIN port
@@ -2925,16 +2928,16 @@ style  sky130
  or mvpdicbase
  labels CONT
 
- layer locali LI,LITXT,LIPIN
+ layer coreli LI,LITXT,LIPIN
  and-not LIRES,LISHORT
- and-not COREID
+ and COREID
  labels LI
  labels LITXT text
  labels LIPIN port
 
- layer coreli LI,LITXT,LIPIN
+ layer locali LI,LITXT,LIPIN
  and-not LIRES,LISHORT
- and COREID
+ and-not COREID
  labels LI
  labels LITXT text
  labels LIPIN port
@@ -3515,14 +3518,14 @@ style  vendorimport
  ignore POLYMOD
  ignore LOWTAPDENSITY
 
- layer nwell NWELL,WELLTXT,WELLPIN
- and-not PNPID
+ layer pnp NWELL,WELLTXT,WELLPIN
+ and PNPID
  labels NWELL
  labels WELLTXT port
  labels WELLPIN port
 
- layer pnp NWELL,WELLTXT,WELLPIN
- and PNPID
+ layer nwell NWELL,WELLTXT,WELLPIN
+ and-not PNPID
  labels NWELL
  labels WELLTXT port
  labels WELLPIN port
@@ -4429,16 +4432,16 @@ style  vendorimport
  or mvpdicbase
  labels CONT
 
- layer locali LI,LITXT,LIPIN
+ layer coreli LI,LITXT,LIPIN
  and-not LIRES,LISHORT
- and-not COREID
+ and COREID
  labels LI
  labels LITXT port
  labels LIPIN port
 
- layer coreli LI,LITXT,LIPIN
+ layer locali LI,LITXT,LIPIN
  and-not LIRES,LISHORT
- and COREID
+ and-not COREID
  labels LI
  labels LITXT port
  labels LIPIN port

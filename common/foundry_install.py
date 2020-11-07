@@ -1221,7 +1221,6 @@ if __name__ == '__main__':
                 # .mag files from the database.
 
                 print('Creating magic generation script to generate magic database files.') 
-
                 with open(destlibdir + '/generate_magic.tcl', 'w') as ofile:
                     print('#!/usr/bin/env wish', file=ofile)
                     print('#--------------------------------------------', file=ofile)
@@ -1271,6 +1270,7 @@ if __name__ == '__main__':
 
                             leffiles = os.listdir(lefsrclibdir)
                             leffiles = list(item for item in leffiles if os.path.splitext(item)[1] == '.lef')
+                            print('puts stdout "Annotating cells from LEF"', file=ofile)
                             for leffile in leffiles:
                                 print('lef read ' + lefsrclibdir + '/' + leffile, file=ofile)
                      
@@ -1282,11 +1282,17 @@ if __name__ == '__main__':
                                 netdir = slibdir
 
                             # Find CDL/SPICE file names in the source
+                            # Ignore "sources.txt" if it is in the list.
                             netfiles = os.listdir(netdir)
+                            print('puts stdout "Annotating cells from CDL/SPICE"',
+					file=ofile)
                             for netfile in netfiles:
-                                print('readspice ' + netdir + '/' + netfile, file=ofile)
+                                if os.path.split(netfile)[1] != 'sources.txt':
+                                    print('catch {readspice ' + netdir + '/' + netfile
+						+ '}', file=ofile)
 
-                    print('cellname delete \(UNNAMED\)', file=ofile)
+                    # print('cellname delete \(UNNAMED\)', file=ofile)
+                    print('puts stdout "Writing all magic database files"', file=ofile)
                     print('writeall force', file=ofile)
 
                     leffiles = []
@@ -1436,6 +1442,7 @@ if __name__ == '__main__':
                             print('   load ' + lefmacro, file=ofile)
                             print('   lef write ' + lefmacro + ' -hide', file=ofile)
                             print('}', file=ofile)
+
                     print('puts stdout "Done."', file=ofile)
                     print('quit -noprompt', file=ofile)
 
@@ -1648,7 +1655,7 @@ if __name__ == '__main__':
                     # an error message.
                     if len(lefmacros) > 0:
                         print('load ' + lefmacros[0], file=ofile)
-                        print('cellname delete \(UNNAMED\)', file=ofile)
+                        # print('cellname delete \(UNNAMED\)', file=ofile)
                     else:
                         err_no_macros = True
                     print('writeall force', file=ofile)
@@ -1987,7 +1994,7 @@ if __name__ == '__main__':
                 else:
                     gdslibroot = os.path.split(allgdslibname)[1]
                     print('load ' + os.path.splitext(gdslibroot)[0], file=ofile)
-                print('cellname delete \(UNNAMED\)', file=ofile)
+                # print('cellname delete \(UNNAMED\)', file=ofile)
 
                 print('ext2spice lvs', file=ofile)
 
