@@ -55,15 +55,16 @@ pdngen::specify_grid stdcell $stdcell
 # A general macro that follows the premise of the set heirarchy. You may want to modify this or add other macro configs
 pdngen::specify_grid macro {
     orient {R0 R180 MX MY R90 R270 MXR90 MYR90}
-    power_pins "VDDE"
-    ground_pins "VSSE"
-    blockages "li1 met1 met2 met3 met4 met5" 
-    straps { 
-    } 
+    power_pins "VDD VPWR"
+    ground_pins "VSS VGND"
+    blockages "li1 met1 met2 met3 met4"
+    straps {
+    }
     connect {{met4_PIN_ver met5}}
 }
 
-set ::halo 0
+set ::halo [expr min($::env(FP_HORIZONTAL_HALO), $::env(FP_VERTICAL_HALO))]
+
 
 # Metal layer for rails on every row
 set ::rails_mlayer "met1" ;
