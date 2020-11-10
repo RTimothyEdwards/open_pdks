@@ -1550,16 +1550,22 @@ if __name__ == '__main__':
                 srclibdir = srcdir + '/' + destlib
                 maglibdir = magdir + '/' + destlib
                 cdllibdir = cdldir + '/' + destlib
+                clibdir = cdir + '/' + destlib
+                slibdir = sdir + '/' + destlib
             else:
                 destdir = targetdir + '/libs.ref/' + destlib + '/maglef'
                 srcdir = targetdir + lef_reflib + destlib + '/lef'
                 magdir = targetdir + gds_reflib + destlib + '/mag'
                 cdldir = targetdir + cdl_reflib + destlib + '/cdl'
+                cdir = targetdir + cdl_reflib + destlib + '/cdl'
+                sdir = targetdir + cdl_reflib + destlib + '/spice'
 
                 destlibdir = destdir
                 srclibdir = srcdir
                 maglibdir = magdir
                 cdllibdir = cdldir
+                clibdir = cdir
+                slibdir = sdir
 
             os.makedirs(destlibdir, exist_ok=True)
 
@@ -1635,10 +1641,26 @@ if __name__ == '__main__':
                     for leffile in leffiles:
                         print('lef read ' + srclibdir + '/' + leffile, file=ofile)
 
-                    for lefmacro in lefmacros:
+                    # Use CDL or SPICE netlists to make sure that ports are
+                    # present, and to set the port order
 
-                        # To be completed:  Parse SPICE file for port order, make
-                        # sure ports are present and ordered.
+                    if have_cdl or have_spice:
+                        if have_cdl:
+                            netdir = clibdir
+                        else:
+                            netdir = slibdir
+
+                        # Find CDL/SPICE file names in the source
+                        # Ignore "sources.txt" if it is in the list.
+                        netfiles = os.listdir(netdir)
+                        print('puts stdout "Annotating cells from CDL/SPICE"',
+				file=ofile)
+                        for netfile in netfiles:
+                            if os.path.split(netfile)[1] != 'sources.txt':
+                                print('catch {readspice ' + netdir + '/' + netfile
+					+ '}', file=ofile)
+
+                    for lefmacro in lefmacros:
 
                         if pdklibrary and lefmacro in shortdevlist:
                             print('set cellname ' + lefmacro, file=ofile)
@@ -1743,7 +1765,7 @@ if __name__ == '__main__':
                     proprex = re.compile('<< properties >>')
                     endrex = re.compile('<< end >>')
                     rlabrex = re.compile('rlabel[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+([^ \t]+)')
-                    flabrex = re.compile('flabel[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+([^ \t]+)')
+                    flabrex = re.compile('flabel[ \t]+.*[ \t]+([^ \t]+)[ \t]*')
                     portrex = re.compile('port[ \t]+([^ \t]+)[ \t]+(.*)')
                     gcellrex = re.compile('string gencell')
                     portnum = -1
