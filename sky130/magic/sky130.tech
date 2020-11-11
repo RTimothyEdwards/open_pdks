@@ -5594,7 +5594,13 @@ variants (fast),(full)
   spacing xhrpoly,uhrpoly,xpc alldiff 480 touching_illegal \
 	"xhrpoly/uhrpoly resistor spacing to diffusion < %d (poly.9)"
 
-  spacing allpolyres,xpc *poly,allfets 480 touching_illegal \
+  spacing alllpolyres allfets 480 touching_illegal \
+	"Poly resistor spacing to poly < %d (poly.9)"
+
+  spacing xhrpoly,uhrpoly,xpc *poly 480 touching_illegal \
+	"Poly resistor spacing to poly < %d (poly.9)"
+
+  spacing mrp1,rmp *poly 480 touching_okay \
 	"Poly resistor spacing to poly < %d (poly.9)"
 
   spacing allpolyres,xpc alldiff 480 touching_illegal \
