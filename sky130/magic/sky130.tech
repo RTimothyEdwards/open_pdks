@@ -1511,6 +1511,9 @@ style drc
  grow-min 840
  bridge	700 600
 
+ # Simple spacing checks to lvnwell must use CIF-DRC rule
+ templayer allmvdiffnowell *mvndiff,*mvpsd
+
  templayer lvnwell nwell
  and-not mvnwell
 
@@ -5129,8 +5132,11 @@ drc
 	"N-well overlap of MV varactor < %d (lvtn.10 + lvtn.4b)"
  spacing *mvndiode *mvndiode 1070 touching_ok \
 	"MV N-diode spacing < %d (hvntm.2 + 2 * hvntm.3)"
- spacing alldiffmv nwell 825 surround_ok \
-	"MV N-diffusion to nwell spacing < %d (hvi.5 + nsd/psd.5)"
+
+variants (full)
+ cifspacing allmvdiffnowell lvnwell 825 touching_illegal \
+	"MV diffusion to LV nwell spacing < %d (hvi.5 + nsd/psd.5)"
+variants (fast),(full)
 
  spacing allnfets allpactivenonfet 270 touching_illegal \
 	"nFET cannot abut P-diffusion (diff/tap.3)"
