@@ -231,7 +231,7 @@ types
   locali locali,li1,li
  -locali corelocali,coreli1,coreli
   locali rlocali,rli1,rli
-  locali viali,vial,lic,licon,m1c,v0
+  locali viali,vial,mcon,lic,licon,m1c,v0
  -locali obsli1,obsli
  -locali obsli1c,obslic,obslicon
 
@@ -5146,7 +5146,7 @@ drc
  spacing allpoly allpoly 210 touching_ok "poly spacing < %d (poly.2)"
 
  spacing allpolynonfet \
-	*ndif,*ndiode,*nndiode,ndiffres,*ndiodelvt,*pdif,*pdiode,pdiffres,*pdiodelvt,*pdiodehvt \
+	*ndiff,*mvndiff,*ndiode,*nndiode,ndiffres,*ndiodelvt,*pdiff,*mvpdiff,*pdiode,pdiffres,*pdiodelvt,*pdiodehvt \
 	75 corner_ok allfets \
 	"poly spacing to Diffusion < %d (poly.4)"
  spacing npres *nsd 480 touching_illegal \
