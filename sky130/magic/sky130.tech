@@ -1532,6 +1532,19 @@ style drc
  bloat-all varactor,mvvaractor nwell
  and allpactive
 
+ # HVNTM spacing requires recreating HVNTM
+ templayer hvntm_block *mvpsd
+ grow 185
+
+ templayer hvntm_generate
+ bloat-all mvnfet,mvnnfet,*mvndiode,mvrdn,*nndiode *mvndiff
+ bloat-all mvvaractor *mvnsd
+ and-not hvntm_block
+ grow 185
+ grow    345
+ shrink  345
+ and-not hvntm_block
+
  templayer m1_small_hole allm1,obsm1,obslic
  close   140000
 
@@ -5116,6 +5129,8 @@ drc
 	"N-well overlap of MV varactor < %d (lvtn.10 + lvtn.4b)"
  spacing *mvndiode *mvndiode 1070 touching_ok \
 	"MV N-diode spacing < %d (hvntm.2 + 2 * hvntm.3)"
+ spacing alldiffmv nwell 825 surround_ok \
+	"MV N-diffusion to nwell spacing < %d (hvi.5 + nsd/psd.5)"
 
  spacing allnfets allpactivenonfet 270 touching_illegal \
 	"nFET cannot abut P-diffusion (diff/tap.3)"
@@ -5724,6 +5739,14 @@ variants (fast),(full)
  exact_overlap mim2cc/c2
 
 #endif (MIM)
+
+#----------------------------
+# HVNTM
+#----------------------------
+variants (full)
+ cifspacing hvntm_generate hvntm_generate 700 touching_ok \
+ 	"HVNTM spacing < %d (hvntm.2)"
+variants (fast),(full)
 
 #----------------------------
 # End DRC style
