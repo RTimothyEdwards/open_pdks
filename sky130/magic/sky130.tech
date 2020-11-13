@@ -1505,11 +1505,27 @@ style drc
  and-not dnwell
  and allpdifflv,allpdiffmv
 
+ # MV nwell must be 2um from any other nwell
+ templayer mvnwell
+ bloat-all alldiffmv nwell
+ grow-min 840
+ bridge	700 600
+
+ templayer lvnwell nwell
+ and-not mvnwell
+
  templayer nwell_with_tap
  bloat-all nsc,mvnsc nwell
 
  templayer nwell_missing_tap nwell
  and-not nwell_with_tap
+
+ templayer tap_with_licon
+ bloat-all psc,mvpsc psd,mvpsd
+ bloat-all nsc,mvnsc nsd,mvnsd
+
+ templayer tap_missing_licon psd,nsd,mvpsd,mvnsd
+ and-not tap_with_licon
 
  # Make sure varactor nwell contains no P diffusion
  templayer pdiff_in_varactor_well
@@ -5048,6 +5064,11 @@ drc
  variants (full)
  cifmaxwidth nwell_missing_tap 0 bend_illegal \
 	"All nwells must contain metal-connected N+ taps (nwell.4)"
+
+ cifspacing mvnwell lvnwell 2000 touching_illegal \
+	"Spacing of HV nwell to LV nwell < 2.0um (nwell.8)"
+ cifspacing mvnwell mvnwell 2000 touching_ok \
+	"Spacing of HV nwell to HV nwell < 2.0um (nwell.8)"
  variants (fast),(full)
 
 #-----------------------------
@@ -5124,9 +5145,13 @@ drc
  edge4way (*pdiff)/a (*nsd)/a 400 ~(*pdiff)/a 0 0 "NSDM width < %d (diff/tap.5)"
  edge4way (*ndiff)/a (*psd)/a 400 ~(*ndiff)/a 0 0 "PSDM width < %d (diff/tap.5)"
 
+ area  *nsd,*mvnsd 70110 150 "N-tap minimum area < 0.07011um^2 (nsd.10b)"
+ area  *psd,*mvpsd 70110 150 "P-tap minimum area < 0.07011um^2 (psd.10b)"
+
  angles allactive 90 "Only 90 degree angles permitted on diff and tap (x.2)"
 
  variants (full)
+ cifmaxwidth tap_missing_licon 0 bend_illegal "All taps must be contacted (licon.16)"
 
  # Latchup rules
  cifmaxwidth ptap_missing 0 bend_illegal \
