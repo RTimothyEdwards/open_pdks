@@ -5486,6 +5486,7 @@ variants (fast),(full)
 	"Metal3 > 3um spacing to unrelated m3 < %d (met3.3d)"
  widespacing obsm3 3000 allm3  400 touching_ok \
 	"Metal3 > 3um spacing to unrelated m3 < %d (met3.3d)"
+variants (full)
  cifspacing m3_large_halo m3_large_halo 400 touching_ok \
 	"Spacing of metal3 features attached to and within 0.40um of large metal3 < %d (met3.3c)"
 variants *
@@ -5523,6 +5524,7 @@ variants (fast),(full)
 	"Metal4 > 3um spacing to unrelated m4 < %d (met4.5b)"
  widespacing obsm4 3000 allm4  400 touching_ok \
 	"Metal4 > 3um spacing to unrelated m4 < %d (met4.5b)"
+variants (full)
  cifspacing m4_large_halo m4_large_halo 400 touching_ok \
 	"Spacing of metal4 features attached to and within 0.40um of large metal4 < %d (met4.5a)"
 variants *
