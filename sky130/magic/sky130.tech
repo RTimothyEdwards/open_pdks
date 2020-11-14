@@ -3795,6 +3795,7 @@ style  vendorimport
  layer pfethvt pfetarea
  and HVTP
  and-not STDCELL
+ and-not COREID
  labels DIFF
 
  # Always force nwell under pfet (nwell encloses pdiff by 0.18)
@@ -3867,7 +3868,7 @@ style  vendorimport
  and STDCELL
  labels DIFF
 
- layer npd DIFF
+ layer npass DIFF
  and POLY
  and-not PPLUS
  and NPLUS
@@ -3875,13 +3876,16 @@ style  vendorimport
  and COREID
  labels DIFF
 
- # layer npass DIFF
- # and POLY
- # and-not PPLUS
- # and NPLUS
- # and-not NWELL
- # and COREID
- # labels DIFF
+ layer npd DIFF
+ and POLY
+ and-not PPLUS
+ and NPLUS
+ and-not NWELL
+ and COREID
+ # Shrink-grow operation eliminates the smaller npass device
+ shrink 70
+ grow 70
+ labels DIFF
 
  layer nfetlvt DIFF
  and POLY
@@ -4099,15 +4103,15 @@ style  vendorimport
 
  layer scpfet POLY
  and DIFF
- and-not HVTP
  and diffresarea
+ and-not HVTP
  and-not NPLUS
  and STDCELL
 
  layer scpfethvt POLY
  and DIFF
- and HVTP
  and diffresarea
+ and HVTP
  and-not NPLUS
  and STDCELL
 
