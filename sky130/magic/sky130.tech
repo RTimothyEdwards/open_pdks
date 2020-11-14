@@ -837,7 +837,7 @@ style gdsii
 # HVTP
 #----------------------------------------------------------------
 
- layer HVTP scpfethvt,pfethvt,varhvt,*pdiodehvt
+ layer HVTP scpfethvt,ppu,pfethvt,varhvt,*pdiodehvt
         grow 180
 	bridge	380 380
 	grow	185
@@ -2272,7 +2272,7 @@ style  sky130
 
  layer ppu pfetarea
  and-not LVTN
- and-not HVTP
+ and HVTP
  and COREID
  labels DIFF
 
@@ -2287,6 +2287,7 @@ style  sky130
  layer pfethvt pfetarea
  and HVTP
  and-not STDCELL
+ and-not COREID
  labels DIFF
 
  # Always force nwell under pfet (nwell encloses pdiff by 0.18)
