@@ -6221,11 +6221,6 @@ variants (),(si)
 	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
  device msubcircuit sky130_fd_pr__special_nfet_pass npass \
 	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
-
- device msubcircuit sky130_fd_pr__special_nfet_latch npd \
-	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
- device msubcircuit sky130_fd_pr__special_nfet_pass npass \
-	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
  device msubcircuit sky130_fd_pr__nfet_01v8_lvt nfetlvt \
 	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w
  device msubcircuit sky130_fd_bs_flash__special_sonosfet_star nsonos \
