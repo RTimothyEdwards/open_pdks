@@ -2360,7 +2360,7 @@ style  sky130
  and STDCELL
  labels DIFF
 
- layer npd DIFF
+ layer npass DIFF
  and POLY
  and-not PPLUS
  and NPLUS
@@ -2368,13 +2368,16 @@ style  sky130
  and COREID
  labels DIFF
 
- # layer npass DIFF
- # and POLY
- # and-not PPLUS
- # and NPLUS
- # and-not NWELL
- # and COREID
- # labels DIFF
+ layer npd DIFF
+ and POLY
+ and-not PPLUS
+ and NPLUS
+ and-not NWELL
+ and COREID
+ # Shrink-grow operation eliminates the smaller npass device
+ shrink 70
+ grow 70
+ labels DIFF
 
  layer nfetlvt DIFF
  and POLY
