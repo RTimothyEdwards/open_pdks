@@ -5390,7 +5390,9 @@ variants *
 
  area allli,*obsli 56100 170 "Local interconnect minimum area < %a (li.6)"
 
- angles allli 90 "Only 90 degree angles permitted on local interconnect (x.2)"
+ angles *locali,rli 90 "Only 90 degree angles permitted on local interconnect (x.2)"
+ angles coreli 45 \
+	"Only 45 degree angles permitted on local interconnect in SRAM cell (x.2)"
 
 #-------------------------------------------------------------
 # MCON - Contact between local interconnect and metal1
