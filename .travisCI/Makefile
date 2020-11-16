@@ -49,6 +49,7 @@ all-skywater-libraries: skywater-pdk
 		git submodule update --init libraries/sky130_fd_sc_hdll/latest && \
 		git submodule update --init libraries/sky130_fd_sc_ms/latest && \
 		git submodule update --init libraries/sky130_fd_sc_ls/latest && \
+		git submodule update --init libraries/sky130_fd_sc_hvl/latest && \
 		$(MAKE) -j$(THREADS) timing
 
 .PHONY: build-pdk

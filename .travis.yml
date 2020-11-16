@@ -33,6 +33,8 @@ jobs:
       env: STD_CELL_LIBRARY=sky130_fd_sc_ls
     - name: "hdll library"
       env: STD_CELL_LIBRARY=sky130_fd_sc_hdll
+    - name: "hvl library"
+      env: STD_CELL_LIBRARY=sky130_fd_sc_hvl
     - name: "all libraries"
       env: STD_CELL_LIBRARY=all
   allow_failures:
