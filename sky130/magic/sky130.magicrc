@@ -45,7 +45,7 @@ set SUB VSUBS
 # from environment variable MAGTYPE
 
 if {[catch {set MAGTYPE $env(MAGTYPE)}]} {
-   set MAGTYPE maglef
+   set MAGTYPE mag
 }
 
 # add path to reference cells

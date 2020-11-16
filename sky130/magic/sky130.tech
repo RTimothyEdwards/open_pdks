@@ -3780,7 +3780,7 @@ style  vendorimport
 
  layer ppu pfetarea
  and-not LVTN
- and-not HVTP
+ and HVTP
  and COREID
  labels DIFF
 
