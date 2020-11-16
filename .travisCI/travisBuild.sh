@@ -22,9 +22,25 @@ cd ./.travisCI
 sh ./build-docker.sh > /dev/null
 make skywater-pdk > /dev/null
 if [ $STD_CELL_LIBRARY == all ]; then
-    make all-skywater-libraries;
+    cnt=0
+    until make all-skywater-libraries; do
+    cnt=$((cnt+1))
+    if [ $cnt -eq 5 ]; then
+        exit 2
+    fi
+    rm -rf $PDK_ROOT/skywater-pdk
+    make skywater-pdk > /dev/null
+    done
 else
-    make skywater-library;
+    cnt=0
+    until make skywater-library; do
+    cnt=$((cnt+1))
+    if [ $cnt -eq 5 ]; then
+        exit 2
+    fi
+    rm -rf $PDK_ROOT/skywater-pdk
+    make skywater-pdk > /dev/null
+    done
 fi
 cd ..
 docker run -it -v $(pwd):/some_root -v $(pwd)/.travisCI:/build_root -v $OPEN_PDKS_ROOT:$OPEN_PDKS_ROOT -v $PDK_ROOT:$PDK_ROOT -e OPEN_PDKS_ROOT=$OPEN_PDKS_ROOT -e PDK_ROOT=$PDK_ROOT -u $(id -u $USER):$(id -g $USER) magic:latest  bash -c "cd /build_root && make build-pdk"
