@@ -967,6 +967,9 @@ style gdsii
 	or alldiffmv,mvvar
 	grow	185
         bloat-all alldiffmv nwell
+	bridge	700 600
+ 	grow 	345
+ 	shrink 	345
 	# (HVI min width rule is 0.6 but CNTM min width rule is 0.84um)
 	grow-min 840
 	# grow-min 600
