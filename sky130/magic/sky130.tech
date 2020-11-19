@@ -962,18 +962,25 @@ style gdsii
 # THKOX (HVI) (includes rules NWELL 8-11 and DIFFTAP 14-26)
 #----------------------------------------------------------------
 
- templayer baseTHKOX 	*mvpsd
-	grow-min 470
-	or alldiffmv,mvvar
+ templayer thkox_area 	alldiffmv,mvvar
 	grow	185
-        bloat-all alldiffmv nwell
+	bloat-all alldiffmv nwell
+	grow 345
+	shrink 345
+
+ templayer large_ptap_mv thkox_area
+	shrink	420
+	grow	420
+
+ templayer small_ptap_mv thkox_area
+	and-not large_ptap_mv
+	# (HVI min width rule is 0.6 but CNTM min width rule is 0.84um)
+	grow-min 840
+
+ templayer baseTHKOX 	thkox_area,small_ptap_mv
 	bridge	700 600
  	grow 	345
  	shrink 	345
-	# (HVI min width rule is 0.6 but CNTM min width rule is 0.84um)
-	grow-min 840
-	# grow-min 600
-	bridge	700 600
 
  templayer extendTHKOX	baseTHKOX,CELLRING
  	grow 	345
