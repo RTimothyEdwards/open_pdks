@@ -6307,9 +6307,9 @@ variants (),(si)
  device rsubcircuit sky130_fd_pr__res_xhigh_po	     uhrpoly \
 	xpc pwell,space/w error l=l w=w
 
- device rsubcircuit sky130_fd_pr_res_generic_nd     ndiffres \
+ device rsubcircuit sky130_fd_pr__res_generic_nd     ndiffres \
 	*ndiff pwell,space/w  error l=l w=w
- device rsubcircuit sky130_fd_pr_res_generic_pd     pdiffres \
+ device rsubcircuit sky130_fd_pr__res_generic_pd     pdiffres \
 	*pdiff nwell    error l=l w=w
  device rsubcircuit sky130_fd_pr__res_iso_pw   rpw \
         pwell dnwell error l=l w=w
@@ -6323,7 +6323,7 @@ variants (),(si)
 	nwell a=area
  device subcircuit  sky130_fd_pr__diode_pd2nw_05v5_lvt *pdiodelvt \
 	nwell a=area
- device subcircuit  sky130_fd_pr_diode_pd2nw_05v5_hvt *pdiodehvt \
+ device subcircuit  sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt \
 	nwell a=area
  device subcircuit  sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode \
 	nwell a=area
