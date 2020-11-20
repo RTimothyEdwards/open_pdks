@@ -1421,29 +1421,29 @@ style drc
  # no nwell ring is crossed.  There is no difference between
  # ntaps in and out of deep nwell.
  grow 1270
- and nwell
+ and nwell,pnp
  grow 1270
- and nwell
+ and nwell,pnp
  grow 1270
- and nwell
+ and nwell,pnp
  grow 1270
- and nwell
+ and nwell,pnp
  grow 1270
- and nwell
+ and nwell,pnp
  grow 1270
- and nwell
+ and nwell,pnp
  grow 1270
- and nwell
+ and nwell,pnp
  grow 1270
- and nwell
+ and nwell,pnp
  grow 1270
- and nwell
+ and nwell,pnp
  grow 1270
- and nwell
+ and nwell,pnp
  grow 1270
- and nwell
+ and nwell,pnp
  grow 945
- and nwell
+ and nwell,pnp
  
  templayer ntap_missing *pdiff,*mvpdiff
  and-not pwell_in_dnwell
@@ -1528,9 +1528,9 @@ style drc
  and-not mvnwell
 
  templayer nwell_with_tap
- bloat-all nsc,mvnsc nwell
+ bloat-all nsc,mvnsc nwell,pnp
 
- templayer nwell_missing_tap nwell
+ templayer nwell_missing_tap nwell,pnp
  and-not nwell_with_tap
 
  templayer tap_with_licon
