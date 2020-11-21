@@ -4698,10 +4698,10 @@ proc sky130::guard_ring {gw gh parameters} {
 	box grow w [/ $cw 2]um
         set anchor [string index $viagr 0]
 	if {$anchor == "+"} {
-            box move s [/ [- $gh $via_size]]um
+            box move s [/ [- $gh $via_size] 2]um
 	    box grow n ${ch}um
 	} elseif {$anchor == "-"} {
-            box move n [/ [- $gh $via_size]]um
+            box move n [/ [- $gh $via_size] 2]um
 	    box grow s ${ch}um
 	} else {
 	    box grow n [/ $ch 2]um
@@ -4720,10 +4720,10 @@ proc sky130::guard_ring {gw gh parameters} {
 	box grow w [/ $cw 2]um
         set anchor [string index $viagl 0]
 	if {$anchor == "+"} {
-            box move s [/ [- $gh $via_size]]um
+            box move s [/ [- $gh $via_size] 2]um
 	    box grow n ${ch}um
 	} elseif {$anchor == "-"} {
-            box move n [/ [- $gh $via_size]]um
+            box move n [/ [- $gh $via_size] 2]um
 	    box grow s ${ch}um
 	} else {
 	    box grow n [/ $ch 2]um
