@@ -4721,7 +4721,7 @@ proc sky130::guard_ring {gw gh parameters} {
         set anchor [string index $viagl 0]
 	if {$anchor == "+"} {
             box move s [/ [- $gh $via_size]]um
-	    box grow h ${ch}um
+	    box grow n ${ch}um
 	} elseif {$anchor == "-"} {
             box move n [/ [- $gh $via_size]]um
 	    box grow s ${ch}um
