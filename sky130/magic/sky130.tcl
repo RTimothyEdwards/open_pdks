@@ -169,9 +169,9 @@ proc sky130::addtechmenu {framename} {
    magic::add_toolkit_command $layoutframe "p-diff resistor (1.8V) - 197 Ohm/sq" \
 	    "magic::gencell sky130::sky130_fd_pr__res_generic_pd" pdk2
    magic::add_toolkit_command $layoutframe "n-diff resistor (5.0V) - 114 Ohm/sq" \
-	    "magic::gencell sky130::sky130_fd_pr__mrdn_hv" pdk2
+	    "magic::gencell sky130::sky130_fd_pr__res_generic_nd__hv" pdk2
    magic::add_toolkit_command $layoutframe "p-diff resistor (5.0V) - 191 Ohm/sq" \
-	    "magic::gencell sky130::sky130_fd_pr__mrdp_hv" pdk2
+	    "magic::gencell sky130::sky130_fd_pr__res_generic_pd__hv" pdk2
 
    magic::add_toolkit_command $layoutframe "poly resistor - 48.2 Ohm/sq" \
 	    "magic::gencell sky130::sky130_fd_pr__res_generic_po" pdk2
@@ -230,7 +230,8 @@ proc sky130::addtechmenu {framename} {
 
 #----------------------------------------------------------------
 
-proc sky130::mcon_draw {} {
+proc sky130::mcon_draw {{dir default}} {
+   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.17} {
@@ -242,19 +243,26 @@ proc sky130::mcon_draw {} {
       return
    }
    paint lic
-   box grow n 0.05um
-   box grow s 0.05um
-   paint m1
-   box grow n -0.05um
-   box grow s -0.05um
-   box grow e 0.05um
-   box grow w 0.05um
-   paint li
-   box grow e -0.05um
-   box grow w -0.05um
+   pushbox
+   if {($w < $h) || ($dir == "vert")} {
+       box grow e 0.03um
+       box grow w 0.03um
+       box grow n 0.06um
+       box grow s 0.06um
+       paint m1
+   } else {
+       box grow n 0.03um
+       box grow s 0.03um
+       box grow e 0.06um
+       box grow w 0.06um
+       paint m1
+   }
+   popbox
+   resumeall
 }
 
 proc sky130::via1_draw {} {
+   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.26} {
@@ -276,9 +284,11 @@ proc sky130::via1_draw {} {
    paint m1
    box grow e -0.05um
    box grow w -0.05um
+   resumeall
 }
 
 proc sky130::via2_draw {} {
+   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.28} {
@@ -300,10 +310,12 @@ proc sky130::via2_draw {} {
    paint m3
    box grow e -0.05um
    box grow w -0.05um
+   resumeall
 }
 
 #ifdef METAL5
 proc sky130::via3_draw {} {
+   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.32} {
@@ -325,9 +337,11 @@ proc sky130::via3_draw {} {
    paint m3
    box grow e -0.05um
    box grow w -0.05um
+   resumeall
 }
 
 proc sky130::via4_draw {} {
+   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 1.18} {
@@ -349,10 +363,12 @@ proc sky130::via4_draw {} {
    paint m4
    box grow e -0.05um
    box grow w -0.05um
+   resumeall
 }
 #endif (METAL5)
 
 proc sky130::subconn_draw {} {
+   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.17} {
@@ -367,11 +383,13 @@ proc sky130::subconn_draw {} {
    box grow c 0.1um
    paint nsd
    box grow c -0.1um
+   resumeall
 }
 
 #----------------------------------------------------------------
 
 proc sky130::mvsubconn_draw {} {
+   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.17} {
@@ -386,6 +404,7 @@ proc sky130::mvsubconn_draw {} {
    box grow c 0.1um
    paint mvnsd
    box grow c -0.1um
+   resumeall
 }
 
 #----------------------------------------------------------------
@@ -647,6 +666,22 @@ proc sky130::diode_dialog {device parameters} {
     if {[dict exists $parameters gbc]} {
         magic::add_checkbox gbc "Add bottom guard ring contact" $parameters
     }
+    if {[dict exists $parameters viagb]} {
+	magic::add_entry viagb  "Bottom guard ring via coverage \[+/-\](%)" $parameters
+    }
+    if {[dict exists $parameters viagt]} {
+	magic::add_entry viagt  "Top guard ring via coverage \[+/-\](%)" $parameters
+    }
+    if {[dict exists $parameters viagr]} {
+	magic::add_entry viagr  "Right guard ring via coverage \[+/-\](%)" $parameters
+    }
+    if {[dict exists $parameters viagl]} {
+	magic::add_entry viagl  "Left guard ring via coverage \[+/-\](%)" $parameters
+    }
+
+    if {[dict exists $parameters vias]} {
+	magic::add_checkbox vias "Add vias over contacts" $parameters
+    }
 
     magic::add_dependency sky130::diode_recalc $device sky130 l w area peri
 
@@ -711,6 +746,39 @@ proc sky130::diode_check {parameters} {
 	puts stderr "Diode length must be >= $lmin"
 	dict set parameters l $lmin
     } 
+
+    # Check via coverage for syntax
+    if {$guard == 1} {
+    	if {[catch {expr abs($viagb)}]} {
+	    puts stderr "Guard ring bottom via coverage must be numeric!"
+            dict set parameters viagb 0
+    	} elseif {[expr abs($viagb)] > 100} {
+	    puts stderr "Guard ring bottom via coverage can't be more than 100%"
+            dict set parameters viagb 100
+    	}
+    	if {[catch {expr abs($viagt)}]} {
+	    puts stderr "Guard ring top via coverage must be numeric!"
+            dict set parameters viagt 0
+	} elseif {[expr abs($viagt)] > 100} {
+	    puts stderr "Guard ring top via coverage can't be more than 100%"
+            dict set parameters viagt 100
+	}
+	if {[catch {expr abs($viagr)}]} {
+	    puts stderr "Guard ring right via coverage must be numeric!"
+            dict set parameters viagr 0
+	} elseif {[expr abs($viagr)] > 100} {
+	    puts stderr "Guard ring right via coverage can't be more than 100%"
+            dict set parameters viagr 100
+   	} 
+        if {[catch {expr abs($viagl)}]} {
+	    puts stderr "Guard ring left via coverage must be numeric!"
+            dict set parameters viagl 0
+	} elseif {[expr abs($viagl)] > 100} {
+	   puts stderr "Guard ring left via coverage can't be more than 100%"
+           dict set parameters viagl 100
+	}
+    }
+
     # Calculate area and perimeter from L and W
     set area [expr ($l * $w)]
     dict set parameters area [magic::float2spice $area]
@@ -736,7 +804,7 @@ proc sky130::sky130_fd_pr__diode_pw2nd_05v5_defaults {} {
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
 	sky130_fd_pr__diode_pw2nd_05v5_nvt sky130_fd_pr__diode_pw2nd_11v0} \
-	full_metal 1}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 proc sky130::sky130_fd_pr__diode_pw2nd_05v5_lvt_defaults {} {
@@ -745,7 +813,7 @@ proc sky130::sky130_fd_pr__diode_pw2nd_05v5_lvt_defaults {} {
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
 	sky130_fd_pr__diode_pw2nd_05v5_nvt sky130_fd_pr__diode_pw2nd_11v0} \
-	full_metal 1}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 proc sky130::sky130_fd_pr__diode_pw2nd_05v5_nvt_defaults {} {
@@ -754,7 +822,7 @@ proc sky130::sky130_fd_pr__diode_pw2nd_05v5_nvt_defaults {} {
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
 	sky130_fd_pr__diode_pw2nd_05v5_nvt sky130_fd_pr__diode_pw2nd_11v0} \
-	full_metal 1}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 proc sky130::sky130_fd_pr__diode_pw2nd_11v0_defaults {} {
@@ -763,7 +831,7 @@ proc sky130::sky130_fd_pr__diode_pw2nd_11v0_defaults {} {
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
 	sky130_fd_pr__diode_pw2nd_05v5_nvt sky130_fd_pr__diode_pw2nd_11v0} \
-	full_metal 1}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 proc sky130::sky130_fd_pr__diode_pd2nw_05v5_defaults {} {
@@ -772,8 +840,8 @@ proc sky130::sky130_fd_pr__diode_pd2nw_05v5_defaults {} {
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
-	sky130_fd_pr__diode_pd2nw_05v5_hvt sky130_fd_pr__diode_pd2nw_11v0} \ 
-	full_metal 1}
+	sky130_fd_pr__diode_pd2nw_05v5_hvt sky130_fd_pr__diode_pd2nw_11v0} \
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 proc sky130::sky130_fd_pr__diode_pd2nw_05v5_lvt_defaults {} {
@@ -783,7 +851,7 @@ proc sky130::sky130_fd_pr__diode_pd2nw_05v5_lvt_defaults {} {
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
 	sky130_fd_pr__diode_pd2nw_05v5_hvt sky130_fd_pr__diode_pd2nw_11v0} \
-	full_metal 1}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 proc sky130::sky130_fd_pr__diode_pd2nw_05v5_hvt_defaults {} {
@@ -793,7 +861,7 @@ proc sky130::sky130_fd_pr__diode_pd2nw_05v5_hvt_defaults {} {
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
 	sky130_fd_pr__diode_pd2nw_05v5_hvt sky130_fd_pr__diode_pd2nw_11v0} \
-	full_metal 1}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 
@@ -804,7 +872,7 @@ proc sky130::sky130_fd_pr__diode_pd2nw_11v0_defaults {} {
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
 	sky130_fd_pr__diode_pd2nw_05v5_hvt sky130_fd_pr__diode_pd2nw_11v0} \
-	full_metal 1}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 #----------------------------------------------------------------
@@ -983,6 +1051,20 @@ proc sky130::diode_device {parameters} {
     set w [- $w [* ${dev_surround} 2.0]]
     set l [- $l [* ${dev_surround} 2.0]]
 
+    # Draw via over contact first
+    if {$vias != 0} {
+        pushbox
+        set ch $l
+    	if {$ch < $via_size} {set ch $via_size}
+    	set cw $w
+    	if {$cw < $via_size} {set cw $via_size}
+	box grow n [/ $ch 2]um
+	box grow s [/ $ch 2]um
+	box grow w [/ $cw 2]um
+	box grow e [/ $cw 2]um
+        sky130::mcon_draw
+        popbox
+    }
     set cext [sky130::unionbox $cext [sky130::draw_contact ${w} ${l} \
 		${dev_surround} ${metal_surround} ${contact_size} \
 		${dev_type} ${dev_contact_type} li ${orient}]]
@@ -2063,7 +2145,8 @@ proc sky130::sky130_fd_pr__cap_mim_m3_2_check {parameters} {
 proc sky130::sky130_fd_pr__res_iso_pw_defaults {} {
     return {w 2.650 l 26.50 m 1 nx 1 wmin 2.650 lmin 26.50 \
 	 	rho 975 val 4875 dummy 0 dw 0.25 term 1.0 \
-		guard 1 endcov 100 full_metal 1}
+		guard 1 endcov 100 full_metal 1 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 #----------------------------------------------------------------
@@ -2076,7 +2159,8 @@ proc sky130::sky130_fd_pr__res_generic_po_defaults {} {
 		rho 48.2 val 241 dummy 0 dw 0.0 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
-		full_metal 1}
+		full_metal 1 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 # "term" is rho * 0.06, the distance between xpc edge and CONT.
@@ -2087,7 +2171,8 @@ proc sky130::sky130_fd_pr__res_high_po_0p35_defaults {} {
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
-		full_metal 1 wmax 0.350}
+		full_metal 1 wmax 0.350 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_high_po_0p69_defaults {} {
     return {w 0.690 l 1.00 m 1 nx 1 wmin 0.690 lmin 0.50 \
@@ -2096,7 +2181,8 @@ proc sky130::sky130_fd_pr__res_high_po_0p69_defaults {} {
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
-		full_metal 1 wmax 0.690}
+		full_metal 1 wmax 0.690 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_high_po_1p41_defaults {} {
     return {w 1.410 l 2.00 m 1 nx 1 wmin 1.410 lmin 0.50 \
@@ -2105,7 +2191,8 @@ proc sky130::sky130_fd_pr__res_high_po_1p41_defaults {} {
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
-		full_metal 1 wmax 1.410}
+		full_metal 1 wmax 1.410 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_high_po_2p85_defaults {} {
     return {w 2.850 l 3.00 m 1 nx 1 wmin 2.850 lmin 0.50 \
@@ -2114,7 +2201,8 @@ proc sky130::sky130_fd_pr__res_high_po_2p85_defaults {} {
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
-		full_metal 1 wmax 2.850}
+		full_metal 1 wmax 2.850 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_high_po_5p73_defaults {} {
     return {w 5.730 l 6.00 m 1 nx 1 wmin 5.730 lmin 0.50 \
@@ -2123,7 +2211,8 @@ proc sky130::sky130_fd_pr__res_high_po_5p73_defaults {} {
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
-		full_metal 1 wmax 5.730}
+		full_metal 1 wmax 5.730 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 # "term" is rho * 0.06, the distance between xpc edge and CONT.
@@ -2135,7 +2224,8 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p35_defaults {} {
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
-		full_metal 1}
+		full_metal 1 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_0p69_defaults {} {
     return {w 0.690 l 1.00 m 1 nx 1 wmin 0.690 lmin 0.50 \
@@ -2145,7 +2235,8 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p69_defaults {} {
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
-		full_metal 1}
+		full_metal 1 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_1p41_defaults {} {
     return {w 1.410 l 2.00 m 1 nx 1 wmin 1.410 lmin 0.50 \
@@ -2155,7 +2246,8 @@ proc sky130::sky130_fd_pr__res_xhigh_po_1p41_defaults {} {
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
-		full_metal 1}
+		full_metal 1 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_2p85_defaults {} {
     return {w 2.850 l 3.00 m 1 nx 1 wmin 2.850 lmin 0.50 \
@@ -2165,7 +2257,8 @@ proc sky130::sky130_fd_pr__res_xhigh_po_2p85_defaults {} {
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
-		full_metal 1}
+		full_metal 1 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_5p73_defaults {} {
     return {w 5.730 l 6.00 m 1 nx 1 wmin 5.730 lmin 0.50 \
@@ -2175,7 +2268,8 @@ proc sky130::sky130_fd_pr__res_xhigh_po_5p73_defaults {} {
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
-		full_metal 1}
+		full_metal 1 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 #----------------------------------------------------------------
@@ -2188,15 +2282,17 @@ proc sky130::sky130_fd_pr__res_generic_nd_defaults {} {
 		rho 120 val 600.0 dummy 0 dw 0.05 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
-		full_metal 1}
+		full_metal 1 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
-proc sky130::sky130_fd_pr__mrdn_hv_defaults {} {
+proc sky130::sky130_fd_pr__res_generic_nd__hv_defaults {} {
     return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 \
 		rho 120 val 600.0 dummy 0 dw 0.02 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
-		full_metal 1}
+		full_metal 1 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 #----------------------------------------------------------------
@@ -2209,15 +2305,17 @@ proc sky130::sky130_fd_pr__res_generic_pd_defaults {} {
 		rho 197 val 985.0 dummy 0 dw 0.02 term 0.0 \
 		sterm 0.0 caplen 0.60 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
-		full_metal 1}
+		full_metal 1 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
-proc sky130::sky130_fd_pr__mrdp_hv_defaults {} {
+proc sky130::sky130_fd_pr__res_generic_pd__hv_defaults {} {
     return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 \
 		rho 197 val 985.0 dummy 0 dw 0.02 term 0.0 \
 		sterm 0.0 caplen 0.60 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
-		full_metal 1}
+		full_metal 1 vias 1 \
+		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
 #----------------------------------------------------------------
@@ -2353,11 +2451,11 @@ proc sky130::sky130_fd_pr__res_generic_pd_convert {parameters} {
     return [sky130::res_convert $parameters]
 }
 
-proc sky130::sky130_fd_pr__mrdn_hv_convert {parameters} {
+proc sky130::sky130_fd_pr__res_generic_nd__hv_convert {parameters} {
     return [sky130::res_convert $parameters]
 }
 
-proc sky130::sky130_fd_pr__mrdp_hv_convert {parameters} {
+proc sky130::sky130_fd_pr__res_generic_pd__hv_convert {parameters} {
     return [sky130::res_convert $parameters]
 }
 
@@ -2442,6 +2540,15 @@ proc sky130::res_dialog {device parameters} {
 	if {[dict exists $parameters gbc]} {
 	    magic::add_checkbox gbc "Add bottom guard ring contact" $parameters
 	}
+
+    	magic::add_entry viagb "Bottom guard ring via coverage \[+/-\](%)" $parameters
+    	magic::add_entry viagt "Top guard ring via coverage \[+/-\](%)" $parameters
+    	magic::add_entry viagr "Right guard ring via coverage \[+/-\](%)" $parameters
+    	magic::add_entry viagl "Left guard ring via coverage \[+/-\](%)" $parameters
+    }
+
+    if {[dict exists $parameters vias]} {
+	magic::add_checkbox vias "Add vias over contacts" $parameters
     }
 
     if {[dict exists $parameters snake]} {
@@ -2501,12 +2608,12 @@ proc sky130::sky130_fd_pr__res_generic_pd_dialog {parameters} {
     sky130::res_dialog sky130_fd_pr__res_generic_pd $parameters
 }
 
-proc sky130::sky130_fd_pr__mrdn_hv_dialog {parameters} {
-    sky130::res_dialog sky130_fd_pr__mrdn_hv $parameters
+proc sky130::sky130_fd_pr__res_generic_nd__hv_dialog {parameters} {
+    sky130::res_dialog sky130_fd_pr__res_generic_nd__hv $parameters
 }
 
-proc sky130::sky130_fd_pr__mrdp_hv_dialog {parameters} {
-    sky130::res_dialog sky130_fd_pr__mrdp_hv $parameters
+proc sky130::sky130_fd_pr__res_generic_pd__hv_dialog {parameters} {
+    sky130::res_dialog sky130_fd_pr__res_generic_pd__hv $parameters
 }
 
 proc sky130::sky130_fd_pr__res_generic_l1_dialog {parameters} {
@@ -2548,6 +2655,7 @@ proc sky130::res_device {parameters} {
     set well_res_overlap 0 	;# not a well resistor
     set end_contact_type ""	;# no contacts for metal resistors
     set end_overlap_cont 0	;# additional end overlap on sides
+    set vias 0			;# add vias over contacts
     set res_idtype none
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
@@ -2644,6 +2752,20 @@ proc sky130::res_device {parameters} {
     popbox
 
     if {${end_contact_type} != ""} {
+	# Draw via over contact first
+	if {$vias != 0} {
+            pushbox
+            set ch $res_to_endcont
+    	    if {$ch < $via_size} {set ch $via_size}
+    	    set cw $epl
+    	    if {$cw < $via_size} {set cw $via_size}
+	    box grow n [/ $via_size 2]um
+	    box grow s [- $ch [/ $via_size 2]]um
+	    box grow w [/ $cw 2]um
+	    box grow e [/ $cw 2]um
+            sky130::mcon_draw
+            popbox
+    	}
 	set cext [sky130::unionbox $cext [sky130::draw_contact ${cpl} 0 \
 		${end_surround} ${metal_surround} ${end_contact_size} \
 		${end_type} ${end_contact_type} li horz]]
@@ -2666,6 +2788,20 @@ proc sky130::res_device {parameters} {
     popbox
 
     if {${end_contact_type} != ""} {
+	# Draw via over contact first
+	if {$vias != 0} {
+            pushbox
+            set ch $res_to_endcont
+    	    if {$ch < $via_size} {set ch $via_size}
+    	    set cw $epl
+    	    if {$cw < $via_size} {set cw $via_size}
+	    box grow n [- $ch [/ $via_size 2]]um
+	    box grow s [/ $via_size 2]um
+	    box grow w [/ $cw 2]um
+	    box grow e [/ $cw 2]um
+            sky130::mcon_draw
+            popbox
+    	}
 	set cext [sky130::unionbox $cext [sky130::draw_contact ${cpl} 0 \
 		${end_surround} ${metal_surround} ${end_contact_size} \
 		${end_type} ${end_contact_type} li horz]]
@@ -3343,7 +3479,7 @@ proc sky130::sky130_fd_pr__res_generic_nd_draw {parameters} {
 
 #----------------------------------------------------------------
 
-proc sky130::sky130_fd_pr__mrdn_hv_draw {parameters} {
+proc sky130::sky130_fd_pr__res_generic_nd__hv_draw {parameters} {
 
     # Set a local variable for each rule in ruleset
     foreach key [dict keys $sky130::ruleset] {
@@ -3399,7 +3535,7 @@ proc sky130::sky130_fd_pr__res_generic_pd_draw {parameters} {
 
 #----------------------------------------------------------------
 
-proc sky130::sky130_fd_pr__mrdp_hv_draw {parameters} {
+proc sky130::sky130_fd_pr__res_generic_pd__hv_draw {parameters} {
 
     # Set a local variable for each rule in ruleset
     foreach key [dict keys $sky130::ruleset] {
@@ -3630,6 +3766,7 @@ proc sky130::res_check {device parameters} {
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     set snake 0
+    set guard 0
     set sterm 0.0
     set caplen 0
     set wmax 0
@@ -3703,6 +3840,38 @@ proc sky130::res_check {device parameters} {
 	if {$w > $l} {
 	    puts stderr "Snake resistor width must be < length"
 	    dict set parameters w $l
+	}
+    }
+
+    # Check via coverage for syntax
+    if {$guard == 1} {
+    	if {[catch {expr abs($viagb)}]} {
+	    puts stderr "Guard ring bottom via coverage must be numeric!"
+            dict set parameters viagb 0
+    	} elseif {[expr abs($viagb)] > 100} {
+	    puts stderr "Guard ring bottom via coverage can't be more than 100%"
+            dict set parameters viagb 100
+    	}
+    	if {[catch {expr abs($viagt)}]} {
+	    puts stderr "Guard ring top via coverage must be numeric!"
+            dict set parameters viagt 0
+	} elseif {[expr abs($viagt)] > 100} {
+	    puts stderr "Guard ring top via coverage can't be more than 100%"
+            dict set parameters viagt 100
+	}
+	if {[catch {expr abs($viagr)}]} {
+	    puts stderr "Guard ring right via coverage must be numeric!"
+            dict set parameters viagr 0
+	} elseif {[expr abs($viagr)] > 100} {
+	    puts stderr "Guard ring right via coverage can't be more than 100%"
+            dict set parameters viagr 100
+   	} 
+        if {[catch {expr abs($viagl)}]} {
+	    puts stderr "Guard ring left via coverage must be numeric!"
+            dict set parameters viagl 0
+	} elseif {[expr abs($viagl)] > 100} {
+	   puts stderr "Guard ring left via coverage can't be more than 100%"
+           dict set parameters viagl 100
 	}
     }
 
@@ -3799,12 +3968,12 @@ proc sky130::sky130_fd_pr__res_generic_pd_check {parameters} {
     return [sky130::res_check sky130_fd_pr__res_generic_pd $parameters]
 }
 
-proc sky130::sky130_fd_pr__mrdn_hv_check {parameters} {
-    return [sky130::res_check sky130_fd_pr__mrdn_hv $parameters]
+proc sky130::sky130_fd_pr__res_generic_nd__hv_check {parameters} {
+    return [sky130::res_check sky130_fd_pr__res_generic_nd__hv $parameters]
 }
 
-proc sky130::sky130_fd_pr__mrdp_hv_check {parameters} {
-    return [sky130::res_check sky130_fd_pr__mrdp_hv $parameters]
+proc sky130::sky130_fd_pr__res_generic_pd__hv_check {parameters} {
+    return [sky130::res_check sky130_fd_pr__res_generic_pd__hv $parameters]
 }
 
 proc sky130::sky130_fd_pr__res_generic_l1_check {parameters} {
@@ -3903,7 +4072,9 @@ proc sky130::sky130_fd_pr__nfet_01v8_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
-		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} full_metal 1}
+		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} \
+		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 proc sky130::sky130_fd_pr__nfet_01v8_lvt_defaults {} {
@@ -3912,7 +4083,9 @@ proc sky130::sky130_fd_pr__nfet_01v8_lvt_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
-		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} full_metal 1}
+		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} \
+		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 proc sky130::sky130_fd_bs_flash__special_sonosfet_star_defaults {} {
@@ -3921,7 +4094,9 @@ proc sky130::sky130_fd_bs_flash__special_sonosfet_star_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
-		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} full_metal 1}
+		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} \
+		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 proc sky130::sky130_fd_pr__nfet_g5v0d10v5_defaults {} {
@@ -3930,7 +4105,9 @@ proc sky130::sky130_fd_pr__nfet_g5v0d10v5_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.50 wmin 0.42 \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
-		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} full_metal 1}
+		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} \
+		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 proc sky130::sky130_fd_pr__nfet_05v0_nvt_defaults {} {
@@ -3939,7 +4116,9 @@ proc sky130::sky130_fd_pr__nfet_05v0_nvt_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.50 wmin 0.42 \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
-		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} full_metal 1}
+		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} \
+		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 #----------------------------------------------------------------
@@ -3952,7 +4131,9 @@ proc sky130::sky130_fd_pr__cap_var_lvt_defaults {} {
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.18 wmin 1.0 \
 		compatible {sky130_fd_pr__cap_var_lvt \
-		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} full_metal 1}
+		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} \
+		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 proc sky130::sky130_fd_pr__cap_var_hvt_defaults {} {
@@ -3960,7 +4141,9 @@ proc sky130::sky130_fd_pr__cap_var_hvt_defaults {} {
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.18 wmin 1.0 \
 		compatible {sky130_fd_pr__cap_var_lvt \
-		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} full_metal 1}
+		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} \
+		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 proc sky130::sky130_fd_pr__cap_var_defaults {} {
@@ -3968,7 +4151,9 @@ proc sky130::sky130_fd_pr__cap_var_defaults {} {
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.50 wmin 1.0 \
 		compatible {sky130_fd_pr__cap_var_lvt \
-		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} full_metal 1}
+		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} \
+		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 #----------------------------------------------------------------
@@ -4104,6 +4289,14 @@ proc sky130::mos_dialog {device parameters} {
     if {[dict exists $parameters gtc]} {
 	magic::add_checkbox gtc "Add top guard ring contact" $parameters
     }
+
+    magic::add_entry viasrc "Source via coverage \[+/-\](%)" $parameters
+    magic::add_entry viadrn "Drain via coverage \[+/-\](%)" $parameters
+    magic::add_entry viagate "Gate via coverage \[+/-\](%)" $parameters
+    magic::add_entry viagb "Bottom guard ring via coverage \[+/-\](%)" $parameters
+    magic::add_entry viagt "Top guard ring via coverage \[+/-\](%)" $parameters
+    magic::add_entry viagr "Right guard ring via coverage \[+/-\](%)" $parameters
+    magic::add_entry viagl "Left guard ring via coverage \[+/-\](%)" $parameters
 }
 
 #----------------------------------------------------------------
@@ -4277,6 +4470,10 @@ proc sky130::guard_ring {gw gh parameters} {
     set glc 1		;# Draw left side contact
     set gtc 1		;# Draw right side contact
     set gbc 1		;# Draw left side contact
+    set viagb 0		;# Draw bottom side via
+    set viagt 0		;# Draw top side via
+    set viagr 0		;# Draw right side via
+    set viagl 0		;# Draw left side via
     set full_metal 1	;# Draw full (continuous) metal ring
     set guard_sub_type	 pwell	;# substrate type under guard ring
     set guard_sub_surround  0	;# substrate type surrounds guard ring
@@ -4446,6 +4643,96 @@ proc sky130::guard_ring {gw gh parameters} {
         }
     }
 
+    # Vias
+    if {$viagb != 0} {
+        pushbox
+    	set ch $via_size
+    	set cw [* [- $gw $via_size] [/ [expr abs($viagb)] 100.0]]
+    	if {$cw < $via_size} {set cw $via_size}
+        box move s ${hh}um
+	box grow n [/ $ch 2]um
+	box grow s [/ $ch 2]um
+        set anchor [string index $viagb 0]
+	if {$anchor == "+"} {
+            box move w [/ [- $gw $via_size] 2]um
+	    box grow e ${cw}um
+	} elseif {$anchor == "-"} {
+            box move e [/ [- $gw $via_size] 2]um
+	    box grow w ${cw}um
+	} else {
+	    box grow e [/ $cw 2]um
+	    box grow w [/ $cw 2]um
+	}
+        sky130::mcon_draw horz
+        popbox
+    }
+    if {$viagt != 0} {
+        pushbox
+    	set ch $via_size
+    	set cw [* [- $gw $via_size] [/ [expr abs($viagt)] 100.0]]
+    	if {$cw < $via_size} {set cw $via_size}
+        box move n ${hh}um
+	box grow n [/ $ch 2]um
+	box grow s [/ $ch 2]um
+        set anchor [string index $viagt 0]
+	if {$anchor == "+"} {
+            box move w [/ [- $gw $via_size] 2]um
+	    box grow e ${cw}um
+	} elseif {$anchor == "-"} {
+            box move e [/ [- $gw $via_size] 2]um
+	    box grow w ${cw}um
+	} else {
+	    box grow e [/ $cw 2]um
+	    box grow w [/ $cw 2]um
+	}
+        sky130::mcon_draw horz
+        popbox
+    }
+    if {$viagr != 0} {
+        pushbox
+    	set ch [* [- $gh $via_size] [/ [expr abs($viagr)] 100.0]]
+    	if {$ch < $via_size} {set ch $via_size}
+    	set cw $via_size
+        box move e ${hw}um
+	box grow e [/ $cw 2]um
+	box grow w [/ $cw 2]um
+        set anchor [string index $viagr 0]
+	if {$anchor == "+"} {
+            box move s [/ [- $gh $via_size]]um
+	    box grow n ${ch}um
+	} elseif {$anchor == "-"} {
+            box move n [/ [- $gh $via_size]]um
+	    box grow s ${ch}um
+	} else {
+	    box grow n [/ $ch 2]um
+	    box grow s [/ $ch 2]um
+	}
+        sky130::mcon_draw vert
+        popbox
+    }
+    if {$viagl != 0} {
+        pushbox
+    	set ch [* [- $gh $via_size] [/ [expr abs($viagl)] 100.0]]
+    	if {$ch < $via_size} {set ch $via_size}
+    	set cw $via_size
+        box move w ${hw}um
+	box grow e [/ $cw 2]um
+	box grow w [/ $cw 2]um
+        set anchor [string index $viagl 0]
+	if {$anchor == "+"} {
+            box move s [/ [- $gh $via_size]]um
+	    box grow h ${ch}um
+	} elseif {$anchor == "-"} {
+            box move n [/ [- $gh $via_size]]um
+	    box grow s ${ch}um
+	} else {
+	    box grow n [/ $ch 2]um
+	    box grow s [/ $ch 2]um
+	}
+        sky130::mcon_draw vert
+        popbox
+    }
+
     pushbox
     box grow e ${hw}um
     box grow w ${hw}um
@@ -4478,8 +4765,12 @@ proc sky130::mos_device {parameters} {
     set polycov 100	;# percent coverage of poly contact
     set topc 1		;# draw top poly contact
     set botc 1		;# draw bottom poly contact
-    set evenodd 1	;# even or odd numbered device finger, in X
+    set viasrc 100	;# draw source vias
+    set viadrn 100	;# draw drain vias
+    set viagate 100	;# draw gate vias
+    set evens 1		;# even or odd numbered device finger, in X
     set dev_sub_type ""	;# device substrate type (if different from guard ring)
+    set dev_sub_dist 0	;# device substrate distance (if nondefault dev_sub_type)
     set min_effl 0	;# gate length below which finger pitch must be stretched
     set diff_overlap_cont 0	;# extra overlap of end contact by diffusion
 
@@ -4592,6 +4883,10 @@ proc sky130::mos_device {parameters} {
     set cdw [- ${w} [* ${tsurround} 2]]		;# diff contact height
     set cpl [- ${l} [* ${poly_surround} 2]]     ;# poly contact width
 
+    # Save the full diffusion (source/drain) and poly (gate) lengths
+    set cdwfull $cdw
+    set cplfull $cpl
+
     # Reduce by coverage percentage.  NOTE:  If overlapping multiple devices,
     # keep maximum poly contact coverage.
 
@@ -4604,6 +4899,30 @@ proc sky130::mos_device {parameters} {
     pushbox
     box move e ${he}um
     box move e ${gate_to_diffcont}um
+
+    # Source via on top of contact
+    if {$evens == 1} {set viatype $viasrc} else {set viatype $viadrn}
+    if {$viatype != 0} {
+        pushbox
+        set cw $via_size
+    	set ch [* $cdwfull [/ [expr abs($viatype)] 100.0]]
+    	if {$ch < $via_size} {set ch $via_size}
+	box grow e [/ $cw 2]um
+	box grow w [/ $cw 2]um
+        set anchor [string index $viatype 0]
+	if {$anchor == "+"} {
+            box move s [/ [- $cdwfull $via_size] 2]um
+	    box grow n ${ch}um
+	} elseif {$anchor == "-"} {
+            box move n [/ [- $cdwfull $via_size] 2]um
+	    box grow s ${ch}um
+	} else {
+	    box grow n [/ $ch 2]um
+	    box grow s [/ $ch 2]um
+	}
+        sky130::mcon_draw vert
+        popbox
+    }
     set cext [sky130::unionbox $cext [sky130::draw_contact 0 ${cdw} \
 		${diff_surround} ${metal_surround} ${contact_size}\
 		${diff_type} ${diff_contact_type} li vert]]
@@ -4612,6 +4931,30 @@ proc sky130::mos_device {parameters} {
     pushbox
     box move w ${he}um
     box move w ${gate_to_diffcont}um
+
+    # Drain via on top of contact
+    if {$evens == 1} {set viatype $viadrn} else {set viatype $viasrc}
+    if {$viatype != 0} {
+        pushbox
+        set cw $via_size
+    	set ch [* $cdwfull [/ [expr abs($viatype)] 100.0]]
+    	if {$ch < $via_size} {set ch $via_size}
+	box grow e [/ $cw 2]um
+	box grow w [/ $cw 2]um
+        set anchor [string index $viatype 0]
+	if {$anchor == "+"} {
+            box move s [/ [- $cdwfull $via_size] 2]um
+	    box grow n ${ch}um
+	} elseif {$anchor == "-"} {
+            box move n [/ [- $cdwfull $via_size] 2]um
+	    box grow s ${ch}um
+	} else {
+	    box grow n [/ $ch 2]um
+	    box grow s [/ $ch 2]um
+	}
+        sky130::mcon_draw vert
+        popbox
+    }
     set cext [sky130::unionbox $cext [sky130::draw_contact 0 ${cdw} \
 		${diff_surround} ${metal_surround} ${contact_size} \
 		${diff_type} ${diff_contact_type} li vert]]
@@ -4622,6 +4965,29 @@ proc sky130::mos_device {parameters} {
        pushbox
        box move n ${hw}um
        box move n ${gate_to_polycont}um
+
+       # Gate via on top of contact
+       if {$viagate != 0} {
+           pushbox
+    	   set ch $via_size
+    	   set cw [* $cplfull [/ [expr abs($viagate)] 100.0]]
+    	   if {$cw < $via_size} {set cw $via_size}
+	   box grow n [/ $ch 2]um
+	   box grow s [/ $ch 2]um
+           set anchor [string index $viagate 0]
+	   if {$anchor == "+"} {
+               box move w [/ [- $cplfull $via_size] 2]um
+	       box grow e ${cw}um
+	   } elseif {$anchor == "-"} {
+               box move e [/ [- $cplfull $via_size] 2]um
+	       box grow w ${cw}um
+	   } else {
+	       box grow e [/ $cw 2]um
+	       box grow w [/ $cw 2]um
+	   }
+           sky130::mcon_draw horz
+           popbox
+       }
        set cext [sky130::unionbox $cext [sky130::draw_contact ${cpl} 0 \
 		${poly_surround} ${metal_surround} ${contact_size} \
 		${poly_type} ${poly_contact_type} li horz]]
@@ -4632,6 +4998,29 @@ proc sky130::mos_device {parameters} {
        pushbox
        box move s ${hw}um
        box move s ${gate_to_polycont}um
+
+       # Gate via on top of contact
+       if {$viagate != 0} {
+           pushbox
+    	   set ch $via_size
+    	   set cw [* $cplfull [/ [expr abs($viagate)] 100.0]]
+    	   if {$cw < $via_size} {set cw $via_size}
+	   box grow n [/ $ch 2]um
+	   box grow s [/ $ch 2]um
+           set anchor [string index $viagate 0]
+	   if {$anchor == "+"} {
+               box move w [/ [- $cplfull $via_size] 2]um
+	       box grow e ${cw}um
+	   } elseif {$anchor == "-"} {
+               box move e [/ [- $cplfull $via_size] 2]um
+	       box grow w ${cw}um
+	   } else {
+	       box grow e [/ $cw 2]um
+	       box grow w [/ $cw 2]um
+	   }
+           sky130::mcon_draw horz
+           popbox
+       }
        set cext [sky130::unionbox $cext [sky130::draw_contact ${cpl} 0 \
 		${poly_surround} ${metal_surround} ${contact_size} \
 		${poly_type} ${poly_contact_type} li horz]]
@@ -4663,7 +5052,9 @@ proc sky130::mos_device {parameters} {
 	box grow e ${sub_surround}um
 	box grow w ${sub_surround}um
 	paint ${dev_sub_type}
-	set cext [sky130::unionbox $cext [sky130::getbox]]
+	if {$dev_sub_dist > 0} {
+	    set cext [sky130::unionbox $cext [sky130::getbox]]
+	}
         # puts stdout "Diagnostic:  bounding box is $cext"
     }
 
@@ -4719,6 +5110,7 @@ proc sky130::mos_draw {parameters} {
     # If dx < (poly contact space + poly contact width), then there is not
     # enough room for a row of contacts, so force alternating contacts
 
+    set evens 1
     if {$nf > 1 && $l < $min_allc} {
 	set intc 1
 	set evenodd 1
@@ -4796,8 +5188,8 @@ proc sky130::mos_draw {parameters} {
 	}
     }
 
-    if {$guard != 0} {
-	# Calculate guard ring size (measured to contact center)
+    # Calculate guard ring size (measured to contact center)
+    if {($guard != 0) || (${id_type} != "")} {
 	if {($dev_sub_dist > 0) && ([+ $dev_sub_dist $sub_surround] > $diff_tap_space)} {
 	    set gx [+ $corex [* 2.0 [+ $dev_sub_dist $diff_surround]] $contact_size]
 	} else {
@@ -4827,7 +5219,8 @@ proc sky130::mos_draw {parameters} {
 		set corelly [- $corelly [/ $sdiff 2.0]]
 	    }
 	}
-
+    }
+    if {$guard != 0} {
 	# Draw the guard ring first, as MOS well may interact with guard ring substrate
 	sky130::guard_ring $gx $gy $parameters
     }
@@ -4849,6 +5242,8 @@ proc sky130::mos_draw {parameters} {
     box move w ${corellx}um
     box move s ${corelly}um
     for {set xp 0} {$xp < $nf} {incr xp} {
+	dict set parameters evens $evens
+	set evens [- 1 $evens]
         pushbox
 	if {$intc == 1} {
 	    set evenodd [- 1 $evenodd]
@@ -5177,10 +5572,12 @@ proc sky130::mos_check {device parameters} {
     if {[catch {expr abs($diffcov)}]} {
 	puts stderr "diffcov must be numeric!"
 	set diffcov 100
+	dict set parameters diffcov $diffcov
     }
     if {[catch {expr abs($polycov)}]} {
 	puts stderr "polycov must be numeric!"
 	set polycov 100
+	dict set parameters polycov $polycov
     }
 
     if {$l < $lmin} {
@@ -5212,6 +5609,56 @@ proc sky130::mos_check {device parameters} {
     } elseif {$polycov > 100 } {
 	puts stderr "Poly contact coverage can't be more than 100%"
         dict set parameters polycov 100
+    }
+
+    if {[catch {expr abs($viasrc)}]} {
+	puts stderr "Source via coverage must be numeric!"
+        dict set parameters viasrc 100
+    } elseif {[expr abs($viasrc)] > 100} {
+	puts stderr "Source via coverage can't be more than 100%"
+        dict set parameters viasrc 100
+    }
+    if {[catch {expr abs($viadrn)}]} {
+	puts stderr "Drain via coverage must be numeric!"
+        dict set parameters viadrn 100
+    } elseif {[expr abs($viadrn)] > 100} {
+	puts stderr "Drain via coverage can't be more than 100%"
+        dict set parameters viadrn 100
+    }
+    if {[catch {expr abs($viagate)}]} {
+	puts stderr "Gate via coverage must be numeric!"
+        dict set parameters viagate 100
+    } elseif {[expr abs($viagate)] > 100} {
+	puts stderr "Gate via coverage can't be more than 100%"
+        dict set parameters viagate 100
+    }
+    if {[catch {expr abs($viagb)}]} {
+	puts stderr "Guard ring bottom via coverage must be numeric!"
+        dict set parameters viagb 0
+    } elseif {[expr abs($viagb)] > 100} {
+	puts stderr "Guard ring bottom via coverage can't be more than 100%"
+        dict set parameters viagb 100
+    }
+    if {[catch {expr abs($viagt)}]} {
+	puts stderr "Guard ring top via coverage must be numeric!"
+        dict set parameters viagt 0
+    } elseif {[expr abs($viagt)] > 100} {
+	puts stderr "Guard ring top via coverage can't be more than 100%"
+        dict set parameters viagt 100
+    }
+    if {[catch {expr abs($viagr)}]} {
+	puts stderr "Guard ring right via coverage must be numeric!"
+        dict set parameters viagr 0
+    } elseif {[expr abs($viagr)] > 100} {
+	puts stderr "Guard ring right via coverage can't be more than 100%"
+        dict set parameters viagr 100
+    }
+    if {[catch {expr abs($viagl)}]} {
+	puts stderr "Guard ring left via coverage must be numeric!"
+        dict set parameters viagl 0
+    } elseif {[expr abs($viagl)] > 100} {
+	puts stderr "Guard ring left via coverage can't be more than 100%"
+        dict set parameters viagl 100
     }
 
     # Values must satisfy diffusion-to-tap spacing of 20um.

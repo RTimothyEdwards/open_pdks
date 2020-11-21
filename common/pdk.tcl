@@ -14,7 +14,7 @@ proc magic::u2l {micron} {
     set tech1 [lindex $techlambda 1]
     set tech0 [lindex $techlambda 0]
     set tscale [expr {$tech1 / $tech0}]
-    set lambdaout [expr {((int([magic::cif scale output] * 10000)) / 10000.0)}]
+    set lambdaout [expr {((round([magic::cif scale output] * 10000)) / 10000.0)}]
     return [expr $micron / ($lambdaout*$tscale) ]
 }
 
@@ -25,7 +25,7 @@ proc magic::l2u {lambda} {
     set techlambda [magic::tech lambda]
     set tech1 [lindex $techlambda 1] ; set tech0 [lindex $techlambda 0]
     set tscale [expr {$tech1 / $tech0}]
-    set lambdaout [expr {((int([magic::cif scale output] * 10000)) / 10000.0)}]
+    set lambdaout [expr {((round([magic::cif scale output] * 10000)) / 10000.0)}]
     return [expr $lambda * $lambdaout * $tscale ]
 }
 
@@ -33,14 +33,14 @@ proc magic::l2u {lambda} {
 # Internal to Microns
 #---------------------
 proc magic::i2u { value } {
-    return [expr {((int([magic::cif scale output] * 10000)) / 10000.0) * $value}]
+    return [expr {((round([magic::cif scale output] * 10000)) / 10000.0) * $value}]
 }
 
 #---------------------
 # Microns to Internal
 #---------------------
 proc magic::u2i {value} {
-    return [expr {$value / ((int([magic::cif scale output] * 10000)) / 10000.0)}]
+    return [expr {$value / ((round([magic::cif scale output] * 10000)) / 10000.0)}]
 }
 
 #---------------------
