@@ -231,7 +231,6 @@ proc sky130::addtechmenu {framename} {
 #----------------------------------------------------------------
 
 proc sky130::mcon_draw {{dir default}} {
-   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.17} {
@@ -242,6 +241,7 @@ proc sky130::mcon_draw {{dir default}} {
       puts stderr "Mcon height must be at least 0.17um"
       return
    }
+   suspendall
    paint lic
    pushbox
    if {($w < $h) || ($dir == "vert")} {
@@ -262,7 +262,6 @@ proc sky130::mcon_draw {{dir default}} {
 }
 
 proc sky130::via1_draw {} {
-   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.26} {
@@ -273,6 +272,7 @@ proc sky130::via1_draw {} {
       puts stderr "Via1 height must be at least 0.26um"
       return
    }
+   suspendall
    paint via1
    box grow n 0.05um
    box grow s 0.05um
@@ -288,7 +288,6 @@ proc sky130::via1_draw {} {
 }
 
 proc sky130::via2_draw {} {
-   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.28} {
@@ -299,6 +298,7 @@ proc sky130::via2_draw {} {
       puts stderr "Via2 height must be at least 0.28um"
       return
    }
+   suspendall
    paint via2
    box grow n 0.05um
    box grow s 0.05um
@@ -315,7 +315,6 @@ proc sky130::via2_draw {} {
 
 #ifdef METAL5
 proc sky130::via3_draw {} {
-   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.32} {
@@ -326,6 +325,7 @@ proc sky130::via3_draw {} {
       puts stderr "Via3 height must be at least 0.32um"
       return
    }
+   suspendall
    paint via3
    box grow n 0.05um
    box grow s 0.05um
@@ -341,7 +341,6 @@ proc sky130::via3_draw {} {
 }
 
 proc sky130::via4_draw {} {
-   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 1.18} {
@@ -352,6 +351,7 @@ proc sky130::via4_draw {} {
       puts stderr "Via3 height must be at least 1.18um"
       return
    }
+   suspendall
    paint via4
    box grow n 0.05um
    box grow s 0.05um
@@ -368,7 +368,6 @@ proc sky130::via4_draw {} {
 #endif (METAL5)
 
 proc sky130::subconn_draw {} {
-   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.17} {
@@ -379,6 +378,7 @@ proc sky130::subconn_draw {} {
       puts stderr "Substrate tap height must be at least 0.17um"
       return
    }
+   suspendall
    paint nsc
    box grow c 0.1um
    paint nsd
@@ -389,7 +389,6 @@ proc sky130::subconn_draw {} {
 #----------------------------------------------------------------
 
 proc sky130::mvsubconn_draw {} {
-   suspendall
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.17} {
@@ -400,6 +399,7 @@ proc sky130::mvsubconn_draw {} {
       puts stderr "Substrate tap height must be at least 0.17um"
       return
    }
+   suspendall
    paint mvnsc
    box grow c 0.1um
    paint mvnsd
