@@ -6283,27 +6283,27 @@ variants (),(si)
 #endif (METAL5)
 
  device rsubcircuit sky130_fd_pr__res_high_po_0p35 xhrpoly \
-	xpc pwell,space/w error +res0p35 l=l w=w
+	xpc pwell,space/w error +res0p35 l=l
  device rsubcircuit sky130_fd_pr__res_high_po_0p69  xhrpoly \
-	xpc pwell,space/w error +res0p69 l=l w=w
+	xpc pwell,space/w error +res0p69 l=l
  device rsubcircuit sky130_fd_pr__res_high_po_1p41  xhrpoly \
-	xpc pwell,space/w error +res1p41 l=l w=w
+	xpc pwell,space/w error +res1p41 l=l
  device rsubcircuit sky130_fd_pr__res_high_po_2p85  xhrpoly \
-	xpc pwell,space/w error +res2p85 l=l w=w
+	xpc pwell,space/w error +res2p85 l=l
  device rsubcircuit sky130_fd_pr__res_high_po_5p73  xhrpoly \
-	xpc pwell,space/w error +res5p73 l=l w=w
+	xpc pwell,space/w error +res5p73 l=l
  device rsubcircuit sky130_fd_pr__res_high_po	    xhrpoly \
 	xpc pwell,space/w error l=l w=w
  device rsubcircuit sky130_fd_pr__res_xhigh_po_0p35  uhrpoly \
-	xpc pwell,space/w error +res0p35 l=l w=w
+	xpc pwell,space/w error +res0p35 l=l
  device rsubcircuit sky130_fd_pr__res_xhigh_po_0p69  uhrpoly \
-	xpc pwell,space/w error +res0p69 l=l w=w
+	xpc pwell,space/w error +res0p69 l=l
  device rsubcircuit sky130_fd_pr__res_xhigh_po_1p41  uhrpoly \
-	xpc pwell,space/w error +res1p41 l=l w=w
+	xpc pwell,space/w error +res1p41 l=l
  device rsubcircuit sky130_fd_pr__res_xhigh_po_2p85  uhrpoly \
-	xpc pwell,space/w error +res2p85 l=l w=w
+	xpc pwell,space/w error +res2p85 l=l
  device rsubcircuit sky130_fd_pr__res_xhigh_po_5p73  uhrpoly \
-	xpc pwell,space/w error +res5p73 l=l w=w
+	xpc pwell,space/w error +res5p73 l=l
  device rsubcircuit sky130_fd_pr__res_xhigh_po	     uhrpoly \
 	xpc pwell,space/w error l=l w=w
 

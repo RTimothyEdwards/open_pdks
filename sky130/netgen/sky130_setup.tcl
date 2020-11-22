@@ -125,12 +125,12 @@ set devices {}
 lappend devices sky130_fd_pr__nfet_01v8
 lappend devices sky130_fd_pr__nfet_01v8_lvt
 lappend devices sky130_fd_bs_flash__special_sonosfet_star
-lappend devices sky130_fd_pr__nfet_g5v9d10v5
+lappend devices sky130_fd_pr__nfet_g5v0d10v5
 lappend devices sky130_fd_pr__pfet_01v8
 lappend devices sky130_fd_pr__pfet_01v8_lvt
 lappend devices sky130_fd_pr__pfet_01v8_mvt
 lappend devices sky130_fd_pr__pfet_01v8_hvt
-lappend devices sky130_fd_pr__pfet_g5v9d10v5
+lappend devices sky130_fd_pr__pfet_g5v0d10v5
 lappend devices sky130_fd_pr__special_pfet_pass
 lappend devices sky130_fd_pr__special_nfet_pass
 lappend devices sky130_fd_pr__special_nfet_latch
