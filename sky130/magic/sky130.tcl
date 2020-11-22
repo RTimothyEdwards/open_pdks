@@ -299,17 +299,19 @@ proc sky130::via2_draw {} {
       return
    }
    suspendall
+   pushbox
    paint via2
    box grow n 0.05um
    box grow s 0.05um
    paint m2
-   box grow n -0.05um
-   box grow s -0.05um
+   popbox
+   pushbox
+   box grow n 0.025um
+   box grow s 0.025um
    box grow e 0.05um
    box grow w 0.05um
    paint m3
-   box grow e -0.05um
-   box grow w -0.05um
+   popbox
    resumeall
 }
 
@@ -326,17 +328,19 @@ proc sky130::via3_draw {} {
       return
    }
    suspendall
+   pushbox
    paint via3
-   box grow n 0.05um
-   box grow s 0.05um
+   box grow n 0.005um
+   box grow s 0.005um
+   box grow e 0.005um
+   box grow w 0.005um
    paint m4
-   box grow n -0.05um
-   box grow s -0.05um
+   popbox
+   pushbox
    box grow e 0.05um
    box grow w 0.05um
    paint m3
-   box grow e -0.05um
-   box grow w -0.05um
+   popbox
    resumeall
 }
 
@@ -353,16 +357,13 @@ proc sky130::via4_draw {} {
    }
    suspendall
    paint via4
-   box grow n 0.05um
-   box grow s 0.05um
+   pushbox
+   box grow n 0.12um
+   box grow s 0.12um
+   box grow e 0.12um
+   box grow w 0.12um
    paint m5
-   box grow n -0.05um
-   box grow s -0.05um
-   box grow e 0.05um
-   box grow w 0.05um
-   paint m4
-   box grow e -0.05um
-   box grow w -0.05um
+   popbox
    resumeall
 }
 #endif (METAL5)
@@ -379,10 +380,23 @@ proc sky130::subconn_draw {} {
       return
    }
    suspendall
-   paint nsc
-   box grow c 0.1um
-   paint nsd
-   box grow c -0.1um
+   paint psc
+   pushbox
+   if {$w > $h} {
+      box grow e 0.08um
+      box grow w 0.08um
+      paint li
+      box grow e 0.04um
+      box grow w 0.04um
+   } else {
+      box grow n 0.08um
+      box grow s 0.08um
+      paint li
+      box grow n 0.04um
+      box grow s 0.04um
+   }
+   paint psd
+   popbox
    resumeall
 }
 
@@ -400,10 +414,23 @@ proc sky130::mvsubconn_draw {} {
       return
    }
    suspendall
-   paint mvnsc
-   box grow c 0.1um
-   paint mvnsd
-   box grow c -0.1um
+   paint mvpsc
+   pushbox
+   if {$w > $h} {
+      box grow e 0.08um
+      box grow w 0.08um
+      paint li
+      box grow e 0.04um
+      box grow w 0.04um
+   } else {
+      box grow n 0.08um
+      box grow s 0.08um
+      paint li
+      box grow n 0.04um
+      box grow s 0.04um
+   }
+   paint mvpsd
+   popbox
    resumeall
 }
 
