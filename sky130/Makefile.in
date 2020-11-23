@@ -370,9 +370,13 @@ vendor-a:
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
 		-spice %l/latest/cells/*/*.spice filter=custom/scripts/rename_cells.py \
 		-library primitive sky130_fd_pr |& tee -a ${SKY130A}_install.log
-	# Custom:  Add "short" resistor model to the r+c models file
+	# Custom:  Add "short" resistor model and subcircuit to the r+c models file
 	cat ./custom/models/short.spice >> \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice 
+	# Custom:  Add diodes as subcircuits to the r+c models file
+	cat ./custom/models/diode.spice >> \
+		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice 
+
 	# Install custom additions to I/O pad library
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-verilog %l/verilog/*.v \
