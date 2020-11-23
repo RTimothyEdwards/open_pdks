@@ -1,0 +1,44 @@
+magic
+tech sky130A
+magscale 1 2
+timestamp 1602966501
+<< error_p >>
+rect 1419 2275 1664 2282
+rect 2097 2235 2343 2245
+rect 2096 2201 2342 2211
+rect 2972 2208 3006 2242
+rect 2667 2191 2683 2207
+rect 2717 2191 2733 2207
+rect 3429 2191 3448 2541
+rect 2683 2175 2699 2183
+rect 2701 2175 2717 2183
+<< poly >>
+rect 2665 2225 2733 2239
+rect 2665 2191 2683 2225
+rect 2717 2191 2733 2225
+rect 2665 2172 2733 2191
+<< polycont >>
+rect 2683 2191 2717 2225
+<< locali >>
+rect 1419 2248 1664 2275
+rect 2097 2235 2343 2272
+rect 2683 2225 2717 2277
+rect 2096 2174 2342 2211
+rect 2972 2208 3006 2242
+rect 2683 2183 2717 2191
+<< rlocali >>
+rect 3390 2191 3429 2541
+<< labels >>
+flabel comment s 2260 2050 2260 2050 0 FreeSans 560 0 0 0 li.3
+flabel comment s 1549 2081 1549 2081 0 FreeSans 560 0 0 0 li.1
+flabel comment s 2708 2080 2708 2080 0 FreeSans 560 0 0 0 li.5
+flabel comment s 3017 2100 3017 2100 0 FreeSans 560 0 0 0 li.6
+flabel comment s 3426 2104 3426 2104 0 FreeSans 560 0 0 0 li.7
+flabel comment s 574 2516 580 2516 0 FreeSans 560 0 0 0 Correct_by_design
+flabel comment s 510 2232 510 2232 0 FreeSans 560 0 0 0 licon.4
+flabel comment s 393 3188 393 3188 0 FreeSans 800 0 0 0 Li
+flabel comment s 500 1677 500 1677 0 FreeSans 560 0 0 0 Not implemented
+flabel comment s 568 1459 568 1459 0 FreeSans 560 0 0 0 li 1a
+flabel comment s 574 1270 574 1270 0 FreeSans 560 0 0 0 li.2
+flabel comment s 530 1094 530 1094 0 FreeSans 560 0 0 0 li.3a
+<< end >>

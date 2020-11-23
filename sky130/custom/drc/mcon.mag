@@ -1,0 +1,39 @@
+magic
+tech sky130A
+magscale 1 2
+timestamp 1602970211
+<< error_p >>
+rect 1530 2301 1564 2305
+rect 2170 2285 2174 2319
+rect 2208 2285 2212 2319
+<< locali >>
+rect 1530 2301 1564 2349
+rect 1530 2237 1564 2271
+rect 2140 2319 2174 2367
+rect 2140 2251 2174 2285
+rect 2208 2319 2242 2367
+rect 2208 2251 2242 2285
+<< viali >>
+rect 1530 2271 1564 2301
+rect 2140 2285 2174 2319
+rect 2208 2285 2242 2319
+<< metal1 >>
+rect 2083 2319 2275 2325
+rect 1473 2301 1629 2307
+rect 1473 2271 1530 2301
+rect 1564 2271 1629 2301
+rect 2083 2285 2140 2319
+rect 2174 2285 2208 2319
+rect 2242 2285 2275 2319
+rect 2083 2279 2275 2285
+rect 1473 2265 1629 2271
+<< labels >>
+flabel comment s 574 2516 580 2516 0 FreeSans 560 0 0 0 Correct_by_design
+flabel comment s 500 1677 500 1677 0 FreeSans 560 0 0 0 Not implemented
+flabel comment s 393 3188 393 3188 0 FreeSans 800 0 0 0 Mcon
+flabel comment s 1549 2081 1549 2081 0 FreeSans 560 0 0 0 mcon.1
+flabel comment s 2193 2133 2193 2133 0 FreeSans 560 0 0 0 mcon.2
+flabel comment s 510 2232 510 2232 0 FreeSans 560 0 0 0 mcon.3
+flabel comment s 568 1459 568 1459 0 FreeSans 560 0 0 0 mcon.3a
+flabel comment s 536 2059 536 2059 0 FreeSans 560 0 0 0 mcon.4
+<< end >>

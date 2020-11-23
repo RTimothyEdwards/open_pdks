@@ -1,0 +1,34 @@
+magic
+tech sky130A
+timestamp 1597517613
+<< nwell >>
+rect 693 354 1511 830
+<< pmosmvt >>
+rect 868 458 947 661
+<< pmoshvt >>
+rect 1027 458 1092 661
+<< pdiff >>
+rect 798 458 868 661
+rect 947 458 1027 661
+rect 1092 458 1155 661
+<< nsubdiff >>
+rect 1280 542 1360 557
+rect 1280 450 1360 465
+<< nsubdiffcont >>
+rect 1280 465 1360 542
+<< poly >>
+rect 868 661 947 716
+rect 1027 661 1092 720
+rect 868 403 947 458
+rect 1027 401 1092 458
+<< locali >>
+rect 1280 542 1360 557
+rect 1280 450 1360 465
+<< labels >>
+flabel comment s 835 1140 835 1140 0 FreeSans 280 0 0 0 Use_cif_see_HVTR
+flabel comment s 146 1124 146 1124 0 FreeSans 400 0 0 0 Hvtr
+flabel comment s 266 788 269 788 0 FreeSans 280 0 0 0 Correct_by_design
+flabel comment s 277 694 277 694 0 FreeSans 280 0 0 0 hvtr.1
+flabel comment s 267 620 267 623 0 FreeSans 280 0 0 0 hvtr.2
+flabel comment s 256 528 256 529 0 FreeSans 280 0 0 0 hvtr.3
+<< end >>
