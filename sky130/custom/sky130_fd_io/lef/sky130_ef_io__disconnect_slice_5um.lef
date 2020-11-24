@@ -1,0 +1,12 @@
+MACRO sky130_ef_io__disconnect_slice_5um
+  CLASS PAD AREAIO ;
+  FOREIGN sky130_ef_io__disconnect_slice_5um ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 5.000 BY 197.965 ;
+  OBS
+      LAYER met4 ;
+        RECT 0.000 0.000 5.000 197.965 ;
+      LAYER met5 ;
+        RECT 0.000 0.000 5.000 197.965 ;
+  END
+END sky130_ef_io__disconnect_slice_5um
