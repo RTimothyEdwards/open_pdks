@@ -5391,18 +5391,25 @@ variants *
 
  width *li 170 "Local interconnect width < %d (li.1)"
  width rli 290 "Local interconnect width < %d (li.7)"
- width coreli 140 "Core local interconnect width < %d (li.c1)"
+
+ # Note:  coreli width rule uses edge4way rule so as not to imply that
+ # all li contact types can also be minimum width 0.14um.
+ edge4way ~(coreli,pc,ndc,nsc,pdc,psc)/li coreli 140 coreli,pc,ndc,nsc,pdc,psc \
+	0 0 "Core local interconnect width < %d (li.c1)"
+
+ # width coreli 140 "Core local interconnect width < %d (li.c1)"
+
  spacing allli allli,*obsli 170 touching_ok  "Local interconnect spacing < %d (li.3)"
  spacing coreli allli,*obsli 140 touching_ok  "Core local interconnect spacing < %d (li.c2)"
 
- surround pc/li *li 80 directional \
+ surround pc/li *li,coreli 80 directional \
 	"Local interconnect overlap of poly contact < %d in one direction (li.5)"
 
  surround ndc/li,nsc/li,pdc/li,psc/li,ndic/li,pdic/li,mvndc/li,mvnsc/li,mvpdc/li,mvpsc/li,mvndic/li,mvpdic/li \
-	*li,rli 80 directional \
+	*li,rli,coreli 80 directional \
 	"Local interconnect overlap of diffusion contact < %d in one direction (li.5)"
 
- area allli,*obsli 56100 170 "Local interconnect minimum area < %a (li.6)"
+ area allli,*obsli,coreli 56100 170 "Local interconnect minimum area < %a (li.6)"
 
  angles *locali,rli 90 "Only 90 degree angles permitted on local interconnect (x.2)"
  angles coreli 45 \
