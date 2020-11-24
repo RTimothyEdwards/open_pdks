@@ -2,7 +2,17 @@
 set ::power_nets $::env(VDD_PIN)
 set ::ground_nets $::env(GND_PIN)
 
-set ::macro_blockage_layer_list "li1 met1 met2 met3 met4 met5"
+# to parameterize -- needs a PDNGEN fix
+set pdngen::global_connections {
+  VPWR {
+    {inst_name .* pin_name VPWR}
+    {inst_name .* pin_name VPB}
+  }
+  VGND {
+    {inst_name .* pin_name VGND}
+    {inst_name .* pin_name VNB}
+  }
+}
 
 # Used if the design is the core of the chip
 set stdcell_core {
@@ -55,8 +65,8 @@ pdngen::specify_grid stdcell $stdcell
 # A general macro that follows the premise of the set heirarchy. You may want to modify this or add other macro configs
 pdngen::specify_grid macro {
     orient {R0 R180 MX MY R90 R270 MXR90 MYR90}
-    power_pins "VDD VPWR"
-    ground_pins "VSS VGND"
+    power_pins "VDD VPWR vdd"
+    ground_pins "VSS VGND gnd"
     blockages "li1 met1 met2 met3 met4"
     straps {
     }
@@ -64,10 +74,6 @@ pdngen::specify_grid macro {
 }
 
 set ::halo [expr min($::env(FP_HORIZONTAL_HALO), $::env(FP_VERTICAL_HALO))]
-
-
-# Metal layer for rails on every row
-set ::rails_mlayer "met1" ;
 
 # POWER or GROUND #Std. cell rails starting with power or ground rails at the bottom of the core area
 set ::rails_start_with "POWER" ;
