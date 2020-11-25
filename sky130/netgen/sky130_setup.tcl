@@ -229,8 +229,8 @@ foreach dev $devices {
 set devices {}
 lappend devices sky130_fd_pr__npn_05v5_W1p00L1p00
 lappend devices sky130_fd_pr__npn_05v5_W1p00L2p00
-lappend devices sky130_fd_pr__php_05v5_W0p68L0p68
-lappend devices sky130_fd_pr__php_05v5_W3p40L3p40
+lappend devices sky130_fd_pr__pnp_05v5_W0p68L0p68
+lappend devices sky130_fd_pr__pnp_05v5_W3p40L3p40
 
 #ifdef METAL5
 lappend devices sky130_fd_pr__cap_vpp_11p5x11p7_lim5_shield
