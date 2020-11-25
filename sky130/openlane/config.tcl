@@ -12,21 +12,36 @@ set ::env(GND_PIN) "VGND"
 #ifdef EF_FORMAT
 set ::env(TECH_LEF) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/techLEF/$::env(STD_CELL_LIBRARY)/$::env(STD_CELL_LIBRARY).tlef"
 set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lef/$::env(STD_CELL_LIBRARY)/*.lef"]
+
 set ::env(GPIO_PADS_LEF) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lef/sky130_fd_io/sky130_fd_io.lef\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lef/sky130_fd_io/sky130_ef_io.lef\
 	"
 # sky130_fd_io.v is not parsable by yosys, so it cannot be included it here yet...
 set ::env(GPIO_PADS_VERILOG) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/verilog/sky130_fd_io/sky130_ef_io.v"
+set ::env(GPIO_PADS_VERILOG) "\
+	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/verilog/sky130_fd_io/sky130_ef_io.v\
+	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/verilog/sky130_fd_io/sky130_ef_io__gpiov2_pad_wrapped.v\
+	"
 #else (!EF_FORMAT)
 set ::env(TECH_LEF) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/$::env(STD_CELL_LIBRARY).tlef"
 set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lef/*.lef"]
+
 set ::env(GPIO_PADS_LEF) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lef/sky130_fd_io.lef\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lef/sky130_ef_io.lef\
 	"
-set ::env(GPIO_PADS_VERILOG) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/verilog/sky130_ef_io.v"
+
+set ::env(GPIO_PADS_VERILOG) "\
+	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/verilog/sky130_ef_io.v\
+	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/verilog/sky130_ef_io__gpiov2_pad_wrapped.v\
+	"
 #endif (!EF_FORMAT)
+
+set ::env(GPIO_PADS_LEF_CORE_SIDE) "\
+	$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/custom_cells/lef/sky130_fd_io_core.lef\
+	$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/custom_cells/lef/sky130_ef_io_core.lef\
+	"
 
 # magic setup
 #ifdef EF_FORMAT

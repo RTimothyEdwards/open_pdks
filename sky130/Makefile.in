@@ -302,6 +302,7 @@ klayout-a: klayout/${TECH}.lyp klayout/${TECH}.lyt
 openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_A}
 	mkdir -p ${OPENLANE_STAGING_A}
+	rm -f ${OPENLANE_STAGING_A}/custom_cells
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_hd
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_hs
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_ls
@@ -314,7 +315,6 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/tracks.info
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/no_synth.cells
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/sky130_fd_sc_hd__fakediode_2.gds
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tracks.info
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/no_synth.cells
@@ -332,12 +332,12 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/no_synth.cells
 	rm -f ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/config.tcl
 	rm -f ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/tracks.info
+	cp -r openlane/custom_cells ${OPENLANE_STAGING_A}
 	${CPP} ${SKY130A_DEFS} openlane/common_pdn.tcl > ${OPENLANE_STAGING_A}/common_pdn.tcl
 	${CPP} ${SKY130A_DEFS} openlane/config.tcl > ${OPENLANE_STAGING_A}/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/no_synth.cells
-	cp openlane/sky130_fd_sc_hd/sky130_fd_sc_hd__fakediode_2.gds ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/sky130_fd_sc_hd__fakediode_2.gds
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/no_synth.cells
@@ -404,6 +404,11 @@ vendor-a:
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_io/verilog/*.*.v
+	# Install custom additions to standard cell libraries
+	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
+		-gds %l/gds/*.gds \
+		-lef %l/lef/*.lef \
+		-library digital sky130_fd_sc_hd |& tee -a ${SKY130A}_install.log
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-techlef %l/latest/tech/*.tlef \

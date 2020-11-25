@@ -32,6 +32,7 @@ MACRO sky130_ef_io__vssio_lvc_pad
     END
   END AMUXBUS_B
   PIN DRN_LVC1
+    ANTENNADIFFAREA 6.889900 ;
     DIRECTION INOUT ;
     USE POWER ;
     PORT
@@ -40,6 +41,7 @@ MACRO sky130_ef_io__vssio_lvc_pad
     END
   END DRN_LVC1
   PIN DRN_LVC2
+    ANTENNADIFFAREA 3.870900 ;
     DIRECTION INOUT ;
     USE POWER ;
     PORT
