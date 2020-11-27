@@ -6320,11 +6320,13 @@ variants (),(si)
 	*pdiff nwell    error l=l w=w
  device rsubcircuit sky130_fd_pr__res_iso_pw   rpw \
         pwell dnwell error l=l w=w
+ device rsubcircuit sky130_fd_pr__res_generic_nd__hv  mvndiffres \
+	*mvndiff pwell,space/w error l=l w=w
+ device rsubcircuit sky130_fd_pr__res_generic_pd__hv  mvpdiffres \
+	*mvpdiff nwell  error l=l w=w
 
  device resistor sky130_fd_pr__res_generic_po rmp *poly
  device resistor sky130_fd_pr__res_generic_po mrp1 *poly
- device resistor sky130_fd_pr__res_generic_nd__hv  mvndiffres *mvndiff
- device resistor sky130_fd_pr__res_generic_pd__hv  mvpdiffres *mvpdiff
 
  device subcircuit  sky130_fd_pr__diode_pd2nw_05v5 *pdiode \
 	nwell a=area

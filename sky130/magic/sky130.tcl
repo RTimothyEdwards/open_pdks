@@ -1423,12 +1423,14 @@ proc sky130::sky130_fd_pr__diode_pd2nw_11v0_draw {parameters} {
 proc sky130::sky130_fd_pr__cap_mim_m3_1_defaults {} {
     return {w 2.00 l 2.00 val 4.0 carea 1.00 cperi 0.17 \
 		nx 1 ny 1 dummy 0 square 0 lmin 2.00 wmin 2.00 \
-		lmax 30.0 wmax 30.0 dc 0 bconnect 1 tconnect 1}
+		lmax 30.0 wmax 30.0 dc 0 bconnect 1 tconnect 1 \
+		ccov 100}
 }
 proc sky130::sky130_fd_pr__cap_mim_m3_2_defaults {} {
     return {w 2.00 l 2.00 val 4.0 carea 1.00 cperi 0.17 \
 		nx 1 ny 1 dummy 0 square 0 lmin 2.00 wmin 2.00 \
-		lmax 30.0 wmax 30.0 dc 0 bconnect 1 tconnect 1}
+		lmax 30.0 wmax 30.0 dc 0 bconnect 1 tconnect 1 \
+		ccov 100}
 }
 #endif (MIM)
 
@@ -1533,6 +1535,9 @@ proc sky130::cap_dialog {device parameters} {
     if {[dict exists $parameters tconnect]} {
 	magic::add_checkbox tconnect "Connect top plates in array" $parameters
     }
+    if {[dict exists $parameters ccov]} {
+    	magic::add_entry ccov "Capacitor contact coverage \[+/-\](%)" $parameters
+    }
     if {[dict exists $parameters guard]} {
 	magic::add_checkbox guard "Add guard ring" $parameters
     }
@@ -1578,9 +1583,13 @@ proc sky130::cap_device {parameters} {
     set cap_surround 0
     set bot_surround 0
     set top_surround 0
+    set end_spacing 0
     set bconnect 0	    ;# bottom plates are connected in array
     set cap_spacing 0	    ;# cap spacing in array
     set top_metal_space 0   ;# top metal spacing (if larger than cap spacing)
+    set top_metal_width 0   ;# top metal minimum width
+    set contact_size 0	    ;# cap contact minimum size
+    set ccov 100	    ;# amount of contact coverage
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -1604,11 +1613,34 @@ proc sky130::cap_device {parameters} {
     box grow s ${hl}um
     paint ${cap_type}
     pushbox
+
+    # Find contact width if ccov is other than 100
+    set cmaxw [- $w [* $cap_surround 2]]
+    set cw [* $cmaxw [/ [expr abs($ccov)] 100.0]]
+    # Contact width must meet minimum
+    if {$cw < $contact_size} {set cw $contact_size}
+    if {$cw < $top_metal_width} {set cw $top_metal_width}
+    # Difference between maximum contact width and actual contact width
+    set cdif [- $cmaxw $cw]
+
+    # Reduce the box to the maximum contact area
     box grow n -${cap_surround}um
     box grow s -${cap_surround}um
     box grow e -${cap_surround}um
     box grow w -${cap_surround}um
+
+    set anchor [string index $ccov 0]
+    if {$anchor == "+"} {
+	box grow e -${cdif}um
+    } elseif {$anchor == "-"} {
+	box grow w -${cdif}um
+    } else {
+        set cdif [/ ${cdif} 2]
+	box grow w -${cdif}um
+	box grow e -${cdif}um
+    }
     paint ${cap_contact_type}
+
     pushbox
     box grow n ${top_surround}um
     box grow s ${top_surround}um
@@ -1629,8 +1661,24 @@ proc sky130::cap_device {parameters} {
     property FIXED_BBOX [box values]
     set cext [sky130::unionbox $cext [sky130::getbox]]
 
+    # Calculate the distance from the top metal on the cap contact
+    # to the top metal on the end contact.
+    set top_met_sep [+ $end_spacing [- $cdif $top_surround]]
+
+    # Diagnostic!
+    puts stdout "cdif = $cdif"
+    puts stdout "top_met_sep = $top_met_sep"
+
+    # Increase end spacing if top metal spacing rule is not met
+    set loc_end_spacing $end_spacing
+    if {$top_met_sep < $top_metal_space} {
+	set loc_end_spacing [+ $loc_end_spacing [- $top_metal_space $top_met_sep]]
+    }
+    # Diagnostic!
+    puts stdout "loc_end_spacing = $loc_end_spacing"
+
     # Extend bottom metal under contact to right
-    box grow e ${end_spacing}um
+    box grow e ${loc_end_spacing}um
     set chw [/ ${contact_size} 2.0]
     box grow e ${chw}um
     box grow e ${end_surround}um
@@ -1652,7 +1700,7 @@ proc sky130::cap_device {parameters} {
     pushbox
     box move e ${hw}um
     box move e ${bot_surround}um
-    box move e ${end_spacing}um
+    box move e ${loc_end_spacing}um
     set cl [- [+ ${lcont} [* ${bot_surround} 2.0]] [* ${end_surround} 2.0]]
     set cl [- ${cl} ${metal_surround}]  ;# see below
     set cext [sky130::unionbox $cext [sky130::draw_contact 0 ${cl} \
@@ -2023,7 +2071,7 @@ proc sky130::sky130_fd_pr__cap_mim_m3_1_draw {parameters} {
 	    cap_surround	0.2 \
 	    top_surround	0.005 \
 	    end_surround	0.1 \
-	    end_spacing		0.60 \
+	    end_spacing		0.1 \
 	    contact_size	0.32 \
 	    metal_surround	0.08 \
     ]
@@ -2043,7 +2091,7 @@ proc sky130::sky130_fd_pr__cap_mim_m3_2_draw {parameters} {
 	    cap_surround	0.2 \
 	    top_surround	0.12 \
 	    end_surround	0.1 \
-	    end_spacing		2.10 \
+	    end_spacing		0.1 \
 	    contact_size	1.18 \
 	    metal_surround	0.21 \
 	    top_metal_width	1.6 \
@@ -2063,6 +2111,7 @@ proc sky130::cap_check {parameters} {
     # In case wmax and/or lmax are undefined
     set lmax 0
     set wmax 0
+    set ccov 100
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -2118,6 +2167,14 @@ proc sky130::cap_check {parameters} {
 	dict set parameters l $lmax
 	set l $lmax
     } 
+    if {[catch {expr abs($ccov)}]} {
+	puts stderr "Capacitor contact coverage must be numeric!"
+        dict set parameters ccov 100
+    } elseif {[expr abs($ccov)] > 100} {
+	puts stderr "Capaitor contact coverage can't be more than 100%"
+        dict set parameters ccov 100
+    }
+
     # Calculate value from L and W
     set cval [expr ($l * $w * $carea + 2 * ($l + $w) * $cperi - 4 * $dc)]
     dict set parameters val [magic::float2spice $cval]
