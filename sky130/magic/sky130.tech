@@ -5313,8 +5313,6 @@ variants (fast),(full)
 	"Diffusion contact to standard cell gate < %d (licon.11)"
  spacing mvndc,mvpdc mvnfet,mvnnfet,mvpfet 55 touching_illegal \
 	"Diffusion contact to gate < %d (licon.11)"
- spacing ndc,mvndc rnd,mvrnd 60 touching_illegal "Diffusion contact to rndiff < %d ()"
- spacing pdc,mvpdc rdp,mvrdp 60 touching_illegal "Diffusion contact to rndiff < %d ()"
  spacing nsc varactor,varhvt 250 touching_illegal \
 	"Diffusion contact to varactor gate < %d (licon.10)"
  spacing mvnsc mvvar 250 touching_illegal \
