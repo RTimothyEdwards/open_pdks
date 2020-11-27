@@ -5111,7 +5111,7 @@ drc
 
  width *ndiff,nfet,scnfet,npd,npass,*nsd,*ndiode,ndiffres,*pdiff,pfet,scpfet,scpfethvt,ppu,*psd,*pdiode,pdiffres \
 	150 "Diffusion width < %d (diff/tap.1)"
- width *mvndiff,mvnfet,mvnnfet,*mvndiode,*nndiode,mvndiffres,*mvpdiff,mvpfet,*mvpdiode 290 \
+ width *mvndiff,mvnfet,mvnnfet,*mvndiode,*nndiode,mvndiffres,*mvpdiff,mvpfet,*mvpdiode,mvpdiffres 290 \
 	"MV Diffusion width < %d (diff/tap.14)"
 
  width *mvnsd,*mvpsd 150 "MV Tap width < %d (diff/tap.1)"
@@ -5318,9 +5318,10 @@ variants (fast),(full)
  spacing mvnsc mvvar 250 touching_illegal \
 	"Diffusion contact to varactor gate < %d (licon.10)"
 
- surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt 40 absence_illegal \
+ surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt,rnd 40 absence_illegal \
 	"N-diffusion overlap of N-diffusion contact < %d (licon.5a)"
- surround pdc/a *pdiff,pfet,scpfet,scpfethvt,ppu,pfethvt,pfetmvt,pfetlvt 40 absence_illegal \
+ surround pdc/a *pdiff,pfet,scpfet,scpfethvt,ppu,pfethvt,pfetmvt,pfetlvt,rpd \
+	40 absence_illegal \
 	"P-diffusion overlap of P-diffusion contact < %d (licon.5a)"
  surround ndic/a *ndi 40 absence_illegal \
 	"N-diode overlap of N-diode contact < %d (licon.5a)"
@@ -5332,9 +5333,10 @@ variants (fast),(full)
  spacing nsc/a allpactivenontap 60 touching_illegal \
 	"Min. space between N-tap contact and butting P diffusion < %d (licon.5b)"
 
- surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt 60 directional \
+ surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt,rnd 60 directional \
 	"N-diffusion overlap of N-diffusion contact < %d in one direction (licon.5c)"
- surround pdc/a *pdiff,pfet,scpfet,scpfethvt,ppu,pfethvt,pfetmvt,pfetlvt 60 directional \
+ surround pdc/a *pdiff,pfet,scpfet,scpfethvt,ppu,pfethvt,pfetmvt,pfetlvt,rpd \
+	 60 directional \
 	"P-diffusion overlap of P-diffusion contact < %d in one direction (licon.5c)"
  surround ndic/a *ndi 60 directional \
 	"N-diode overlap of N-diode contact < %d in one direction (licon.5c)"
@@ -5346,9 +5348,9 @@ variants (fast),(full)
  surround psc/a *psd 120 directional \
 	"P-tap overlap of P-tap contact < %d in one direction (licon.7)"
 
- surround mvndc/a *mvndiff,mvnfet 40 absence_illegal \
+ surround mvndc/a *mvndiff,mvnfet,mvrnd 40 absence_illegal \
 	"N-diffusion overlap of N-diffusion contact < %d (licon.5a)"
- surround mvpdc/a *mvpdiff,mvpfet 40 absence_illegal \
+ surround mvpdc/a *mvpdiff,mvpfet,mvrpd 40 absence_illegal \
 	"P-diffusion overlap of P-diffusion contact < %d (licon.5a)"
  surround mvndic/a *mvndi 40 absence_illegal \
 	"N-diode overlap of N-diode contact < %d (licon.5a)"
@@ -5360,9 +5362,9 @@ variants (fast),(full)
  spacing mvnsc/a allpdiffmvnontap 60 touching_illegal \
 	"Min. space between N-tap contact and butting P diffusion < %d (licon.5b)"
 
- surround mvndc/a *mvndiff,mvnfet 60 directional \
+ surround mvndc/a *mvndiff,mvnfet,mvrnd 60 directional \
 	"N-diffusion overlap of N-diffusion contact < %d in one direction (licon.5c)"
- surround mvpdc/a *mvpdiff,mvpfet 60 directional \
+ surround mvpdc/a *mvpdiff,mvpfet,mvrpd 60 directional \
 	"P-diffusion overlap of P-diffusion contact < %d in one direction (licon.5c)"
  surround mvndic/a *mvndi 60 directional \
 	"N-diode overlap of N-diode contact < %d in one direction (licon.5c)"
