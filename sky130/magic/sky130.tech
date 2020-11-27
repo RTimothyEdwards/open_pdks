@@ -5718,16 +5718,16 @@ variants (fast),(full)
 
  width *mimcap 1000 "MiM cap width < %d (capm.1)"
  spacing *mimcap *mimcap 840 touching_ok "MiM cap spacing < %d (capm.2a)"
- spacing *mimcap via3/m3 140 touching_illegal \
-	"MiM cap spacing to via3 < %d (capm.5)"
- surround *mimcc *mimcap 200 absence_illegal \
-	"MiM cap must surround MiM cap contact by %d (capm.4)"
+ spacing *mimcap via3/m3 80 touching_illegal \
+	"MiM cap spacing to via3 < %d (capm.5 - via3.4)"
+ surround *mimcc *mimcap 80 absence_illegal \
+	"MiM cap must surround MiM cap contact by %d (capm.4 - via3.4)"
  rect_only *mimcap "MiM cap must be rectangular (capm.7)
 
  surround *mimcap *metal3/m3 140 absence_illegal \
 	"Metal3 must surround MiM cap by %d (capm.3)"
- spacing via2 *mimcap 140 touching_illegal "MiM cap spacing to via2 < %d (capm.8)"
- spacing via3 *mimcap 140 touching_illegal "MiM cap spacing to via3 < %d (capm.8)"
+ spacing via2 *mimcap 100 touching_illegal \
+	"MiM cap spacing to via2 < %d (capm.8 - via2.4)"
  spacing *mimcap *metal3/m3 500 surround_ok \
 	"MiM cap spacing to unrelated metal3 < %d (capm.11)"
 
@@ -5746,16 +5746,16 @@ variants (fast),(full)
 
  width *mimcap2 1000 "MiM2 cap width < %d (cap2m.1)"
  spacing *mimcap2 *mimcap2 840 touching_ok "MiM2 cap spacing < %d (cap2m.2a)"
- spacing *mimcap2 via4/m4 140 touching_illegal \
-	"MiM2 cap spacing to via4 < %d (cap2m.5)"
- surround *mim2cc *mimcap2 200 absence_illegal \
-	"MiM2 cap must surround MiM cap 2 contact by %d (cap2m.4)"
+ spacing *mimcap2 via4/m4 10 touching_illegal \
+	"MiM2 cap spacing to via4 < %d (cap2m.5 - via4.4)"
+ surround *mim2cc *mimcap2 10 absence_illegal \
+	"MiM2 cap must surround MiM cap 2 contact by %d (cap2m.4 - via4.4)"
  rect_only *mimcap2 "MiM2 cap must be rectangular (cap2m.7)
 
  surround *mimcap2 *metal4/m4 140 absence_illegal \
 	"Metal4 must surround MiM2 cap by %d (cap2m.3)"
- spacing via3 *mimcap2 140 touching_illegal "MiM2 cap spacing to via3 < %d (cap2m.8)"
- spacing via4 *mimcap2 140 touching_illegal "MiM2 cap spacing to via4 < %d (cap2m.8)"
+ spacing via3 *mimcap2 80 touching_illegal \
+	"MiM2 cap spacing to via3 < %d (cap2m.8 - via3.4)"
  spacing *mimcap2 *metal4/m4 500 surround_ok \
 	"MiM2 cap spacing to unrelated metal4 < %d (cap2m.11)"
 

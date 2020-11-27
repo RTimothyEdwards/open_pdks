@@ -302,7 +302,7 @@ klayout-a: klayout/${TECH}.lyp klayout/${TECH}.lyt
 openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_A}
 	mkdir -p ${OPENLANE_STAGING_A}
-	rm -f ${OPENLANE_STAGING_A}/custom_cells
+	rm -f ${OPENLANE_STAGING_A}/custom_cells/*
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_hd
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_hs
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_fd_sc_ls
