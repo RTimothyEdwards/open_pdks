@@ -2243,7 +2243,7 @@ proc sky130::sky130_fd_pr__res_generic_po_defaults {} {
 		rho 48.2 val 241 dummy 0 dw 0.0 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
-		full_metal 1 vias 1 \
+		full_metal 1 hv_guard 0 vias 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
@@ -2609,6 +2609,9 @@ proc sky130::res_dialog {device parameters} {
     if {[dict exists $parameters guard]} {
 	magic::add_checkbox guard "Add guard ring" $parameters
 
+    	if {[dict exists $parameters hv_guard]} {
+	    magic::add_checkbox hv_guard "High-voltage guard ring" $parameters
+	}
 	if {[dict exists $parameters full_metal]} {
 	    magic::add_checkbox full_metal "Full metal guard ring" $parameters
 	}
@@ -3209,13 +3212,26 @@ proc sky130::sky130_fd_pr__res_generic_po_draw {parameters} {
         set $key [dict get $sky130::ruleset $key]
     }
 
+    if {[dict exists $parameters hv_guard]} {
+    	if {[dict get $parameters hv_guard] == 1} {
+	    set gdifftype mvnsd
+	    set gdiffcont mvnsc
+	    set gsurround 0.33
+	} else {
+	    set gdifftype nsd
+	    set gdiffcont nsc
+	    set gsurround $sub_surround
+	}
+    }
+
     set newdict [dict create \
 	    res_type		npres \
 	    end_type 		poly \
 	    end_contact_type	pc \
-	    plus_diff_type	nsd \
-	    plus_contact_type	nsc \
+	    plus_diff_type	$gdifftype \
+	    plus_contact_type	$gdiffcont \
 	    sub_type		nwell \
+	    guard_sub_surround	$gsurround \
 	    end_surround	$poly_surround \
 	    end_spacing		0.48 \
 	    end_to_end_space	0.52 \
@@ -3225,6 +3241,7 @@ proc sky130::sky130_fd_pr__res_generic_po_draw {parameters} {
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
     ]
+
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::res_draw $drawdict]
 }
