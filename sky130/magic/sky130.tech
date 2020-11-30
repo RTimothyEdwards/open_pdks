@@ -797,6 +797,8 @@ style gdsii
 	and-not	CELLRING
 
  layer PPLUS basePPLUS,extendPPLUS 
+	grow	185
+	shrink	185
 	close   265000
 	calma	94 20
 
@@ -806,6 +808,8 @@ style gdsii
 	and-not	CELLRING
 
  layer NPLUS baseNPLUS,extendNPLUS
+	grow	185
+	shrink	185
  	close   265000
  	calma	93 44
 
