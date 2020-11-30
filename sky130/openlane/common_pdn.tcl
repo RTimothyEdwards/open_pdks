@@ -2,16 +2,20 @@
 set ::power_nets $::env(VDD_PIN)
 set ::ground_nets $::env(GND_PIN)
 
-# to parameterize -- needs a PDNGEN fix
-set pdngen::global_connections {
-  VPWR {
-    {inst_name .* pin_name VPWR}
-    {inst_name .* pin_name VPB}
-  }
-  VGND {
-    {inst_name .* pin_name VGND}
-    {inst_name .* pin_name VNB}
-  }
+if { [info exists ::env(FP_PDN_ENABLE_GLOBAL_CONNECTIONS)] } {
+    if { $::env(FP_PDN_ENABLE_GLOBAL_CONNECTIONS) == 1 } {        
+        # to parameterize -- needs a PDNGEN fix
+        set pdngen::global_connections {
+            VPWR {
+                {inst_name .* pin_name VPWR}
+                {inst_name .* pin_name VPB}
+            }
+            VGND {
+                {inst_name .* pin_name VGND}
+                {inst_name .* pin_name VNB}
+            }
+        }
+    }
 }
 
 # Used if the design is the core of the chip
