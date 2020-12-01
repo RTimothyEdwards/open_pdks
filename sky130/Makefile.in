@@ -342,18 +342,23 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/no_synth.cells
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tribuff_map.v 
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/no_synth.cells
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/tribuff_map.v 
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/no_synth.cells
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/tribuff_map.v 
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/no_synth.cells
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/tribuff_map.v 
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/no_synth.cells	
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tribuff_map.v 
 	${CPP} ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/config.tcl > ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/tracks.info > ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/tracks.info
 
