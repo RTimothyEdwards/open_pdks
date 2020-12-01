@@ -5839,6 +5839,14 @@ lef
  # NOTE: obslic only used with li1, not obsli.
  obs obslic mcon
 
+ # Vias on obstruction layers should be ignored, so cast to obstruction metal.
+ obs obsm1   via
+ obs obsm2   via2
+#ifdef METAL5
+ obs obsm3   via3
+ obs obsm4   via4
+#endif (METAL5)
+
 end
 
 #-----------------------------------------------------
