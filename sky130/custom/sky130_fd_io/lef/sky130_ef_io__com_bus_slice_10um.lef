@@ -160,6 +160,10 @@ MACRO sky130_ef_io__com_bus_slice_10um
     USE POWER ;
     PORT
       LAYER met5 ;
+        RECT 0.000 68.000 1.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
         RECT 0.000 68.000 1.000 92.965 ;
     END
     PORT
@@ -172,6 +176,10 @@ MACRO sky130_ef_io__com_bus_slice_10um
     END
     PORT
       LAYER met5 ;
+        RECT 9.000 68.000 10.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
         RECT 9.000 68.000 10.000 92.965 ;
     END
     PORT
