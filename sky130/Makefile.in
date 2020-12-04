@@ -528,6 +528,7 @@ install-local-a:
 	echo "Starting SKY130 PDK migration on "`date` > ${SKY130A}_migrate.log
 	${INSTALL} -source ${STAGING_PATH}/${SKY130A} \
 		-target ${LOCAL_PATH}/${SKY130A} \
+		-variable PDKPATH \
 		-link_from ${LINK_TARGETS} |& tee -a ${SKY130A}_migrate.log
 	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_migrate.log
 
@@ -537,6 +538,7 @@ install-dist-a:
 	echo "Starting SKY130 PDK migration on "`date` > ${SKY130A}_migrate.log
 	${INSTALL} -source ${STAGING_PATH}/${SKY130A} \
 		-target ${DIST_PATH}/${SKY130A} \
+		-variable PDKPATH \
 		-local ${LOCAL_PATH}/${SKY130A} \
 		-link_from ${DIST_LINK_TARGETS} |& tee -a ${SKY130A}_migrate.log
 	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_migrate.log
