@@ -21,6 +21,9 @@
 #                       if link_from is "source".  This option may
 #                       be called multiple times if there are multiple
 #                       sources.
+#    -variable <name>	Specify a variable name that is used for the
+#			target path.  This variable name must be enforced
+#			in setup scripts like .magicrc
 
 import re
 import os
@@ -231,6 +234,7 @@ if __name__ == '__main__':
     targetdir = None
     link_from = None
     localdir = None
+    variable = None
 
     ef_format = False
     do_install = True
@@ -286,6 +290,9 @@ if __name__ == '__main__':
         elif option[0] == 'local':
             optionlist.remove(option)
             localdir = option[1]
+        elif option[0] == 'variable':
+            optionlist.remove(option)
+            variable = option[1]
 
     # Error if no staging or dest specified
     if not stagingdir:
@@ -432,7 +439,13 @@ if __name__ == '__main__':
                             print('      ' + tool + ' (' + str(total) + ' ' + symstr + ')')
 
     # In .mag files in mag/ and maglef/, also need to change the staging
-    # directory name to localdir
+    # directory name to localdir.  If "-variable" is specified in the options,
+    # the replace the staging path with the variable name, not localdir.
+
+    if variable:
+        localname = '$' + variable
+    else:
+        localname = localdir
 
     needcheck = ['mag', 'maglef']
     refdirs = ['/libs.ref/']
@@ -449,7 +462,7 @@ if __name__ == '__main__':
                     libraries = os.listdir(filedir)
                     for library in libraries:
                         libdir = filedir + '/' + library
-                        total = filter_recursive(libdir, stagingdir, localdir)
+                        total = filter_recursive(libdir, stagingdir, localname)
                         if total > 0:
                             substr = 'substitutions' if total > 1 else 'substitution'
                             print('      ' + library + ' (' + str(total) + ' ' + substr + ')')
@@ -461,7 +474,7 @@ if __name__ == '__main__':
                 print('   ' + library)
                 for filetype in needcheck:
                     filedir = targetdir + refdir + library + '/' + filetype
-                    total = filter_recursive(filedir, stagingdir, localdir)
+                    total = filter_recursive(filedir, stagingdir, localname)
                     if total > 0:
                         substr = 'substitutions' if total > 1 else 'substitution'
                         print('      ' + filetype + ' (' + str(total) + ' ' + substr + ')')

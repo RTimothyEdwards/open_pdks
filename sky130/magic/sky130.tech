@@ -1647,10 +1647,17 @@ style paint
 style wafflefill
 #----------------------------------------------------------------
 # Style used by scripts for automatically generating fill layers
+# NOTE: Be sure to generate output on flattened layout.
 #----------------------------------------------------------------
  scalefactor 10  nanometers
  options calma-permissive-labels
  gridlimit 5
+
+#----------------------------------------------------------------
+# Generate and retain a layer representing the bounding box
+#----------------------------------------------------------------
+ templayer	topbox
+	bbox	top
 
 #----------------------------------------------------------------
 # Generate guard-band around nwells to keep FOM from crossing
@@ -1666,114 +1673,107 @@ style wafflefill
 #---------------------------------------------------
 # Interleaved FOM and POLY fill
 #---------------------------------------------------
- templayer      slots_fom_pass1
-	bbox	top
+ templayer      slots_fom_pass1 topbox
         slots   0 4080 1320 0 4080 1320 1360 0
  templayer      obstruct_fom_pass1 alldiff,allpoly,rpw
         grow    500
 	or	well_guardband
  templayer	fomfill_pass1 slots_fom_pass1
         and-not obstruct_fom_pass1
+	and	topbox
         shrink  2035
         grow    2035
 
 #---------------------------------------------------
 
- templayer      slots_poly_pass1
-	bbox	top
-        slots   0 720 360 0 720 360 240 0
- templayer      obstruct_poly_pass1 alldiff,allpoly,rpw
-        grow    700
-	or	fomfill_pass1
-        grow    300
-	or	well_guardband
- templayer	polyfill_pass1 slots_poly_pass1
-        and-not obstruct_poly_pass1
-        shrink  355
-        grow    355
-
-#---------------------------------------------------
-
- templayer      slots_fom_pass2
-	bbox	top
+ templayer      slots_fom_pass2 topbox
         slots   0 2500 1320 0 2500 1320 1360 0
  templayer      obstruct_fom_pass2 fomfill_pass1
-        grow    820
-        grow    200
-	or	polyfill_pass1
-        grow    300
+        grow    1320
 	or	obstruct_fom_pass1
  templayer	fomfill_pass2 slots_fom_pass2
         and-not obstruct_fom_pass2
+	and	topbox
         shrink  1245
         grow    1245
 
 #---------------------------------------------------
 
- templayer      slots_poly_coarse
-	bbox	top
-        slots   0 720 360 0 720 360 240 120
- templayer      obstruct_poly_coarse polyfill_pass1
-	grow	60
-	or	fomfill_pass1,fomfill_pass2
-	grow	300
-	or	obstruct_poly_pass1
- templayer	polyfill_coarse slots_poly_coarse
-        and-not obstruct_poly_coarse
-        shrink  355
-        grow    355
-
-#---------------------------------------------------
-
- templayer      slots_fom_coarse
-	bbox	top
+ templayer      slots_fom_coarse topbox
         slots   0 1500 1320 0 1500 1320 1360 0
  templayer      obstruct_fom_coarse fomfill_pass1,fomfill_pass2
-        grow    1020
-	or	polyfill_pass1,polyfill_coarse
-        grow    300
+        grow    1320
 	or	obstruct_fom_pass1
  templayer	fomfill_coarse slots_fom_coarse
         and-not obstruct_fom_coarse
+	and	topbox
         shrink  745
         grow    745
 
 #---------------------------------------------------
- templayer      slots_poly_medium
-	bbox	top
-        slots   0 540 360 0 540 360 240 100
- templayer      obstruct_poly_medium polyfill_pass1,polyfill_coarse
-        grow    1010
-	or	obstruct_poly_pass1
- templayer	polyfill_medium slots_poly_medium
-        and-not obstruct_poly_medium
-        shrink  265
-        grow    265
 
-#---------------------------------------------------
-
- templayer      slots_fom_fine
-	bbox	top
+ templayer      slots_fom_fine topbox
         slots   0 500 400 0 500 400 160 0
  templayer      obstruct_fom_fine fomfill_pass1,fomfill_pass2,fomfill_coarse
 	grow	1320
 	or	obstruct_fom_pass1
  templayer	fomfill_fine slots_fom_fine
         and-not obstruct_fom_fine
+	and	topbox
         shrink  245
         grow    245
 
 #---------------------------------------------------
- templayer      slots_poly_fine
-	bbox	top
+
+ templayer      slots_poly_pass1 topbox
+        slots   0 720 360 0 720 360 240 0
+ templayer      obstruct_poly_pass1
+	or	fomfill_pass1,fomfill_pass2,fomfill_coarse,fomfill_fine
+        grow    300
+	or	obstruct_fom_pass1
+ templayer	polyfill_pass1 slots_poly_pass1
+        and-not obstruct_poly_pass1
+	and	topbox
+        shrink  355
+        grow    355
+
+#---------------------------------------------------
+
+ templayer      slots_poly_coarse topbox
+        slots   0 720 360 0 720 360 240 120
+ templayer      obstruct_poly_coarse polyfill_pass1
+	or	fomfill_pass1,fomfill_pass2,fomfill_coarse,fomfill_fine
+	grow	360
+	or	obstruct_fom_pass1
+ templayer	polyfill_coarse slots_poly_coarse
+        and-not obstruct_poly_coarse
+	and	topbox
+        shrink  355
+        grow    355
+
+#---------------------------------------------------
+ templayer      slots_poly_medium topbox
+        slots   0 540 360 0 540 360 240 100
+ templayer      obstruct_poly_medium polyfill_pass1,polyfill_coarse
+	or	fomfill_pass1,fomfill_pass2,fomfill_coarse,fomfill_fine
+        grow    1010
+	or	obstruct_fom_pass1
+ templayer	polyfill_medium slots_poly_medium
+        and-not obstruct_poly_medium
+	and	topbox
+        shrink  265
+        grow    265
+
+#---------------------------------------------------
+ templayer      slots_poly_fine topbox
         slots   0 480 360 0 480 360 240 200
  templayer      obstruct_poly_fine polyfill_pass1,polyfill_coarse,polyfill_medium
-        grow    650
-	or	polyfill_pass1,polyfill_coarse,polyfill_medium
-	grow	360
+	or	fomfill_pass1,fomfill_pass2,fomfill_coarse,fomfill_fine
+	grow	1010
 	or	obstruct_poly_pass1
  templayer	polyfill_fine slots_poly_fine
         and-not obstruct_poly_fine
+	and	topbox
         shrink  235
         grow    235
 
@@ -1796,18 +1796,17 @@ style wafflefill
 #---------------------------------------------------
 # MET1 fill
 #---------------------------------------------------
- templayer      slots_m1_coarse
-        bbox    top
+ templayer      slots_m1_coarse topbox
         slots   0 2000 200 0 2000 200 700 0
  templayer      obstruct_m1_coarse allm1,allpad,obsm1,m1fill,fillblock
         grow    3000
  templayer	met1fill_coarse slots_m1_coarse
         and-not obstruct_m1_coarse
+	and	topbox
         shrink  995
         grow    995
 
- templayer      slots_m1_medium
-        bbox    top
+ templayer      slots_m1_medium topbox
         slots   0 1000 200 0 1000 200 700 0
  templayer      obstruct_m1_medium allm1,allpad,obsm1,m1fill,fillblock
         grow    2800
@@ -1815,11 +1814,11 @@ style wafflefill
         grow    200
  templayer	met1fill_medium slots_m1_medium
         and-not obstruct_m1_medium
+	and	topbox
         shrink  495
         grow    495
 
- templayer      slots_m1_fine
-        bbox    top
+ templayer      slots_m1_fine topbox
         slots   0 580 200 0 580 200 700 0
  templayer      obstruct_m1_fine allm1,allpad,obsm1,m1fill,fillblock
         grow    300
@@ -1827,11 +1826,11 @@ style wafflefill
         grow    200
  templayer	met1fill_fine slots_m1_fine
         and-not obstruct_m1_fine
+	and	topbox
         shrink  285
         grow    285
 
- templayer      slots_m1_veryfine
-        bbox    top
+ templayer      slots_m1_veryfine topbox
         slots   0 300 200 0 300 200 100 50
  templayer      obstruct_m1_veryfine allm1,allpad,obsm1,m1fill,fillblock
         grow    100
@@ -1839,6 +1838,7 @@ style wafflefill
         grow    200
  templayer	met1fill_veryfine slots_m1_veryfine
         and-not obstruct_m1_veryfine
+	and	topbox
         shrink  145
         grow    145
 
@@ -1851,18 +1851,17 @@ style wafflefill
 #---------------------------------------------------
 # MET2 fill
 #---------------------------------------------------
- templayer      slots_m2_coarse
-        bbox    top
+ templayer      slots_m2_coarse topbox
         slots   0 2000 200 0 2000 200 700 350
  templayer      obstruct_m2 allm2,allpad,obsm2,m2fill,fillblock
         grow    3000
  templayer	met2fill_coarse slots_m2_coarse
         and-not obstruct_m2
+	and	topbox
         shrink  995
         grow    995
 
- templayer      slots_m2_medium
-        bbox    top
+ templayer      slots_m2_medium topbox
         slots   0 1000 200 0 1000 200 700 350
  templayer      obstruct_m2_medium allm2,allpad,obsm2,m2fill,fillblock
         grow    2800
@@ -1870,11 +1869,11 @@ style wafflefill
         grow    200
  templayer	met2fill_medium slots_m2_medium
         and-not obstruct_m2_medium
+	and	topbox
         shrink  495
         grow    495
 
- templayer      slots_m2_fine
-        bbox    top
+ templayer      slots_m2_fine topbox
         slots   0 580 200 0 580 200 700 350
  templayer      obstruct_m2_fine allm2,allpad,obsm2,m2fill,fillblock
         grow    300
@@ -1882,11 +1881,11 @@ style wafflefill
         grow    200
  templayer	met2fill_fine slots_m2_fine
         and-not obstruct_m2_fine
+	and	topbox
         shrink  285
         grow    285
 
- templayer      slots_m2_veryfine
-        bbox    top
+ templayer      slots_m2_veryfine topbox
         slots   0 300 200 0 300 200 100 100
  templayer      obstruct_m2_veryfine allm2,allpad,obsm2,m2fill,fillblock
         grow    100
@@ -1894,6 +1893,7 @@ style wafflefill
         grow    200
  templayer	met2fill_veryfine slots_m2_veryfine
         and-not obstruct_m2_veryfine
+	and	topbox
         shrink  145
         grow    145
 
@@ -1906,18 +1906,17 @@ style wafflefill
 #---------------------------------------------------
 # MET3 fill
 #---------------------------------------------------
- templayer      slots_m3_coarse
-        bbox    top
+ templayer      slots_m3_coarse topbox
         slots   0 2000 300 0 2000 300 700 700
  templayer      obstruct_m3 allm3,allpad,obsm3,m3fill,fillblock
         grow    3000
  templayer	met3fill_coarse slots_m3_coarse
         and-not obstruct_m3
+	and	topbox
         shrink  995
         grow    995
 
- templayer      slots_m3_medium
-        bbox    top
+ templayer      slots_m3_medium topbox
         slots   0 1000 300 0 1000 300 700 700
  templayer      obstruct_m3_medium allm3,allpad,obsm3,m3fill,fillblock
         grow    2700
@@ -1925,11 +1924,11 @@ style wafflefill
         grow    300
  templayer	met3fill_medium slots_m3_medium
         and-not obstruct_m3_medium
+	and	topbox
         shrink  495
         grow    495
 
- templayer      slots_m3_fine
-        bbox    top
+ templayer      slots_m3_fine topbox
         slots   0 580 300 0 580 300 700 700
  templayer      obstruct_m3_fine allm3,allpad,obsm3,m3fill,fillblock
         grow    200
@@ -1937,17 +1936,18 @@ style wafflefill
         grow    300
  templayer	met3fill_fine slots_m3_fine
         and-not obstruct_m3_fine
+	and	topbox
         shrink  285
         grow    285
 
- templayer      slots_m3_veryfine
-        bbox    top
+ templayer      slots_m3_veryfine topbox
         slots   0 400 300 0 400 300 150 200
  templayer      obstruct_m3_veryfine allm3,allpad,obsm3,m3fill,fillblock
 	or	met3fill_coarse,met3fill_medium,met3fill_fine
         grow    300
  templayer	met3fill_veryfine slots_m3_veryfine
         and-not obstruct_m3_veryfine
+	and	topbox
         shrink  195
         grow    195
 
@@ -1961,18 +1961,17 @@ style wafflefill
 #---------------------------------------------------
 # MET4 fill
 #---------------------------------------------------
- templayer      slots_m4_coarse
-        bbox    top
+ templayer      slots_m4_coarse topbox
         slots   0 2000 300 0 2000 300 700 1050
  templayer      obstruct_m4 allm4,allpad,obsm4,m4fill,fillblock
         grow    3000
  templayer	met4fill_coarse slots_m4_coarse
         and-not obstruct_m4
+	and	topbox
         shrink  995
         grow    995
 
- templayer      slots_m4_medium
-        bbox    top
+ templayer      slots_m4_medium topbox
         slots   0 1000 300 0 1000 300 700 1050
  templayer      obstruct_m4_medium allm4,allpad,obsm4,m4fill,fillblock
         grow    2700
@@ -1983,8 +1982,7 @@ style wafflefill
         shrink  495
         grow    495
 
- templayer      slots_m4_fine
-        bbox    top
+ templayer      slots_m4_fine topbox
         slots   0 580 300 0 580 300 700 1050
  templayer      obstruct_m4_fine allm4,allpad,obsm4,m4fill,fillblock
         grow    200
@@ -1992,17 +1990,18 @@ style wafflefill
         grow    300
  templayer	met4fill_fine slots_m4_fine
         and-not obstruct_m4_fine
+	and	topbox
         shrink  285
         grow    285
 
- templayer      slots_m4_veryfine
-        bbox    top
+ templayer      slots_m4_veryfine topbox
         slots   0 400 300 0 400 300 150 300
  templayer      obstruct_m4_veryfine allm4,allpad,obsm4,m4fill,fillblock
 	or	met4fill_coarse,met4fill_medium,met4fill_fine
         grow    300
  templayer	met4fill_veryfine slots_m4_veryfine
         and-not obstruct_m4_veryfine
+	and	topbox
         shrink  195
         grow    195
 
@@ -2015,13 +2014,13 @@ style wafflefill
 #---------------------------------------------------
 # MET5 fill
 #---------------------------------------------------
- templayer      slots_m5
-        bbox    top
+ templayer      slots_m5 topbox
         slots   0 3000 1600 0 3000 1600 1000 100
  templayer      obstruct_m5 allm5,allpad,obsm5,m5fill,fillblock
         grow    3000
  templayer	met5fill_gen slots_m5
         and-not obstruct_m5
+	and	topbox
         shrink  1495
         grow    1495
 
@@ -5051,6 +5050,31 @@ style  vendorimport
  calma FILLOBSM2  105 52
  calma FILLOBSM3  107 24
  calma FILLOBSM4  112 4
+
+style  waffleimport
+ # This style is for reading back and validating shapes
+ # generated by the "wafflefill" cifoutput style.
+
+ scalefactor 10 nanometers
+ gridlimit 5
+
+ options ignore-unknown-layer-labels no-reconnect-labels
+
+ layer	ndiff  FOMMASK
+ layer	poly   POLYMASK
+ layer	metal1 MET1MASK
+ layer	metal2 MET2MASK
+ layer	metal3 MET3MASK
+ layer	metal4 MET4MASK
+ layer	metal5 MET5MASK
+
+ calma  FOMMASK  23 0
+ calma 	POLYMASK 28 0
+ calma 	MET1MASK 36 0
+ calma 	MET2MASK 41 0
+ calma 	MET3MASK 34 0
+ calma 	MET4MASK 51 0
+ calma 	MET5MASK 59 0
 
 end
 
