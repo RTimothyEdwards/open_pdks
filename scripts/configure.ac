@@ -39,34 +39,38 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS],
     # --with-pdk-local-path=PDK_LOCAL_PATH
     m4_foreach_w(pdk, $1, [
 	m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z" "A-Z"))])
-        pdkvar[]_LOCAL_PATH=""
+        pdkvar[]_LOCAL_PATH_=""
         AC_ARG_WITH(pdk-local-path,
               [AS_HELP_STRING([--with-pdk-local-path=/path/to/install/pdks], "run-time location of the PDKs")],
-              [pdkvar[]_LOCAL_PATH=$withval]
+              [pdkvar[]_LOCAL_PATH_=$withval]
         )
 	# Require this argument
         AC_MSG_NOTICE([Checking whether local path is specified for 'pdk'])
-        if test "x$[]pdkvar[]_LOCAL_PATH" == "x" ; then
+        if test "x$[]pdkvar[]_LOCAL_PATH_" == "x" ; then
 	   AC_MSG_ERROR([Option --with-pdk-local-path=<path> not specified!])
+	   pdkvar[]_LOCAL_PATH=""
+	else
+	   pdkvar[]_LOCAL_PATH=`readlink -f $[]pdkvar[]_LOCAL_PATH_`
 	fi
-	pdkvar[]_LOCAL_PATH=$(readlink -f $[]pdkvar[]_LOCAL_PATH)
         AC_SUBST([]pdkvar[]_LOCAL_PATH)
     ])
 
     # --with-pdk-dist-path=PDK_DIST_PATH
     m4_foreach_w(pdk, $1, [
 	m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z" "A-Z"))])
-        pdkvar[]_DIST_PATH=""
+        pdkvar[]_DIST_PATH_=""
         AC_ARG_WITH(pdk-dist-path,
               [AS_HELP_STRING([--with-pdk-dist-path=/path/to/install/pdks], "staging location to install the PDKs for distribution (optional)")],
-              [[]pdkvar[]_DIST_PATH=$withval]
+              [pdkvar[]_DIST_PATH_=$withval]
         )
 	# Require this argument
         AC_MSG_NOTICE([Checking whether distribution path is specified for 'pdk'])
-        if test "x$[]pdkvar[]_DIST_PATH" == "x" ; then
+        if test "x$[]pdkvar[]_DIST_PATH_" == "x" ; then
 	   AC_MSG_NOTICE([Option --with-pdk-dist-path=<path> not specified.  Local install only."])
+	   pdkvar[]_DIST_PATH=""
+	else
+	   pdkvar[]_DIST_PATH=`readlink -f $[]pdkvar[]_DIST_PATH_`
 	fi
-	pdkvar[]_DIST_PATH=$(readlink -f $[]pdkvar[]_DIST_PATH)
         AC_SUBST([]pdkvar[]_DIST_PATH)
     ])
 

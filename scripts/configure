@@ -620,7 +620,6 @@ infodir
 docdir
 oldincludedir
 includedir
-runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -691,7 +690,6 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
-runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
@@ -944,15 +942,6 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
-  -runstatedir | --runstatedir | --runstatedi | --runstated \
-  | --runstate | --runstat | --runsta | --runst | --runs \
-  | --run | --ru | --r)
-    ac_prev=runstatedir ;;
-  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
-  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
-  | --run=* | --ru=* | --r=*)
-    runstatedir=$ac_optarg ;;
-
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -1090,7 +1079,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir runstatedir
+		libdir localedir mandir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -1243,7 +1232,6 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
-  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -1789,43 +1777,47 @@ fi
     # --with-pdk-local-path=PDK_LOCAL_PATH
 
 
-        SKY130_LOCAL_PATH=""
+        SKY130_LOCAL_PATH_=""
 
 # Check whether --with-sky130-local-path was given.
 if test "${with_sky130_local_path+set}" = set; then :
-  withval=$with_sky130_local_path; SKY130_LOCAL_PATH=$withval
+  withval=$with_sky130_local_path; SKY130_LOCAL_PATH_=$withval
 
 fi
 
 	# Require this argument
         { $as_echo "$as_me:${as_lineno-$LINENO}: Checking whether local path is specified for 'sky130'" >&5
 $as_echo "$as_me: Checking whether local path is specified for 'sky130'" >&6;}
-        if test "x$SKY130_LOCAL_PATH" == "x" ; then
+        if test "x$SKY130_LOCAL_PATH_" == "x" ; then
 	   as_fn_error $? "Option --with-sky130-local-path=<path> not specified!" "$LINENO" 5
+	   SKY130_LOCAL_PATH=""
+	else
+	   SKY130_LOCAL_PATH=`readlink -f $SKY130_LOCAL_PATH_`
 	fi
-	SKY130_LOCAL_PATH=$(readlink -f $SKY130_LOCAL_PATH)
 
 
 
     # --with-pdk-dist-path=PDK_DIST_PATH
 
 
-        SKY130_DIST_PATH=""
+        SKY130_DIST_PATH_=""
 
 # Check whether --with-sky130-dist-path was given.
 if test "${with_sky130_dist_path+set}" = set; then :
-  withval=$with_sky130_dist_path; SKY130_DIST_PATH=$withval
+  withval=$with_sky130_dist_path; SKY130_DIST_PATH_=$withval
 
 fi
 
 	# Require this argument
         { $as_echo "$as_me:${as_lineno-$LINENO}: Checking whether distribution path is specified for 'sky130'" >&5
 $as_echo "$as_me: Checking whether distribution path is specified for 'sky130'" >&6;}
-        if test "x$SKY130_DIST_PATH" == "x" ; then
+        if test "x$SKY130_DIST_PATH_" == "x" ; then
 	   { $as_echo "$as_me:${as_lineno-$LINENO}: Option --with-sky130-dist-path=<path> not specified.  Local install only.\"" >&5
 $as_echo "$as_me: Option --with-sky130-dist-path=<path> not specified.  Local install only.\"" >&6;}
+	   SKY130_DIST_PATH=""
+	else
+	   SKY130_DIST_PATH=`readlink -f $SKY130_DIST_PATH_`
 	fi
-	SKY130_DIST_PATH=$(readlink -f $SKY130_DIST_PATH)
 
 
 
@@ -1890,7 +1882,7 @@ if ${am_cv_pathless_PYTHON+:} false; then :
   $as_echo_n "(cached) " >&6
 else
 
-	for am_cv_pathless_PYTHON in python python2 python3  python3.9 python3.8 python3.7 python3.6 python3.5 python3.4 python3.3  python3.2 python3.1 python3.0  python2.7 python2.6 python2.5 python2.4 python2.3 python2.2 python2.1  python2.0 none; do
+	for am_cv_pathless_PYTHON in python python2 python3 python3.3 python3.2 python3.1 python3.0 python2.7  python2.6 python2.5 python2.4 python2.3 python2.2 python2.1 python2.0 none; do
 	  test "$am_cv_pathless_PYTHON" = none && break
 	  prog="import sys
 # split strings by '.' and convert to numeric.  Append some zeros
@@ -2113,33 +2105,28 @@ $as_echo "$am_cv_python_pyexecdir" >&6; }
 
     if test -z $PYTHON;
     then
-        if test -z "";
-        then
-            PYTHON="python3"
-        else
-            PYTHON=""
-        fi
+        PYTHON="python"
     fi
     PYTHON_NAME=`basename $PYTHON`
     { $as_echo "$as_me:${as_lineno-$LINENO}: checking $PYTHON_NAME module: distutils" >&5
 $as_echo_n "checking $PYTHON_NAME module: distutils... " >&6; }
-    $PYTHON -c "import distutils" 2>/dev/null
-    if test $? -eq 0;
-    then
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+	$PYTHON -c "import distutils" 2>/dev/null
+	if test $? -eq 0;
+	then
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
 $as_echo "yes" >&6; }
-        eval HAVE_PYMOD_DISTUTILS=yes
-    else
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+		eval HAVE_PYMOD_DISTUTILS=yes
+	else
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
 $as_echo "no" >&6; }
-        eval HAVE_PYMOD_DISTUTILS=no
-        #
-        if test -n ""
-        then
-            as_fn_error $? "failed to find required module distutils" "$LINENO" 5
-            exit 1
-        fi
-    fi
+		eval HAVE_PYMOD_DISTUTILS=no
+		#
+		if test -n ""
+		then
+			as_fn_error $? "failed to find required module distutils" "$LINENO" 5
+			exit 1
+		fi
+	fi
 
 
 # Extract the first word of "magic", so it can be a program name with args.
