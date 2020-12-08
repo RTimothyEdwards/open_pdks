@@ -5427,15 +5427,16 @@ variants *
  width *li 170 "Local interconnect width < %d (li.1)"
  width rli 290 "Local interconnect width < %d (li.7)"
 
- # Note:  coreli width rule uses edge4way rule so as not to imply that
- # all li contact types can also be minimum width 0.14um.
- edge4way ~(coreli,pc,ndc,nsc,pdc,psc)/li coreli 140 coreli,pc,ndc,nsc,pdc,psc \
-	0 0 "Core local interconnect width < %d (li.c1)"
+ spacing *locali,rli *locali,rli,*obsli 170 touching_ok  \
+	"Local interconnect spacing < %d (li.3)"
 
- # width coreli 140 "Core local interconnect width < %d (li.c1)"
+ # Local interconnect in core (SRAM) cells has more relaxed rules.  There are
+ # no special layers for the contacts in core cells, so they must be included
+ # in the rule.
+ width coreli,pc,ndc,nsc,pdc,psc,lic 140 "Core local interconnect width < %d (li.c1)"
 
- spacing allli allli,*obsli 170 touching_ok  "Local interconnect spacing < %d (li.3)"
- spacing coreli allli,*obsli 140 touching_ok  "Core local interconnect spacing < %d (li.c2)"
+ spacing coreli,pc,ndc,nsc,pdc,psc,lic allli,*obsli 140 touching_ok \
+	"Core local interconnect spacing < %d (li.c2)"
 
  surround pc/li *li,coreli 80 directional \
 	"Local interconnect overlap of poly contact < %d in one direction (li.5)"
