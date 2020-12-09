@@ -30,7 +30,7 @@ module sky130_ef_io__vccd_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
   inout VSSIO;
 
   // Instantiate the underlying power pad (connects P_PAD to VCCD)
-  sky130_fd_io__top_power_hvc_wpad sky130_fd_io__top_power_hvc_base ( 
+  sky130_fd_io__top_power_hvc_wpadv2 sky130_fd_io__top_power_hvc_base ( 
 	.VSSA(VSSA),
 	.VDDA(VDDA),
 	.VSWITCH(VSWITCH),
@@ -170,7 +170,7 @@ module sky130_ef_io__vdda_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
   inout VSSIO;
 
   // Instantiate the underlying power pad (connects P_PAD to VDDA)
-  sky130_fd_io__top_power_hvc_wpad sky130_fd_io__top_power_hvc_base ( 
+  sky130_fd_io__top_power_hvc_wpadv2 sky130_fd_io__top_power_hvc_base ( 
 	.VSSA(VSSA),
 	.VDDA(VDDA),
 	.VSWITCH(VSWITCH),
@@ -263,7 +263,7 @@ module sky130_ef_io__vddio_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
   inout VSSIO;
 
   // Instantiate the underlying power pad (connects P_PAD and VDDIO_Q to VDDIO)
-  sky130_fd_io__top_power_hvc_wpad sky130_fd_io__top_power_hvc_base ( 
+  sky130_fd_io__top_power_hvc_wpadv2 sky130_fd_io__top_power_hvc_base ( 
 	.VSSA(VSSA),
 	.VDDA(VDDA),
 	.VSWITCH(VSWITCH),
