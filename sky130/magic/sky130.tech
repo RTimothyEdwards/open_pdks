@@ -173,6 +173,8 @@ types
   active nmoslvt,nfetlvt
   active varactorhvt,varacthvt,varhvt
  -active nsonos,sonos
+  active sramnvar,corenvar,corenvaractor
+  active srampvar,corepvar,corepvaractor
 
 # Diffusions
   active ndiff,ndiffusion,ndif
@@ -366,20 +368,21 @@ aliases
 
   allnfets	   nfet,npass,npd,scnfet,mvnfet,mvnnfet,nfetlvt,nsonos
   allpfets	   pfet,ppu,scpfet,scpfethvt,mvpfet,pfethvt,pfetlvt,pfetmvt
-  allfets	   allnfets,allpfets,varactor,mvvaractor,varhvt
+  allfets	   allnfets,allpfets,varactor,mvvaractor,varhvt,corenvar,corepvar
   allfetsstd	   nfet,mvnfet,mvnnfet,nfetlvt,pfet,mvpfet,pfethvt,pfetlvt,pfetmvt
-  allfetsspecial   npass,npd,scnfet,nsonos,ppu,scpfet,scpfethvt
-  allfetsnolvt	   nfet,npass,npd,scnfet,mvnfet,mvnnfet,nsonos,pfet,ppu,scpfet,scpfethvt,mvpfet,pfethvt,pfetmvt,varactor,mvvaractor,varhvt
+  allfetsspecial   scnfet,scpfet,scpfethvt
+  allfetscore	   npass,npd,nsonos,ppu,corenvar,corepvar
+  allfetsnolvt	   nfet,npass,npd,scnfet,mvnfet,mvnnfet,nsonos,pfet,ppu,scpfet,scpfethvt,mvpfet,pfethvt,pfetmvt,varactor,mvvaractor,varhvt,corenvar
 
   allnactivenonfet *ndiff,*nsd,*ndiode,*nndiode,*mvndiff,*mvnsd,*mvndiode,*ndiodelvt
   allnactive	   allnactivenonfet,allnfets
   allnactivenontap *ndiff,*ndiode,*nndiode,*mvndiff,*mvndiode,*ndiodelvt,allnfets
-  allnactivetap	   *nsd,*mvnsd,var,varhvt,mvvar
+  allnactivetap	   *nsd,*mvnsd,var,varhvt,mvvar,corenvar
 
   allpactivenonfet *pdiff,*psd,*pdiode,*mvpdiff,*mvpsd,*mvpdiode,*pdiodelvt,*pdiodehvt
   allpactive	   allpactivenonfet,allpfets
   allpactivenontap *pdiff,*pdiode,*mvpdiff,*mvpdiode,*pdiodelvt,*pdiodehvt,allpfets
-  allpactivetap    *psd,*mvpsd
+  allpactivetap    *psd,*mvpsd,corepvar
 
   allactivenonfet  allnactivenonfet,allpactivenonfet
   allactive	   allactivenonfet,allfets
@@ -469,6 +472,8 @@ styles
   pdc       pdiffusion     metal1  contact_X'es
   nsc       ndiff_in_nwell metal1  contact_X'es
   psc       pdiff_in_pwell metal1  contact_X'es
+  corenvar  polysilicon    ndiff_in_nwell
+  corepvar  polysilicon    pdiff_in_pwell
 
   pnp	    nwell ntransistor_stripes
   npn	    pwell ptransistor_stripes
@@ -868,7 +873,7 @@ style gdsii
 #----------------------------------------------------------------
 
  layer COREID
-	bloat-all nsonos,coreli,ppu,npd,npass CELLBOUND
+	bloat-all nsonos,coreli,ppu,npd,npass,corepvar,corenvar CELLBOUND
 	calma 81 2
 
 #----------------------------------------------------------------
@@ -2435,6 +2440,12 @@ style  sky130
  labels TAP
  labels TAPPIN port
 
+ layer corenvar TAP
+ and NPLUS
+ and POLY
+ and COREID
+ labels TAP
+
  templayer nsdexpand nsdarea
  grow 500
 
@@ -2460,6 +2471,12 @@ style  sky130
  and-not THKOX
  labels TAP
  labels TAPPIN port
+
+ layer corepvar TAP
+ and PPLUS
+ and POLY
+ and COREID
+ labels TAP
 
  templayer psdexpand psdarea
  grow 500
@@ -2640,6 +2657,7 @@ style  sky130
  and-not POLYRES
  and-not POLYSHORT
  and-not DIFF
+ and-not TAP
  and-not RPM
  and-not URPM
  copyup polycheck
@@ -3943,6 +3961,12 @@ style  vendorimport
  labels TAP
  labels TAPPIN port
 
+ layer corenvar TAP
+ and NPLUS
+ and POLY
+ and COREID
+ labels TAP
+
  templayer nsdexpand nsdarea
  grow 500
 
@@ -3968,6 +3992,12 @@ style  vendorimport
  and-not THKOX
  labels TAP
  labels TAPPIN port
+
+ layer corepvar TAP
+ and PPLUS
+ and POLY
+ and COREID
+ labels TAP
 
  templayer psdexpand psdarea
  grow 500
@@ -4148,6 +4178,7 @@ style  vendorimport
  and-not POLYRES
  and-not POLYSHORT
  and-not DIFF
+ and-not TAP
  and-not RPM
  and-not URPM
  copyup polycheck
@@ -5083,6 +5114,20 @@ style  waffleimport
  calma 	MET4MASK 51 0
  calma 	MET5MASK 59 0
 
+style  rdlimport
+ # This style is for reading shapes generated with the RDL layers
+
+ scalefactor 10 nanometers
+ gridlimit 5
+
+ options ignore-unknown-layer-labels no-reconnect-labels
+
+ layer mrdl RDL
+ layer mrdlc RDLC
+
+ calma RDL 10 0
+ calma RDLC 20 0
+
 end
 
 #-----------------------------------------------------
@@ -5255,7 +5300,8 @@ variants (fast),(full)
 	"N-Diffusion overhang of nFET < %d (poly.7)"
  overhang *pdiff,rpdiff pfet,scpfet,ppu 250 "P-Diffusion overhang of pmos < %d (poly.7)"
  overhang *mvpdiff,mvrpdiff mvpfet 250 "P-Diffusion overhang of pmos < %d (poly.7)"
- overhang *poly allfets 130 "poly overhang of transistor < %d (poly.8)"
+ overhang *poly allfetsstd,allfetsspecial 130 "poly overhang of transistor < %d (poly.8)"
+ overhang *poly allfetscore 110 "poly overhang of SRAM core transistor < %d (poly.8)"
  rect_only allfets "No bends in transistors (poly.11)"
  rect_only xhrpoly,uhrpoly "No bends in poly resistors (poly.11)"
  extend  xpc/a xhrpoly,uhrpoly 2160 \
@@ -5344,8 +5390,10 @@ variants (fast),(full)
 
  spacing ndc,pdc nfet,nfetlvt,pfet,pfethvt,pfetlvt,pfetmvt 55 touching_illegal \
 	"Diffusion contact to gate < %d (licon.11)"
- spacing ndc,pdc scnfet,npd,npass,scpfet,scpfethvt,ppu 50 touching_illegal \
+ spacing ndc,pdc scnfet,scpfet,scpfethvt 50 touching_illegal \
 	"Diffusion contact to standard cell gate < %d (licon.11)"
+ spacing ndc,pdc npd,npass,ppu 40 touching_illegal \
+	"Diffusion contact to SRAM gate < %d (licon.11)"
  spacing mvndc,mvpdc mvnfet,mvnnfet,mvpfet 55 touching_illegal \
 	"Diffusion contact to gate < %d (licon.11)"
  spacing nsc varactor,varhvt 250 touching_illegal \
@@ -5643,6 +5691,10 @@ variants (fast),(full)
 	"Transistor width < %d (diff/tap.2)"
  edge4way *poly allfetsspecial 360 allfets 0 0 \
 	"Transistor in standard cell width < %d (diff/tap.2)"
+ edge4way *poly npass,npd,nsonos 210 allfets 0 0 \
+	"N-Transistor in SRAM core width < %d (diff/tap.2)"
+ edge4way *poly ppu 140 allfets 0 0 \
+	"P-Transistor in SRAM core width < %d (diff/tap.2)"
 
  # Except:  Note that standard cells allow transistor width minimum 0.36um
  width pfetlvt 350 "LVT PMOS gate length < %d (poly.1b)"
@@ -6410,6 +6462,9 @@ variants (),(si)
  device mosfet sky130_fd_pr__nfet_01v8_lvt nfetlvt ndiff,ndiffres,ndc pwell,space/w
  device mosfet sky130_fd_bs_flash__special_sonosfet_star nsonos ndiff,ndiffres,ndc \
 	pwell,space/w
+
+ # Note that corenvar, corepvar are not considered devices, and extract as
+ # parasitic capacitance instead (but cap values need to be added).
 
  # Extended drain devices (must appear before the regular devices)
  device mosfet sky130_fd_pr__nfet_20v0_nvt mvnnfet *mvndiff,mvndiffres \
