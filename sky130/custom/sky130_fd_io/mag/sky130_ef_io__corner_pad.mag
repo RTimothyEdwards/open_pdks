@@ -1,7 +1,7 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1602597384
+timestamp 1607568790
 << error_s >>
 rect 3820 9372 3822 9497
 << metal4 >>
@@ -66,8 +66,10 @@ rect 11667 0 12517 254
 rect 12837 0 13687 254
 rect 14007 0 18997 254
 rect 35157 0 40000 254
+<< fillblock >>
+tri 25423 26223 40000 40800 ne
 use sky130_fd_io__corner_bus_overlay  sky130_fd_io__corner_bus_overlay_0 ~/projects/efabless/tech/SW/sky130A/libs.ref/sky130_fd_io/mag
-timestamp 1602555073
+timestamp 1607568790
 transform 1 0 0 0 1 67
 box 0 0 40000 40733
 << labels >>
