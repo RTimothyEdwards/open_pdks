@@ -7,6 +7,8 @@ MACRO sky130_ef_sc_hd__fakediode_2
   FOREIGN sky130_ef_sc_hd__fakediode_2 ;
   ORIGIN 0.000 0.000 ;
   SIZE 0.920 BY 2.720 ;
+  SYMMETRY X Y R90 ;
+  SITE unithd ;
   PIN DIODE
     PORT
       LAYER li1 ;
