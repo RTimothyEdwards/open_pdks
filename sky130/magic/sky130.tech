@@ -5481,7 +5481,8 @@ variants *
  # Local interconnect in core (SRAM) cells has more relaxed rules.  There are
  # no special layers for the contacts in core cells, so they must be included
  # in the rule.
- width coreli,pc,ndc,nsc,pdc,psc,lic 140 "Core local interconnect width < %d (li.c1)"
+ width coreli,pc,ndc,nsc,pdc,psc,allli,*obsli 140 \
+	"Core local interconnect width < %d (li.c1)"
 
  spacing coreli,pc,ndc,nsc,pdc,psc,lic allli,*obsli 140 touching_ok \
 	"Core local interconnect spacing < %d (li.c2)"
