@@ -73,17 +73,22 @@ set ::env(TRISTATE_BUFFER_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/
 set ::env(GLB_RT_L1_ADJUSTMENT) 0.99
 
 # Extra PDN configs
+set ::env(FP_PDN_RAILS_LAYER) met1
+set ::env(FP_PDN_LOWER_LAYER) met4
+set ::env(FP_PDN_UPPER_LAYER) met5
 set ::env(FP_PDN_RAIL_OFFSET) 0
 set ::env(FP_PDN_VWIDTH) 1.6
 set ::env(FP_PDN_HWIDTH) 1.6
+set ::env(FP_PDN_VSPACING) 1.7
+set ::env(FP_PDN_HSPACING) 1.7
 
 # Core Ring PDN defaults
-set ::env(FP_PDN_CORE_RING_VWIDTH) 20
-set ::env(FP_PDN_CORE_RING_HWIDTH) 20
-set ::env(FP_PDN_CORE_RING_VSPACING) 5
-set ::env(FP_PDN_CORE_RING_HSPACING) 5
-set ::env(FP_PDN_CORE_RING_VOFFSET) 20
-set ::env(FP_PDN_CORE_RING_HOFFSET) 20
+set ::env(FP_PDN_CORE_RING_VWIDTH) 1.6
+set ::env(FP_PDN_CORE_RING_HWIDTH) 1.6
+set ::env(FP_PDN_CORE_RING_VSPACING) 1.7
+set ::env(FP_PDN_CORE_RING_HSPACING) 1.7
+set ::env(FP_PDN_CORE_RING_VOFFSET) 6
+set ::env(FP_PDN_CORE_RING_HOFFSET) 6
 
 # Used for estimate_parasitics
 set ::env(WIRE_RC_LAYER) "met1"; 
