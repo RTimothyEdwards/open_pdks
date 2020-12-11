@@ -2653,7 +2653,7 @@ style  sky130
 
  layer xpc xpolyterm
 
- templayer polyarea POLY
+ templayer polyarea POLY,POLYTXT,POLYPIN
  and-not POLYRES
  and-not POLYSHORT
  and-not DIFF
@@ -2662,7 +2662,7 @@ style  sky130
  and-not URPM
  copyup polycheck
 
- layer poly polyarea,POLYTXT,POLYPIN
+ layer poly polyarea
  labels POLY
  labels POLYTXT text
  labels POLYPIN port
@@ -4174,7 +4174,7 @@ style  vendorimport
 
  layer xpc xpolyterm
 
- templayer polyarea POLY
+ templayer polyarea POLY,POLYTXT,POLYPIN
  and-not POLYRES
  and-not POLYSHORT
  and-not DIFF
@@ -4183,7 +4183,7 @@ style  vendorimport
  and-not URPM
  copyup polycheck
 
- layer poly polyarea,POLYTXT,POLYPIN
+ layer poly polyarea
  labels POLY
  labels POLYTXT port
  labels POLYPIN port
