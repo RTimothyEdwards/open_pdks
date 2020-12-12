@@ -2372,6 +2372,7 @@ style  sky130
  and-not LVTN
  and-not SONOS
  and-not STDCELL
+ and-not COREID
  labels DIFF
 
  layer scnfet DIFF
@@ -2391,6 +2392,9 @@ style  sky130
  and NPLUS
  and-not NWELL
  and COREID
+ # Shrink-grow operation eliminates the smaller npass device
+ shrink 70
+ grow 70
  labels DIFF
 
  layer npd DIFF
@@ -3808,6 +3812,7 @@ style  vendorimport
  and-not LVTN
  and-not HVTP
  and STDCELL
+ and-not COREID
  labels DIFF
 
  layer scpfethvt pfetarea
@@ -3820,6 +3825,9 @@ style  vendorimport
  and-not LVTN
  and HVTP
  and COREID
+ # Shrink-grow operation eliminates the smaller ppass device
+ shrink 70
+ grow 70
  labels DIFF
 
  layer pfetlvt pfetarea
@@ -4715,6 +4723,7 @@ style  vendorimport
  and-not PPLUS
  and-not NPLUS
  and-not POLY
+ and-not COREID
  copyup DIFF
 
  # Handle contacts found by copyup
