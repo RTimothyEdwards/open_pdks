@@ -3370,6 +3370,7 @@ style  sky130
  and-not psubcheck
  and-not mvnsubcheck
  and-not mvpsubcheck
+ and-not CORELI
  copyup CONT,LI
 
  templayer barecont CONT
@@ -3378,6 +3379,7 @@ style  sky130
  and-not psubcheck
  and-not mvnsubcheck
  and-not mvpsubcheck
+ and-not CORELI
  copyup CONT
 
  layer glass GLASS,PADTXT,PADPIN
@@ -3635,6 +3637,7 @@ style  vendorimport
  and-not DIFFRES
  and-not THKOX
  and NPLUS
+ and-not CORELI
  copyup ndifcheck
  labels DIFF
  labels DIFFTXT port
@@ -3957,6 +3960,7 @@ style  vendorimport
  and-not POLY
  and-not PPLUS
  and-not THKOX
+ and-not CORELI
  copyup nsubcheck
 
  layer nsd nsdarea
