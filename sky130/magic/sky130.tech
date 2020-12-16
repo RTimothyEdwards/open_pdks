@@ -1104,7 +1104,7 @@ style gdsii
 #----------------------------------------------------------------
 # MET1
 #----------------------------------------------------------------
- layer MET1 	allm1,m1fill
+ layer MET1 	allm1
  	calma 	68 20
 
  layer MET1TXT
@@ -1119,6 +1119,10 @@ style gdsii
 	labels rm1
 	calma 68 13
 
+ layer MET1FILL m1fill
+	labels m1fill
+	calma 68 28
+
 #----------------------------------------------------------------
 # VIA1
 #----------------------------------------------------------------
@@ -1129,7 +1133,7 @@ style gdsii
 #----------------------------------------------------------------
 # MET2
 #----------------------------------------------------------------
- layer MET2 	allm2,m2fill
+ layer MET2 	allm2
  	calma 	69 20
 
  layer MET2TXT
@@ -1144,6 +1148,10 @@ style gdsii
 	labels rm2
 	calma 69 13
 
+ layer MET2FILL m2fill
+	labels m2fill
+	calma 69 28
+
 #----------------------------------------------------------------
 # VIA2
 #----------------------------------------------------------------
@@ -1154,7 +1162,7 @@ style gdsii
 #----------------------------------------------------------------
 # MET3
 #----------------------------------------------------------------
- layer MET3 	allm3,m3fill
+ layer MET3 	allm3
  	calma 	70 20
 
  layer MET3TXT
@@ -1168,6 +1176,10 @@ style gdsii
  layer MET3RES rm3
 	labels rm3
 	calma 70 13
+
+ layer MET3FILL m3fill
+	labels m3fill
+	calma 70 28
 
 #ifdef METAL5
 #----------------------------------------------------------------
@@ -1183,7 +1195,7 @@ style gdsii
 #----------------------------------------------------------------
 # MET4
 #----------------------------------------------------------------
- layer MET4 	allm4,m4fill
+ layer MET4 	allm4
  	calma 	71 20
 
  layer MET4TXT
@@ -1197,6 +1209,10 @@ style gdsii
  layer MET4RES rm4
 	labels rm4
 	calma 71 13
+
+ layer MET4FILL m4fill
+	labels m4fill
+	calma 71 28
 
 #----------------------------------------------------------------
 # VIA4
@@ -1225,6 +1241,10 @@ style gdsii
  layer MET5RES rm5
 	labels rm5
 	calma 72 13
+
+ layer MET5FILL m5fill
+	labels m5fill
+	calma 72 28
 
 #endif (METAL5)
 
@@ -1814,10 +1834,10 @@ style wafflefill
 	or	polyfill_medium
 	or	polyfill_fine
 
- layer	FOMMASK    fomfill
- 	calma 	23 0
- layer	POLYMASK    polyfill
- 	calma 	28 0
+ layer	FOMFILL    fomfill
+ 	calma 	65 28
+ layer	POLYFILL    polyfill
+ 	calma 	66 28
 
 #---------------------------------------------------
 # MET1 fill
@@ -1865,11 +1885,11 @@ style wafflefill
         shrink  145
         grow    145
 
- layer	MET1MASK met1fill_coarse
+ layer	MET1FILL met1fill_coarse
 	or	met1fill_medium
 	or	met1fill_fine
 	or	met1fill_veryfine
- 	calma 	36 0
+ 	calma 	68 28
 
 #---------------------------------------------------
 # MET2 fill
@@ -1916,11 +1936,11 @@ style wafflefill
         shrink  145
         grow    145
 
- layer	MET2MASK met2fill_coarse
+ layer	MET2FILL met2fill_coarse
 	or met2fill_medium
 	or met2fill_fine
 	or met2fill_veryfine
- 	calma 	41 0
+ 	calma 	69 28
 
 #---------------------------------------------------
 # MET3 fill
@@ -1968,11 +1988,11 @@ style wafflefill
         shrink  195
         grow    195
 
- layer	MET3MASK met3fill_coarse
+ layer	MET3FILL met3fill_coarse
 	or	met3fill_medium
 	or	met3fill_fine
 	or	met3fill_veryfine
- 	calma 	34 0
+ 	calma 	70 28
 
 #ifdef METAL5
 #---------------------------------------------------
@@ -2020,11 +2040,11 @@ style wafflefill
         shrink  195
         grow    195
 
- layer	MET4MASK met4fill_coarse
+ layer	MET4FILL met4fill_coarse
 	or	met4fill_medium
 	or	met4fill_fine
 	or	met4fill_veryfine
- 	calma 	51 0
+ 	calma 	71 28
 
 #---------------------------------------------------
 # MET5 fill
@@ -2038,8 +2058,8 @@ style wafflefill
         shrink  1495
         grow    1495
 
- layer	MET5MASK met5fill_gen
- 	calma 	59 0
+ layer	MET5FILL met5fill_gen
+ 	calma 	72 28
 #endif (METAL5)
 
 end
@@ -5113,21 +5133,21 @@ style  waffleimport
 
  options ignore-unknown-layer-labels no-reconnect-labels
 
- layer	ndiff  FOMMASK
- layer	poly   POLYMASK
- layer	metal1 MET1MASK
- layer	metal2 MET2MASK
- layer	metal3 MET3MASK
- layer	metal4 MET4MASK
- layer	metal5 MET5MASK
+ layer	ndiff  FOMFILL
+ layer	poly   POLYFILL
+ layer	m1fill MET1FILL
+ layer	m2fill MET2FILL
+ layer	m3fill MET3FILL
+ layer	m4fill MET4FILL
+ layer	m5fill MET5FILL
 
- calma  FOMMASK  23 0
- calma 	POLYMASK 28 0
- calma 	MET1MASK 36 0
- calma 	MET2MASK 41 0
- calma 	MET3MASK 34 0
- calma 	MET4MASK 51 0
- calma 	MET5MASK 59 0
+ calma  FOMFILL  65 28
+ calma 	POLYFILL 66 28
+ calma 	MET1FILL 68 28
+ calma 	MET2FILL 69 28
+ calma 	MET3FILL 70 28
+ calma 	MET4FILL 71 28
+ calma 	MET5FILL 72 28
 
 style  rdlimport
  # This style is for reading shapes generated with the RDL layers
