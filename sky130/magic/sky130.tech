@@ -15,9 +15,6 @@
 # of the Apache 2.0 license agreement.
 #
 #------------------------------------------------------------------------
-# This file is designed to be used with magic versions
-# 8.3.24 or newer.
-#------------------------------------------------------------------------
 tech
   format 35
   TECHNAME
@@ -25,7 +22,8 @@ end
 
 version
  version REVISION
- description "SkyWater SKY130: PRE ALPHA Vendor Open Source rules and DRC"
+ description "SkyWater SKY130: BETA Vendor Open Source rules and DRC"
+ requires magic-8.3.99
 end
 
 #------------------------------------------------------------------------
@@ -805,6 +803,7 @@ style gdsii
 	grow	185
 	shrink	185
 	close   265000
+	mask-hints PPLUS
 	calma	94 20
 
  templayer extendNPLUS  baseNPLUS,CELLRING
@@ -816,6 +815,7 @@ style gdsii
 	grow	185
 	shrink	185
  	close   265000
+	mask-hints NPLUS
  	calma	93 44
 
 #----------------------------------------------------------------
@@ -997,6 +997,7 @@ style gdsii
 	and-not	CELLRING
 
  layer THKOX	baseTHKOX,extendTHKOX
+	mask-hints THKOX
  	calma 	75 20
 
 #----------------------------------------------------------------
@@ -1038,6 +1039,7 @@ style gdsii
 	bridge 270 270
 	grow 130
 	shrink 130
+	mask-hints NPC
 	calma  95 20
 
  # NPC is also generated on xhrpoly and uhrpoly resistors
