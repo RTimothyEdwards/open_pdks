@@ -46,6 +46,10 @@
 #		cloned from https://github.com/google/skywater-pdk.  This
 #		option is mandatory and has no default.
 #
+#
+# NOTE:  The comments below are for features that have not yet been
+# implemented.
+#
 # Enable/disable for specific libraries to be installed (and downloaded if
 # needed).  Libraries that are part of the open_pdks repository are enabled
 # by default and must be disabled by passing an option to configure.  Libraries
@@ -85,11 +89,9 @@
 #		repository and installed.
 #
 #	--enable-alpha-lib[=<path>]
-#		If enabled, install the alphanumeric library.  If <path> is
-#		specified, then the alphanumeric library is expected to be
-#		found rooted at the given path.  If not specified, then the
-#		alphanumeric library will be cloned from the git repository
-#		and installed.
+#		If enabled, install the sky130_ml_xx_hd font library from
+#		Paul Schulz on github.  If not specified, then the font
+#		library will be cloned from the git repository and installed.
 #
 #	--enable-xschem[=<path>]
 #		If enabled, install the Sky130 setup for the xschem schematic
@@ -168,6 +170,9 @@ SKYWATER_PATH = @SKY130_SOURCE_PATH@
 
 # Path to OSU standard cell library sources (to be added to configuration options).
 OSU_PATH = ~/gits/osu_130_pdk
+
+# Path to independent library sources (to be added to configuration options).
+REPO_PATH = ~/gits
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
@@ -506,6 +511,14 @@ vendor-a:
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_ms/verilog/*.*.v
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_ls/verilog/*.*.v
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_lp/verilog/*.*.v
+	# Install alphanumeric library.
+	${STAGE} -source ${REPO_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-mag %l/mag/*.mag \
+		-library general sky130_ml_xx_hd |& tee -a ${SKY130A}_install.log
+	# Install text2mag.py script for alphanumeric library
+	mkdir -p ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
+	cp custom/scripts/text2mag.py \
+		${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
 	# Install OSU digital standard cells.
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-techlef %l/latest/lef/sky130_osu_sc.tlef rename=sky130_osu_sc_t18.tlef \
