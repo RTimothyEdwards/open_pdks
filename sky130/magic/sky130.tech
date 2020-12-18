@@ -5560,9 +5560,9 @@ variants *
  angles allm1 45 "Only 45 and 90 degree angles permitted on metal1 (x.3a)"
 
 variants (fast),(full)
- widespacing allm1 3000 allm1,*obsm1 280 touching_ok \
+ widespacing allm1 3005 allm1,*obsm1 280 touching_ok \
 	"Metal1 > 3um spacing to unrelated m1 < %d (met1.3b)"
- widespacing *obsm1 3000 allm1 280 touching_ok \
+ widespacing *obsm1 3005 allm1 280 touching_ok \
 	"Metal1 > 3um spacing to unrelated m1 < %d (met1.3b)"
 
 variants (full)
@@ -5597,9 +5597,9 @@ variants *
  angles allm2 45 "Only 45 and 90 degree angles permitted on metal2 (x.3a)"
 
 variants (fast),(full)
- widespacing allm2 3000 allm2,obsm2  280 touching_ok \
+ widespacing allm2 3005 allm2,obsm2  280 touching_ok \
 	"Metal2 > 3um spacing to unrelated m2 < %d (met2.3b)"
- widespacing obsm2 3000 allm2  280 touching_ok \
+ widespacing obsm2 3005 allm2  280 touching_ok \
 	"Metal2 > 3um spacing to unrelated m2 < %d (met2.3b)"
 
 variants (full)
@@ -5635,9 +5635,9 @@ variants *
  angles allm3 45 "Only 45 and 90 degree angles permitted on metal3 (x.3a)"
 
 variants (fast),(full)
- widespacing allm3 3000 allm3,obsm3  400 touching_ok \
+ widespacing allm3 3005 allm3,obsm3  400 touching_ok \
 	"Metal3 > 3um spacing to unrelated m3 < %d (met3.3d)"
- widespacing obsm3 3000 allm3  400 touching_ok \
+ widespacing obsm3 3005 allm3  400 touching_ok \
 	"Metal3 > 3um spacing to unrelated m3 < %d (met3.3d)"
 variants (full)
  cifspacing m3_large_halo m3_large_halo 400 touching_ok \
@@ -5673,9 +5673,9 @@ variants *
  angles allm4 45 "Only 45 and 90 degree angles permitted on metal4 (x.3a)"
 
 variants (fast),(full)
- widespacing allm4 3000 allm4,obsm4  400 touching_ok \
+ widespacing allm4 3005 allm4,obsm4  400 touching_ok \
 	"Metal4 > 3um spacing to unrelated m4 < %d (met4.5b)"
- widespacing obsm4 3000 allm4  400 touching_ok \
+ widespacing obsm4 3005 allm4  400 touching_ok \
 	"Metal4 > 3um spacing to unrelated m4 < %d (met4.5b)"
 variants (full)
  cifspacing m4_large_halo m4_large_halo 400 touching_ok \
