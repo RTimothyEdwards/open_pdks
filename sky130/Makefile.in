@@ -513,7 +513,7 @@ vendor-a:
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_lp/verilog/*.*.v
 	# Install alphanumeric library.
 	${STAGE} -source ${REPO_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-mag %l/mag/*.mag \
+		-mag %l/mag/*.mag filter=custom/scripts/text2m5.py \
 		-library general sky130_ml_xx_hd |& tee -a ${SKY130A}_install.log
 	# Install text2mag.py script for alphanumeric library
 	mkdir -p ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
