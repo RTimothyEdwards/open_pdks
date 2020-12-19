@@ -2,9 +2,9 @@ VERSION 5.7 ;
   NOWIREEXTENSIONATPIN ON ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
-MACRO sky130_ef_io__vssio_hvc_pad
+MACRO sky130_ef_io__vssio_hvc_clamped_pad
   CLASS PAD GROUND ;
-  FOREIGN sky130_ef_io__vssio_hvc_pad ;
+  FOREIGN sky130_ef_io__vssio_hvc_clamped_pad ;
   ORIGIN 0.000 0.000 ;
   SIZE 75.000 BY 197.965 ;
   PIN AMUXBUS_A
@@ -31,30 +31,6 @@ MACRO sky130_ef_io__vssio_hvc_pad
         RECT 0.000 46.330 1.270 49.310 ;
     END
   END AMUXBUS_B
-  PIN DRN_HVC
-    DIRECTION INOUT ;
-    USE POWER ;
-    PORT
-      LAYER met2 ;
-        RECT 50.390 -2.035 74.290 23.625 ;
-    END
-    PORT
-      LAYER met3 ;
-        RECT 37.890 -2.035 48.890 10.345 ;
-    END
-  END DRN_HVC
-  PIN SRC_BDY_HVC
-    DIRECTION INOUT ;
-    USE GROUND ;
-    PORT
-      LAYER met2 ;
-        RECT 0.495 -2.035 24.395 0.020 ;
-    END
-    PORT
-      LAYER met3 ;
-        RECT 25.895 -2.035 36.895 10.390 ;
-    END
-  END SRC_BDY_HVC
   PIN VSSA
     DIRECTION INOUT ;
     USE GROUND ;
@@ -347,17 +323,15 @@ MACRO sky130_ef_io__vssio_hvc_pad
         RECT 69.540 -0.115 70.680 0.000 ;
         RECT 12.035 -1.065 70.680 -0.115 ;
       LAYER met2 ;
-        RECT 0.265 23.905 74.290 193.040 ;
-        RECT 0.265 0.300 50.110 23.905 ;
-        RECT 24.675 0.000 50.110 0.300 ;
+        RECT 0.265 0.000 74.290 193.040 ;
+        RECT 0.495 -2.035 24.395 0.000 ;
         RECT 25.895 -2.035 27.895 -0.115 ;
+        RECT 50.390 -2.035 74.290 0.000 ;
       LAYER met3 ;
         RECT 0.240 24.215 74.290 197.965 ;
-        RECT 24.795 10.790 49.990 24.215 ;
-        RECT 24.795 10.345 25.495 10.790 ;
-        RECT 37.295 10.745 49.990 10.790 ;
-        RECT 37.295 10.345 37.490 10.745 ;
-        RECT 49.290 10.345 49.990 10.745 ;
+        RECT 24.795 0.000 49.990 24.215 ;
+        RECT 25.895 -2.035 36.895 0.000 ;
+        RECT 37.890 -2.035 48.890 0.000 ;
       LAYER met4 ;
         RECT 1.670 173.350 73.330 197.965 ;
         RECT 0.965 93.365 74.035 173.350 ;
@@ -395,6 +369,6 @@ MACRO sky130_ef_io__vssio_hvc_pad
         RECT 2.565 13.000 72.435 16.250 ;
         RECT 2.870 0.100 72.130 13.000 ;
   END
-END sky130_ef_io__vssio_hvc_pad
+END sky130_ef_io__vssio_hvc_clamped_pad
 END LIBRARY
 
