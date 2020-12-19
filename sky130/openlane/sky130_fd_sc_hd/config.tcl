@@ -47,7 +47,7 @@ set ::env(RE_BUFFER_CELL) "sky130_fd_sc_hd__buf_4"
 
 # Diode insertaion
 set ::env(DIODE_CELL) "sky130_fd_sc_hd__diode_2"
-set ::env(FAKEDIODE_CELL) "sky130_fd_sc_hd__fakediode_2"
+set ::env(FAKEDIODE_CELL) "sky130_ef_sc_hd__fakediode_2"
 set ::env(DIODE_CELL_PIN) "DIODE"
 
 set ::env(CELL_PAD) 8

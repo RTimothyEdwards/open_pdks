@@ -20,6 +20,11 @@
 # technology file, with the GDS_FILE property pointing to the seal ring GDS.
 # This layout and GDS can then be imported into a layout.
 #
+# Note:  All magic files are in base units of centimicrons.  Because the
+# manufacturing grid is 5nm, if the half-width of the seal ring is on 5nm,
+# the seal ring quadrants will overlap at the center by 5nm, which is not
+# an issue.
+#
 # Usage:
 #
 #   sky130_gen_sealring.py width height target_dir [-force] [-outer] [-keep]
@@ -92,8 +97,8 @@ def generate_sealring(width, height, target_dir, force, keep):
     fwidth = float(width) + 12
     fheight = float(height) + 12
 
-    dbhwidth = int(fwidth * 100)
-    dbhheight = int(fheight * 100)
+    dbhwidth = round(fwidth * 100)
+    dbhheight = round(fheight * 100)
 
     swidth = str(dbhwidth)
     sheight = str(dbhheight)
@@ -120,8 +125,8 @@ def generate_sealring(width, height, target_dir, force, keep):
 
     # Abstract corner view gets the same treatment
 
-    qwidth = str(int(fwidth * 50))
-    qheight = str(int(fheight * 50))
+    qwidth = str(round(fwidth * 50))
+    qheight = str(round(fheight * 50))
 
     with open(abstract, 'r') as ifile:
         maglines = ifile.read().splitlines()
@@ -214,7 +219,7 @@ def generate_sealring(width, height, target_dir, force, keep):
         print('<< end >>', file=ofile)
     
     # Create a new abstract layout TO BE called 'advSeal_6um_gen.mag'
-    # This is the view in technology EFS8A.  Since there is already
+    # This is the view in technology sky130A.  Since there is already
     # a cell with this name that is used to generate GDS, the cell
     # will be called "seal_ring.mag" and copied to "advSeal_6um_gen.mag"
     # in the target directory.
@@ -224,7 +229,7 @@ def generate_sealring(width, height, target_dir, force, keep):
 
     with open('seal_ring.mag', 'w') as ofile:
         print('magic', file=ofile)
-        print('tech EFS8A', file=ofile)
+        print('tech sky130A', file=ofile)
         print('timestamp 1584566829', file=ofile)
 
         # Lower left original

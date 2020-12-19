@@ -16,7 +16,7 @@ set leffile=STAGING_PATH/TECHNAME/libs.ref/LIBRARY/lef/LIBRARY.lef
 #ifdef EF_FORMAT
 set spicefile=STAGING_PATH/TECHNAME/libs.ref/spi/LIBRARY/LIBRARY.spi
 #else (!EF_FORMAT)
-set spicefile=STAGING_PATH/TECHNAME/libs.ref/LIBRARY/spice/LIBRARY.spi
+set spicefile=STAGING_PATH/TECHNAME/libs.ref/LIBRARY/spice/LIBRARY.spice
 #endif (!EF_FORMAT)
 
 # The liberty format file containing standard cell timing and function information

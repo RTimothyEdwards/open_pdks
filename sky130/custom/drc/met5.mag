@@ -1,0 +1,27 @@
+magic
+tech sky130A
+magscale 1 2
+timestamp 1599845411
+<< error_p >>
+rect 2292 2691 3017 2913
+rect 1151 2501 1864 2568
+rect 2305 2371 3030 2593
+rect 3537 2272 3902 2644
+rect 2187 1571 2482 1619
+rect 2187 1269 2482 1293
+<< via4 >>
+rect 2187 1269 2482 1595
+<< metal5 >>
+rect 2292 2691 3017 3025
+rect 1151 2248 1864 2501
+rect 2305 2259 3030 2593
+rect 3537 2272 3902 2644
+rect 1935 1269 2187 1595
+rect 2482 1269 2690 1595
+<< labels >>
+flabel comment s 688 2342 688 2342 0 FreeSans 800 0 0 0 Met5 (m5)
+flabel comment s 1549 2081 1549 2081 0 FreeSans 560 0 0 0 m5.1
+flabel comment s 2541 2105 2541 2105 0 FreeSans 560 0 0 0 m5.2
+flabel comment s 3730 2144 3730 2144 0 FreeSans 560 0 0 0 m5.4
+flabel comment s 2340 1136 2340 1136 0 FreeSans 560 0 0 0 m5.3
+<< end >>

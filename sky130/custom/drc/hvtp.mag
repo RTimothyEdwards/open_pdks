@@ -1,0 +1,59 @@
+magic
+tech sky130A
+timestamp 1602966314
+<< error_p >>
+rect 1696 472 1707 675
+rect 2175 551 2254 560
+<< nwell >>
+rect 693 354 2429 830
+<< pmos >>
+rect 1696 472 1761 675
+rect 2175 551 2254 583
+<< pmoshvt >>
+rect 868 458 947 661
+rect 1013 458 1078 661
+rect 1592 472 1671 675
+rect 2175 471 2254 524
+<< pdiff >>
+rect 798 458 868 661
+rect 947 458 1013 661
+rect 1078 458 1155 661
+rect 1513 472 1592 675
+rect 1671 472 1696 675
+rect 1761 472 1838 675
+rect 2099 551 2175 583
+rect 2254 551 2315 583
+rect 2096 471 2175 524
+rect 2254 471 2312 524
+<< nsubdiff >>
+rect 1280 542 1360 557
+rect 1280 450 1360 465
+<< nsubdiffcont >>
+rect 1280 465 1360 542
+<< poly >>
+rect 868 661 947 716
+rect 1013 661 1078 720
+rect 1592 675 1671 730
+rect 1696 675 1761 734
+rect 2175 583 2254 596
+rect 2175 524 2254 551
+rect 868 403 947 458
+rect 1013 401 1078 458
+rect 1592 417 1671 472
+rect 1696 415 1761 472
+rect 2175 416 2254 471
+<< locali >>
+rect 1280 542 1360 557
+rect 1280 450 1360 465
+<< labels >>
+flabel comment s 146 1124 146 1124 0 FreeSans 400 0 0 0 Hvtp
+flabel comment s -47 423 -44 423 0 FreeSans 280 0 0 0 Correct_by_design
+flabel comment s -36 329 -36 329 0 FreeSans 280 0 0 0 hvtp.1
+flabel comment s -46 255 -46 258 0 FreeSans 280 0 0 0 hvtp.2
+flabel comment s -57 163 -57 164 0 FreeSans 280 0 0 0 hvtp.3
+flabel comment s 835 1140 835 1140 0 FreeSans 280 0 0 0 Use_cif_see_HVTP
+flabel comment s 1679 300 1679 300 0 FreeSans 280 0 0 0 hvtp.4
+flabel comment s 2209 294 2209 294 0 FreeSans 280 0 0 0 hvtp.4
+flabel comment s -64 98 -64 98 0 FreeSans 280 0 0 0 hvtp.5
+flabel comment s -73 21 -73 21 0 FreeSans 280 0 0 0 hvtp.6
+<< end >>

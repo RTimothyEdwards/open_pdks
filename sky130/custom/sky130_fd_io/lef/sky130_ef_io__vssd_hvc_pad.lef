@@ -44,6 +44,7 @@ MACRO sky130_ef_io__vssd_hvc_pad
     END
   END DRN_HVC
   PIN SRC_BDY_HVC
+    ANTENNADIFFAREA 12.516800 ;
     DIRECTION INOUT ;
     USE GROUND ;
     PORT

@@ -1,0 +1,51 @@
+magic
+tech sky130A
+timestamp 1602965897
+<< error_p >>
+rect 1398 514 1680 827
+rect 41 6 206 400
+rect 1492 -314 1534 -313
+rect 2517 -562 2519 -410
+<< dnwell >>
+rect 730 514 1050 827
+rect 1398 514 1718 827
+rect -94 6 41 400
+rect 989 -793 1399 -388
+rect 2177 -649 2517 -336
+<< nwell >>
+rect 670 469 1769 899
+rect -181 -66 106 464
+rect 1450 -314 1492 -313
+rect 925 -502 1492 -314
+rect 925 -667 1109 -502
+rect 1274 -667 1492 -502
+rect 925 -861 1492 -667
+rect 2108 -707 2675 -277
+<< pwell >>
+rect 1138 -644 1245 -525
+<< pdiff >>
+rect 2422 -562 2559 -410
+<< nsubdiff >>
+rect 2230 -402 2303 -384
+rect 2230 -525 2245 -402
+rect 2286 -525 2303 -402
+rect 2230 -546 2303 -525
+<< nsubdiffcont >>
+rect 2245 -525 2286 -402
+<< locali >>
+rect 2245 -402 2286 -368
+rect 2245 -557 2286 -525
+<< labels >>
+flabel comment s 32 -554 32 -554 0 FreeSans 280 0 0 0 dnwell.4
+flabel comment s 25 -459 25 -459 0 FreeSans 280 0 0 0 (not_implemented)
+flabel comment s 146 1124 146 1124 0 FreeSans 400 0 0 0 Deep_Nwell
+flabel comment s 1238 944 1238 944 0 FreeSans 280 0 0 0 ERROR:_Incorrect_Implementation
+flabel comment s 2340 -755 2340 -755 0 FreeSans 280 0 0 0 dnwell.5
+flabel comment s 30 -1145 30 -1145 0 FreeSans 280 0 0 0 NOTE:_Why_do_errors_keep_disappearing??
+flabel comment s 15 -628 15 -628 0 FreeSans 280 0 0 0 dnwell.3a
+flabel comment s 15 -699 15 -699 0 FreeSans 280 0 0 0 dnwell.3b
+flabel comment s 13 -771 13 -771 0 FreeSans 280 0 0 0 dnwell.3c
+flabel comment s 28 -850 28 -850 0 FreeSans 280 0 0 0 dnwell.3d
+flabel comment s -32 -172 -32 -172 0 FreeSans 280 0 0 0 dnwell.2
+flabel comment s 1247 369 1247 369 0 FreeSans 280 0 0 0 dnwell.3
+<< end >>

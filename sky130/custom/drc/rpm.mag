@@ -1,0 +1,92 @@
+magic
+tech sky130A
+magscale 1 2
+timestamp 1602987013
+<< error_p >>
+rect 1080 986 1150 1418
+rect 1130 886 1150 986
+rect 1080 454 1150 886
+rect 2208 462 2226 1426
+rect 2848 1244 2908 1400
+rect 3004 708 3064 1244
+rect 3889 1039 3910 1135
+rect 5046 1049 5073 1215
+rect 3985 814 4006 1039
+rect 4424 961 4494 1041
+rect 5212 769 5239 1049
+<< mvnmos >>
+rect 5212 833 5297 990
+<< ndiff >>
+rect 3004 708 3292 1244
+<< mvndiff >>
+rect 5212 990 5297 1049
+rect 5212 769 5297 833
+<< psubdiff >>
+rect 3346 1006 3424 1031
+rect 3346 942 3355 1006
+rect 3415 942 3424 1006
+rect 3346 918 3424 942
+<< mvpsubdiff >>
+rect 5401 936 5472 961
+rect 5401 883 5409 936
+rect 5463 883 5472 936
+rect 5401 858 5472 883
+<< psubdiffcont >>
+rect 3355 942 3415 1006
+<< mvpsubdiffcont >>
+rect 5409 883 5463 936
+<< poly >>
+rect 3985 814 4039 1039
+rect 4424 961 4494 1194
+rect 5178 833 5212 990
+rect 5297 833 5330 990
+<< xpolycontact >>
+rect 1080 986 1130 1418
+rect 1080 454 1130 886
+rect 1908 992 1978 1424
+rect 1908 460 1978 892
+rect 2208 994 2278 1426
+rect 2208 462 2278 894
+rect 2838 1010 2908 1442
+rect 2838 478 2908 910
+rect 3840 994 3910 1426
+rect 3840 462 3910 894
+rect 5003 979 5073 1411
+rect 5003 447 5073 879
+<< ppolyres >>
+rect 1080 886 1130 986
+rect 1908 892 1978 992
+rect 2208 894 2278 994
+rect 2838 910 2908 1010
+rect 3840 894 3910 994
+rect 4424 861 4494 961
+rect 5003 879 5073 979
+<< locali >>
+rect 3355 1006 3415 1030
+rect 3355 918 3415 942
+rect 5409 936 5463 961
+rect 5409 859 5463 883
+<< labels >>
+flabel comment s 292 2248 292 2248 0 FreeSans 800 0 0 0 P+_Poly_Resistor_(rpm)
+flabel comment s 1670 2280 1670 2280 0 FreeSans 560 0 0 0 Use_cif_see_RPM
+flabel comment s -200 1168 -200 1168 0 FreeSans 560 0 0 0 rpm.1
+flabel comment s -84 1324 -78 1324 0 FreeSans 560 0 0 0 Correct_by_design
+flabel comment s 1778 2112 1778 2112 0 FreeSans 560 0 0 0 Use_cif_see_POLYRES
+flabel comment s 1634 1892 1634 1892 0 FreeSans 560 0 0 0 Use_cif_see_CONT
+flabel comment s 2098 358 2098 358 0 FreeSans 560 0 0 0 rpm.2
+flabel comment s 2084 206 2084 206 0 FreeSans 560 0 0 0 rpm.3
+flabel comment s -210 1020 -210 1020 0 FreeSans 560 0 0 0 rpm.4
+flabel comment s 1640 1692 1640 1692 0 FreeSans 560 0 0 0 Use_cif_see_PPLUS
+flabel comment s 1654 1538 1654 1538 0 FreeSans 560 0 0 0 Use_cif_see_NPC
+flabel comment s -206 882 -206 882 0 FreeSans 560 0 0 0 rpm.5
+flabel comment s 2986 400 2986 400 0 FreeSans 560 0 0 0 rpm.6
+flabel comment s 3909 367 3909 367 0 FreeSans 560 0 0 0 rpm.7
+flabel comment s 4452 685 4452 685 0 FreeSans 560 0 0 0 rpm.8
+flabel comment s 5410 479 5410 479 0 FreeSans 560 0 0 0 rpm.9
+flabel comment s -76 1892 -70 1892 0 FreeSans 560 0 0 0 Not_Implemented
+flabel comment s -173 1762 -173 1762 0 FreeSans 560 0 0 0 rpm.10
+flabel comment s -173 1621 -173 1621 0 FreeSans 560 0 0 0 rpm.11
+flabel comment s 1183 338 1183 338 0 FreeSans 560 0 0 0 rpm.1b
+flabel comment s 986 130 986 130 0 FreeSans 560 0 0 0 NOTE:
+flabel comment s 1268 -28 1268 -28 0 FreeSans 560 0 0 0 discrete_widths_not_checked
+<< end >>

@@ -17,7 +17,7 @@
 OPEN_PDKS_ROOT ?= $(shell pwd)/..
 THREADS ?= $(shell nproc)
 STD_CELL_LIBRARY ?= sky130_fd_sc_hd
-SKYWATER_COMMIT ?= 5cd70ed19fee8ea37c4e8dbd5c5c3eaa9886dd23
+SKYWATER_COMMIT ?= d8e2cf1ba006ed01468aa60e7f4e85a1ece74ca4
 
 .DEFAULT_GOAL := all
 
@@ -49,6 +49,7 @@ all-skywater-libraries: skywater-pdk
 		git submodule update --init libraries/sky130_fd_sc_hdll/latest && \
 		git submodule update --init libraries/sky130_fd_sc_ms/latest && \
 		git submodule update --init libraries/sky130_fd_sc_ls/latest && \
+		git submodule update --init libraries/sky130_fd_sc_hvl/latest && \
 		$(MAKE) -j$(THREADS) timing
 
 .PHONY: build-pdk

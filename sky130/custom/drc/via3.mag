@@ -1,0 +1,41 @@
+magic
+tech sky130A
+magscale 1 2
+timestamp 1599843560
+<< error_p >>
+rect 1348 2048 1408 2066
+rect 1408 2002 1412 2048
+rect 1885 2026 1891 2032
+rect 1955 2026 1961 2032
+rect 1891 2020 1897 2021
+rect 1949 2020 1955 2021
+<< metal3 >>
+rect 1343 2048 1413 2146
+rect 1343 2002 1348 2048
+rect 1408 2002 1413 2048
+rect 1891 2090 1955 2177
+rect 1891 2021 1955 2026
+rect 1343 1978 1413 2002
+<< via3 >>
+rect 1348 2002 1408 2048
+rect 1891 2026 1955 2090
+<< metal4 >>
+rect 1860 2090 2053 2110
+rect 1329 2048 1469 2065
+rect 1329 2002 1348 2048
+rect 1408 2002 1469 2048
+rect 1860 2026 1891 2090
+rect 1955 2026 2053 2090
+rect 1860 2010 2053 2026
+rect 1329 1988 1469 2002
+<< labels >>
+flabel comment s 504 1462 504 1462 0 FreeSans 560 0 0 0 Not implemented
+flabel comment s 454 2146 454 2146 0 FreeSans 560 0 0 0 Correct by design
+flabel comment s 493 2348 493 2348 0 FreeSans 800 0 0 0 Via3
+flabel comment s 504 2000 504 2000 0 FreeSans 560 0 0 0 via3.2
+flabel comment s 500 1869 500 1869 0 FreeSans 560 0 0 0 via3.3
+flabel comment s 477 1736 477 1736 0 FreeSans 560 0 0 0 via3.4
+flabel comment s 1962 1922 1962 1922 0 FreeSans 560 0 0 0 via3.5
+flabel comment s 572 1244 572 1244 0 FreeSans 560 0 0 0 via3.1a
+flabel comment s 1377 1899 1377 1899 0 FreeSans 560 0 0 0 via3.1
+<< end >>

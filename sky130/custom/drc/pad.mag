@@ -1,0 +1,17 @@
+magic
+tech sky130A
+magscale 1 2
+timestamp 1599845824
+<< error_p >>
+rect 3183 2163 3389 3664
+rect 3503 2169 3709 3670
+<< padl >>
+rect 1936 2163 3389 3664
+rect 3503 2169 4956 3670
+<< labels >>
+flabel comment s 688 2342 688 2342 0 FreeSans 800 0 0 0 Pad
+flabel comment s 775 1925 775 1925 0 FreeSans 640 0 0 0 Not implemented
+flabel comment s 817 1656 817 1656 0 FreeSans 560 0 0 0 pad.3
+flabel comment s 3413 2012 3413 2012 0 FreeSans 560 0 0 0 pad.2
+flabel comment s 3515 1696 3515 1696 0 FreeSans 640 0 0 0 Need to check rule
+<< end >>

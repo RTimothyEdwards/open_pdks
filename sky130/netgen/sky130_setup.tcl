@@ -125,12 +125,12 @@ set devices {}
 lappend devices sky130_fd_pr__nfet_01v8
 lappend devices sky130_fd_pr__nfet_01v8_lvt
 lappend devices sky130_fd_bs_flash__special_sonosfet_star
-lappend devices sky130_fd_pr__nfet_g5v9d10v5
+lappend devices sky130_fd_pr__nfet_g5v0d10v5
 lappend devices sky130_fd_pr__pfet_01v8
 lappend devices sky130_fd_pr__pfet_01v8_lvt
 lappend devices sky130_fd_pr__pfet_01v8_mvt
 lappend devices sky130_fd_pr__pfet_01v8_hvt
-lappend devices sky130_fd_pr__pfet_g5v9d10v5
+lappend devices sky130_fd_pr__pfet_g5v0d10v5
 lappend devices sky130_fd_pr__special_pfet_pass
 lappend devices sky130_fd_pr__special_nfet_pass
 lappend devices sky130_fd_pr__special_nfet_latch
@@ -229,8 +229,8 @@ foreach dev $devices {
 set devices {}
 lappend devices sky130_fd_pr__npn_05v5_W1p00L1p00
 lappend devices sky130_fd_pr__npn_05v5_W1p00L2p00
-lappend devices sky130_fd_pr__php_05v5_W0p68L0p68
-lappend devices sky130_fd_pr__php_05v5_W3p40L3p40
+lappend devices sky130_fd_pr__pnp_05v5_W0p68L0p68
+lappend devices sky130_fd_pr__pnp_05v5_W3p40L3p40
 
 #ifdef METAL5
 lappend devices sky130_fd_pr__cap_vpp_11p5x11p7_lim5_shield

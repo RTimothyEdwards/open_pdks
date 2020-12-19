@@ -1,0 +1,28 @@
+VERSION 5.7 ;
+  NOWIREEXTENSIONATPIN ON ;
+  DIVIDERCHAR "/" ;
+  BUSBITCHARS "[]" ;
+MACRO sky130_ef_io__bare_pad
+  CLASS BLOCK ;
+  FOREIGN sky130_ef_io__bare_pad ;
+  ORIGIN 2.700 2.700 ;
+  SIZE 65.400 BY 75.400 ;
+  PIN PAD
+    PORT
+      LAYER met4 ;
+        RECT -2.700 70.000 62.700 72.700 ;
+        RECT -2.700 0.000 0.000 70.000 ;
+        RECT 60.000 0.000 62.700 70.000 ;
+        RECT -2.700 -2.700 62.700 0.000 ;
+      LAYER via4 ;
+        RECT -2.580 71.400 62.580 72.580 ;
+        RECT -2.580 -1.400 -1.400 71.400 ;
+        RECT 61.400 -1.400 62.580 71.400 ;
+        RECT -2.580 -2.580 62.580 -1.400 ;
+      LAYER met5 ;
+        RECT -2.700 -2.700 62.700 72.700 ;
+    END
+  END PAD
+END sky130_ef_io__bare_pad
+END LIBRARY
+
