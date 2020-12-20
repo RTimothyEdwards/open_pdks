@@ -43,6 +43,8 @@ lappend devices sky130_fd_pr__res_xhigh_po_5p73
 lappend devices sky130_fd_pr__res_xhigh_po
 lappend devices sky130_fd_pr__res_generic_nd
 lappend devices sky130_fd_pr__res_generic_pd
+lappend devices sky130_fd_pr__res_generic_nd__hv
+lappend devices sky130_fd_pr__res_generic_pd__hv
 lappend devices mrdn_hv mrdp_hv
 
 foreach dev $devices {
@@ -137,6 +139,9 @@ lappend devices sky130_fd_pr__special_nfet_latch
 lappend devices sky130_fd_pr__cap_var_lvt
 lappend devices sky130_fd_pr__cap_var_hvt
 lappend devices sky130_fd_pr__cap_var
+lappend devices sky130_fd_pr__nfet_20v0_nvt
+lappend devices sky130_fd_pr__nfet_20v0
+lappend devices sky130_fd_pr__pfet_20v0
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -231,6 +236,9 @@ lappend devices sky130_fd_pr__npn_05v5_W1p00L1p00
 lappend devices sky130_fd_pr__npn_05v5_W1p00L2p00
 lappend devices sky130_fd_pr__pnp_05v5_W0p68L0p68
 lappend devices sky130_fd_pr__pnp_05v5_W3p40L3p40
+lappend devices sky130_fd_pr__npn_05v5
+lappend devices sky130_fd_pr__pnp_05v5
+lappend devices sky130_fd_pr__npn_11v0
 
 #ifdef METAL5
 lappend devices sky130_fd_pr__cap_vpp_11p5x11p7_lim5_shield
