@@ -889,6 +889,16 @@ style gdsii
 	calma 81 4
 
 #----------------------------------------------------------------
+# ESDID is a marker layer for ESD devices in the padframe I/O.
+#----------------------------------------------------------------
+
+ layer ESDID  
+	bloat-all mvnfetesd *mvndiff,*poly
+	bloat-all mvpfetesd *mvpdiff,*poly
+	grow 100
+	calma 81 19
+
+#----------------------------------------------------------------
 # NPNID and PNPID apply to bipolar transistors
 #----------------------------------------------------------------
 
