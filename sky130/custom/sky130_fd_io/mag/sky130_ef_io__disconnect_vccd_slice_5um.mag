@@ -99,13 +99,17 @@ flabel metal5 s 800 20 1000 1070 0 FreeSans 800 0 0 0 VCCHIB
 port 7 nsew power bidirectional
 flabel metal4 s 800 0 1000 1090 0 FreeSans 800 0 0 0 VCCHIB
 port 7 nsew power bidirectional
-flabel metal5 s 0 13600 200 18593 0 FreeSans 800 0 0 0 VDDIO
+flabel metal5 s 0 13600 200 18590 0 FreeSans 800 0 0 0 VDDIO
+port 8 nsew power bidirectional
+flabel metal4 s 0 13600 200 18593 0 FreeSans 800 0 0 0 VDDIO
 port 8 nsew power bidirectional
 flabel metal5 s 0 3570 200 4460 0 FreeSans 800 0 0 0 VDDIO
 port 8 nsew power bidirectional
 flabel metal4 s 0 3550 200 4480 0 FreeSans 800 0 0 0 VDDIO
 port 8 nsew power bidirectional
-flabel metal5 s 800 13600 1000 18593 0 FreeSans 800 0 0 0 VDDIO
+flabel metal5 s 800 13600 1000 18590 0 FreeSans 800 0 0 0 VDDIO
+port 8 nsew power bidirectional
+flabel metal4 s 800 13600 1000 18593 0 FreeSans 800 0 0 0 VDDIO
 port 8 nsew power bidirectional
 flabel metal5 s 800 3570 1000 4460 0 FreeSans 800 0 0 0 VDDIO
 port 8 nsew power bidirectional
@@ -135,6 +139,6 @@ port 12 nsew ground bidirectional
 string LEFclass PAD AREAIO
 string FIXED_BBOX 0 0 1000 39593
 string GDS_FILE ../gds/sky130_ef_io__disconnect_vccd_slice_5um.gds
-string GDS_END 8022
+string GDS_END 8282
 string GDS_START 170
 << end >>

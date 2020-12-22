@@ -160,6 +160,10 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
     USE POWER ;
     PORT
       LAYER met5 ;
+        RECT 0.000 68.000 1.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
         RECT 0.000 68.000 1.000 92.965 ;
     END
     PORT
@@ -172,6 +176,10 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
     END
     PORT
       LAYER met5 ;
+        RECT 4.000 68.000 5.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
         RECT 4.000 68.000 5.000 92.965 ;
     END
     PORT
@@ -233,7 +241,8 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
   END VSSIO_Q
   OBS
       LAYER met4 ;
-        RECT 0.000 66.900 5.000 197.965 ;
+        RECT 0.000 66.900 5.000 95.000 ;
+        RECT 0.000 172.000 5.000 197.965 ;
         RECT 0.000 61.050 5.000 61.650 ;
         RECT 0.000 55.100 5.000 55.800 ;
         RECT 0.000 49.710 5.000 50.690 ;
