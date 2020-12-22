@@ -885,6 +885,6 @@ port 4 nsew ground bidirectional
 flabel metal5 s 6339 32546 10468 33417 0 FreeSans 2000 0 0 0 VSSA
 port 9 nsew ground bidirectional
 << properties >>
-string LEFclass PAD GROUND
+string LEFclass PAD POWER
 string FIXED_BBOX 0 0 15000 39593
 << end >>
