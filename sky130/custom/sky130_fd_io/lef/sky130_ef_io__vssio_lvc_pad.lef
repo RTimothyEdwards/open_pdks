@@ -3,7 +3,7 @@ VERSION 5.7 ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
 MACRO sky130_ef_io__vssio_lvc_pad
-  CLASS PAD GROUND ;
+  CLASS PAD POWER ;
   FOREIGN sky130_ef_io__vssio_lvc_pad ;
   ORIGIN 0.000 0.000 ;
   SIZE 75.000 BY 197.965 ;
