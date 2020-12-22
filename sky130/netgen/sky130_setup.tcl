@@ -128,6 +128,7 @@ lappend devices sky130_fd_pr__nfet_01v8
 lappend devices sky130_fd_pr__nfet_01v8_lvt
 lappend devices sky130_fd_bs_flash__special_sonosfet_star
 lappend devices sky130_fd_pr__nfet_g5v0d10v5
+lappend devices sky130_fd_pr__nfet_05v0_nvt
 lappend devices sky130_fd_pr__pfet_01v8
 lappend devices sky130_fd_pr__pfet_01v8_lvt
 lappend devices sky130_fd_pr__pfet_01v8_mvt
@@ -273,6 +274,21 @@ foreach dev $devices {
 	property "-circuit2 $dev" parallel enable
 	# Ignore these properties
 	property "-circuit2 $dev" delete mult
+    }
+}
+
+#---------------------------------------------------------------
+# Schematic cells which are not extractable
+#---------------------------------------------------------------
+
+set devices {sky130_fd_io__condiode}
+
+foreach dev $devices {
+    if {[lsearch $cells1 $dev] >= 0} {
+    	ignore class "-circuit1 $dev"
+    }
+    if {[lsearch $cells2 $dev] >= 0} {
+	ignore class "-circuit2 $dev"
     }
 }
 

@@ -2574,6 +2574,10 @@ style  sky130
  templayer mvxnsubcheck mvnsubcheck
  copyup mvnsubcheck
 
+ # Copy THKOX areas up for mv diffusion checks
+ templayer mvarea THKOX
+ copyup THKOX
+
  templayer mvpsdarea DIFF
  and PPLUS
  and-not NWELL
