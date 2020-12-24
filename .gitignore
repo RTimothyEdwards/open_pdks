@@ -11,17 +11,13 @@ __pycache__
 *_migrate.log
 
 # autotools artifacts
-scripts/*
-!scripts/configure
-!scripts/configure.ac
-!scripts/tools.txt
-!scripts/rl
 **/Makefile
 **/Makefile.am
 
 # exceptions for travisCI
 !.travisCI/Makefile
 
-# staged PDKs
-sky130/sky130A
-sky130/sky130A/*
+# local install cache
+/pdks
+/libs
+/tools

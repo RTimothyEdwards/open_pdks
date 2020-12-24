@@ -35,13 +35,39 @@
 # The following definitions are tied to the contents
 # of this repository and should not be changed.
 
-TECHS       = sky130
+TECHS =
+
+SKY130_SOURCE_PATH = @SKY130_SOURCE_PATH@
+ifneq ($(SKY130_SOURCE_PATH),)
+    TECHS += sky130
+endif
+
+DONE_MESSAGE = "Done."
+ifeq ($(TECHS),)
+	DONE_MESSAGE = "No techs configured."
+endif
+
+TECHS_ALL = $(addprefix tech_,$(TECHS))
+TECHS_INSTALL = $(addprefix install-,$(TECHS))
+TECHS_CLEAN = $(addprefix clean-,$(TECHS))
+TECHS_VERYCLEAN = $(addprefix veryclean-,$(TECHS))
 
 #---------------------------------------------------
 
-all:	${TECHS}
-	for tech in ${TECHS}; do \
-		${MAKE} tech_$$tech; done
+all: $(TECHS_ALL)
+	@echo $(DONE_MESSAGE)
+
+install: $(TECHS_INSTALL)
+	@echo $(DONE_MESSAGE)
+
+clean: $(TECHS_CLEAN)
+	@echo $(DONE_MESSAGE)
+
+veryclean: $(TECHS_VERYCLEAN)
+	@echo $(DONE_MESSAGE)
+
+distclean: $(TECHS_VERYCLEAN)
+	@echo $(DONE_MESSAGE)
 
 #---------------------------------------------------
 
@@ -60,19 +86,3 @@ veryclean-sky130:
 	(cd sky130 && ${MAKE} veryclean)
 
 #---------------------------------------------------
-
-install:	${TECHS}	
-	for tech in ${TECHS}; do \
-		${MAKE} install-$${tech}; done
-
-clean:		${TECHS}
-	for tech in ${TECHS}; do \
-		${MAKE} clean-$${tech}; done
-
-veryclean:	${TECHS}
-	for tech in ${TECHS}; do \
-		${MAKE} veryclean-$${tech}; done
-
-distclean:	${TECHS}
-	for tech in ${TECHS}; do \
-		${MAKE} veryclean-$${tech}; done

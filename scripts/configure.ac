@@ -1,101 +1,228 @@
 AC_INIT([open_pdks], [1.0], [github.com/RTimothyEdwards/open_pdks])
 
 # detect PDKs based on directories that include Makefile.in files
-m4_define([M4_GET_TECHS], [m4_normalize(m4_esyscmd(cd .. && find * -mindepth 1 -name "Makefile.in" -exec dirname {} \; | tr "\n" " "))])
+m4_define([M4_GET_TECHS], [m4_normalize(m4_esyscmd(cd .. && find * -mindepth 1 -maxdepth 1 -name "Makefile.in" -exec dirname {} \; | tr "\n" " "))])
 
+# define tools
 # define tools to install setup files for.  This does not imply that the tools are
 # available on the system;  just that open_pdks will install the setup files for them.
+## DO NOT INCLUDE XSCHEM IN THE TOOL LIST. XSCHEM CAN BE INSTALLED IN THE CONFIG SCRIPT
 m4_define([M4_GET_TOOLS], [m4_normalize(m4_esyscmd(cat ./tools.txt | tr "\n" " "))])
 
+mkdir -p ../pdks
+
 # check for the source and install paths for each PDK.
-AC_DEFUN([M4_GEN_WITH_PDK_ARGS],
-[
-    # --with-pdk-source=PDK_SOURCE_PATH
+AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
+
+    # --enable-pdk-[pdk]=/path/to/pdk
     m4_foreach_w(pdk, $1, [
-	m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z" "A-Z"))])
-        pdkvar[]_SOURCE_PATH_=""
-        AC_ARG_WITH(pdk-source,
-              [AS_HELP_STRING([--with-pdk-source=/path/to/pdk/source], "location of the source files for pdk")],
-              [pdkvar[]_SOURCE_PATH_=$withval]
+        m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z" "A-Z"))])
+
+        pdkvar[]_SOURCE_PATH=""
+        pdkvar[]_LOCAL_PATH=""
+        pdkvar[]_DIST_PATH=""
+        pdkvar[]_LINK_TARGETS="none"
+
+        pdk_get() {
+            AC_CHECK_FILE(../pdk/[pdk]_url, [
+                AC_CHECK_FILE(../pdks/pdk,[
+                    echo "Using pre-existing pdk download..."
+                ], [
+                    mkdir -p ../pdks/pdk
+                    sh dl $(cat "../pdk/pdk_get") ../pdks/pdk.tar.gz;
+                    (echo "Extracting pdk..." && cd ../pdks && tar -xf pdk.tar.gz --strip-components 1 -C ../pdks/pdk)
+                ])
+                export pdkvar[]_SOURCE_PATH=../pdks/pdk
+            ], [
+                AC_MSG_ERROR([PDK pdk cannot be automatically downloaded and requires a path.])
+            ])
+        }
+
+        AC_ARG_ENABLE(pdk-[pdk],
+            [AS_HELP_STRING([--enable-pdk-[pdk]=@<:@/path/to/pdk/@:>@ --disable-pdk-[pdk]], "location of the source files for the pdk (pdks with a [pdk]_url file can automatically download them if the path is omitted)")],
+            [
+                if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                    pdk_get
+                elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                    echo "Disabling pdk..."
+                else
+                    export pdkvar[]_SOURCE_PATH=$enableval
+                fi
+            ], [
+                pdk_get
+            ]
         )
+	    # # Require this argument
+        # AC_MSG_NOTICE([Checking whether source path is specified for 'pdk'])
+        # if test "x$[]pdkvar[]_SOURCE_PATH" == "x" ; then
+        #     AC_MSG_ERROR([Option --with-pdk-source=<path> not specified!])
+        # fi
 
-	# Require this argument
-        AC_MSG_NOTICE([Checking whether source path is specified for 'pdk'])
-        if test "x$[]pdkvar[]_SOURCE_PATH_" == "x" ; then
-	   AC_MSG_ERROR([Option --with-pdk-source=<path> not specified!])
-	fi
+        if @<:@ "$[]pdkvar[]_SOURCE_PATH" != "" @:>@; then
+            pdkvar[]_SOURCE_PATH=`readlink -f $[]pdkvar[]_SOURCE_PATH`
 
-	pdkvar[]_SOURCE_PATH=`readlink -f $[]pdkvar[]_SOURCE_PATH_`
+            # basic check that the PDK exists there (the path must exist in any case)
+            AC_MSG_NOTICE([Checking specified path for 'pdk' at $pdkvar[]_SOURCE_PATH])
+            AC_CHECK_FILE($pdkvar[]_SOURCE_PATH,[
+                AC_MSG_NOTICE(['pdk' source path found at $pdkvar[]_SOURCE_PATH])
+            ], [
+                AC_MSG_ERROR([Specified path for 'pdk' at $pdkvar[]_SOURCE_PATH not found])
+            ])
 
-        # basic check that the PDK exists there (the path must exist in any case)
-        AC_MSG_NOTICE([Checking specified path for 'pdk' at $[]pdkvar[]_SOURCE_PATH])
-        AC_CHECK_FILE($[]pdkvar[]_SOURCE_PATH,
-        [
-           AC_MSG_NOTICE(['pdk' source path found at $[]pdkvar[]_SOURCE_PATH])
-        ],
-        [
-           AC_MSG_ERROR([Specified path for 'pdk' at $[]pdkvar[]_SOURCE_PATH not found])
-        ])
-        AC_SUBST([]pdkvar[]_SOURCE_PATH)
-    ])
+            # --with-pdk-local-path=PDK_LOCAL_PATH
+            AC_ARG_WITH(pdk-local-path,
+                [AS_HELP_STRING([--with-pdk-local-path=/path/to/install/pdk], "run-time location of the PDK")],
+                [pdkvar[]_LOCAL_PATH=$withval]
+            )
+            
+            # Require this argument
+            AC_MSG_NOTICE([Checking whether local path is specified for 'pdk'])
+            if test "x$[]pdkvar[]_LOCAL_PATH" == "x" ; then
+                AC_MSG_ERROR([Option --with-pdk-local-path=<path> not specified!])
+                pdkvar[]_LOCAL_PATH=""
+            else
+                pdkvar[]_LOCAL_PATH=`readlink -f $[]pdkvar[]_LOCAL_PATH`
+            fi
 
+            # --with-pdk-dist-path=PDK_DIST_PATH
+            AC_ARG_WITH(pdk-dist-path,
+                [AS_HELP_STRING([--with-pdk-dist-path=/path/to/install/pdk], "staging location to install the PDK for distribution (optional)")],
+                [pdkvar[]_DIST_PATH=$withval]
+            )
 
-    # --with-pdk-local-path=PDK_LOCAL_PATH
-    m4_foreach_w(pdk, $1, [
-	m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z" "A-Z"))])
-        pdkvar[]_LOCAL_PATH_=""
-        AC_ARG_WITH(pdk-local-path,
-              [AS_HELP_STRING([--with-pdk-local-path=/path/to/install/pdks], "run-time location of the PDKs")],
-              [pdkvar[]_LOCAL_PATH_=$withval]
-        )
-	# Require this argument
-        AC_MSG_NOTICE([Checking whether local path is specified for 'pdk'])
-        if test "x$[]pdkvar[]_LOCAL_PATH_" == "x" ; then
-	   AC_MSG_ERROR([Option --with-pdk-local-path=<path> not specified!])
-	   pdkvar[]_LOCAL_PATH=""
-	else
-	   pdkvar[]_LOCAL_PATH=`readlink -f $[]pdkvar[]_LOCAL_PATH_`
-	fi
-        AC_SUBST([]pdkvar[]_LOCAL_PATH)
-    ])
+            
+            # "Require" this argument
+            AC_MSG_NOTICE([Checking whether distribution path is specified for 'pdk'])
+            if test "x$[]pdkvar[]_DIST_PATH" == "x" ; then
+                AC_MSG_NOTICE([Option --with-pdk-dist-path=<path> not specified.  Local install only.])
+                pdkvar[]_DIST_PATH=""
+            else
+                pdkvar[]_DIST_PATH=`readlink -f $[]pdkvar[]_DIST_PATH`
+            fi
 
-    # --with-pdk-dist-path=PDK_DIST_PATH
-    m4_foreach_w(pdk, $1, [
-	m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z" "A-Z"))])
-        pdkvar[]_DIST_PATH_=""
-        AC_ARG_WITH(pdk-dist-path,
-              [AS_HELP_STRING([--with-pdk-dist-path=/path/to/install/pdks], "staging location to install the PDKs for distribution (optional)")],
-              [pdkvar[]_DIST_PATH_=$withval]
-        )
-	# Require this argument
-        AC_MSG_NOTICE([Checking whether distribution path is specified for 'pdk'])
-        if test "x$[]pdkvar[]_DIST_PATH_" == "x" ; then
-	   AC_MSG_NOTICE([Option --with-pdk-dist-path=<path> not specified.  Local install only."])
-	   pdkvar[]_DIST_PATH=""
-	else
-	   pdkvar[]_DIST_PATH=`readlink -f $[]pdkvar[]_DIST_PATH_`
-	fi
-        AC_SUBST([]pdkvar[]_DIST_PATH)
-    ])
+            # --with-pdk-link-targets=PDK_LINK_TARGETS
+            AC_ARG_WITH(pdk-link-targets,
+                [AS_HELP_STRING([--with-pdk-link-targets=none|source], "make symbolic links to existing files @<:@default=none@:>@")],
+                [[]pdkvar[]_LINK_TARGETS=$with_[]pdk[]_link_targets]
+            )
+            AC_SUBST([]pdkvar[]_LINK_TARGETS)
+            AC_MSG_NOTICE([Link targets set to $pdkvar[]_LINK_TARGETS])
+        fi
 
-    # --with-pdk-link-targets=PDK_LINK_TARGETS
-    m4_foreach_w(pdk, $1, [
-	m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z" "A-Z"))])
-	# Default link_targets = "none"
-	pdkvar[]_LINK_TARGETS="none"
-
-        AC_ARG_WITH(pdk-link-targets,
-              [AS_HELP_STRING([--with-pdk-link-targets=none|source], "make symbolic links to existing files @<:@default=none@:>@")],
-              [[]pdkvar[]_LINK_TARGETS=$with_[]pdk[]_link_targets]
-        )
-        AC_SUBST([]pdkvar[]_LINK_TARGETS)
-        AC_MSG_NOTICE([Link targets set to $[]pdkvar[]_LINK_TARGETS])
+        AC_SUBST(pdkvar[]_SOURCE_PATH)
+        AC_SUBST(pdkvar[]_LOCAL_PATH)
+        AC_SUBST(pdkvar[]_DIST_PATH)
+        AC_SUBST(pdkvar[]_LINK_TARGETS)
     ])
 ])
 
 AC_MSG_NOTICE([Found technology directories: M4_GET_TECHS()])
 
 M4_GEN_WITH_PDK_ARGS(M4_GET_TECHS())
+
+# Set variables for tool setups
+AC_DEFUN([M4_GEN_WITH_TOOLS], [
+    m4_foreach_w(tool, $1, [
+        m4_define([toolvar], [m4_normalize(m4_esyscmd(echo tool | tr "a-z" "A-Z"))])
+
+        toolvar[]_DISABLED=0
+        AC_ARG_ENABLE(tool,
+            AS_HELP_STRING(
+                --enable-tool
+                Enable or disable tool @<:@default=enabled@:>@
+            ), [
+                if test "$enableval" == "no" -o "$enableval" == "NO"; then
+                    toolvar[]_DISABLED=1
+                fi
+            ]
+        )
+        AC_SUBST(toolvar[]_DISABLED)
+    ])
+])
+
+AC_MSG_NOTICE([Found tools: M4_GET_TOOLS()])
+
+M4_GEN_WITH_TOOLS(M4_GET_TOOLS())
+
+# Magic
+AC_PATH_PROG(MAGIC, magic)
+if test -z "$MAGIC"; then
+   AC_MSG_ERROR([You need 'magic' to generate the needed various cell views.])
+fi
+
+# Other installations (libraries or tools if applicable)
+mkdir -p ../libs
+mkdir -p ../tools
+AC_DEFUN([M4_GEN_INSTALLATION], [
+    m4_define([target], $1)
+    m4_define([targetvar], [m4_normalize(m4_esyscmd(echo target | tr "a-z" "A-Z"))])
+    m4_define([flag], $2)
+    m4_define([url], $3)
+    m4_define([location], $4)
+
+    # echo target targetvar flag url location
+
+    targetvar[]_PATH=""
+    targetvar[]_GET() {
+        AC_CHECK_FILE(
+            location/target,
+            [
+                echo "Using pre-existing target download..."
+            ], [
+                mkdir -p location/target
+                sh ./download.sh url location/target.tar.gz
+                (echo "Extracting target..." && cd location && tar -xf target.tar.gz --strip-components 1 -C location/target)
+            ]
+        )
+        export targetvar[]_PATH=location/target
+    }
+
+    AC_ARG_ENABLE(
+        flag,
+        AS_HELP_STRING(
+            [--enable-flag@<:@=path@:>@],
+            [Install target. If path is omitted, it'll be downloaded. @<:@default=disabled@:>@]
+        ), [
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                targetvar[]_GET
+                XSCHEM_INST=1
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                echo "Disabling target..."
+                XSCHEM_DISABLED=1
+            else
+                targetvar[]_PATH=$enableval
+            fi
+            targetvar[]_PATH=`readlink -f $[]targetvar[]_PATH`
+        ],
+        []
+    )
+
+    $5
+
+    AC_SUBST(targetvar[]_PATH)
+])
+
+M4_GEN_INSTALLATION(osu, osu-lib, 'https://vlsiarch.ecen.okstate.edu/flows/MOSIS_SCMOS/osu_stdcells_v2.4/osu_stdcells_lib.v2.4.tar.gz', ../libs)
+M4_GEN_INSTALLATION(sky130_ml_xx_hd, alpha-lib, 'https://github.com/PaulSchulz/sky130_pschulz_xx_hd/archive/master.tar.gz', ../libs)
+
+XSCHEM_DISABLED=0
+XSCHEM_INST=0
+M4_GEN_INSTALLATION(xschem, xschem, 'https://github.com/StefanSchippers/xschem/archive/master.tar.gz', ../tools, [
+    if @<:@ "$XSCHEM_INST" = 1 @:>@; then
+        AC_CHECK_FILE(../tools/xschem-install,[
+            echo "Using pre-existing xschem installation..."
+        ], [
+            echo "---"
+            echo "Note: attempting to build xschem. Xschem requires all of Magic's dependencies and further, flex, bison and libxpm."
+            echo "Your build WILL fail if any of these are missing. You can choose to remove --enable-xschem or add a known installation path."
+            sleep 2
+            mkdir -p ../tools/xschem-install
+            XSCHEM_ABSOLUTE=`readlink -f ../tools/xschem-install`
+            (cd ../tools/xschem && ./configure --prefix=$XSCHEM_ABSOLUTE && make && make install)
+            XSCHEM_PATH=$XSCHEM_ABSOLUTE
+        ])
+    fi
+])
 
 AC_DEFUN([M4_GEN_WITH_TOOLS], [
     m4_foreach_w(tool, $1, [
@@ -126,22 +253,20 @@ M4_GEN_WITH_TOOLS(M4_GET_TOOLS())
 AM_PATH_PYTHON([3.4])
 AX_PYTHON_MODULE([distutils],[])
 
-AC_PATH_PROG(MAGIC, magic)
-if test -z "$MAGIC"; then
-   AC_MSG_ERROR([You need 'magic' to generate the needed various cell views])
-fi
-
 # Check for "--with-ef-style"
 EF_STYLE=0
-AC_ARG_WITH([ef-style],
-  [AS_HELP_STRING([--with-ef-style],
-    [Use efabless style file system structure @<:@default=no@:>@])],
-  [
-    pdks_ef_style=$withval
-    if test "$withval" == "yes" -o "$withval" == "YES"; then
-        EF_STYLE=1
-    fi
-  ], )
+AC_ARG_WITH(
+    [ef-style],
+    AS_HELP_STRING(
+        [--with-ef-style],
+        [Use efabless style file system structure @<:@default=no@:>@]
+    ), [
+        pdks_ef_style=$withval
+        if test "$withval" == "yes" -o "$withval" == "YES"; then
+            EF_STYLE=1
+        fi
+    ],
+)
 
 AC_SUBST(EF_STYLE)
 

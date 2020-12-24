@@ -1,0 +1,7 @@
+*
+!.gitignore
+!configure
+!configure.ac
+!tools.txt
+!print_tools_make.pl
+!dl
