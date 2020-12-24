@@ -14,7 +14,7 @@
 # Run "configure" from the top level directory.  Use the following
 # configuration options to match your environment:
 #
-#	--enable-skywater-pdk[=<path>]
+#	--enable-sky130-pdk[=<path>]
 #		If enabled, install the skywater PDK.  If <path> is specified,
 #		then the skywater PDK is expected to be found rooted at the
 #		given path.  If not specified, then the skywater PDK will be
