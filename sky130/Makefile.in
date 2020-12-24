@@ -46,10 +46,6 @@
 #		cloned from https://github.com/google/skywater-pdk.  This
 #		option is mandatory and has no default.
 #
-#
-# NOTE:  The comments below are for features that have not yet been
-# implemented.
-#
 # Enable/disable for specific libraries to be installed (and downloaded if
 # needed).  Libraries that are part of the open_pdks repository are enabled
 # by default and must be disabled by passing an option to configure.  Libraries
@@ -72,6 +68,10 @@
 #
 #	--disable-klayout
 #		Do not install setup files for the klayout layout tool.
+#
+#
+# NOTE:  The comments below are for features that have not yet been
+# implemented.
 #
 # External libraries and tool setups that can be enabled are the following:
 #
@@ -132,7 +132,7 @@ SHELL = bash
 MV = mv
 
 REVISION    = `git describe --long`
-TECH        = sky130
+TECH	= sky130
 
 # If EF_STYLE is set to 1, then efabless naming conventions are
 # used, otherwise the generic naming conventions are used.
@@ -263,7 +263,38 @@ INSTALL = ../common/staging_install.py ${EF_FORMAT}
 ADDPROP = ../common/insert_property.py ${EF_FORMAT}
 
 # List the EDA tools to install local setup files for
-TOOLS = magic qflow netgen klayout openlane
+TOOLS = 
+
+# KLAYOUT_DISABLED = 0 | 1
+KLAYOUT_DISABLED = @KLAYOUT_DISABLED@
+ifneq (${KLAYOUT_DISABLED}, 1)
+        TOOLS += klayout
+endif
+
+# OPENLANE_DISABLED = 0 | 1
+OPENLANE_DISABLED = @OPENLANE_DISABLED@
+ifneq (${OPENLANE_DISABLED}, 1)
+        TOOLS += openlane
+endif
+
+# QFLOW_DISABLED = 0 | 1
+QFLOW_DISABLED = @QFLOW_DISABLED@
+ifneq (${QFLOW_DISABLED}, 1)
+        TOOLS += qflow
+endif
+
+# MAGIC_DISABLED = 0 | 1
+MAGIC_DISABLED = @MAGIC_DISABLED@
+ifneq (${MAGIC_DISABLED}, 1)
+        TOOLS += magic
+endif
+
+# NETGEN_DISABLED = 0 | 1
+NETGEN_DISABLED = @NETGEN_DISABLED@
+ifneq (${NETGEN_DISABLED}, 1)
+        TOOLS += netgen
+endif
+
 
 all: all-a
 

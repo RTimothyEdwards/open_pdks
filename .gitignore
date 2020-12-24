@@ -14,6 +14,8 @@ __pycache__
 scripts/*
 !scripts/configure
 !scripts/configure.ac
+!scripts/tools.txt
+!scripts/rl
 **/Makefile
 **/Makefile.am
 

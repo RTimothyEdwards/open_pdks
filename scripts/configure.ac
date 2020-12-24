@@ -3,6 +3,10 @@ AC_INIT([open_pdks], [1.0], [github.com/RTimothyEdwards/open_pdks])
 # detect PDKs based on directories that include Makefile.in files
 m4_define([M4_GET_TECHS], [m4_normalize(m4_esyscmd(cd .. && find * -mindepth 1 -name "Makefile.in" -exec dirname {} \; | tr "\n" " "))])
 
+# define tools to install setup files for.  This does not imply that the tools are
+# available on the system;  just that open_pdks will install the setup files for them.
+m4_define([M4_GET_TOOLS], [m4_normalize(m4_esyscmd(cat ./tools.txt | tr "\n" " "))])
+
 # check for the source and install paths for each PDK.
 AC_DEFUN([M4_GEN_WITH_PDK_ARGS],
 [
@@ -93,7 +97,32 @@ AC_MSG_NOTICE([Found technology directories: M4_GET_TECHS()])
 
 M4_GEN_WITH_PDK_ARGS(M4_GET_TECHS())
 
+AC_DEFUN([M4_GEN_WITH_TOOLS], [
+    m4_foreach_w(tool, $1, [
+        m4_define([toolvar], [m4_normalize(m4_esyscmd(echo tool | tr "a-z" "A-Z"))])
+
+        toolvar[]_DISABLED=0
+        AC_ARG_ENABLE(tool,
+            AS_HELP_STRING(
+                --enable-tool --disable-tool,
+                Enable or disable tool @<:@default=enabled@:>@
+            ),
+            [
+                if test "$enableval" == "no" -o "$enableval" == "NO"; then
+                    toolvar[]_DISABLED=1
+                fi
+            ],
+        )
+        AC_SUBST(toolvar[]_DISABLED)
+    ])
+])
+
+AC_MSG_NOTICE([Tools enabled for PDK setup installation: M4_GET_TOOLS()])
+
+M4_GEN_WITH_TOOLS(M4_GET_TOOLS())
+
 # Checking if (some) prerequisites are satisfied
+## REQUIRES: https://www.gnu.org/software/autoconf-archive/ax_python_module.html#ax_python_module
 AM_PATH_PYTHON([3.4])
 AX_PYTHON_MODULE([distutils],[])
 

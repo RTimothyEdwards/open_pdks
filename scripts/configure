@@ -597,6 +597,11 @@ PYTHON_EXEC_PREFIX
 PYTHON_PREFIX
 PYTHON_VERSION
 PYTHON
+QFLOW_DISABLED
+OPENLANE_DISABLED
+NETGEN_DISABLED
+MAGIC_DISABLED
+KLAYOUT_DISABLED
 SKY130_LINK_TARGETS
 SKY130_DIST_PATH
 SKY130_LOCAL_PATH
@@ -646,6 +651,11 @@ with_sky130_source
 with_sky130_local_path
 with_sky130_dist_path
 with_sky130_link_targets
+enable_klayout
+enable_magic
+enable_netgen
+enable_openlane
+enable_qflow
 with_ef_style
 '
       ac_precious_vars='build_alias
@@ -1257,6 +1267,21 @@ if test -n "$ac_init_help"; then
    esac
   cat <<\_ACEOF
 
+Optional Features:
+  --disable-option-checking  ignore unrecognized --enable/--with options
+  --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
+  --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+  --enable-klayout --disable-klayout
+                          Enable or disable klayout [default=enabled]
+  --enable-magic --disable-magic
+                          Enable or disable magic [default=enabled]
+  --enable-netgen --disable-netgen
+                          Enable or disable netgen [default=enabled]
+  --enable-openlane --disable-openlane
+                          Enable or disable openlane [default=enabled]
+  --enable-qflow --disable-qflow
+                          Enable or disable qflow [default=enabled]
+
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
@@ -1711,6 +1736,10 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 # detect PDKs based on directories that include Makefile.in files
 
 
+# define tools to install setup files for.  This does not imply that the tools are
+# available on the system;  just that open_pdks will install the setup files for them.
+
+
 # check for the source and install paths for each PDK.
 
 
@@ -1840,7 +1869,87 @@ $as_echo "$as_me: Link targets set to $SKY130_LINK_TARGETS" >&6;}
 
 
 
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Tools enabled for PDK setup installation: klayout magic netgen openlane qflow" >&5
+$as_echo "$as_me: Tools enabled for PDK setup installation: klayout magic netgen openlane qflow" >&6;}
+
+
+
+
+
+        KLAYOUT_DISABLED=0
+        # Check whether --enable-klayout was given.
+if test "${enable_klayout+set}" = set; then :
+  enableval=$enable_klayout;
+                if test "$enableval" == "no" -o "$enableval" == "NO"; then
+                    KLAYOUT_DISABLED=1
+                fi
+
+fi
+
+
+
+
+
+        MAGIC_DISABLED=0
+        # Check whether --enable-magic was given.
+if test "${enable_magic+set}" = set; then :
+  enableval=$enable_magic;
+                if test "$enableval" == "no" -o "$enableval" == "NO"; then
+                    MAGIC_DISABLED=1
+                fi
+
+fi
+
+
+
+
+
+        NETGEN_DISABLED=0
+        # Check whether --enable-netgen was given.
+if test "${enable_netgen+set}" = set; then :
+  enableval=$enable_netgen;
+                if test "$enableval" == "no" -o "$enableval" == "NO"; then
+                    NETGEN_DISABLED=1
+                fi
+
+fi
+
+
+
+
+
+        OPENLANE_DISABLED=0
+        # Check whether --enable-openlane was given.
+if test "${enable_openlane+set}" = set; then :
+  enableval=$enable_openlane;
+                if test "$enableval" == "no" -o "$enableval" == "NO"; then
+                    OPENLANE_DISABLED=1
+                fi
+
+fi
+
+
+
+
+
+        QFLOW_DISABLED=0
+        # Check whether --enable-qflow was given.
+if test "${enable_qflow+set}" = set; then :
+  enableval=$enable_qflow;
+                if test "$enableval" == "no" -o "$enableval" == "NO"; then
+                    QFLOW_DISABLED=1
+                fi
+
+fi
+
+
+
+
+
 # Checking if (some) prerequisites are satisfied
+## REQUIRES: https://www.gnu.org/software/autoconf-archive/ax_python_module.html#ax_python_module
 
 
 
