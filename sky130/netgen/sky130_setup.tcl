@@ -281,7 +281,7 @@ foreach dev $devices {
 # Schematic cells which are not extractable
 #---------------------------------------------------------------
 
-set devices {sky130_fd_io__condiode}
+set devices {sky130_fd_io__condiode sky130_fd_io__tap_1}
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {

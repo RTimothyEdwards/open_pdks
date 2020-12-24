@@ -2548,7 +2548,7 @@ style  sky130
  and NPLUS
  and-not LVTN
  and THKOX
- grow 1000
+ grow 350 
 
  templayer mvnnfetarea DIFF,TAP
  and POLY
@@ -4104,7 +4104,7 @@ style  vendorimport
  and NPLUS
  and-not LVTN
  and THKOX
- grow 1000
+ grow 350
 
  templayer mvnnfetarea DIFF,TAP
  and POLY
