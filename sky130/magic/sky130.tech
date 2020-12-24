@@ -177,6 +177,7 @@ types
  -active srampvar,corepvar,corepvaractor
 
 # Diffusions
+ -active fomfill
   active ndiff,ndiffusion,ndif
   active pdiff,pdiffusion,pdif
   active mvndiff,mvndiffusion,mvndif
@@ -200,6 +201,7 @@ types
   active poly,p,polysilicon
   active polycont,pc,pcontact,polycut,polyc
   active xpolycontact,xpolyc,xpc
+ -active polyfill
 
 # Resistors
   active npolyres,npres,mrp1
@@ -292,7 +294,7 @@ types
 
 # Miscellaneous
  -block  glass
- -block  fillblock
+ -block  fillblock,fillblock4
   comment comment
  -comment obscomment
 # fixed resistor width identifiers
@@ -407,7 +409,7 @@ aliases
   alldiffmvnonfet  allndiffmvnonfet,allpdiffmvnonfet
 
   alldiffnonfet	   alldifflvnonfet,alldiffmvnonfet
-  alldiff	   alldifflv,alldiffmv
+  alldiff	   alldifflv,alldiffmv,fomfill
 
   allpolyres	   mrp1,xhrpoly,uhrpoly,rmp
   allpolynonfet	   *poly,allpolyres,xpc
@@ -456,6 +458,7 @@ styles
   pwell	    pwell
   rpwell    pwell 	ptransistor_stripes
   ndiff     ndiffusion
+  fomfill   ndiffusion
   pdiff     pdiffusion
   nsd       ndiff_in_nwell
   psd       pdiff_in_pwell
@@ -501,6 +504,7 @@ styles
   mvpsc     pdiff_in_pwell metal1  contact_X'es hvpdiff_mask
 
   poly      polysilicon 
+  polyfill  polysilicon
   pc        polysilicon    metal1  contact_X'es
   npolyres  polysilicon    silicide_block nselect2
   ppolyres  polysilicon    silicide_block pselect2
@@ -590,6 +594,7 @@ styles
   error_s   error_waffle
   error_ps  error_waffle
   fillblock cwell
+  fillblock4 cwell
 
   obswell   cwell
   obsactive implant4
@@ -678,7 +683,7 @@ connect
 #endif (METAL5)
    allnactivenonfet	allnactivenonfet
    allpactivenonfet	allpactivenonfet
-  *poly,xpc,allfets	*poly,xpc,allfets
+  *poly,xpc,allfets,polyfill	*poly,xpc,allfets,polyfill
 #ifdef REDISTRIBUTION
   # RDL connects to m5 (i.e., padl) through glass cut
   *mrdl			*mrdl
@@ -781,6 +786,14 @@ style gdsii
  layer TAP 	allnactivetap,allpactivetap
  	labels 	allnactivetap,allpactivetap
  	calma 	65 44
+
+#----------------------------------------------------------------
+# FOM
+#----------------------------------------------------------------
+
+ layer FOMFILL	fomfill
+	labels	fomfill
+	calma	65 28
 
 #----------------------------------------------------------------
 # PPLUS, NPLUS (PSDM, NSDM)
@@ -980,6 +993,10 @@ style gdsii
  layer POLYPIN
 	labels  allpoly port
 	calma	66 5
+
+ layer POLYFILL	polyfill
+	labels 	polyfill
+	calma	66 28
 
 #----------------------------------------------------------------
 # THKOX (HVI) (includes rules NWELL 8-11 and DIFFTAP 14-26)
@@ -1327,16 +1344,16 @@ style gdsii
 #----------------------------------------------------------------
 # FILLBLOCK
 #----------------------------------------------------------------
- layer FILLOBSM1 fillblock
+ layer FILLOBSM1 fillblock,fillblock4
  	calma 	62 24
 
- layer FILLOBSM2 fillblock
+ layer FILLOBSM2 fillblock,fillblock4
  	calma 	105 52
 
- layer FILLOBSM3 fillblock
+ layer FILLOBSM3 fillblock,fillblock4
  	calma 	107 24
 
- layer FILLOBSM4 fillblock
+ layer FILLOBSM4 fillblock,fillblock4
  	calma 	112 4
 
  render	DNWELL 	cwell       -0.1    0.1
@@ -1836,28 +1853,23 @@ style wafflefill
         grow    245
 
 #---------------------------------------------------
- templayer	fomfill
-	or	fomfill_pass1 
+ layer  FOMFILL fomfill_pass1 
 	or	fomfill_pass2
 	or	fomfill_coarse
 	or	fomfill_fine
-
- templayer	polyfill
-	or	polyfill_pass1 
-	or	polyfill_coarse
-	or	polyfill_medium
-	or	polyfill_fine
-
- layer	FOMFILL    fomfill
  	calma 	65 28
- layer	POLYFILL    polyfill
+
+ layer	POLYFILL polyfill_pass1 
+	or	 polyfill_coarse
+	or	 polyfill_medium
+	or	 polyfill_fine
  	calma 	66 28
 
 #---------------------------------------------------
 # MET1 fill
 #---------------------------------------------------
 
- templayer      obstruct_m1_coarse allm1,allpad,obsm1,m1fill,fillblock
+ templayer      obstruct_m1_coarse allm1,allpad,obsm1,m1fill,fillblock,fillblock4
         grow    3000
  templayer	met1fill_coarse topbox
         slots   0 2000 200 0 2000 200 700 0
@@ -1866,7 +1878,7 @@ style wafflefill
         shrink  995
         grow    995
 
- templayer      obstruct_m1_medium allm1,allpad,obsm1,m1fill,fillblock
+ templayer      obstruct_m1_medium allm1,allpad,obsm1,m1fill,fillblock,fillblock4
         grow    2800
 	or	met1fill_coarse
         grow    200
@@ -1877,7 +1889,7 @@ style wafflefill
         shrink  495
         grow    495
 
- templayer      obstruct_m1_fine allm1,allpad,obsm1,m1fill,fillblock
+ templayer      obstruct_m1_fine allm1,allpad,obsm1,m1fill,fillblock,fillblock4
         grow    300
 	or	met1fill_coarse,met1fill_medium
         grow    200
@@ -1888,7 +1900,7 @@ style wafflefill
         shrink  285
         grow    285
 
- templayer      obstruct_m1_veryfine allm1,allpad,obsm1,m1fill,fillblock
+ templayer      obstruct_m1_veryfine allm1,allpad,obsm1,m1fill,fillblock,fillblock4
         grow    100
 	or	met1fill_coarse,met1fill_medium,met1fill_fine
         grow    200
@@ -1908,7 +1920,7 @@ style wafflefill
 #---------------------------------------------------
 # MET2 fill
 #---------------------------------------------------
- templayer      obstruct_m2 allm2,allpad,obsm2,m2fill,fillblock
+ templayer      obstruct_m2 allm2,allpad,obsm2,m2fill,fillblock,fillblock4
         grow    3000
  templayer	met2fill_coarse topbox
         slots   0 2000 200 0 2000 200 700 350
@@ -1917,7 +1929,7 @@ style wafflefill
         shrink  995
         grow    995
 
- templayer      obstruct_m2_medium allm2,allpad,obsm2,m2fill,fillblock
+ templayer      obstruct_m2_medium allm2,allpad,obsm2,m2fill,fillblock,fillblock4
         grow    2800
 	or	met2fill_coarse
         grow    200
@@ -1928,7 +1940,7 @@ style wafflefill
         shrink  495
         grow    495
 
- templayer      obstruct_m2_fine allm2,allpad,obsm2,m2fill,fillblock
+ templayer      obstruct_m2_fine allm2,allpad,obsm2,m2fill,fillblock,fillblock4
         grow    300
 	or	met2fill_coarse,met2fill_medium
         grow    200
@@ -1939,7 +1951,7 @@ style wafflefill
         shrink  285
         grow    285
 
- templayer      obstruct_m2_veryfine allm2,allpad,obsm2,m2fill,fillblock
+ templayer      obstruct_m2_veryfine allm2,allpad,obsm2,m2fill,fillblock,fillblock4
         grow    100
 	or	met2fill_coarse,met2fill_medium,met2fill_fine
         grow    200
@@ -1959,7 +1971,7 @@ style wafflefill
 #---------------------------------------------------
 # MET3 fill
 #---------------------------------------------------
- templayer      obstruct_m3 allm3,allpad,obsm3,m3fill,fillblock
+ templayer      obstruct_m3 allm3,allpad,obsm3,m3fill,fillblock,fillblock4
         grow    3000
  templayer	met3fill_coarse topbox
         slots   0 2000 300 0 2000 300 700 700
@@ -1968,7 +1980,7 @@ style wafflefill
         shrink  995
         grow    995
 
- templayer      obstruct_m3_medium allm3,allpad,obsm3,m3fill,fillblock
+ templayer      obstruct_m3_medium allm3,allpad,obsm3,m3fill,fillblock,fillblock4
         grow    2700
 	or	met3fill_coarse
         grow    300
@@ -1979,7 +1991,7 @@ style wafflefill
         shrink  495
         grow    495
 
- templayer      obstruct_m3_fine allm3,allpad,obsm3,m3fill,fillblock
+ templayer      obstruct_m3_fine allm3,allpad,obsm3,m3fill,fillblock,fillblock4
         grow    200
 	or	met3fill_coarse,met3fill_medium
         grow    300
@@ -1990,7 +2002,7 @@ style wafflefill
         shrink  285
         grow    285
 
- templayer      obstruct_m3_veryfine allm3,allpad,obsm3,m3fill,fillblock
+ templayer      obstruct_m3_veryfine allm3,allpad,obsm3,m3fill,fillblock,fillblock4
 	# Note: Adding 0.1 to waffle rule to clear wide spacing rule
         grow    100
 	or	met3fill_coarse,met3fill_medium,met3fill_fine
@@ -2012,7 +2024,7 @@ style wafflefill
 #---------------------------------------------------
 # MET4 fill
 #---------------------------------------------------
- templayer      obstruct_m4 allm4,allpad,obsm4,m4fill,fillblock
+ templayer      obstruct_m4 allm4,allpad,obsm4,m4fill,fillblock,fillblock4
         grow    3000
  templayer	met4fill_coarse topbox
         slots   0 2000 300 0 2000 300 700 1050
@@ -2021,7 +2033,7 @@ style wafflefill
         shrink  995
         grow    995
 
- templayer      obstruct_m4_medium allm4,allpad,obsm4,m4fill,fillblock
+ templayer      obstruct_m4_medium allm4,allpad,obsm4,m4fill,fillblock,fillblock4
         grow    2700
 	or	met4fill_coarse
         grow    300
@@ -2031,7 +2043,7 @@ style wafflefill
         shrink  495
         grow    495
 
- templayer      obstruct_m4_fine allm4,allpad,obsm4,m4fill,fillblock
+ templayer      obstruct_m4_fine allm4,allpad,obsm4,m4fill,fillblock,fillblock4
         grow    200
 	or	met4fill_coarse,met4fill_medium
         grow    300
@@ -2042,7 +2054,7 @@ style wafflefill
         shrink  285
         grow    285
 
- templayer      obstruct_m4_veryfine allm4,allpad,obsm4,m4fill,fillblock
+ templayer      obstruct_m4_veryfine allm4,allpad,obsm4,m4fill,fillblock,fillblock4
 	# Note: Adding 0.1 to waffle rule to clear wide spacing rule
         grow    100
 	or	met4fill_coarse,met4fill_medium,met4fill_fine
@@ -3060,6 +3072,12 @@ style  sky130
  grow 85
  or mvpdicbase
  labels CONT
+
+ layer	fomfill  FOMFILL
+ labels FOMFILL
+
+ layer	polyfill POLYFILL
+ labels POLYFILL
 
  layer coreli LI,LITXT,LIPIN
  and-not LIRES,LISHORT
@@ -5181,24 +5199,6 @@ style  vendorimport
  calma FILLOBSM2  105 52
  calma FILLOBSM3  107 24
  calma FILLOBSM4  112 4
-
-style  waffleimport
- # This style is for reading back and validating shapes
- # generated by the "wafflefill" cifoutput style.
-
- scalefactor 10 nanometers
- gridlimit 5
-
- options ignore-unknown-layer-labels no-reconnect-labels
-
- layer	ndiff  FOMFILL
- layer	poly   POLYFILL
- layer	m1fill MET1FILL
- layer	m2fill MET2FILL
- layer	m3fill MET3FILL
- layer	m4fill MET4FILL
- layer	m5fill MET5FILL
-
  calma  FOMFILL  65 28
  calma 	POLYFILL 66 28
  calma 	MET1FILL 68 28
@@ -5282,7 +5282,7 @@ drc
 # DIFF
 #-----------------------------
 
- width *ndiff,nfet,scnfet,npd,npass,*nsd,*ndiode,ndiffres,*pdiff,pfet,scpfet,scpfethvt,ppu,*psd,*pdiode,pdiffres \
+ width *ndiff,nfet,scnfet,npd,npass,*nsd,*ndiode,ndiffres,*pdiff,pfet,scpfet,scpfethvt,ppu,*psd,*pdiode,pdiffres,fomfill \
 	150 "Diffusion width < %d (diff/tap.1)"
  width *mvndiff,mvnfet,mvnfetesd,mvnnfet,*mvndiode,*nndiode,mvndiffres,*mvpdiff,mvpfet,mvpfetesd,*mvpdiode,mvpdiffres 290 \
 	"MV Diffusion width < %d (diff/tap.14)"
@@ -5293,7 +5293,7 @@ drc
  extend *psd *ndiff 290 "Butting tap length < %d (diff/tap.4)"
  extend *nsd *pdiff 290 "Butting tap length < %d (diff/tap.4)"
  width mvpdiffres 150 "MV P-Diffusion resistor width < %d (diff/tap.14a)"
- spacing alldifflv,var,varhvt alldifflv,var,varhvt 270 touching_ok \
+ spacing alldifflv,var,varhvt,fomfill alldifflv,var,varhvt,fomfill 270 touching_ok \
 	"Diffusion spacing < %d (diff/tap.3)"
  spacing alldiffmvnontap,mvvar alldiffmvnontap,mvvar 300 touching_ok \
 	"MV Diffusion spacing < %d (diff/tap.15a)"
@@ -5379,10 +5379,10 @@ variants (fast),(full)
 # POLY
 #-----------------------------
 
- width allpoly 150 "poly width < %d (poly.1a)"
- spacing allpoly allpoly 210 touching_ok "poly spacing < %d (poly.2)"
+ width allpoly,polyfill 150 "poly width < %d (poly.1a)"
+ spacing allpoly,polyfill allpoly,polyfill 210 touching_ok "poly spacing < %d (poly.2)"
 
- spacing allpolynonfet \
+ spacing allpolynonfet,polyfill \
 	*ndiff,*mvndiff,*ndiode,*nndiode,ndiffres,*ndiodelvt,*pdiff,*mvpdiff,*pdiode,pdiffres,*pdiodelvt,*pdiodehvt \
 	75 corner_ok allfets \
 	"poly spacing to Diffusion < %d (poly.4)"
@@ -5409,7 +5409,7 @@ variants (fast),(full)
  spacing xhrpoly,uhrpoly,xpc allndiffmvnontap 830 touching_illegal \
 	"Distance from precision resistor to MV N+ diffusion < %d (rpm.3 + rpm.9)"
 
- angles allpoly 90 "Only 90 degree angles permitted on poly (x.2)"
+ angles allpoly,polyfill 90 "Only 90 degree angles permitted on poly (x.2)"
 
 #--------------------------------------------------------------------
 # HVTP
@@ -5607,7 +5607,7 @@ variants *
 #-------------------------------------------------------------
 
  width *m1,rm1 140 "Metal1 width < %d (met1.1)"
- spacing allm1 allm1,*obsm1 140 touching_ok "Metal1 spacing < %d (met1.2)"
+ spacing allm1,m1fill allm1,*obsm1,m1fill 140 touching_ok "Metal1 spacing < %d (met1.2)"
  area allm1,*obsm1 83000 140 "Metal1 minimum area < %a (met1.6)"
 
  surround lic/m1 *met1 30 absence_illegal \
@@ -5615,10 +5615,10 @@ variants *
  surround lic/m1 *met1 60 directional \
 	"Metal1 overlap of local interconnect contact < %d in one direction (met1.5)"
 
- angles allm1 45 "Only 45 and 90 degree angles permitted on metal1 (x.3a)"
+ angles allm1,m1fill 45 "Only 45 and 90 degree angles permitted on metal1 (x.3a)"
 
 variants (fast),(full)
- widespacing allm1 3005 allm1,*obsm1 280 touching_ok \
+ widespacing allm1 3005 allm1,*obsm1,m1fill 280 touching_ok \
 	"Metal1 > 3um spacing to unrelated m1 < %d (met1.3b)"
  widespacing *obsm1 3005 allm1 280 touching_ok \
 	"Metal1 > 3um spacing to unrelated m1 < %d (met1.3b)"
@@ -5648,14 +5648,14 @@ variants *
 # METAL2 - 
 #--------------------------------------------------
 
- width allm2 140 "Metal2 width < %d (met2.1)"
- spacing allm2  allm2,obsm2 140 touching_ok       "Metal2 spacing < %d (met2.2)"
+ width allm2,m2fill 140 "Metal2 width < %d (met2.1)"
+ spacing allm2  allm2,obsm2,m2fill 140 touching_ok       "Metal2 spacing < %d (met2.2)"
  area allm2,obsm2 67600 140 "Metal2 minimum area < %a (met2.6)"
 
  angles allm2 45 "Only 45 and 90 degree angles permitted on metal2 (x.3a)"
 
 variants (fast),(full)
- widespacing allm2 3005 allm2,obsm2  280 touching_ok \
+ widespacing allm2 3005 allm2,obsm2,m2fill  280 touching_ok \
 	"Metal2 > 3um spacing to unrelated m2 < %d (met2.3b)"
  widespacing obsm2 3005 allm2  280 touching_ok \
 	"Metal2 > 3um spacing to unrelated m2 < %d (met2.3b)"
@@ -5686,14 +5686,14 @@ variants *
 # METAL3 - 
 #--------------------------------------------------
 
- width allm3 300 "Metal3 width < %d (met3.1)"
- spacing allm3 allm3,obsm3  300 touching_ok "Metal3 spacing < %d (met3.2)"
+ width allm3,m3fill 300 "Metal3 width < %d (met3.1)"
+ spacing allm3 allm3,obsm3,m3fill  300 touching_ok "Metal3 spacing < %d (met3.2)"
  area allm3,obsm3 240000 300 "Metal3 minimum area < %a (met3.6)"
 
  angles allm3 45 "Only 45 and 90 degree angles permitted on metal3 (x.3a)"
 
 variants (fast),(full)
- widespacing allm3 3005 allm3,obsm3  400 touching_ok \
+ widespacing allm3,m3fill 3005 allm3,obsm3  400 touching_ok \
 	"Metal3 > 3um spacing to unrelated m3 < %d (met3.3d)"
  widespacing obsm3 3005 allm3  400 touching_ok \
 	"Metal3 > 3um spacing to unrelated m3 < %d (met3.3d)"
@@ -5724,14 +5724,14 @@ variants *
 
 variants *
 
- width allm4 300 "Metal4 width < %d (met4.1)"
- spacing allm4  allm4,obsm4 300 touching_ok      "Metal4 spacing < %d (met4.2)"
+ width allm4,m4fill 300 "Metal4 width < %d (met4.1)"
+ spacing allm4  allm4,obsm4,m4fill 300 touching_ok      "Metal4 spacing < %d (met4.2)"
  area allm4,obsm4 240000 300 "Metal4 minimum area < %a (met4.4a)"
 
  angles allm4 45 "Only 45 and 90 degree angles permitted on metal4 (x.3a)"
 
 variants (fast),(full)
- widespacing allm4 3005 allm4,obsm4  400 touching_ok \
+ widespacing allm4,m4fill 3005 allm4,obsm4  400 touching_ok \
 	"Metal4 > 3um spacing to unrelated m4 < %d (met4.5b)"
  widespacing obsm4 3005 allm4  400 touching_ok \
 	"Metal4 > 3um spacing to unrelated m4 < %d (met4.5b)"
@@ -5755,8 +5755,8 @@ variants *
 # METAL5 - METAL5 Module
 #-----------------------------
 
- width allm5 1600 "Metal5 width < %d (met5.1)"
- spacing allm5  allm5,obsm5 1600 touching_ok "Metal5 spacing < %d (met5.2)"
+ width allm5,m5fill 1600 "Metal5 width < %d (met5.1)"
+ spacing allm5  allm5,obsm5,m5fill 1600 touching_ok "Metal5 spacing < %d (met5.2)"
  area allm5,obsm5 4000000 1600 "Metal5 minimum area < %a (met5.4)"
 
  angles allm5 45 "Only 45 and 90 degree angles permitted on metal5 (x.3a)"
@@ -5793,9 +5793,9 @@ variants (fast),(full)
  # Except:  Note that standard cells allow transistor width minimum 0.36um
  width pfetlvt 350 "LVT PMOS gate length < %d (poly.1b)"
 
- spacing allpolynonfet *nsd 55 corner_ok varactor \
+ spacing allpolynonfet,polyfill *nsd 55 corner_ok varactor \
 	"poly spacing to diffusion tap < %d (poly.5)"
- spacing allpolynonfet *mvnsd 55 corner_ok mvvaractor \
+ spacing allpolynonfet,polyfill *mvnsd 55 corner_ok mvvaractor \
 	"poly spacing to diffusion tap < %d (poly.5)"
 
  edge4way *psd *ndiff 300 ~(nfet,npass,npd,scnfet,nfetlvt,nsonos)/a *psd 300 \
@@ -6093,21 +6093,28 @@ extract
  height	dnwell 	    -0.1    0.1
  height	nwell,pwell  0.0    0.2062
  height alldiff	     0.2062 0.12
+ height fomfill	     0.2062 0.12
  height allpoly	     0.3262 0.18
+ height polyfill     0.3262 0.18
  height alldiffcont  0.3262 0.61
  height pc	     0.5062 0.43
  height allli	     0.9361 0.10
  height lic	     1.0361 0.34
  height allm1	     1.3761 0.36
+ height m1fill	     1.3761 0.36
  height v1	     1.7361 0.27
  height allm2	     2.0061 0.36
+ height m2fill	     1.3761 0.36
  height v2	     2.3661 0.42
  height allm3	     2.7861 0.845
+ height m3fill	     1.3761 0.36
 #ifdef METAL5
  height v3	     3.6311 0.39
  height allm4	     4.0211 0.845
+ height m4fill	     1.3761 0.36
  height v4	     4.8661 0.505
  height allm5	     5.3711 1.26
+ height m5fill	     1.3761 0.36
  height mimcap	     2.4661 0.2
  height mimcap2	     3.7311 0.2
  height mimcc	     2.6661 0.12
@@ -6679,6 +6686,14 @@ plot
   style pnm
      default
      draw fillblock no_color_at_all
+     draw fillblock4 no_color_at_all
+     draw fomfill no_color_at_all
+     draw polyfill no_color_at_all
+     draw m1fill no_color_at_all
+     draw m2fill no_color_at_all
+     draw m3fill no_color_at_all
+     draw m4fill no_color_at_all
+     draw m5fill no_color_at_all
      draw nwell cwell
 end
 
