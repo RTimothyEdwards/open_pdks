@@ -24,13 +24,15 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
         pdkvar[]_LINK_TARGETS="none"
 
         pdk_get() {
-            AC_CHECK_FILE(../pdk/[pdk]_url, [
+            AC_CHECK_FILE(../pdk/[pdk]_info, [
                 AC_CHECK_FILE(../pdks/pdk,[
                     echo "Using pre-existing pdk download..."
                 ], [
-                    mkdir -p ../pdks/pdk
-                    sh dl $(cat "../pdk/pdk_get") ../pdks/pdk.tar.gz;
-                    (echo "Extracting pdk..." && cd ../pdks && tar -xf pdk.tar.gz --strip-components 1 -C ../pdks/pdk)
+                    REPO=$(cat "../pdk/pdk_info" | sed -n "1p")
+                    POST_CLONE_COMMANDS=$(cat "../pdk/pdk_info" | sed "1d")
+                    mkdir -p ../pdks
+                    git clone "$REPO" ../pdks/pdk;
+                    (cd ../pdks/pdk && sh -c "$POST_CLONE_COMMANDS")
                 ])
                 export pdkvar[]_SOURCE_PATH=../pdks/pdk
             ], [
@@ -38,18 +40,33 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
             ])
         }
 
+        pdk_find() {
+            FOUND=0
+            for path in /opt/pdks/pdk /usr/share/pdks/pdk /usr/local/share/pdks/pdk; do
+                if @<:@ -d $path @:>@ ; then
+                    echo "Found pdk in $path, using this installation..."
+                    export pdkvar[]_SOURCE_PATH=$path
+                    FOUND=1
+                fi
+            done
+            if @<:@ "$FOUND" = "$1" @:>@; then
+                echo "Could not found pdk in standard search paths, manually downloading to ../pdks/pdk ..."
+                pdk_find
+            fi
+        }
+
         AC_ARG_ENABLE(pdk-[pdk],
             [AS_HELP_STRING([--enable-pdk-[pdk]=@<:@/path/to/pdk/@:>@ --disable-pdk-[pdk]], "location of the source files for the pdk (pdks with a [pdk]_url file can automatically download them if the path is omitted)")],
             [
                 if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-                    pdk_get
+                   pdk_find
                 elif test "$enableval" == "no" -o "$enableval" == "NO"; then
                     echo "Disabling pdk..."
                 else
                     export pdkvar[]_SOURCE_PATH=$enableval
                 fi
             ], [
-                pdk_get
+                pdk_find
             ]
         )
 	    # # Require this argument

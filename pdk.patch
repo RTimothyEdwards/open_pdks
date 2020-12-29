@@ -1,0 +1,337 @@
+commit c8e490f65d8624cc2e39147afd1c0269cac7f8b4
+Author: Donn <me@donn.website>
+Date:   Tue Dec 29 01:38:02 2020 +0200
+
+    Looking for PDKs in standard directories then downloading
+
+diff --git a/scripts/.gitignore b/scripts/.gitignore
+index b1083e1..1383243 100644
+--- a/scripts/.gitignore
++++ b/scripts/.gitignore
+@@ -4,4 +4,4 @@
+ !configure.ac
+ !tools.txt
+ !print_tools_make.pl
+-!dl
+\ No newline at end of file
++!download.sh
+\ No newline at end of file
+diff --git a/scripts/configure b/scripts/configure
+index ba4f0c8..5e03076 100755
+--- a/scripts/configure
++++ b/scripts/configure
+@@ -628,6 +628,7 @@ infodir
+ docdir
+ oldincludedir
+ includedir
++runstatedir
+ localstatedir
+ sharedstatedir
+ sysconfdir
+@@ -706,6 +707,7 @@ datadir='${datarootdir}'
+ sysconfdir='${prefix}/etc'
+ sharedstatedir='${prefix}/com'
+ localstatedir='${prefix}/var'
++runstatedir='${localstatedir}/run'
+ includedir='${prefix}/include'
+ oldincludedir='/usr/include'
+ docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
+@@ -958,6 +960,15 @@ do
+   | -silent | --silent | --silen | --sile | --sil)
+     silent=yes ;;
+ 
++  -runstatedir | --runstatedir | --runstatedi | --runstated \
++  | --runstate | --runstat | --runsta | --runst | --runs \
++  | --run | --ru | --r)
++    ac_prev=runstatedir ;;
++  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
++  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
++  | --run=* | --ru=* | --r=*)
++    runstatedir=$ac_optarg ;;
++
+   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
+     ac_prev=sbindir ;;
+   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
+@@ -1095,7 +1106,7 @@ fi
+ for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
+ 		datadir sysconfdir sharedstatedir localstatedir includedir \
+ 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
+-		libdir localedir mandir
++		libdir localedir mandir runstatedir
+ do
+   eval ac_val=\$$ac_var
+   # Remove trailing slashes.
+@@ -1248,6 +1259,7 @@ Fine tuning of the installation directories:
+   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
+   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
+   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
++  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
+   --libdir=DIR            object code libraries [EPREFIX/lib]
+   --includedir=DIR        C header files [PREFIX/include]
+   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
+@@ -1279,7 +1291,7 @@ Optional Features:
+   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
+   --enable-sky130-pdk=[/path/to/sky130/] --disable-sky130-pdk
+                           "location of the source files for the sky130 (pdks
+-                          with a pdk_url file can automatically download them
++                          with a pdk_info file can automatically download them
+                           if the path is omitted)"
+   --enable-klayout
+                 Enable or disable klayout [default=enabled]
+@@ -1797,22 +1809,22 @@ $as_echo "$as_me: Found technology directories: sky130" >&6;}
+         SKY130_LINK_TARGETS="none"
+ 
+         pdk_get() {
+-            { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ../sky130/pdk_url" >&5
+-$as_echo_n "checking for ../sky130/pdk_url... " >&6; }
+-if ${ac_cv_file____sky130_pdk_url+:} false; then :
++            { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ../sky130/pdk_info" >&5
++$as_echo_n "checking for ../sky130/pdk_info... " >&6; }
++if ${ac_cv_file____sky130_pdk_info+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+   test "$cross_compiling" = yes &&
+   as_fn_error $? "cannot check for file existence when cross compiling" "$LINENO" 5
+-if test -r "../sky130/pdk_url"; then
+-  ac_cv_file____sky130_pdk_url=yes
++if test -r "../sky130/pdk_info"; then
++  ac_cv_file____sky130_pdk_info=yes
+ else
+-  ac_cv_file____sky130_pdk_url=no
++  ac_cv_file____sky130_pdk_info=no
+ fi
+ fi
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_file____sky130_pdk_url" >&5
+-$as_echo "$ac_cv_file____sky130_pdk_url" >&6; }
+-if test "x$ac_cv_file____sky130_pdk_url" = xyes; then :
++{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_file____sky130_pdk_info" >&5
++$as_echo "$ac_cv_file____sky130_pdk_info" >&6; }
++if test "x$ac_cv_file____sky130_pdk_info" = xyes; then :
+ 
+                 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ../pdks/sky130" >&5
+ $as_echo_n "checking for ../pdks/sky130... " >&6; }
+@@ -1835,9 +1847,11 @@ if test "x$ac_cv_file____pdks_sky130" = xyes; then :
+ 
+ else
+ 
+-                    mkdir -p ../pdks/sky130
+-                    sh dl $(cat "../sky130/pdk_get") ../pdks/sky130.tar.gz;
+-                    (echo "Extracting sky130" && cd ../pdks && tar -xf sky130.tar.gz --strip-components 1 -C ../pdks/sky130)
++                    REPO=$(cat "../sky130/pdk_info" | sed -n "1p")
++                    POST_CLONE_COMMANDS=$(cat "../sky130/pdk_info" | sed "1d")
++                    mkdir -p ../pdks
++                    git clone "$REPO" ../pdks/sky130;
++                    (cd ../pdks/sky130 && sh -c "$POST_CLONE_COMMANDS")
+ 
+ fi
+ 
+@@ -1851,11 +1865,26 @@ fi
+ 
+         }
+ 
++        pdk_find() {
++            FOUND=0
++            for path in /opt/pdks/sky130 /usr/share/pdks/sky130 /usr/local/share/pdks/sky130; do
++                if [ -d $path ] ; then
++                    echo "Found sky130 in $path, using this installation..."
++                    export SKY130_SOURCE_PATH=$path
++                    FOUND=1
++                fi
++            done
++            if [ "$FOUND" = "sky130" ]; then
++                echo "Could not found sky130 in standard search paths, manually downloading to ../pdks/sky130 ..."
++                pdk_find
++            fi
++        }
++
+         # Check whether --enable-sky130-sky130 was given.
+ if test "${enable_sky130_pdk+set}" = set; then :
+   enableval=$enable_sky130_pdk;
+                 if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+-                    pdk_get
++                   pdk_find
+                 elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                     echo "Disabling sky130..."
+                 else
+@@ -1864,7 +1893,7 @@ if test "${enable_sky130_pdk+set}" = set; then :
+ 
+ else
+ 
+-                pdk_get
++                pdk_find
+ 
+ 
+ fi
+@@ -2455,7 +2484,7 @@ if ${am_cv_pathless_PYTHON+:} false; then :
+   $as_echo_n "(cached) " >&6
+ else
+ 
+-	for am_cv_pathless_PYTHON in python python2 python3 python3.3 python3.2 python3.1 python3.0 python2.7  python2.6 python2.5 python2.4 python2.3 python2.2 python2.1 python2.0 none; do
++	for am_cv_pathless_PYTHON in python python2 python3 python3.8 python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python2.7  python2.6 python2.5 python2.4 python2.3 python2.2 python2.1 python2.0 none; do
+ 	  test "$am_cv_pathless_PYTHON" = none && break
+ 	  prog="import sys
+ # split strings by '.' and convert to numeric.  Append some zeros
+@@ -2678,28 +2707,33 @@ $as_echo "$am_cv_python_pyexecdir" >&6; }
+ 
+     if test -z $PYTHON;
+     then
+-        PYTHON="python"
++        if test -z "";
++        then
++            PYTHON="python3"
++        else
++            PYTHON=""
++        fi
+     fi
+     PYTHON_NAME=`basename $PYTHON`
+     { $as_echo "$as_me:${as_lineno-$LINENO}: checking $PYTHON_NAME module: distutils" >&5
+ $as_echo_n "checking $PYTHON_NAME module: distutils... " >&6; }
+-	$PYTHON -c "import distutils" 2>/dev/null
+-	if test $? -eq 0;
+-	then
+-		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
++    $PYTHON -c "import distutils" 2>/dev/null
++    if test $? -eq 0;
++    then
++        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; }
+-		eval HAVE_PYMOD_DISTUTILS=yes
+-	else
+-		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
++        eval HAVE_PYMOD_DISTUTILS=yes
++    else
++        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+ $as_echo "no" >&6; }
+-		eval HAVE_PYMOD_DISTUTILS=no
+-		#
+-		if test -n ""
+-		then
+-			as_fn_error $? "failed to find required module distutils" "$LINENO" 5
+-			exit 1
+-		fi
+-	fi
++        eval HAVE_PYMOD_DISTUTILS=no
++        #
++        if test -n ""
++        then
++            as_fn_error $? "failed to find required module distutils" "$LINENO" 5
++            exit 1
++        fi
++    fi
+ 
+ 
+ # Check for "--with-ef-style"
+diff --git a/scripts/configure.ac b/scripts/configure.ac
+index 1c06fcf..03866fc 100755
+--- a/scripts/configure.ac
++++ b/scripts/configure.ac
+@@ -24,13 +24,15 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
+         pdkvar[]_LINK_TARGETS="none"
+ 
+         pdk_get() {
+-            AC_CHECK_FILE(../pdk/[pdk]_url, [
++            AC_CHECK_FILE(../pdk/[pdk]_info, [
+                 AC_CHECK_FILE(../pdks/pdk,[
+                     echo "Using pre-existing pdk download..."
+                 ], [
+-                    mkdir -p ../pdks/pdk
+-                    sh dl $(cat "../pdk/pdk_get") ../pdks/pdk.tar.gz;
+-                    (echo "Extracting pdk..." && cd ../pdks && tar -xf pdk.tar.gz --strip-components 1 -C ../pdks/pdk)
++                    REPO=$(cat "../pdk/pdk_info" | sed -n "1p")
++                    POST_CLONE_COMMANDS=$(cat "../pdk/pdk_info" | sed "1d")
++                    mkdir -p ../pdks
++                    git clone "$REPO" ../pdks/pdk;
++                    (cd ../pdks/pdk && sh -c "$POST_CLONE_COMMANDS")
+                 ])
+                 export pdkvar[]_SOURCE_PATH=../pdks/pdk
+             ], [
+@@ -38,18 +40,33 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
+             ])
+         }
+ 
++        pdk_find() {
++            FOUND=0
++            for path in /opt/pdks/pdk /usr/share/pdks/pdk /usr/local/share/pdks/pdk; do
++                if @<:@ -d $path @:>@ ; then
++                    echo "Found pdk in $path, using this installation..."
++                    export pdkvar[]_SOURCE_PATH=$path
++                    FOUND=1
++                fi
++            done
++            if @<:@ "$FOUND" = "$1" @:>@; then
++                echo "Could not found pdk in standard search paths, manually downloading to ../pdks/pdk ..."
++                pdk_find
++            fi
++        }
++
+         AC_ARG_ENABLE(pdk-[pdk],
+             [AS_HELP_STRING([--enable-pdk-[pdk]=@<:@/path/to/pdk/@:>@ --disable-pdk-[pdk]], "location of the source files for the pdk (pdks with a [pdk]_url file can automatically download them if the path is omitted)")],
+             [
+                 if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+-                    pdk_get
++                   pdk_find
+                 elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                     echo "Disabling pdk..."
+                 else
+                     export pdkvar[]_SOURCE_PATH=$enableval
+                 fi
+             ], [
+-                pdk_get
++                pdk_find
+             ]
+         )
+ 	    # # Require this argument
+diff --git a/scripts/download.sh b/scripts/download.sh
+new file mode 100755
+index 0000000..7623f32
+--- /dev/null
++++ b/scripts/download.sh
+@@ -0,0 +1,22 @@
++#!/bin/sh
++#
++# Neither curl or wget are guaranteed to be included in all *nix systems,
++# (but most have *one* of them). This tools tries its best to find one.
++#
++
++DL_CMD=
++if type "wget" > /dev/null; then
++    DL_CMD="wget -qO"
++fi
++
++if type "curl" > /dev/null; then
++    DL_CMD="curl -sLo"
++fi
++
++if [ "$DL_CMD" = "" ]; then
++    echo "Either curl or wget are required to automatically install tools."
++    exit 1
++fi
++
++echo "Downloading $1 to $2..."
++$DL_CMD $2 $1
+\ No newline at end of file
+diff --git a/sky130/pdk_info b/sky130/pdk_info
+new file mode 100644
+index 0000000..ee872cd
+--- /dev/null
++++ b/sky130/pdk_info
+@@ -0,0 +1,10 @@
++https://github.com/google/skywater-pdk
++
++# Post Clone Commands
++for i in $(git submodule | grep /latest | awk '{print $2}'); do
++    git submodule init $i
++done
++
++git submodule update
++
++make timing
+\ No newline at end of file
+diff --git a/sky130/pdk_url b/sky130/pdk_url
+deleted file mode 100644
+index 11a17e1..0000000
+--- a/sky130/pdk_url
++++ /dev/null
+@@ -1 +0,0 @@
+-https://github.com/google/skywater-pdk/archive/master.tar.gz
+\ No newline at end of file
