@@ -232,8 +232,8 @@ if __name__ == '__main__':
         filelist = os.listdir(magpath)
         for file in filelist:
             if os.path.splitext(magpath + '/' + file)[1] == '.gds':
-                if file.startswith(project + '_fill_pattern_')
-                    os.remove(magpath + '/' + file
+                if file.startswith(project + '_fill_pattern_'):
+                    os.remove(magpath + '/' + file)
 
     print('Done!')
     exit(0)
