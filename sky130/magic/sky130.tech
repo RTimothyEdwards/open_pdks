@@ -1707,7 +1707,7 @@ style paint
 #endif (EXPERIMENTAL)
 
 #----------------------------------------------------------------
-style wafflefill
+style wafflefill variants (),(tiled)
 #----------------------------------------------------------------
 # Style used by scripts for automatically generating fill layers
 # NOTE: Be sure to generate output on flattened layout.
@@ -1717,10 +1717,30 @@ style wafflefill
  gridlimit 5
 
 #----------------------------------------------------------------
-# Generate and retain a layer representing the bounding box
+# Generate and retain a layer representing the bounding box.
+#
+# For variant ():
+# The bounding box is the full extent of geometry on the top level
+# cell.
+#
+# For variant (tiled):
+# Use with a script that breaks layout into flattened tiles and runs
+# fill individually on each.  The tiles should be larger than the
+# step size, and each should draw a layer "comment" the size of the
+# step box.
 #----------------------------------------------------------------
- templayer	topbox
-	bbox	top
+
+ variants ()
+     templayer	topbox
+	 bbox	top
+
+ variants (tiled)
+     templayer	topbox comment
+	 # Each tile imposes the full keepout distance rule of
+	 # 3um on all sides.
+	 shrink 1500
+
+ variants *
 
 #----------------------------------------------------------------
 # Generate guard-band around nwells to keep FOM from crossing
@@ -1732,25 +1752,27 @@ style wafflefill
  templayer mvnwell
  	bloat-all alldiffmv nwell
 
- templayer lvnwell nwell
+ templayer lvnwell allnwell
 	and-not mvnwell
 
  templayer	well_shrink mvnwell
 	shrink 	250
 	or lvnwell
 	shrink	180
- templayer	well_guardband nwell
+ templayer	well_guardband allnwell
 	grow	340
 	and-not	well_shrink
 
 #---------------------------------------------------
 # Diffusion and poly keep-out areas
 #---------------------------------------------------
- templayer      obstruct_fom alldiff,allpoly,rpw
+ templayer      obstruct_fom alldiff,allpoly,fomfill,polyfill,obspoly,obsactive
+	or	rpw,pnp,npn
         grow    500
 	or	well_guardband
 
- templayer      obstruct_poly alldiff,allpoly,rpw
+ templayer      obstruct_poly alldiff,allpolyfomfill,polyfill,obspoly,obsactive
+	or	rpw,pnp,npn
 	grow	1000
 
 #---------------------------------------------------
@@ -2045,6 +2067,7 @@ style wafflefill
  templayer	met4fill_medium topbox
         slots   0 1000 300 0 1000 300 700 1050
         and-not obstruct_m4_medium
+	and	topbox
         shrink  495
         grow    495
 
