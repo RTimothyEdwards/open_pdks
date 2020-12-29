@@ -106,9 +106,11 @@ MACRO sky130_ef_io__connect_vcchib_vccd_and_vswitch_vddio_slice_20um
     USE POWER ;
     PORT
       LAYER met5 ;
-        RECT 0.000 92.950 1.000 92.965 ;
-        RECT 19.000 92.950 20.000 92.965 ;
         RECT 0.000 68.000 20.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 68.000 20.000 92.965 ;
     END
     PORT
       LAYER met5 ;
@@ -166,7 +168,6 @@ MACRO sky130_ef_io__connect_vcchib_vccd_and_vswitch_vddio_slice_20um
   OBS
       LAYER met4 ;
         RECT 0.000 173.750 20.000 197.965 ;
-        RECT 0.000 68.000 20.000 92.965 ;
         RECT 0.000 49.610 20.000 50.790 ;
   END
 END sky130_ef_io__connect_vcchib_vccd_and_vswitch_vddio_slice_20um

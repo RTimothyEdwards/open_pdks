@@ -1,13 +1,7 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1606130423
-<< checkpaint >>
-rect -1260 10182 2260 40853
-rect -1470 6602 2548 10182
-rect -1260 3688 2260 6602
-rect -1404 -42 2424 3688
-rect -1260 -1260 2260 -42
+timestamp 1609262803
 << metal4 >>
 rect 0 34750 1000 39593
 rect 0 13600 1000 18593
@@ -26,8 +20,6 @@ rect 0 2580 1000 3270
 rect 0 0 1000 1090
 << metal5 >>
 rect 0 34750 1000 39593
-rect 0 18590 200 18593
-rect 800 18590 1000 18593
 rect 0 13600 1000 18590
 rect 0 12430 1000 13280
 rect 0 11260 1000 12110
@@ -139,6 +131,6 @@ port 12 nsew ground bidirectional
 string LEFclass PAD AREAIO
 string FIXED_BBOX 0 0 1000 39593
 string GDS_FILE ../gds/sky130_ef_io__disconnect_vccd_slice_5um.gds
-string GDS_END 8282
+string GDS_END 8154
 string GDS_START 170
 << end >>
