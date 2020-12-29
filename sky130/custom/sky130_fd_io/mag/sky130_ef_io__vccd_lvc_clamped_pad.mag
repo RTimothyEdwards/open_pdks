@@ -1,10 +1,11 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1608397426
+timestamp 1609271235
 << metal1 >>
 rect 6867 95 7067 195
-rect 5242 -7 5540 69
+rect 5242 58 5540 69
+rect 5127 -7 5657 58
 << metal2 >>
 rect 98 0 4099 287
 rect 6888 -7 8888 58
@@ -77,18 +78,18 @@ rect 0 1390 254 2280
 rect 14746 1390 15000 2280
 rect 0 20 254 1070
 rect 14746 20 15000 1070
+use sky130_fd_io__top_power_lvc_wpad  sky130_fd_io__top_power_lvc_wpad_0 $PDKPATH/libs.ref/sky130_fd_io/mag
+timestamp 1609263052
+transform 1 0 0 0 1 -7
+box 0 0 15000 39600
+use sky130_fd_io__overlay_vccd_lvc  sky130_fd_io__overlay_vccd_lvc_0 $PDKPATH/libs.ref/sky130_fd_io/mag
+timestamp 1609263052
+transform 1 0 0 0 1 -7
+box 0 7 15000 39600
 use sky130_ef_io__lvc_vccd_overlay  sky130_ef_io__lvc_vccd_overlay_0
 timestamp 1607710904
 transform 1 0 0 0 1 0
 box -2195 -2184 17228 39586
-use sky130_fd_io__overlay_vccd_lvc  sky130_fd_io__overlay_vccd_lvc_0 $PDKPATH/libs.ref/sky130_fd_io/mag
-timestamp 1608233597
-transform 1 0 0 0 1 -7
-box 0 7 15000 39600
-use sky130_fd_io__top_power_lvc_wpad  sky130_fd_io__top_power_lvc_wpad_0 $PDKPATH/libs.ref/sky130_fd_io/mag
-timestamp 1608233597
-transform 1 0 0 0 1 -7
-box 0 0 15000 39600
 << labels >>
 flabel metal4 s 14873 37925 14873 37925 3 FreeSans 520 180 0 0 VSSIO
 port 16 nsew ground bidirectional
