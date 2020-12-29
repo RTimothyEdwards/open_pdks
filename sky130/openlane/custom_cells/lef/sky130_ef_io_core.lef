@@ -2,6 +2,32 @@ VERSION 5.7 ;
   NOWIREEXTENSIONATPIN ON ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
+MACRO sky130_ef_io__bare_pad
+  CLASS BLOCK ;
+  FOREIGN sky130_ef_io__bare_pad ;
+  ORIGIN 2.700 2.700 ;
+  SIZE 65.400 BY 75.400 ;
+  PIN PAD
+    PORT
+      LAYER met4 ;
+        RECT -2.700 70.000 62.700 72.700 ;
+        RECT -2.700 0.000 0.000 70.000 ;
+        RECT 60.000 0.000 62.700 70.000 ;
+        RECT -2.700 -2.700 62.700 0.000 ;
+      LAYER via4 ;
+        RECT -2.580 71.400 62.580 72.580 ;
+        RECT -2.580 -1.400 -1.400 71.400 ;
+        RECT 61.400 -1.400 62.580 71.400 ;
+        RECT -2.580 -2.580 62.580 -1.400 ;
+      LAYER met5 ;
+        RECT -2.700 -2.700 62.700 72.700 ;
+    END
+  END PAD
+
+END sky130_ef_io__bare_pad
+
+#--------EOF---------
+
 MACRO sky130_ef_io__com_bus_slice_1um
   CLASS PAD SPACER ;
   FOREIGN sky130_ef_io__com_bus_slice_1um ;
@@ -107,6 +133,10 @@ MACRO sky130_ef_io__com_bus_slice_1um
     USE POWER ;
     PORT
       LAYER met5 ;
+        RECT 0.000 68.000 1.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
         RECT 0.000 68.000 1.000 92.965 ;
     END
     PORT
@@ -177,8 +207,8 @@ MACRO sky130_ef_io__com_bus_slice_1um
 
   OBS
       LAYER met4 ;
-        RECT 0.000 66.900 1.000 197.965 ;
-        RECT 0.000 61.050 1.000 61.650 ;
+        RECT 0.000 66.900 1.000 95.000 ;
+	RECT 0.000 172.000 1.000 197.965 ;
         RECT 0.000 55.100 1.000 55.800 ;
         RECT 0.000 49.710 1.000 50.690 ;
   END
@@ -351,6 +381,10 @@ MACRO sky130_ef_io__com_bus_slice_5um
     USE POWER ;
     PORT
       LAYER met5 ;
+        RECT 0.000 68.000 1.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
         RECT 0.000 68.000 1.000 92.965 ;
     END
     PORT
@@ -363,6 +397,10 @@ MACRO sky130_ef_io__com_bus_slice_5um
     END
     PORT
       LAYER met5 ;
+        RECT 4.000 68.000 5.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
         RECT 4.000 68.000 5.000 92.965 ;
     END
     PORT
@@ -469,7 +507,8 @@ MACRO sky130_ef_io__com_bus_slice_5um
 
   OBS
       LAYER met4 ;
-        RECT 0.000 66.900 5.000 197.965 ;
+        RECT 0.000 66.900 5.000 95.000 ;
+        RECT 0.000 172.000 5.000 197.965 ;
         RECT 0.000 61.050 5.000 61.650 ;
         RECT 0.000 55.100 5.000 55.800 ;
         RECT 0.000 49.710 5.000 50.690 ;
@@ -643,6 +682,10 @@ MACRO sky130_ef_io__com_bus_slice_10um
     USE POWER ;
     PORT
       LAYER met5 ;
+        RECT 0.000 68.000 1.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
         RECT 0.000 68.000 1.000 92.965 ;
     END
     PORT
@@ -655,6 +698,10 @@ MACRO sky130_ef_io__com_bus_slice_10um
     END
     PORT
       LAYER met5 ;
+        RECT 9.000 68.000 10.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
         RECT 9.000 68.000 10.000 92.965 ;
     END
     PORT
@@ -761,7 +808,8 @@ MACRO sky130_ef_io__com_bus_slice_10um
 
   OBS
       LAYER met4 ;
-        RECT 0.000 66.900 10.000 197.965 ;
+        RECT 0.000 66.900 10.000 95.000 ;
+        RECT 0.000 172.000 10.000 197.965 ;
         RECT 0.000 61.050 10.000 61.650 ;
         RECT 0.000 55.100 10.000 55.800 ;
         RECT 0.000 49.710 10.000 50.690 ;
@@ -937,6 +985,10 @@ MACRO sky130_ef_io__com_bus_slice_20um
     USE POWER ;
     PORT
       LAYER met5 ;
+        RECT 0.000 68.000 1.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
         RECT 0.000 68.000 1.000 92.965 ;
     END
     PORT
@@ -949,6 +1001,10 @@ MACRO sky130_ef_io__com_bus_slice_20um
     END
     PORT
       LAYER met5 ;
+        RECT 19.000 68.000 20.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
         RECT 19.000 68.000 20.000 92.965 ;
     END
     PORT
@@ -1055,7 +1111,8 @@ MACRO sky130_ef_io__com_bus_slice_20um
 
   OBS
       LAYER met4 ;
-        RECT 0.000 66.900 20.000 197.965 ;
+        RECT 0.000 66.900 20.000 95.000 ;
+        RECT 0.000 172.000 20.000 197.965 ;
         RECT 0.000 61.050 20.000 61.650 ;
         RECT 0.000 55.100 20.000 55.800 ;
         RECT 0.000 49.710 20.000 50.690 ;
@@ -1177,9 +1234,11 @@ MACRO sky130_ef_io__connect_vcchib_vccd_and_vswitch_vddio_slice_20um
     USE POWER ;
     PORT
       LAYER met5 ;
-        RECT 0.000 92.950 1.000 92.965 ;
-        RECT 19.000 92.950 20.000 92.965 ;
         RECT 0.000 68.000 20.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 68.000 20.000 92.965 ;
     END
     PORT
       LAYER met5 ;
@@ -1242,7 +1301,6 @@ MACRO sky130_ef_io__connect_vcchib_vccd_and_vswitch_vddio_slice_20um
   OBS
       LAYER met4 ;
         RECT 0.000 173.750 20.000 197.965 ;
-        RECT 0.000 68.000 20.000 92.965 ;
         RECT 0.000 49.610 20.000 50.790 ;
   END
 END sky130_ef_io__connect_vcchib_vccd_and_vswitch_vddio_slice_20um
@@ -1597,6 +1655,7 @@ MACRO sky130_ef_io__corner_pad
         RECT 0.000 17.935 47.335 18.535 ;
         RECT 4.185 12.485 47.335 17.935 ;
         RECT 0.000 11.885 47.335 12.485 ;
+        RECT 0.400 5.635 2.035 6.035 ;
         RECT 2.750 5.635 47.335 11.885 ;
         RECT 0.000 1.670 47.335 5.635 ;
         RECT 0.000 1.255 1.635 1.670 ;
@@ -1630,6 +1689,7 @@ MACRO sky130_ef_io__corner_pad
         RECT 3.125 22.285 46.135 28.335 ;
         RECT 3.070 19.035 46.135 22.285 ;
         RECT 5.385 11.385 46.135 19.035 ;
+        RECT 1.600 4.535 2.135 6.135 ;
         RECT 3.950 4.535 46.135 11.385 ;
         RECT 0.000 2.870 46.135 4.535 ;
         RECT 58.335 3.455 200.000 28.755 ;
@@ -1640,20 +1700,6 @@ MACRO sky130_ef_io__corner_pad
   END
 END sky130_ef_io__corner_pad
 
-#--------EOF---------
-
-MACRO sky130_ef_io__disconnect_slice_5um
-  CLASS PAD AREAIO ;
-  FOREIGN sky130_ef_io__disconnect_slice_5um ;
-  ORIGIN 0.000 0.000 ;
-  SIZE 5.000 BY 197.965 ;
-  OBS
-      LAYER met4 ;
-        RECT 0.000 0.000 5.000 197.965 ;
-      LAYER met5 ;
-        RECT 0.000 0.000 5.000 197.965 ;
-  END
-END sky130_ef_io__disconnect_slice_5um
 #--------EOF---------
 
 MACRO sky130_ef_io__disconnect_vccd_slice_5um
@@ -1668,10 +1714,6 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
       LAYER met4 ;
         RECT 0.000 51.090 5.000 54.070 ;
     END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 51.090 5.000 54.070 ;
-    END
   END AMUXBUS_A
 
   PIN AMUXBUS_B
@@ -1680,10 +1722,6 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
     PORT
       LAYER met4 ;
         RECT 0.000 46.330 5.000 49.310 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 46.330 5.000 49.310 ;
     END
   END AMUXBUS_B
 
@@ -1710,26 +1748,6 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
       LAYER met4 ;
         RECT 0.000 34.700 5.000 38.150 ;
     END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 45.700 5.000 54.700 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 54.370 5.000 54.700 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 45.700 5.000 46.030 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 34.800 5.000 38.050 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 34.700 5.000 38.150 ;
-    END
   END VSSA
 
   PIN VDDA
@@ -1742,14 +1760,6 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
     PORT
       LAYER met4 ;
         RECT 0.000 12.900 5.000 16.350 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 13.000 5.000 16.250 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 12.900 5.000 16.350 ;
     END
   END VDDA
 
@@ -1764,14 +1774,6 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
       LAYER met4 ;
         RECT 0.000 29.850 5.000 33.300 ;
     END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 29.950 5.000 33.200 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 29.850 5.000 33.300 ;
-    END
   END VSWITCH
 
   PIN VDDIO_Q
@@ -1784,14 +1786,6 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
     PORT
       LAYER met4 ;
         RECT 0.000 62.050 5.000 66.500 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 62.150 5.000 66.400 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 62.050 5.000 66.500 ;
     END
   END VDDIO_Q
 
@@ -1806,14 +1800,6 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
       LAYER met4 ;
         RECT 0.000 0.000 5.000 5.450 ;
     END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 0.100 5.000 5.350 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 0.000 5.000 5.450 ;
-    END
   END VCCHIB
 
   PIN VDDIO
@@ -1821,7 +1807,11 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
     USE POWER ;
     PORT
       LAYER met5 ;
-        RECT 0.000 68.000 1.000 92.965 ;
+        RECT 0.000 68.000 5.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 68.000 5.000 92.965 ;
     END
     PORT
       LAYER met5 ;
@@ -1830,18 +1820,6 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
     PORT
       LAYER met4 ;
         RECT 0.000 17.750 5.000 22.400 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 68.000 5.000 92.965 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 17.850 5.000 22.300 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 17.750 5.000 22.400 ;
     END
   END VDDIO
 
@@ -1860,18 +1838,6 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
       LAYER met5 ;
         RECT 0.000 173.750 5.000 197.965 ;
     END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 23.900 5.000 28.350 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 23.800 5.000 28.450 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 173.750 5.000 197.965 ;
-    END
   END VSSIO
 
   PIN VSSIO_Q
@@ -1885,22 +1851,12 @@ MACRO sky130_ef_io__disconnect_vccd_slice_5um
       LAYER met4 ;
         RECT 0.000 56.200 5.000 60.650 ;
     END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 56.300 5.000 60.550 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 56.200 5.000 60.650 ;
-    END
   END VSSIO_Q
 
   OBS
       LAYER met4 ;
-        RECT 0.000 66.900 5.000 197.965 ;
-        RECT 0.000 61.050 5.000 61.650 ;
-        RECT 0.000 55.100 5.000 55.800 ;
-        RECT 0.000 49.710 5.000 50.690 ;
+        RECT 0.000 173.750 5.000 197.965 ;
+        RECT 0.000 49.610 5.000 50.790 ;
   END
 END sky130_ef_io__disconnect_vccd_slice_5um
 
@@ -1918,10 +1874,6 @@ MACRO sky130_ef_io__disconnect_vdda_slice_5um
       LAYER met4 ;
         RECT 0.000 51.090 5.000 54.070 ;
     END
-    PORT
-      LAYER met4 ;
-        RECT 0.000 51.090 1.000 54.070 ;
-    END
   END AMUXBUS_A
 
   PIN AMUXBUS_B
@@ -1930,10 +1882,6 @@ MACRO sky130_ef_io__disconnect_vdda_slice_5um
     PORT
       LAYER met4 ;
         RECT 0.000 46.330 5.000 49.310 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 0.000 46.330 1.000 49.310 ;
     END
   END AMUXBUS_B
 
@@ -1948,14 +1896,6 @@ MACRO sky130_ef_io__disconnect_vdda_slice_5um
       LAYER met4 ;
         RECT 0.000 29.850 5.000 33.300 ;
     END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 29.950 5.000 33.200 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 29.850 5.000 33.300 ;
-    END
   END VSWITCH
 
   PIN VDDIO_Q
@@ -1964,10 +1904,6 @@ MACRO sky130_ef_io__disconnect_vdda_slice_5um
     PORT
       LAYER met5 ;
         RECT 0.000 62.150 5.000 66.400 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 62.150 5.000 66.400 ;
     END
     PORT
       LAYER met4 ;
@@ -1986,14 +1922,6 @@ MACRO sky130_ef_io__disconnect_vdda_slice_5um
       LAYER met4 ;
         RECT 0.000 0.000 5.000 5.450 ;
     END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 0.100 5.000 5.350 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 0.000 5.000 5.450 ;
-    END
   END VCCHIB
 
   PIN VDDIO
@@ -2005,27 +1933,15 @@ MACRO sky130_ef_io__disconnect_vdda_slice_5um
     END
     PORT
       LAYER met5 ;
-        RECT 0.000 68.000 1.000 92.965 ;
+        RECT 0.000 68.000 5.000 92.950 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 68.000 5.000 92.965 ;
     END
     PORT
       LAYER met5 ;
         RECT 0.000 17.850 5.000 22.300 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 0.000 17.750 1.000 22.400 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 68.000 5.000 92.965 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 17.850 5.000 22.300 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 17.750 5.000 22.400 ;
     END
   END VDDIO
 
@@ -2039,14 +1955,6 @@ MACRO sky130_ef_io__disconnect_vdda_slice_5um
     PORT
       LAYER met4 ;
         RECT 0.000 6.850 5.000 11.500 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 6.950 5.000 11.400 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 6.850 5.000 11.500 ;
     END
   END VCCD
 
@@ -2065,18 +1973,6 @@ MACRO sky130_ef_io__disconnect_vdda_slice_5um
       LAYER met5 ;
         RECT 0.000 173.750 5.000 197.965 ;
     END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 23.900 5.000 28.350 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 23.800 5.000 28.450 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 173.750 5.000 197.965 ;
-    END
   END VSSIO
 
   PIN VSSD
@@ -2089,14 +1985,6 @@ MACRO sky130_ef_io__disconnect_vdda_slice_5um
     PORT
       LAYER met4 ;
         RECT 0.000 39.550 5.000 44.200 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 39.650 5.000 44.100 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 39.550 5.000 44.200 ;
     END
   END VSSD
 
@@ -2111,19 +1999,11 @@ MACRO sky130_ef_io__disconnect_vdda_slice_5um
       LAYER met4 ;
         RECT 0.000 56.200 5.000 60.650 ;
     END
-    PORT
-      LAYER met5 ;
-        RECT 4.000 56.300 5.000 60.550 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 4.000 56.200 5.000 60.650 ;
-    END
   END VSSIO_Q
 
   OBS
       LAYER met4 ;
-        RECT 0.000 68.000 5.000 197.965 ;
+        RECT 0.000 173.750 5.000 197.965 ;
   END
 END sky130_ef_io__disconnect_vdda_slice_5um
 
@@ -2369,14 +2249,42 @@ MACRO sky130_ef_io__gpiov2_pad
   END VTRIP_SEL
 
   OBS
-     LAYER li1 ;
+      LAYER nwell ;
        RECT -0.160 -1.350 80.160 197.965 ;
-     LAYER met1 ;
+        RECT 0.000 -2.035 61.490 -1.500 ;
+      LAYER pwell ;
        RECT -0.160 -1.350 80.160 197.965 ;
-     LAYER met2 ;
+        RECT 64.375 -1.785 66.075 -1.500 ;
+      LAYER li1 ;
        RECT -0.160 -1.350 80.160 197.965 ;
-     LAYER met3 ;
+        RECT 2.550 -1.705 60.990 -1.535 ;
+        RECT 64.375 -1.785 66.075 -1.500 ;
+        RECT 66.795 -1.805 66.965 -1.500 ;
+        RECT 67.325 -1.805 67.495 -1.500 ;
+        RECT 67.855 -1.805 68.025 -1.500 ;
+      LAYER met1 ;
        RECT -0.160 -1.350 80.160 197.965 ;
+        RECT 1.460 -1.765 61.195 -1.500 ;
+        RECT 64.375 -1.775 67.525 -1.500 ;
+      LAYER met2 ;
+       RECT -0.160 -1.350 80.160 197.965 ;
+        RECT 0.930 -1.735 2.160 -1.500 ;
+        RECT 2.365 -1.735 3.005 -1.500 ;
+        RECT 6.895 -1.765 10.715 -1.500 ;
+        RECT 19.235 -1.765 21.375 -1.500 ;
+        RECT 22.995 -1.760 26.265 -1.500 ;
+        RECT 33.400 -1.765 34.670 -1.500 ;
+        RECT 54.155 -1.670 65.200 -1.500 ;
+        RECT 54.220 -1.735 65.200 -1.670 ;
+        RECT 54.240 -1.755 65.200 -1.735 ;
+        RECT 54.250 -1.765 65.200 -1.755 ;
+        RECT 54.270 -1.785 65.200 -1.765 ;
+      LAYER met3 ;
+       RECT -0.160 -1.350 80.160 197.965 ;
+        RECT 6.455 -1.790 10.715 -1.500 ;
+        RECT 22.635 -1.785 27.635 -1.500 ;
+        RECT 49.610 -1.505 55.000 -1.500 ;
+        RECT 49.610 -1.515 50.340 -1.505 ;
      LAYER met4 ;
        RECT -0.160 -1.350 80.160 197.965 ;
      LAYER met5 ;
@@ -3051,12 +2959,27 @@ MACRO sky130_ef_io__vccd_hvc_pad
   END VCCD
 
   OBS
-     LAYER li1 ;
+      LAYER pwell ;
        RECT -0.000 0.000 75.000 197.965 ;
-     LAYER met1 ;
+        RECT 3.625 -0.970 11.155 0.000 ;
+      LAYER nwell ;
        RECT -0.000 0.000 75.000 197.965 ;
-     LAYER met2 ;
+        RECT 11.860 -1.350 70.965 0.000 ;
+      LAYER li1 ;
        RECT -0.000 0.000 75.000 197.965 ;
+        RECT 0.610 -0.970 11.155 0.000 ;
+        RECT 12.035 -0.115 13.045 0.000 ;
+        RECT 69.730 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met1 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 3.625 -0.905 8.855 0.000 ;
+        RECT 12.035 -0.115 13.350 0.000 ;
+        RECT 69.540 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met2 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 25.895 -2.035 27.895 -0.115 ;
      LAYER met3 ;
        RECT -0.000 0.000 75.000 197.965 ;
      LAYER met4 ;
@@ -3065,6 +2988,153 @@ MACRO sky130_ef_io__vccd_hvc_pad
        RECT -0.000 0.000 75.000 197.965 ;
   END
 END sky130_ef_io__vccd_hvc_pad
+
+#--------EOF---------
+
+MACRO sky130_ef_io__vccd_lvc_clamped2_pad
+  CLASS PAD POWER ;
+  FOREIGN sky130_ef_io__vccd_lvc_clamped2_pad ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 75.000 BY 197.965 ;
+  PIN VCCHIB
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER met5 ;
+        RECT 73.730 0.100 75.000 1.400 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 0.100 1.270 1.400 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 0.000 75.000 1.400 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 0.000 1.270 1.400 ;
+    END
+  END VCCHIB
+
+  PIN VCCD
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER met3 ;
+        RECT 50.755 -0.035 74.700 1.400 ;
+    END
+    PORT
+      LAYER met3 ;
+        RECT 0.500 -0.035 24.500 1.400 ;
+    END
+  END VCCD
+
+  OBS
+      LAYER li1 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.240 0.985 74.755 1.400 ;
+      LAYER met1 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.120 0.000 75.000 1.400 ;
+        RECT 16.655 -0.035 56.565 0.000 ;
+        RECT 20.925 -0.815 53.535 -0.035 ;
+        RECT 76.200 -0.815 85.935 1.400 ;
+        RECT 20.925 -6.535 85.935 -0.815 ;
+        RECT 20.925 -10.535 81.935 -6.535 ;
+      LAYER met2 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.490 0.000 75.000 1.400 ;
+        RECT 0.500 -0.035 20.495 0.000 ;
+        RECT 20.925 -0.035 53.535 0.000 ;
+        RECT 54.095 -0.035 74.700 0.000 ;
+      LAYER met3 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 24.900 0.000 50.355 1.400 ;
+        RECT 26.000 -0.035 36.880 0.000 ;
+        RECT 38.380 -0.035 49.255 0.000 ;
+      LAYER met4 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 1.670 0.000 73.330 1.400 ;
+      LAYER met5 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 2.870 0.100 72.130 1.400 ;
+  END
+END sky130_ef_io__vccd_lvc_clamped2_pad
+
+#--------EOF---------
+
+MACRO sky130_ef_io__vccd_lvc_clamped_pad
+  CLASS PAD POWER ;
+  FOREIGN sky130_ef_io__vccd_lvc_clamped_pad ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 75.000 BY 197.965 ;
+  PIN VCCHIB
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER met5 ;
+        RECT 73.730 0.100 75.000 1.400 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 0.100 1.270 1.400 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 0.000 75.000 1.400 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 0.000 1.270 1.400 ;
+    END
+  END VCCHIB
+
+  PIN VCCD
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER met3 ;
+        RECT 50.755 -0.035 74.700 1.400 ;
+    END
+    PORT
+      LAYER met3 ;
+        RECT 0.500 -0.035 24.500 1.400 ;
+    END
+  END VCCD
+
+  OBS
+      LAYER li1 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.240 0.985 74.755 1.400 ;
+      LAYER met1 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.120 0.000 75.000 1.400 ;
+        RECT 16.655 -0.035 56.565 0.000 ;
+        RECT 20.925 -0.815 53.535 -0.035 ;
+        RECT 76.200 -0.815 85.935 1.400 ;
+        RECT 20.925 -6.920 85.935 -0.815 ;
+        RECT 20.925 -10.920 81.935 -6.920 ;
+      LAYER met2 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.000 0.000 75.000 1.400 ;
+        RECT 0.500 -0.035 20.495 0.000 ;
+        RECT 20.925 -0.035 53.535 0.000 ;
+        RECT 54.095 -0.035 74.700 0.000 ;
+      LAYER met3 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.000 0.000 0.100 1.400 ;
+        RECT 24.900 0.000 50.355 1.400 ;
+        RECT 26.000 -0.035 36.880 0.000 ;
+        RECT 38.380 -0.035 49.255 0.000 ;
+      LAYER met4 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 1.670 0.000 73.330 1.400 ;
+      LAYER met5 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 2.870 0.100 72.130 1.400 ;
+  END
+END sky130_ef_io__vccd_lvc_clamped_pad
 
 #--------EOF---------
 
@@ -3159,11 +3229,19 @@ MACRO sky130_ef_io__vccd_lvc_pad
       LAYER met1 ;
        RECT -0.000 1.400 75.000 197.965 ;
         RECT 0.120 0.000 74.785 1.400 ;
+        RECT 16.655 -0.035 25.635 0.000 ;
+        RECT 26.210 -0.035 27.700 0.000 ;
+        RECT 28.270 -0.035 56.565 0.000 ;
       LAYER met2 ;
        RECT -0.000 1.400 75.000 197.965 ;
-        RECT 20.775 0.570 54.435 1.400 ;
-        RECT 20.775 0.000 34.160 0.570 ;
-        RECT 44.720 0.000 54.435 0.570 ;
+        RECT 20.775 0.570 54.715 1.400 ;
+        RECT 20.775 0.005 34.160 0.570 ;
+        RECT 44.720 0.005 54.715 0.570 ;
+        RECT 20.775 0.000 34.440 0.005 ;
+        RECT 20.925 -0.035 34.440 0.000 ;
+        RECT 44.440 0.000 54.715 0.005 ;
+        RECT 44.440 -0.035 53.535 0.000 ;
+        RECT 54.095 -0.035 54.715 0.000 ;
       LAYER met3 ;
        RECT -0.000 1.400 75.000 197.965 ;
         RECT 24.900 0.000 25.600 1.400 ;
@@ -3177,6 +3255,61 @@ MACRO sky130_ef_io__vccd_lvc_pad
         RECT 2.870 0.100 72.130 1.400 ;
   END
 END sky130_ef_io__vccd_lvc_pad
+
+#--------EOF---------
+
+MACRO sky130_ef_io__vdda_hvc_clamped_pad
+  CLASS PAD POWER ;
+  FOREIGN sky130_ef_io__vdda_hvc_clamped_pad ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 75.000 BY 197.965 ;
+  PIN VDDA
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER met3 ;
+        RECT 50.390 -2.035 74.290 0.000 ;
+    END
+    PORT
+      LAYER met3 ;
+        RECT 0.495 -2.035 24.395 0.000 ;
+    END
+  END VDDA
+
+  OBS
+      LAYER pwell ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 3.625 -0.970 11.155 0.000 ;
+      LAYER nwell ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 11.860 -1.350 70.965 0.000 ;
+      LAYER li1 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 0.610 -0.970 11.155 0.000 ;
+        RECT 12.035 -0.115 13.045 0.000 ;
+        RECT 69.730 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met1 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 3.625 -0.905 8.855 0.000 ;
+        RECT 12.035 -0.115 13.350 0.000 ;
+        RECT 69.540 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met2 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 0.495 -2.035 24.395 0.000 ;
+        RECT 25.895 -2.035 27.895 -0.115 ;
+        RECT 50.390 -2.035 74.290 0.000 ;
+      LAYER met3 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 25.895 -2.035 36.895 0.000 ;
+        RECT 37.890 -2.035 48.890 0.000 ;
+     LAYER met4 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+     LAYER met5 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+  END
+END sky130_ef_io__vdda_hvc_clamped_pad
 
 #--------EOF---------
 
@@ -3225,12 +3358,27 @@ MACRO sky130_ef_io__vdda_hvc_pad
   END VDDA
 
   OBS
-     LAYER li1 ;
+      LAYER pwell ;
        RECT -0.000 0.000 75.000 197.965 ;
-     LAYER met1 ;
+        RECT 3.625 -0.970 11.155 0.000 ;
+      LAYER nwell ;
        RECT -0.000 0.000 75.000 197.965 ;
-     LAYER met2 ;
+        RECT 11.860 -1.350 70.965 0.000 ;
+      LAYER li1 ;
        RECT -0.000 0.000 75.000 197.965 ;
+        RECT 0.610 -0.970 11.155 0.000 ;
+        RECT 12.035 -0.115 13.045 0.000 ;
+        RECT 69.730 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met1 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 3.625 -0.905 8.855 0.000 ;
+        RECT 12.035 -0.115 13.350 0.000 ;
+        RECT 69.540 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met2 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 25.895 -2.035 27.895 -0.115 ;
      LAYER met3 ;
        RECT -0.000 0.000 75.000 197.965 ;
      LAYER met4 ;
@@ -3333,11 +3481,19 @@ MACRO sky130_ef_io__vdda_lvc_pad
       LAYER met1 ;
        RECT -0.000 1.400 75.000 197.965 ;
         RECT 0.120 0.000 74.785 1.400 ;
+        RECT 16.655 -0.035 25.635 0.000 ;
+        RECT 26.210 -0.035 27.700 0.000 ;
+        RECT 28.270 -0.035 56.565 0.000 ;
       LAYER met2 ;
        RECT -0.000 1.400 75.000 197.965 ;
-        RECT 20.775 0.570 54.435 1.400 ;
-        RECT 20.775 0.000 34.160 0.570 ;
-        RECT 44.720 0.000 54.435 0.570 ;
+        RECT 20.775 0.570 54.715 1.400 ;
+        RECT 20.775 0.005 34.160 0.570 ;
+        RECT 44.720 0.005 54.715 0.570 ;
+        RECT 20.775 0.000 34.440 0.005 ;
+        RECT 20.925 -0.035 34.440 0.000 ;
+        RECT 44.440 0.000 54.715 0.005 ;
+        RECT 44.440 -0.035 53.535 0.000 ;
+        RECT 54.095 -0.035 54.715 0.000 ;
       LAYER met3 ;
        RECT -0.000 1.400 75.000 197.965 ;
         RECT 24.900 0.000 25.600 1.400 ;
@@ -3351,6 +3507,61 @@ MACRO sky130_ef_io__vdda_lvc_pad
         RECT 2.870 0.100 72.130 1.400 ;
   END
 END sky130_ef_io__vdda_lvc_pad
+
+#--------EOF---------
+
+MACRO sky130_ef_io__vddio_hvc_clamped_pad
+  CLASS PAD POWER ;
+  FOREIGN sky130_ef_io__vddio_hvc_clamped_pad ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 75.000 BY 197.965 ;
+  PIN VDDIO
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER met3 ;
+        RECT 50.390 -2.035 74.290 0.000 ;
+    END
+    PORT
+      LAYER met3 ;
+        RECT 0.495 -2.035 24.395 0.000 ;
+    END
+  END VDDIO
+
+  OBS
+      LAYER pwell ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 3.625 -0.970 11.155 0.000 ;
+      LAYER nwell ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 11.860 -1.350 70.965 0.000 ;
+      LAYER li1 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 0.610 -0.970 11.155 0.000 ;
+        RECT 12.035 -0.115 13.045 0.000 ;
+        RECT 69.730 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met1 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 3.625 -0.905 8.855 0.000 ;
+        RECT 12.035 -0.115 13.350 0.000 ;
+        RECT 69.540 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met2 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 0.495 -2.035 24.395 0.000 ;
+        RECT 25.895 -2.035 27.895 -0.115 ;
+        RECT 50.390 -2.035 74.290 0.000 ;
+      LAYER met3 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 25.895 -2.035 36.895 0.000 ;
+        RECT 37.890 -2.035 48.890 0.000 ;
+     LAYER met4 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+     LAYER met5 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+  END
+END sky130_ef_io__vddio_hvc_clamped_pad
 
 #--------EOF---------
 
@@ -3399,12 +3610,27 @@ MACRO sky130_ef_io__vddio_hvc_pad
   END VDDIO
 
   OBS
-     LAYER li1 ;
+      LAYER pwell ;
        RECT -0.000 0.000 75.000 197.965 ;
-     LAYER met1 ;
+        RECT 3.625 -0.970 11.155 0.000 ;
+      LAYER nwell ;
        RECT -0.000 0.000 75.000 197.965 ;
-     LAYER met2 ;
+        RECT 11.860 -1.350 70.965 0.000 ;
+      LAYER li1 ;
        RECT -0.000 0.000 75.000 197.965 ;
+        RECT 0.610 -0.970 11.155 0.000 ;
+        RECT 12.035 -0.115 13.045 0.000 ;
+        RECT 69.730 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met1 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 3.625 -0.905 8.855 0.000 ;
+        RECT 12.035 -0.115 13.350 0.000 ;
+        RECT 69.540 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met2 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 25.895 -2.035 27.895 -0.115 ;
      LAYER met3 ;
        RECT -0.000 0.000 75.000 197.965 ;
      LAYER met4 ;
@@ -3507,11 +3733,19 @@ MACRO sky130_ef_io__vddio_lvc_pad
       LAYER met1 ;
        RECT -0.000 1.400 75.000 197.965 ;
         RECT 0.120 0.000 74.785 1.400 ;
+        RECT 16.655 -0.035 25.635 0.000 ;
+        RECT 26.210 -0.035 27.700 0.000 ;
+        RECT 28.270 -0.035 56.565 0.000 ;
       LAYER met2 ;
        RECT -0.000 1.400 75.000 197.965 ;
-        RECT 20.775 0.570 54.435 1.400 ;
-        RECT 20.775 0.000 34.160 0.570 ;
-        RECT 44.720 0.000 54.435 0.570 ;
+        RECT 20.775 0.570 54.715 1.400 ;
+        RECT 20.775 0.005 34.160 0.570 ;
+        RECT 44.720 0.005 54.715 0.570 ;
+        RECT 20.775 0.000 34.440 0.005 ;
+        RECT 20.925 -0.035 34.440 0.000 ;
+        RECT 44.440 0.000 54.715 0.005 ;
+        RECT 44.440 -0.035 53.535 0.000 ;
+        RECT 54.095 -0.035 54.715 0.000 ;
       LAYER met3 ;
        RECT -0.000 1.400 75.000 197.965 ;
         RECT 24.900 0.000 25.600 1.400 ;
@@ -3525,6 +3759,56 @@ MACRO sky130_ef_io__vddio_lvc_pad
         RECT 2.870 0.100 72.130 1.400 ;
   END
 END sky130_ef_io__vddio_lvc_pad
+
+#--------EOF---------
+
+MACRO sky130_ef_io__vssa_hvc_clamped_pad
+  CLASS PAD POWER ;
+  FOREIGN sky130_ef_io__vssa_hvc_clamped_pad ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 75.000 BY 197.965 ;
+  PIN VSSA
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER met3 ;
+        RECT 0.495 -2.035 24.395 0.000 ;
+    END
+    PORT
+      LAYER met3 ;
+        RECT 50.390 -2.035 74.290 0.000 ;
+    END
+  END VSSA
+
+  OBS
+      LAYER nwell ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 11.860 -1.350 70.965 0.000 ;
+      LAYER li1 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 12.065 -0.145 13.045 0.000 ;
+        RECT 69.760 -0.145 70.650 0.000 ;
+        RECT 12.065 -1.035 70.650 -0.145 ;
+      LAYER met1 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 12.035 -0.115 13.350 0.000 ;
+        RECT 69.540 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met2 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 0.495 -2.035 24.395 0.000 ;
+        RECT 25.895 -2.035 27.895 -0.115 ;
+        RECT 50.390 -2.035 74.290 0.000 ;
+      LAYER met3 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 25.895 -2.035 36.895 0.000 ;
+        RECT 37.890 -2.035 48.890 0.000 ;
+     LAYER met4 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+     LAYER met5 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+  END
+END sky130_ef_io__vssa_hvc_clamped_pad
 
 #--------EOF---------
 
@@ -3573,12 +3857,22 @@ MACRO sky130_ef_io__vssa_hvc_pad
   END VSSA
 
   OBS
-     LAYER li1 ;
+      LAYER nwell ;
        RECT -0.000 0.000 75.000 197.965 ;
-     LAYER met1 ;
+        RECT 11.860 -1.350 70.965 0.000 ;
+      LAYER li1 ;
        RECT -0.000 0.000 75.000 197.965 ;
-     LAYER met2 ;
+        RECT 12.065 -0.145 13.045 0.000 ;
+        RECT 69.760 -0.145 70.650 0.000 ;
+        RECT 12.065 -1.035 70.650 -0.145 ;
+      LAYER met1 ;
        RECT -0.000 0.000 75.000 197.965 ;
+        RECT 12.035 -0.115 13.350 0.000 ;
+        RECT 69.540 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met2 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 25.895 -2.035 27.895 -0.115 ;
      LAYER met3 ;
        RECT -0.000 0.000 75.000 197.965 ;
      LAYER met4 ;
@@ -3681,11 +3975,19 @@ MACRO sky130_ef_io__vssa_lvc_pad
       LAYER met1 ;
        RECT -0.000 1.400 75.000 197.965 ;
         RECT 0.120 0.000 74.785 1.400 ;
+        RECT 16.655 -0.035 25.635 0.000 ;
+        RECT 26.210 -0.035 27.700 0.000 ;
+        RECT 28.270 -0.035 56.565 0.000 ;
       LAYER met2 ;
        RECT -0.000 1.400 75.000 197.965 ;
-        RECT 20.775 0.570 54.435 1.400 ;
-        RECT 20.775 0.000 34.160 0.570 ;
-        RECT 44.720 0.000 54.435 0.570 ;
+        RECT 20.775 0.570 54.715 1.400 ;
+        RECT 20.775 0.005 34.160 0.570 ;
+        RECT 44.720 0.005 54.715 0.570 ;
+        RECT 20.775 0.000 34.440 0.005 ;
+        RECT 20.925 -0.035 34.440 0.000 ;
+        RECT 44.440 0.000 54.715 0.005 ;
+        RECT 44.440 -0.035 53.535 0.000 ;
+        RECT 54.095 -0.035 54.715 0.000 ;
       LAYER met4 ;
        RECT -0.000 1.400 75.000 197.965 ;
         RECT 1.670 0.000 73.330 1.400 ;
@@ -3744,12 +4046,22 @@ MACRO sky130_ef_io__vssd_hvc_pad
   END VSSD
 
   OBS
-     LAYER li1 ;
+      LAYER nwell ;
        RECT -0.000 0.000 75.000 197.965 ;
-     LAYER met1 ;
+        RECT 11.860 -1.350 70.965 0.000 ;
+      LAYER li1 ;
        RECT -0.000 0.000 75.000 197.965 ;
-     LAYER met2 ;
+        RECT 12.065 -0.145 13.045 0.000 ;
+        RECT 69.760 -0.145 70.650 0.000 ;
+        RECT 12.065 -1.035 70.650 -0.145 ;
+      LAYER met1 ;
        RECT -0.000 0.000 75.000 197.965 ;
+        RECT 12.035 -0.115 13.350 0.000 ;
+        RECT 69.540 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met2 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 25.895 -2.035 27.895 -0.115 ;
      LAYER met3 ;
        RECT -0.000 0.000 75.000 197.965 ;
      LAYER met4 ;
@@ -3758,6 +4070,153 @@ MACRO sky130_ef_io__vssd_hvc_pad
        RECT -0.000 0.000 75.000 197.965 ;
   END
 END sky130_ef_io__vssd_hvc_pad
+
+#--------EOF---------
+
+MACRO sky130_ef_io__vssd_lvc_clamped2_pad
+  CLASS PAD POWER ;
+  FOREIGN sky130_ef_io__vssd_lvc_clamped2_pad ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 75.000 BY 197.965 ;
+  PIN VCCHIB
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER met5 ;
+        RECT 73.730 0.100 75.000 1.400 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 0.100 1.270 1.400 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 0.000 75.000 1.400 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 0.000 1.270 1.400 ;
+    END
+  END VCCHIB
+
+  PIN VSSD
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER met3 ;
+        RECT 50.755 -0.035 74.700 1.400 ;
+    END
+    PORT
+      LAYER met3 ;
+        RECT 0.500 -0.035 24.500 1.400 ;
+    END
+  END VSSD
+
+  OBS
+      LAYER li1 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.240 0.985 74.755 1.400 ;
+      LAYER met1 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.120 0.000 75.000 1.400 ;
+        RECT 16.655 -0.035 56.565 0.000 ;
+        RECT 20.925 -0.815 53.535 -0.035 ;
+        RECT 76.200 -0.815 85.935 1.400 ;
+        RECT 20.925 -6.535 85.935 -0.815 ;
+        RECT 20.925 -10.535 81.935 -6.535 ;
+      LAYER met2 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.500 0.000 75.000 1.400 ;
+        RECT 0.500 -0.035 20.495 0.000 ;
+        RECT 20.925 -0.035 53.535 0.000 ;
+        RECT 54.095 -0.035 74.700 0.000 ;
+      LAYER met3 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 24.900 0.000 50.355 1.400 ;
+        RECT 26.000 -0.035 36.880 0.000 ;
+        RECT 38.380 -0.035 49.255 0.000 ;
+      LAYER met4 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 1.670 0.000 73.330 1.400 ;
+      LAYER met5 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 2.870 0.100 72.130 1.400 ;
+  END
+END sky130_ef_io__vssd_lvc_clamped2_pad
+
+#--------EOF---------
+
+MACRO sky130_ef_io__vssd_lvc_clamped_pad
+  CLASS PAD POWER ;
+  FOREIGN sky130_ef_io__vssd_lvc_clamped_pad ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 75.000 BY 197.965 ;
+  PIN VCCHIB
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER met5 ;
+        RECT 73.730 0.100 75.000 1.400 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 0.100 1.270 1.400 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 0.000 75.000 1.400 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 0.000 1.270 1.400 ;
+    END
+  END VCCHIB
+
+  PIN VSSD
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER met3 ;
+        RECT 50.755 -0.035 74.700 1.400 ;
+    END
+    PORT
+      LAYER met3 ;
+        RECT 0.500 -0.035 24.500 1.400 ;
+    END
+  END VSSD
+
+  OBS
+      LAYER li1 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.240 0.985 74.755 1.400 ;
+      LAYER met1 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.120 0.000 75.000 1.400 ;
+        RECT 16.655 -0.035 56.565 0.000 ;
+        RECT 20.925 -0.815 53.535 -0.035 ;
+        RECT 76.200 -0.815 85.935 1.400 ;
+        RECT 20.925 -6.920 85.935 -0.815 ;
+        RECT 20.925 -10.920 81.935 -6.920 ;
+      LAYER met2 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.000 0.000 75.000 1.400 ;
+        RECT 0.500 -0.035 20.495 0.000 ;
+        RECT 20.925 -0.035 53.535 0.000 ;
+        RECT 54.095 -0.035 74.700 0.000 ;
+      LAYER met3 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 0.000 0.000 0.100 1.400 ;
+        RECT 24.900 0.000 50.355 1.400 ;
+        RECT 26.000 -0.035 36.880 0.000 ;
+        RECT 38.380 -0.035 49.255 0.000 ;
+      LAYER met4 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 1.670 0.000 73.330 1.400 ;
+      LAYER met5 ;
+       RECT -0.000 1.400 75.000 197.965 ;
+        RECT 2.870 0.100 72.130 1.400 ;
+  END
+END sky130_ef_io__vssd_lvc_clamped_pad
 
 #--------EOF---------
 
@@ -3852,11 +4311,19 @@ MACRO sky130_ef_io__vssd_lvc_pad
       LAYER met1 ;
        RECT -0.000 1.400 75.000 197.965 ;
         RECT 0.120 0.000 74.785 1.400 ;
+        RECT 16.655 -0.035 25.635 0.000 ;
+        RECT 26.210 -0.035 27.700 0.000 ;
+        RECT 28.270 -0.035 56.565 0.000 ;
       LAYER met2 ;
        RECT -0.000 1.400 75.000 197.965 ;
-        RECT 20.775 0.570 54.435 1.400 ;
-        RECT 20.775 0.000 34.160 0.570 ;
-        RECT 44.720 0.000 54.435 0.570 ;
+        RECT 20.775 0.570 54.715 1.400 ;
+        RECT 20.775 0.005 34.160 0.570 ;
+        RECT 44.720 0.005 54.715 0.570 ;
+        RECT 20.775 0.000 34.440 0.005 ;
+        RECT 20.925 -0.035 34.440 0.000 ;
+        RECT 44.440 0.000 54.715 0.005 ;
+        RECT 44.440 -0.035 53.535 0.000 ;
+        RECT 54.095 -0.035 54.715 0.000 ;
       LAYER met4 ;
        RECT -0.000 1.400 75.000 197.965 ;
         RECT 1.670 0.000 73.330 1.400 ;
@@ -3867,6 +4334,56 @@ MACRO sky130_ef_io__vssd_lvc_pad
        RECT -0.000 1.400 75.000 197.965 ;
   END
 END sky130_ef_io__vssd_lvc_pad
+
+#--------EOF---------
+
+MACRO sky130_ef_io__vssio_hvc_clamped_pad
+  CLASS PAD POWER ;
+  FOREIGN sky130_ef_io__vssio_hvc_clamped_pad ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 75.000 BY 197.965 ;
+  PIN VSSIO
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER met3 ;
+        RECT 0.495 -2.035 24.395 0.000 ;
+    END
+    PORT
+      LAYER met3 ;
+        RECT 50.390 -2.035 74.290 0.000 ;
+    END
+  END VSSIO
+
+  OBS
+      LAYER nwell ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 11.860 -1.350 70.965 0.000 ;
+      LAYER li1 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 12.065 -0.145 13.045 0.000 ;
+        RECT 69.760 -0.145 70.650 0.000 ;
+        RECT 12.065 -1.035 70.650 -0.145 ;
+      LAYER met1 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 12.035 -0.115 13.350 0.000 ;
+        RECT 69.540 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met2 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 0.495 -2.035 24.395 0.000 ;
+        RECT 25.895 -2.035 27.895 -0.115 ;
+        RECT 50.390 -2.035 74.290 0.000 ;
+      LAYER met3 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 25.895 -2.035 36.895 0.000 ;
+        RECT 37.890 -2.035 48.890 0.000 ;
+     LAYER met4 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+     LAYER met5 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+  END
+END sky130_ef_io__vssio_hvc_clamped_pad
 
 #--------EOF---------
 
@@ -3915,12 +4432,22 @@ MACRO sky130_ef_io__vssio_hvc_pad
   END VSSIO
 
   OBS
-     LAYER li1 ;
+      LAYER nwell ;
        RECT -0.000 0.000 75.000 197.965 ;
-     LAYER met1 ;
+        RECT 11.860 -1.350 70.965 0.000 ;
+      LAYER li1 ;
        RECT -0.000 0.000 75.000 197.965 ;
-     LAYER met2 ;
+        RECT 12.065 -0.145 13.045 0.000 ;
+        RECT 69.760 -0.145 70.650 0.000 ;
+        RECT 12.065 -1.035 70.650 -0.145 ;
+      LAYER met1 ;
        RECT -0.000 0.000 75.000 197.965 ;
+        RECT 12.035 -0.115 13.350 0.000 ;
+        RECT 69.540 -0.115 70.680 0.000 ;
+        RECT 12.035 -1.065 70.680 -0.115 ;
+      LAYER met2 ;
+       RECT -0.000 0.000 75.000 197.965 ;
+        RECT 25.895 -2.035 27.895 -0.115 ;
      LAYER met3 ;
        RECT -0.000 0.000 75.000 197.965 ;
      LAYER met4 ;
@@ -4023,11 +4550,19 @@ MACRO sky130_ef_io__vssio_lvc_pad
       LAYER met1 ;
        RECT -0.000 1.400 75.000 197.965 ;
         RECT 0.120 0.000 74.785 1.400 ;
+        RECT 16.655 -0.035 25.635 0.000 ;
+        RECT 26.210 -0.035 27.700 0.000 ;
+        RECT 28.270 -0.035 56.565 0.000 ;
       LAYER met2 ;
        RECT -0.000 1.400 75.000 197.965 ;
-        RECT 20.775 0.570 54.435 1.400 ;
-        RECT 20.775 0.000 34.160 0.570 ;
-        RECT 44.720 0.000 54.435 0.570 ;
+        RECT 20.775 0.570 54.715 1.400 ;
+        RECT 20.775 0.005 34.160 0.570 ;
+        RECT 44.720 0.005 54.715 0.570 ;
+        RECT 20.775 0.000 34.440 0.005 ;
+        RECT 20.925 -0.035 34.440 0.000 ;
+        RECT 44.440 0.000 54.715 0.005 ;
+        RECT 44.440 -0.035 53.535 0.000 ;
+        RECT 54.095 -0.035 54.715 0.000 ;
       LAYER met4 ;
        RECT -0.000 1.400 75.000 197.965 ;
         RECT 1.670 0.000 73.330 1.400 ;
