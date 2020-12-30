@@ -1349,6 +1349,9 @@ style gdsii
 #----------------------------------------------------------------
 # FILLBLOCK
 #----------------------------------------------------------------
+ layer FILLOBSFOM  obsactive
+	calma	22 24
+
  layer FILLOBSM1 fillblock,fillblock4
  	calma 	62 24
 
@@ -1766,12 +1769,12 @@ style wafflefill variants (),(tiled)
 #---------------------------------------------------
 # Diffusion and poly keep-out areas
 #---------------------------------------------------
- templayer      obstruct_fom alldiff,allpoly,fomfill,polyfill,obspoly,obsactive
+ templayer      obstruct_fom alldiff,allpoly,fomfill,polyfill,obsactive
 	or	rpw,pnp,npn
         grow    500
 	or	well_guardband
 
- templayer      obstruct_poly alldiff,allpolyfomfill,polyfill,obspoly,obsactive
+ templayer      obstruct_poly alldiff,allpoly,fomfill,polyfill,obsactive
 	or	rpw,pnp,npn
 	grow	1000
 
@@ -2146,6 +2149,7 @@ style  sky130 variants (),(vendor)
  ignore HVNTM
  ignore POLYMOD
  ignore LOWTAPDENSITY
+ ignore FILLOBSPOLY
 
  layer pnp NWELL,WELLTXT,WELLPIN
  and PNPID
@@ -3580,6 +3584,8 @@ style  sky130 variants (),(vendor)
  layer fillblock  FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4
  labels FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4
 
+ layer obsactive  FILLOBSFOM
+
 # MOS Varactor
 
  layer var POLY
@@ -3755,7 +3761,10 @@ style  sky130 variants (),(vendor)
  calma FILLOBSM1  62  24
  calma FILLOBSM2  105 52
  calma FILLOBSM3  107 24
- calma FILLOBSM4  112 4
+ calma FILLOBSM4  112  4
+ calma FILLOBSFOM  22 24
+ calma FILLOBSPOLY 33 24
+
  calma FOMFILL	  65  28
  calma POLYFILL	  66  28
  calma MET1FILL	  68  28
