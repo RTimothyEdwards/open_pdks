@@ -242,7 +242,7 @@ proc sky130::mcon_draw {{dir default}} {
       return
    }
    suspendall
-   paint lic
+   paint mcon
    pushbox
    if {($w < $h) || ($dir == "vert")} {
        box grow e 0.03um
