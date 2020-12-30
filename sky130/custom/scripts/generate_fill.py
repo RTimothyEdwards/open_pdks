@@ -141,9 +141,10 @@ if __name__ == '__main__':
         print('        flatten -dobox -nolabels ' + project + '_fill_pattern_${x}_$y', file=ofile)
         print('        load ' + project + '_fill_pattern_${x}_$y', file=ofile)
 
-        # Remove any GDS_FILE reference
+        # Remove any GDS_FILE reference (there should not be any?)
         print('        property GDS_FILE ""', file=ofile)
         # Set boundary using comment layer, to the size of the step box
+	# This corresponds to the "topbox" rule in the wafflefill(tiled) style
         print('        box values $xlo $ylo $xhi $yhi', file=ofile)
         print('        paint comment', file=ofile)
         print('        puts stdout "Writing GDS. . . "', file=ofile)
@@ -161,15 +162,15 @@ if __name__ == '__main__':
         print('}', file=ofile)
 
         # Now create simple "fake" views of all the tiles.
-        print('gds readonly true')
-        print('gds rescale false')
+        print('gds readonly true', file=ofile)
+        print('gds rescale false', file=ofile)
         print('for {set y 0} {$y < $ytiles} {incr y} {', file=ofile)
         print('    for {set x 0} {$x < $xtiles} {incr x} {', file=ofile)
         print('        set xlo [expr $xbase + $x * $stepwidth]', file=ofile)
         print('        set ylo [expr $ybase + $y * $stepheight]', file=ofile)
         print('        set xhi [expr $xlo + $stepwidth]', file=ofile)
         print('        set yhi [expr $ylo + $stepheight]', file=ofile)
-        print('        load ' + project + '_fill_pattern_${x}_$y', file=ofile)
+        print('        load ' + project + '_fill_pattern_${x}_$y -quiet', file=ofile)
         print('        box values $xlo $ylo $xhi $yhi', file=ofile)
         print('        paint comment', file=ofile)
         print('        property FIXED_BBOX "$xlo $ylo $xhi $yhi"', file=ofile)
@@ -179,7 +180,7 @@ if __name__ == '__main__':
         print('}', file=ofile)
 
         # Now tile everything back together
-        print('load ' + project + '_fill_pattern', file=ofile)
+        print('load ' + project + '_fill_pattern -quiet', file=ofile)
         print('for {set y 0} {$y < $ytiles} {incr y} {', file=ofile)
         print('    for {set x 0} {$x < $xtiles} {incr x} {', file=ofile)
         print('        box values 0 0 0 0', file=ofile)
