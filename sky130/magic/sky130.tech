@@ -186,14 +186,14 @@ types
   active pdiffc,pdcontact,pdc
   active mvndiffc,mvndcontact,mvndc
   active mvpdiffc,mvpdcontact,mvpdc
-  active psubdiff,psubstratepdiff,ppdiff,ppd,psd
-  active nsubdiff,nsubstratendiff,nndiff,nnd,nsd
-  active mvpsubdiff,mvpsubstratepdiff,mvppdiff,mvppd,mvpsd
-  active mvnsubdiff,mvnsubstratendiff,mvnndiff,mvnnd,mvnsd
-  active psubdiffcont,psubstratepcontact,psc
-  active nsubdiffcont,nsubstratencontact,nsc
-  active mvpsubdiffcont,mvpsubstratepcontact,mvpsc
-  active mvnsubdiffcont,mvnsubstratencontact,mvnsc
+  active psubdiff,psubstratepdiff,ppdiff,ppd,psd,ptap
+  active nsubdiff,nsubstratendiff,nndiff,nnd,nsd,ntap
+  active mvpsubdiff,mvpsubstratepdiff,mvppdiff,mvppd,mvpsd,mvptap
+  active mvnsubdiff,mvnsubstratendiff,mvnndiff,mvnnd,mvnsd,mvntap
+  active psubdiffcont,psubstratepcontact,psc,ptapc
+  active nsubdiffcont,nsubstratencontact,nsc,ntapc
+  active mvpsubdiffcont,mvpsubstratepcontact,mvpsc,mvptapc
+  active mvnsubdiffcont,mvnsubstratencontact,mvnsc,mvntapc
  -active obsactive
  -active mvobsactive
 
@@ -235,9 +235,9 @@ types
   locali locali,li1,li
  -locali corelocali,coreli1,coreli
   locali rlocali,rli1,rli
-  locali viali,vial,mcon,lic,licon,m1c,v0
+  locali viali,vial,mcon,m1c,v0
  -locali obsli1,obsli
- -locali obsli1c,obslic,obslicon
+ -locali obsli1c,obsmcon
 
 # Metal 1
   metal1 metal1,m1,met1
@@ -331,8 +331,8 @@ contact
   mvndic  mvndiode  locali
   mvpdic  mvpdiode  locali
 
-  lic locali metal1
-  obslic obsli metal1
+  mcon locali metal1
+  obsmcon obsli metal1
 
   via1   metal1 metal2
   via2   metal2 metal3
@@ -539,9 +539,9 @@ styles
   locali    metal1
   coreli    metal1
   rli       metal1         poly_resist_stripes
-  lic	    metal1	   metal2 via1arrow
+  mcon	    metal1	   metal2 via1arrow
   obsli     metal1
-  obslic    metal1	   metal2 via1arrow
+  obsmcon   metal1	   metal2 via1arrow
 
   metal1    metal2
   m1fill    metal2
@@ -623,8 +623,8 @@ compose
   compose  mvpfet  poly  mvpdiff
   compose  mvvar   poly  mvnsd
 
-  paint	 obslic	 locali	 via1
-  paint	 obslic	 obsm1	 obsli,obsm1
+  paint	 obsmcon locali	 via1
+  paint	 obsmcon obsm1	 obsli,obsm1
   
   paint  ndc     nwell  pdc
   paint  nfet    nwell  pfet
@@ -670,7 +670,7 @@ connect
   *nwell,*nsd,*mvnsd,dnwell,pnp *nwell,*nsd,*mvnsd,dnwell,pnp
   pwell,*psd,*mvpsd,npn  pwell,*psd,*mvpsd,npn
   *li,coreli	*li,coreli
-  *m1,m1fill,obslic	*m1,m1fill,obslic
+  *m1,m1fill,obsmcon	*m1,m1fill,obsmcon
   *m2,m2fill	*m2,m2fill
   *m3,m3fill	*m3,m3fill
 #ifdef METAL5
@@ -796,43 +796,43 @@ style gdsii
 	calma	65 28
 
 #----------------------------------------------------------------
-# PPLUS, NPLUS (PSDM, NSDM)
+# PSDM, NSDM (PPLUS, NPLUS implants)
 #----------------------------------------------------------------
 
- templayer basePPLUS pdiffres,mvpdiffres
+ templayer basePSDM pdiffres,mvpdiffres
 	grow	15
 	or	xhrpoly,uhrpoly,xpc
 	grow	110
 	bloat-or allpactivetap * 125 allnactivenontap 0
 	bloat-or allpactivenontap * 125 allnactivetap 0
 
- templayer baseNPLUS ndiffres,mvndiffres
+ templayer baseNSDM ndiffres,mvndiffres
  	grow	125
 	bloat-or allnactivetap * 125 allpactivenontap 0
 	bloat-or allnactivenontap * 125 allpactivetap 0
 
- templayer extendPPLUS  basePPLUS,CELLRING
+ templayer extendPSDM  basePSDM,CELLRING
 	bridge	380 380
-	and-not baseNPLUS
+	and-not baseNSDM
 	and-not	CELLRING
 
- layer PPLUS basePPLUS,extendPPLUS 
+ layer PSDM basePSDM,extendPSDM 
 	grow	185
 	shrink	185
 	close   265000
-	mask-hints PPLUS
+	mask-hints PSDM
 	calma	94 20
 
- templayer extendNPLUS  baseNPLUS,CELLRING
+ templayer extendNSDM  baseNSDM,CELLRING
 	bridge	380 380
-	and-not basePPLUS
+	and-not basePSDM
 	and-not	CELLRING
 
- layer NPLUS baseNPLUS,extendNPLUS
+ layer NSDM baseNSDM,extendNSDM
 	grow	185
 	shrink	185
  	close   265000
-	mask-hints NPLUS
+	mask-hints NSDM
  	calma	93 44
 
 #----------------------------------------------------------------
@@ -1004,7 +1004,7 @@ style gdsii
 	calma	66 28
 
 #----------------------------------------------------------------
-# THKOX (HVI) (includes rules NWELL 8-11 and DIFFTAP 14-26)
+# HVI (includes rules NWELL 8-11 and DIFFTAP 14-26)
 #----------------------------------------------------------------
 
  templayer thkox_area 	alldiffmv,mvvar
@@ -1022,18 +1022,18 @@ style gdsii
 	# (HVI min width rule is 0.6 but CNTM min width rule is 0.84um)
 	grow-min 840
 
- templayer baseTHKOX 	thkox_area,small_ptap_mv
+ templayer baseHVI 	thkox_area,small_ptap_mv
 	bridge	700 600
  	grow 	345
  	shrink 	345
 
- templayer extendTHKOX	baseTHKOX,CELLRING
+ templayer extendHVI	baseHVI,CELLRING
  	grow 	345
  	shrink 	345
 	and-not	CELLRING
 
- layer THKOX	baseTHKOX,extendTHKOX
-	mask-hints THKOX
+ layer HVI	baseHVI,extendHVI
+	mask-hints HVI
  	calma 	75 20
 
 #----------------------------------------------------------------
@@ -1133,7 +1133,7 @@ style gdsii
 #----------------------------------------------------------------
 # MCON
 #----------------------------------------------------------------
- layer MCON lic
+ layer MCON mcon
  	squares-grid 0 170 190
  	calma 	67 44
 
@@ -1628,11 +1628,11 @@ style drc
  shrink  345
  and-not hvntm_block
 
- templayer m1_small_hole allm1,obsm1,obslic
+ templayer m1_small_hole allm1,obsm1,obsmcon
  close   140000
 
  templayer m1_hole_empty m1_small_hole
- and-not allm1,obsm1,obslic
+ and-not allm1,obsm1,obsmcon
 
  templayer m2_small_hole allm2,obsm2
  close   140000
@@ -1697,7 +1697,7 @@ style paint
  #    cif ostyle paint
  #    cif paint m1strap comment
  #    cif paint m1strap m1
- #    cif paint listrap licon
+ #    cif paint listrap viali
  #    erase comment
 
  templayer m1strap *li
@@ -2197,11 +2197,11 @@ style  sky130 variants (),(vendor)
  templayer ndiffarea DIFF,DIFFTXT,DIFFPIN
  and-not POLY
  and-not NWELL
- and-not PPLUS
+ and-not PSDM
  and-not DIODE
  and-not DIFFRES
- and-not THKOX
- and NPLUS
+ and-not HVI
+ and NSDM
  and-not CORELI
  copyup ndifcheck
  labels DIFF
@@ -2222,11 +2222,11 @@ style  sky130 variants (),(vendor)
  templayer mvndiffarea DIFF,DIFFTXT,DIFFPIN
  and-not POLY
  and-not NWELL
- and-not PPLUS
+ and-not PSDM
  and-not DIODE
  and-not DIFFRES
- and THKOX
- and NPLUS
+ and HVI
+ and NSDM
  copyup ndifcheck
  labels DIFF
  labels DIFFTXT text
@@ -2244,43 +2244,43 @@ style  sky130 variants (),(vendor)
  copyup mvndifcheck
 
  layer ndiode DIFF
- and NPLUS
+ and NSDM
  and DIODE
  and-not NWELL
  and-not POLY
- and-not PPLUS
- and-not THKOX
+ and-not PSDM
+ and-not HVI
  and-not LVTN
  labels DIFF
 
  layer ndiodelvt DIFF
- and NPLUS
+ and NSDM
  and DIODE
  and-not NWELL
  and-not POLY
- and-not PPLUS
- and-not THKOX
+ and-not PSDM
+ and-not HVI
  and LVTN
  labels DIFF
 
  templayer ndiodearea DIODE
- and NPLUS
- and-not THKOX
+ and NSDM
+ and-not HVI
  and-not NWELL
- copyup DIODE,NPLUS
+ copyup DIODE,NSDM
 
  layer ndiffres DIFFRES
- and NPLUS
- and-not THKOX
+ and NSDM
+ and-not HVI
  labels DIFF
 
  templayer pdiffarea DIFF,DIFFTXT,DIFFPIN
  and-not POLY
  and NWELL
- and-not NPLUS
+ and-not NSDM
  and-not DIODE
- and-not THKOX
- and PPLUS
+ and-not HVI
+ and PSDM
  copyup pdifcheck
  labels DIFF 
  variants (vendor)
@@ -2293,42 +2293,42 @@ style  sky130 variants (),(vendor)
  layer pdiff pdiffarea
 
  layer mvndiode DIFF
- and NPLUS
+ and NSDM
  and DIODE
- and THKOX
+ and HVI
  and-not POLY
- and-not PPLUS
+ and-not PSDM
  and-not LVTN
  labels DIFF
 
  layer nndiode DIFF
- and NPLUS
+ and NSDM
  and DIODE
- and THKOX
+ and HVI
  and-not POLY
- and-not PPLUS
+ and-not PSDM
  and LVTN
  labels DIFF
 
  templayer mvndiodearea DIODE
- and NPLUS
- and THKOX
+ and NSDM
+ and HVI
  and-not NWELL
- copyup DIODE,NPLUS
+ copyup DIODE,NSDM
 
  layer mvndiffres DIFFRES
- and NPLUS
- and THKOX
+ and NSDM
+ and HVI
  labels DIFF
 
  templayer mvpdiffarea DIFF,DIFFTXT,DIFFPIN
  and-not POLY
  and NWELL
- and-not NPLUS
- and THKOX
+ and-not NSDM
+ and HVI
  and-not DIODE
  and-not DIFFRES
- and PPLUS
+ and PSDM
  copyup mvpdifcheck
  labels DIFF
  variants (vendor)
@@ -2345,45 +2345,45 @@ style  sky130 variants (),(vendor)
  copyup pdifcheck
 
  layer pdiode DIFF
- and PPLUS
+ and PSDM
  and-not POLY
- and-not NPLUS
- and-not THKOX
+ and-not NSDM
+ and-not HVI
  and-not LVTN
  and-not HVTP
  and DIODE
  labels DIFF
 
  layer pdiodelvt DIFF
- and PPLUS
+ and PSDM
  and-not POLY
- and-not NPLUS
- and-not THKOX
+ and-not NSDM
+ and-not HVI
  and LVTN
  and-not HVTP
  and DIODE
  labels DIFF
 
  layer pdiodehvt DIFF
- and PPLUS
+ and PSDM
  and-not POLY
- and-not NPLUS
- and-not THKOX
+ and-not NSDM
+ and-not HVI
  and-not LVTN
  and HVTP
  and DIODE
  labels DIFF
 
  templayer pdiodearea DIODE
- and PPLUS
- and-not THKOX
- copyup DIODE,PPLUS
+ and PSDM
+ and-not HVI
+ copyup DIODE,PSDM
 
  # Define pfet areas as known pdiff, regardless of the presence of a well.
 
  templayer pfetarea DIFF
- and-not NPLUS
- and-not THKOX
+ and-not NSDM
+ and-not HVI
  and POLY
 
  layer pfet pfetarea
@@ -2438,25 +2438,25 @@ style  sky130 variants (),(vendor)
  copyup mvpdifcheck
 
  layer mvpdiode DIFF
- and PPLUS
+ and PSDM
  and-not POLY
- and-not NPLUS
- and THKOX
+ and-not NSDM
+ and HVI
  and DIODE
  labels DIFF
 
  templayer mvpdiodearea DIODE
- and PPLUS
- and THKOX
- copyup DIODE,PPLUS
+ and PSDM
+ and HVI
+ copyup DIODE,PSDM
 
  # Define pfet areas as known pdiff,
  # regardless of the presence of a
  # well.
 
  templayer mvpfetarea DIFF
- and-not NPLUS
- and THKOX
+ and-not NSDM
+ and HVI
  and POLY
 
  layer mvpfet mvpfetarea
@@ -2468,9 +2468,9 @@ style  sky130 variants (),(vendor)
  labels DIFF
 
  layer pdiff DIFF,DIFFTXT,DIFFPIN
- and-not NPLUS
+ and-not NSDM
  and-not POLY
- and-not THKOX
+ and-not HVI
  and-not DIODE
  and-not DIFFRES
  labels DIFF
@@ -2482,16 +2482,16 @@ style  sky130 variants (),(vendor)
  labels DIFFPIN port
 
  layer pdiffres DIFFRES
- and PPLUS
+ and PSDM
  and NWELL
- and-not THKOX
+ and-not HVI
  labels DIFF
 
  layer nfet DIFF
  and POLY
- and-not PPLUS
- and NPLUS
- and-not THKOX
+ and-not PSDM
+ and NSDM
+ and-not HVI
  and-not LVTN
  and-not SONOS
  and-not STDCELL
@@ -2500,10 +2500,10 @@ style  sky130 variants (),(vendor)
 
  layer scnfet DIFF
  and POLY
- and-not PPLUS
- and NPLUS
+ and-not PSDM
+ and NSDM
  and-not NWELL
- and-not THKOX
+ and-not HVI
  and-not LVTN
  and-not SONOS
  and STDCELL
@@ -2511,8 +2511,8 @@ style  sky130 variants (),(vendor)
 
  layer npass DIFF
  and POLY
- and-not PPLUS
- and NPLUS
+ and-not PSDM
+ and NSDM
  and-not NWELL
  and COREID
  # Shrink-grow operation eliminates the smaller npass device
@@ -2522,8 +2522,8 @@ style  sky130 variants (),(vendor)
 
  layer npd DIFF
  and POLY
- and-not PPLUS
- and NPLUS
+ and-not PSDM
+ and NSDM
  and-not NWELL
  and COREID
  # Shrink-grow operation eliminates the smaller npass device
@@ -2533,28 +2533,28 @@ style  sky130 variants (),(vendor)
 
  layer nfetlvt DIFF
  and POLY
- and-not PPLUS
- and NPLUS
- and-not THKOX
+ and-not PSDM
+ and NSDM
+ and-not HVI
  and LVTN
  and-not SONOS
  labels DIFF
 
  layer nsonos DIFF
  and POLY
- and-not PPLUS
- and NPLUS
- and-not THKOX
+ and-not PSDM
+ and NSDM
+ and-not HVI
  and LVTN
  and SONOS
  labels DIFF
 
  templayer nsdarea TAP
- and NPLUS
+ and NSDM
  and NWELL
  and-not POLY
- and-not PPLUS
- and-not THKOX
+ and-not PSDM
+ and-not HVI
  and-not CORELI
  copyup nsubcheck
 
@@ -2562,14 +2562,14 @@ style  sky130 variants (),(vendor)
  labels TAP
 
  layer nsd TAP,TAPPIN
- and NPLUS
+ and NSDM
  and-not POLY
- and-not THKOX
+ and-not HVI
  labels TAP
  labels TAPPIN port
 
  layer corenvar TAP
- and NPLUS
+ and NSDM
  and POLY
  and COREID
  labels TAP
@@ -2582,11 +2582,11 @@ style  sky130 variants (),(vendor)
  copyup nsubcheck
 
  templayer psdarea TAP
- and PPLUS
+ and PSDM
  and-not NWELL
  and-not POLY
- and-not NPLUS
- and-not THKOX
+ and-not NSDM
+ and-not HVI
  and-not pfetexpand
  copyup psubcheck
 
@@ -2594,14 +2594,14 @@ style  sky130 variants (),(vendor)
  labels TAP
 
  layer psd TAP,TAPPIN
- and PPLUS
+ and PSDM
  and-not POLY
- and-not THKOX
+ and-not HVI
  labels TAP
  labels TAPPIN port
 
  layer corepvar TAP
- and PPLUS
+ and PSDM
  and POLY
  and COREID
  labels TAP
@@ -2610,9 +2610,9 @@ style  sky130 variants (),(vendor)
  grow 500
 
  layer mvpdiff DIFF,DIFFTXT,DIFFPIN
- and-not NPLUS
+ and-not NSDM
  and-not POLY
- and THKOX
+ and HVI
  and mvpfetexpand
  labels DIFF
  variants (vendor)
@@ -2623,42 +2623,42 @@ style  sky130 variants (),(vendor)
  labels DIFFPIN port
 
  layer mvpdiffres DIFFRES
- and PPLUS
+ and PSDM
  and NWELL
- and THKOX
+ and HVI
  and-not mvrdpioedge
  labels DIFF
 
  templayer mvnfetarea DIFF
  and POLY
- and-not PPLUS
- and NPLUS
+ and-not PSDM
+ and NSDM
  and-not LVTN
- and THKOX
+ and HVI
  grow 350
 
  templayer mvnnfetarea DIFF,TAP
  and POLY
- and-not PPLUS
- and NPLUS
+ and-not PSDM
+ and NSDM
  and LVTN
- and THKOX
+ and HVI
  and-not mvnfetarea
 
  layer mvnfetesd DIFF
  and POLY
- and-not PPLUS
- and NPLUS
- and THKOX
+ and-not PSDM
+ and NSDM
+ and HVI
  and ESDID
  and-not mvnnfetarea
  labels DIFF
 
  layer mvnfet DIFF
  and POLY
- and-not PPLUS
- and NPLUS
- and THKOX
+ and-not PSDM
+ and NSDM
+ and HVI
  and-not ESDID
  and-not mvnnfetarea
  labels DIFF
@@ -2667,19 +2667,19 @@ style  sky130 variants (),(vendor)
  labels DIFF
 
  templayer mvnsdarea TAP
- and NPLUS
+ and NSDM
  and NWELL
  and-not POLY
- and-not PPLUS
- and THKOX
+ and-not PSDM
+ and HVI
  copyup mvnsubcheck
 
  layer mvnsd mvnsdarea
  labels TAP
 
  layer mvnsd TAP,TAPPIN
- and NPLUS
- and THKOX
+ and NSDM
+ and HVI
  labels TAP
  labels TAPPIN port
 
@@ -2691,11 +2691,11 @@ style  sky130 variants (),(vendor)
  copyup mvnsubcheck
 
  templayer mvpsdarea DIFF
- and PPLUS
+ and PSDM
  and-not NWELL
  and-not POLY
- and-not NPLUS
- and THKOX
+ and-not NSDM
+ and HVI
  and-not mvpfetexpand
  copyup mvpsubcheck
 
@@ -2703,8 +2703,8 @@ style  sky130 variants (),(vendor)
  labels DIFF
 
  layer mvpsd TAP,TAPPIN
- and PPLUS
- and THKOX
+ and PSDM
+ and HVI
  labels TAP
  labels TAPPIN port
 
@@ -2719,33 +2719,33 @@ style  sky130 variants (),(vendor)
  copyup mvpsubcheck
 
  layer psd TAP
- and-not PPLUS
- and-not NPLUS
+ and-not PSDM
+ and-not NSDM
  and-not POLY
- and-not THKOX
+ and-not HVI
  and-not pfetexpand
  and psdexpand
 
  layer nsd TAP
- and-not PPLUS
- and-not NPLUS
+ and-not PSDM
+ and-not NSDM
  and-not POLY
- and-not THKOX
+ and-not HVI
  and nsdexpand
 
  layer mvpsd TAP
- and-not PPLUS
- and-not NPLUS
+ and-not PSDM
+ and-not NSDM
  and-not POLY
- and THKOX
+ and HVI
  and-not mvpfetexpand
  and mvpsdexpand
 
  layer mvnsd TAP
- and-not PPLUS
- and-not NPLUS
+ and-not PSDM
+ and-not NSDM
  and-not POLY
- and THKOX
+ and HVI
  and mvnsdexpand
 
  templayer hresarea POLY
@@ -2757,11 +2757,11 @@ style  sky130 variants (),(vendor)
  grow 3000
 
  templayer diffresarea DIFFRES
- and-not THKOX
+ and-not HVI
  grow 3000
 
  templayer mvdiffresarea DIFFRES
- and THKOX
+ and HVI
  grow 3000
 
  templayer resarea diffresarea,mvdiffresarea,hresarea,uresarea
@@ -2769,21 +2769,21 @@ style  sky130 variants (),(vendor)
  layer pfet POLY
  and DIFF
  and diffresarea
- and-not NPLUS
+ and-not NSDM
  and-not STDCELL
 
  layer scpfet POLY
  and DIFF
  and diffresarea
  and-not HVTP
- and-not NPLUS
+ and-not NSDM
  and STDCELL
 
  layer scpfethvt POLY
  and DIFF
  and diffresarea
  and HVTP
- and-not NPLUS
+ and-not NSDM
  and STDCELL
 
  templayer xpolyterm RPM,URPM
@@ -2831,7 +2831,7 @@ style  sky130 variants (),(vendor)
  and POLYRES
  and RPM
  and-not URPM
- and PPLUS
+ and PSDM
  and NPC
  and-not xpolyterm
  labels POLY
@@ -2846,10 +2846,10 @@ style  sky130 variants (),(vendor)
 
  templayer ndcbase CONT
  and DIFF
- and NPLUS
+ and NSDM
  and-not NWELL
  and LI
- and-not THKOX
+ and-not HVI
 
  layer ndc ndcbase
  grow 85
@@ -2861,10 +2861,10 @@ style  sky130 variants (),(vendor)
 
  templayer nscbase CONT
  and DIFF,TAP
- and NPLUS
+ and NSDM
  and NWELL
  and LI
- and-not THKOX
+ and-not HVI
 
  layer nsc nscbase
  grow 85
@@ -2876,10 +2876,10 @@ style  sky130 variants (),(vendor)
 
  templayer pdcbase CONT
  and DIFF
- and PPLUS
+ and PSDM
  and NWELL
  and LI
- and-not THKOX
+ and-not HVI
 
  layer pdc pdcbase
  grow 85
@@ -2891,10 +2891,10 @@ style  sky130 variants (),(vendor)
 
  templayer pdcnowell CONT
  and DIFF
- and PPLUS
+ and PSDM
  and pfetexpand
  and LI
- and-not THKOX
+ and-not HVI
 
  layer pdc pdcnowell
  grow 85
@@ -2906,11 +2906,11 @@ style  sky130 variants (),(vendor)
 
  templayer pscbase CONT
  and DIFF,TAP
- and PPLUS
+ and PSDM
  and-not NWELL
  and-not pfetexpand
  and LI
- and-not THKOX
+ and-not HVI
 
  layer psc pscbase
  grow 85
@@ -2936,11 +2936,11 @@ style  sky130 variants (),(vendor)
 
  templayer ndicbase CONT
  and DIFF
- and NPLUS
+ and NSDM
  and DIODE
  and-not POLY
- and-not PPLUS
- and-not THKOX
+ and-not PSDM
+ and-not HVI
  and-not LVTN
 
  layer ndic ndicbase
@@ -2953,11 +2953,11 @@ style  sky130 variants (),(vendor)
 
  templayer ndilvtcbase CONT
  and DIFF
- and NPLUS
+ and NSDM
  and DIODE
  and-not POLY
- and-not PPLUS
- and-not THKOX
+ and-not PSDM
+ and-not HVI
  and LVTN
 
  layer ndilvtc ndilvtcbase
@@ -2970,11 +2970,11 @@ style  sky130 variants (),(vendor)
 
  templayer pdicbase CONT
  and DIFF
- and PPLUS
+ and PSDM
  and DIODE
  and-not POLY
- and-not NPLUS
- and-not THKOX
+ and-not NSDM
+ and-not HVI
  and-not LVTN
  and-not HVTP
 
@@ -2988,11 +2988,11 @@ style  sky130 variants (),(vendor)
 
  templayer pdilvtcbase CONT
  and DIFF
- and PPLUS
+ and PSDM
  and DIODE
  and-not POLY
- and-not NPLUS
- and-not THKOX
+ and-not NSDM
+ and-not HVI
  and LVTN
  and-not HVTP
 
@@ -3006,11 +3006,11 @@ style  sky130 variants (),(vendor)
 
  templayer pdihvtcbase CONT
  and DIFF
- and PPLUS
+ and PSDM
  and DIODE
  and-not POLY
- and-not NPLUS
- and-not THKOX
+ and-not NSDM
+ and-not HVI
  and-not LVTN
  and HVTP
 
@@ -3024,10 +3024,10 @@ style  sky130 variants (),(vendor)
 
  templayer mvndcbase CONT
  and DIFF
- and NPLUS
+ and NSDM
  and-not NWELL
  and LI
- and THKOX
+ and HVI
 
  layer mvndc mvndcbase
  grow 85
@@ -3039,10 +3039,10 @@ style  sky130 variants (),(vendor)
 
  templayer mvnscbase CONT
  and DIFF,TAP
- and NPLUS
+ and NSDM
  and NWELL
  and LI
- and THKOX
+ and HVI
 
  layer mvnsc mvnscbase
  grow 85
@@ -3054,10 +3054,10 @@ style  sky130 variants (),(vendor)
 
  templayer mvpdcbase CONT
  and DIFF
- and PPLUS
+ and PSDM
  and NWELL
  and LI
- and THKOX
+ and HVI
 
  layer mvpdc mvpdcbase
  grow 85
@@ -3069,10 +3069,10 @@ style  sky130 variants (),(vendor)
 
  templayer mvpdcnowell CONT
  and DIFF
- and PPLUS
+ and PSDM
  and mvpfetexpand
  and MET1
- and THKOX
+ and HVI
 
  layer mvpdc mvpdcnowell
  grow 85
@@ -3084,11 +3084,11 @@ style  sky130 variants (),(vendor)
 
  templayer mvpscbase CONT
  and DIFF,TAP
- and PPLUS
+ and PSDM
  and-not NWELL
  and-not mvpfetexpand
  and LI
- and THKOX
+ and HVI
 
  layer mvpsc mvpscbase
  grow 85
@@ -3100,12 +3100,12 @@ style  sky130 variants (),(vendor)
 
  templayer mvndicbase CONT
  and DIFF
- and NPLUS
+ and NSDM
  and DIODE
  and-not POLY
- and-not PPLUS
+ and-not PSDM
  and-not LVTN
- and THKOX
+ and HVI
 
  layer mvndic mvndicbase
  grow 85
@@ -3117,12 +3117,12 @@ style  sky130 variants (),(vendor)
 
  templayer nndicbase CONT
  and DIFF
- and NPLUS
+ and NSDM
  and DIODE
  and-not POLY
- and-not PPLUS
+ and-not PSDM
  and LVTN
- and THKOX
+ and HVI
 
  layer nndic nndicbase
  grow 85
@@ -3134,11 +3134,11 @@ style  sky130 variants (),(vendor)
 
  templayer mvpdicbase CONT
  and DIFF
- and PPLUS
+ and PSDM
  and DIODE
  and-not POLY
- and-not NPLUS
- and THKOX
+ and-not NSDM
+ and HVI
 
  layer mvpdic mvpdicbase
  grow 85
@@ -3180,7 +3180,7 @@ style  sky130 variants (),(vendor)
  and LIRES,LISHORT
  labels LIRES,LISHORT
 
- layer lic MCON
+ layer mcon MCON
  grow 95
  shrink 95
  shrink 85
@@ -3365,18 +3365,18 @@ style  sky130 variants (),(vendor)
 #endif
 
  # Find diffusion not covered in
- # NPLUS or PPLUS and pull it into
+ # NSDM or PSDM and pull it into
  # the next layer up
 
  templayer gentrans DIFF
- and-not PPLUS
- and-not NPLUS
+ and-not PSDM
+ and-not NSDM
  and POLY
  copyup DIFF,POLY
 
  templayer gendiff DIFF,TAP
- and-not PPLUS
- and-not NPLUS
+ and-not PSDM
+ and-not NSDM
  and-not POLY
  and-not COREID
  copyup DIFF
@@ -3386,8 +3386,8 @@ style  sky130 variants (),(vendor)
  templayer ndiccopy CONT
  and LI
  and DIODE
- and NPLUS
- and-not THKOX
+ and NSDM
+ and-not HVI
 
  layer ndic ndiccopy
  grow 85
@@ -3400,8 +3400,8 @@ style  sky130 variants (),(vendor)
  templayer mvndiccopy CONT
  and LI
  and DIODE
- and NPLUS
- and THKOX
+ and NSDM
+ and HVI
 
  layer mvndic mvndiccopy
  grow 85
@@ -3414,8 +3414,8 @@ style  sky130 variants (),(vendor)
  templayer pdiccopy CONT
  and LI
  and DIODE
- and PPLUS
- and-not THKOX
+ and PSDM
+ and-not HVI
 
  layer pdic pdiccopy
  grow 85
@@ -3428,8 +3428,8 @@ style  sky130 variants (),(vendor)
  templayer mvpdiccopy CONT
  and LI
  and DIODE
- and PPLUS
- and THKOX
+ and PSDM
+ and HVI
 
  layer mvpdic mvpdiccopy
  grow 85
@@ -3590,9 +3590,9 @@ style  sky130 variants (),(vendor)
 
  layer var POLY
  and TAP
- and NPLUS
+ and NSDM
  and NWELL
- and-not THKOX
+ and-not HVI
  and-not HVTP
  # NOTE:  Else forms a varactor that is not in the vendor netlist.
  and-not COREID
@@ -3600,17 +3600,17 @@ style  sky130 variants (),(vendor)
 
  layer varhvt POLY
  and TAP
- and NPLUS
+ and NSDM
  and NWELL
- and-not THKOX
+ and-not HVI
  and HVTP
  labels POLY
 
  layer mvvar POLY
  and TAP
- and NPLUS
+ and NSDM
  and NWELL
- and THKOX
+ and HVI
  labels POLY
 
  calma NWELL 64 20
@@ -3626,12 +3626,12 @@ style  sky130 variants (),(vendor)
  calma HVTP 78 44
  # SONOS (TUNM)
  calma SONOS 80 20
- # NPLUS = NSDM
- calma NPLUS 93 44
- # PPLUS = PSDM
- calma PPLUS 94 20
- # HVI
- calma THKOX 75 20
+ # NSDM (NPLUS)
+ calma NSDM 93 44
+ # PSDM (PPLUS)
+ calma PSDM 94 20
+ # HVI (THKOX)
+ calma HVI 75 20
  # NPC
  calma NPC 95 20
  # P+ POLY MASK
@@ -4145,7 +4145,7 @@ variants *
  width coreli,pc,ndc,nsc,pdc,psc,allli,*obsli 140 \
 	"Core local interconnect width < %d (li.c1)"
 
- spacing coreli,pc,ndc,nsc,pdc,psc,lic allli,*obsli 140 touching_ok \
+ spacing coreli,pc,ndc,nsc,pdc,psc,mcon allli,*obsli 140 touching_ok \
 	"Core local interconnect spacing < %d (li.c2)"
 
  surround pc/li *li,coreli 80 directional \
@@ -4165,10 +4165,10 @@ variants *
 # MCON - Contact between local interconnect and metal1
 #-------------------------------------------------------------
 
- width lic/m1 170 "mcon.width < %d (mcon.1)"
- spacing lic/m1 lic/m1,obslic/m1 190 touching_ok "mcon.spacing < %d (mcon.2)"
+ width mcon/m1 170 "mcon.width < %d (mcon.1)"
+ spacing mcon/m1 mcon/m1,obsmcon/m1 190 touching_ok "mcon.spacing < %d (mcon.2)"
 
- exact_overlap lic/li
+ exact_overlap mcon/li
 
 #-------------------------------------------------------------
 # METAL1 -
@@ -4178,9 +4178,9 @@ variants *
  spacing allm1,m1fill allm1,*obsm1,m1fill 140 touching_ok "Metal1 spacing < %d (met1.2)"
  area allm1,*obsm1 83000 140 "Metal1 minimum area < %a (met1.6)"
 
- surround lic/m1 *met1 30 absence_illegal \
+ surround mcon/m1 *met1 30 absence_illegal \
 	"Metal1 overlap of local interconnect contact < %d (met1.4)"
- surround lic/m1 *met1 60 directional \
+ surround mcon/m1 *met1 60 directional \
 	"Metal1 overlap of local interconnect contact < %d in one direction (met1.5)"
 
  angles allm1,m1fill 45 "Only 45 and 90 degree angles permitted on metal1 (x.3a)"
@@ -4561,7 +4561,7 @@ lef
  routing mrdl	met6 MET6 m6 MRDL METRDL
 #endif
 
- cut lic  mcon MCON Mcon
+ cut mcon  mcon MCON Mcon
  cut m2c  via via1 VIA VIA1 cont2 via12
  cut m3c  via2 VIA2 cont3 via23
 #ifdef METAL5
@@ -4582,8 +4582,8 @@ lef
  obs obsmrdl met6
 #endif
 
- # NOTE: obslic only used with li1, not obsli.
- obs obslic mcon
+ # NOTE: obsmcon only used with li1, not obsli.
+ obs obsmcon mcon
 
  # Vias on obstruction layers should be ignored, so cast to obstruction metal.
  obs obsm1   via
@@ -4667,7 +4667,7 @@ extract
  height alldiffcont  0.3262 0.61
  height pc	     0.5062 0.43
  height allli	     0.9361 0.10
- height lic	     1.0361 0.34
+ height mcon	     1.0361 0.34
  height allm1	     1.3761 0.36
  height m1fill	     1.3761 0.36
  height v1	     1.7361 0.27
@@ -4699,7 +4699,7 @@ extract
  antenna poly sidewall 50 none
  antenna allcont surface 3 none
  antenna li sidewall 75 0 450
- antenna lic surface 3 0 18
+ antenna mcon surface 3 0 18
  antenna m1,m2,m3 sidewall 400 2600 400
  antenna v1 surface 3 0 18
  antenna v2 surface 6 0 36
@@ -4754,7 +4754,7 @@ extract
  contact mvndc,mvnsc		 15000
  contact mvpdc,mvpsc	  	 15000
  contact pc			 15000
- contact lic			152000
+ contact mcon			152000
  contact m2c			  4500
  contact m3c			  3410
 #ifdef METAL5
@@ -5216,7 +5216,7 @@ wiring
  # All wiring values are in nanometers
  scalefactor 10
 
- contact lic 170 li 0  0 m1 30 60
+ contact mcon 170 li 0  0 m1 30 60
  contact v1  260 m1 0 30 m2  0 30
  contact v2  280 m2 0 45 m3 25  0
 #ifdef METAL5
