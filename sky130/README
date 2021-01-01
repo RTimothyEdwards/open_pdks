@@ -79,9 +79,9 @@ Step 1:
     not in the foundry subdirctory, and must be run from the top level
     directory.  Configure options are as follows:
 
-	--with-sky130-source=/path/to/sky130/source
+	--enable-sky130-pdk=/path/to/sky130/source
                           "location of the source files for sky130"
-	--with-local-path=/path/to/install/pdks
+	--with-sky130-local-path=/path/to/install/pdks
                           "location where the PDKs will be installed"
 
     NOTE:  The intention of the configure file is to not have to hand-edit
