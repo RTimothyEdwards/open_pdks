@@ -120,6 +120,11 @@
 #	noconvert : Install only; do not attempt to convert to other
 #		    formats (applies only to GDS, CDL, and LEF).
 #
+#	options:   Followed by "=" and the name of a script.  Behavior
+#		    is dependent on the mode;  if applied to "-gds",
+#		    then the script is inserted before the GDS read
+#		    in the Tcl generate script passed to magic.
+#
 # NOTE:  This script can be called once for all libraries if all file
 # types (gds, cdl, lef, etc.) happen to all work with the same wildcards.
 # However, it is more likely that it will be called several times for the
@@ -1070,6 +1075,12 @@ if __name__ == '__main__':
                 if item.split('=')[0] == 'ignore':
                     ignorelist = item.split('=')[1].split(',')
 
+        elif option[0] == 'gds':
+            for item in option:
+                if item.split('=')[0] == 'options':
+                    tclscript = item.split('=')[1]
+                    print('Adding Tcl script options from file ' + tclscript)
+
 	# Option 'noconvert' is a standalone keyword.
         if 'noconvert' in option:
             if option[0] == 'cdl':
@@ -1221,6 +1232,10 @@ if __name__ == '__main__':
                 # .mag files from the database.
 
                 print('Creating magic generation script to generate magic database files.') 
+                if tclscript:
+                    with open(tclscript, 'r') as ifile:
+                        tcllines = ifile.read().splitlines()
+
                 with open(destlibdir + '/generate_magic.tcl', 'w') as ofile:
                     print('#!/usr/bin/env wish', file=ofile)
                     print('#--------------------------------------------', file=ofile)
@@ -1230,6 +1245,11 @@ if __name__ == '__main__':
                     print('gds flatten true', file=ofile)
                     print('gds rescale false', file=ofile)
                     print('tech unlock *', file=ofile)
+
+                    # Add custom Tcl script lines before "gds read".
+                    if tclscript:
+                        for line in tcllines:
+                            print(line, file=ofile)
 
                     for gdsfile in gdsfiles:
                         # Note:  DO NOT use a relative path here.
