@@ -1049,6 +1049,7 @@ if __name__ == '__main__':
     # then migrate them to magic (.mag files in layout/ or abstract/).
 
     ignorelist = []
+    tclscript = None
     do_cdl_scaleu  = False
     no_cdl_convert = False
     no_gds_convert = False
