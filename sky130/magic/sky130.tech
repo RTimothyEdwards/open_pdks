@@ -23,7 +23,7 @@ end
 version
  version REVISION
  description "SkyWater SKY130: Open Source rules and DRC"
- requires magic-8.3.107
+ requires magic-8.3.111
 end
 
 #------------------------------------------------------------------------
@@ -722,16 +722,6 @@ style gdsii
  layer 	BOUND CELLBOUND
 	calma 235 4
 
-# Create a boundary outside of an abutment box, so that layers
-# can be made to stretch to the abutment box edges.  First strink
-# so that any box that would be so small as to interact with
-# itself will be removed.
-
- templayer CELLRING CELLBOUND
-	shrink 345
-	grow 545
-	and-not CELLBOUND
-
 #----------------------------------------------------------------
 # DNWELL
 #----------------------------------------------------------------
@@ -812,10 +802,9 @@ style gdsii
 	bloat-or allnactivetap * 125 allpactivenontap 0
 	bloat-or allnactivenontap * 125 allpactivetap 0
 
- templayer extendPSDM  basePSDM,CELLRING
+ templayer extendPSDM  basePSDM
 	bridge	380 380
 	and-not baseNSDM
-	and-not	CELLRING
 
  layer PSDM basePSDM,extendPSDM 
 	grow	185
@@ -824,10 +813,9 @@ style gdsii
 	mask-hints PSDM
 	calma	94 20
 
- templayer extendNSDM  baseNSDM,CELLRING
+ templayer extendNSDM  baseNSDM
 	bridge	380 380
 	and-not basePSDM
-	and-not	CELLRING
 
  layer NSDM baseNSDM,extendNSDM
 	grow	185
@@ -1023,17 +1011,10 @@ style gdsii
 	# (HVI min width rule is 0.6 but CNTM min width rule is 0.84um)
 	grow-min 840
 
- templayer baseHVI 	thkox_area,small_ptap_mv
+ layer HVI 	thkox_area,small_ptap_mv
 	bridge	700 600
  	grow 	345
  	shrink 	345
-
- templayer extendHVI	baseHVI,CELLRING
- 	grow 	345
- 	shrink 	345
-	and-not	CELLRING
-
- layer HVI	baseHVI,extendHVI
 	mask-hints HVI
  	calma 	75 20
 

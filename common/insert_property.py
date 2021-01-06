@@ -10,8 +10,8 @@
 # 
 # e.g.:
 #
-# insert_property.py /home/tim/projects/efabless/tech/SkyWater/EFS8A \
-#	s8iom0 s8iom0s8_top_gpio "FIXED_BBOX 0 607 15000 40200"
+# insert_property.py /path/to/sky130A \
+#	sky130_fd_io sky130_fd_io__top_gpiov2 "MASKHINTS_HVI 0 607 15000 40200"
 
 import os
 import re
@@ -83,6 +83,13 @@ if __name__ == '__main__':
     libname = arguments[1]
     cellname = arguments[2]
     propstring = arguments[3]
+
+    # Diagnostic
+    print('insert_property.py:')
+    print('   source   = ' + source)
+    print('   library  = ' + libname)
+    print('   cell     = ' + cellname)
+    print('   property = ' + propstring)
 
     noupdate = True if '-noupdate' in options else False
     fail = 0
