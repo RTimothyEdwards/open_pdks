@@ -471,10 +471,6 @@ vendor-a:
 		-gds %l/gds/*.gds \
 		-lef %l/lef/*.lef compile-only rename=sky130_ef_io \
 		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
-	# Add a maskhint set for the GPIO pad .mag view to prevent problems writing
-	# when writing HVI to GDS during hierarchical adjustments.
-	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io__top_gpiov2 \
-		"MASKHINTS_HVI 1346 17198 5828 19224 13700 1890 15920 2360 24 17522 1778 20612" -mag
 	# Install SkyWater I/O pad library
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-spice %l/latest/cells/*/*.spice compile-only \
@@ -501,6 +497,10 @@ vendor-a:
 		-gds %l/gds/*.gds \
 		-lef %l/lef/*.lef \
 		-library digital sky130_fd_sc_hd |& tee -a ${SKY130A}_install.log
+	# Add a maskhint set for the GPIO pad .mag view to prevent problems writing
+	# when writing HVI to GDS during hierarchical adjustments.
+	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io__top_gpiov2 \
+		"MASKHINTS_HVI 1346 17198 5828 19224 13700 1890 15920 2360 24 17522 1778 20612" -mag
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-techlef %l/latest/tech/*.tlef \

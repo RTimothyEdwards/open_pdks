@@ -45,7 +45,7 @@ if __name__ == '__main__':
     gdsfile = os.path.split(source)[1]
 
     with open(destdir + '/split_gds.tcl', 'w') as ofile:
-        print('#!/bin/env wish', file=ofile)
+        print('#!/usr/bin/env wish', file=ofile)
         print('drc off', file=ofile)
         print('gds readonly true', file=ofile)
         print('gds rescale false', file=ofile)
