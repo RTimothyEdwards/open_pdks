@@ -239,6 +239,7 @@ types
   locali viali,vial,mcon,m1c,v0
  -locali obsli1,obsli
  -locali obsli1c,obsmcon
+ -locali lifill
 
 # Metal 1
   metal1 metal1,m1,met1
@@ -538,6 +539,7 @@ styles
   nndiodec    ndiff_in_nwell nselect2 metal1 contact_X'es hvndiff_mask
 
   locali    metal1
+  lifill    metal1
   coreli    metal1
   rli       metal1         poly_resist_stripes
   mcon	    metal1	   metal2 via1arrow
@@ -670,7 +672,7 @@ end
 connect
   *nwell,*nsd,*mvnsd,dnwell,pnp *nwell,*nsd,*mvnsd,dnwell,pnp
   pwell,*psd,*mvpsd,npn  pwell,*psd,*mvpsd,npn
-  *li,coreli	*li,coreli
+  *li,coreli,lifill	*li,coreli,lifill
   *m1,m1fill,obsmcon	*m1,m1fill,obsmcon
   *m2,m2fill	*m2,m2fill
   *m3,m3fill	*m3,m3fill
@@ -784,7 +786,7 @@ style gdsii
 
  layer FOMFILL	fomfill
 	labels	fomfill
-	calma	65 28
+	calma	23 28
 
 #----------------------------------------------------------------
 # PSDM, NSDM (PPLUS, NPLUS implants)
@@ -990,7 +992,7 @@ style gdsii
 
  layer POLYFILL	polyfill
 	labels 	polyfill
-	calma	66 28
+	calma	28 28
 
 #----------------------------------------------------------------
 # HVI (includes rules NWELL 8-11 and DIFFTAP 14-26)
@@ -1112,6 +1114,10 @@ style gdsii
 	labels rli
 	calma 67 13
 
+ layer LIFILL	lifill
+	labels 	lifill
+	calma	56 28
+
 #----------------------------------------------------------------
 # MCON
 #----------------------------------------------------------------
@@ -1139,7 +1145,7 @@ style gdsii
 
  layer MET1FILL m1fill
 	labels m1fill
-	calma 68 28
+	calma 36 28
 
 #----------------------------------------------------------------
 # VIA1
@@ -1168,7 +1174,7 @@ style gdsii
 
  layer MET2FILL m2fill
 	labels m2fill
-	calma 69 28
+	calma 41 28
 
 #----------------------------------------------------------------
 # VIA2
@@ -1197,7 +1203,7 @@ style gdsii
 
  layer MET3FILL m3fill
 	labels m3fill
-	calma 70 28
+	calma 34 28
 
 #ifdef METAL5
 #----------------------------------------------------------------
@@ -1230,7 +1236,7 @@ style gdsii
 
  layer MET4FILL m4fill
 	labels m4fill
-	calma 71 28
+	calma 51 28
 
 #----------------------------------------------------------------
 # VIA4
@@ -1262,7 +1268,7 @@ style gdsii
 
  layer MET5FILL m5fill
 	labels m5fill
-	calma 72 28
+	calma 59 28
 
 #endif (METAL5)
 
@@ -1869,13 +1875,53 @@ style wafflefill variants (),(tiled)
 	or	fomfill_pass2
 	or	fomfill_coarse
 	or	fomfill_fine
- 	calma 	65 28
+ 	calma 	23 28
 
  layer	POLYFILL polyfill_pass1 
 	or	 polyfill_coarse
 	or	 polyfill_medium
 	or	 polyfill_fine
- 	calma 	66 28
+ 	calma 	28 28
+
+#---------------------------------------------------
+# LI fill
+#---------------------------------------------------
+
+ templayer      obstruct_li_coarse allli,allpad,obsli,lifill,fillblock,fillblock4
+        grow    3000
+ templayer	lifill_coarse topbox
+        slots   0 2000 200 0 2000 200 700 0
+        and-not obstruct_li_coarse
+	and	topbox
+        shrink  995
+        grow    995
+
+ templayer      obstruct_li_medium allli,allpad,obsli,lifill,fillblock,fillblock4
+        grow    2800
+	or	lifill_coarse
+        grow    200
+ templayer	lifill_medium topbox
+        slots   0 1000 200 0 1000 200 700 0
+        and-not obstruct_li_medium
+	and	topbox
+        shrink  495
+        grow    495
+
+ templayer      obstruct_li_fine allli,allpad,obsli,lifill,fillblock,fillblock4
+        grow    300
+	or	lifill_coarse,lifill_medium
+        grow    200
+ templayer	lifill_fine topbox
+        slots   0 580 200 0 580 200 700 0
+        and-not obstruct_li_fine
+	and	topbox
+        shrink  285
+        grow    285
+
+ layer	LIFILL  lifill_coarse
+	or	lifill_medium
+	or	lifill_fine
+ 	calma 	56 28
 
 #---------------------------------------------------
 # MET1 fill
@@ -1927,7 +1973,7 @@ style wafflefill variants (),(tiled)
 	or	met1fill_medium
 	or	met1fill_fine
 	or	met1fill_veryfine
- 	calma 	68 28
+ 	calma 	36 28
 
 #---------------------------------------------------
 # MET2 fill
@@ -1978,7 +2024,7 @@ style wafflefill variants (),(tiled)
 	or met2fill_medium
 	or met2fill_fine
 	or met2fill_veryfine
- 	calma 	69 28
+ 	calma 	41 28
 
 #---------------------------------------------------
 # MET3 fill
@@ -2030,7 +2076,7 @@ style wafflefill variants (),(tiled)
 	or	met3fill_medium
 	or	met3fill_fine
 	or	met3fill_veryfine
- 	calma 	70 28
+ 	calma 	34 28
 
 #ifdef METAL5
 #---------------------------------------------------
@@ -2083,7 +2129,7 @@ style wafflefill variants (),(tiled)
 	or	met4fill_medium
 	or	met4fill_fine
 	or	met4fill_veryfine
- 	calma 	71 28
+ 	calma 	51 28
 
 #---------------------------------------------------
 # MET5 fill
@@ -2098,7 +2144,7 @@ style wafflefill variants (),(tiled)
         grow    1495
 
  layer	MET5FILL met5fill_gen
- 	calma 	72 28
+ 	calma 	59 28
 #endif (METAL5)
 
 end
@@ -3162,6 +3208,9 @@ style  sky130 variants (),(vendor)
  and LIRES,LISHORT
  labels LIRES,LISHORT
 
+ layer	lifill LIFILL
+ labels LIFILL
+
  layer mcon MCON
  grow 95
  shrink 95
@@ -3696,12 +3745,13 @@ style  sky130 variants (),(vendor)
  calma MET5RES 72 13
 #endif
 
- calma MET1FILL 68 28
- calma MET2FILL 69 28
- calma MET3FILL 70 28
+ calma LIFILL   56 28
+ calma MET1FILL 36 28
+ calma MET2FILL 41 28
+ calma MET3FILL 34 28
 #ifdef METAL5
- calma MET4FILL 71 28
- calma MET5FILL 72 28
+ calma MET4FILL 51 28
+ calma MET5FILL 59 28
 #endif
 
  calma POLYSHORT 66 15
@@ -3747,13 +3797,14 @@ style  sky130 variants (),(vendor)
  calma FILLOBSFOM  22 24
  calma FILLOBSPOLY 33 24
 
- calma FOMFILL	  65  28
- calma POLYFILL	  66  28
- calma MET1FILL	  68  28
- calma MET2FILL	  69  28
- calma MET3FILL	  70  28
- calma MET4FILL	  71  28
- calma MET5FILL	  72  28
+ calma FOMFILL	  23  28
+ calma POLYFILL	  28  28
+ calma LIFILL	  56  28
+ calma MET1FILL	  36  28
+ calma MET2FILL	  41  28
+ calma MET3FILL	  34  28
+ calma MET4FILL	  51  28
+ calma MET5FILL	  59  28
 
 #-----------------------------------------------------------------------
 
