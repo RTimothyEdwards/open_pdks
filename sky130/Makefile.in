@@ -528,6 +528,12 @@ vendor-a:
 		-library digital sky130_fd_sc_ls \
 		-library digital sky130_fd_sc_ms \
 		-library digital sky130_fd_sc_lp |& tee -a ${SKY130A}_install.log
+	# Add a maskhint set for the tap cell .ag view to prevent problems writing
+	# when writing NSDM and PSDM to GDS during hierarchical adjustments.
+	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_sc_hd sky130_fd_sc_hd__tapvpwrvgnd_1 \
+		"MASKHINTS_PSDM 0 38 92 196" -mag
+	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_sc_hd sky130_fd_sc_hd__tapvpwrvgnd_1 \
+		"MASKHINTS_NSDM 0 280 92 506" -mag
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hd/verilog/*.*.v
