@@ -1,7 +1,7 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1608397426
+timestamp 1610122293
 << metal2 >>
 rect 99 -407 4879 -259
 rect 5179 -407 5579 -211
@@ -74,18 +74,18 @@ rect 0 1390 254 2280
 rect 14746 1390 15000 2280
 rect 0 20 254 1070
 rect 14746 20 15000 1070
-use sky130_ef_io__hvc_vdda_overlay  sky130_ef_io__hvc_vdda_overlay_0
-timestamp 1607721650
-transform 1 0 0 0 1 -1
-box 5196 2610 9707 7592
-use sky130_fd_io__overlay_vdda_lvc  sky130_fd_io__overlay_vdda_lvc_0 $PDKPATH/libs.ref/sky130_fd_io/mag
-timestamp 1608233597
-transform 1 0 0 0 1 -7
-box 0 7 15000 39600
 use sky130_fd_io__top_power_hvc_wpadv2  sky130_fd_io__top_power_hvc_wpadv2_1 $PDKPATH/libs.ref/sky130_fd_io/mag
-timestamp 1608233597
+timestamp 1609966165
 transform 1 0 0 0 1 -407
 box 0 0 15000 40000
+use sky130_ef_io__hvc_vdda_overlay  sky130_ef_io__hvc_vdda_overlay_0
+timestamp 1607721650
+transform -1 0 14903 0 1 -1
+box 5196 2610 9707 7592
+use sky130_fd_io__overlay_vdda_hvc  sky130_fd_io__overlay_vdda_hvc_0 $PDKPATH/libs.ref/sky130_fd_io/mag
+timestamp 1609966165
+transform 1 0 0 0 1 -407
+box 0 407 15000 40000
 << labels >>
 flabel metal4 s 14873 37925 14873 37925 3 FreeSans 520 180 0 0 VSSIO
 port 12 nsew ground bidirectional
