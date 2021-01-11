@@ -2029,7 +2029,6 @@ style wafflefill variants (),(tiled)
 #---------------------------------------------------
 # MET3 fill
 #---------------------------------------------------
-XXX
  templayer      obstruct_m3 allm3,allpad,obsm3,m3fill,fillblock,fillblock4
         grow    3000
  templayer	met3fill_coarse topbox
