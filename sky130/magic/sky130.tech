@@ -1890,7 +1890,8 @@ style wafflefill variants (),(tiled)
  templayer      obstruct_li_coarse allli,allpad,obsli,lifill,fillblock,fillblock4
         grow    3000
  templayer	lifill_coarse topbox
-        slots   0 2000 200 0 2000 200 700 0
+        # slots   0 2000 200 0 2000 200 700 0
+        slots   0 2000 350 0 2000 350 700 0
         and-not obstruct_li_coarse
 	and	topbox
         shrink  995
@@ -1930,7 +1931,8 @@ style wafflefill variants (),(tiled)
  templayer      obstruct_m1_coarse allm1,allpad,obsm1,m1fill,fillblock,fillblock4
         grow    3000
  templayer	met1fill_coarse topbox
-        slots   0 2000 200 0 2000 200 700 0
+        # slots   0 2000 200 0 2000 200 700 0
+        slots   0 2000 350 0 2000 350 700 0
         and-not obstruct_m1_coarse
 	and	topbox
         shrink  995
@@ -1981,7 +1983,8 @@ style wafflefill variants (),(tiled)
  templayer      obstruct_m2 allm2,allpad,obsm2,m2fill,fillblock,fillblock4
         grow    3000
  templayer	met2fill_coarse topbox
-        slots   0 2000 200 0 2000 200 700 350
+        # slots   0 2000 200 0 2000 200 700 350
+        slots   0 2000 350 0 2000 350 700 350
         and-not obstruct_m2
 	and	topbox
         shrink  995
@@ -2032,7 +2035,8 @@ style wafflefill variants (),(tiled)
  templayer      obstruct_m3 allm3,allpad,obsm3,m3fill,fillblock,fillblock4
         grow    3000
  templayer	met3fill_coarse topbox
-        slots   0 2000 300 0 2000 300 700 700
+        # slots   0 2000 300 0 2000 300 700 700
+        slots   0 2000 350 0 2000 350 700 700
         and-not obstruct_m3
 	and	topbox
         shrink  995
@@ -2085,7 +2089,8 @@ style wafflefill variants (),(tiled)
  templayer      obstruct_m4 allm4,allpad,obsm4,m4fill,fillblock,fillblock4
         grow    3000
  templayer	met4fill_coarse topbox
-        slots   0 2000 300 0 2000 300 700 1050
+        # slots   0 2000 300 0 2000 300 700 1050
+        slots   0 2000 350 0 2000 350 700 1050
         and-not obstruct_m4
 	and	topbox
         shrink  995
@@ -2137,7 +2142,8 @@ style wafflefill variants (),(tiled)
  templayer      obstruct_m5 allm5,allpad,obsm5,m5fill,fillblock
         grow    3000
  templayer	met5fill_gen topbox
-        slots   0 3000 1600 0 3000 1600 1000 100
+        # slots   0 3000 1600 0 3000 1600 1000 100
+        slots   0 5000 1600 0 5000 1600 1000 100
         and-not obstruct_m5
 	and	topbox
         shrink  1495
