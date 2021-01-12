@@ -1698,6 +1698,31 @@ style paint
 #endif (EXPERIMENTAL)
 
 #----------------------------------------------------------------
+style density
+#----------------------------------------------------------------
+# Style used by scripts to check for fill density
+#----------------------------------------------------------------
+ scalefactor 10  nanometers
+ options calma-permissive-labels
+ gridlimit 5
+
+ templayer fom_all alldiff,fomfill
+
+ templayer poly_all allpoly,polyfill
+
+ templayer li_all allli,lifill
+
+ templayer m1_all allm1,m1fill
+
+ templayer m2_all allm2,m2fill
+
+ templayer m3_all allm3,m3fill
+
+ templayer m4_all allm4,m4fill
+
+ templayer m5_all allm5,m5fill
+
+#----------------------------------------------------------------
 style wafflefill variants (),(tiled)
 #----------------------------------------------------------------
 # Style used by scripts for automatically generating fill layers
