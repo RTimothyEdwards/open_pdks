@@ -2171,8 +2171,10 @@ style wafflefill variants (),(tiled)
         slots   0 5000 1600 0 5000 1600 1000 100
         and-not obstruct_m5
 	and	topbox
-        shrink  1495
-        grow    1495
+        # shrink  1495
+        # grow    1495
+        shrink  2495
+        grow    2495
 
  layer	MET5FILL met5fill_gen
  	calma 	59 28
