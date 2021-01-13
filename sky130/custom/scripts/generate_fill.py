@@ -113,11 +113,11 @@ if __name__ == '__main__':
         print('set xmax [lindex $fullbox 2]', file=ofile)
         print('set xmin [lindex $fullbox 0]', file=ofile)
         print('set fullwidth [expr {$xmax - $xmin}]', file=ofile)
-        print('set xtiles [expr {int(ceil($fullwidth / $stepwidth))}]', file=ofile)
+        print('set xtiles [expr {int(ceil(($fullwidth + 0.0) / $stepwidth))}]', file=ofile)
         print('set ymax [lindex $fullbox 3]', file=ofile)
         print('set ymin [lindex $fullbox 1]', file=ofile)
         print('set fullheight [expr {$ymax - $ymin}]', file=ofile)
-        print('set ytiles [expr {int(ceil($fullheight / $stepheight))}]', file=ofile)
+        print('set ytiles [expr {int(ceil(($fullheight + 0.0) / $stepheight))}]', file=ofile)
         print('box size $stepwidth $stepheight', file=ofile)
         print('set xbase [lindex $fullbox 0]', file=ofile)
         print('set ybase [lindex $fullbox 1]', file=ofile)
@@ -130,6 +130,8 @@ if __name__ == '__main__':
         print('        set ylo [expr $ybase + $y * $stepheight]', file=ofile)
         print('        set xhi [expr $xlo + $stepwidth]', file=ofile)
         print('        set yhi [expr $ylo + $stepheight]', file=ofile)
+        print('        if {$xhi > $fullwidth} {set xhi $fullwidth}', file=ofile)
+        print('        if {$yhi > $fullheight} {set yhi $fullheight}', file=ofile)
         print('        box values $xlo $ylo $xhi $yhi', file=ofile)
         # The flattened area must be larger than the fill tile by >1.5um
         print('        box grow c 1.6um', file=ofile)
@@ -145,6 +147,8 @@ if __name__ == '__main__':
         print('        property GDS_FILE ""', file=ofile)
         # Set boundary using comment layer, to the size of the step box
 	# This corresponds to the "topbox" rule in the wafflefill(tiled) style
+        print('        select top cell', file=ofile)
+        print('        erase comment', file=ofile)
         print('        box values $xlo $ylo $xhi $yhi', file=ofile)
         print('        paint comment', file=ofile)
         print('        puts stdout "Writing GDS. . . "', file=ofile)

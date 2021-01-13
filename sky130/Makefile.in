@@ -313,6 +313,7 @@ magic-a: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${
 	(cd ${MAGICTOP_STAGING_A} ; ln -s ${REV_DIR} current)
 	cp -rp custom/scripts/seal_ring_generator ${MAGIC_STAGING_A}/.
 	cp custom/scripts/generate_fill.py ${MAGIC_STAGING_A}/.
+	cp custom/scripts/check_density.py ${MAGIC_STAGING_A}/.
 	${CPP} ${SKY130A_DEFS} magic/${TECH}.tech > ${MAGIC_STAGING_A}/${SKY130A}.tech
 	${CPP} ${SKY130A_DEFS} magic/${TECH}gds.tech > ${MAGIC_STAGING_A}/${SKY130A}-GDS.tech
 	${CPP} ${SKY130A_DEFS} magic/${TECH}.magicrc > ${MAGIC_STAGING_A}/${SKY130A}.magicrc
