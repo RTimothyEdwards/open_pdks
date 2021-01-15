@@ -380,7 +380,7 @@ klayout-a: klayout/${TECH}.lyp klayout/${TECH}.lyt
 	rm -f ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
 	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyp > ${KLAYOUT_STAGING_A}/${SKY130A}.lyp
 	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyt > ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
-	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lydrc > ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc
+	cp klayout/${TECH}.lydrc ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc
 	./custom/scripts/gen_run_drc.py -l ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc -o ${KLAYOUT_STAGING_A}/${SKY130A}.drc
 
 openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
