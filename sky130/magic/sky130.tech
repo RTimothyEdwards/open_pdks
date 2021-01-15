@@ -1908,37 +1908,43 @@ style wafflefill variants (),(tiled)
 	or	 polyfill_fine
  	calma 	28 28
 
-#---------------------------------------------------
+#---------------------------------------------------------
 # LI fill
-#---------------------------------------------------
+# Note requirement that LI fill may not overlap (non-fill)
+# diff or poly.
+#---------------------------------------------------------
 
  templayer      obstruct_li_coarse allli,allpad,obsli,lifill,fillblock,fillblock4
-        grow    3000
+        grow    2800
+	or	alldiff,allpoly
+	grow	200
  templayer	lifill_coarse topbox
-        # slots   0 2000 200 0 2000 200 700 0
-        slots   0 2000 350 0 2000 350 700 0
+        slots   0 3000 500 0 3000 500 700 0
         and-not obstruct_li_coarse
 	and	topbox
-        shrink  995
-        grow    995
+        shrink  1495
+        grow    1495
 
  templayer      obstruct_li_medium allli,allpad,obsli,lifill,fillblock,fillblock4
-        grow    2800
+        grow    2500
 	or	lifill_coarse
+	grow	300
+	or	alldiff,allpoly
         grow    200
  templayer	lifill_medium topbox
-        slots   0 1000 200 0 1000 200 700 0
+        slots   0 1500 500 0 1500 500 700 0
         and-not obstruct_li_medium
 	and	topbox
-        shrink  495
-        grow    495
+        shrink  745
+        grow    745
 
  templayer      obstruct_li_fine allli,allpad,obsli,lifill,fillblock,fillblock4
-        grow    300
 	or	lifill_coarse,lifill_medium
+	grow	300
+	or	alldiff,allpoly
         grow    200
  templayer	lifill_fine topbox
-        slots   0 580 200 0 580 200 700 0
+        slots   0 580 500 0 580 500 700 0
         and-not obstruct_li_fine
 	and	topbox
         shrink  285

@@ -223,18 +223,7 @@ if __name__ == '__main__':
 
     # Use signal to poll the process and generate any output as it arrives
 
-    fomfill  = []
-    polyfill = []
-    lifill   = []
-    met1fill = []
-    met2fill = []
-    met3fill = []
-    met4fill = []
-    met5fill = []
-    xtiles = 0
-    ytiles = 0
-    xfrac = 0.0
-    yfrac = 0.0
+    dlines = []
 
     while mproc:
         status = mproc.poll()
@@ -248,39 +237,8 @@ if __name__ == '__main__':
                 outlines = output[0]
                 errlines = output[1]
                 for line in outlines.splitlines():
+                    dlines.append(line)
                     print(line)
-                    dpair = line.split(':')
-                    if len(dpair) == 2:
-                        layer = dpair[0]
-                        try:
-                            density = float(dpair[1].strip())
-                        except:
-                            continue
-                        if layer == 'FOM':
-                            fomfill.append(density)
-                        elif layer == 'POLY':
-                            polyfill.append(density)
-                        elif layer == 'LI1':
-                            lifill.append(density)
-                        elif layer == 'MET1':
-                            met1fill.append(density)
-                        elif layer == 'MET2':
-                            met2fill.append(density)
-                        elif layer == 'MET3':
-                            met3fill.append(density)
-                        elif layer == 'MET4':
-                            met4fill.append(density)
-                        elif layer == 'MET5':
-                            met5fill.append(density)
-                        elif layer == 'XTILES':
-                            xtiles = int(dpair[1].strip())
-                        elif layer == 'YTILES':
-                            ytiles = int(dpair[1].strip())
-                        elif layer == 'XFRAC':
-                            xfrac = float(dpair[1].strip())
-                        elif layer == 'YFRAC':
-                            yfrac = float(dpair[1].strip())
-
                 for line in errlines.splitlines():
                     print(line)
                 print('Magic exited with status ' + str(status))
@@ -300,12 +258,63 @@ if __name__ == '__main__':
                 sresult = select.select([mproc.stdout, mproc.stderr], [], [], 0)[0]
                 if mproc.stdout in sresult:
                     outstring = mproc.stdout.readline().strip()
+                    dlines.append(outstring)
                     print(outstring)
                 elif mproc.stderr in sresult:
                     outstring = mproc.stderr.readline().strip()
                     print(outstring)
                 else:
                     break
+
+    fomfill  = []
+    polyfill = []
+    lifill   = []
+    met1fill = []
+    met2fill = []
+    met3fill = []
+    met4fill = []
+    met5fill = []
+    xtiles = 0
+    ytiles = 0
+    xfrac = 0.0
+    yfrac = 0.0
+
+    for line in dlines:
+        dpair = line.split(':')
+        if len(dpair) == 2:
+            layer = dpair[0]
+            try:
+                density = float(dpair[1].strip())
+            except:
+                continue
+            if layer == 'FOM':
+                fomfill.append(density)
+            elif layer == 'POLY':
+                polyfill.append(density)
+            elif layer == 'LI1':
+                lifill.append(density)
+            elif layer == 'MET1':
+                met1fill.append(density)
+            elif layer == 'MET2':
+                met2fill.append(density)
+            elif layer == 'MET3':
+                met3fill.append(density)
+            elif layer == 'MET4':
+                met4fill.append(density)
+            elif layer == 'MET5':
+                met5fill.append(density)
+            elif layer == 'XTILES':
+                xtiles = int(dpair[1].strip())
+            elif layer == 'YTILES':
+                ytiles = int(dpair[1].strip())
+            elif layer == 'XFRAC':
+                xfrac = float(dpair[1].strip())
+            elif layer == 'YFRAC':
+                yfrac = float(dpair[1].strip())
+
+    if ytiles == 0 or xtiles == 0:
+        print('Failed to read XTILES or YTILES from output.')
+        sys.exit(1)
 
     total_tiles = (ytiles - 9) * (xtiles - 9)
 
@@ -337,10 +346,11 @@ if __name__ == '__main__':
                 base = xtiles * w + x
                 fomaccum += sum(fomfill[base : base + 10])
                     
-            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(fomaccum / atotal))
-            if fomaccum < 33.0:
+            fomaccum /= atotal
+            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(fomaccum))
+            if fomaccum < 0.33:
                 print('***Error:  FOM Density < 33%')
-            elif fomaccum > 57.0:
+            elif fomaccum > 0.57:
                 print('***Error:  FOM Density > 57%')
 
     print('')
@@ -361,7 +371,8 @@ if __name__ == '__main__':
                 base = xtiles * w + x
                 polyaccum += sum(polyfill[base : base + 10])
                     
-            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(polyaccum / atotal))
+            polyaccum /= atotal
+            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(polyaccum))
 
     print('')
     print('LI Density:')
@@ -381,10 +392,11 @@ if __name__ == '__main__':
                 base = xtiles * w + x
                 liaccum += sum(lifill[base : base + 10])
                     
-            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(liaccum / atotal))
-            if liaccum < 35.0:
+            liaccum /= atotal
+            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(liaccum))
+            if liaccum < 0.35:
                 print('***Error:  LI Density < 35%')
-            elif liaccum > 70.0:
+            elif liaccum > 0.70:
                 print('***Error:  LI Density > 70%')
 
     print('')
@@ -405,10 +417,11 @@ if __name__ == '__main__':
                 base = xtiles * w + x
                 met1accum += sum(met1fill[base : base + 10])
                     
-            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met1accum / atotal))
-            if met1accum < 35.0:
+            met1accum /= atotal
+            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met1accum))
+            if met1accum < 0.35:
                 print('***Error:  MET1 Density < 35%')
-            elif met1accum > 70.0:
+            elif met1accum > 0.70:
                 print('***Error:  MET1 Density > 70%')
 
     print('')
@@ -429,10 +442,11 @@ if __name__ == '__main__':
                 base = xtiles * w + x
                 met2accum += sum(met2fill[base : base + 10])
                     
-            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met2accum / atotal))
-            if met2accum < 35.0:
+            met2accum /= atotal
+            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met2accum))
+            if met2accum < 0.35:
                 print('***Error:  MET2 Density < 35%')
-            elif met2accum > 70.0:
+            elif met2accum > 0.70:
                 print('***Error:  MET2 Density > 70%')
 
     print('')
@@ -453,10 +467,11 @@ if __name__ == '__main__':
                 base = xtiles * w + x
                 met3accum += sum(met3fill[base : base + 10])
                     
-            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met3accum / atotal))
-            if met3accum < 35.0:
+            met3accum /= atotal
+            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met3accum))
+            if met3accum < 0.35:
                 print('***Error:  MET3 Density < 35%')
-            elif met3accum > 70.0:
+            elif met3accum > 0.70:
                 print('***Error:  MET3 Density > 70%')
 
     print('')
@@ -477,10 +492,11 @@ if __name__ == '__main__':
                 base = xtiles * w + x
                 met4accum += sum(met4fill[base : base + 10])
                     
-            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met4accum / atotal))
-            if met4accum < 35.0:
+            met4accum /= atotal
+            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met4accum))
+            if met4accum < 0.35:
                 print('***Error:  MET4 Density < 35%')
-            elif met4accum > 70.0:
+            elif met4accum > 0.70:
                 print('***Error:  MET4 Density > 70%')
 
     print('')
@@ -501,11 +517,77 @@ if __name__ == '__main__':
                 base = xtiles * w + x
                 met5accum += sum(met5fill[base : base + 10])
                     
-            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met5accum / atotal))
-            if met5accum < 45.0:
+            met5accum /= atotal
+            print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met5accum))
+            if met5accum < 0.45:
                 print('***Error:  MET5 Density < 45%')
-            elif met5accum > 86.0:
-                print('***Error:  MET5 Density > 80%')
+            elif met5accum > 0.86:
+                print('***Error:  MET5 Density > 86%')
+
+    print('')
+    print('Whole-chip density results:')
+
+    atotal = ((xtiles - 1.0) * (ytiles - 1.0)) + ((ytiles - 1.0) * xfrac) + ((xtiles - 1.0) * yfrac) + (xfrac * yfrac)
+
+    fomaccum = sum(fomfill) / atotal
+    print('')
+    print('FOM Density: ' + str(fomaccum))
+    if fomaccum < 0.33:
+        print('***Error:  FOM Density < 33%')
+    elif fomaccum > 0.57:
+        print('***Error:  FOM Density > 57%')
+
+    polyaccum = sum(polyfill) / atotal
+    print('')
+    print('POLY Density: ' + str(polyaccum))
+
+    liaccum = sum(lifill) / atotal
+    print('')
+    print('LI Density: ' + str(liaccum))
+    if liaccum < 0.35:
+        print('***Error:  LI Density < 35%')
+    elif liaccum > 0.70:
+        print('***Error:  LI Density > 70%')
+
+    met1accum = sum(met1fill) / atotal
+    print('')
+    print('MET1 Density: ' + str(met1accum))
+    if met1accum < 0.35:
+        print('***Error:  MET1 Density < 35%')
+    elif met1accum > 0.70:
+        print('***Error:  MET1 Density > 70%')
+
+    met2accum = sum(met2fill) / atotal
+    print('')
+    print('MET2 Density: ' + str(met2accum))
+    if met2accum < 0.35:
+        print('***Error:  MET2 Density < 35%')
+    elif met2accum > 0.70:
+        print('***Error:  MET2 Density > 70%')
+
+    met3accum = sum(met3fill) / atotal
+    print('')
+    print('MET3 Density: ' + str(met3accum))
+    if met3accum < 0.35:
+        print('***Error:  MET3 Density < 35%')
+    elif met3accum > 0.70:
+        print('***Error:  MET3 Density > 70%')
+
+    met4accum = sum(met4fill) / atotal
+    print('')
+    print('MET4 Density: ' + str(met4accum))
+    if met4accum < 0.35:
+        print('***Error:  MET4 Density < 35%')
+    elif met4accum > 0.70:
+        print('***Error:  MET4 Density > 70%')
+
+    met5accum = sum(met5fill) / atotal
+    print('')
+    print('MET5 Density: ' + str(met5accum))
+    if met5accum < 0.45:
+        print('***Error:  MET5 Density < 45%')
+    elif met5accum > 0.86:
+        print('***Error:  MET5 Density > 86%')
 
     if not keepmode:
         os.remove(magpath + '/check_density.tcl')
