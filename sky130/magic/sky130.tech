@@ -2172,17 +2172,26 @@ style wafflefill variants (),(tiled)
 #---------------------------------------------------
  templayer      obstruct_m5 allm5,allpad,obsm5,m5fill,fillblock
         grow    3000
- templayer	met5fill_gen topbox
-        # slots   0 3000 1600 0 3000 1600 1000 100
+ templayer	met5fill_coarse topbox
         slots   0 5000 1600 0 5000 1600 1000 100
         and-not obstruct_m5
 	and	topbox
-        # shrink  1495
-        # grow    1495
         shrink  2495
         grow    2495
 
- layer	MET5FILL met5fill_gen
+ templayer      obstruct_m5_medium allm5,allpad,obsm5,m5fill,fillblock
+        grow    1400
+	or	met5fill_coarse
+        grow    1600
+ templayer	met5fill_medium topbox
+        slots   0 3000 1600 0 3000 1600 1000 100
+        and-not obstruct_m5_medium
+	and	topbox
+        shrink  1495
+        grow    1495
+
+ layer	MET5FILL met5fill_coarse
+	or	met5fill_medium
  	calma 	59 28
 #endif (METAL5)
 
