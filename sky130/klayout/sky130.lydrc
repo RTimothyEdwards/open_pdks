@@ -32,7 +32,7 @@ if $input
 end
 
 if $report
-  report($report)
+  report("SKY130 DRC runset", $report)
 else
   report("SKY130 DRC runset", File.join(File.dirname(RBA::CellView::active.filename), "sky130_drc.txt"))
 end
