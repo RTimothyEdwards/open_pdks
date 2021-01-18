@@ -32,7 +32,7 @@ if $input
 end
 
 if $report
-  report("SKY130 DRC runset", $report)
+  report($report)
 else
   report("SKY130 DRC runset", File.join(File.dirname(RBA::CellView::active.filename), "sky130_drc.txt"))
 end
@@ -43,9 +43,9 @@ CU = false  # do not change
 backend_flow = AL
 
 # enable / disable rule groups
-FEOL    = true # front-end-of-line checks
+FEOL    = false # front-end-of-line checks
 BEOL    = true # back-end-of-line checks
-OFFGRID = true # manufacturing grid/angle checks
+OFFGRID = false # manufacturing grid/angle checks
 
 # klayout setup
 ########################
@@ -61,7 +61,7 @@ deep
 # use 4 cpu cores
 threads(4)
 # if more inof is needed, set true
-verbose(false)
+verbose(true)
 
 # layers definitions
 ########################
@@ -502,7 +502,7 @@ via.not(m2).output("m2.via", "m2.via : m2 must enclose via")
 if backend_flow = AL
   m2.enclosing(via, 0.055, euclidian).output("m2.4", "m2.4 : min. m2 enclosure of via : 0.055um")
   via_edges_with_less_enclosure_m2 = m2.enclosing(via, 0.085, projection).second_edges
-  opposite7 = (via.edges - via_edges_with_less_enclosure_m2).width(0.14 + 1.dbu, projection).polygons
+  opposite7 = (via.edges - via_edges_with_less_enclosure_m2).width(0.2 + 1.dbu, projection).polygons
   via.not_interacting(opposite7).output("m2.5", "m2.5 : min. m2 enclosure of via of 2 opposite edges : 0.085um")
   # rule m2.pd.1, rule m2.pd.2a, rule m2.pd.2b not coded
 end
@@ -534,7 +534,7 @@ if backend_flow = CU
 end
 
 #   m3
-huge_m3 = m3.sized(-1.5).sized(1.5)
+huge_m3 = m3 - m3.width(3.0, projection).polygons
 m3.width(0.3, euclidian).output("m3.1", "m3.1 : min. m3 width : 0.3um")
 m3.isolated(0.3, euclidian).output("m3.2", "m3.2 : min. m3 spacing : 0.3um")
 huge_m3.separation(m3, 0.4, euclidian).output("m3.3ab", "m3.3ab : min. 3um.m3 spacing m3 : 0.4um")
@@ -544,8 +544,9 @@ via2.not(m3).output("m3.via2", "m3.via2 : m3 must enclose via2")
 if backend_flow = AL
   m3.enclosing(via2, 0.065, euclidian).output("m3.4", "m3.4 : min. m3 enclosure of via2 : 0.065um")
   via2_edges_with_less_enclosure_m3 = m3.enclosing(via2, 0.085, projection).second_edges
-  opposite9 = (via2.edges - via2_edges_with_less_enclosure_m3).width(0.3 + 1.dbu, projection).polygons
-  via2.not_interacting(opposite9).output("m3.5", "m3.5 : min. m3 enclosure of via2 of 2 opposite edges : 0.085um")
+  # m3.5 N/A
+  # opposite9 = (via2.edges - via2_edges_with_less_enclosure_m3).width(0.3 + 1.dbu, projection).polygons
+  # via2.not_interacting(opposite9).output("m3.5", "m3.5 : min. m3 enclosure of via2 of 2 opposite edges : 0.085um")
   # rule m3.pd.1, rule m3.pd.2a, rule m3.pd.2b not coded
 end
 if bakend_flow = CU
@@ -610,9 +611,10 @@ huge_m4.separation(m4, 0.4, euclidian).output("m4.5ab", "m4.5ab : min. 3um.m4 sp
 via3.not(m4).output("m4.via3", "m4.via3 : m4 must enclose via3")
 if backend_flow = AL
   m4.enclosing(via3, 0.065, euclidian).output("m4.3", "m4.3 : min. m4 enclosure of via3 : 0.065um")
-  via3_edges_with_less_enclosure_m4 = m4.enclosing(via2, 0.085, projection).second_edges
-  opposite9 = (via3.edges - via3_edges_with_less_enclosure_m4).width(0.3 + 1.dbu, projection).polygons
-  via3.not_interacting(opposite9).output("m4.5", "m4.5 : min. m4 enclosure of via3 of 2 opposite edges : 0.085um")
+  # m4.5 doesn't exist 
+  # via3_edges_with_less_enclosure_m4 = m4.enclosing(via2, 0.085, projection).second_edges
+  # opposite9 = (via3.edges - via3_edges_with_less_enclosure_m4).width(0.3 + 1.dbu, projection).polygons
+  # via3.not_interacting(opposite9).output("m4.5", "m4.5 : min. m4 enclosure of via3 of 2 opposite edges : 0.085um")
   # rule m4.pd.1, rule m4.pd.2a, rule m4.pd.2b not coded
 end
 if bakend_flow = CU
