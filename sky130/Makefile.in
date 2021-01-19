@@ -546,6 +546,11 @@ vendor-a:
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_ms/verilog/*.*.v
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_ls/verilog/*.*.v
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_lp/verilog/*.*.v
+	# Apply extra PDK patches until they get fixed properly in the source
+	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hd/techlef \
+		< custom/patches/hd_minenclosed.squeaky.patch || true
+	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hdll/techlef \
+		< custom/patches/hdll_minenclosed.squeaky.patch || true
 	# Install alphanumeric library.
 	${STAGE} -source ${REPO_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-mag %l/mag/*.mag filter=custom/scripts/text2m5.py \
