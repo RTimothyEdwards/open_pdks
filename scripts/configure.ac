@@ -166,6 +166,10 @@ AC_PATH_PROG(MAGIC, magic)
 if test -z "$MAGIC"; then
    AC_MSG_ERROR([You need 'magic' to generate the needed various cell views.])
 fi
+AC_PATH_PROG(PATCH, patch)
+if test -z "$PATCH"; then
+   AC_MSG_ERROR([You need 'patch' to apply patches.])
+fi
 
 # Other installations (libraries or tools if applicable)
 mkdir -p ../libs
