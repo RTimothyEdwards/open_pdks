@@ -63,23 +63,18 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
                 elif test "$enableval" == "no" -o "$enableval" == "NO"; then
                     echo "Disabling pdk..."
                 else
-                    export pdkvar[]_SOURCE_PATH=$enableval
+                    pdkvar[]_SOURCE_PATH=$enableval
                 fi
             ], [
                 pdk_find
             ]
         )
 	    # # Require this argument
-        # AC_MSG_NOTICE([Checking whether source path is specified for 'pdk'])
-        # if test "x$[]pdkvar[]_SOURCE_PATH" == "x" ; then
-        #     AC_MSG_ERROR([Option --with-pdk-source=<path> not specified!])
-        # fi
 
         if @<:@ "$[]pdkvar[]_SOURCE_PATH" != "" @:>@; then
             pdkvar[]_SOURCE_PATH=`readlink -f $[]pdkvar[]_SOURCE_PATH`
-
             # basic check that the PDK exists there (the path must exist in any case)
-            AC_MSG_NOTICE([Checking specified path for 'pdk' at $pdkvar[]_SOURCE_PATH])
+            AC_MSG_NOTICE([Checking specified path for 'pdk' at $[]pdkvar[]_SOURCE_PATH])
             AC_CHECK_FILE($pdkvar[]_SOURCE_PATH,[
                 AC_MSG_NOTICE(['pdk' source path found at $pdkvar[]_SOURCE_PATH])
             ], [

@@ -499,6 +499,7 @@ vendor-a:
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-gds %l/gds/*.gds \
 		-lef %l/lef/*.lef \
+		-verilog %l/verilog/*.v \
 		-library digital sky130_fd_sc_hd |& tee -a ${SKY130A}_install.log
 	# Add a maskhint set for the GPIO pad .mag view to prevent problems writing
 	# when writing HVI to GDS during hierarchical adjustments.
