@@ -2226,6 +2226,7 @@ style  sky130 variants (),(vendor)
  ignore POLYMOD
  ignore LOWTAPDENSITY
  ignore FILLOBSPOLY
+ ignore OUTLINE
 
  layer pnp NWELL,WELLTXT,WELLPIN
  and PNPID
@@ -3738,6 +3739,7 @@ style  sky130 variants (),(vendor)
  calma LOWTAPDENSITY 81 14
  # ESD area ID
  calma ESDID 81 19
+ calma OUTLINE 236 0
  
  # LICON
  calma CONT 66 44
