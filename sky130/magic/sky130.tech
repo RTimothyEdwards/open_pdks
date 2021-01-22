@@ -2226,6 +2226,7 @@ style  sky130 variants (),(vendor)
  ignore POLYMOD
  ignore LOWTAPDENSITY
  ignore FILLOBSPOLY
+ ignore OUTLINE
 
  layer pnp NWELL,WELLTXT,WELLPIN
  and PNPID
@@ -3826,6 +3827,8 @@ style  sky130 variants (),(vendor)
  calma BOUND 235 4
 
  calma LVSTEXT 83 44
+
+ calma OUTLINE 236 0
 
 #ifdef (MIM)
  calma CAPM 89 44
