@@ -1,5 +1,14 @@
 AC_INIT([open_pdks], [1.0], [github.com/RTimothyEdwards/open_pdks])
 
+## REQUIRES: https://www.gnu.org/software/autoconf-archive/ax_python_module.html#ax_python_module
+AM_PATH_PYTHON([3.4])
+AX_PYTHON_MODULE([distutils],[])
+
+realpath() {
+    # Cross-platform, handles ~
+    python3 -c 'import os,sys;print(os.path.realpath(os.path.expanduser(sys.argv@<:@1@:>@)))' $1
+}
+
 # detect PDKs based on directories that include Makefile.in files
 m4_define([M4_GET_TECHS], [m4_normalize(m4_esyscmd(cd .. && find * -mindepth 1 -maxdepth 1 -name "Makefile.in" -exec dirname {} \; | tr "\n" " "))])
 
@@ -72,7 +81,11 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
 	    # # Require this argument
 
         if @<:@ "$[]pdkvar[]_SOURCE_PATH" != "" @:>@; then
-            pdkvar[]_SOURCE_PATH=`readlink -f $[]pdkvar[]_SOURCE_PATH`
+            pdkvar[]_SOURCE_PATH=`realpath $[]pdkvar[]_SOURCE_PATH`
+            pdkvar[]_BASENAME=`basename $[]pdkvar[]_SOURCE_PATH`
+	    if @<:@ "$[]pdkvar[]_BASENAME" = "libraries" @:>@; then
+		pdkvar[]_SOURCE_PATH=`dirname $[]pdkvar[]_SOURCE_PATH`
+	    fi
             # basic check that the PDK exists there (the path must exist in any case)
             AC_MSG_NOTICE([Checking specified path for 'pdk' at $[]pdkvar[]_SOURCE_PATH])
             AC_CHECK_FILE($pdkvar[]_SOURCE_PATH,[
@@ -93,7 +106,7 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
                 AC_MSG_ERROR([Option --with-pdk-local-path=<path> not specified!])
                 pdkvar[]_LOCAL_PATH=""
             else
-                pdkvar[]_LOCAL_PATH=`readlink -f $[]pdkvar[]_LOCAL_PATH`
+                pdkvar[]_LOCAL_PATH=`realpath $[]pdkvar[]_LOCAL_PATH`
             fi
 
             # --with-pdk-dist-path=PDK_DIST_PATH
@@ -109,7 +122,7 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
                 AC_MSG_NOTICE([Option --with-pdk-dist-path=<path> not specified.  Local install only.])
                 pdkvar[]_DIST_PATH=""
             else
-                pdkvar[]_DIST_PATH=`readlink -f $[]pdkvar[]_DIST_PATH`
+                pdkvar[]_DIST_PATH=`realpath $[]pdkvar[]_DIST_PATH`
             fi
 
             # --with-pdk-link-targets=PDK_LINK_TARGETS
@@ -208,7 +221,7 @@ AC_DEFUN([M4_GEN_INSTALLATION], [
             else
                 targetvar[]_PATH=$enableval
             fi
-            targetvar[]_PATH=`readlink -f $[]targetvar[]_PATH`
+            targetvar[]_PATH=`realpath $[]targetvar[]_PATH`
         ],
         []
     )
@@ -233,7 +246,7 @@ M4_GEN_INSTALLATION(xschem, xschem, 'https://github.com/StefanSchippers/xschem/a
             echo "Your build WILL fail if any of these are missing. You can choose to remove --enable-xschem or add a known installation path."
             sleep 2
             mkdir -p ../tools/xschem-install
-            XSCHEM_ABSOLUTE=`readlink -f ../tools/xschem-install`
+            XSCHEM_ABSOLUTE=`realpath ../tools/xschem-install`
             (cd ../tools/xschem && ./configure --prefix=$XSCHEM_ABSOLUTE && make && make install)
             XSCHEM_PATH=$XSCHEM_ABSOLUTE
         ])
@@ -263,11 +276,6 @@ AC_DEFUN([M4_GEN_WITH_TOOLS], [
 AC_MSG_NOTICE([Tools enabled for PDK setup installation: M4_GET_TOOLS()])
 
 M4_GEN_WITH_TOOLS(M4_GET_TOOLS())
-
-# Checking if (some) prerequisites are satisfied
-## REQUIRES: https://www.gnu.org/software/autoconf-archive/ax_python_module.html#ax_python_module
-AM_PATH_PYTHON([3.4])
-AX_PYTHON_MODULE([distutils],[])
 
 # Check for "--with-ef-style"
 EF_STYLE=0

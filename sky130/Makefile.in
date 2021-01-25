@@ -156,6 +156,9 @@ LINK_TARGETS = @SKY130_LINK_TARGETS@
 
 # Path to skywater_pdk 
 SKYWATER_PATH = @SKY130_SOURCE_PATH@
+ifneq ($(SKYWATER_PATH),)
+SKYWATER_PATH = $(SKYWATER_PATH)/libraries
+endif
 
 # Path to OSU standard cell library sources (to be added to configuration options).
 OSU_PATH = ~/gits/osu_130_pdk
