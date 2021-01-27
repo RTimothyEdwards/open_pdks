@@ -1,0 +1,137 @@
+tech
+   35
+   micross
+end
+
+version
+   version 0.1
+   description "Techfile for Micross bump-bond post-processing for Sky130"
+   requires magic-8.1.111
+end
+
+planes
+   m5
+   rdl
+   ubm
+   glass
+end
+
+types
+   m5 metal5 m5
+   m5    pi1
+   rdl   rdl
+   rdl   pi2
+   ubm   ubm
+   glass glass
+end 
+
+contact
+   pi1	  metal5 rdl
+   pi2	  rdl	 ubm
+end
+
+styles
+   styletype mos
+   metal5 metal6
+   pi1	  metal6 metal7 via6
+   rdl	  metal7
+   pi2	  metal7 metal8 via7
+   ubm    metal8
+   glass  overglass
+end
+
+compose
+end
+
+connect
+end
+
+cifoutput
+style micross
+   scalefactor 1
+   options calma-permissive-labels
+
+   # NOTE:  metal5 and glass are for reference only;  they do not get output
+
+   layer PI1 pi1
+   labels pi1
+   calma  5 0
+
+   layer RDL rdl
+   labels rdl
+   calma 10 0
+
+   layer PI2 pi2
+   labels pi2
+   calma 15 0
+
+   layer UBM ubm
+   labels ubm
+   calma 20 0
+
+end
+
+cifinput
+style micross
+   scalefactor 1
+
+   # NOTE:  metal5 and glass are for reference;  GDS numbers correspond
+   # to SkyWater SKY130
+
+   layer metal5 MET5
+   labels MET5
+
+   layer glass GLASS
+
+   layer pi1 PI1
+   labels PI1
+
+   layer rdl RDL
+   labels RDL
+
+   layer pi2 PI2
+   labels PI2
+
+   layer ubm UBM
+   labels UBM
+
+   calma MET5  72 20
+   calma GLASS 76 20
+   calma PI1    5 0
+   calma RDL   10 0
+   calma PI2   15 0
+   calma UBM   20 0
+
+end
+
+# mzrouter
+# end
+
+drc
+end
+
+extract
+style generic
+   cscale 1
+   lambda 1
+   step 10
+   sidehalo 0
+
+  planeorder m5  0
+  planeorder rdl 1
+  planeorder ubm 2
+  planeorder glass 3
+end
+
+# wiring
+# end
+
+# router
+# end
+
+# plowing
+# end
+
+plot
+  style pnm
+end
