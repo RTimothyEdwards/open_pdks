@@ -2,9 +2,9 @@ VERSION 5.7 ;
   NOWIREEXTENSIONATPIN ON ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
-MACRO sky130_fd_sc_hd__fakediode_2
+MACRO sky130_ef_sc_hd__fakediode_2
   CLASS CORE SPACER ;
-  FOREIGN sky130_fd_sc_hd__fakediode_2 ;
+  FOREIGN sky130_ef_sc_hd__fakediode_2 ;
   ORIGIN  0.000000  0.000000 ;
   SIZE  0.920000 BY  2.720000 ;
   SYMMETRY X Y R90 ;
@@ -61,5 +61,5 @@ MACRO sky130_fd_sc_hd__fakediode_2
       RECT 0.605000 -0.085000 0.775000 0.085000 ;
       RECT 0.605000  2.635000 0.775000 2.805000 ;
   END
-END sky130_fd_sc_hd__fakediode_2
+END sky130_ef_sc_hd__fakediode_2
 END LIBRARY
