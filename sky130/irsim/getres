@@ -1,0 +1,60 @@
+#! /bin/csh
+
+set spice = /usr/local/bin/ngspice
+
+if( $#argv != 3 ) then
+	echo "usage: getres nmodel_file pmodel_file dev_file"
+	exit 1
+endif
+
+if( ! -f $1 ) then
+	echo "can't open spice nfet model file '"$1"'"
+	exit 1
+endif
+
+if( ! -f $2 ) then
+	echo "can't open spice pfet model file '"$2"'"
+	exit 1
+endif
+
+if( -f $argv[3] ) then
+	source $argv[3]
+else
+	echo "can't open device configuration file '"$argv[3]"'"
+	exit 1
+endif
+
+set nmos = `grep -i "\.MODEL" $1 | grep -i NMOS`
+set pmos = `grep -i "\.MODEL" $1 | grep -i PMOS`
+
+if( $#nmos == 0 ) then
+	echo "can't find nmos .MODEL card in '"$1"'"
+	exit 1
+endif
+if( $#pmos == 0 ) then
+	echo "can't find pmos .MODEL card in '"$1"'"
+	exit 1
+endif
+
+cat $1 ckt.spi > tmp.spi
+
+ed - <<end tmp.spi >& /dev/null
+g/N_FET/s/N_FET/$nmos[2]/g
+g/P_FET/s/P_FET/$pmos[2]/g
+g/C_LOAD/s/C_LOAD/$cap/g
+g/N_WITH/s/N_WITH/$nwith/g
+g/N_LEN/s/N_LEN/$nlen/g
+g/P_WITH/s/P_WITH/$pwith/g
+g/P_LEN/s/P_LEN/$plen/g
+w
+q
+end
+
+$spice -n -b -r spi.out tmp.spi
+
+if( $status != 0 ) then
+	echo "something went wrong with spice, look at 'tmp.spi'"
+	exit 1
+endif
+
+./findr -c $cap -n $nwith,$nlen -p $pwith,$plen spi.out |& tee resists

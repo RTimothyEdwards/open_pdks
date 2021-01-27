@@ -1,5 +1,6 @@
 klayout
 magic
 netgen
+irsim
 openlane
 qflow

@@ -594,6 +594,7 @@ PATCH
 MAGIC
 QFLOW_DISABLED
 OPENLANE_DISABLED
+IRSIM_DISABLED
 NETGEN_DISABLED
 MAGIC_DISABLED
 KLAYOUT_DISABLED
@@ -658,6 +659,7 @@ with_sky130_link_targets
 enable_klayout
 enable_magic
 enable_netgen
+enable_irsim
 enable_openlane
 enable_qflow
 enable_osu_lib
@@ -1294,6 +1296,10 @@ Optional Features:
                 Enable or disable netgen [default=enabled]
 
 
+  --enable-irsim
+                Enable or disable irsim [default=enabled]
+
+
   --enable-openlane
                 Enable or disable openlane [default=enabled]
 
@@ -1315,6 +1321,8 @@ Optional Features:
                           Enable or disable magic [default=enabled]
   --enable-netgen --disable-netgen
                           Enable or disable netgen [default=enabled]
+  --enable-irsim --disable-irsim
+                          Enable or disable irsim [default=enabled]
   --enable-openlane --disable-openlane
                           Enable or disable openlane [default=enabled]
   --enable-qflow --disable-qflow
@@ -2284,8 +2292,8 @@ $as_echo "$as_me: Link targets set to $SKY130_LINK_TARGETS" >&6;}
 # Set variables for tool setups
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: Found tools: klayout magic netgen openlane qflow" >&5
-$as_echo "$as_me: Found tools: klayout magic netgen openlane qflow" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Found tools: klayout magic netgen irsim openlane qflow" >&5
+$as_echo "$as_me: Found tools: klayout magic netgen irsim openlane qflow" >&6;}
 
 
 
@@ -2327,6 +2335,21 @@ if test "${enable_netgen+set}" = set; then :
   enableval=$enable_netgen;
                 if test "$enableval" == "no" -o "$enableval" == "NO"; then
                     NETGEN_DISABLED=1
+                fi
+
+
+fi
+
+
+
+
+
+        IRSIM_DISABLED=0
+        # Check whether --enable-irsim was given.
+if test "${enable_irsim+set}" = set; then :
+  enableval=$enable_irsim;
+                if test "$enableval" == "no" -o "$enableval" == "NO"; then
+                    IRSIM_DISABLED=1
                 fi
 
 
@@ -2689,8 +2712,8 @@ fi
 
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: Tools enabled for PDK setup installation: klayout magic netgen openlane qflow" >&5
-$as_echo "$as_me: Tools enabled for PDK setup installation: klayout magic netgen openlane qflow" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow" >&5
+$as_echo "$as_me: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow" >&6;}
 
 
 
@@ -2730,6 +2753,20 @@ if test "${enable_netgen+set}" = set; then :
   enableval=$enable_netgen;
                 if test "$enableval" == "no" -o "$enableval" == "NO"; then
                     NETGEN_DISABLED=1
+                fi
+
+fi
+
+
+
+
+
+        IRSIM_DISABLED=0
+        # Check whether --enable-irsim was given.
+if test "${enable_irsim+set}" = set; then :
+  enableval=$enable_irsim;
+                if test "$enableval" == "no" -o "$enableval" == "NO"; then
+                    IRSIM_DISABLED=1
                 fi
 
 fi

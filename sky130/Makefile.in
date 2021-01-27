@@ -59,6 +59,9 @@
 #	--disable-netgen
 #		Do not install setup files for the netgen LVS tool.
 #
+#	--disable-irsim
+#		Do not install setup files for the IRSIM simulation tool.
+#
 #	--disable-qflow
 #		Do not install setup files for the qflow synthesis flow.
 #
@@ -212,6 +215,7 @@ endif
 
 MAGICTOP = libs.tech/magic
 NETGENTOP = libs.tech/netgen
+IRSIMTOP = libs.tech/irsim
 QFLOWTOP = libs.tech/qflow
 KLAYOUTTOP = libs.tech/klayout
 OPENLANETOP = libs.tech/openlane
@@ -222,20 +226,23 @@ else
     MAGICPATH = ${MAGICTOP}
 endif
 
-# Currently, netgen, qflow, and klayout do not use revisioning (needs to change!)
+# Currently, netgen, qflow, irsim, and klayout do not use revisioning (needs to change!)
 NETGENPATH = ${NETGENTOP}
+IRSIMPATH = ${IRSIMTOP}
 QFLOWPATH = ${QFLOWTOP}
 KLAYOUTPATH = ${KLAYOUTTOP}
 OPENLANEPATH = ${OPENLANETOP}
 
 MAGICTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${MAGICTOP}
 NETGENTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NETGENTOP}
+IRSIMTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${IRSIMTOP}
 QFLOWTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${QFLOWTOP}
 KLAYOUTTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${KLAYOUTTOP}
 OPENLANETOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${OPENLANETOP}
 
 MAGIC_STAGING_A = ${STAGING_PATH}/${SKY130A}/${MAGICPATH}
 NETGEN_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NETGENPATH}
+IRSIM_STAGING_A = ${STAGING_PATH}/${SKY130A}/${IRSIMPATH}
 QFLOW_STAGING_A = ${STAGING_PATH}/${SKY130A}/${QFLOWPATH}
 KLAYOUT_STAGING_A = ${STAGING_PATH}/${SKY130A}/${KLAYOUTPATH}
 OPENLANE_STAGING_A = ${STAGING_PATH}/${SKY130A}/${OPENLANEPATH}
@@ -285,6 +292,12 @@ endif
 NETGEN_DISABLED = @NETGEN_DISABLED@
 ifneq (${NETGEN_DISABLED}, 1)
         TOOLS += netgen
+endif
+
+# IRSIM_DISABLED = 0 | 1
+IRSIM_DISABLED = @IRSIM_DISABLED@
+ifneq (${IRSIM_DISABLED}, 1)
+        TOOLS += irsim
 endif
 
 
@@ -375,6 +388,12 @@ netgen-a: netgen/${TECH}_setup.tcl
 	rm -f ${NETGEN_STAGING_A}/setup.tcl
 	${CPP} ${SKY130A_DEFS} netgen/${TECH}_setup.tcl > ${NETGEN_STAGING_A}/${SKY130A}_setup.tcl
 	(cd ${NETGEN_STAGING_A} ; ln -s ${SKY130A}_setup.tcl setup.tcl)
+
+irsim-a: irsim/
+	mkdir -p ${IRSIMTOP_STAGING_A}
+	mkdir -p ${IRSIM_STAGING_A}
+	rm -f ${IRSIM_STAGING_A}/${SKY130A}_*.prm
+	cp irsim/${SKY130A}_*.prm ${IRSIM_STAGING_A}/
 
 klayout-a: klayout/${TECH}.lyp klayout/${TECH}.lyt
 	mkdir -p ${KLAYOUTTOP_STAGING_A}

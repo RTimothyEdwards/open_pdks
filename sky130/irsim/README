@@ -1,0 +1,61 @@
+Attempting to get a valid IRSIM .prm file for the sky130 process
+Specifically for the sky130_fd_sc_hd library, but should work with all of
+them except for sky130_fd_sc_hvl.
+------------------------------------------------------------------------
+Following directions from the irsim web page. . . 
+
+Get the "getres" script from ~/gitsrc/irsim/lib/calibrate_spice3/
+Change "spice" (with path) to "ngspice" (with path)
+Added string.h, stdlib.h, and malloc.h to findr.c to make it compile,
+and compiled it.  
+
+Get characteristics from SPICE, cell sky130_fd_sc_hd__nand2_1
+
+    P device (sky130_fd_pr__pfet_01v8_lvt): 1.00um wide, 0.15um long
+    N device (sky130_fd_pr__nfet_01v8):	    0.65um wide, 0.15um long
+
+    Using 50fF for loading cap (essentially irrelevant)
+
+Writing these values into "config.txt" (but not using).
+
+Copy "ckt.spi" to local directory
+Substitute values by hand (obvious)
+Use ".lib" to get models  (sky130.lib.spice) with corner "tt"
+Convert "M" to "X" on devices.
+
+Changed voltage source on ground to 0.01 ohm resistor because ngspice
+doesn't like shorted voltage sources.
+
+Added ".save all".
+
+Spice models are in 
+
+    ~/projects/efabless/tech/SW/sky130A/libs.tech/ngspice/sky130.lib.spice
+
+Note that the raw file reader expects an ASCII raw file, which in ngspice
+requires in ".spiceinit":
+
+    set filetype=ascii
+
+Running:
+
+    ngspice -b -r spi.out ckt.spi
+
+Do *not* use "-n" because that suppresses the reading of the .spiceinit file.
+
+Run:
+
+    ./findr -c 100 -n 0.8,0.18 -p 1.0,0.18 spi.out |& tee resists
+
+Had to change "findr.c" to replace "vdd" with "v(vdd)" and the same for all
+the vouts.
+
+Success!
+
+Now:  Redo this at all nine corners for low-typ-high voltage and low-typ-high temp.
+
+Add header.  sky130 gate thickness, from sky130_fd_pr__nfet_01v8 model is 4.15E-9 m,
+so:
+	Cox = Eox / Tox  =  8.854E-12 F/m * 3.9 / 4.15E-9 = 8.32E-3 F/m^2 = pF/um^2
+
+The other cap values need to be looked up and corrected. . . 

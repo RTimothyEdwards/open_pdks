@@ -1,0 +1,28 @@
+;
+; configuration file for sky130 (0.13um process)
+;
+
+lambda  0.005 ; length scaling, microns (1 lambda = 1 centimicron)
+
+capga   .00832 ; gate capacitance, pF/micron^2
+
+capda 0.0012
+capdp 0.0013
+cappda 0.00260
+cappdp 0.00090
+
+lowthresh  0.5  ; logic low threshold as a normalized voltage
+highthresh 0.5  ; logic high threshold as a normalized voltage
+
+cntpullup 0     ; irrelevant, cmos technology; no depletion transistors
+diffperim 0     ; don't include diffusion perimeters for sidewall cap.
+subparea 0      ; poly over transistor won't count as part pf bulk-poly cap.
+diffext  0      ; diffusion extension for each transistor
+
+resistance n-channel dynamic-high	0.8	0.2	40227.0
+resistance n-channel dynamic-low		0.8	0.2	3549.0
+resistance n-channel static		0.8	0.2	4518.0
+
+resistance p-channel dynamic-high	1.0	0.2	8694.0
+resistance p-channel dynamic-low		1.0	0.2	662526.0
+resistance p-channel static		1.0	0.2	5762.0
