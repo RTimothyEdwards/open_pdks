@@ -836,6 +836,7 @@ style gdsii
 	grow	185
 	shrink	185
 	close  265000
+	mask-hints LVTN
 	calma 125 44
 
 #----------------------------------------------------------------
@@ -860,6 +861,7 @@ style gdsii
 	grow	185
 	shrink	185
 	close 265000
+	mask-hints HVTP
 	calma 78 44
 
 #----------------------------------------------------------------
