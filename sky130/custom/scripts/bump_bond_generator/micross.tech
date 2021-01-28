@@ -57,7 +57,7 @@ style micross
    labels pi1
    calma  5 0
 
-   layer RDL rdl
+   layer RDL rdl,pi1
    labels rdl
    calma 10 0
 
@@ -65,7 +65,7 @@ style micross
    labels pi2
    calma 15 0
 
-   layer UBM ubm
+   layer UBM ubm,pi2
    labels ubm
    calma 20 0
 

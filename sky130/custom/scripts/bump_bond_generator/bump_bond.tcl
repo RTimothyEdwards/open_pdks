@@ -149,6 +149,7 @@ proc make_bump_bond {{orient 0}} {
 #-----------------------------------------------------------------------
 
 proc draw_bump_bond {x y {orient 0}} {
+    suspendall
     box size 0 0
     box position ${x}um ${y}um
     if {[% $orient 90] != 0} {
@@ -165,6 +166,7 @@ proc draw_bump_bond {x y {orient 0}} {
         set orient [- 360 $orient]
     }
     getcell $bondcell $orient child 0 0
+    resumeall
 }
 
 #-----------------------------------------------------------------------
@@ -221,9 +223,10 @@ proc bevel_corners {layer length} {
 #-----------------------------------------------------------------------
 
 proc draw_pad_bond {x y} {
+    suspendall
     snap internal
     box values 0 0 0 0
-    box position $x $y
+    box position ${x}um ${y}um
     box grow c 50um
 
     # Make sure there is glass underneath.  If not, assume the square
@@ -232,7 +235,7 @@ proc draw_pad_bond {x y} {
     set stuff [what -list]
     set layers [lindex $stuff 0]
     if {$layers == {}} {
-        box position $x $y
+    	box position ${x}um ${y}um
 	box size 0 0
         box grow c 30um
     } else {
@@ -248,6 +251,7 @@ proc draw_pad_bond {x y} {
     box grow c 10um
     paint rdl
     bevel_corners rdl 10.0
+    resumeall
 }
 
 #-----------------------------------------------------------------------
@@ -263,10 +267,12 @@ proc draw_pad_bond {x y} {
 #-----------------------------------------------------------------------
 
 proc draw_pad_route {coords {width 15.0}} {
+    suspendall
     set icoords []
     foreach coord $coords {
         lappend icoords ${coord}um
     }
     wire segment rdl ${width}um {*}$icoords
+    resumeall
 }
 
