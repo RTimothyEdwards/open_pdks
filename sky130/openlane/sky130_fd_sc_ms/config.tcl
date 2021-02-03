@@ -13,6 +13,10 @@ set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LI
 
 set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
 
+# Default No Synth List
+set ::env(NO_SYNTH_LIST) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/no_synth.cells"
+
+
 # Placement site for core cells
 # This can be found in the technology lef
 set ::env(PLACE_SITE) "unit"
