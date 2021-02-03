@@ -56,7 +56,7 @@ set ::env(DIODE_CELL) "ANTFILL"
 #set ::env(FAKEDIODE_CELL) "sky130_osu_sc_t18__fakediode_2"
 set ::env(DIODE_CELL_PIN) "A"
 
-set ::env(CELL_PAD) 8
+set ::env(CELL_PAD) 4
 set ::env(CELL_PAD_EXECLUDE) "FILLX*"
 
 # Clk Buffers info CTS data
