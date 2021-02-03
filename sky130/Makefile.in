@@ -157,7 +157,7 @@ LINK_TARGETS = @SKY130_LINK_TARGETS@
 
 # Paths:
 
-# Path to skywater_pdk 
+# Path to skywater_pdk
 SKYWATER_PATH = @SKY130_SOURCE_PATH@
 ifneq ($(SKYWATER_PATH),)
     SKYWATER_PATH := $(SKYWATER_PATH)/libraries
@@ -445,27 +445,33 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/no_synth.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/tribuff_map.v 
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/tribuff_map.v
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/latch_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/latch_map.v
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/no_synth.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tribuff_map.v 
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tribuff_map.v
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/latch_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/latch_map.v
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/no_synth.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/tribuff_map.v 
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/tribuff_map.v
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/latch_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/latch_map.v
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/no_synth.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/tribuff_map.v 
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/tribuff_map.v
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/latch_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/latch_map.v
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/no_synth.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/tribuff_map.v 
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/tribuff_map.v
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/latch_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/latch_map.v
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tracks.info
 	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/no_synth.cells	
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tribuff_map.v 
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tribuff_map.v
+	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/latch_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/latch_map.v
 	${CPP} ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/config.tcl > ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/tracks.info > ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/tracks.info
 
@@ -485,10 +491,10 @@ vendor-a:
 		-library primitive sky130_fd_pr |& tee -a ${SKY130A}_install.log
 	# Custom:  Add "short" resistor model and subcircuit to the r+c models file
 	cat ./custom/models/short.spice >> \
-		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice 
+		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice
 	# Custom:  Add diodes as subcircuits to the r+c models file
 	cat ./custom/models/diode.spice >> \
-		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice 
+		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice
 
 	# Install custom additions to I/O pad library
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
