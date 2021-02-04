@@ -289,9 +289,11 @@ types
 #endif (METAL5)
 
 #ifdef REDISTRIBUTION
-  metal5 mrdlcontact,mrdlc
-  metali metalrdl,mrdl,metrdl
+  metal5 mrdlcontact,mrdlc,pi1
+  metali metalrdl,mrdl,metrdl,rdl
  -metali obsmrdl
+  metali pi2
+  block  ubm
 #endif (REDISTRIBUTION)
 
 # Miscellaneous
@@ -358,6 +360,7 @@ contact
 
 #ifdef REDISTRIBUTION
   mrdlc metal5 mrdl
+  pi2   mrdl ubm
 #endif (REDISTRIBUTION)
 end
 
@@ -582,6 +585,8 @@ styles
   mrdlc	    metal6  metal7  via6
   metalrdl  metal7
   obsmrdl   metal7
+  ubm	    metal8
+  pi2	    metal7  metal8  via7
 #endif (REDISTRIBUTION)
 
   glass	    overglass
@@ -1055,9 +1060,15 @@ style gdsii
 # surrounds CONT (LICON) on poly only (i.e., pc)
 #----------------------------------------------------------------
 
+ # Avoids a common case of NPC bridges too close to other LICON shapes.
+ templayer diffcutarea pdc,ndc,psc,nsc,mvpdc,mvndc,mvpsc,mvnsc
+	grow 90
+
  layer NPC pc
  	squares-grid 0 170 170
 	grow 100
+	bridge 270 270
+	and-not diffcutarea
 	bridge 270 270
 	grow 130
 	shrink 130
