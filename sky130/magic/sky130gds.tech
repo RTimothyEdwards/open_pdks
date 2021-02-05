@@ -5,7 +5,8 @@ end
 
 version
     version REVISION
-    description "SkyWater S8: Vendor GDS layers"
+    description "SkyWater SKY130: Vendor GDS layers and supplementary DRC"
+    requires magic-8.3.124
 end
 
 planes
@@ -201,6 +202,9 @@ styles
  l68   implant4
  l69   subcircuit
  l70   polysilicon
+ error_p	error_waffle
+ error_s	error_waffle
+ error_ps	error_waffle
 end
 
 compose
@@ -216,8 +220,10 @@ end
 
 cifoutput
 style gdsii
-  scalefactor 50 nanometers
+  scalefactor 10 nanometers
   options calma-permissive-labels
+  gridlimit 1
+
  layer  NWELL NWELL,NWELLT,NWELLP
  calma 64 20
 
@@ -492,8 +498,8 @@ style gdsii
 end
 
 cifinput
-style ProgName
-  scalefactor 50 nanometers
+style default
+ scalefactor 10 nanometers
  layer l1  NWELL
  layer l2  DNWELL
  layer l3  DIFF
@@ -639,7 +645,52 @@ end
 mzrouter
 end
 
+#---------------------------------------------------------------------
+# DRC style used to check DRC errors GDS layers directly.  Generally,
+# this covers rules not found in sky130A.tech
+#---------------------------------------------------------------------
+
 drc
+ scalefactor 10
+
+ # NPC rules
+
+ width NPC 270 "NPC width < %d (NPC.1)"
+ spacing NPC NPC 270 touching_ok "NPC to NPC spacing < %d (NPC.2)"
+ spacing NPC LICON 90 surround_ok "NPC to non-poly LICON spacing < %d (LICON.13)"
+ angles NPC 45 "Only 45 degree angles allowed on NPC (X.3)"
+ off_grid NPC 5 "NPC shape not on %d grid (X.1b)"
+
+ # HVTP rules
+
+ width HVTP 380 "HVTP width < %d (HVTP.1)"
+ spacing HVTP HVTP 700 touching_ok "HVTP to HVTP spacing < %d (HVTP.2)"
+ area HVTP 265000 380 "HVTP minimum area < %a (HVTP.5)"
+ angles HVTP 45 "Only 45 degree angles allowed on HVTP (X.3)"
+ off_grid HVTP 5 "HVTP shape not on %d grid (X.1b)"
+
+ # HVI rules
+
+ width HVI 600 "HVI width < %d (HVI.1)"
+ spacing HVI HVI 700 touching_ok "HVI to HVI spacing < %d (HVI.2)"
+ spacing HVI NWELL 700 surround_ok "HVI to NWELL spacint < %d (HVI.5)"
+ no_overlap HVI TUNM
+ off_grid HVI 5 "HVI shape not on %d grid (X.1b)"
+
+ # NSDM rules
+
+ width NSDM 380 "NSDM width < %d (NSDM.1)"
+ spacing NSDM NSDM 380 touching_ok "NSDM to NSDM spacing < %d (NSDM.2)"
+ angles NSDM 45 "Only 45 degree angles allowed on NSDM (X.3)"
+ off_grid NSDM 5 "NSDM shape not on %d grid (X.1b)"
+
+ # PSDM rules
+
+ width PSDM 380 "PSDM width < %d (PSDM.1)"
+ spacing PSDM PSDM 380 touching_ok "PSDM to PSDM spacing < %d (PSDM.2)"
+ angles PSDM 45 "Only 45 degree angles allowed on PSDM (X.3)"
+ off_grid PSDM 5 "PSDM shape not on %d grid (X.1b)"
+
 end
 
 extract
