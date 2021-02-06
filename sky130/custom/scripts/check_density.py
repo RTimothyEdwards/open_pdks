@@ -396,8 +396,8 @@ if __name__ == '__main__':
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(liaccum))
             if liaccum < 0.35:
                 print('***Error:  LI Density < 35%')
-            elif liaccum > 0.70:
-                print('***Error:  LI Density > 70%')
+            elif liaccum > 0.60:
+                print('***Error:  LI Density > 60%')
 
     print('')
     print('MET1 Density:')
@@ -421,8 +421,8 @@ if __name__ == '__main__':
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met1accum))
             if met1accum < 0.35:
                 print('***Error:  MET1 Density < 35%')
-            elif met1accum > 0.70:
-                print('***Error:  MET1 Density > 70%')
+            elif met1accum > 0.60:
+                print('***Error:  MET1 Density > 60%')
 
     print('')
     print('MET2 Density:')
@@ -446,8 +446,8 @@ if __name__ == '__main__':
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met2accum))
             if met2accum < 0.35:
                 print('***Error:  MET2 Density < 35%')
-            elif met2accum > 0.70:
-                print('***Error:  MET2 Density > 70%')
+            elif met2accum > 0.60:
+                print('***Error:  MET2 Density > 60%')
 
     print('')
     print('MET3 Density:')
@@ -471,8 +471,8 @@ if __name__ == '__main__':
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met3accum))
             if met3accum < 0.35:
                 print('***Error:  MET3 Density < 35%')
-            elif met3accum > 0.70:
-                print('***Error:  MET3 Density > 70%')
+            elif met3accum > 0.60:
+                print('***Error:  MET3 Density > 60%')
 
     print('')
     print('MET4 Density:')
@@ -496,8 +496,8 @@ if __name__ == '__main__':
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met4accum))
             if met4accum < 0.35:
                 print('***Error:  MET4 Density < 35%')
-            elif met4accum > 0.70:
-                print('***Error:  MET4 Density > 70%')
+            elif met4accum > 0.60:
+                print('***Error:  MET4 Density > 60%')
 
     print('')
     print('MET5 Density:')
@@ -521,8 +521,8 @@ if __name__ == '__main__':
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met5accum))
             if met5accum < 0.45:
                 print('***Error:  MET5 Density < 45%')
-            elif met5accum > 0.86:
-                print('***Error:  MET5 Density > 86%')
+            elif met5accum > 0.76:
+                print('***Error:  MET5 Density > 76%')
 
     print('')
     print('Whole-chip density results:')
