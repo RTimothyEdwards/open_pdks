@@ -1932,7 +1932,8 @@ style wafflefill variants (),(tiled)
 	or	alldiff,allpoly
 	grow	200
  templayer	lifill_coarse topbox
-        slots   0 3000 650 0 3000 650 700 0
+        # slots   0 3000 650 0 3000 650 700 0
+        slots   0 3000 750 0 3000 750 700 0
         and-not obstruct_li_coarse
 	and	topbox
         shrink  1495
@@ -1976,7 +1977,7 @@ style wafflefill variants (),(tiled)
         grow    3000
  templayer	met1fill_coarse topbox
         # slots   0 2000 200 0 2000 200 700 0
-        slots   0 2000 350 0 2000 350 700 0
+        slots   0 2000 500 0 2000 500 700 350
         and-not obstruct_m1_coarse
 	and	topbox
         shrink  995
@@ -2028,7 +2029,7 @@ style wafflefill variants (),(tiled)
         grow    3000
  templayer	met2fill_coarse topbox
         # slots   0 2000 200 0 2000 200 700 350
-        slots   0 2000 350 0 2000 350 700 350
+        slots   0 2000 500 0 2000 500 700 350
         and-not obstruct_m2
 	and	topbox
         shrink  995
@@ -2080,7 +2081,7 @@ style wafflefill variants (),(tiled)
         grow    3000
  templayer	met3fill_coarse topbox
         # slots   0 2000 300 0 2000 300 700 700
-        slots   0 2000 350 0 2000 350 700 700
+        slots   0 2000 500 0 2000 500 700 350
         and-not obstruct_m3
 	and	topbox
         shrink  995
@@ -2134,7 +2135,7 @@ style wafflefill variants (),(tiled)
         grow    3000
  templayer	met4fill_coarse topbox
         # slots   0 2000 300 0 2000 300 700 1050
-        slots   0 2000 350 0 2000 350 700 1050
+        slots   0 2000 500 0 2000 500 700 350
         and-not obstruct_m4
 	and	topbox
         shrink  995
