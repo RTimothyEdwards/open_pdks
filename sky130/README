@@ -196,6 +196,7 @@ Summary:
 		    qflow/		qflow scripts and graywolf setup files.
 		    klayout/		setup files for klayout
 		    openlane/		setup files for openlane
+		    ngspice/		base model files and libraries for ngspice
 
 		libs.ref/		foundry data
 
@@ -224,9 +225,7 @@ Summary:
 
 			sky130_fd_io/			Standard I/O
 
-			sky130_fd_pr_base/		Primitive devices w/fixed layout
-			sky130_fd_pr_rf/		RF primitive devices w/fixed layout
-			sky130_fd_pr_rf2/		Additional RF primitive devices w/fixed layout
+			sky130_fd_pr/			Primitive devices w/fixed layout
 
     The target installation destinations assume the directory structure above.  Changing
     this requires editing the source files.
