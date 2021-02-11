@@ -75,14 +75,8 @@
 # NOTE:  The comments below are for features that have not yet been
 # implemented.
 #
-# External libraries and tool setups that can be enabled are the following:
-#
-#	--enable-osu-lib[=<path>]
-#		If enabled, install the OSU standard cell library.  If <path>
-#		is specified, then the OSU standard cell library is expected
-#		to be found rooted at the given path.  If not specified, then
-#		the OSU standard cell library will be cloned from the git
-#		repository and installed.
+# External (third-party) libraries and tool setups are the following (enabled
+# by default):
 #
 #	--enable-alpha-lib[=<path>]
 #		If enabled, install the sky130_ml_xx_hd font library from
@@ -466,6 +460,12 @@ xschem-a: ${XSCHEM_PATH}
 	if test "x${XSCHEM_PATH}" != "x" ; then \
 	    cp -rp ${XSCHEM_PATH}/* ${XSCHEM_STAGING_A} ; \
 	fi
+	# Re-copy the xschemrc, with one change to add the PDK install path as
+	# a component of XSCHEM_LIBRARY_PATH
+	cat ${XSCHEM_PATH}/xschemrc | \
+		sed -e "/PWD/aappend XSCHEM_LIBRARY_PATH :${XSCHEM_STAGING_A}" | \
+		sed -e "/sky130_models.tcl/s#scripts#${XSCHEM_STAGING_A}/scripts#" \
+		> ${XSCHEM_STAGING_A}/xschemrc
 
 openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_A}
