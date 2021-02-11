@@ -27,16 +27,15 @@ Quick summary (TL;DR):
     Open_PDKs SKY130 Installation: Most people will want to run the following
     for PDK installation:
 
-	./configure --enable-sky130-pdk --enable-alpha-sky130 \
-		--enable-xschem-sky130 --with-sky130-local-path=/usr/share/pdks
+	./configure --enable-sky130-pdk
 	make
 	sudo make install
 
     This will download and install the SkyWater SKY130 PDK, the SKY130 setup
     files for xschem, and a third-party library containing alphanumeric layouts.
-    If you prefer an installation in your user space, then replace /usr/share/pdks
-    with some alternative like ~/pdks, and "make install" does not need to be
-    run sudo.
+    If you prefer an installation in your user space, then use configure option
+    "--with-sky130-local-path=<path>" with <path> being some alternative like
+    ~/pdks, and "make install" does not need to be run sudo.
 
     With he above configuration line, the PDK files will be installed into
     the path
@@ -131,7 +130,6 @@ Step 1:
     directory.  The mandatory configure options are as follows:
 
 	--enable-sky130-pdk[=/path/to/sky130/pdk/source]
-	--with-sky130-local-path=/path/to/install/pdks
 
     See below for details.
 
@@ -174,7 +172,9 @@ Step 1:
 		a distribution installation, this is the local name of
 		the path to the PDK after it has been distributed to
 		the host computers (This should have been set by the
-		option --with-local-path= passed to configure).
+		option --with-local-path= passed to configure).  If not
+		specified, then the default <path> is /usr/share/pdks/,
+		so the PDK will be installed as /usr/share/pdks/sky130A/.
 
 	--with-sky130-dist-path=<path>
 		The path to the location of the installed files prior to
@@ -185,15 +185,17 @@ Step 1:
 	--enable-alpha-sky130[=<path>] 
 		The path to the sky130_ml_xx_hd library, a third-party
 		library containing layouts of alphanumeric characters
-		for adding text to layout.  If the path is not
-		specified, then the library will be downloaded from
-		github automatically.
+		for adding text to layout.  If the configuration option
+		or the path is not specified, then the library will be
+		downloaded from github automatically.  To disable this
+		package, use "--disable-alpha-sky130".
 
 	--enable-xschem-sky130[=<path>]
 		The path to the SKY130 setup for the xschem schematic
-		entry/schematic capture tool.  If the path is not
-		specified, then the library will be downloaded from
-		github automatically.
+		entry/schematic capture tool.  If the configuration
+		option or the path is not specified, then the library
+		will be downloaded from github automatically.  To disable
+		this package, use "--disable-xschem-sky130".
 
 Step 2:
 	Run:

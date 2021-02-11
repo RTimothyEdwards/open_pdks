@@ -2101,32 +2101,17 @@ $as_echo "$as_me: Found technology directories: sky130" >&6;}
 
 
         SKY130_SOURCE_PATH=""
-        SKY130_LOCAL_PATH=""
+        SKY130_LOCAL_PATH="/usr/share/pdk"
         SKY130_DIST_PATH=""
         SKY130_LINK_TARGETS="none"
-
-        pdk_find() {
-            FOUND=0
-            for path in /opt/pdks/sky130 /usr/share/pdks/sky130 /usr/local/share/pdks/sky130; do
-                if [ -d $path ] ; then
-                    echo "Found sky130 in $path, using this installation..."
-                    export SKY130_SOURCE_PATH=$path
-                    export SKY130_FOUND=1
-                    FOUND=1
-                fi
-            done
-            if [ "$FOUND" = "0" ]; then
-                export SKY130_SOURCE_PATH=../sources/sky130-pdk
-                export SKY130_FOUND=0
-            fi
-        }
+        SKY130_AUTO="0"
 
         # Check whether --enable-sky130-sky130 was given.
 if test "${enable_sky130_pdk+set}" = set; then :
   enableval=$enable_sky130_pdk;
                 if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-		    echo "Looking for sky130 in usual places"
-                    pdk_find
+                    export SKY130_SOURCE_PATH=../sources/sky130-pdk
+            	    SKY130_AUTO="1"
                 elif test "$enableval" == "no" -o "$enableval" == "NO"; then
                     echo "Disabling sky130..."
                 else
@@ -2145,7 +2130,7 @@ fi
 	    fi
             # Basic check that the PDK path exists, unless depending on Makefile
 	    # to download it automatically.
-            if [ "$SKY130_FOUND" == "1" ]; then
+            if [ "$SKY130_AUTO" = "0" ]; then
                 { $as_echo "$as_me:${as_lineno-$LINENO}: Checking specified path for 'sky130' at $SKY130_SOURCE_PATH" >&5
 $as_echo "$as_me: Checking specified path for 'sky130' at $SKY130_SOURCE_PATH" >&6;}
                 as_ac_File=`$as_echo "ac_cv_file_$SKY130_SOURCE_PATH" | $as_tr_sh`
@@ -2197,6 +2182,8 @@ $as_echo "$as_me: Checking whether local path is specified for 'sky130'" >&6;}
                 as_fn_error $? "Option --with-sky130-local-path=<path> not specified!" "$LINENO" 5
                 SKY130_LOCAL_PATH=""
             else
+            	{ $as_echo "$as_me:${as_lineno-$LINENO}: Install path for 'sky130' is $SKY130_LOCAL_PATH" >&5
+$as_echo "$as_me: Install path for 'sky130' is $SKY130_LOCAL_PATH" >&6;}
                 SKY130_LOCAL_PATH=`realpath $SKY130_LOCAL_PATH`
             fi
 
@@ -2207,7 +2194,6 @@ if test "${with_sky130_dist_path+set}" = set; then :
   withval=$with_sky130_dist_path; SKY130_DIST_PATH=$withval
 
 fi
-
 
 
             # "Require" this argument
@@ -2461,18 +2447,26 @@ fi
 if test "${enable_alpha_sky130+set}" = set; then :
   enableval=$enable_alpha_sky130;
             if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Option 'sky130_ml_xx_hd' will be installed automatically during make." >&5
-$as_echo "$as_me: Option 'sky130_ml_xx_hd' will be installed automatically during make." >&6;}
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_ml_xx_hd' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_ml_xx_hd' will be installed automatically during make." >&6;}
         	export SKY130_ML_XX_HD_PATH=../sources/sky130_ml_xx_hd
             elif test "$enableval" == "no" -o "$enableval" == "NO"; then
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling option 'sky130_ml_xx_hd'" >&5
-$as_echo "$as_me: Disabling option 'sky130_ml_xx_hd'" >&6;}
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_ml_xx_hd'" >&5
+$as_echo "$as_me: Disabling package 'sky130_ml_xx_hd'" >&6;}
+    		export SKY130_ML_XX_HD_PATH=""
             else
                 SKY130_ML_XX_HD_PATH=$enableval
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling option 'sky130_ml_xx_hd' at $SKY130_ML_XX_HD_PATH" >&5
-$as_echo "$as_me: Enabling option 'sky130_ml_xx_hd' at $SKY130_ML_XX_HD_PATH" >&6;}
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_ml_xx_hd' at $SKY130_ML_XX_HD_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_ml_xx_hd' at $SKY130_ML_XX_HD_PATH" >&6;}
             fi
             SKY130_ML_XX_HD_PATH=`realpath $SKY130_ML_XX_HD_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_ml_xx_hd' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_ml_xx_hd' will be installed automatically during make." >&6;}
+	    SKY130_ML_XX_HD_PATH=../sources/sky130_ml_xx_hd
+
 
 fi
 
@@ -2495,18 +2489,26 @@ fi
 if test "${enable_xschem_sky130+set}" = set; then :
   enableval=$enable_xschem_sky130;
             if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Option 'xschem_sky130' will be installed automatically during make." >&5
-$as_echo "$as_me: Option 'xschem_sky130' will be installed automatically during make." >&6;}
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'xschem_sky130' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'xschem_sky130' will be installed automatically during make." >&6;}
         	export XSCHEM_SKY130_PATH=../sources/xschem_sky130
             elif test "$enableval" == "no" -o "$enableval" == "NO"; then
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling option 'xschem_sky130'" >&5
-$as_echo "$as_me: Disabling option 'xschem_sky130'" >&6;}
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'xschem_sky130'" >&5
+$as_echo "$as_me: Disabling package 'xschem_sky130'" >&6;}
+    		export XSCHEM_SKY130_PATH=""
             else
                 XSCHEM_SKY130_PATH=$enableval
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling option 'xschem_sky130' at $XSCHEM_SKY130_PATH" >&5
-$as_echo "$as_me: Enabling option 'xschem_sky130' at $XSCHEM_SKY130_PATH" >&6;}
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'xschem_sky130' at $XSCHEM_SKY130_PATH" >&5
+$as_echo "$as_me: Enabling package 'xschem_sky130' at $XSCHEM_SKY130_PATH" >&6;}
             fi
             XSCHEM_SKY130_PATH=`realpath $XSCHEM_SKY130_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'xschem_sky130' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'xschem_sky130' will be installed automatically during make." >&6;}
+	    XSCHEM_SKY130_PATH=../sources/xschem_sky130
+
 
 fi
 

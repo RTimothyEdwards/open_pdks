@@ -26,32 +26,17 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
         m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z-" "A-Z_"))])
 
         pdkvar[]_SOURCE_PATH=""
-        pdkvar[]_LOCAL_PATH=""
+        pdkvar[]_LOCAL_PATH="/usr/share/[pdk]"
         pdkvar[]_DIST_PATH=""
         pdkvar[]_LINK_TARGETS="none"
-
-        pdk_find() {
-            FOUND=0
-            for path in /opt/pdks/pdk /usr/share/pdks/pdk /usr/local/share/pdks/pdk; do
-                if @<:@ -d $path @:>@ ; then
-                    echo "Found pdk in $path, using this installation..."
-                    export pdkvar[]_SOURCE_PATH=$path
-                    export pdkvar[]_FOUND=1
-                    FOUND=1
-                fi
-            done
-            if @<:@ "$FOUND" = "0" @:>@; then
-                export pdkvar[]_SOURCE_PATH=../sources/pdk-[pdk]
-                export pdkvar[]_FOUND=0
-            fi
-        }
+        pdkvar[]_AUTO="0" 
 
         AC_ARG_ENABLE(pdk-[pdk],
             [AS_HELP_STRING([--enable-pdk-[pdk]=@<:@/path/to/pdk/@:>@ --disable-pdk-[pdk]], "location of the source files for the pdk (pdks with a [pdk]_url file can automatically download them if the path is omitted)")],
             [
                 if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-		    echo "Looking for pdk in usual places"
-                    pdk_find
+                    export pdkvar[]_SOURCE_PATH=../sources/pdk-[pdk]
+            	    pdkvar[]_AUTO="1" 
                 elif test "$enableval" == "no" -o "$enableval" == "NO"; then
                     echo "Disabling pdk..."
                 else
@@ -70,7 +55,7 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
 	    fi
             # Basic check that the PDK path exists, unless depending on Makefile
 	    # to download it automatically.
-            if @<:@ "$[]pdkvar[]_FOUND" == "1" @:>@; then
+            if @<:@ "$[]pdkvar[]_AUTO" = "0" @:>@; then
                 AC_MSG_NOTICE([Checking specified path for 'pdk' at $[]pdkvar[]_SOURCE_PATH])
                 AC_CHECK_FILE($pdkvar[]_SOURCE_PATH,[
                     AC_MSG_NOTICE(['pdk' source path found at $pdkvar[]_SOURCE_PATH])
@@ -93,6 +78,7 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
                 AC_MSG_ERROR([Option --with-pdk-local-path=<path> not specified!])
                 pdkvar[]_LOCAL_PATH=""
             else
+            	AC_MSG_NOTICE([Install path for 'pdk' is $[]pdkvar[]_LOCAL_PATH])
                 pdkvar[]_LOCAL_PATH=`realpath $[]pdkvar[]_LOCAL_PATH`
             fi
 
@@ -101,7 +87,6 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
                 [AS_HELP_STRING([--with-pdk-dist-path=/path/to/install/pdk], "staging location to install the PDK for distribution (optional)")],
                 [pdkvar[]_DIST_PATH=$withval]
             )
-
             
             # "Require" this argument
             AC_MSG_NOTICE([Checking whether distribution path is specified for 'pdk'])
@@ -184,17 +169,20 @@ AC_DEFUN([M4_GEN_INSTALLATION], [
             [Install target. If path is omitted, it'll be downloaded. @<:@default=disabled@:>@]
         ), [
             if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-                AC_MSG_NOTICE([Option 'target' will be installed automatically during make.])
+                AC_MSG_NOTICE([Package 'target' will be installed automatically during make.])
         	export targetvar[]_PATH=location/target
             elif test "$enableval" == "no" -o "$enableval" == "NO"; then
-                AC_MSG_NOTICE([Disabling option 'target'])
+                AC_MSG_NOTICE([Disabling package 'target'])
+    		export targetvar[]_PATH=""
             else
                 targetvar[]_PATH=$enableval
-                AC_MSG_NOTICE([Enabling option 'target' at $[]targetvar[]_PATH])
+                AC_MSG_NOTICE([Enabling package 'target' at $[]targetvar[]_PATH])
             fi
             targetvar[]_PATH=`realpath $[]targetvar[]_PATH`
-        ],
-        []
+        ],[
+            AC_MSG_NOTICE([Package 'target' will be installed automatically during make.])
+	    targetvar[]_PATH=location/target
+	]
     )
 
     $4
