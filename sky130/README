@@ -9,9 +9,14 @@ for open source EDA tools
 -------------------------------------------------------------------------------
 Quick summary (TL;DR):
 
-    Prerequisite:  The Magic VLSI layout tool is used often by the
-    installation.  If you do not have it, then obtain it and install
-    with the following:
+    Prerequisites:
+
+    	sudo apt-get install python3
+
+    The Magic VLSI layout tool is used often by the installation.  If you do
+    not have it, then obtain it and install with the following:
+
+    	sudo apt-get install m4 tcsh tcl-dev tk-dev
 
 	git clone https://github.com/RTimothyEdwards/magic
 	cd magic
@@ -32,6 +37,10 @@ Quick summary (TL;DR):
     If you prefer an installation in your user space, then replace /usr/share/pdks
     with some alternative like ~/pdks, and "make install" does not need to be
     run sudo.
+
+    With he above configuration line, the PDK files will be installed into
+    the path
+		/usr/share/pdks/sky130A/
 
 -------------------------------------------------------------------------------
 Detailed instructions for the patient reader:
