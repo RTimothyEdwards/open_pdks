@@ -7,18 +7,68 @@ for open source EDA tools
 ----------------------------------------
 
 -------------------------------------------------------------------------------
+Quick summary (TL;DR):
+
+    Prerequisite:  The Magic VLSI layout tool is used often by the
+    installation.  If you do not have it, then obtain it and install
+    with the following:
+
+	git clone https://github.com/RTimothyEdwards/magic
+	cd magic
+	./configure
+	make
+	sudo make install
+
+    Open_PDKs SKY130 Installation: Most people will want to run the following
+    for PDK installation:
+
+	./configure --enable-sky130-pdk --enable-alpha-sky130 \
+		--enable-xschem-sky130 --with-sky130-local-path=/usr/share/pdks
+	make
+	sudo make install
+
+    This will download and install the SkyWater SKY130 PDK, the SKY130 setup
+    files for xschem, and a third-party library containing alphanumeric layouts.
+    If you prefer an installation in your user space, then replace /usr/share/pdks
+    with some alternative like ~/pdks, and "make install" does not need to be
+    run sudo.
+
+-------------------------------------------------------------------------------
+Detailed instructions for the patient reader:
+-------------------------------------------------------------------------------
 Prerequisites:
 
-1. Foundry source files:
+1. EDA tools:
 
-    Obtain sources for the SkyWater sky130 130nm process from the git repository at
-    the following location:
+    For installing files to use with the Magic layout tool, Magic must be installed.
+    Obtain Magic from:
+
+	https://github.com/RTimothyEdwards/magic
+
+    No other tools are required for installation, although open_pdks will
+    generate and install the setup files for a number of tools.
+
+2. Foundry source files [optional]:
+
+    If you do not have the foundry source files, the latest version will
+    be downloaded from github, built, and installed locally in the
+    open_pdks/sources/ directory.  If you have the foundry source files,
+    then you can pass the location to the open_pdks configure script.  In
+    that case, the sources will need to be completely built.  The
+    instructions below are needed ONLY if you intend to download and
+    install the PDK sources outside of open_pdks.  Instructions below
+    are only valid for the SkyWater SKY130 process.  If additional
+    open-source PDKs become available, instructions will be added as
+    needed.
+
+    Obtain sources for the SkyWater sky130 130nm process from the git repository
+    at the following location:
 
 	 https://github.com/google/skywater-pdk
 
     This repository may go in any convenient location.  The Makefile suggests
     the target location ~/projects/foundry/skywater-pdk but any location will
-    do as long as the definition for SKYWATER_PATH in the Makefile is set
+    do as long as the --enable-sky130-pdk= configuration option value is set
     appropriately.
 
     So cd to the target location parent directory (e.g., "cd ~/projects/foundry")
@@ -56,15 +106,7 @@ Prerequisites:
     Then follow the instructions below for generating the additional files
     for supporting the open source EDA tool flows.
 
-2. EDA tools:
-
-    For installing files to use with the Magic layout tool, Magic must be installed.
-    Obtain Magic from:
-
-	https://github.com/RTimothyEdwards/magic
-
--------------------------------------------------------------------------------
-Installation:
+PDK Installation:
 
     There are two methods for installation:  Local and Distribution.  Use Local
     installation if you are installing on a single host computer.  Use Distribution
@@ -77,53 +119,74 @@ Step 1:
     repository and to set the path to the install location.  Note that
     the configure script is located in the open_pdks top level directory,
     not in the foundry subdirctory, and must be run from the top level
-    directory.  Configure options are as follows:
+    directory.  The mandatory configure options are as follows:
 
-	--enable-sky130-pdk=/path/to/sky130/source
-                          "location of the source files for sky130"
+	--enable-sky130-pdk[=/path/to/sky130/pdk/source]
 	--with-sky130-local-path=/path/to/install/pdks
-                          "location where the PDKs will be installed"
+
+    See below for details.
 
     NOTE:  The intention of the configure file is to not have to hand-edit
     the Makefile.  However, the development of the configure script is
     currently ongoing and unfinished, so for now the Makefile should be
     checked and edited after running configure.
 
+	--enable-sky130-pdk[=/path/to/sky130/pdk/source]
+		This is mandatory for specifying that the installation
+		is for the SKY130 PDK.  If the path is specified, then
+		the PDK is assumed to already be downloaded and installed.
+		If not, then the PDK will be downloaded automatically
+		from github and installed.  Note that the PDK repository
+		is very large, contains submodules, and the submodules
+		need to compile the liberty timing files, which can
+		take a very long time.  Be patient.
+
+	--with-ef-style
+		Select this for an efabless-style file structure.
+		The default is "no".  There are some differences in
+		these two styles, the most important of which being
+		that the order of directories for the IP libraries
+		is <file_format>/<library_name> instead of
+		<library_name>/<file_format>. Other differences
+		include version tracking of the Magic setup files
+		and the location of the technology LEF file.
+
+	--with-sky130-link-targets=none|source
+		"none" copies files from the source directories to
+		the target.  "source" makes symbolic links to the source
+		directories.  Use "source" only if doing a local install,
+		and the source foundry data will not be deleted.  For
+		distribution installations, the value must be set to
+		"none".
+
+	--with-sky130-local-path=<path>
+		The path to the target install directory.  This is used
+		in both the local and distribution installations.  For
+		a distribution installation, this is the local name of
+		the path to the PDK after it has been distributed to
+		the host computers (This should have been set by the
+		option --with-local-path= passed to configure).
+
+	--with-sky130-dist-path=<path>
+		The path to the location of the installed files prior to
+		distribution.  This will most likely be a git or similar
+		repo.  This path should NOT be specified for a single-
+		machine installation.
+
+	--enable-alpha-sky130[=<path>] 
+		The path to the sky130_ml_xx_hd library, a third-party
+		library containing layouts of alphanumeric characters
+		for adding text to layout.  If the path is not
+		specified, then the library will be downloaded from
+		github automatically.
+
+	--enable-xschem-sky130[=<path>]
+		The path to the SKY130 setup for the xschem schematic
+		entry/schematic capture tool.  If the path is not
+		specified, then the library will be downloaded from
+		github automatically.
+
 Step 2:
-
-    All other steps are run in the sky130/ subdirectory.
-
-    cd to the sky130/ subdirectory and edit the Makefile to set the following
-    definitions for your host system:
-
-	EF_STYLE = Select "1" for an efabless-style file structure, "0"
-			otherwise. There are some differences in
-			these two styles, the most important of which being
-			that the order of directories for the IP libraries
-			is <file_format>/<library_name> instead of
-			<library_name>/<file_format>. Other differences
-			include version tracking of the Magic setup files
-			and the location of the technology LEF file.
-
-	LINK_TARGETS = "none" or "source".  "none" copies files from the source
-			directories to the target.  "source" makes symbolic links
-			to the source directories.  Use "source" only if doing
-			a local install, and the source foundry data will not
-			be deleted.  For distribution installations, LINK_TARGETS
-			must be set to "none".
-
-	LOCAL_PATH = The path to the target install directory.  This is used
-			in both the local and distribution installations.  For
-			a distribution installation, this is the local name of
-			the path to the PDK after it has been distributed to
-			the host computers (This should have been set by the
-			option --with-local-path= passed to configure).
-
-	DIST_PATH = The path to the location of the installed files prior to
-			distribution.  This will most likely be a git or similar
-			repo.
-
-Step 3:
 	Run:
 
 	    make
@@ -132,30 +195,30 @@ Step 3:
 	for the SKY130A PDK, and process all vendor files, and place everything
 	in a local staging area.
 
-Step 4:
-	For a local install, do:
+Step 3:
+	Run:
 
-	    make install-local
+	    make install
 
-	This copies all files from the staging area into the destination
-	as specified by the variable LOCAL_PATH in the Makefile.  All
+	The behavior of installation depends on whether or not
+	--with-<pdk>-dist-path=<path> has been set (e.g.,
+	--with-sky130-dist-path).  If only the local path
+	(--with-<pdk>-local-path=<path>) has been set, then "make
+	install" copies all files from the staging area into the
+	destination.  All pointers to absolute paths in the files
+	are changed to match the local path.
+
+	If --with-<pdk>-dist-path=<path> has been set, then "make
+	install" copies all files from the staging area into the
+	destination as specified by the value of <path>.  All
 	pointers to absolute paths in the files are changed to match
-	LOCAL_PATH.
-
-	For a distribution install, do:
-
-	    make install-dist
-
-	This copies all files from the staging area into the destination
-	as specified by the variable DIST_PATH in the Makefile.  All
-	pointers to absolute paths in the files are changed to match
-	LOCAL_PATH.  The assumption is that DIST_PATH is a repository
-	(such as a git repo) that is cloned to multiple hosts, and
-	the destination on the hosts where it is distributed is
-	LOCAL_PATH.
+	the local path value.  The assumption is that the distribution
+	path is a repository (such as a git repo) that is cloned to
+	multiple hosts, and the destination on the hosts where it is
+	distributed is the local path.
 
 -------------------------------------------------------------------------------
-Summary:
+Summary of the installation directories:
 
     The Makefile script takes the source files and generates files for local
     PDK names "SKY130A", "SKY130B", etc.  (Note there is currently only one
@@ -195,7 +258,10 @@ Summary:
 		    netgen/		netgen setup file
 		    qflow/		qflow scripts and graywolf setup files.
 		    klayout/		setup files for klayout
-		    openlane/		setup files for openlane
+		    openlane/		setup and supplementary files for openlane
+		    ngspice/		base model files and libraries for ngspice
+		    xschem/		setup files for xschem
+		    irsim/		setup and parameter files for IRSIM
 
 		libs.ref/		foundry data
 
@@ -224,9 +290,9 @@ Summary:
 
 			sky130_fd_io/			Standard I/O
 
-			sky130_fd_pr_base/		Primitive devices w/fixed layout
-			sky130_fd_pr_rf/		RF primitive devices w/fixed layout
-			sky130_fd_pr_rf2/		Additional RF primitive devices w/fixed layout
+			sky130_fd_pr/			Primitive devices w/fixed layout
+
+			sky130_ml_xx_hd/		Library of alphanumeric layouts
 
     The target installation destinations assume the directory structure above.  Changing
     this requires editing the source files.

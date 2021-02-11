@@ -163,11 +163,9 @@ ifneq ($(SKYWATER_PATH),)
     SKYWATER_PATH := $(SKYWATER_PATH)/libraries
 endif
 
-# Path to OSU standard cell library sources (to be added to configuration options).
-OSU_PATH = ~/gits/osu_130_pdk
-
 # Path to independent library sources (to be added to configuration options).
-REPO_PATH = ~/gits
+ALPHA_PATH = @SKY130_ML_XX_HD_PATH@
+XSCHEM_PATH = @XSCHEM_SKY130_PATH@
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
@@ -219,6 +217,7 @@ IRSIMTOP = libs.tech/irsim
 QFLOWTOP = libs.tech/qflow
 KLAYOUTTOP = libs.tech/klayout
 OPENLANETOP = libs.tech/openlane
+XSCHEMTOP = libs.tech/xschem
 
 ifeq (${EF_STYLE}, 1)
     MAGICPATH = ${MAGICTOP}/${REVISION}
@@ -232,6 +231,7 @@ IRSIMPATH = ${IRSIMTOP}
 QFLOWPATH = ${QFLOWTOP}
 KLAYOUTPATH = ${KLAYOUTTOP}
 OPENLANEPATH = ${OPENLANETOP}
+XSCHEMPATH = ${XSCHEMTOP}
 
 MAGICTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${MAGICTOP}
 NETGENTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NETGENTOP}
@@ -239,6 +239,7 @@ IRSIMTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${IRSIMTOP}
 QFLOWTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${QFLOWTOP}
 KLAYOUTTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${KLAYOUTTOP}
 OPENLANETOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${OPENLANETOP}
+XSCHEMTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XSCHEMTOP}
 
 MAGIC_STAGING_A = ${STAGING_PATH}/${SKY130A}/${MAGICPATH}
 NETGEN_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NETGENPATH}
@@ -246,8 +247,15 @@ IRSIM_STAGING_A = ${STAGING_PATH}/${SKY130A}/${IRSIMPATH}
 QFLOW_STAGING_A = ${STAGING_PATH}/${SKY130A}/${QFLOWPATH}
 KLAYOUT_STAGING_A = ${STAGING_PATH}/${SKY130A}/${KLAYOUTPATH}
 OPENLANE_STAGING_A = ${STAGING_PATH}/${SKY130A}/${OPENLANEPATH}
+XSCHEM_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XSCHEMPATH}
 
 SKY130A_DEFS += -DMAGIC_CURRENT=${MAGICTOP}/current
+
+# Openlane has a number of files that are common to all digital
+# standard cell libraries, so these are collected in one definition
+# here:
+OPENLANE_COMMON = config.tcl tracks.info no_synth.cells
+OPENLANE_COMMON += tribuff_map.v latch_map.v mux2_map.v mux4_map.v fa_map.v rca_map.v
 
 # Where cpp syntax is followed, this is equivalent to cpp, but it does not
 # mangle non-C source files under the belief that they are actually C code.
@@ -300,6 +308,11 @@ ifneq (${IRSIM_DISABLED}, 1)
         TOOLS += irsim
 endif
 
+# XSCHEM_DISABLED = 0 | 1
+XSCHEM_DISABLED = @XSCHEM_DISABLED@
+ifneq (${XSCHEM_DISABLED}, 1)
+        TOOLS += xschem
+endif
 
 all: all-a
 
@@ -390,7 +403,7 @@ netgen-a: netgen/${TECH}_setup.tcl
 	${CPP} ${SKY130A_DEFS} netgen/${TECH}_setup.tcl > ${NETGEN_STAGING_A}/${SKY130A}_setup.tcl
 	(cd ${NETGEN_STAGING_A} ; ln -s ${SKY130A}_setup.tcl setup.tcl)
 
-irsim-a: irsim/
+irsim-a: irsim
 	mkdir -p ${IRSIMTOP_STAGING_A}
 	mkdir -p ${IRSIM_STAGING_A}
 	rm -f ${IRSIM_STAGING_A}/${SKY130A}_*.prm
@@ -406,6 +419,15 @@ klayout-a: klayout/${TECH}.lyp klayout/${TECH}.lyt
 	cp klayout/${TECH}.lydrc ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc
 	./custom/scripts/gen_run_drc.py -l ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc -o ${KLAYOUT_STAGING_A}/${SKY130A}.drc
 
+xschem-a: ${XSCHEM_PATH}
+	rm -rf ${XSCHEM_STAGING_A}
+	mkdir -p ${XSCHEMTOP_STAGING_A}
+	mkdir -p ${XSCHEM_STAGING_A}
+	# Copy the entire repository (other than .git, if it exists)
+	if test "x${XSCHEM_PATH}" != "x" ; then \
+	    cp -rp ${XSCHEM_PATH}/* ${XSCHEM_STAGING_A} ; \
+	fi
+
 openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_A}
 	mkdir -p ${OPENLANE_STAGING_A}
@@ -419,74 +441,57 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	mkdir -p ${OPENLANE_STAGING_A}/sky130_osu_sc_t18
 	rm -f ${OPENLANE_STAGING_A}/common_pdn.info
 	rm -f ${OPENLANE_STAGING_A}/config.tcl
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/tracks.info
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/no_synth.cells
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/config.tcl
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tracks.info
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/no_synth.cells
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/config.tcl
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/tracks.info
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/no_synth.cells
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/config.tcl
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/tracks.info
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/no_synth.cells
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/config.tcl
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/tracks.info
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/no_synth.cells
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/config.tcl
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tracks.info
-	rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/no_synth.cells
-	rm -f ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/config.tcl
-	rm -f ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/tracks.info
+	for file in ${OPENLANE_COMMON} ; do \
+	    rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/$$file ; \
+	done
+	for file in ${OPENLANE_COMMON} ; do \
+	    rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/$$file ; \
+	done
+	for file in ${OPENLANE_COMMON} ; do \
+	    rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/$$file ; \
+	done
+	for file in ${OPENLANE_COMMON} ; do \
+	    rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/$$file ; \
+	done
+	for file in ${OPENLANE_COMMON} ; do \
+	    rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/$$file ; \
+	done
+	for file in ${OPENLANE_COMMON} ; do \
+	    rm -f ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/$$file ; \
+	done
+	for file in ${OPENLANE_COMMON} ; do \
+	    rm -f ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/$$file ; \
+	done
+
 	cp -r openlane/custom_cells ${OPENLANE_STAGING_A}
 	${CPP} ${SKY130A_DEFS} openlane/common_pdn.tcl > ${OPENLANE_STAGING_A}/common_pdn.tcl
 	${CPP} ${SKY130A_DEFS} openlane/config.tcl > ${OPENLANE_STAGING_A}/config.tcl
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/config.tcl
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/tracks.info
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/no_synth.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/drc_exclude.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/drc_exclude.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/tribuff_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/latch_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/latch_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/mux2_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/mux2_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/mux4_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hd/mux4_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/config.tcl
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tracks.info
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/no_synth.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/drc_exclude.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/drc_exclude.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/tribuff_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/latch_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/latch_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/mux2_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/mux2_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/mux4_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hs/mux4_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/config.tcl
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/tracks.info
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/no_synth.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/drc_exclude.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/drc_exclude.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/tribuff_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/latch_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/latch_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/mux2_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/mux2_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/mux4_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ms/mux4_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/config.tcl
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/tracks.info
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/no_synth.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/drc_exclude.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/drc_exclude.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/tribuff_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/latch_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/latch_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/mux2_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/mux2_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/mux4_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_ls/mux4_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/config.tcl
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/tracks.info
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/no_synth.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/no_synth.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/drc_exclude.cells > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/drc_exclude.cells
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/tribuff_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/latch_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/latch_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/mux2_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/mux2_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/config.tcl > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/config.tcl
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/tracks.info > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tracks.info
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/tribuff_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/tribuff_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/latch_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/latch_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/mux2_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/mux2_map.v
-	${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/mux4_map.v > ${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/mux4_map.v
+
+	for file in ${OPENLANE_COMMON} ; do \
+	    ${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/$$file > \
+		${OPENLANE_STAGING_A}/sky130_fd_sc_hd/$$file ; \
+	done
+	for file in ${OPENLANE_COMMON} ; do \
+	    ${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/$$file > \
+		${OPENLANE_STAGING_A}/sky130_fd_sc_hs/$$file ; \
+	done
+	for file in ${OPENLANE_COMMON} ; do \
+	    ${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/$$file > \
+		${OPENLANE_STAGING_A}/sky130_fd_sc_ms/$$file ; \
+	done
+	for file in ${OPENLANE_COMMON} ; do \
+	    ${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/$$file > \
+		${OPENLANE_STAGING_A}/sky130_fd_sc_ls/$$file ; \
+	done
+	for file in ${OPENLANE_COMMON} ; do \
+	    ${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/$$file > \
+		${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/$$file ; \
+	done
+	for file in ${OPENLANE_COMMON} ; do \
+	    ${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/$$file > \
+		${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/$$file ; \
+	done
+
 	${CPP} ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/config.tcl > ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/config.tcl
 	${CPP} ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/tracks.info > ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/tracks.info
 
@@ -597,7 +602,7 @@ vendor-a:
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hdll/techlef \
 		< custom/patches/hdll_minenclosed.squeaky.patch || true
 	# Install alphanumeric library.
-	${STAGE} -source ${REPO_PATH} -target ${STAGING_PATH}/${SKY130A} \
+	${STAGE} -source ${ALPHA_PATH}/.. -target ${STAGING_PATH}/${SKY130A} \
 		-mag %l/mag/*.mag filter=custom/scripts/text2m5.py \
 		-library general sky130_ml_xx_hd |& tee -a ${SKY130A}_install.log
 	# Install text2mag.py script for alphanumeric library

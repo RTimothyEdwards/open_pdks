@@ -15,10 +15,10 @@
  <interpreter>dsl</interpreter>
  <dsl-interpreter-name>drc-dsl-xml</dsl-interpreter-name>
  <text>#
-#  DRC  for  SKY130 according to : 
+#  DRC  for  SKY130 according to :
 #   https://skywater-pdk.readthedocs.io/en/latest/rules/periphery.html
 #   https://skywater-pdk.readthedocs.io/en/latest/rules/layers.html
-# 
+#
 #   Distributed under GNU GPLv3: https://www.gnu.org/licenses/
 #
 #  History :
@@ -65,6 +65,25 @@ verbose(true)
 
 # layers definitions
 ########################
+
+# all except purpose (datatype) 5 -- label and 44 -- via
+li_wildcard = "67/0-4,6-43,45-*"
+mcon_wildcard = "67/44"
+
+m1_wildcard = "68/0-4,6-43,45-*"
+via_wildcard = "68/44"
+
+m2_wildcard = "69/0-4,6-43,45-*"
+via2_wildcard = "69/44"
+
+m3_wildcard = "70/0-4,6-43,45-*"
+via3_wildcard = "70/44"
+
+m4_wildcard = "71/0-4,6-43,45-*"
+via4_wildcard = "71/44"
+
+m5_wildcard = "72/0-4,6-43,45-*"
+
 diff = input(65, 20)
 tap = polygons(65, 44)
 nwell = polygons(64, 20)
@@ -86,17 +105,24 @@ rpm = polygons(86, 20)
 urpm = polygons(79, 20)
 npc = polygons(95, 20)
 licon = polygons(66, 44)
-li = input(67, 20)
-mcon = polygons(67, 44)
-m1 = polygons(68, 20)
-via = polygons(68, 44)
-m2 = polygons(69, 20)
-via2 = polygons(69, 44)
-m3 = polygons(70, 20)
-via3 = polygons(70, 44)
-m4 = polygons(71, 20)
-via4 = polygons(71, 44)
-m5 = polygons(72, 20)
+
+li = polygons(li_wildcard)
+mcon = polygons(mcon_wildcard)
+
+m1 = polygons(m1_wildcard)
+via = polygons(via_wildcard)
+
+m2 = polygons(m2_wildcard)
+via2 = polygons(via2_wildcard)
+
+m3 = polygons(m3_wildcard)
+via3 = polygons(via3_wildcard)
+
+m4 = polygons(m4_wildcard)
+via4 = polygons(via4_wildcard)
+
+m5 = polygons(m5_wildcard)
+
 pad = polygons(76, 20)
 nsm = polygons(61, 20)
 capm = polygons(89, 44)
@@ -165,7 +191,7 @@ class DRC::DRCLayer
     end
     DRC::DRCLayer::new(@engine, new_data)
   end
-end 
+end
 
 # DRC section
 ########################
@@ -370,22 +396,6 @@ tap.not(uhvi).not_interacting(licon).output("licon.16", "licon.16 : tap must enc
 poly.and(tap).edges.not(tap.edges).output("licon.17", "licon.17 : tap must not straddle poly")
 npc.not_interacting(licon.and(poly)).output("licon.18", "licon.18 : npc mut enclosed one poly-licon")
 
-#   li
-not_in_cell5 = layout(source.cell_obj).select("-s8rf2_xcmvpp_hd5_*")
-not_in_cell5_li = not_in_cell5.input(67, 20)
-not_in_cell5_li.width(0.17, euclidian).output("li.1", "li.1 : min. li width : 0.17um")
-in_cell5 = layout(source.cell_obj).select("+s8rf2_xcmvpp_hd5_*")
-in_cell5_li = in_cell5.input(67, 20)
-in_cell5_li.width(0.14, euclidian).output("li.1a", "li.1a : min. li width for the cells s8rf2_xcmvpp_hd5_* : 0.14um")
-# rule li.2 not coded
-not_in_cell5_li.isolated(0.17, euclidian).output("li.3", "li.3 : min. li spacing : 0.17um")
-in_cell5_li.isolated(0.14, euclidian).output("li.3a", "li.3a : min. li spacing for the cells s8rf2_xcmvpp_hd5_* : 0.14um")
-licon08 = licon.interacting(li.enclosing(licon, 0.08, euclidian).polygons)
-licon_edges_with_less_enclosure_li = li.enclosing(licon, 0.08, projection).second_edges
-opposite3 = (licon.edges - licon_edges_with_less_enclosure_li).width(0.17 + 1.dbu, projection).polygons
-licon08.not_interacting(opposite3).output("li.5", "li.5 : min. li enclosure of licon of 2 opposite edges : 0.08um")
-li.with_area(0..0.0561).output("li.6", "li.6 : min. li area : 0.0561um²")
-
 #   vpp
 vpp.width(1.43, euclidian).output("vpp.1", "vpp.1 : min. vpp width : 1.43um")
 # rules 1.b, 1.c not coded
@@ -428,9 +438,27 @@ end #FEOL
 if BEOL
 info("BEOL section")
 
+#   li
+not_in_cell5 = source.select("-s8rf2_xcmvpp_hd5_*")
+not_in_cell5_li = not_in_cell5.polygons(li_wildcard)
+not_in_cell5_li.width(0.17, euclidian).output("li.1", "li.1 : min. li width : 0.17um")
+
+in_cell5_li = li - not_in_cell5_li
+in_cell5_li.width(0.14, euclidian).output("li.1a", "li.1a : min. li width for the cells s8rf2_xcmvpp_hd5_* : 0.14um")
+
+# rule li.2 not coded
+
+not_in_cell5_li.space(0.17, euclidian).output("li.3", "li.3 : min. li spacing : 0.17um")
+in_cell5_li.space(0.14, euclidian).output("li.3a", "li.3a : min. li spacing for the cells s8rf2_xcmvpp_hd5_* : 0.14um")
+licon08 = licon.interacting(li.enclosing(licon, 0.08, euclidian).polygons)
+licon_edges_with_less_enclosure_li = li.enclosing(licon, 0.08, projection).second_edges
+opposite3 = (licon.edges - licon_edges_with_less_enclosure_li).width(0.17 + 1.dbu, projection).polygons
+licon08.not_interacting(opposite3).output("li.5", "li.5 : min. li enclosure of licon of 2 opposite edges : 0.08um")
+li.with_area(0..0.0561).output("li.6", "li.6 : min. li area : 0.0561um²")
+
 #   ct
 mcon.edges.without_length(0.17).output("ct.1", "ct.1 : minimum/maximum width of mcon : 0.17um")
-mcon.isolated(0.19, euclidian).output("ct.2", "ct.2 : min. mcon spacing : 0.19um")
+mcon.space(0.19, euclidian).output("ct.2", "ct.2 : min. mcon spacing : 0.19um")
 # rule ct.3 not coded
 mcon.not(li).output("ct.4", "ct.4 : mcon should covered by li")
 if backend_flow = CU
@@ -439,15 +467,20 @@ if backend_flow = CU
 end
 
 #   m1
-huge_m1 = m1.sized(-1.5).sized(1.5)
 m1.width(0.14, euclidian).output("m1.1", "m1.1 : min. m1 width : 0.14um")
-m1.isolated(0.14, euclidian).output("m1.2", "m1.2 : min. m1 spacing : 0.14um")
-huge_m1.separation(m1, 0.28, euclidian).output("m1.3ab", "m1.3ab : min. 3um.m1 spacing m1 : 0.28um")
+
+huge_m1 = m1.sized(-1.5).sized(1.5)
+non_huge_m1 = m1 - huge_m1
+
+non_huge_m1.space(0.14, euclidian).output("m1.2", "m1.2 : min. m1 spacing : 0.14um")
+
+(huge_m1.separation(non_huge_m1, 0.28, euclidian) + huge_m1.space(0.28, euclidian)).output("m1.3ab", "m1.3ab : min. 3um.m1 spacing m1 : 0.28um")
+
 not_in_cell6 = layout(source.cell_obj).select("-s8cell_ee_plus_sseln_a", "-s8cell_ee_plus_sseln_b", "-s8cell_ee_plus_sselp_a", "-s8cell_ee_plus_sselp_b", "-s8fpls_pl8", "-s8fs_cmux4_fm")
-not_in_cell6_m1 = not_in_cell6.input(68, 20)
+not_in_cell6_m1 = not_in_cell6.input(m1_wildcard)
 not_in_cell6_m1.enclosing(mcon, 0.03, euclidian).output("m1.4", "m1.4 : min. m1 enclosure of mcon : 0.03um")
 in_cell6 = layout(source.cell_obj).select("+s8cell_ee_plus_sseln_a", "+s8cell_ee_plus_sseln_b", "+s8cell_ee_plus_sselp_a", "+s8cell_ee_plus_sselp_b", "+s8fpls_pl8", "+s8fs_cmux4_fm")
-in_cell6_m1 = in_cell6.input(68, 20)
+in_cell6_m1 = in_cell6.input(m1_wildcard)
 in_cell6_m1.enclosing(mcon, 0.005, euclidian).output("m1.4a", "m1.4a : min. m1 enclosure of mcon for specific cells : 0.005um")
 m1.with_area(0..0.083).output("m1.6", "m1.6 : min. m1 area : 0.083um²")
 m1.holes.with_area(0..0.14).output("m1.7", "m1.7 : min. m1 holes area : 0.14um²")
@@ -491,10 +524,15 @@ if backend_flow = CU
 end
 
 #   m2
-huge_m2 = m2.sized(-1.5).sized(1.5)
 m2.width(0.14, euclidian).output("m2.1", "m2.1 : min. m2 width : 0.14um")
-m2.isolated(0.14, euclidian).output("m2.2", "m2.2 : min. m2 spacing : 0.14um")
-huge_m2.separation(m2, 0.28, euclidian).output("m2.3ab", "m2.3ab : min. 3um.m2 spacing m2 : 0.28um")
+
+huge_m2 = m2.sized(-1.5).sized(1.5)
+non_huge_m2 = m2 - huge_m2
+
+non_huge_m2.space(0.14, euclidian).output("m2.2", "m2.2 : min. m2 spacing : 0.14um")
+
+(huge_m2.separation(non_huge_m2, 0.28, euclidian) + huge_m2.space(0.28, euclidian)).output("m2.3ab", "m2.3ab : min. 3um.m2 spacing m2 : 0.28um")
+
 # rule m2.3c not coded
 m2.with_area(0..0.0676).output("m2.6", "m2.6 : min. m2 area : 0.0676um²")
 m2.holes.with_area(0..0.14).output("m2.7", "m2.7 : min. m2 holes area : 0.14um²")
@@ -534,10 +572,15 @@ if backend_flow = CU
 end
 
 #   m3
-huge_m3 = m3 - m3.width(3.0, projection).polygons
 m3.width(0.3, euclidian).output("m3.1", "m3.1 : min. m3 width : 0.3um")
-m3.isolated(0.3, euclidian).output("m3.2", "m3.2 : min. m3 spacing : 0.3um")
-huge_m3.separation(m3, 0.4, euclidian).output("m3.3ab", "m3.3ab : min. 3um.m3 spacing m3 : 0.4um")
+
+huge_m3 = m3.sized(-1.5).sized(1.5)
+non_huge_m3 = m3 - huge_m3
+
+non_huge_m3.space(0.3, euclidian).output("m3.2", "m3.2 : min. m3 spacing : 0.3um")
+
+(huge_m3.separation(non_huge_m3, 0.4, euclidian) + huge_m3.space(0.4, euclidian)).output("m3.3ab", "m3.3ab : min. 3um.m3 spacing m3 : 0.4um")
+
 # rule m3.3c not coded
 m3.with_area(0..0.24).output("m3.6", "m3.6 : min. m2 area : 0.24um²")
 via2.not(m3).output("m3.via2", "m3.via2 : m3 must enclose via2")
@@ -576,42 +619,21 @@ if backend_flow = CU
   # rules via3.irdrop.1, via3.irdrop.2, via3.irdrop.3, via3.irdrop.4 not coded because not understandable
 end
 
-#   nsm
-nsm.width(3.0, euclidian).output("nsm.1", "nsm.1 : min. nsm width : 3.0um")
-nsm.isolated(4.0, euclidian).output("nsm.2", "nsm.2 : min. nsm spacing : 4.0um")
-nsm.enclosing(diff, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of diff : 3.0um")
-nsm.enclosing(tap, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of tap : 3.0um")
-nsm.enclosing(poly, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of poly : 3.0um")
-nsm.enclosing(li, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of li : 3.0um")
-nsm.enclosing(m1, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of m1 : 3.0um")
-nsm.enclosing(m2, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of m2 : 3.0um")
-nsm.enclosing(m3, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of m3 : 3.0um")
-nsm.enclosing(m4, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of m4 : 3.0um")
-nsm.enclosing(m5, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of m5 : 3.0um")
-nsm.enclosing(cfom, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of cfom : 3.0um")
-if backend_flow = AL
-  nsm.separation(diff, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to diff : 1.0um")
-  nsm.separation(tap, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to tap : 1.0um")
-  nsm.separation(poly, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to poly : 1.0um")
-  nsm.separation(li, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to li : 1.0um")
-  nsm.separation(m1, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to m1 : 1.0um")
-  nsm.separation(m2, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to m2 : 1.0um")
-  nsm.separation(m3, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to m3 : 1.0um")
-  nsm.separation(m4, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to m4 : 1.0um")
-  nsm.separation(m5, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to m5 : 1.0um")
-  nsm.separation(cfom, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to cfom : 1.0um")
-end  
-
 #   m4
-huge_m4 = m4.sized(-1.5).sized(1.5)
 m4.width(0.3, euclidian).output("m4.1", "m4.1 : min. m4 width : 0.3um")
-m4.isolated(0.3, euclidian).output("m4.2", "m4.2 : min. m4 spacing : 0.3um")
+
+huge_m4 = m4.sized(-1.5).sized(1.5)
+non_huge_m4 = m4 - huge_m4
+
+non_huge_m4.space(0.3, euclidian).output("m4.2", "m4.2 : min. m4 spacing : 0.3um")
+
+(huge_m4.separation(non_huge_m4, 0.4, euclidian) + huge_m4.space(0.4, euclidian)).output("m4.5ab", "m4.5ab : min. 3um.m4 spacing m4 : 0.4um")
+
 m4.with_area(0..0.24).output("m4.4", "m4.4 : min. m2 area : 0.24um²")
-huge_m4.separation(m4, 0.4, euclidian).output("m4.5ab", "m4.5ab : min. 3um.m4 spacing m4 : 0.4um")
 via3.not(m4).output("m4.via3", "m4.via3 : m4 must enclose via3")
 if backend_flow = AL
   m4.enclosing(via3, 0.065, euclidian).output("m4.3", "m4.3 : min. m4 enclosure of via3 : 0.065um")
-  # m4.5 doesn't exist 
+  # m4.5 doesn't exist
   # via3_edges_with_less_enclosure_m4 = m4.enclosing(via2, 0.085, projection).second_edges
   # opposite9 = (via3.edges - via3_edges_with_less_enclosure_m4).width(0.3 + 1.dbu, projection).polygons
   # via3.not_interacting(opposite9).output("m4.5", "m4.5 : min. m4 enclosure of via3 of 2 opposite edges : 0.085um")
@@ -637,9 +659,37 @@ end
 
 #   m5
 m5.width(1.6, euclidian).output("m5.1", "m5.1 : min. m5 width : 1.6um")
-m5.isolated(1.6, euclidian).output("m5.2", "m5.2 : min. m5 spacing : 1.6um")
+
+m5.space(1.6, euclidian).output("m5.2", "m5.2 : min. m5 spacing : 1.6um")
+
 via4.not(m5).output("m5.via4", "m5.via4 : m5 must enclose via4")
 m5.enclosing(via4, 0.31, euclidian).output("m5.3", "m4.3 : min. m5 enclosure of via4 : 0.31um")
+
+#   nsm
+nsm.width(3.0, euclidian).output("nsm.1", "nsm.1 : min. nsm width : 3.0um")
+nsm.isolated(4.0, euclidian).output("nsm.2", "nsm.2 : min. nsm spacing : 4.0um")
+nsm.enclosing(diff, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of diff : 3.0um")
+nsm.enclosing(tap, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of tap : 3.0um")
+nsm.enclosing(poly, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of poly : 3.0um")
+nsm.enclosing(li, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of li : 3.0um")
+nsm.enclosing(m1, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of m1 : 3.0um")
+nsm.enclosing(m2, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of m2 : 3.0um")
+nsm.enclosing(m3, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of m3 : 3.0um")
+nsm.enclosing(m4, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of m4 : 3.0um")
+nsm.enclosing(m5, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of m5 : 3.0um")
+nsm.enclosing(cfom, 3.0, euclidian).output("nsm.4", "nsm.4 : min. nsm enclosure of cfom : 3.0um")
+if backend_flow = AL
+  nsm.separation(diff, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to diff : 1.0um")
+  nsm.separation(tap, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to tap : 1.0um")
+  nsm.separation(poly, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to poly : 1.0um")
+  nsm.separation(li, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to li : 1.0um")
+  nsm.separation(m1, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to m1 : 1.0um")
+  nsm.separation(m2, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to m2 : 1.0um")
+  nsm.separation(m3, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to m3 : 1.0um")
+  nsm.separation(m4, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to m4 : 1.0um")
+  nsm.separation(m5, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to m5 : 1.0um")
+  nsm.separation(cfom, 1.0, euclidian).output("nsm.3", "nsm.3 : min. nsm spacing to cfom : 1.0um")
+end
 
 #   pad
 pad.isolated(1.27, euclidian).output("pad.2", "pad.2 : min. pad spacing : 1.27um")

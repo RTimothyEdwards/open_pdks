@@ -18,6 +18,4 @@ __pycache__
 !.travisCI/Makefile
 
 # local install cache
-/pdks
-/libs
-/tools
+/sources

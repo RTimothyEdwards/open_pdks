@@ -63,7 +63,8 @@ def makeuserwritable(filepath):
 # symbolic links.
 
 def filter_recursive(tooldir, stagingdir, localdir):
-    gdstypes = ['.gds', '.gds2', '.gdsii']
+    # Add any non-ASCII file types here
+    bintypes = ['.gds', '.gds2', '.gdsii', '.png']
 
     if not os.path.exists(tooldir):
         return 0
@@ -73,9 +74,12 @@ def filter_recursive(tooldir, stagingdir, localdir):
     toolfiles = os.listdir(tooldir)
     total = 0
 
+    # Add any non-ASCII 
+    binexts = ['.png']
+
     for file in toolfiles:
         # Do not attempt to do text substitutions on a binary file!
-        if os.path.splitext(file)[1] in gdstypes:
+        if os.path.splitext(file)[1] in bintypes:
             continue
 
         filepath = tooldir + '/' + file

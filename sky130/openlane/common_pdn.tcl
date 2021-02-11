@@ -81,11 +81,11 @@ if { [info exists ::env(FP_PDN_ENABLE_RAILS)] } {
 	}
 }
 
-pdngen::specify_grid stdcell $stdcell
+pdngen::specify_grid stdcell [subst $stdcell]
 
 # A general macro that follows the premise of the set heirarchy. You may want to modify this or add other macro configs
 # TODO: generate automatically per instance:
-pdngen::specify_grid macro {
+set macro {
     orient {R0 R180 MX MY R90 R270 MXR90 MYR90}
     power_pins $::env(VDD_NET)
     ground_pins $::env(GND_NET)
@@ -94,6 +94,8 @@ pdngen::specify_grid macro {
     }
     connect {{$::env(FP_PDN_LOWER_LAYER)_PIN_ver $::env(FP_PDN_UPPER_LAYER)}}
 }
+
+pdngen::specify_grid macro [subst $macro]
 
 set ::halo [expr min($::env(FP_HORIZONTAL_HALO), $::env(FP_VERTICAL_HALO))]
 
