@@ -163,11 +163,9 @@ ifneq ($(SKYWATER_PATH),)
     SKYWATER_PATH := $(SKYWATER_PATH)/libraries
 endif
 
-# Path to OSU standard cell library sources (to be added to configuration options).
-OSU_PATH = ~/gits/osu_130_pdk
-
 # Path to independent library sources (to be added to configuration options).
-REPO_PATH = ~/gits
+ALPHA_PATH = @SKY130_ML_XX_HD_PATH@
+XSCHEM_PATH = @XSCHEM_SKY130_PATH@
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
@@ -219,6 +217,7 @@ IRSIMTOP = libs.tech/irsim
 QFLOWTOP = libs.tech/qflow
 KLAYOUTTOP = libs.tech/klayout
 OPENLANETOP = libs.tech/openlane
+XSCHEMTOP = libs.tech/xschem
 
 ifeq (${EF_STYLE}, 1)
     MAGICPATH = ${MAGICTOP}/${REVISION}
@@ -232,6 +231,7 @@ IRSIMPATH = ${IRSIMTOP}
 QFLOWPATH = ${QFLOWTOP}
 KLAYOUTPATH = ${KLAYOUTTOP}
 OPENLANEPATH = ${OPENLANETOP}
+XSCHEMPATH = ${XSCHEMTOP}
 
 MAGICTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${MAGICTOP}
 NETGENTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NETGENTOP}
@@ -239,6 +239,7 @@ IRSIMTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${IRSIMTOP}
 QFLOWTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${QFLOWTOP}
 KLAYOUTTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${KLAYOUTTOP}
 OPENLANETOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${OPENLANETOP}
+XSCHEMTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XSCHEMTOP}
 
 MAGIC_STAGING_A = ${STAGING_PATH}/${SKY130A}/${MAGICPATH}
 NETGEN_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NETGENPATH}
@@ -246,6 +247,7 @@ IRSIM_STAGING_A = ${STAGING_PATH}/${SKY130A}/${IRSIMPATH}
 QFLOW_STAGING_A = ${STAGING_PATH}/${SKY130A}/${QFLOWPATH}
 KLAYOUT_STAGING_A = ${STAGING_PATH}/${SKY130A}/${KLAYOUTPATH}
 OPENLANE_STAGING_A = ${STAGING_PATH}/${SKY130A}/${OPENLANEPATH}
+XSCHEM_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XSCHEMPATH}
 
 SKY130A_DEFS += -DMAGIC_CURRENT=${MAGICTOP}/current
 
@@ -306,6 +308,11 @@ ifneq (${IRSIM_DISABLED}, 1)
         TOOLS += irsim
 endif
 
+# XSCHEM_DISABLED = 0 | 1
+XSCHEM_DISABLED = @XSCHEM_DISABLED@
+ifneq (${XSCHEM_DISABLED}, 1)
+        TOOLS += xschem
+endif
 
 all: all-a
 
@@ -396,7 +403,7 @@ netgen-a: netgen/${TECH}_setup.tcl
 	${CPP} ${SKY130A_DEFS} netgen/${TECH}_setup.tcl > ${NETGEN_STAGING_A}/${SKY130A}_setup.tcl
 	(cd ${NETGEN_STAGING_A} ; ln -s ${SKY130A}_setup.tcl setup.tcl)
 
-irsim-a: irsim/
+irsim-a: irsim
 	mkdir -p ${IRSIMTOP_STAGING_A}
 	mkdir -p ${IRSIM_STAGING_A}
 	rm -f ${IRSIM_STAGING_A}/${SKY130A}_*.prm
@@ -411,6 +418,15 @@ klayout-a: klayout/${TECH}.lyp klayout/${TECH}.lyt
 	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyt > ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
 	cp klayout/${TECH}.lydrc ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc
 	./custom/scripts/gen_run_drc.py -l ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc -o ${KLAYOUT_STAGING_A}/${SKY130A}.drc
+
+xschem-a: ${XSCHEM_PATH}
+	rm -rf ${XSCHEM_STAGING_A}
+	mkdir -p ${XSCHEMTOP_STAGING_A}
+	mkdir -p ${XSCHEM_STAGING_A}
+	# Copy the entire repository (other than .git, if it exists)
+	if test "x${XSCHEM_PATH}" != "x" ; then \
+	    cp -rp ${XSCHEM_PATH}/* ${XSCHEM_STAGING_A} ; \
+	fi
 
 openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_A}
@@ -586,7 +602,7 @@ vendor-a:
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hdll/techlef \
 		< custom/patches/hdll_minenclosed.squeaky.patch || true
 	# Install alphanumeric library.
-	${STAGE} -source ${REPO_PATH} -target ${STAGING_PATH}/${SKY130A} \
+	${STAGE} -source ${ALPHA_PATH}/.. -target ${STAGING_PATH}/${SKY130A} \
 		-mag %l/mag/*.mag filter=custom/scripts/text2m5.py \
 		-library general sky130_ml_xx_hd |& tee -a ${SKY130A}_install.log
 	# Install text2mag.py script for alphanumeric library

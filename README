@@ -3,12 +3,24 @@ open_pdks : A system for installing silicon foundry PDKs for open-source EDA too
 
 ----------------------------------------------------------------------------------
 
-Written by Tim Edwards 2019 / 2020 for efabless (efabless.com)
+Written by Tim Edwards 2019 - 2021 for efabless (efabless.com)
 and Open Circuit Design (opencircuitdesign.com)
 
 URL: http://opencircuitdesign.com/open_pdks
+Mirror URL: https://github.com/RTimothyEdwards/open_pdks
 
 Distributed under the Apache-2.0 license (see file LICENSE).
+
+----------------------------------------------------------------------------------
+
+Quick Install:
+
+    Looking to install the Google/SkyWater SKY130 PDK libraries and setup
+    files for open source EDA tools?  Read the README file in the sky130/
+    directory.
+
+    The rest of this README file is general information about open_pdks
+    and is not specific to any single PDK.
 
 ----------------------------------------------------------------------------------
 

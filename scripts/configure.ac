@@ -15,17 +15,15 @@ m4_define([M4_GET_TECHS], [m4_normalize(m4_esyscmd(cd .. && find * -mindepth 1 -
 # define tools
 # define tools to install setup files for.  This does not imply that the tools are
 # available on the system;  just that open_pdks will install the setup files for them.
-## DO NOT INCLUDE XSCHEM IN THE TOOL LIST. XSCHEM CAN BE INSTALLED IN THE CONFIG SCRIPT
 m4_define([M4_GET_TOOLS], [m4_normalize(m4_esyscmd(cat ./tools.txt | tr "\n" " "))])
-
-mkdir -p ../pdks
 
 # check for the source and install paths for each PDK.
 AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
 
     # --enable-pdk-[pdk]=/path/to/pdk
     m4_foreach_w(pdk, $1, [
-        m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z" "A-Z"))])
+        echo "Checking technology pdk..."
+        m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z-" "A-Z_"))])
 
         pdkvar[]_SOURCE_PATH=""
         pdkvar[]_LOCAL_PATH=""
@@ -33,17 +31,17 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
         pdkvar[]_LINK_TARGETS="none"
 
         pdk_get() {
-            AC_CHECK_FILE(../pdk/[pdk]_info, [
-                AC_CHECK_FILE(../pdks/pdk,[
+            AC_CHECK_FILE(../pdk/[pdk]_info.txt, [
+                AC_CHECK_FILE(../sources/pdk,[
                     echo "Using pre-existing pdk download..."
                 ], [
-                    REPO=$(cat "../pdk/pdk_info" | sed -n "1p")
-                    POST_CLONE_COMMANDS=$(cat "../pdk/pdk_info" | sed "1d")
-                    mkdir -p ../pdks
-                    git clone "$REPO" ../pdks/pdk;
-                    (cd ../pdks/pdk && sh -c "$POST_CLONE_COMMANDS")
+                    REPO=$(cat "../pdk/pdk_info.txt" | sed -n "1p")
+                    POST_CLONE_COMMANDS=$(cat "../pdk/pdk_info.txt" | sed "1d")
+                    mkdir -p ../sources
+                    git clone "$REPO" ../sources/pdk;
+                    (cd ../sources/pdk && sh -c "$POST_CLONE_COMMANDS")
                 ])
-                export pdkvar[]_SOURCE_PATH=../pdks/pdk
+                export pdkvar[]_SOURCE_PATH=../sources/pdk
             ], [
                 AC_MSG_ERROR([PDK pdk cannot be automatically downloaded and requires a path.])
             ])
@@ -58,9 +56,9 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
                     FOUND=1
                 fi
             done
-            if @<:@ "$FOUND" = "$1" @:>@; then
-                echo "Could not found pdk in standard search paths, manually downloading to ../pdks/pdk ..."
-                pdk_find
+            if @<:@ "$FOUND" = "0" @:>@; then
+                echo "Could not find pdk in standard search paths, automatically fetching repository to ../sources/pdk ..."
+                pdk_get
             fi
         }
 
@@ -68,14 +66,14 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
             [AS_HELP_STRING([--enable-pdk-[pdk]=@<:@/path/to/pdk/@:>@ --disable-pdk-[pdk]], "location of the source files for the pdk (pdks with a [pdk]_url file can automatically download them if the path is omitted)")],
             [
                 if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-                   pdk_find
+		    echo "Looking for pdk in usual places"
+                    pdk_find
                 elif test "$enableval" == "no" -o "$enableval" == "NO"; then
                     echo "Disabling pdk..."
                 else
                     pdkvar[]_SOURCE_PATH=$enableval
                 fi
             ], [
-                pdk_find
             ]
         )
 	    # # Require this argument
@@ -148,13 +146,13 @@ M4_GEN_WITH_PDK_ARGS(M4_GET_TECHS())
 # Set variables for tool setups
 AC_DEFUN([M4_GEN_WITH_TOOLS], [
     m4_foreach_w(tool, $1, [
-        m4_define([toolvar], [m4_normalize(m4_esyscmd(echo tool | tr "a-z" "A-Z"))])
+        m4_define([toolvar], [m4_normalize(m4_esyscmd(echo tool | tr "a-z-" "A-Z_"))])
 
         toolvar[]_DISABLED=0
         AC_ARG_ENABLE(tool,
             AS_HELP_STRING(
                 --enable-tool
-                Enable or disable tool @<:@default=enabled@:>@
+                Enable or disable tool setup @<:@default=enabled@:>@
             ), [
                 if test "$enableval" == "no" -o "$enableval" == "NO"; then
                     toolvar[]_DISABLED=1
@@ -180,11 +178,9 @@ if test -z "$PATCH"; then
 fi
 
 # Other installations (libraries or tools if applicable)
-mkdir -p ../libs
-mkdir -p ../tools
 AC_DEFUN([M4_GEN_INSTALLATION], [
     m4_define([target], $1)
-    m4_define([targetvar], [m4_normalize(m4_esyscmd(echo target | tr "a-z" "A-Z"))])
+    m4_define([targetvar], [m4_normalize(m4_esyscmd(echo target | tr "a-z-" "A-Z_"))])
     m4_define([flag], $2)
     m4_define([url], $3)
     m4_define([location], $4)
@@ -200,7 +196,7 @@ AC_DEFUN([M4_GEN_INSTALLATION], [
             ], [
                 mkdir -p location/target
                 sh ./download.sh url location/target.tar.gz
-                (echo "Extracting target..." && cd location && tar -xf target.tar.gz --strip-components 1 -C location/target)
+                (echo "Extracting target..." && cd location && tar -xf target.tar.gz --strip-components 1 -C location/target && rm target.tar.gz )
             ]
         )
         export targetvar[]_PATH=location/target
@@ -231,37 +227,19 @@ AC_DEFUN([M4_GEN_INSTALLATION], [
     AC_SUBST(targetvar[]_PATH)
 ])
 
-M4_GEN_INSTALLATION(osu, osu-lib, 'https://vlsiarch.ecen.okstate.edu/flows/MOSIS_SCMOS/osu_stdcells_v2.4/osu_stdcells_lib.v2.4.tar.gz', ../libs)
-M4_GEN_INSTALLATION(sky130_ml_xx_hd, alpha-lib, 'https://github.com/PaulSchulz/sky130_pschulz_xx_hd/archive/master.tar.gz', ../libs)
+M4_GEN_INSTALLATION(sky130_ml_xx_hd, alpha-sky130, 'https://github.com/PaulSchulz/sky130_pschulz_xx_hd/archive/master.tar.gz', ../sources)
 
-XSCHEM_DISABLED=0
-XSCHEM_INST=0
-M4_GEN_INSTALLATION(xschem, xschem, 'https://github.com/StefanSchippers/xschem/archive/master.tar.gz', ../tools, [
-    if @<:@ "$XSCHEM_INST" = 1 @:>@; then
-        AC_CHECK_FILE(../tools/xschem-install,[
-            echo "Using pre-existing xschem installation..."
-        ], [
-            echo "---"
-            echo "Note: attempting to build xschem. Xschem requires all of Magic's dependencies and further, flex, bison and libxpm."
-            echo "Your build WILL fail if any of these are missing. You can choose to remove --enable-xschem or add a known installation path."
-            sleep 2
-            mkdir -p ../tools/xschem-install
-            XSCHEM_ABSOLUTE=`realpath ../tools/xschem-install`
-            (cd ../tools/xschem && ./configure --prefix=$XSCHEM_ABSOLUTE && make && make install)
-            XSCHEM_PATH=$XSCHEM_ABSOLUTE
-        ])
-    fi
-])
+M4_GEN_INSTALLATION(xschem_sky130, xschem-sky130, 'https://github.com/StefanSchippers/xschem_sky130/archive/main.tar.gz', ../sources)
 
 AC_DEFUN([M4_GEN_WITH_TOOLS], [
     m4_foreach_w(tool, $1, [
-        m4_define([toolvar], [m4_normalize(m4_esyscmd(echo tool | tr "a-z" "A-Z"))])
+        m4_define([toolvar], [m4_normalize(m4_esyscmd(echo tool | tr "a-z-" "A-Z_"))])
 
         toolvar[]_DISABLED=0
         AC_ARG_ENABLE(tool,
             AS_HELP_STRING(
                 --enable-tool --disable-tool,
-                Enable or disable tool @<:@default=enabled@:>@
+                Enable or disable tool setup @<:@default=enabled@:>@
             ),
             [
                 if test "$enableval" == "no" -o "$enableval" == "NO"; then
@@ -274,8 +252,6 @@ AC_DEFUN([M4_GEN_WITH_TOOLS], [
 ])
 
 AC_MSG_NOTICE([Tools enabled for PDK setup installation: M4_GET_TOOLS()])
-
-M4_GEN_WITH_TOOLS(M4_GET_TOOLS())
 
 # Check for "--with-ef-style"
 EF_STYLE=0

@@ -14,8 +14,7 @@
 # Updated December 17, 2016
 # Version 1.0
 # Imported December 22, 2020 to open_pdks
-# To do: Rework from electric to xschem and support both EF_STYLE = 0
-# and 1 styles of directory structures from open_pdks.
+# Updated February 10, 2021 for use running on netlist alone
 #---------------------------------------------------------------------
 
 import os
@@ -23,118 +22,7 @@ import re
 import sys
 import subprocess
 
-# Routines to generate netlist from schematic if needed
-
-def check_schematic_out_of_date(spipath, schempath, schematic_name):
-    # Check if a netlist (spipath) is out-of-date relative to the schematics
-    # (schempath).  Need to read the netlist and check all of the subcells.
-    need_capture = False
-    if not os.path.isfile(spipath):
-        return True
-    if os.path.isfile(schempath):
-        spi_statbuf = os.stat(spipath)
-        sch_statbuf = os.stat(schempath)
-        if spi_statbuf.st_mtime < sch_statbuf.st_mtime:
-            # netlist exists but is out-of-date
-            need_capture = True
-        else:
-            # only found that the top-level-schematic is older than the
-            # netlist.  Now need to read the netlist, find all subcircuits,
-            # and check those dates, too.
-            schemdir = os.path.split(schempath)[0]
-            subrex = re.compile('^[^\*]*[ \t]*.subckt[ \t]+([^ \t]+).*$', re.IGNORECASE)
-            with open(spipath, 'r') as ifile:
-                duttext = ifile.read()
- 
-            dutlines = duttext.replace('\n+', ' ').splitlines()
-            for line in dutlines:
-                lmatch = subrex.match(line)
-                if lmatch:
-                    subname = lmatch.group(1)
-                    # NOTE: Electric uses library:cell internally to track libraries,
-                    # and maps the ":" to "__" in the netlist.  Not entirely certain that
-                    # the double-underscore uniquely identifies the library:cell. . .
-                    librex = re.compile('(.*)__(.*)', re.IGNORECASE)
-                    lmatch = librex.match(subname)
-                    if lmatch:
-                        elecpath = os.path.split(os.path.split(schempath)[0])[0]
-                        libname = lmatch.group(1)
-                        subschem = elecpath + '/' + libname + '.delib/' + lmatch.group(2) + '.sch'
-                    else:
-                        libname = {}
-                        subschem = schemdir + '/' + subname + '.sch'
-                    # subcircuits that cannot be found in the current directory are
-                    # assumed to be library components and therefore never out-of-date.
-                    if os.path.exists(subschem):
-                        sub_statbuf = os.stat(subschem)
-                        if spi_statbuf.st_mtime < sub_statbuf.st_mtime:
-                            # netlist exists but is out-of-date
-                            need_capture = True
-                            break
-                    # mapping of characters to what's allowed in SPICE makes finding
-                    # the associated schematic file a bit difficult.  Requires wild-card
-                    # searching.
-                    elif libname:
-                        restr = lmatch.group(2) + '.sch'
-                        restr = restr.replace('.', '\.')
-                        restr = restr.replace('_', '.')
-                        schrex = re.compile(restr, re.IGNORECASE)
-                        libpath = elecpath + '/' + libname + '.delib'
-                        if os.path.exists(libpath):
-                            liblist = os.listdir(libpath)
-                            for file in liblist:
-                                lmatch = schrex.match(file)
-                                if lmatch:
-                                    subschem = libpath + '/' + file
-                                    sub_statbuf = os.stat(subschem)
-                                    if spi_statbuf.st_mtime < sch_statbuf.st_mtime:
-                                        # netlist exists but is out-of-date
-                                        need_capture = True
-                                    break
-    return need_capture
-
-def generate_schematic_netlist(schem_path, schem_src, project_path, schematic_name):
-    # Does schematic netlist exist and is it current?
-    if check_schematic_out_of_date(schem_path, schem_src, schematic_name):
-        # elec2spi will not run unless /spi/stub directory is present
-        if not os.path.exists(project_path + '/spi'):
-            os.makedirs(project_path + '/spi')
-        if not os.path.exists(project_path + '/spi/stub'):
-            os.makedirs(project_path + '/spi/stub')
-
-        # elec2spi will run, but not correctly, if the .java directory is not present
-        if not os.path.exists(project_path + '/elec/.java'):
-            # Same behavior as project manager. . . copy from skeleton directory
-            pdkdir = os.path.join(project_path, '.ef-config/techdir')
-            dotjava = os.path.join(pdkdir, 'libs.tech/deskel/dotjava')
-            if not os.path.exists(dotjava):
-                dotjava = '/ef/efabless/deskel/dotjava'
-
-            if os.path.exists(dotjava):
-                try:
-                    shutil.copytree(dotjava, project_path + '/elec/.java', symlinks = True)
-                except IOError as e:
-                    print('Error copying files: ' + str(e))
-
-        print('Generating schematic netlist.')
-        eproc = subprocess.Popen(['/ef/efabless/bin/elec2spi',
-			'-o', schem_path, '-LP', '-TS', '-NTI', schematic_name + '.delib',
-			schematic_name + '.sch'], stdout=subprocess.PIPE,
-			stderr=subprocess.STDOUT, cwd = project_path + '/elec/')
-        elecout = eproc.communicate()[0]
-        outlines = elecout.splitlines()
-        for line in outlines:
-            print(line)
-        if eproc.returncode != 0:
-            print('Bad result from elec2spi -o ' + schem_path + ' -LP -TS -NTI ' + schematic_name + '.delib ' + schematic_name + '.sch')
-            print('Failure to generate new schematic netlist.')
-            return False
-    return True
-
-def generate_layout_start(library):
-    # Write out a TCL script to generate the layout
-    ofile = open('create_script.tcl', 'w')
-
+def generate_layout_start(library, ofile=sys.stdout):
     # Write a couple of simplifying procedures
     print('#!/usr/bin/env wish', file=ofile)
     print('#-------------------------------------', file=ofile)
@@ -179,13 +67,14 @@ def generate_layout_start(library):
         print('namespace import ${PDKNAMESPACE}::*', file=ofile)
     print('suspendall', file=ofile)
     return ofile
-
-def generate_layout_add(ofile, subname, subpins, complist, library):
+ 
+def generate_layout_add(subname, subpins, complist, library, ofile=sys.stdout):
     parmrex = re.compile('([^=]+)=([^=]+)', re.IGNORECASE)
     exprrex = re.compile('\'([^\']+)\'', re.IGNORECASE)
     librex  = re.compile('(.*)__(.*)', re.IGNORECASE)
 
     print('load ' + subname, file=ofile)
+
     print('box 0um 0um 0um 0um', file=ofile)
     print('', file=ofile)
 
@@ -266,21 +155,34 @@ def generate_layout_add(ofile, subname, subpins, complist, library):
         print('', file=ofile)
     print('save ' + subname, file=ofile)
                 
-def generate_layout_end(ofile):
+def generate_layout_end(ofile=sys.stdout):
     print('resumeall', file=ofile)
     print('refresh', file=ofile)
     print('writeall force', file=ofile)
     print('quit', file=ofile)
-    ofile.close()
+
+def usage():
+    print('Usage:')
+    print('	netlist_to_layout.py <filename> [<namespace>] [-options]')
+    print('')
+    print('Arguments:')
+    print('	<filename> is the path to the SPICE netlist to import to magic')
+    print('	<namespace> is the namespace of the PDK')
+    print('')
+    print('Options:')
+    print('	-keep	Keep the working script after completion.')
+    print('	-help	Print this help text.')
+
+# Main procedure
 
 if __name__ == '__main__':
 
-   # Parse command line for options and arguments
-    options = []
+    # Parse command line for options and arguments
+    optionlist = []
     arguments = []
     for item in sys.argv[1:]:
         if item.find('-', 0) == 0:
-            options.append(item)
+            optionlist.append(item)
         else:
             arguments.append(item)
 
@@ -291,39 +193,53 @@ if __name__ == '__main__':
         else:
             library = None
     else:
-        raise SyntaxError('Usage: ' + sys.argv[0] + ' netlist_file [library] [-options]\n')
+        usage()
+        sys.exit(0)
 
-    debug = False
-    for item in options:
+    debugmode = False
+    keepmode = False
+
+    for item in optionlist:
         result = item.split('=')
         if result[0] == '-help':
-            print('Usage: ' + sys.argv[0] + ' netlist_file [-options]\n')
+            usage()
+            sys.exit(0)
         elif result[0] == '-debug':
-            debug = True
+            debugmode = True
+        elif result[0] == '-keep':
+            keepmode = True
         else:
-            raise SyntaxError('Bad option ' + item + ', options are -help\n')
+            usage()
+            sys.exit(1)
 
-    # Check if netlist exists or needs updating.
     netpath = os.path.split(inputfile)[0]
-    netfile = os.path.split(inputfile)[1]
-    netname = os.path.splitext(netfile)[0]
-    projectpath = os.path.split(netpath)[0]
-    projectname = os.path.split(projectpath)[1]
+    if netpath == '':
+        netpath = os.getcwd()
 
-    elec_path = projectpath + '/elec/' + projectname + '.delib'
-    schem_src = elec_path + '/' + projectname + '.sch'
+    if os.path.splitext(inputfile)[1] == '.sch':
+        print('Sorry, automatic conversion of schematic to netlist not yet supported.')
+        sys.exit(1)
 
-    if not generate_schematic_netlist(inputfile, schem_src, projectpath, netname):
-        raise SyntaxError('File ' + inputfile + ':  Failure to generate netlist.')
+    netroot = os.path.split(netpath)[0]
+    magpath = os.path.join(netroot, 'mag')
+    if not os.path.isdir(magpath):
+        print('Error:  Layout path "' + magpath + '" does not exist or is not readable.')
+        sys.exit(1)
+
+    # NOTE:  There should be some attempt to find the installed PDK magicrc file
+    # if there is no mag/ directory.
+    rcfile = '.magicrc'
+    rcfilepath = os.path.join(magpath, rcfile)
+    if not os.path.isfile(rcfilepath):
+        print('Error:  No startup script file "' + rcfilepath + '"')
+        sys.exit(1)
 
     # Read SPICE netlist
-
     with open(inputfile, 'r') as ifile:
         spicetext = ifile.read()
         
     subrex = re.compile('.subckt[ \t]+(.*)$', re.IGNORECASE)
-    # All devices are going to be subcircuits
-    xrex = re.compile('[xmcrbdi]([^ \t]+)[ \t](.*)$', re.IGNORECASE)
+    devrex = re.compile('[xmcrbdi]([^ \t]+)[ \t](.*)$', re.IGNORECASE)
     namerex = re.compile('([^= \t]+)[ \t]+(.*)$', re.IGNORECASE)
     endsrex = re.compile('^[ \t]*\.ends', re.IGNORECASE)
 
@@ -334,31 +250,59 @@ if __name__ == '__main__':
     subname = ''
     subpins = ''
     complist = []
-    ofile = generate_layout_start(library)
-    for line in spicelines:
-        if not insub:
-            lmatch = subrex.match(line)
-            if lmatch:
-                rest = lmatch.group(1)
-                smatch = namerex.match(rest)
-                if smatch:
-                    subname = smatch.group(1)
-                    subpins = smatch.group(2)
-                    insub = True
-                else:
-                    raise SyntaxError('File ' + inputfile + ':  Failure to parse line ' + line)
-                    break
-        else:
-            lmatch = endsrex.match(line)
-            if lmatch:
-                insub = False
-                generate_layout_add(ofile, subname, subpins, complist, library)
-                subname = None
-                subpins = None
-                complist = []
-            else:
-                xmatch = xrex.match(line)
-                if xmatch:
-                    complist.append(line)
+    scriptfile = 'generate_layout.tcl'
+    scriptpath = os.path.join(magpath, scriptfile)
 
-    generate_layout_end(ofile)
+    with open(scriptpath, 'w') as ofile:
+        generate_layout_start(library, ofile)
+        for line in spicelines:
+            if not insub:
+                lmatch = subrex.match(line)
+                if lmatch:
+                    rest = lmatch.group(1)
+                    smatch = namerex.match(rest)
+                    if smatch:
+                        subname = smatch.group(1)
+                        subpins = smatch.group(2)
+                        insub = True
+                    else:
+                        print('File ' + inputfile + ':  Failure to parse line ' + line)
+            else:
+                lmatch = endsrex.match(line)
+                if lmatch:
+                    insub = False
+                    generate_layout_add(subname, subpins, complist, library, ofile)
+                    subname = None
+                    subpins = None
+                    complist = []
+                else:
+                    dmatch = devrex.match(line)
+                    if dmatch:
+                        complist.append(line)
+
+        generate_layout_end(ofile)
+
+    myenv = os.environ.copy()
+    myenv['MAGTYPE'] = 'mag'
+
+    # Run the layout generator
+    mproc = subprocess.run(['magic', '-dnull', '-noconsole', '-rcfile',
+		rcfile, scriptfile],
+		stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
+		stderr = subprocess.PIPE, cwd = magpath,
+		env = myenv, universal_newlines = True)
+    if mproc.stdout:
+        for line in mproc.stdout.splitlines():
+            print(line)
+    if mproc.stderr:
+        print('Error message output from magic:')
+        for line in mproc.stderr.splitlines():
+            print(line)
+    if mproc.returncode != 0:
+        print('ERROR:  Magic exited with status ' + str(mproc.returncode))
+
+    # Clean up
+    if not keepmode:
+        os.remove(scriptpath)
+
+    sys.exit(0)
