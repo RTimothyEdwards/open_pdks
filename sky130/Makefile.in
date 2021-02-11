@@ -260,7 +260,7 @@ SKY130A_DEFS += -DMAGIC_CURRENT=${MAGICTOP}/current
 # Openlane has a number of files that are common to all digital
 # standard cell libraries, so these are collected in one definition
 # here:
-OPENLANE_COMMON = config.tcl tracks.info no_synth.cells
+OPENLANE_COMMON = config.tcl tracks.info no_synth.cells drc_exclude.cells
 OPENLANE_COMMON += tribuff_map.v latch_map.v mux2_map.v mux4_map.v fa_map.v rca_map.v
 
 # Where cpp syntax is followed, this is equivalent to cpp, but it does not
