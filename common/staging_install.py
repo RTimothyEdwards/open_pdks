@@ -79,7 +79,7 @@ def filter_recursive(tooldir, stagingdir, localdir):
 
     for file in toolfiles:
         # Do not attempt to do text substitutions on a binary file!
-        if os.path.splitext(file)[1] in gdstypes:
+        if os.path.splitext(file)[1] in bintypes:
             continue
 
         filepath = tooldir + '/' + file
