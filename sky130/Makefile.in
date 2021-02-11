@@ -160,12 +160,18 @@ LINK_TARGETS = @SKY130_LINK_TARGETS@
 # Path to skywater_pdk
 SKYWATER_PATH = @SKY130_SOURCE_PATH@
 ifneq ($(SKYWATER_PATH),)
-    SKYWATER_PATH := $(SKYWATER_PATH)/libraries
+    SKYWATER_LIBS_PATH = ${SKYWATER_PATH}/libraries
+else
+    SKYWATER_LIBS_PATH =
 endif
 
 # Path to independent library sources (to be added to configuration options).
 ALPHA_PATH = @SKY130_ML_XX_HD_PATH@
 XSCHEM_PATH = @XSCHEM_SKY130_PATH@
+
+PDK_URL = https://github.com/google/skywater-pdk
+ALPHA_URL = https://github.com/PaulSchulz/sky130_pshulz_xx_hd/archive/master.tar.gz
+XSCHEM_URL = https://github.com/StefanSchippers/xschem_sky130/archive/main.tar.gz
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
@@ -316,7 +322,40 @@ endif
 
 all: all-a
 
-all-a:
+# Handle prerequisites (fetch and install the PDK and requested libraries)
+prerequisites: pdk-repo alpha-repo xschem-repo
+
+pdk-repo:
+	if test "x${SKYWATER_PATH}" != "x" ; then \
+		if test -d "${SKYWATER_PATH}" ; then \
+			echo "Using existing installation of SkyWater PDK from ${SKYWATER_PATH}" ; \
+		else \
+			echo "Downloading SkyWater PDK from ${PDK_URL}" ; \
+			custom/scripts/pdk_download.sh ${PDK_URL} ${SKYWATER_PATH} ; \
+		fi ; \
+	fi
+
+alpha-repo:
+	if test "x${ALPHA_PATH}" != "x" ; then \
+		if test -d "${ALPHA_PATH}" ; then \
+			echo "Using existing installation of alphanumeric library from ${ALPHA_PATH}" ; \
+		else \
+			echo "Downloading alphanumeric library from ${ALPHA_URL}" ; \
+			../scripts/download.sh ${ALPHA_URL} ${ALPHA_PATH} ; \
+		fi ; \
+	fi
+
+xschem-repo:
+	if test "x${XSCHEM_PATH}" != "x" ; then \
+		if test -d "${XSCHEM_PATH}" ; then \
+			echo "Using existing installation of xschem setup from ${XSCHEM_PATH}" ; \
+		else \
+			echo "Downloading xschem setup from ${XSCHEM_URL}" ; \
+			../scripts/download.sh ${XSCHEM_URL} ${XSCHEM_PATH} ; \
+		fi ; \
+	fi
+
+all-a: prerequisites
 	echo "Starting sky130A PDK staging on "`date` > ${SKY130A}_install.log
 	${MAKE} tools-a
 	${MAKE} vendor-a
@@ -498,12 +537,12 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 vendor-a:
 	# Modify the LEF files to update hs and ms libraries
 	# Install device subcircuits from vendor files
-	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
+	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-ngspice sky130_fd_pr/latest/models/* \
 		filter=custom/scripts/rename_models.py \
 		|& tee -a ${SKY130A}_install.log
 	# Install base device library from vendor files
-	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
+	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-gds %l/latest/cells/*/*.gds compile-only \
 		-cdl %l/latest/cells/*/*.cdl compile-only \
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
@@ -524,7 +563,7 @@ vendor-a:
 		-lef %l/lef/*.lef compile-only rename=sky130_ef_io \
 		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
 	# Install SkyWater I/O pad library
-	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
+	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=custom/scripts/sort_pdkfiles.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
@@ -555,7 +594,7 @@ vendor-a:
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io__top_gpiov2 \
 		"MASKHINTS_HVI 1346 17198 5828 19224 13700 1890 15920 2360 24 17522 1778 20612" -mag
 	# Install all SkyWater digital standard cells.
-	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
+	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-techlef %l/latest/tech/*.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=custom/scripts/sort_pdkfiles.py \
@@ -610,7 +649,7 @@ vendor-a:
 	cp custom/scripts/text2mag.py \
 		${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
 	# Install OSU digital standard cells.
-	${STAGE} -source ${SKYWATER_PATH} -target ${STAGING_PATH}/${SKY130A} \
+	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-techlef %l/latest/lef/sky130_osu_sc.tlef rename=sky130_osu_sc_t18.tlef \
 		-cdl %l/latest/cdl/*.cdl ignore=topography compile-only \
 		-lef %l/latest/lef/*.lef compile-only \
@@ -656,3 +695,4 @@ veryclean: veryclean-a
 veryclean-a: clean-a
 	${RM} ${SKY130A}_install.log
 	${RM} ${SKY130A}_migrate.log
+

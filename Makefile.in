@@ -67,6 +67,7 @@ veryclean: $(TECHS_VERYCLEAN)
 	@echo $(DONE_MESSAGE)
 
 distclean: $(TECHS_VERYCLEAN)
+	${RM} -rf sources
 	@echo $(DONE_MESSAGE)
 
 #---------------------------------------------------

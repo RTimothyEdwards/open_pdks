@@ -2105,75 +2105,19 @@ $as_echo "$as_me: Found technology directories: sky130" >&6;}
         SKY130_DIST_PATH=""
         SKY130_LINK_TARGETS="none"
 
-        pdk_get() {
-            { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ../sky130/pdk_info.txt" >&5
-$as_echo_n "checking for ../sky130/pdk_info.txt... " >&6; }
-if ${ac_cv_file____sky130_pdk_info_txt+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  test "$cross_compiling" = yes &&
-  as_fn_error $? "cannot check for file existence when cross compiling" "$LINENO" 5
-if test -r "../sky130/pdk_info.txt"; then
-  ac_cv_file____sky130_pdk_info_txt=yes
-else
-  ac_cv_file____sky130_pdk_info_txt=no
-fi
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_file____sky130_pdk_info_txt" >&5
-$as_echo "$ac_cv_file____sky130_pdk_info_txt" >&6; }
-if test "x$ac_cv_file____sky130_pdk_info_txt" = xyes; then :
-
-                { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ../sources/sky130" >&5
-$as_echo_n "checking for ../sources/sky130... " >&6; }
-if ${ac_cv_file____sources_sky130+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  test "$cross_compiling" = yes &&
-  as_fn_error $? "cannot check for file existence when cross compiling" "$LINENO" 5
-if test -r "../sources/sky130"; then
-  ac_cv_file____sources_sky130=yes
-else
-  ac_cv_file____sources_sky130=no
-fi
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_file____sources_sky130" >&5
-$as_echo "$ac_cv_file____sources_sky130" >&6; }
-if test "x$ac_cv_file____sources_sky130" = xyes; then :
-
-                    echo "Using pre-existing sky130 download..."
-
-else
-
-                    REPO=$(cat "../sky130/pdk_info.txt" | sed -n "1p")
-                    POST_CLONE_COMMANDS=$(cat "../sky130/pdk_info.txt" | sed "1d")
-                    mkdir -p ../sources
-                    git clone "$REPO" ../sources/sky130;
-                    (cd ../sources/sky130 && sh -c "$POST_CLONE_COMMANDS")
-
-fi
-
-                export SKY130_SOURCE_PATH=../sources/sky130
-
-else
-
-                as_fn_error $? "PDK sky130 cannot be automatically downloaded and requires a path." "$LINENO" 5
-
-fi
-
-        }
-
         pdk_find() {
             FOUND=0
             for path in /opt/pdks/sky130 /usr/share/pdks/sky130 /usr/local/share/pdks/sky130; do
                 if [ -d $path ] ; then
                     echo "Found sky130 in $path, using this installation..."
                     export SKY130_SOURCE_PATH=$path
+                    export SKY130_FOUND=1
                     FOUND=1
                 fi
             done
             if [ "$FOUND" = "0" ]; then
-                echo "Could not find sky130 in standard search paths, automatically fetching repository to ../sources/sky130 ..."
-                pdk_get
+                export SKY130_SOURCE_PATH=../sources/sky130-pdk
+                export SKY130_FOUND=0
             fi
         }
 
@@ -2199,10 +2143,12 @@ fi
 	    if [ "$SKY130_BASENAME" = "libraries" ]; then
 		SKY130_SOURCE_PATH=`dirname $SKY130_SOURCE_PATH`
 	    fi
-            # basic check that the PDK exists there (the path must exist in any case)
-            { $as_echo "$as_me:${as_lineno-$LINENO}: Checking specified path for 'sky130' at $SKY130_SOURCE_PATH" >&5
+            # Basic check that the PDK path exists, unless depending on Makefile
+	    # to download it automatically.
+            if [ "$SKY130_FOUND" == "1" ]; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Checking specified path for 'sky130' at $SKY130_SOURCE_PATH" >&5
 $as_echo "$as_me: Checking specified path for 'sky130' at $SKY130_SOURCE_PATH" >&6;}
-            as_ac_File=`$as_echo "ac_cv_file_$SKY130_SOURCE_PATH" | $as_tr_sh`
+                as_ac_File=`$as_echo "ac_cv_file_$SKY130_SOURCE_PATH" | $as_tr_sh`
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $SKY130_SOURCE_PATH" >&5
 $as_echo_n "checking for $SKY130_SOURCE_PATH... " >&6; }
 if eval \${$as_ac_File+:} false; then :
@@ -2221,15 +2167,19 @@ eval ac_res=\$$as_ac_File
 $as_echo "$ac_res" >&6; }
 if eval test \"x\$"$as_ac_File"\" = x"yes"; then :
 
-                { $as_echo "$as_me:${as_lineno-$LINENO}: 'sky130' source path found at $SKY130_SOURCE_PATH" >&5
+                    { $as_echo "$as_me:${as_lineno-$LINENO}: 'sky130' source path found at $SKY130_SOURCE_PATH" >&5
 $as_echo "$as_me: 'sky130' source path found at $SKY130_SOURCE_PATH" >&6;}
 
 else
 
-                as_fn_error $? "Specified path for 'sky130' at $SKY130_SOURCE_PATH not found" "$LINENO" 5
+                    as_fn_error $? "Specified path for 'sky130' at $SKY130_SOURCE_PATH not found" "$LINENO" 5
 
 fi
 
+	    else
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: PDK 'sky130' will be downloaded automatically during make." >&5
+$as_echo "$as_me: PDK 'sky130' will be downloaded automatically during make." >&6;}
+	    fi
 
             # --with-pdk-local-path=PDK_LOCAL_PATH
 
@@ -2503,53 +2453,24 @@ fi
 
 
 
-
-    # echo target targetvar flag url location
+    # echo target targetvar flag location
 
     SKY130_ML_XX_HD_PATH=""
-    SKY130_ML_XX_HD_GET() {
-        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ../sources/sky130_ml_xx_hd" >&5
-$as_echo_n "checking for ../sources/sky130_ml_xx_hd... " >&6; }
-if ${ac_cv_file____sources_sky130_ml_xx_hd+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  test "$cross_compiling" = yes &&
-  as_fn_error $? "cannot check for file existence when cross compiling" "$LINENO" 5
-if test -r "../sources/sky130_ml_xx_hd"; then
-  ac_cv_file____sources_sky130_ml_xx_hd=yes
-else
-  ac_cv_file____sources_sky130_ml_xx_hd=no
-fi
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_file____sources_sky130_ml_xx_hd" >&5
-$as_echo "$ac_cv_file____sources_sky130_ml_xx_hd" >&6; }
-if test "x$ac_cv_file____sources_sky130_ml_xx_hd" = xyes; then :
-
-                echo "Using pre-existing sky130_ml_xx_hd download..."
-
-else
-
-                mkdir -p ../sources/sky130_ml_xx_hd
-                sh ./download.sh 'https://github.com/PaulSchulz/sky130_pschulz_xx_hd/archive/master.tar.gz' ../sources/sky130_ml_xx_hd.tar.gz
-                (echo "Extracting sky130_ml_xx_hd..." && cd ../sources && tar -xf sky130_ml_xx_hd.tar.gz --strip-components 1 -C ../sources/sky130_ml_xx_hd && rm sky130_ml_xx_hd.tar.gz )
-
-
-fi
-
-        export SKY130_ML_XX_HD_PATH=../sources/sky130_ml_xx_hd
-    }
 
     # Check whether --enable-alpha-sky130 was given.
 if test "${enable_alpha_sky130+set}" = set; then :
   enableval=$enable_alpha_sky130;
             if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-                SKY130_ML_XX_HD_GET
-                XSCHEM_INST=1
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Option 'sky130_ml_xx_hd' will be installed automatically during make." >&5
+$as_echo "$as_me: Option 'sky130_ml_xx_hd' will be installed automatically during make." >&6;}
+        	export SKY130_ML_XX_HD_PATH=../sources/sky130_ml_xx_hd
             elif test "$enableval" == "no" -o "$enableval" == "NO"; then
-                echo "Disabling sky130_ml_xx_hd..."
-                XSCHEM_DISABLED=1
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling option 'sky130_ml_xx_hd'" >&5
+$as_echo "$as_me: Disabling option 'sky130_ml_xx_hd'" >&6;}
             else
                 SKY130_ML_XX_HD_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling option 'sky130_ml_xx_hd' at $SKY130_ML_XX_HD_PATH" >&5
+$as_echo "$as_me: Enabling option 'sky130_ml_xx_hd' at $SKY130_ML_XX_HD_PATH" >&6;}
             fi
             SKY130_ML_XX_HD_PATH=`realpath $SKY130_ML_XX_HD_PATH`
 
@@ -2566,54 +2487,24 @@ fi
 
 
 
-
-
-    # echo target targetvar flag url location
+    # echo target targetvar flag location
 
     XSCHEM_SKY130_PATH=""
-    XSCHEM_SKY130_GET() {
-        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ../sources/xschem_sky130" >&5
-$as_echo_n "checking for ../sources/xschem_sky130... " >&6; }
-if ${ac_cv_file____sources_xschem_sky130+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  test "$cross_compiling" = yes &&
-  as_fn_error $? "cannot check for file existence when cross compiling" "$LINENO" 5
-if test -r "../sources/xschem_sky130"; then
-  ac_cv_file____sources_xschem_sky130=yes
-else
-  ac_cv_file____sources_xschem_sky130=no
-fi
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_file____sources_xschem_sky130" >&5
-$as_echo "$ac_cv_file____sources_xschem_sky130" >&6; }
-if test "x$ac_cv_file____sources_xschem_sky130" = xyes; then :
-
-                echo "Using pre-existing xschem_sky130 download..."
-
-else
-
-                mkdir -p ../sources/xschem_sky130
-                sh ./download.sh 'https://github.com/StefanSchippers/xschem_sky130/archive/main.tar.gz' ../sources/xschem_sky130.tar.gz
-                (echo "Extracting xschem_sky130..." && cd ../sources && tar -xf xschem_sky130.tar.gz --strip-components 1 -C ../sources/xschem_sky130 && rm xschem_sky130.tar.gz )
-
-
-fi
-
-        export XSCHEM_SKY130_PATH=../sources/xschem_sky130
-    }
 
     # Check whether --enable-xschem-sky130 was given.
 if test "${enable_xschem_sky130+set}" = set; then :
   enableval=$enable_xschem_sky130;
             if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-                XSCHEM_SKY130_GET
-                XSCHEM_INST=1
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Option 'xschem_sky130' will be installed automatically during make." >&5
+$as_echo "$as_me: Option 'xschem_sky130' will be installed automatically during make." >&6;}
+        	export XSCHEM_SKY130_PATH=../sources/xschem_sky130
             elif test "$enableval" == "no" -o "$enableval" == "NO"; then
-                echo "Disabling xschem_sky130..."
-                XSCHEM_DISABLED=1
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling option 'xschem_sky130'" >&5
+$as_echo "$as_me: Disabling option 'xschem_sky130'" >&6;}
             else
                 XSCHEM_SKY130_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling option 'xschem_sky130' at $XSCHEM_SKY130_PATH" >&5
+$as_echo "$as_me: Enabling option 'xschem_sky130' at $XSCHEM_SKY130_PATH" >&6;}
             fi
             XSCHEM_SKY130_PATH=`realpath $XSCHEM_SKY130_PATH`
 

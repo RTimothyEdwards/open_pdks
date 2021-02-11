@@ -30,35 +30,19 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
         pdkvar[]_DIST_PATH=""
         pdkvar[]_LINK_TARGETS="none"
 
-        pdk_get() {
-            AC_CHECK_FILE(../pdk/[pdk]_info.txt, [
-                AC_CHECK_FILE(../sources/pdk,[
-                    echo "Using pre-existing pdk download..."
-                ], [
-                    REPO=$(cat "../pdk/pdk_info.txt" | sed -n "1p")
-                    POST_CLONE_COMMANDS=$(cat "../pdk/pdk_info.txt" | sed "1d")
-                    mkdir -p ../sources
-                    git clone "$REPO" ../sources/pdk;
-                    (cd ../sources/pdk && sh -c "$POST_CLONE_COMMANDS")
-                ])
-                export pdkvar[]_SOURCE_PATH=../sources/pdk
-            ], [
-                AC_MSG_ERROR([PDK pdk cannot be automatically downloaded and requires a path.])
-            ])
-        }
-
         pdk_find() {
             FOUND=0
             for path in /opt/pdks/pdk /usr/share/pdks/pdk /usr/local/share/pdks/pdk; do
                 if @<:@ -d $path @:>@ ; then
                     echo "Found pdk in $path, using this installation..."
                     export pdkvar[]_SOURCE_PATH=$path
+                    export pdkvar[]_FOUND=1
                     FOUND=1
                 fi
             done
             if @<:@ "$FOUND" = "0" @:>@; then
-                echo "Could not find pdk in standard search paths, automatically fetching repository to ../sources/pdk ..."
-                pdk_get
+                export pdkvar[]_SOURCE_PATH=../sources/pdk-[pdk]
+                export pdkvar[]_FOUND=0
             fi
         }
 
@@ -84,13 +68,18 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
 	    if @<:@ "$[]pdkvar[]_BASENAME" = "libraries" @:>@; then
 		pdkvar[]_SOURCE_PATH=`dirname $[]pdkvar[]_SOURCE_PATH`
 	    fi
-            # basic check that the PDK exists there (the path must exist in any case)
-            AC_MSG_NOTICE([Checking specified path for 'pdk' at $[]pdkvar[]_SOURCE_PATH])
-            AC_CHECK_FILE($pdkvar[]_SOURCE_PATH,[
-                AC_MSG_NOTICE(['pdk' source path found at $pdkvar[]_SOURCE_PATH])
-            ], [
-                AC_MSG_ERROR([Specified path for 'pdk' at $pdkvar[]_SOURCE_PATH not found])
-            ])
+            # Basic check that the PDK path exists, unless depending on Makefile
+	    # to download it automatically.
+            if @<:@ "$[]pdkvar[]_FOUND" == "1" @:>@; then
+                AC_MSG_NOTICE([Checking specified path for 'pdk' at $[]pdkvar[]_SOURCE_PATH])
+                AC_CHECK_FILE($pdkvar[]_SOURCE_PATH,[
+                    AC_MSG_NOTICE(['pdk' source path found at $pdkvar[]_SOURCE_PATH])
+                ], [
+                    AC_MSG_ERROR([Specified path for 'pdk' at $pdkvar[]_SOURCE_PATH not found])
+                ])
+	    else
+		AC_MSG_NOTICE([PDK 'pdk' will be downloaded automatically during make.])
+	    fi
 
             # --with-pdk-local-path=PDK_LOCAL_PATH
             AC_ARG_WITH(pdk-local-path,
@@ -182,25 +171,11 @@ AC_DEFUN([M4_GEN_INSTALLATION], [
     m4_define([target], $1)
     m4_define([targetvar], [m4_normalize(m4_esyscmd(echo target | tr "a-z-" "A-Z_"))])
     m4_define([flag], $2)
-    m4_define([url], $3)
-    m4_define([location], $4)
+    m4_define([location], $3)
 
-    # echo target targetvar flag url location
+    # echo target targetvar flag location
 
     targetvar[]_PATH=""
-    targetvar[]_GET() {
-        AC_CHECK_FILE(
-            location/target,
-            [
-                echo "Using pre-existing target download..."
-            ], [
-                mkdir -p location/target
-                sh ./download.sh url location/target.tar.gz
-                (echo "Extracting target..." && cd location && tar -xf target.tar.gz --strip-components 1 -C location/target && rm target.tar.gz )
-            ]
-        )
-        export targetvar[]_PATH=location/target
-    }
 
     AC_ARG_ENABLE(
         flag,
@@ -209,27 +184,26 @@ AC_DEFUN([M4_GEN_INSTALLATION], [
             [Install target. If path is omitted, it'll be downloaded. @<:@default=disabled@:>@]
         ), [
             if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-                targetvar[]_GET
-                XSCHEM_INST=1
+                AC_MSG_NOTICE([Option 'target' will be installed automatically during make.])
+        	export targetvar[]_PATH=location/target
             elif test "$enableval" == "no" -o "$enableval" == "NO"; then
-                echo "Disabling target..."
-                XSCHEM_DISABLED=1
+                AC_MSG_NOTICE([Disabling option 'target'])
             else
                 targetvar[]_PATH=$enableval
+                AC_MSG_NOTICE([Enabling option 'target' at $[]targetvar[]_PATH])
             fi
             targetvar[]_PATH=`realpath $[]targetvar[]_PATH`
         ],
         []
     )
 
-    $5
+    $4
 
     AC_SUBST(targetvar[]_PATH)
 ])
 
-M4_GEN_INSTALLATION(sky130_ml_xx_hd, alpha-sky130, 'https://github.com/PaulSchulz/sky130_pschulz_xx_hd/archive/master.tar.gz', ../sources)
-
-M4_GEN_INSTALLATION(xschem_sky130, xschem-sky130, 'https://github.com/StefanSchippers/xschem_sky130/archive/main.tar.gz', ../sources)
+M4_GEN_INSTALLATION(sky130_ml_xx_hd, alpha-sky130, ../sources)
+M4_GEN_INSTALLATION(xschem_sky130, xschem-sky130, ../sources)
 
 AC_DEFUN([M4_GEN_WITH_TOOLS], [
     m4_foreach_w(tool, $1, [
