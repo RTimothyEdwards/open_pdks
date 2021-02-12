@@ -1,0 +1,227 @@
+%! PostScript set of library objects for XCircuit
+%  Version: 3.9
+%  Library name is: ngspice
+%  Author:  <tim@stravinsky>
+%
+
+% Depend ngspice::Vsource analog::source
+% Depend ngspice::ACsource analog::source generic::sinusoid
+% Depend ngspice::Vpwl analog::source
+% Depend ngspice::Switch generic::circle generic::arrowhead
+% Depend ngspice::Vpulse analog::source
+
+% XCircuitLib library objects
+/generic::arrowhead {
+% nonetwork
+begingate
+8 -28 beginpath
+3 -18 3 -15 0 0 curveto
+-3 -15 -3 -18 -8 -28 curveto
+-2 -26 2 -26 8 -28 curveto
+249 
+1.000 endpath
+endgate
+} def
+
+/analog::source {
+% hidden
+begingate
+1 1.000 0 0 32 0.000 360.000 xcarc
+1 1.000 0 32 0 64 2 polygon
+1 1.000 0 -32 0 -64 2 polygon
+endgate
+} def
+
+/ngspice::Vsource {
+<</p_yps 16 /p_xps 48 /p_rot 0 /@class (V) /@index (?) /@value (5) /p_jst 20 >> begingate
+1.000 360.000 0 0 analog::source
+(+) {/Symbol cf} 2 5 p_rot 1.000 0 14 label
+(-) {/Symbol cf} 2 5 p_rot 1.000 0 -22 label
+1.000 0.000 0.000 scb
+(v.p) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+(v.m) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @value ( %pv.p %pv.m ) @index @class (spice:) {/Times-Roman cf} ctmk 20 
+360.000 1.000 -96 -160 infolabel
+0.647 0.165 0.165 scb
+mark (V) {hS} @value {/Times-Roman cf} ctmk p_jst p_rot 0.700 48 -16 label
+0.000 0.000 1.000 scb
+mark @index @class {/Times-Roman cf} ctmk 20 p_rot 0.700 p_xps p_yps label
+endgate
+} def
+
+1.000 270.000 <</p_xps -48 /p_yps -16 /p_rot 270 >> /ngspice::Vsource libinst
+
+/generic::sinusoid {
+% hidden
+begingate
+1 0.800 0 -48 0 48 -16 0 16 0 spline
+endgate
+} def
+
+/ngspice::ACsource {
+<</p_yps1 -24 /p_xps1 48 /p_yps 32 /p_xps 48 /p_rot 0 /@index (?) /@value (5) /@offset 
+(0) /@freq (1) /@units (k) /p_jst 20 >> begingate
+1.000 0.000 0 0 analog::source
+1.000 0.000 0.000 scb
+(s.p) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+(s.m) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+0.180 0.545 0.341 scb
+mark (\)) @units @freq ( ) @value ( ) @offset ( %ps.p %ps.m SIN\() @index 
+(spice:V) {/Times-Roman cf} ctmk 20 0.000 1.000 -336 -160 infolabel
+0.647 0.165 0.165 scb
+mark (Hz) @units {hS} @freq {CR} (offset) {ss} (V) {hS} @offset {CR} (p-p) {ss} 
+(V) {hS} @value {/Times-Roman cf} ctmk p_jst p_rot 0.750 p_xps1 p_yps1 label
+sce
+1.000 p_rot 0 0 generic::sinusoid
+0.000 0.000 1.000 scb
+mark @index (V) {/Times-RomanISO cf} ctmk 16 p_rot 0.700 p_xps p_yps label
+endgate
+} def
+
+1.000 90.000 <</p_xps -48 /p_yps -16 /p_xps1 80 /p_yps1 -40 /p_rot 270 >> /ngspice::ACsource libinst
+
+/ngspice::Vpwl {
+<</p_yps1 -16 /p_xps1 48 /@pwl (0 0 1u 5 2u 5 3u 0) /p_jst 20 /@index (?) /@class 
+(V) /p_rot 0 /p_xps 48 /p_yps 16 >> begingate
+1.000 360.000 0 0 analog::source
+(+) {/Symbol cf} 2 5 p_rot 1.000 0 14 label
+(-) {/Symbol cf} 2 5 p_rot 1.000 0 -22 label
+1.000 0.000 0.000 scb
+(1) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+(2) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+0.000 0.000 1.000 scb
+mark @index @class {/Times-Roman cf} ctmk p_jst p_rot 0.700 p_xps p_yps label
+0.180 0.545 0.341 scb
+mark (\)) @pwl ( %p1 %p2 PWL\() @index @class (spice:) {/Times-Roman cf} ctmk 
+16 0.000 1.000 -304 -176 infolabel
+0.647 0.165 0.165 scb
+mark @pwl {/Times-Roman cf} ctmk p_jst p_rot 0.700 p_xps1 p_yps1 label
+endgate
+} def
+
+1.000 270.000 <</p_yps1 -112 /p_rot 270 /p_xps -56 /p_yps -16 /p_xps1 56 >> /ngspice::Vpwl libinst
+
+/nsgpice::Capacitor {
+<</p_yps1 16 /p_xps1 48 /p_yps -16 /p_xps 48 /@class (C) /@value (1.0) /@units 
+(p) /@index (?) /p_jst 20 /p_rot 0 >> begingate
+1 1.000 0 -64 0 -6 2 polygon
+1 1.000 0 64 0 6 2 polygon
+1 1.000 -32 6 32 6 2 polygon
+1.000 0.000 0.000 scb
+(1) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+(2) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @units @value ( %p1 %p2 ) @index @class (spice:) {/Times-Roman cf} ctmk 4 
+0.000 1.000 -208 -160 infolabel
+(sim:e %p1 %p2) {/Times-Roman cf} 2 4 0.000 1.000 -208 -208 infolabel
+0.647 0.165 0.165 scb
+mark (F) @units {hS} @value {/Times-Roman cf} ctmk p_jst p_rot 0.700 p_xps 
+p_yps label
+0.180 0.545 0.341 scb
+mark @index @class (pcb:) {/Times-Roman cf} ctmk 20 0.000 1.000 -208 -256 
+infolabel
+0.000 0.000 1.000 scb
+mark @index @class {/Times-Roman cf} ctmk 20 p_rot 0.700 p_xps1 p_yps1 label
+sce
+1 1.000 -32 -6 32 -6 2 polygon
+endgate
+} def
+
+1.000 90.000 <</p_xps 56 /p_yps1 -16 /p_xps1 -56 /p_yps -32 /p_rot 270 >> /ngspice::Capacitor libinst
+
+/ngspice::Resistor {
+<</@class (R) /@value (1.0) /@units (k) /@index (?) /p_jst 20 /p_rot 0 /p_xps 
+32 /p_yps -16 /p_xps1 32 /p_yps1 16 >> begingate
+1 1.000 0 64 0 36 2 polygon
+1 1.000 0 -64 0 -36 2 polygon
+1 1.000 0 -36 14 -30 -14 -18 14 -6 -14 6 14 18 -14 30 0 36 8 polygon
+1.000 0.000 0.000 scb
+(1) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+(2) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @units @value ( %p1 %p2 ) @index @class (spice:) {/Times-Roman cf} ctmk 4 
+0.000 1.000 -208 -160 infolabel
+mark @index @class (pcb:) {/Times-Roman cf} ctmk 20 0.000 1.000 -208 -256 
+infolabel
+(sim:r %p1 %p2) {/Times-Roman cf} 2 4 0.000 1.000 -208 -208 infolabel
+0.647 0.165 0.165 scb
+mark (W) {/Symbol cf} @units {hS} @value {/Times-Roman cf} ctmk p_jst p_rot 
+0.700 p_xps p_yps label
+0.000 0.000 1.000 scb
+mark @index @class {/Times-Roman cf} ctmk p_jst p_rot 0.700 p_xps1 p_yps1 label
+endgate
+} def
+
+1.000 90.000 <</p_yps1 -16 /p_xps1 -32 /p_yps -32 /p_rot 270 >> /ngspice::Resistor libinst
+
+/generic::circle {
+% trivial
+begingate
+1 1.000 16 0 6 0.000 360.000 xcarc
+1 1.000 0 0 10 0 2 polygon
+1.000 0.000 0.000 scb
+(out) {/Times-Roman cf} 2 4 -0.000 1.000 16 0 pinlabel
+(out) {/Times-Roman cf} 2 7 -0.000 1.000 0 0 pinlabel
+endgate
+} def
+
+/ngspice::Switch {
+<</@model (switch) /@class (S) /@index (?) >> begingate
+1 1.300 32 32 2 -43 2 polygon
+1 0.600 8 -24 57 49.000 90.000 xcarc
+-1.000 /sv 90.000 0 -64 generic::circle
+1.000 90.000 0 48 generic::circle
+1.000 0.000 0.000 scb
+(1) {/Times-Roman cf} 2 9 0.000 1.000 0 48 pinlabel
+(2) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+sce
+1 1.000 32 -16 96 -16 2 polygon
+-1.000 /sv 270.000 16 -16 generic::arrowhead
+1.000 0.000 0.000 scb
+(3) {/Times-Roman cf} 2 20 0.000 1.000 96 -16 pinlabel
+(4) {/Times-Roman cf} 2 20 0.000 1.000 96 -48 pinlabel
+0.180 0.545 0.341 scb
+mark @model ( %p1 %p2 %p3 %p4 ) @index @class (spice1:) {/Times-Roman cf} ctmk 
+16 0.000 0.700 -128 -192 infolabel
+sce
+(+) {/Symbol cf} 2 17 0.000 0.700 96 -8 label
+(-) {/Symbol cf} 2 17 0.000 0.700 96 -40 label
+1 1.000 96 -48 72 -48 72 -64 3 polygon
+1 1.000 54 -64 90 -64 2 polygon
+1 1.000 62 -72 82 -72 2 polygon
+1 1.000 70 -80 74 -80 2 polygon
+0.180 0.545 0.341 scb
+mark ( sw) @model (spice@1:.model ) {/Times-Roman cf} ctmk 16 0.000 0.700 -128 
+-160 infolabel
+endgate
+} def
+
+/ngspice::Vpulse {
+<</@period (10.0u) /@pwidth (1.0u) /@t_fall (1.0u) /@t_rise (1.0u) /@t_delay 
+(0.0) /@vpulse (3.3) /@vinit (0.0) /p_jst 20 /@index (?) /@class (V) /p_rot 0 /p_xps 
+48 /p_yps 16 >> begingate
+1.000 360.000 0 0 analog::source
+1.000 0.000 0.000 scb
+(v.p) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+(v.m) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+0.180 0.545 0.341 scb
+mark (\)) @period ( ) @pwidth ( ) @t_fall ( ) @t_rise ( ) @t_delay ( ) @vpulse 
+( ) @vinit ( PULSE\() @vpulse ( %pv.p %pv.m DC=) @index @class (spice:) 
+{/Times-Roman cf} ctmk 20 360.000 1.000 -96 -160 infolabel
+0.647 0.165 0.165 scb
+mark (V) {hS} @vpulse (\261) @vinit {/Times-Roman cf} ctmk p_jst p_rot 0.700 48 
+-16 label
+0.000 0.000 1.000 scb
+mark @index @class {/Times-Roman cf} ctmk 20 p_rot 0.700 p_xps p_yps label
+sce
+1 1.000 -24 -12 -16 -12 -16 12 -8 12 -8 -12 0 -12 0 12 8 12 8 -12 16 -12 16 12 
+24 12 12 polygon
+mark (s) @period (T=) {0.647 0.165 0.165 scb} {/Times-Roman cf} ctmk 16 0.000 
+0.700 48 -52 label
+(+) {/Times-Roman cf} 2 21 0.000 0.600 0 22 label
+endgate
+} def
+
+
+% EndLib

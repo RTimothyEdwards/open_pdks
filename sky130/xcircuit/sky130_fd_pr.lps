@@ -1,0 +1,289 @@
+%! PostScript set of library objects for XCircuit
+%  Version: 3.9
+%  Library name is: sky130_fd_pr
+%  Author:  <tim@stravinsky>
+%
+
+% Depend sky130_fd_pr::NPNModel generic::arrowhead
+% Depend ngspice::Vsource analog::source
+% Depend ngspice::ACsource analog::source generic::sinusoid
+% Depend ngspice::Vpwl analog::source
+% Depend ngspice::Switch generic::circle generic::arrowhead
+% Depend ngspice::Vpulse analog::source
+
+% XCircuitLib library objects
+/sky130_fd_pr::pMOS {
+<</@subs (avdd) /p_yps2 48 /p_xps2 16 /p_yps1 -8 /p_xps1 16 /p_yps 16 /p_xps 16 /p_rot 
+0 /@fingers (1) /@class (M) /@width (1u) /@length (0.18u) /@model (pfet) /@index 
+(?) /p_jst 28 >> begingate
+1 1.000 -44 -28 -44 28 2 polygon
+1 1.000 -60 0 -64 0 2 polygon
+1 1.000 0 -64 0 -28 -32 -28 -32 28 0 28 0 64 6 polygon
+1 1.000 -52 0 8 0.000 360.000 xcarc
+1.000 0.000 0.000 scb
+(S) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+(D) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+(G) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
+0.180 0.545 0.341 scb
+mark @fingers ( M=) @length ( L=) @width ( W=) @model ( ) @subs ( %pD %pG %pS ) 
+@index @class (spice:) {/Times-Roman cf} ctmk 4 0.000 1.000 -196 -139 infolabel
+mark ( %x %y) @width ( ) @length (sim:p %pG %pD %pS ) {/Times-Roman cf} ctmk 4 
+0.000 1.000 -196 -187 infolabel
+0.647 0.165 0.165 scb
+mark @fingers {hS} (=) {hS} (M) {CR} @length (=) {Tf} (L) {hS} {CR} @width (=) 
+{Ts} (W) {/Times-Roman cf} ctmk p_jst p_rot 0.700 p_xps1 p_yps1 label
+0.000 0.000 1.000 scb
+mark @index @class {/Times-Roman cf} ctmk 16 p_rot 0.700 p_xps2 p_yps2 label
+sce
+mark @model {/Times-RomanISO cf} ctmk 16 p_rot 0.700 p_xps p_yps label
+endgate
+} def
+
+1.000 90.000 <</p_yps -32 /p_xps1 32 /p_yps1 -40 /p_rot 270 /p_xps2 -32 >> /sky130_fd_pr::pMOS libinst
+<</@model (hvpfet) /@length (0.36u) /@subs (dvdd3) >> /sky130_fd_pr::pMOS libinst
+1.000 90.000 <</p_yps -32 /p_xps1 32 /p_yps1 -40 /p_rot 270 /p_xps2 -32 /@model (hvpfet) 
+/@length (0.36u) /@subs (dvdd3) >> /sky130_fd_pr::pMOS libinst
+
+/sky130_fd_pr::pMOS1finger {
+<</p_yps2 -16 /p_xps2 16 /p_yps1 8 /p_xps1 16 /p_yps 40 /p_xps 16 /p_rot 0 /@subs 
+(avdd) /@class (M) /@width (1u) /@length (0.18u) /@model (pfet) /@index 
+(?) /p_jst 28 >> begingate
+1 1.000 -44 -28 -44 28 2 polygon
+1 1.000 -60 0 -64 0 2 polygon
+1 1.000 0 -64 0 -28 -32 -28 -32 28 0 28 0 64 6 polygon
+1 1.000 -52 0 8 0.000 360.000 xcarc
+1.000 0.000 0.000 scb
+(S) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+(D) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+(G) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
+0.180 0.545 0.341 scb
+mark @length ( L=) @width ( W=) @model ( ) @subs ( %pD %pG %pS ) @index @class 
+(spice:) {/Times-Roman cf} ctmk 4 0.000 1.000 -196 -139 infolabel
+mark ( %x %y) @width ( ) @length (sim:p %pG %pD %pS ) {/Times-Roman cf} ctmk 4 
+0.000 1.000 -196 -187 infolabel
+0.647 0.165 0.165 scb
+mark @length (=) {Tf} (L) {hS} {CR} @width (=) {Ts} (W) {/Times-Roman cf} ctmk 
+p_jst p_rot 0.700 p_xps2 p_yps2 label
+0.000 0.000 1.000 scb
+mark @index @class {/Times-Roman cf} ctmk 16 p_rot 0.700 p_xps p_yps label
+sce
+mark @model {/Times-RomanISO cf} ctmk 16 p_rot 0.700 p_xps1 p_yps1 label
+endgate
+} def
+
+1.000 90.000 <</p_yps2 -32 /p_yps1 -24 /p_xps2 32 /p_rot 270 /p_xps -16 >> /sky130_fd_pr::pMOS1finger libinst
+<</@model (hvpfet) /@length (0.36u) /@subs (dvdd3) >> /sky130_fd_pr::pMOS1finger libinst
+1.000 90.000 <</p_yps2 -32 /p_yps1 -24 /p_xps2 32 /p_rot 270 /p_xps -16 /@model (hvpfet) 
+/@length (0.36u) /@subs (dvdd3) >> /sky130_fd_pr::pMOS1finger libinst
+
+/sky130_fd_pr::nMOS {
+<</@subs (agnd) /p_yps2 -16 /p_xps2 16 /p_yps1 8 /p_xps1 16 /p_yps 40 /p_xps 16 /p_rot 
+0 /@fingers (1) /@class (M) /@width (1u) /@length (0.18u) /@model (nfet) /@index 
+(?) /p_jst 28 >> begingate
+1 1.000 0 -64 0 -28 -32 -28 -32 28 0 28 0 64 6 polygon
+1 1.000 -44 -28 -44 28 2 polygon
+1 1.000 -44 0 -64 0 2 polygon
+1.000 0.000 0.000 scb
+(G) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
+(S) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+(D) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+0.180 0.545 0.341 scb
+mark @fingers ( m=) @length ( l=) @width ( w=) @model ( ) @subs ( %pD %pG %pS ) 
+@index @class (spice:) {/Times-Roman cf} ctmk 4 0.000 1.000 -244 -139 infolabel
+mark ( %x %y) @width ( ) @length (sim:n %pG %pD %pS ) {/Times-Roman cf} ctmk 4 
+0.000 1.000 -244 -187 infolabel
+0.647 0.165 0.165 scb
+mark @fingers (=) {Tf} {Tf} (M) {CR} @length (=) {Tf} (L) {hS} {CR} @width (=) 
+{Ts} (W) {/Times-Roman cf} ctmk p_jst p_rot 0.700 p_xps2 p_yps2 label
+0.000 0.000 1.000 scb
+mark @index @class {/Times-Roman cf} ctmk 20 p_rot 0.700 p_xps p_yps label
+sce
+mark @model {/Times-RomanISO cf} ctmk 20 p_rot 0.700 p_xps1 p_yps1 label
+endgate
+} def
+
+1.000 90.000 <</p_yps1 -24 /p_xps2 32 /p_yps2 -32 /p_rot 270 /p_xps -32 >> /sky130_fd_pr::nMOS libinst
+<</p_jst 28 /p_xps2 16 /p_yps2 -16 /@model (hvnfet) /@length (0.36u) /@subs 
+(dgnd) >> /sky130_fd_pr::nMOS libinst
+1.000 90.000 <</p_yps2 -32 /p_yps1 -24 /p_xps2 32 /p_rot 270 /p_xps -32 /@model (hvnfet) 
+/@length (0.36u) /@subs (dgnd) >> /sky130_fd_pr::nMOS libinst
+
+/sky130_fd_pr::nMOS1finger {
+<</@subs (agnd) /p_yps2 -16 /p_xps2 16 /p_yps1 8 /p_xps1 16 /p_yps 40 /p_xps 16 /p_rot 
+0 /@class (M) /@width (1u) /@length (0.18u) /@model (nfet) /@index (?) /p_jst 
+28 >> begingate
+1 1.000 0 -64 0 -28 -32 -28 -32 28 0 28 0 64 6 polygon
+1 1.000 -44 -28 -44 28 2 polygon
+1 1.000 -44 0 -64 0 2 polygon
+1.000 0.000 0.000 scb
+(G) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
+(S) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+(D) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+0.180 0.545 0.341 scb
+mark @length ( l=) @width ( w=) @model ( ) @subs ( %pD %pG %pS ) @index @class 
+(spice:) {/Times-Roman cf} ctmk 4 360.000 1.000 -244 -139 infolabel
+mark ( %x %y) @width ( ) @length (sim:n %pG %pD %pS ) {/Times-Roman cf} ctmk 4 
+0.000 1.000 -244 -187 infolabel
+0.647 0.165 0.165 scb
+mark @length (=) {Tf} (L) {hS} {CR} @width (=) {Ts} (W) {/Times-Roman cf} ctmk 
+p_jst p_rot 0.700 p_xps2 p_yps2 label
+0.000 0.000 1.000 scb
+mark @index @class {/Times-Roman cf} ctmk 20 p_rot 0.700 p_xps p_yps label
+sce
+mark @model {/Times-RomanISO cf} ctmk 20 p_rot 0.700 p_xps1 p_yps1 label
+endgate
+} def
+
+1.000 90.000 <</p_yps2 -32 /p_yps1 -24 /p_xps2 32 /p_rot 270 /p_xps -32 >> /sky130_fd_pr::nMOS1finger libinst
+<</@model (hvnfet) /@length (0.36u) /@subs (dgnd) >> /sky130_fd_pr::nMOS1finger libinst
+1.000 90.000 <</p_yps2 -32 /p_yps1 -24 /p_xps2 32 /p_rot 270 /p_xps -32 /@model (hvnfet) 
+/@length (0.36u) /@subs (dgnd) >> /sky130_fd_pr::nMOS1finger libinst
+
+/generic::arrowhead {
+% nonetwork
+begingate
+8 -28 beginpath
+3 -18 3 -15 0 0 curveto
+-3 -15 -3 -18 -8 -28 curveto
+-2 -26 2 -26 8 -28 curveto
+249 
+1.000 endpath
+endgate
+} def
+
+/sky130_fd_pr::NPNModel {
+<</@subs (agnd) /p_yps2 56 /p_xps2 16 /p_yps1 0 /p_xps1 16 /p_yps 24 /p_xps 16 /p_rot 
+0 /@length (10.16u) /@width (0.2u) /@m (1) /@model (bipolar) /@index (?) /@class 
+(Q) >> begingate
+1 1.000 -48 0 -64 0 2 polygon
+1 1.000 -48 48 -48 -48 2 polygon
+1 1.000 0 48 -48 22 2 polygon
+1 1.000 0 48 0 64 2 polygon
+1 1.000 0 -48 -48 -22 2 polygon
+1 1.000 0 -48 0 -64 2 polygon
+1.000 120.000 0 -48 generic::arrowhead
+1.000 0.000 0.000 scb
+(C) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
+(E) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @m ( M=) @length ( L=) @width ( W=) @model ( ) @subs ( %pC %pB %pE ) 
+@index @class (spice:) {/Times-Roman cf} ctmk 4 0.000 1.000 -244 -139 infolabel
+(sim:b %pB %pE %pC) {/Times-Roman cf} 2 4 0.000 1.000 -244 -187 infolabel
+0.000 0.000 1.000 scb
+mark @index @class {/Times-Roman cf} ctmk 16 p_rot 0.700 p_xps2 p_yps2 label
+sce
+mark @model {/Times-RomanISO cf} ctmk 16 p_rot 0.700 p_xps p_yps label
+0.647 0.165 0.165 scb
+mark @m {Tf} (=) {Tf} (M) {CR} @length {Tf} (=) {Tf} (L) {CR} @width {Ts} {hS} 
+(=) {Ts} {hS} (W) {/Times-Roman cf} ctmk 28 p_rot 0.700 p_xps1 p_yps1 label
+endgate
+} def
+
+1.000 90.000 <</p_yps -40 /p_xps2 -32 /p_xps 32 /p_xps1 48 /p_yps1 -32 /p_rot 270 >> /sky130_fd_pr::NPNModel libinst
+
+/sky130_fd_pr::ResModel {
+<</@substype (sub) (lindex {sub well} 0) pop /@subs (avdd) /@width (1u) /@length 
+(1u) /p_yps2 -48 /p_xps2 32 /@model (resistor) /p_yps1 0 /p_xps1 32 /p_yps 
+32 /p_xps 32 /p_rot 0 /@class (R) /@value (1.0) /@units (k) /@index (?) /p_jst 
+20 >> begingate
+1 1.000 0 64 0 36 2 polygon
+1 1.000 0 -64 0 -36 2 polygon
+1 1.000 0 -36 14 -30 -14 -18 14 -6 -14 6 14 18 -14 30 0 36 8 polygon
+1.000 0.000 0.000 scb
+(1) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+(2) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @subs (=) @substype ( ) @width ( W=) @length ( L=) @units @value ( R=) 
+@model ( %p1 %p2 ) @index @class (spice:) {/Times-Roman cf} ctmk 4 0.000 1.000 
+-208 -160 infolabel
+(sim:r %p1 %p2) {/Times-Roman cf} 2 4 0.000 1.000 -208 -208 infolabel
+0.647 0.165 0.165 scb
+mark (W) {/Symbol cf} @units {hS} @value {/Times-Roman cf} ctmk p_jst p_rot 
+0.700 p_xps1 p_yps1 label
+0.180 0.545 0.341 scb
+mark @index @class (pcb:) {/Times-Roman cf} ctmk 20 0.000 1.000 -208 -256 
+infolabel
+0.000 0.000 1.000 scb
+mark @index @class {/Times-Roman cf} ctmk 20 p_rot 0.700 p_xps p_yps label
+0.647 0.165 0.165 scb
+mark @model {/Times-RomanISO cf} ctmk 16 p_rot 0.700 p_xps2 p_yps2 label
+endgate
+} def
+
+1.000 90.000 <</@substype (sub) /p_xps -32 /p_yps1 -32 /p_yps -16 /p_xps2 80 /p_yps2 -32 
+/p_rot 270 >> /sky130_fd_pr::ResModel libinst
+
+/sky130_fd_pr::MiMCap {
+<</@substype (sub) (lindex {sub well} 0) pop /@subs (agnd) /@fingers (1) /@length 
+(1u) /@width (1u) /p_yps2 -8 /p_xps2 48 /p_yps1 24 /p_xps1 48 /p_yps 
+56 /p_xps 48 /p_rot 0 /@class (C) /@value (1.0) /@units (p) /@index (?) /p_jst 
+20 >> begingate
+1 1.000 0 -64 0 -6 2 polygon
+1 1.000 0 64 0 6 2 polygon
+1 1.000 -32 6 32 6 2 polygon
+1.000 0.000 0.000 scb
+(1) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+(2) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @subs (=) @substype ( ) @fingers ( M=) @width ( W=) @length ( L=) @units 
+@value ( %p1 %p2 MIM C=) @index (spice:C) {/Times-Roman cf} ctmk 4 0.000 1.000 
+-208 -160 infolabel
+(sim:c %p1 %p2) {/Times-Roman cf} 2 4 0.000 1.000 -208 -208 infolabel
+0.647 0.165 0.165 scb
+mark (F) @units {hS} @value {/Times-Roman cf} ctmk p_jst p_rot 0.700 p_xps1 
+p_yps1 label
+0.180 0.545 0.341 scb
+mark @index (pcb:C) {/Times-Roman cf} ctmk 20 0.000 1.000 -208 -256 infolabel
+0.000 0.000 1.000 scb
+mark @index @class {/Times-Roman cf} ctmk 20 p_rot 0.700 p_xps p_yps label
+0.647 0.165 0.165 scb
+mark @fingers {Tf} (=) {Tf} (M) {CR} @length {Tf} (=) {Tf} (L) {CR} @width {Ts} 
+{hS} (=) {Ts} {hS} (W) {/Times-RomanISO cf} ctmk 28 p_rot 0.700 p_xps2 p_yps2 
+label
+sce
+1 1.000 0 -80 74 66.000 114.000 xcarc
+endgate
+} def
+
+1.000 90.000 <</@substype (sub) /p_xps -48 /p_yps 24 /p_yps1 -24 /p_xps2 80 /p_yps2 -24 
+/p_rot 270 >> /sky130_fd_pr::MiMCap libinst
+
+/sky130_fd_pr::IndModel {
+<</@size (175u) /@width (2.5u) /@sep (2.5u) /@turns (6.5) /@substype (sub) 
+(lindex {sub well} 0) pop /@subs (agnd) /p_yps2 -48 /p_xps2 32 /@model 
+(inductor) /p_yps1 -16 /p_xps1 32 /p_yps 16 /p_xps 32 /@value (10) /@units (n) /@index 
+(?) /p_jst 20 /p_rot 0 >> begingate
+1 1.000 20 -22 20 -38 0 -42 0 -18 spline
+1 1.000 -20 -14 -20 -26 0 -22 0 -18 spline
+1 1.000 20 38 20 22 0 18 0 42 spline
+1 1.000 20 18 20 2 0 -2 0 22 spline
+1 1.000 20 -2 20 -18 0 -22 0 2 spline
+1 1.000 -20 26 -20 14 0 18 0 22 spline
+1 1.000 -20 6 -20 -6 0 -2 0 2 spline
+1 1.000 0 -42 0 -64 2 polygon
+1 1.000 0 42 0 64 2 polygon
+1.000 0.000 0.000 scb
+(1) {/Times-Roman cf} 2 9 0.000 1.000 0 64 pinlabel
+(2) {/Times-Roman cf} 2 13 0.000 1.000 0 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @turns ( turns=) @sep ( sep=) @width ( width=) @size ( size=) @subs (=) 
+@substype ( ) @units @value ( ind=) @model ( %p1 %p2 ) @index (spice:L) 
+{/Times-Roman cf} ctmk 132 360.000 1.000 -208 -160 infolabel
+(sim:l %p1 %p2) {/Times-Roman cf} 2 4 0.000 1.000 -208 -208 infolabel
+0.647 0.165 0.165 scb
+mark (H) @units {hS} @value {/Times-Roman cf} ctmk p_jst p_rot 0.700 p_xps1 
+p_yps1 label
+0.180 0.545 0.341 scb
+mark @index (pcb:L) {/Times-Roman cf} ctmk 20 0.000 1.000 -208 -256 infolabel
+0.000 0.000 1.000 scb
+mark @index (L) {/Times-Roman cf} ctmk 20 p_rot 0.700 p_xps p_yps label
+0.647 0.165 0.165 scb
+mark @model {/Times-Roman cf} ctmk 20 p_rot 0.700 p_xps2 p_yps2 label
+endgate
+} def
+
+1.000 90.000 <</@substype (sub) /p_rot 270 /p_yps1 -48 /p_xps1 48 /p_yps -16 /p_xps -48 
+/p_xps2 80 >> /sky130_fd_pr::IndModel libinst
+
+% EndLib
