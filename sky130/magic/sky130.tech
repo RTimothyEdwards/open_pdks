@@ -1808,7 +1808,7 @@ style wafflefill variants (),(tiled)
 # FOM and POLY fill
 #---------------------------------------------------
  templayer	fomfill_pass1 topbox
-        slots   0 4080 1320 0 4080 1320 1360 0
+        slots   0 4080 1600 0 4080 1600 1360 0
         and-not obstruct_fom
 	and	topbox
         shrink  2035
