@@ -54,6 +54,7 @@
 #	#endif
 #--------------------------------------------------------------------
 
+import os
 import re
 import sys
 
@@ -500,6 +501,7 @@ def printusage(progname):
     print('Usage: ' + progname + ' input_file [output_file] [-options]')
     print('   Options are:')
     print('      -help         Print this help text.')
+    print('      -quiet        Stop without error if input file is not found.')
     print('      -ccomm        Remove C comments in /* ... */ delimiters.')
     print('      -D<def>       Define word <def> and set its value to 1.')
     print('      -D<def>=<val> Define word <def> and set its value to <val>.')
@@ -532,6 +534,7 @@ if __name__ == '__main__':
     keys = []
     incdirs = []
     ccomm = False
+    quiet = False
     for item in options:
         result = item.split('=')
         if result[0] == '-help':
@@ -539,6 +542,8 @@ if __name__ == '__main__':
             sys.exit(0)
         elif result[0] == '-ccomm':
             ccomm = True
+        elif result[0] == '-quiet':
+            quiet = True
         elif result[0][0:2] == '-I':
             incdirs.append(result[0][2:])
         elif result[0][0:2] == '-D':
@@ -552,8 +557,14 @@ if __name__ == '__main__':
             keys.append(keyword)
             keys = sortkeys(keys)
         else:
-            print('Bad option ' + item + ', options are -help, -ccomm, -D<def> -I<dir>\n')
+            print('Bad option ' + item + ', options are -help, -quiet, -ccomm, -D<def> -I<dir>\n')
             sys.exit(1)
+
+    if not os.path.isfile(inputfile):
+        if not quiet:
+            print("Error:  No input file " + inputfile + " found.")
+        else:
+            sys.exit(0)
 
     if outputfile:
         ofile = open(outputfile, 'w')
@@ -561,7 +572,7 @@ if __name__ == '__main__':
         ofile = sys.stdout
 
     if not ofile:
-        print("Error:  Cannot open file " + output_file + " for writing.")
+        print("Error:  Cannot open file " + outputfile + " for writing.")
         sys.exit(1)
 
     # Sort keys so that if any definition contains another definition, the

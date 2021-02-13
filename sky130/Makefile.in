@@ -107,7 +107,7 @@
 #
 # Run "make clean" to remove all staging files.
 #
-# Run "make veryclean" to remove all staging and install log files.
+# Run "make veryclean" to remove all staging and make.log files.
 #
 # For the sake of simplicity, the "standard" installation can be done
 # with the usual
@@ -222,8 +222,10 @@ XCIRCUITTOP = libs.tech/xcircuit
 
 ifeq (${EF_STYLE}, 1)
     MAGICPATH = ${MAGICTOP}/${REVISION}
+    MAGICCURRENT = ${MAGICTOP}/current
 else
     MAGICPATH = ${MAGICTOP}
+    MAGICCURRENT = ${MAGICTOP}
 endif
 
 # Currently, netgen, qflow, irsim, and klayout do not use revisioning (needs to change!)
@@ -253,7 +255,7 @@ OPENLANE_STAGING_A = ${STAGING_PATH}/${SKY130A}/${OPENLANEPATH}
 XSCHEM_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XSCHEMPATH}
 XCIRCUIT_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XCIRCUITPATH}
 
-SKY130A_DEFS += -DMAGIC_CURRENT=${MAGICTOP}/current
+SKY130A_DEFS += -DMAGIC_CURRENT=${MAGICCURRENT}
 
 # Openlane has a number of files that are common to all digital
 # standard cell libraries, so these are collected in one definition
@@ -360,17 +362,17 @@ xschem-repo:
 	fi
 
 all-a: prerequisites
-	echo "Starting sky130A PDK staging on "`date` > ${SKY130A}_install.log
+	echo "Starting sky130A PDK staging on "`date` > ${SKY130A}_make.log
 	${MAKE} tools-a
 	${MAKE} vendor-a
-	echo "Ended sky130A PDK staging on "`date` >> ${SKY130A}_install.log
+	echo "Ended sky130A PDK staging on "`date` >> ${SKY130A}_make.log
 
 tools-a: $(addsuffix -a, $(TOOLS))
 
 general-a: ${TECH}.json
 	mkdir -p ${STAGING_PATH}/${SKY130A}/${CONFIG_DIR}
 	rm -f ${STAGING_PATH}/${SKY130A}/${CONFIG_DIR}/nodeinfo.json
-	${CPP} ${SKY130A_DEFS} ${TECH}.json > \
+	${CPP} ${SKY130A_DEFS} ${TECH}.json \
 		${STAGING_PATH}/${SKY130A}/${CONFIG_DIR}/nodeinfo.json
 
 magic-a: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${TECH}.tcl
@@ -382,16 +384,18 @@ magic-a: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${
 	rm -f ${MAGIC_STAGING_A}/${SKY130A}.tcl
 	rm -f ${MAGIC_STAGING_A}/${SKY130A}-BindKeys
 	rm -f ${MAGIC_STAGING_A}/magicrc
-	(cd ${MAGICTOP_STAGING_A} ; ln -s ${REV_DIR} current)
+	if "${EF_STYLE}" == "1" ; then \
+	    (cd ${MAGICTOP_STAGING_A} ; ln -s ${REV_DIR} current) ; \
+	fi
 	cp -rp custom/scripts/seal_ring_generator ${MAGIC_STAGING_A}/.
 	cp -rp custom/scripts/bump_bond_generator ${MAGIC_STAGING_A}/.
 	cp custom/scripts/generate_fill.py ${MAGIC_STAGING_A}/.
 	cp custom/scripts/check_density.py ${MAGIC_STAGING_A}/.
-	${CPP} ${SKY130A_DEFS} magic/${TECH}.tech > ${MAGIC_STAGING_A}/${SKY130A}.tech
-	${CPP} ${SKY130A_DEFS} magic/${TECH}gds.tech > ${MAGIC_STAGING_A}/${SKY130A}-GDS.tech
-	${CPP} ${SKY130A_DEFS} magic/${TECH}.magicrc > ${MAGIC_STAGING_A}/${SKY130A}.magicrc
-	${CPP} ${SKY130A_DEFS} ../common/pdk.bindkeys > ${MAGIC_STAGING_A}/${SKY130A}-BindKeys
-	${CPP} ${SKY130A_DEFS} magic/${TECH}.tcl > ${MAGIC_STAGING_A}/${SKY130A}.tcl
+	${CPP} ${SKY130A_DEFS} magic/${TECH}.tech ${MAGIC_STAGING_A}/${SKY130A}.tech
+	${CPP} ${SKY130A_DEFS} magic/${TECH}gds.tech ${MAGIC_STAGING_A}/${SKY130A}-GDS.tech
+	${CPP} ${SKY130A_DEFS} magic/${TECH}.magicrc ${MAGIC_STAGING_A}/${SKY130A}.magicrc
+	${CPP} ${SKY130A_DEFS} ../common/pdk.bindkeys ${MAGIC_STAGING_A}/${SKY130A}-BindKeys
+	${CPP} ${SKY130A_DEFS} magic/${TECH}.tcl ${MAGIC_STAGING_A}/${SKY130A}.tcl
 	${CPP} ${SKY130A_DEFS} ../common/pdk.tcl >> ${MAGIC_STAGING_A}/${SKY130A}.tcl
 
 qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
@@ -413,37 +417,37 @@ qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
 	rm -f ${QFLOW_STAGING_A}/${SKY130A}ms.par
 	rm -f ${QFLOW_STAGING_A}/${SKY130A}osu.sh
 	rm -f ${QFLOW_STAGING_A}/${SKY130A}osu.par
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hd qflow/${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hd qflow/${TECH}.sh \
 		${QFLOW_STAGING_A}/${SKY130A}hd.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hdll qflow/${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hdll qflow/${TECH}.sh \
 		${QFLOW_STAGING_A}/${SKY130A}hdll.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hvl qflow/${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hvl qflow/${TECH}.sh \
 		${QFLOW_STAGING_A}/${SKY130A}hvl.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hs qflow/${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hs qflow/${TECH}.sh \
 		${QFLOW_STAGING_A}/${SKY130A}hs.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_lp qflow/${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_lp qflow/${TECH}.sh \
 		${QFLOW_STAGING_A}/${SKY130A}lp.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ls qflow/${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ls qflow/${TECH}.sh \
 		${QFLOW_STAGING_A}/${SKY130A}ls.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ms qflow/${TECH}.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ms qflow/${TECH}.sh \
 		${QFLOW_STAGING_A}/${SKY130A}ms.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_t18 qflow/sky130osu.sh > \
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_t18 qflow/sky130osu.sh \
 		${QFLOW_STAGING_A}/${SKY130A}osu.sh
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hd.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hdll.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hvl.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}hs.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}ms.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}lp.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}ls.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par > ${QFLOW_STAGING_A}/${SKY130A}osu.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hd.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hdll.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hvl.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hs.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}ms.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}lp.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}ls.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}osu.par
 
 netgen-a: netgen/${TECH}_setup.tcl
 	mkdir -p ${NETGENTOP_STAGING_A}
 	mkdir -p ${NETGEN_STAGING_A}
 	rm -f ${NETGEN_STAGING_A}/${SKY130A}_setup.tcl
 	rm -f ${NETGEN_STAGING_A}/setup.tcl
-	${CPP} ${SKY130A_DEFS} netgen/${TECH}_setup.tcl > ${NETGEN_STAGING_A}/${SKY130A}_setup.tcl
+	${CPP} ${SKY130A_DEFS} netgen/${TECH}_setup.tcl ${NETGEN_STAGING_A}/${SKY130A}_setup.tcl
 	(cd ${NETGEN_STAGING_A} ; ln -s ${SKY130A}_setup.tcl setup.tcl)
 
 irsim-a: irsim
@@ -457,8 +461,8 @@ klayout-a: klayout/${TECH}.lyp klayout/${TECH}.lyt
 	mkdir -p ${KLAYOUT_STAGING_A}
 	rm -f ${KLAYOUT_STAGING_A}/${SKY130A}.lyp
 	rm -f ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
-	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyp > ${KLAYOUT_STAGING_A}/${SKY130A}.lyp
-	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyt > ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
+	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyp ${KLAYOUT_STAGING_A}/${SKY130A}.lyp
+	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyt ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
 	cp klayout/${TECH}.lydrc ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc
 	./custom/scripts/gen_run_drc.py -l ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc -o ${KLAYOUT_STAGING_A}/${SKY130A}.drc
 
@@ -468,11 +472,10 @@ xcircuit-a: xcircuit/${TECH}.xcircuitrc
 	mkdir -p ${XCIRCUIT_STAGING_A}
 	rm -f ${XCIRCUIT_STAGING_A}/*.lps
 	rm -f ${XCIRCUIT_STAGING_A}/${SKY130A}.xcircuitrc
-	${CPP} xcircuit/sky130_fd_pr.lps > ${XCIRCUIT_STAGING_A}/sky130_fd_pr.lps
-	${CPP} xcircuit/sky130_fd_sc_hd.lps > ${XCIRCUIT_STAGING_A}/sky130_fd_sc_hd.lps
-	${CPP} xcircuit/ngspice.lps > ${XCIRCUIT_STAGING_A}/ngspice.lps
-	cp xcircuit/${TECH}_*.lps ${XCIRCUIT_STAGING_A}/
-	${CPP} ${SKY130A_DEFS} xcircuit/${TECH}.xcircuitrc > ${XCIRCUIT_STAGING_A}/${SKY130A}.xcircuitrc
+	${CPP} ${SKY130A_DEFS} xcircuit/ngspice.lps ${XCIRCUIT_STAGING_A}/ngspice.lps
+	${CPP} ${SKY130A_DEFS} xcircuit/sky130_fd_pr.lps ${XCIRCUIT_STAGING_A}/sky130_fd_pr.lps
+	${CPP} ${SKY130A_DEFS} xcircuit/sky130_fd_sc_hd.lps ${XCIRCUIT_STAGING_A}/sky130_fd_sc_hd.lps
+	${CPP} ${SKY130A_DEFS} xcircuit/${TECH}.xcircuitrc ${XCIRCUIT_STAGING_A}/${SKY130A}.xcircuitrc
 
 xschem-a: ${XSCHEM_PATH}
 	rm -rf ${XSCHEM_STAGING_A}
@@ -486,7 +489,8 @@ xschem-a: ${XSCHEM_PATH}
 	# a component of XSCHEM_LIBRARY_PATH
 	cat ${XSCHEM_PATH}/xschemrc | \
 		sed -e "/PWD/aappend XSCHEM_LIBRARY_PATH :${XSCHEM_STAGING_A}" | \
-		sed -e "/sky130_models.tcl/s#scripts#${XSCHEM_STAGING_A}/scripts#" \
+		sed -e "/sky130_models.tcl/s#scripts#${XSCHEM_STAGING_A}/scripts#" | \
+		sed -e "/netlist_dir/aset netlist_dir ." \
 		> ${XSCHEM_STAGING_A}/xschemrc
 
 openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
@@ -525,36 +529,38 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	done
 
 	cp -r openlane/custom_cells ${OPENLANE_STAGING_A}
-	${CPP} ${SKY130A_DEFS} openlane/common_pdn.tcl > ${OPENLANE_STAGING_A}/common_pdn.tcl
-	${CPP} ${SKY130A_DEFS} openlane/config.tcl > ${OPENLANE_STAGING_A}/config.tcl
+	${CPP} ${SKY130A_DEFS} openlane/common_pdn.tcl ${OPENLANE_STAGING_A}/common_pdn.tcl
+	${CPP} ${SKY130A_DEFS} openlane/config.tcl ${OPENLANE_STAGING_A}/config.tcl
 
 	for file in ${OPENLANE_COMMON} ; do \
-	    ${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/$$file > \
+	    ${CPP} -quiet ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/$$file \
 		${OPENLANE_STAGING_A}/sky130_fd_sc_hd/$$file ; \
 	done
 	for file in ${OPENLANE_COMMON} ; do \
-	    ${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/$$file > \
+	    ${CPP} -quiet ${SKY130A_DEFS} openlane/sky130_fd_sc_hs/$$file \
 		${OPENLANE_STAGING_A}/sky130_fd_sc_hs/$$file ; \
 	done
 	for file in ${OPENLANE_COMMON} ; do \
-	    ${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/$$file > \
+	    ${CPP} -quiet ${SKY130A_DEFS} openlane/sky130_fd_sc_ms/$$file \
 		${OPENLANE_STAGING_A}/sky130_fd_sc_ms/$$file ; \
 	done
 	for file in ${OPENLANE_COMMON} ; do \
-	    ${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/$$file > \
+	    ${CPP} -quiet ${SKY130A_DEFS} openlane/sky130_fd_sc_ls/$$file \
 		${OPENLANE_STAGING_A}/sky130_fd_sc_ls/$$file ; \
 	done
 	for file in ${OPENLANE_COMMON} ; do \
-	    ${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/$$file > \
+	    ${CPP} -quiet ${SKY130A_DEFS} openlane/sky130_fd_sc_hdll/$$file \
 		${OPENLANE_STAGING_A}/sky130_fd_sc_hdll/$$file ; \
 	done
 	for file in ${OPENLANE_COMMON} ; do \
-	    ${CPP} ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/$$file > \
+	    ${CPP} -quiet ${SKY130A_DEFS} openlane/sky130_fd_sc_hvl/$$file \
 		${OPENLANE_STAGING_A}/sky130_fd_sc_hvl/$$file ; \
 	done
 
-	${CPP} ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/config.tcl > ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/config.tcl
-	${CPP} ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/tracks.info > ${OPENLANE_STAGING_A}/sky130_osu_sc_t18/tracks.info
+	${CPP} -quiet ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/config.tcl \
+		${OPENLANE_STAGING_A}/sky130_osu_sc_t18/config.tcl
+	${CPP} -quiet ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/tracks.info \
+		${OPENLANE_STAGING_A}/sky130_osu_sc_t18/tracks.info
 
 vendor-a:
 	# Modify the LEF files to update hs and ms libraries
@@ -562,14 +568,14 @@ vendor-a:
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-ngspice sky130_fd_pr/latest/models/* \
 		filter=custom/scripts/rename_models.py \
-		|& tee -a ${SKY130A}_install.log
+		|& tee -a ${SKY130A}_make.log
 	# Install base device library from vendor files
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-gds %l/latest/cells/*/*.gds compile-only \
 		-cdl %l/latest/cells/*/*.cdl compile-only \
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
 		-spice %l/latest/cells/*/*.spice filter=custom/scripts/rename_cells.py \
-		-library primitive sky130_fd_pr |& tee -a ${SKY130A}_install.log
+		-library primitive sky130_fd_pr |& tee -a ${SKY130A}_make.log
 	# Custom:  Add "short" resistor model and subcircuit to the r+c models file
 	cat ./custom/models/short.spice >> \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice
@@ -577,13 +583,18 @@ vendor-a:
 	cat ./custom/models/diode.spice >> \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice
 
+	# Custom:  Patch the models to work around ngspice issue with the relative
+	# order of the "nf" and "mult" parameters.
+	patch -p1 -f -d ${STAGING_PATH}/${SKY130A} \
+		< custom/patches/sky130_fd_pr.patch \
+		|& tee -a ${SKY130A}_make.log || true
 	# Install custom additions to I/O pad library
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-verilog %l/verilog/*.v \
 		-cdl %l/cdl/*.cdl \
 		-gds %l/gds/*.gds \
 		-lef %l/lef/*.lef compile-only rename=sky130_ef_io \
-		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
+		-library general sky130_fd_io |& tee -a ${SKY130A}_make.log
 	# Install SkyWater I/O pad library
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-spice %l/latest/cells/*/*.spice compile-only \
@@ -601,7 +612,7 @@ vendor-a:
 		-verilog %l/latest/cells/*/*.v exclude=*.*.v \
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=custom/scripts/sort_pdkfiles.py \
-		-library general sky130_fd_io |& tee -a ${SKY130A}_install.log
+		-library general sky130_fd_io |& tee -a ${SKY130A}_make.log
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_io/verilog/*.*.v
@@ -610,7 +621,7 @@ vendor-a:
 		-gds %l/gds/*.gds \
 		-lef %l/lef/*.lef \
 		-verilog %l/verilog/*.v \
-		-library digital sky130_fd_sc_hd |& tee -a ${SKY130A}_install.log
+		-library digital sky130_fd_sc_hd |& tee -a ${SKY130A}_make.log
 	# Add a maskhint set for the GPIO pad .mag view to prevent problems writing
 	# when writing HVI to GDS during hierarchical adjustments.
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io__top_gpiov2 \
@@ -641,7 +652,7 @@ vendor-a:
 		-library digital sky130_fd_sc_hs \
 		-library digital sky130_fd_sc_ls \
 		-library digital sky130_fd_sc_ms \
-		-library digital sky130_fd_sc_lp |& tee -a ${SKY130A}_install.log
+		-library digital sky130_fd_sc_lp |& tee -a ${SKY130A}_make.log
 	# Add a maskhint set for the tap cell .ag view to prevent problems writing
 	# when writing NSDM and PSDM to GDS during hierarchical adjustments.
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_sc_hd sky130_fd_sc_hd__tapvpwrvgnd_1 \
@@ -659,13 +670,15 @@ vendor-a:
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_lp/verilog/*.*.v
 	# Apply extra PDK patches until they get fixed properly in the source
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hd/techlef \
-		< custom/patches/hd_minenclosed.squeaky.patch || true
+		< custom/patches/hd_minenclosed.squeaky.patch \
+		|& tee -a ${SKY130A}_make.log || true
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hdll/techlef \
-		< custom/patches/hdll_minenclosed.squeaky.patch || true
+		< custom/patches/hdll_minenclosed.squeaky.patch \
+		|& tee -a ${SKY130A}_make.log || true
 	# Install alphanumeric library.
 	${STAGE} -source ${ALPHA_PATH}/.. -target ${STAGING_PATH}/${SKY130A} \
 		-mag %l/mag/*.mag filter=custom/scripts/text2m5.py \
-		-library general sky130_ml_xx_hd |& tee -a ${SKY130A}_install.log
+		-library general sky130_ml_xx_hd |& tee -a ${SKY130A}_make.log
 	# Install text2mag.py script for alphanumeric library
 	mkdir -p ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
 	cp custom/scripts/text2mag.py \
@@ -677,7 +690,7 @@ vendor-a:
 		-lef %l/latest/lef/*.lef compile-only \
 		-lib %l/latest/lib/*.lib \
 		-gds %l/latest/gds/*.gds compile-only \
-		-library digital sky130_osu_sc_t18 |& tee -a ${SKY130A}_install.log
+		-library digital sky130_osu_sc_t18 |& tee -a ${SKY130A}_make.log
 
 install:
 	if test "x${DIST_PATH}" == "x" ; then \
@@ -689,23 +702,23 @@ install:
 install-local: install-local-a
 
 install-local-a:
-	echo "Starting SKY130 PDK migration on "`date` > ${SKY130A}_migrate.log
+	echo "Starting SKY130 PDK migration on "`date` > ${SKY130A}_install.log
 	${INSTALL} -source ${STAGING_PATH}/${SKY130A} \
 		-target ${LOCAL_PATH}/${SKY130A} \
 		-variable PDKPATH \
-		-link_from ${LINK_TARGETS} |& tee -a ${SKY130A}_migrate.log
-	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_migrate.log
+		-link_from ${LINK_TARGETS} |& tee -a ${SKY130A}_install.log
+	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_install.log
 
 install-dist: install-dist-a
 
 install-dist-a:
-	echo "Starting SKY130 PDK migration on "`date` > ${SKY130A}_migrate.log
+	echo "Starting SKY130 PDK migration on "`date` > ${SKY130A}_install.log
 	${INSTALL} -source ${STAGING_PATH}/${SKY130A} \
 		-target ${DIST_PATH}/${SKY130A} \
 		-variable PDKPATH \
 		-local ${LOCAL_PATH}/${SKY130A} \
-		-link_from ${DIST_LINK_TARGETS} |& tee -a ${SKY130A}_migrate.log
-	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_migrate.log
+		-link_from ${DIST_LINK_TARGETS} |& tee -a ${SKY130A}_install.log
+	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_install.log
 
 clean: clean-a
 
@@ -715,6 +728,8 @@ clean-a:
 veryclean: veryclean-a
 
 veryclean-a: clean-a
+	${RM} ${SKY130A}_make.log
 	${RM} ${SKY130A}_install.log
+	# Legacy name
 	${RM} ${SKY130A}_migrate.log
 

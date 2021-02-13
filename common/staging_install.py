@@ -64,7 +64,7 @@ def makeuserwritable(filepath):
 
 def filter_recursive(tooldir, stagingdir, localdir):
     # Add any non-ASCII file types here
-    bintypes = ['.gds', '.gds2', '.gdsii', '.png']
+    bintypes = ['.gds', '.gds2', '.gdsii', '.png', '.swp']
 
     if not os.path.exists(tooldir):
         return 0
@@ -73,9 +73,6 @@ def filter_recursive(tooldir, stagingdir, localdir):
 
     toolfiles = os.listdir(tooldir)
     total = 0
-
-    # Add any non-ASCII 
-    binexts = ['.png']
 
     for file in toolfiles:
         # Do not attempt to do text substitutions on a binary file!
@@ -608,6 +605,8 @@ if __name__ == '__main__':
                             elif libfile == 'generate_magic.tcl':
                                 os.remove(filepath)
                             elif os.path.splitext(libfile)[1] == '.ext':
+                                os.remove(filepath)
+                            elif os.path.splitext(libfile)[1] == '.swp':
                                 os.remove(filepath)
         else:
             libraries = os.listdir(targetdir + refdir)
