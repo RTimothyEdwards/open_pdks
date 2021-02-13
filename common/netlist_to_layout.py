@@ -23,12 +23,17 @@ import sys
 import subprocess
 
 def generate_layout_start(library, ofile=sys.stdout):
+    global debugmode
+    if debugmode:
+        print('Writing layout generating script.')
+
     # Write a couple of simplifying procedures
     print('#!/usr/bin/env wish', file=ofile)
     print('#-------------------------------------', file=ofile)
     print('# Script to create layout from netlist', file=ofile)
     print('# Source this in magic.', file=ofile)
     print('#-----------------------------------------', file=ofile)
+    print('drc off', file=ofile)
     print('proc move_forward {instname} {', file=ofile)
     print('    select cell $instname', file=ofile)
     print('    set anum [lindex [array -list count] 1]', file=ofile)
@@ -69,24 +74,35 @@ def generate_layout_start(library, ofile=sys.stdout):
     return ofile
  
 def generate_layout_add(subname, subpins, complist, library, ofile=sys.stdout):
-    parmrex = re.compile('([^=]+)=([^=]+)', re.IGNORECASE)
-    exprrex = re.compile('\'([^\']+)\'', re.IGNORECASE)
-    librex  = re.compile('(.*)__(.*)', re.IGNORECASE)
+    global debugmode
+    if debugmode:
+        if subpins:
+            print('   Generating layout for subcircuit ' + subname + '.')
+        else:
+            print('   Generating layout for top level circuit ' + subname + '.')
 
-    print('load ' + subname, file=ofile)
+    gparmrex = re.compile('([^= \t]+)=([^=]+)')
+    sparmrex = re.compile('([^= \t]+)=([^= \t]+)[ \t]*(.*)')
+    expr1rex = re.compile('([^= \t]+)=\'([^\']+)\'[ \t]*(.*)')
+    expr2rex = re.compile('([^= \t]+)=\{([^\}]+)\}[ \t]*(.*)')
+    tokrex = re.compile('([^ \t]+)[ \t]*(.*)')
+
+    if subname:
+        print('load ' + subname + ' -quiet', file=ofile)
 
     print('box 0um 0um 0um 0um', file=ofile)
     print('', file=ofile)
 
     # Generate all of the pins as labels
-    pinlist = subpins.split()
-    i = 0
-    for pin in pinlist:
-        # Escape [ and ] in pin name
-        pin_esc = pin.replace('[', '\[').replace(']', '\]')
-        # To be done:  watch for key=value parameters
-        print('add_pin ' + pin_esc + ' ' + str(i), file=ofile)
-        i += 1
+    if subpins:
+        pinlist = subpins.split()
+        i = 0
+        for pin in pinlist:
+            # Escape [ and ] in pin name
+            pin_esc = pin.replace('[', '\[').replace(']', '\]')
+            # To be done:  watch for key=value parameters
+            print('add_pin ' + pin_esc + ' ' + str(i), file=ofile)
+            i += 1
 
     # Set initial position for importing cells
     print('box size 0 0', file=ofile)
@@ -95,41 +111,80 @@ def generate_layout_add(subname, subpins, complist, library, ofile=sys.stdout):
     print('box position ${posx}i ${posy}i', file=ofile)
 
     for comp in complist:
-        params = {}
-        tokens = comp.split()
-        # Diagnostic
-        # print("Adding component " + tokens[0])
-        instname = tokens[0]
-        mult = 1
-        for token in tokens[1:]:
-            rmatch = parmrex.match(token)
-            if rmatch:
-                parmname = rmatch.group(1).upper()
-                parmval = rmatch.group(2)
-                params[parmname] = parmval
-                if parmname.upper() == 'M':
-                    try:
-                        mult = int(parmval)
-                    except ValueError:
-                        # This takes care of multiplier expressions, as long
-                        # as they don't reference parameter names themselves.
-                        mult = eval(eval(parmval))
+        pinlist = []
+        paramlist = []
+
+        # Parse into pins, device name, and parameters.  Make sure parameters
+        # incorporate quoted expressions as {} or ''.
+        rest = comp
+        while rest and rest != '':
+            gmatch = gparmrex.match(rest)
+            if gmatch:
+                break
             else:
-                # Last one that isn't a parameter will be kept
-                devtype = token
+                tmatch = tokrex.match(rest)
+                if tmatch:
+                    token = tmatch.group(1)
+                    pinlist.append(token)
+                    rest = tmatch.group(2)
+                else:
+                    rest = ''
+        
+        while rest and rest != '':
+            ematch = expr1rex.match(rest)
+            if ematch:
+                pname = ematch.group(1)
+                value = ematch.group(2)
+                paramlist.append((pname, '{' + value + '}'))
+                rest = ematch.group(3)
+            else:
+                ematch = expr2rex.match(rest)
+                if ematch:
+                    pname = ematch.group(1)
+                    value = ematch.group(2)
+                    paramlist.append((pname, '{' + value + '}'))
+                    rest = ematch.group(3)
+                else:
+                    smatch = sparmrex.match(rest)
+                    if smatch:
+                        pname = smatch.group(1)
+                        value = smatch.group(2)
+                        paramlist.append((pname, value))
+                        rest = smatch.group(3)
+                    else:
+                        print('Error parsing line "' + comp + '"')
+                        print('at:  "' + rest + '"')
+                        rest = ''
 
-        # If devtype is a cellname in the form "<lib>__<cell>" then check if <cell> is
-        # in the user's /ip/ directory.  If so, recast devtype to just <cell>.
-        ematch = librex.match(devtype)
-        if ematch:
-            cellname = ematch.group(2)
-            if os.path.exists(os.path.expanduser('~/design/ip/' + cellname)):
-                devtype = cellname
+        if len(pinlist) < 2:
+            print('Error:  No device type found in line "' + comp + '"')
+            print('Tokens found are: ' + ', '.join(pinlist))
+            continue
 
-        # devtype is assumed to be in library.  If not, it will throw an error and
-        # attempt to use 'getcell' on devtype.  NOTE:  Current usage is to not pass
-        # a library to netlist_to_layout.py but to rely on the PDK Tcl script to
-        # define variable PDKNAMESPACE, which is the namespace to use for low-level
+        instname = pinlist[0]
+        devtype = pinlist[-1]
+        pinlist = pinlist[0:-1]
+
+        # Diagnostic
+        if debugmode:
+            print('      Adding component ' + devtype + ' instance ' + instname)
+
+        mult = 1
+        for param in paramlist:
+            parmname = param[0]
+            parmval = param[1]
+            if parmname.upper() == 'M':
+                try:
+                    mult = int(parmval)
+                except ValueError:
+                    # This takes care of multiplier expressions, as long
+                    # as they don't reference parameter names themselves.
+                    mult = eval(eval(parmval))
+
+        # devtype is assumed to be in library.  If not, it will attempt to use
+        # 'getcell' on devtype.  NOTE:  Current usage is to not pass a library
+        # to netlist_to_layout.py but to rely on the PDK Tcl script to define
+        # variable PDKNAMESPACE, which is the namespace to use for low-level
         # components, and may not be the same name as the technology node.
         if library:
             libdev = library + '::' + devtype
@@ -141,9 +196,9 @@ def generate_layout_add(subname, subpins, complist, library, ofile=sys.stdout):
         #  Output all parameters.  Parameters not used by the toolkit are ignored
         # by the toolkit.
         outparts.append('-spice')
-        for item in params:
-            outparts.append(str(item).lower())
-            outparts.append(params[item])
+        for param in paramlist:
+            outparts.append(str(param[0]).lower())
+            outparts.append(param[1])
 
         outstring = ' '.join(outparts)
         print('if {[catch {' + outstring + '}]} {', file=ofile)
@@ -156,10 +211,58 @@ def generate_layout_add(subname, subpins, complist, library, ofile=sys.stdout):
     print('save ' + subname, file=ofile)
                 
 def generate_layout_end(ofile=sys.stdout):
+    global debugmode
+
     print('resumeall', file=ofile)
-    print('refresh', file=ofile)
     print('writeall force', file=ofile)
-    print('quit', file=ofile)
+    print('quit -noprompt', file=ofile)
+
+def parse_layout(topname, lines, ofile):
+    global debugmode
+
+    subrex = re.compile('.subckt[ \t]+(.*)$', re.IGNORECASE)
+    devrex = re.compile('[xmcrbdivq]([^ \t]+)[ \t](.*)$', re.IGNORECASE)
+    namerex = re.compile('([^= \t]+)[ \t]+(.*)$', re.IGNORECASE)
+    endsrex = re.compile('^[ \t]*\.ends', re.IGNORECASE)
+
+    insub = False
+    subname = ''
+    subpins = ''
+    complist = []
+    toplist = []
+
+    for line in lines:
+        if not insub:
+            lmatch = subrex.match(line)
+            if lmatch:
+                rest = lmatch.group(1)
+                smatch = namerex.match(rest)
+                if smatch:
+                    subname = smatch.group(1)
+                    subpins = smatch.group(2)
+                    insub = True
+                else:
+                    print('File ' + inputfile + ':  Failure to parse line ' + line)
+            else:
+                dmatch = devrex.match(line)
+                if dmatch:
+                    toplist.append(line)
+        else:
+            lmatch = endsrex.match(line)
+            if lmatch:
+                insub = False
+                generate_layout_add(subname, subpins, complist, library, ofile)
+                subname = None
+                subpins = None
+                complist = []
+            else:
+                dmatch = devrex.match(line)
+                if dmatch:
+                    complist.append(line)
+
+    # Add any top-level components
+    if toplist:
+        generate_layout_add(topname, None, toplist, library, ofile)
 
 def usage():
     print('Usage:')
@@ -171,11 +274,13 @@ def usage():
     print('')
     print('Options:')
     print('	-keep	Keep the working script after completion.')
+    print('	-debug	Provide verbose output while generating script.')
     print('	-help	Print this help text.')
 
 # Main procedure
 
 if __name__ == '__main__':
+    global debugmode
 
     # Parse command line for options and arguments
     optionlist = []
@@ -236,50 +341,22 @@ if __name__ == '__main__':
 
     # Read SPICE netlist
     with open(inputfile, 'r') as ifile:
+        if debugmode:
+            print('Reading file ' + inputfile)
         spicetext = ifile.read()
         
-    subrex = re.compile('.subckt[ \t]+(.*)$', re.IGNORECASE)
-    devrex = re.compile('[xmcrbdi]([^ \t]+)[ \t](.*)$', re.IGNORECASE)
-    namerex = re.compile('([^= \t]+)[ \t]+(.*)$', re.IGNORECASE)
-    endsrex = re.compile('^[ \t]*\.ends', re.IGNORECASE)
-
     # Contatenate continuation lines
     spicelines = spicetext.replace('\n+', ' ').splitlines()
 
-    insub = False
-    subname = ''
-    subpins = ''
-    complist = []
+    filename = os.path.split(inputfile)[1]
+    topname = os.path.splitext(filename)[0]
+
     scriptfile = 'generate_layout.tcl'
     scriptpath = os.path.join(magpath, scriptfile)
 
     with open(scriptpath, 'w') as ofile:
         generate_layout_start(library, ofile)
-        for line in spicelines:
-            if not insub:
-                lmatch = subrex.match(line)
-                if lmatch:
-                    rest = lmatch.group(1)
-                    smatch = namerex.match(rest)
-                    if smatch:
-                        subname = smatch.group(1)
-                        subpins = smatch.group(2)
-                        insub = True
-                    else:
-                        print('File ' + inputfile + ':  Failure to parse line ' + line)
-            else:
-                lmatch = endsrex.match(line)
-                if lmatch:
-                    insub = False
-                    generate_layout_add(subname, subpins, complist, library, ofile)
-                    subname = None
-                    subpins = None
-                    complist = []
-                else:
-                    dmatch = devrex.match(line)
-                    if dmatch:
-                        complist.append(line)
-
+        parse_layout(topname, spicelines, ofile)
         generate_layout_end(ofile)
 
     myenv = os.environ.copy()

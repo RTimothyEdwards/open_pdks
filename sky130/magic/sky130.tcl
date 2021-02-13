@@ -4132,7 +4132,9 @@ proc sky130::sky130_fd_pr__pfet_01v8_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
 		compatible {sky130_fd_pr__pfet_01v8 \
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
-		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1}
+		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
+		viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 proc sky130::sky130_fd_pr__pfet_01v8_lvt_defaults {} {
@@ -4141,7 +4143,9 @@ proc sky130::sky130_fd_pr__pfet_01v8_lvt_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.35 wmin 0.42 \
 		compatible {sky130_fd_pr__pfet_01v8 \
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
-		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1}
+		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
+		viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 proc sky130::sky130_fd_pr__pfet_01v8_hvt_defaults {} {
@@ -4150,7 +4154,9 @@ proc sky130::sky130_fd_pr__pfet_01v8_hvt_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
 		compatible {sky130_fd_pr__pfet_01v8 \
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
-		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1}
+		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
+		viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 proc sky130::sky130_fd_pr__pfet_g5v0d10v5_defaults {} {
@@ -4159,7 +4165,9 @@ proc sky130::sky130_fd_pr__pfet_g5v0d10v5_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.50 wmin 0.42 \
 		compatible {sky130_fd_pr__pfet_01v8 \
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
-		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1}
+		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
+		viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 #----------------------------------------------------------------
