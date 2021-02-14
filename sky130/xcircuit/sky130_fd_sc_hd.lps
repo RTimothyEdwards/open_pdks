@@ -7,140 +7,165 @@
 
 % XCircuitLib library objects
 /sky130_fd_sc_hd::inv {
-<</@gnd (dgnd) /@vdd (dvdd) /@index (?) /@strength (1) >> begingate
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4 6 8 12 16} 0) pop >> begingate
 0 1.000 -32 -40 -32 40 40 0 3 polygon
 1 1.000 48 0 8 0.000 360.000 xcarc
-1 1.000 -32 0 -48 0 2 polygon
+1 1.000 -32 0 -64 0 2 polygon
 1 1.000 56 0 64 0 2 polygon
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
-(A) {/Times-Roman cf} 2 7 0.000 1.000 -48 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
 0.180 0.545 0.341 scb
-mark @strength ( %pA %pY invX) @gnd ( ) @vdd ( ) @index (spice:X) 
-{/Times-Roman cf} ctmk 16 360.000 0.700 -32 -136 infolabel
-mark (.cir) (spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
-{/Times-Roman cf} ctmk 16 0.000 0.700 -32 -96 infolabel
+mark @strength ( %pY sky130_fd_sc_hd__inv_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -32 -136 
+infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -32 -96 infolabel
 0.647 0.165 0.165 scb
-mark {/Times-Roman cf} ctmk 21 0.000 0.600 -8 0 label
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 0 24 label
 0.000 0.000 1.000 scb
 mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 8 -24 label
 endgate
 } def
 
-<</@strength (2) >> /sky130_fd_sc_hd::inv libinst
-<</@strength (4) >> /sky130_fd_sc_hd::inv libinst
-
 /sky130_fd_sc_hd::buf {
-<</@gnd (dgnd) /@vdd (dvdd) /@index (?) /@strength (2) >> begingate
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4 6 8 12 16} 0) pop >> begingate
 0 1.000 -32 -40 -32 40 40 0 3 polygon
-1 1.000 -32 0 -48 0 2 polygon
+1 1.000 -32 0 -64 0 2 polygon
 1 1.000 40 0 64 0 2 polygon
 1.000 0.000 0.000 scb
-(Y) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
-(A) {/Times-Roman cf} 2 7 0.000 1.000 -48 0 pinlabel
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
 0.180 0.545 0.341 scb
-mark @strength ( %pA %pY bufX) @gnd ( ) @vdd ( ) @index (spice:X) 
-{/Times-Roman cf} ctmk 16 360.000 0.700 -32 -112 infolabel
-mark (.cir) (spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
-{/Times-Roman cf} ctmk 16 0.000 0.700 -32 -80 infolabel
+mark @strength ( %pX sky130_fd_sc_hd__buf_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -32 -112 
+infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -32 -80 infolabel
 0.647 0.165 0.165 scb
-mark {/Times-RomanISO cf} ctmk 21 0.000 0.500 -8 0 label
-mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.500 8 24 label
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 0 24 label
 0.000 0.000 1.000 scb
 mark @index (U) {/Times-RomanISO cf} ctmk 16 0.000 0.600 24 -32 label
 endgate
 } def
 
-<</@strength (4) >> /sky130_fd_sc_hd::buf libinst
-
 /sky130_fd_sc_hd::nand2 {
-<</@gnd (dgnd) /@vdd (dvdd) /@index (?) >> begingate
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4 8} 0) pop >> begingate
 1 1.000 0 -48 -64 -48 -64 48 0 48 4 polygon
 1 1.000 56 0 8 0.000 360.000 xcarc
 1 1.000 0 0 48 -90.000 90.000 xcarc
 1.000 0.000 0.000 scb
-(Y) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
-(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 32 pinlabel
-(B) {/Times-Roman cf} 2 7 0.000 1.000 -64 -32 pinlabel
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 -32 pinlabel
 sce
 1 1.000 -64 -48 -64 48 2 polygon
 0.180 0.545 0.341 scb
-mark ( %pA %pB %pY nand2X1) @gnd ( ) @vdd ( ) @index (spice:X) 
-{/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 infolabel
+mark @strength ( %pY sky130_fd_sc_hd__nand2_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
+infolabel
 0.647 0.165 0.165 scb
-mark {/Times-Roman cf} ctmk 21 0.000 0.700 -16 16 label
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
 0.000 0.000 1.000 scb
-mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 -8 label
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
 0.180 0.545 0.341 scb
-mark (.cir) (spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
-{/Times-Roman cf} ctmk 16 0.000 0.700 -64 -96 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+sce
+1 1.000 -96 32 -64 32 2 polygon
+1 1.000 -96 -32 -64 -32 2 polygon
+1 1.000 96 0 64 0 2 polygon
 endgate
 } def
 
 /sky130_fd_sc_hd::nand3 {
-<</@gnd (dgnd) /@vdd (dvdd) /@index (?) >> begingate
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 0 -48 -64 -48 -64 48 0 48 4 polygon
 1 1.000 56 0 8 0.000 360.000 xcarc
 1 1.000 0 0 48 -90.000 90.000 xcarc
 1.000 0.000 0.000 scb
-(Y) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
-(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 32 pinlabel
-(B) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
-(C) {/Times-Roman cf} 2 7 0.000 1.000 -64 -32 pinlabel
-sce
-1 1.000 -64 -64 -64 64 2 polygon
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -96 -32 pinlabel
 0.180 0.545 0.341 scb
-mark ( %pA %pB %pC %pY nand3X1) @gnd ( ) @vdd ( ) @index (spice:X) 
-{/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 infolabel
-mark (.cir) (spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
-{/Times-Roman cf} ctmk 16 0.000 0.700 -64 -96 infolabel
+mark @strength ( %pY sky130_fd_sc_hd__nand3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
+-128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
-mark {/Times-Roman cf} ctmk 21 0.000 0.700 -16 16 label
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
 0.000 0.000 1.000 scb
-mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 -8 label
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -96 32 -64 32 2 polygon
+1 1.000 -96 0 -64 0 2 polygon
+1 1.000 -96 -32 -64 -32 2 polygon
+1 1.000 96 0 64 0 2 polygon
 endgate
 } def
 
 /sky130_fd_sc_hd::nand4 {
-<</@gnd (dgnd) /@vdd (dvdd) /@index (?) >> begingate
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 0 -64 -64 -64 -64 64 0 64 4 polygon
 1 1.000 56 0 8 0.000 360.000 xcarc
 1 1.000 0 0 48 64 -90.000 90.000 ellipse
 1.000 0.000 0.000 scb
-(Y) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
-(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 48 pinlabel
-(B) {/Times-Roman cf} 2 7 0.000 1.000 -64 16 pinlabel
-(C) {/Times-Roman cf} 2 7 0.000 1.000 -64 -16 pinlabel
-(D) {/Times-Roman cf} 2 7 0.000 1.000 -64 -48 pinlabel
-sce
-1 1.000 -64 -80 -64 80 2 polygon
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 48 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 16 pinlabel
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -96 -16 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 -48 pinlabel
 0.180 0.545 0.341 scb
-mark ( %pA %pB %pC %pD %pY nand4X1) @gnd ( ) @vdd ( ) @index (spice:X) 
-{/Times-Roman cf} ctmk 16 360.000 0.700 -64 -144 infolabel
-mark (.cir) (spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
-{/Times-Roman cf} ctmk 16 0.000 0.700 -64 -112 infolabel
+mark @strength ( %pY sky130_fd_sc_hd__nand4_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-64 -144 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -112 infolabel
 0.647 0.165 0.165 scb
-mark {/Times-Roman cf} ctmk 21 0.000 0.700 -16 16 label
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
 0.000 0.000 1.000 scb
-mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 -8 label
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -96 48 -64 48 2 polygon
+1 1.000 -96 16 -64 16 2 polygon
+1 1.000 -96 -16 -64 -16 2 polygon
+1 1.000 -96 -48 -64 -48 2 polygon
+1 1.000 64 0 96 0 2 polygon
 endgate
 } def
 
 /sky130_fd_sc_hd::nor2 {
-<</@gnd (dgnd) /@vdd (dvdd) /@index (?) >> begingate
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4 8} 0) pop >> begingate
 1 1.000 56 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
-(Y) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
 (A) {/Times-Roman cf} 2 7 0.000 1.000 -64 32 pinlabel
 (B) {/Times-Roman cf} 2 7 0.000 1.000 -64 -32 pinlabel
 0.180 0.545 0.341 scb
-mark ( %pA %pB %pY nor2X1) @gnd ( ) @vdd ( ) @index (spice:X) 
-{/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 infolabel
+mark @strength ( %pY sky130_fd_sc_hd__nor2_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
+infolabel
 0.647 0.165 0.165 scb
-mark {/Times-Roman cf} ctmk 21 0.000 0.700 -16 16 label
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
 0.000 0.000 1.000 scb
-mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 -8 label
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
 sce
 1 1.000 -35 48 96 270.000 330.000 xcarc
 1 1.000 -64 -48 -35 -48 2 polygon
@@ -150,27 +175,34 @@ sce
 1 1.000 -64 32 -56 32 2 polygon
 1 1.000 -64 -32 -56 -32 2 polygon
 0.180 0.545 0.341 scb
-mark (.cir) (spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
-{/Times-Roman cf} ctmk 16 0.000 0.700 -64 -96 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+sce
+1 1.000 96 0 64 0 2 polygon
 endgate
 } def
 
 /sky130_fd_sc_hd::nor3 {
-<</@index (?) /@vdd (dvdd) /@gnd (dgnd) >> begingate
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 56 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
-(Y) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
 (A) {/Times-Roman cf} 2 7 0.000 1.000 -64 32 pinlabel
 (B) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
 0.180 0.545 0.341 scb
-mark ( %pA %pB %pC %pY nor3X1) @gnd ( ) @vdd ( ) @index (spice:X) 
-{/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 infolabel
-mark (.cir) (spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
-{/Times-Roman cf} ctmk 16 0.000 0.700 -64 -96 infolabel
+mark @strength ( %pY sky130_fd_sc_hd__nor3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
+-128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
-mark {/Times-Roman cf} ctmk 21 0.000 0.700 -16 16 label
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
+label
 0.000 0.000 1.000 scb
-mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 -8 label
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -32 16 label
 sce
 1 1.000 -35 48 96 270.000 330.000 xcarc
 1 1.000 -64 -48 -35 -48 2 polygon
@@ -183,27 +215,30 @@ sce
 1.000 0.000 0.000 scb
 (C) {/Times-Roman cf} 2 7 0.000 1.000 -64 -32 pinlabel
 sce
-1 1.000 -64 48 -64 64 2 polygon
-1 1.000 -64 -48 -64 -64 2 polygon
+1 1.000 96 0 64 0 2 polygon
 endgate
 } def
 
 /sky130_fd_sc_hd::nor4 {
-<</@gnd (dgnd) /@vdd (dvdd) /@index (?) >> begingate
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 56 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
-(Y) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
 (A) {/Times-Roman cf} 2 7 0.000 1.000 -64 48 pinlabel
 (B) {/Times-Roman cf} 2 7 0.000 1.000 -64 16 pinlabel
 0.180 0.545 0.341 scb
-mark ( %pA %pB %pC %pD %pY nor4X1) @gnd ( ) @vdd ( ) @index (spice:X) 
-{/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 infolabel
-mark (.cir) (spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
-{/Times-Roman cf} ctmk 16 0.000 0.700 -64 -96 infolabel
+mark @strength ( %pY sky130_fd_sc_hd__nor4_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-64 -128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
-mark {/Times-Roman cf} ctmk 21 0.000 0.700 -16 16 label
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
+label
 0.000 0.000 1.000 scb
-mark @index (U) {/Times-RomanISO cf} ctmk 21 0.000 0.700 -8 -16 label
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -32 16 label
 sce
 1 1.000 -64 48 -58 48 2 polygon
 1 1.000 -64 -16 -48 -16 2 polygon
@@ -220,24 +255,29 @@ sce
 (D) {/Times-Roman cf} 2 7 0.000 1.000 -64 -48 pinlabel
 sce
 1 1.000 -64 -48 -60 -48 2 polygon
+1 1.000 96 0 64 0 2 polygon
 endgate
 } def
 
 /sky130_fd_sc_hd::or2 {
-<</@index (?) /@vdd (dvdd) /@gnd (dgnd) >> begingate
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {0 1 2 4} 1) pop >> begingate
 1.000 0.000 0.000 scb
-(Y) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
 (A) {/Times-Roman cf} 2 7 0.000 1.000 -64 32 pinlabel
 (B) {/Times-Roman cf} 2 7 0.000 1.000 -64 -32 pinlabel
 0.180 0.545 0.341 scb
-mark ( %pA %pB %pY or2X1) @gnd ( ) @vdd ( ) @index (spice:X) 
-{/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 infolabel
-mark (.cir) (spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
-{/Times-Roman cf} ctmk 16 0.000 0.700 -64 -96 infolabel
+mark @strength ( %pX skty130_fd_sc_hd__or2_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
+infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
-mark {/Times-Roman cf} ctmk 21 0.000 0.700 -16 16 label
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
 0.000 0.000 1.000 scb
-mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 -8 label
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
 sce
 1 1.000 -35 48 96 270.000 330.000 xcarc
 1 1.000 -64 -48 -35 -48 2 polygon
@@ -251,79 +291,1943 @@ endgate
 } def
 
 /sky130_fd_sc_hd::ebufn {
-<</@strength (2) /@index (?) /@vdd (dvdd) /@gnd (dgnd) >> begingate
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2 4 8} 0) pop >> begingate
 0 1.000 -32 -40 -32 40 40 0 3 polygon
-1 1.000 -32 0 -48 0 2 polygon
+1 1.000 -32 0 -64 0 2 polygon
 1 1.000 40 0 64 0 2 polygon
 1.000 0.000 0.000 scb
-(Y) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
-(A) {/Times-Roman cf} 2 7 0.000 1.000 -48 0 pinlabel
+(Z) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
 0.180 0.545 0.341 scb
-mark @strength ( %pA %pY %pEn ebufnX) @gnd ( ) @vdd ( ) @index 
-(spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -176 -112 infolabel
-mark (.cir) (spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
-{/Times-Roman cf} ctmk 16 0.000 0.700 -176 -80 infolabel
+mark @strength ( %pZ sky130_fd_sc_hd__ebufn_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pTE_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -176 
+-128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -176 -96 infolabel
 0.647 0.165 0.165 scb
-mark {/Times-RomanISO cf} ctmk 21 0.000 0.500 -8 0 label
-mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.500 8 24 label
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 24 24 label
 0.000 0.000 1.000 scb
-mark @index (U) {/Times-RomanISO cf} ctmk 16 0.000 0.600 24 -32 label
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 0 -32 label
 sce
-1 1.000 0 24 0 48 2 polygon
+1 1.000 0 40 0 64 2 polygon
 1.000 0.000 0.000 scb
-(En) {/Times-Roman cf} 2 17 0.000 1.000 0 48 pinlabel
+(TE_B) {/Times-Roman cf} 2 17 0.000 1.000 0 64 pinlabel
+sce
+1 1.000 0 32 8 0.000 360.000 xcarc
 endgate
 } def
 
 /sky130_fd_sc_hd::mux2 {
-<</@gnd (dgnd) /@vdd (dvdd) /@index (?) >> begingate
-1 1.000 -16 16 -32 16 2 polygon
-1 1.000 48 -16 64 -16 2 polygon
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4 8} 0) pop >> begingate
+1 1.000 0 16 -32 16 2 polygon
+1 1.000 64 -16 96 -16 2 polygon
 1.000 0.000 0.000 scb
-(Y) {/Times-Roman cf} 2 4 0.000 1.000 64 -16 pinlabel
-(A) {/Times-Roman cf} 2 7 0.000 1.000 -32 16 pinlabel
+(X) {/Times-Roman cf} 2 4 0.000 1.000 96 -16 pinlabel
+(A0) {/Times-Roman cf} 2 7 0.000 1.000 -32 16 pinlabel
 0.180 0.545 0.341 scb
-mark ( %pA %pB %pY %pS mux2X1) @gnd ( ) @vdd ( ) @index (spice:X) 
-{/Times-Roman cf} ctmk 16 360.000 0.700 -128 -176 infolabel
-mark (.cir) (spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
-{/Times-Roman cf} ctmk 16 0.000 0.700 -128 -144 infolabel
+mark @strength ( %pX sky130_fd_sc_hd__mux2_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA0 %pA1 %pS ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -128 
+-176 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -128 -144 infolabel
 0.647 0.165 0.165 scb
-mark {/Times-RomanISO cf} ctmk 21 0.000 0.500 16 -16 label
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 16 -24 
+label
 0.000 0.000 1.000 scb
-mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.600 24 -80 label
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 24 -80 label
 sce
-1 1.000 16 32 16 64 2 polygon
+1 1.000 32 32 32 64 2 polygon
 1.000 0.000 0.000 scb
-(S) {/Times-Roman cf} 2 17 0.000 1.000 16 64 pinlabel
-(B) {/Times-Roman cf} 2 7 0.000 1.000 -32 -48 pinlabel
+(S) {/Times-Roman cf} 2 17 0.000 1.000 32 64 pinlabel
+(A1) {/Times-Roman cf} 2 7 0.000 1.000 -32 -48 pinlabel
 sce
-1 1.000 -32 -48 -16 -48 2 polygon
-1 1.000 -16 48 48 16 48 -48 -16 -80 -16 48 5 polygon
+1 1.000 -32 -48 0 -48 2 polygon
+1 1.000 0 48 64 16 64 -48 0 -80 0 48 5 polygon
+(0) {/Times-Roman cf} 2 20 0.000 0.700 8 16 label
+(1) {/Times-Roman cf} 2 20 0.000 0.700 8 -48 label
 endgate
 } def
 
-/sky130_fd_sc_hd::dlrbn {
-<</@index (?) /@vdd (dvdd) /@gnd (dgnd) >> begingate
+/sky130_fd_sc_hd::dfxtp {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2} 0) pop >> begingate
 1.000 0.000 0.000 scb
-(Q) {/Times-Roman cf} 2 4 0.000 1.000 32 32 pinlabel
-(D) {/Times-Roman cf} 2 7 0.000 1.000 -64 32 pinlabel
-(CLK) {/Times-Roman cf} 2 13 0.000 1.000 -16 -48 pinlabel
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(CLK) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
 0.180 0.545 0.341 scb
-mark ( %pCLK %pD %pQ dlrbn) @gnd ( ) @vdd ( ) @index (spice:X) 
-{/Times-Roman cf} ctmk 16 360.000 0.700 -192 -160 infolabel
-mark (.cir) (spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
-{/Times-Roman cf} ctmk 16 0.000 0.700 -192 -128 infolabel
+mark @strength ( %pQ sky130_fd_sc_hd__dfxtp_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pCLK %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -192 
+-192 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
 0.647 0.165 0.165 scb
-mark {/Times-Roman cf} ctmk 21 0.000 0.700 -16 64 label
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
 0.000 0.000 1.000 scb
 mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
 sce
 0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
 1 1.000 -32 -48 -16 -32 0 -48 3 polygon
-(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 32 label
-(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 32 label
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
 0.000 0.000 1.000 scb
-(dlrbn) {/Times-Roman cf} 2 29 0.000 0.700 -16 96 label
+(dfxtp) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -16 -64 -16 -48 2 polygon
+1 1.000 64 64 32 64 2 polygon
+1 1.000 -64 64 -96 64 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::xor2 {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2 4} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -64 -32 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX sky130_fd_sc_hd__xor2_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
+infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -24 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -24 16 label
+sce
+1 1.000 -19 -48 96 30.000 90.000 xcarc
+1 1.000 -19 48 96 270.000 330.000 xcarc
+1 1.000 -128 0 80 -37.000 37.000 xcarc
+1 1.000 -112 0 80 -37.000 37.000 xcarc
+1 1.000 -48 48 -19 48 2 polygon
+1 1.000 -48 -48 -19 -48 2 polygon
+1 1.000 96 0 64 0 2 polygon
+1 1.000 -64 32 -56 32 2 polygon
+1 1.000 -64 -32 -56 -32 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::xnor2 {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2 4} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -64 -32 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__xnor2_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
+infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -24 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -24 16 label
+sce
+1 1.000 72 0 8 0.000 360.000 xcarc
+1 1.000 -19 -48 96 30.000 90.000 xcarc
+1 1.000 -19 48 96 270.000 330.000 xcarc
+1 1.000 -128 0 80 -37.000 37.000 xcarc
+1 1.000 -112 0 80 -37.000 37.000 xcarc
+1 1.000 -48 48 -19 48 2 polygon
+1 1.000 -48 -48 -19 -48 2 polygon
+1 1.000 96 0 80 0 2 polygon
+1 1.000 -64 32 -56 32 2 polygon
+1 1.000 -64 -32 -56 -32 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::nand3b {
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 0 -48 -64 -48 -64 48 0 48 4 polygon
+1 1.000 56 0 8 0.000 360.000 xcarc
+1 1.000 0 0 48 -90.000 90.000 xcarc
+1.000 0.000 0.000 scb
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -96 -32 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__nand3b_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pA_N %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
+0.700 -64 -128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -96 32 -80 32 2 polygon
+1 1.000 -96 0 -64 0 2 polygon
+1 1.000 -96 -32 -64 -32 2 polygon
+1 1.000 96 0 64 0 2 polygon
+1 1.000 -72 32 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::and3 {
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 0 -48 -64 -48 -64 48 0 48 4 polygon
+1 1.000 0 0 48 -90.000 90.000 xcarc
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -96 -32 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX sky130_fd_sc_hd__and3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
+-128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -96 32 -64 32 2 polygon
+1 1.000 -96 0 -64 0 2 polygon
+1 1.000 -96 -32 -64 -32 2 polygon
+1 1.000 64 0 48 0 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::or3 {
+<</@strength (1) (lindex {0 1 2 4} 1) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index 
+(?) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX skty130_fd_sc_hd__or3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
+-128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -35 48 96 270.000 330.000 xcarc
+1 1.000 -64 -48 -35 -48 2 polygon
+1 1.000 -128 0 80 -37.000 37.000 xcarc
+1 1.000 -35 -48 96 30.000 90.000 xcarc
+1 1.000 -64 48 -35 48 2 polygon
+1 1.000 -64 32 -56 32 2 polygon
+1 1.000 -64 -32 -56 -32 2 polygon
+1 1.000 48 0 64 0 2 polygon
+1 1.000 -48 0 -64 0 2 polygon
+1.000 0.000 0.000 scb
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -64 -32 pinlabel
+endgate
+} def
+
+/sky130_fd_sc_hd::and4 {
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 0 -64 -64 -64 -64 64 0 64 4 polygon
+1 1.000 0 0 48 64 -90.000 90.000 ellipse
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 48 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 16 pinlabel
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -96 -16 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 -48 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX sky130_fd_sc_hd__and4_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-64 -144 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -112 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -96 48 -64 48 2 polygon
+1 1.000 -96 16 -64 16 2 polygon
+1 1.000 -96 -16 -64 -16 2 polygon
+1 1.000 -96 -48 -64 -48 2 polygon
+1 1.000 48 0 64 0 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::and4bb {
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4} 0) pop >> begingate
+1 1.000 0 -64 -64 -64 -64 64 0 64 4 polygon
+1 1.000 0 0 48 64 -90.000 90.000 ellipse
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 48 pinlabel
+(B_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 16 pinlabel
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -96 -16 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 -48 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX sky130_fd_sc_hd__and4bb_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pA_N %pB_N %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 
+360.000 0.700 -64 -144 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -112 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -96 48 -80 48 2 polygon
+1 1.000 -96 16 -80 16 2 polygon
+1 1.000 -96 -16 -64 -16 2 polygon
+1 1.000 -96 -48 -64 -48 2 polygon
+1 1.000 48 0 64 0 2 polygon
+1 1.000 -72 16 8 0.000 360.000 xcarc
+1 1.000 -72 48 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::dfrtn {
+<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+(vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(CLK_N) {/Times-Roman cf} 2 13 0.000 1.000 -16 -96 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ sky130_fd_sc_hd__dfrtn_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pCLK_N %pD %pRESET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
+0.700 -192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+1 1.000 -32 -48 -16 -32 0 -48 3 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dfrtn) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -16 -56 8 0.000 360.000 xcarc
+1 1.000 -16 -96 -16 -64 2 polygon
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -64 0 -96 0 2 polygon
+(R) {ol} {/Times-Roman cf} 3 21 0.000 0.700 -48 0 label
+1.000 0.000 0.000 scb
+(RESET_B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+endgate
+} def
+
+/sky130_fd_sc_hd::dfsbp {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(CLK) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dfsbp_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pCLK %pD %pSET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
+0.700 -192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+1 1.000 -32 -48 -16 -32 0 -48 3 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dfsbp) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -64 32 -96 32 2 polygon
+(S) {ol} {/Times-Roman cf} 3 21 0.000 0.700 -48 32 label
+1.000 0.000 0.000 scb
+(SET_B) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+sce
+1 1.000 32 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(Q_N) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+sce
+(Q) {ol} {/Times-Roman cf} 3 21 0.000 0.700 16 0 label
+1 1.000 -16 -64 -16 -48 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::mux4 {
+<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 0 96 -32 96 2 polygon
+1 1.000 80 32 96 32 2 polygon
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 96 32 pinlabel
+(A0) {/Times-Roman cf} 2 7 0.000 1.000 -32 96 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX sky130_fd_sc_hd__mux4_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA0 %pA1 %pA2 %pA3 %pS0 %pS1 ) @index (spice:X) {/Times-Roman cf} ctmk 16 
+360.000 0.700 -128 -176 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -128 -144 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 40 32 label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 24 -80 label
+sce
+1 1.000 32 110 32 128 2 polygon
+1.000 0.000 0.000 scb
+(S0) {/Times-Roman cf} 2 17 0.000 1.000 32 128 pinlabel
+(A1) {/Times-Roman cf} 2 7 0.000 1.000 -32 48 pinlabel
+sce
+1 1.000 -32 -48 0 -48 2 polygon
+1 1.000 0 128 80 80 80 -32 0 -80 0 128 5 polygon
+1 1.000 -32 48 0 48 2 polygon
+1 1.000 -32 0 0 0 2 polygon
+1 1.000 64 90 64 128 2 polygon
+1.000 0.000 0.000 scb
+(S1) {/Times-Roman cf} 2 16 0.000 1.000 64 128 pinlabel
+(A2) {/Times-Roman cf} 2 7 0.000 1.000 -32 0 pinlabel
+(A3) {/Times-Roman cf} 2 7 0.000 1.000 -32 -48 pinlabel
+sce
+(0) {/Times-Roman cf} 2 29 0.000 0.700 32 80 label
+(1) {/Times-Roman cf} 2 29 0.000 0.700 64 80 label
+(0) {/Times-Roman cf} 2 20 0.000 0.700 8 96 label
+(1) {/Times-Roman cf} 2 20 0.000 0.700 8 56 label
+(2) {/Times-Roman cf} 2 20 0.000 0.700 8 0 label
+(3) {/Times-Roman cf} 2 20 0.000 0.700 8 -40 label
+endgate
+} def
+
+/sky130_fd_sc_hd::nor2b {
+<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 56 0 8 0.000 360.000 xcarc
+1.000 0.000 0.000 scb
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -80 32 pinlabel
+(B_N) {/Times-Roman cf} 2 7 0.000 1.000 -80 -32 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__nor2b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
+infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -35 48 96 270.000 330.000 xcarc
+1 1.000 -64 -48 -35 -48 2 polygon
+1 1.000 -128 0 80 -37.000 37.000 xcarc
+1 1.000 -35 -48 96 30.000 90.000 xcarc
+1 1.000 -64 48 -35 48 2 polygon
+1 1.000 -80 32 -56 32 2 polygon
+1 1.000 -80 -32 -72 -32 2 polygon
+0.180 0.545 0.341 scb
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+sce
+1 1.000 96 0 64 0 2 polygon
+1 1.000 -64 -32 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::dlrbp {
+<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+(vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(GATE) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dlrbp_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pD %GATE %pRESET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 
+360.000 0.700 -192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dlrbp) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -64 0 -96 0 2 polygon
+(R) {ol} {/Times-Roman cf} 3 21 0.000 0.700 -48 0 label
+1.000 0.000 0.000 scb
+(RESET_B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+sce
+1 1.000 32 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(Q_N) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+sce
+(Q) {ol} {/Times-Roman cf} 3 21 0.000 0.700 16 0 label
+1 1.000 -16 -64 -16 -48 2 polygon
+(GATE) {/Times-Roman cf} 2 17 0.000 0.700 -16 -40 label
+endgate
+} def
+
+/sky130_fd_sc_hd::dfbbn {
+<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+(vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(CLK_N) {/Times-Roman cf} 2 13 0.000 1.000 -16 -96 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dfbbn_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pCLK_N %pD %pSET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 
+360.000 0.700 -192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+1 1.000 -32 -48 -16 -32 0 -48 3 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dfbbn) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -64 32 -96 32 2 polygon
+(S) {ol} {/Times-Roman cf} 3 21 0.000 0.700 -48 32 label
+1.000 0.000 0.000 scb
+(SET_B) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+sce
+1 1.000 32 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(Q_N) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+sce
+(Q) {ol} {/Times-Roman cf} 3 21 0.000 0.700 16 0 label
+1 1.000 -16 -96 -16 -64 2 polygon
+1 1.000 -64 0 -96 0 2 polygon
+(R) {ol} {/Times-Roman cf} 3 21 0.000 0.700 -48 0 label
+1.000 0.000 0.000 scb
+(RESET_B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+sce
+1 1.000 -16 -56 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::nor4bb {
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 56 0 8 0.000 360.000 xcarc
+1.000 0.000 0.000 scb
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 48 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 16 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__nor4bb_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pA %pB %pC_N %pD_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 
+360.000 0.700 -64 -128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -32 16 label
+sce
+1 1.000 -96 48 -58 48 2 polygon
+1 1.000 -96 -16 -65 -16 2 polygon
+1 1.000 -48 16 -96 16 2 polygon
+1.000 0.000 0.000 scb
+(C_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 -16 pinlabel
+sce
+1 1.000 32 32 0 56 -40 56 48 0 spline
+1 1.000 32 -32 0 -56 -40 -56 48 0 spline
+1 1.000 -40 32 -40 -24 -64 -56 -64 56 spline
+1 1.000 -64 56 -40 56 2 polygon
+1 1.000 -64 -56 -40 -56 2 polygon
+1.000 0.000 0.000 scb
+(D_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 -48 pinlabel
+sce
+1 1.000 -96 -48 -77 -48 2 polygon
+1 1.000 96 0 64 0 2 polygon
+1 1.000 -69 -48 8 0.000 360.000 xcarc
+1 1.000 -56 -16 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::ha {
+<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+(vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(SUM) {/Times-Roman cf} 2 4 0.000 1.000 96 64 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pCOUT %pSUM sky130_fd_sc_hd__ha_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pA %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -192 
+-192 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 0 32 label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 0 128 label
+sce
+0 1.000 -64 -48 -64 112 64 112 64 -48 4 polygon
+(A) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(SUM) {/Times-Roman cf} 2 23 0.000 0.700 56 64 label
+0.000 0.000 1.000 scb
+(ha) {/Times-Roman cf} 2 21 0.000 0.700 0 96 label
+sce
+1 1.000 96 64 64 64 2 polygon
+1 1.000 -64 64 -96 64 2 polygon
+1.000 0.000 0.000 scb
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+sce
+(B) {/Times-Roman cf} 2 21 0.000 0.700 -48 0 label
+1 1.000 -64 0 -96 0 2 polygon
+1.000 0.000 0.000 scb
+(COUT) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+sce
+(O) {ss} (C) {/Times-Roman cf} 4 23 0.000 0.700 56 0 label
+1 1.000 96 0 64 0 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::conb {
+<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+(vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(HI) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pHI %pLO sky130_fd_sc_hd__conb_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -192 -192 
+infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+(HI) {/Times-Roman cf} 2 23 0.000 0.700 24 64 label
+0.000 0.000 1.000 scb
+(conb) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 64 64 32 64 2 polygon
+1.000 0.000 0.000 scb
+(LO) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+sce
+(LO) {/Times-Roman cf} 2 23 0.000 0.700 24 0 label
+1 1.000 64 0 32 0 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::xor3 {
+<</@strength (1) (lindex {1 2 4} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index 
+(?) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX sky130_fd_sc_hd__xor3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
+-128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -24 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -24 16 label
+sce
+1 1.000 -19 -48 96 30.000 90.000 xcarc
+1 1.000 -19 48 96 270.000 330.000 xcarc
+1 1.000 -128 0 80 -37.000 37.000 xcarc
+1 1.000 -112 0 80 -37.000 37.000 xcarc
+1 1.000 -48 48 -19 48 2 polygon
+1 1.000 -48 -48 -19 -48 2 polygon
+1 1.000 96 0 64 0 2 polygon
+1 1.000 -64 32 -56 32 2 polygon
+1 1.000 -64 -32 -56 -32 2 polygon
+1 1.000 -64 0 -48 0 2 polygon
+1.000 0.000 0.000 scb
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -64 -32 pinlabel
+endgate
+} def
+
+/sky130_fd_sc_hd::dfstp {
+<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+(vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(CLK) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ sky130_fd_sc_hd__dfstp_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pCLK %pD %pSET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+1 1.000 -32 -48 -16 -32 0 -48 3 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dfstp) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -64 32 -96 32 2 polygon
+(S) {ol} {/Times-Roman cf} 3 21 0.000 0.700 -48 32 label
+1.000 0.000 0.000 scb
+(SET_B) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+sce
+1 1.000 -16 -64 -16 -48 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::mux2i {
+<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 0 16 -32 16 2 polygon
+1 1.000 80 -16 96 -16 2 polygon
+1.000 0.000 0.000 scb
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 -16 pinlabel
+(A0) {/Times-Roman cf} 2 7 0.000 1.000 -32 16 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__mux2i_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA0 %pA1 %pS ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -128 
+-176 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -128 -144 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 16 -24 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 24 -80 label
+sce
+1 1.000 32 32 32 64 2 polygon
+1.000 0.000 0.000 scb
+(S) {/Times-Roman cf} 2 17 0.000 1.000 32 64 pinlabel
+(A1) {/Times-Roman cf} 2 7 0.000 1.000 -32 -48 pinlabel
+sce
+1 1.000 -32 -48 0 -48 2 polygon
+1 1.000 0 48 64 16 64 -48 0 -80 0 48 5 polygon
+1 1.000 72 -16 8 0.000 360.000 xcarc
+(0) {/Times-Roman cf} 2 20 0.000 0.700 8 16 label
+(1) {/Times-Roman cf} 2 20 0.000 0.700 8 -48 label
+endgate
+} def
+
+/sky130_fd_sc_hd::einvn {
+<</@strength (1) (lindex {1 2 4 8} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index 
+(?) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+0 1.000 -32 -40 -32 40 40 0 3 polygon
+1 1.000 -32 0 -64 0 2 polygon
+1 1.000 56 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(Z) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pZ sky130_fd_sc_hd__einvn_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pTE_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -176 
+-128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -176 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 24 24 label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 0 -32 label
+sce
+1 1.000 0 40 0 64 2 polygon
+1.000 0.000 0.000 scb
+(TE_B) {/Times-Roman cf} 2 17 0.000 1.000 0 64 pinlabel
+sce
+1 1.000 0 32 8 0.000 360.000 xcarc
+1 1.000 48 0 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::and3b {
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4} 0) pop >> begingate
+1 1.000 0 -48 -64 -48 -64 48 0 48 4 polygon
+1 1.000 0 0 48 -90.000 90.000 xcarc
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -96 -32 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX sky130_fd_sc_hd__and3b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA_N %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
+-128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -96 32 -80 32 2 polygon
+1 1.000 -96 0 -64 0 2 polygon
+1 1.000 -96 -32 -64 -32 2 polygon
+1 1.000 64 0 48 0 2 polygon
+1 1.000 -72 32 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::or2b {
+<</@strength (1) (lindex {0 1 2 4} 1) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index 
+(?) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 -32 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX skty130_fd_sc_hd__or2b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
+infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -35 48 96 270.000 330.000 xcarc
+1 1.000 -64 -48 -35 -48 2 polygon
+1 1.000 -128 0 80 -37.000 37.000 xcarc
+1 1.000 -35 -48 96 30.000 90.000 xcarc
+1 1.000 -64 48 -35 48 2 polygon
+1 1.000 -96 32 -56 32 2 polygon
+1 1.000 -96 -32 -72 -32 2 polygon
+1 1.000 48 0 64 0 2 polygon
+1 1.000 -64 -32 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::or4 {
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 48 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -64 16 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX sky130_fd_sc_hd__or4_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-64 -128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -32 16 label
+sce
+1 1.000 -64 48 -58 48 2 polygon
+1 1.000 -64 -16 -48 -16 2 polygon
+1 1.000 -48 16 -64 16 2 polygon
+1.000 0.000 0.000 scb
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -64 -16 pinlabel
+sce
+1 1.000 32 32 0 56 -40 56 48 0 spline
+1 1.000 32 -32 0 -56 -40 -56 48 0 spline
+1 1.000 -40 32 -40 -24 -64 -56 -64 56 spline
+1 1.000 -64 56 -40 56 2 polygon
+1 1.000 -64 -56 -40 -56 2 polygon
+1.000 0.000 0.000 scb
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -64 -48 pinlabel
+sce
+1 1.000 -64 -48 -60 -48 2 polygon
+1 1.000 64 0 48 0 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::or4b {
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 48 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 16 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__or4b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC %pD_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-64 -128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -32 16 label
+sce
+1 1.000 -96 48 -58 48 2 polygon
+1 1.000 -96 -16 -48 -16 2 polygon
+1 1.000 -48 16 -96 16 2 polygon
+1.000 0.000 0.000 scb
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -96 -16 pinlabel
+sce
+1 1.000 32 32 0 56 -40 56 48 0 spline
+1 1.000 32 -32 0 -56 -40 -56 48 0 spline
+1 1.000 -40 32 -40 -24 -64 -56 -64 56 spline
+1 1.000 -64 56 -40 56 2 polygon
+1 1.000 -64 -56 -40 -56 2 polygon
+1.000 0.000 0.000 scb
+(D_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 -48 pinlabel
+sce
+1 1.000 -96 -48 -76 -48 2 polygon
+1 1.000 64 0 48 0 2 polygon
+1 1.000 -68 -48 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::dlclkp {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(GCLK) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(GATE) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+(CLK) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pGCLK sky130_fd_sc_hd__dlclkp_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pCLK %GATE ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+0.000 0.000 1.000 scb
+(dlclkp) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -16 -64 -16 -48 2 polygon
+(GATE) {/Times-Roman cf} 2 17 0.000 0.700 -16 -40 label
+1 1.000 -64 64 -96 64 2 polygon
+1 1.000 -64 80 -48 64 -64 48 3 polygon
+1 1.000 16 80 32 64 16 48 3 polygon
+1 1.000 16 80 16 48 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::einvp {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2 4 8} 0) pop >> begingate
+0 1.000 -32 -40 -32 40 40 0 3 polygon
+1 1.000 -32 0 -64 0 2 polygon
+1 1.000 56 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(Z) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pZ sky130_fd_sc_hd__einvp_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pTE ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -176 -128 
+infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -176 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 24 24 label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 0 -32 label
+sce
+1 1.000 0 23 0 64 2 polygon
+1.000 0.000 0.000 scb
+(TE) {/Times-Roman cf} 2 17 0.000 1.000 0 64 pinlabel
+sce
+1 1.000 48 0 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::dfrtp {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(CLK) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ sky130_fd_sc_hd__dfrtp_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pCLK %pD %pRESET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
+0.700 -192 -192 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+1 1.000 -32 -48 -16 -32 0 -48 3 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dfrtp) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -16 -64 -16 -48 2 polygon
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -64 0 -96 0 2 polygon
+(R) {ol} {/Times-Roman cf} 3 21 0.000 0.700 -48 0 label
+1.000 0.000 0.000 scb
+(RESET_B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+endgate
+} def
+
+/sky130_fd_sc_hd::clkbuf {
+<</@strength (1) (lindex {1 2 4 6 8 12 16} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+0 1.000 -32 -40 -32 40 40 0 3 polygon
+1 1.000 -32 0 -64 0 2 polygon
+1 1.000 40 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX sky130_fd_sc_hd__clkbuf_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pA ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -32 -112 
+infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -32 -80 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 0 24 label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 16 0.000 0.600 24 -32 label
+sce
+1 1.000 -24 -12 -16 -12 -16 12 0 12 0 -12 8 -12 6 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::fah {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(SUM) {/Times-Roman cf} 2 4 0.000 1.000 96 64 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pCOUT %pSUM sky130_fd_sc_hd__fah_) @VPWR ( ) @VPB ( ) @VNB 
+( ) @VGND ( %pA %pB %pCI ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
+0.700 -192 -192 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 0 32 label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 0 128 label
+sce
+0 1.000 -64 -48 -64 112 64 112 64 -48 4 polygon
+(A) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(SUM) {/Times-Roman cf} 2 23 0.000 0.700 56 64 label
+0.000 0.000 1.000 scb
+(fah) {/Times-Roman cf} 2 21 0.000 0.700 0 96 label
+sce
+1 1.000 96 64 64 64 2 polygon
+1 1.000 -64 64 -96 64 2 polygon
+1.000 0.000 0.000 scb
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+sce
+(B) {/Times-Roman cf} 2 21 0.000 0.700 -48 32 label
+1 1.000 -64 32 -96 32 2 polygon
+1.000 0.000 0.000 scb
+(COUT) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+sce
+(O) {ss} (C) {/Times-Roman cf} 4 23 0.000 0.700 56 0 label
+1 1.000 96 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(CI) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+sce
+1 1.000 -64 0 -96 0 2 polygon
+(I) {ss} (C) {/Times-Roman cf} 4 21 0.000 0.700 -48 0 label
+endgate
+} def
+
+/sky130_fd_sc_hd::or4bb {
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 -56 -16 8 0.000 360.000 xcarc
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 48 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 16 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__or4bb_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC_N %pD_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
+0.700 -64 -128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -32 16 label
+sce
+1 1.000 -96 48 -58 48 2 polygon
+1 1.000 -96 -16 -64 -16 2 polygon
+1 1.000 -48 16 -96 16 2 polygon
+1.000 0.000 0.000 scb
+(C_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 -16 pinlabel
+sce
+1 1.000 32 32 0 56 -40 56 48 0 spline
+1 1.000 32 -32 0 -56 -40 -56 48 0 spline
+1 1.000 -40 32 -40 -24 -64 -56 -64 56 spline
+1 1.000 -64 56 -40 56 2 polygon
+1 1.000 -64 -56 -40 -56 2 polygon
+1.000 0.000 0.000 scb
+(D_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 -48 pinlabel
+sce
+1 1.000 -96 -48 -76 -48 2 polygon
+1 1.000 64 0 48 0 2 polygon
+1 1.000 -68 -48 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::dlxbn {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(GATE_N) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dlxbn_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pD %GATE_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dlxbn) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 32 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(Q_N) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+sce
+(Q) {ol} {/Times-Roman cf} 3 21 0.000 0.700 16 0 label
+1 1.000 -16 -64 -16 -48 2 polygon
+(GATE) {ol} {/Times-Roman cf} 3 17 0.000 0.700 -16 -40 label
+endgate
+} def
+
+/sky130_fd_sc_hd::fahcon {
+<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+(vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(SUM) {/Times-Roman cf} 2 4 0.000 1.000 96 64 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pCOUT_N %pSUM sky130_fd_sc_hd__fahcon_) @VPWR ( ) @VPB ( ) 
+@VNB ( ) @VGND ( %pA %pB %pCI ) @index (spice:X) {/Times-Roman cf} ctmk 16 
+360.000 0.700 -192 -192 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 0 32 label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 0 128 label
+sce
+0 1.000 -64 -48 -64 112 64 112 64 -48 4 polygon
+(A) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(SUM) {/Times-Roman cf} 2 23 0.000 0.700 56 64 label
+0.000 0.000 1.000 scb
+(fahcon) {/Times-Roman cf} 2 21 0.000 0.700 0 96 label
+sce
+1 1.000 96 64 64 64 2 polygon
+1 1.000 -64 64 -96 64 2 polygon
+1.000 0.000 0.000 scb
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+sce
+(B) {/Times-Roman cf} 2 21 0.000 0.700 -48 32 label
+1 1.000 -64 32 -96 32 2 polygon
+1.000 0.000 0.000 scb
+(COUT_N) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+sce
+(O) {ss} (C) {/Times-Roman cf} 4 23 0.000 0.700 56 0 label
+1 1.000 96 0 80 0 2 polygon
+1.000 0.000 0.000 scb
+(CI) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+sce
+1 1.000 -64 0 -96 0 2 polygon
+(I) {ss} (C) {/Times-Roman cf} 4 21 0.000 0.700 -48 0 label
+1 1.000 72 0 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::nand4b {
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 0 -64 -64 -64 -64 64 0 64 4 polygon
+1 1.000 56 0 8 0.000 360.000 xcarc
+1 1.000 0 0 48 64 -90.000 90.000 ellipse
+1.000 0.000 0.000 scb
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 48 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 16 pinlabel
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -96 -16 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 -48 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__nand4b_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pA_N %pB %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
+0.700 -64 -144 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -112 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -96 48 -80 48 2 polygon
+1 1.000 -96 16 -64 16 2 polygon
+1 1.000 -96 -16 -64 -16 2 polygon
+1 1.000 -96 -48 -64 -48 2 polygon
+1 1.000 64 0 96 0 2 polygon
+1 1.000 -72 48 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::or3b {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {0 1 2 4} 1) pop >> begingate
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX skty130_fd_sc_hd__or3b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
+-128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -35 48 96 270.000 330.000 xcarc
+1 1.000 -64 -48 -35 -48 2 polygon
+1 1.000 -128 0 80 -37.000 37.000 xcarc
+1 1.000 -35 -48 96 30.000 90.000 xcarc
+1 1.000 -64 48 -35 48 2 polygon
+1 1.000 -96 32 -56 32 2 polygon
+1 1.000 -96 -32 -72 -32 2 polygon
+1 1.000 48 0 64 0 2 polygon
+1 1.000 -48 0 -96 0 2 polygon
+1.000 0.000 0.000 scb
+(C_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 -32 pinlabel
+sce
+1 1.000 -64 -32 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::dlxtn {
+<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+(vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(GATE_N) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ sky130_fd_sc_hd__dlxtn_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pD %GATE_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -192 
+-224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dlxtn) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -16 -64 -16 -48 2 polygon
+(GATE) {ol} {/Times-Roman cf} 3 17 0.000 0.700 -16 -40 label
+endgate
+} def
+
+/sky130_fd_sc_hd::dlxtp {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(GATE) {/Times-Roman cf} 2 13 360.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ sky130_fd_sc_hd__dlxtp_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pD %GATE ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -192 
+-224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dlxtp) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -16 -64 -16 -48 2 polygon
+(GATE) {/Times-Roman cf} 2 17 0.000 0.700 -16 -40 label
+endgate
+} def
+
+/sky130_fd_sc_hd::xnor3 {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2 4} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__xnor3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
+-128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -24 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -24 16 label
+sce
+1 1.000 -19 -48 96 30.000 90.000 xcarc
+1 1.000 -19 48 96 270.000 330.000 xcarc
+1 1.000 -128 0 80 -37.000 37.000 xcarc
+1 1.000 -112 0 80 -37.000 37.000 xcarc
+1 1.000 -48 48 -19 48 2 polygon
+1 1.000 -48 -48 -19 -48 2 polygon
+1 1.000 96 0 80 0 2 polygon
+1 1.000 -64 32 -56 32 2 polygon
+1 1.000 -64 -32 -56 -32 2 polygon
+1 1.000 -64 0 -48 0 2 polygon
+1.000 0.000 0.000 scb
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -64 -32 pinlabel
+sce
+1 1.000 72 0 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::nor4b {
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 56 0 8 0.000 360.000 xcarc
+1.000 0.000 0.000 scb
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 48 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 16 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__nor4b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC %pD_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-64 -128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -32 16 label
+sce
+1 1.000 -96 48 -58 48 2 polygon
+1 1.000 -96 -16 -48 -16 2 polygon
+1 1.000 -48 16 -96 16 2 polygon
+1.000 0.000 0.000 scb
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -96 -16 pinlabel
+sce
+1 1.000 32 32 0 56 -40 56 48 0 spline
+1 1.000 32 -32 0 -56 -40 -56 48 0 spline
+1 1.000 -40 32 -40 -24 -64 -56 -64 56 spline
+1 1.000 -64 56 -40 56 2 polygon
+1 1.000 -64 -56 -40 -56 2 polygon
+1.000 0.000 0.000 scb
+(D_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 -48 pinlabel
+sce
+1 1.000 -96 -48 -76 -48 2 polygon
+1 1.000 96 0 64 0 2 polygon
+1 1.000 -68 -48 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::nor3b {
+<</@strength (1) (lindex {1 2 4} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index 
+(?) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 56 0 8 0.000 360.000 xcarc
+1.000 0.000 0.000 scb
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__nor3b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB %pC_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
+-128 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -32 16 label
+sce
+1 1.000 -35 48 96 270.000 330.000 xcarc
+1 1.000 -64 -48 -35 -48 2 polygon
+1 1.000 -128 0 80 -36.870 36.870 xcarc
+1 1.000 -35 -48 96 30.000 90.000 xcarc
+1 1.000 -64 48 -35 48 2 polygon
+1 1.000 -96 32 -56 32 2 polygon
+1 1.000 -96 -32 -72 -32 2 polygon
+1 1.000 -48 0 -96 0 2 polygon
+1.000 0.000 0.000 scb
+(C_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 -32 pinlabel
+sce
+1 1.000 96 0 64 0 2 polygon
+1 1.000 -64 -32 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::nand2b {
+<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 0 -48 -64 -48 -64 48 0 48 4 polygon
+1 1.000 56 0 8 0.000 360.000 xcarc
+1 1.000 0 0 48 -90.000 90.000 xcarc
+1.000 0.000 0.000 scb
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 -32 pinlabel
+sce
+1 1.000 -64 -48 -64 48 2 polygon
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__nand2b_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pA_N %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-64 -128 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+0.180 0.545 0.341 scb
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+sce
+1 1.000 -96 32 -80 32 2 polygon
+1 1.000 -96 -32 -64 -32 2 polygon
+1 1.000 96 0 64 0 2 polygon
+1 1.000 -72 32 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::dlrbn {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(GATE_N) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dlrbn_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pD %GATE_N %pRESET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 
+360.000 0.700 -192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dlrbn) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -64 0 -96 0 2 polygon
+(R) {ol} {/Times-Roman cf} 3 21 0.000 0.700 -48 0 label
+1.000 0.000 0.000 scb
+(RESET_B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+sce
+1 1.000 32 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(Q_N) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+sce
+(Q) {ol} {/Times-Roman cf} 3 21 0.000 0.700 16 0 label
+1 1.000 -16 -64 -16 -48 2 polygon
+(GATE) {ol} {/Times-Roman cf} 3 17 0.000 0.700 -16 -40 label
+endgate
+} def
+
+/sky130_fd_sc_hd::dfxbp {
+<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+(vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(CLK) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dfxbp_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pCLK %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+1 1.000 -32 -48 -16 -32 0 -48 3 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dfxbp) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 32 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(Q_N) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+sce
+(Q) {ol} {/Times-Roman cf} 3 21 0.000 0.700 16 0 label
+1 1.000 -16 -64 -16 -48 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::and2 {
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4} 0) pop >> begingate
+1 1.000 0 -48 -64 -48 -64 48 0 48 4 polygon
+1 1.000 0 0 48 -90.000 90.000 xcarc
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 -32 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX sky130_fd_sc_hd__and2_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
+infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -96 32 -64 32 2 polygon
+1 1.000 -96 -32 -64 -32 2 polygon
+1 1.000 64 0 48 0 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::and2b {
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 0 -48 -64 -48 -64 48 0 48 4 polygon
+1 1.000 0 0 48 -90.000 90.000 xcarc
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 -32 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX sky130_fd_sc_hd__and2b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA_N %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
+infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -96 32 -80 32 2 polygon
+1 1.000 -96 -32 -64 -32 2 polygon
+1 1.000 64 0 48 0 2 polygon
+1 1.000 -72 32 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::clkinv {
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4 6 8 12 16} 0) pop >> begingate
+0 1.000 -32 -40 -32 40 40 0 3 polygon
+1 1.000 -32 0 -64 0 2 polygon
+1 1.000 56 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A) {/Times-Roman cf} 2 7 0.000 1.000 -64 0 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__clkinv_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pA ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -32 -112 
+infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -32 -80 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 0 24 label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 16 0.000 0.600 24 -32 label
+sce
+1 1.000 -24 -12 -16 -12 -16 12 0 12 0 -12 8 -12 6 polygon
+1 1.000 48 0 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::dfrbp {
+<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+(vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(CLK) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dfrbp_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pCLK %pD %pRESET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 
+360.000 0.700 -192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+1 1.000 -32 -48 -16 -32 0 -48 3 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dfrbp) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -64 0 -96 0 2 polygon
+(R) {ol} {/Times-Roman cf} 3 21 0.000 0.700 -48 0 label
+1.000 0.000 0.000 scb
+(RESET_B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+sce
+1 1.000 32 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(Q_N) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+sce
+(Q) {ol} {/Times-Roman cf} 3 21 0.000 0.700 16 0 label
+1 1.000 -16 -64 -16 -48 2 polygon
+endgate
+} def
+
+/sky130_fd_sc_hd::nand4bb {
+<</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
+(1) (lindex {1 2 4} 0) pop >> begingate
+1 1.000 0 -64 -64 -64 -64 64 0 64 4 polygon
+1 1.000 56 0 8 0.000 360.000 xcarc
+1 1.000 0 0 48 64 -90.000 90.000 ellipse
+1.000 0.000 0.000 scb
+(Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
+(A_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 48 pinlabel
+(B_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 16 pinlabel
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -96 -16 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 -48 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pY sky130_fd_sc_hd__nand4bb_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pA_N %pB_N %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 
+360.000 0.700 -64 -144 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -112 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -96 48 -80 48 2 polygon
+1 1.000 -96 16 -80 16 2 polygon
+1 1.000 -96 -16 -64 -16 2 polygon
+1 1.000 -96 -48 -64 -48 2 polygon
+1 1.000 64 0 96 0 2 polygon
+1 1.000 -72 48 8 0.000 360.000 xcarc
+1 1.000 -72 16 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::dlrtp {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(GATE) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ sky130_fd_sc_hd__dlrtp_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pD %GATE %pRESET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
+0.700 -192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dlrtp) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -64 0 -96 0 2 polygon
+(R) {ol} {/Times-Roman cf} 3 21 0.000 0.700 -48 0 label
+1.000 0.000 0.000 scb
+(RESET_B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+sce
+1 1.000 -16 -64 -16 -48 2 polygon
+(GATE) {/Times-Roman cf} 2 17 0.000 0.700 -16 -40 label
+endgate
+} def
+
+/sky130_fd_sc_hd::and4b {
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+(gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
+1 1.000 0 -64 -64 -64 -64 64 0 64 4 polygon
+1 1.000 0 0 48 64 -90.000 90.000 ellipse
+1.000 0.000 0.000 scb
+(X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+(A_N) {/Times-Roman cf} 2 7 0.000 1.000 -96 48 pinlabel
+(B) {/Times-Roman cf} 2 7 0.000 1.000 -96 16 pinlabel
+(C) {/Times-Roman cf} 2 7 0.000 1.000 -96 -16 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 -48 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pX sky130_fd_sc_hd__and4b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND 
+( %pA_N %pB %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-64 -144 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -64 -112 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
+sce
+1 1.000 -96 48 -80 48 2 polygon
+1 1.000 -96 16 -64 16 2 polygon
+1 1.000 -96 -16 -64 -16 2 polygon
+1 1.000 -96 -48 -64 -48 2 polygon
+1 1.000 48 0 64 0 2 polygon
+1 1.000 -72 48 8 0.000 360.000 xcarc
+endgate
+} def
+
+/sky130_fd_sc_hd::dfbbp {
+<</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
+(1) (lindex {1 2} 0) pop >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(CLK) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dfbbp_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pCLK %pD %pSET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
+0.700 -192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+1 1.000 -32 -48 -16 -32 0 -48 3 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dfbbp) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 -64 32 -96 32 2 polygon
+(S) {ol} {/Times-Roman cf} 3 21 0.000 0.700 -48 32 label
+1.000 0.000 0.000 scb
+(SET_B) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
+sce
+1 1.000 32 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(Q_N) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+sce
+(Q) {ol} {/Times-Roman cf} 3 21 0.000 0.700 16 0 label
+1 1.000 -16 -64 -16 -48 2 polygon
+1 1.000 -64 0 -96 0 2 polygon
+(R) {ol} {/Times-Roman cf} 3 21 0.000 0.700 -48 0 label
+1.000 0.000 0.000 scb
+(RESET_B) {/Times-Roman cf} 2 7 0.000 1.000 -96 0 pinlabel
+endgate
+} def
+
+/sky130_fd_sc_hd::dlxbp {
+<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+(vdd1v8) /@VNB (gnd) >> begingate
+1.000 0.000 0.000 scb
+(Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
+(D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
+(GATE) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
+0.180 0.545 0.341 scb
+mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dlxbp_) @VPWR ( ) @VPB ( ) @VNB ( ) 
+@VGND ( %pD %GATE ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
+-192 -224 infolabel
+
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+{/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
+0.647 0.165 0.165 scb
+mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
+label
+0.000 0.000 1.000 scb
+mark @index (U) {/Times-RomanISO cf} ctmk 17 0.000 0.700 -16 128 label
+sce
+0 1.000 -64 -48 -64 112 32 112 32 -48 4 polygon
+(D) {/Times-Roman cf} 2 21 0.000 0.700 -48 64 label
+(Q) {/Times-Roman cf} 2 21 0.000 0.700 16 64 label
+0.000 0.000 1.000 scb
+(dlxbp) {/Times-Roman cf} 2 21 0.000 0.700 -16 96 label
+sce
+1 1.000 -96 64 -64 64 2 polygon
+1 1.000 32 64 64 64 2 polygon
+1 1.000 32 0 64 0 2 polygon
+1.000 0.000 0.000 scb
+(Q_N) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
+sce
+(Q) {ol} {/Times-Roman cf} 3 21 0.000 0.700 16 0 label
+1 1.000 -16 -64 -16 -48 2 polygon
+(GATE) {/Times-Roman cf} 2 17 0.000 0.700 -16 -40 label
 endgate
 } def
 

@@ -1,8 +1,10 @@
 set XCOps(liboverride) 1
 config search libraries .:STAGING_PATH/TECHNAME/libs.tech/xcircuit:$XCIRCUIT_LIB_DIR
-library make Generic
-library 1 load generic.lps
+library make generic
+library 1 load generic
+library make ngspice
+library 2 load ngspice
 library make TECHNAME_analog
-library 2 load sky130_fd_pr
+library 3 load sky130_fd_pr
 library make TECHNAME_digital
-library 3 load sky130_fd_sc_hd
+library 4 load sky130_fd_sc_hd
