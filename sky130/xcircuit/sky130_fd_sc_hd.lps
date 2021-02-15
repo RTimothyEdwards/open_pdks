@@ -7,7 +7,7 @@
 
 % XCircuitLib library objects
 /sky130_fd_sc_hd::conb {
-<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+<</@strength (1) (lindex {1} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
 (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (HI) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
@@ -413,7 +413,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::or3 {
-<</@strength (1) (lindex {0 1 2 4} 1) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index 
+<</@strength (1) (lindex {1 2 4} 1) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index 
 (?) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
@@ -623,7 +623,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::einvn {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index 
+<</@strength (1) (lindex {0 1 2 4 8} 1) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index 
 (?) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 0 1.000 -32 -40 -32 40 40 0 3 polygon
 1 1.000 -32 0 -64 0 2 polygon
@@ -712,7 +712,7 @@ endgate
 
 /sky130_fd_sc_hd::clkinv {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 6 8 12 16} 0) pop >> begingate
+(1) (lindex {1 2 4 8 16} 0) pop >> begingate
 0 1.000 -32 -40 -32 40 40 0 3 polygon
 1 1.000 -32 0 -64 0 2 polygon
 1 1.000 56 0 64 0 2 polygon
@@ -737,7 +737,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::clkbuf {
-<</@strength (1) (lindex {1 2 4 6 8 12 16} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4 8 16} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 0 1.000 -32 -40 -32 40 40 0 3 polygon
 1 1.000 -32 0 -64 0 2 polygon
@@ -795,7 +795,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::mux2i {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 0 16 -32 16 2 polygon
 1 1.000 80 -16 96 -16 2 polygon
@@ -829,7 +829,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::mux4 {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 0 96 -32 96 2 polygon
 1 1.000 80 32 96 32 2 polygon
@@ -873,7 +873,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::nand2b {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 0 -48 -64 -48 -64 48 0 48 4 polygon
 1 1.000 56 0 8 0.000 360.000 xcarc
@@ -1007,7 +1007,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::nor2b {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 56 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
@@ -1289,7 +1289,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::or2b {
-<</@strength (1) (lindex {0 1 2 4} 1) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index 
+<</@strength (1) (lindex {1 2 4} 1) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index 
 (?) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
@@ -1322,7 +1322,7 @@ endgate
 
 /sky130_fd_sc_hd::or3b {
 <</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
-(1) (lindex {0 1 2 4} 1) pop >> begingate
+(1) (lindex {1 2 4} 1) pop >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
 (A) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
@@ -1439,7 +1439,7 @@ endgate
 
 /sky130_fd_sc_hd::dfxtp {
 <</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
-(1) (lindex {1 2} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
 (D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
@@ -1471,7 +1471,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::dfrtn {
-<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+<</@strength (1) (lindex {1} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
 (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
@@ -1509,7 +1509,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::dfstp {
-<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+<</@strength (1) (lindex {1 2 4} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
 (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
@@ -1548,7 +1548,7 @@ endgate
 
 /sky130_fd_sc_hd::dfrtp {
 <</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
-(1) (lindex {1 2} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
 (D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
@@ -1758,7 +1758,7 @@ endgate
 
 /sky130_fd_sc_hd::dfbbp {
 <</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
-(1) (lindex {1 2} 0) pop >> begingate
+(1) (lindex {1} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
 (D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
@@ -1805,7 +1805,7 @@ endgate
 
 /sky130_fd_sc_hd::dlrtp {
 <</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
-(1) (lindex {1 2} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
 (D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
@@ -1842,7 +1842,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::dlxtn {
-<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+<</@strength (1) (lindex {1 2 4} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
 (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
@@ -1876,7 +1876,7 @@ endgate
 
 /sky130_fd_sc_hd::dlxtp {
 <</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
-(1) (lindex {1 2} 0) pop >> begingate
+(1) (lindex {1} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
 (D) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
@@ -1989,7 +1989,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::dlxbp {
-<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+<</@strength (1) (lindex {1} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
 (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (Q) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
@@ -2071,7 +2071,7 @@ endgate
 
 /sky130_fd_sc_hd::dlclkp {
 <</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
-(1) (lindex {1 2} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (GCLK) {/Times-Roman cf} 2 4 0.000 1.000 64 64 pinlabel
 (GATE) {/Times-Roman cf} 2 13 0.000 1.000 -16 -64 pinlabel
@@ -2104,7 +2104,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::ha {
-<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+<</@strength (1) (lindex {1 2 4} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
 (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (SUM) {/Times-Roman cf} 2 4 0.000 1.000 96 64 pinlabel
@@ -2144,7 +2144,7 @@ endgate
 
 /sky130_fd_sc_hd::fah {
 <</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
-(1) (lindex {1 2} 0) pop >> begingate
+(1) (lindex {1} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (SUM) {/Times-Roman cf} 2 4 0.000 1.000 96 64 pinlabel
 (A) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
@@ -2187,7 +2187,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::fahcon {
-<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+<</@strength (1) (lindex {1} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
 (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (SUM) {/Times-Roman cf} 2 4 0.000 1.000 96 64 pinlabel
@@ -2233,7 +2233,7 @@ endgate
 
 /sky130_fd_sc_hd::fahcin {
 <</@VNB (gnd) /@VPB (vdd1v8) /@index (?) /@VPWR (vdd1v8) /@VGND (gnd) /@strength 
-(1) (lindex {1 2} 0) pop >> begingate
+(1) (lindex {1} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (SUM) {/Times-Roman cf} 2 4 0.000 1.000 96 64 pinlabel
 (A) {/Times-Roman cf} 2 7 0.000 1.000 -96 64 pinlabel
@@ -2278,7 +2278,7 @@ endgate
 
 /sky130_fd_sc_hd::a32oi {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 56 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
@@ -2326,7 +2326,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::a21oi {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 56 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
@@ -2366,7 +2366,7 @@ endgate
 
 /sky130_fd_sc_hd::a211oi {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 74 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
@@ -2408,7 +2408,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::a221oi {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 90 -32 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
@@ -2460,7 +2460,7 @@ endgate
 
 /sky130_fd_sc_hd::a21o {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
 (A1) {/Times-Roman cf} 2 7 0.000 1.000 -192 80 pinlabel
@@ -2497,7 +2497,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::o21a {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
@@ -2536,7 +2536,7 @@ endgate
 
 /sky130_fd_sc_hd::a41oi {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 56 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
@@ -2581,7 +2581,7 @@ endgate
 
 /sky130_fd_sc_hd::a31oi {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 56 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
@@ -2624,7 +2624,7 @@ endgate
 
 /sky130_fd_sc_hd::a21boi {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {0 1 2 4} 1) pop >> begingate
 1 1.000 56 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
@@ -2665,7 +2665,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::a22oi {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 56 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
@@ -2710,7 +2710,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::a311oi {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 74 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
@@ -2757,7 +2757,7 @@ endgate
 
 /sky130_fd_sc_hd::a222oi {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1} 0) pop >> begingate
 1 1.000 90 -32 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 128 -32 pinlabel
@@ -2811,7 +2811,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::a2111oi {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {0 1 2 4} 1) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 90 -16 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
@@ -2859,7 +2859,7 @@ endgate
 
 /sky130_fd_sc_hd::a2bb2oi {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 72 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
@@ -2906,7 +2906,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::a32o {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
@@ -2955,7 +2955,7 @@ endgate
 
 /sky130_fd_sc_hd::a2111o {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 96 -16 pinlabel
 (A1) {/Times-Roman cf} 2 7 0.000 1.000 -192 96 pinlabel
@@ -3001,7 +3001,7 @@ endgate
 
 /sky130_fd_sc_hd::o21ai {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {0 1 2 4} 1) pop >> begingate
 1 1.000 56 -32 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 80 -32 pinlabel
@@ -3040,7 +3040,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::a41o {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
@@ -3084,7 +3084,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::o31ai {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 56 -32 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
@@ -3128,7 +3128,7 @@ endgate
 
 /sky130_fd_sc_hd::o41ai {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 56 -32 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 96 -32 pinlabel
@@ -3174,7 +3174,7 @@ endgate
 
 /sky130_fd_sc_hd::a22o {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
 (A1) {/Times-Roman cf} 2 7 0.000 1.000 -192 80 pinlabel
@@ -3217,7 +3217,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::a211o {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
@@ -3260,7 +3260,7 @@ endgate
 
 /sky130_fd_sc_hd::a221o {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 96 -32 pinlabel
 (A1) {/Times-Roman cf} 2 7 0.000 1.000 -192 96 pinlabel
@@ -3309,7 +3309,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::a21bo {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
@@ -3350,7 +3350,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::a31o {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
@@ -3393,7 +3393,7 @@ endgate
 
 /sky130_fd_sc_hd::a311o {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 96 0 pinlabel
 (A1) {/Times-Roman cf} 2 7 0.000 1.000 -192 96 pinlabel
@@ -3437,7 +3437,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::o21bai {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 56 0 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
@@ -3478,7 +3478,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::o211ai {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 72 -32 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
@@ -3520,7 +3520,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::o22ai {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1 1.000 56 -32 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
@@ -3569,7 +3569,7 @@ endgate
 
 /sky130_fd_sc_hd::o2111ai {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 104 -48 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 128 -48 pinlabel
@@ -3616,7 +3616,7 @@ endgate
 
 /sky130_fd_sc_hd::o2bb2ai {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 56 -32 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 96 -32 pinlabel
@@ -3666,7 +3666,7 @@ endgate
 
 /sky130_fd_sc_hd::o311ai {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {0 1 2 4} 1) pop >> begingate
 1 1.000 72 -32 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 96 -32 pinlabel
@@ -3711,7 +3711,7 @@ endgate
 
 /sky130_fd_sc_hd::o32ai {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 56 -32 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 96 -32 pinlabel
@@ -3762,7 +3762,7 @@ endgate
 
 /sky130_fd_sc_hd::o221ai {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1 1.000 104 -48 8 0.000 360.000 xcarc
 1.000 0.000 0.000 scb
 (Y) {/Times-Roman cf} 2 4 0.000 1.000 128 -48 pinlabel
@@ -3814,7 +3814,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::o221a {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 128 -48 pinlabel
@@ -3867,7 +3867,7 @@ endgate
 
 /sky130_fd_sc_hd::o31a {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 -32 pinlabel
 (A1) {/Times-Roman cf} 2 7 0.000 1.000 -192 48 pinlabel
@@ -3909,7 +3909,7 @@ endgate
 
 /sky130_fd_sc_hd::o21ba {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 0 pinlabel
 (A1) {/Times-Roman cf} 2 7 0.000 1.000 -192 80 pinlabel
@@ -3948,7 +3948,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::o41a {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 -32 pinlabel
@@ -3993,7 +3993,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::o32a {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 -32 pinlabel
@@ -4044,7 +4044,7 @@ endgate
 
 /sky130_fd_sc_hd::o211a {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 96 -32 pinlabel
 (A1) {/Times-Roman cf} 2 7 0.000 1.000 -192 64 pinlabel
@@ -4084,7 +4084,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::o311a {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 96 -32 pinlabel
@@ -4128,7 +4128,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::o2bb2a {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 -32 pinlabel
@@ -4178,7 +4178,7 @@ endgate
 
 /sky130_fd_sc_hd::o22a {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 8} 0) pop >> begingate
+(1) (lindex {1 2 4} 0) pop >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 64 -32 pinlabel
 (A1) {/Times-Roman cf} 2 7 0.000 1.000 -192 48 pinlabel
@@ -4224,7 +4224,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::o2111a {
-<</@strength (1) (lindex {1 2 4 8} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {1 2 4} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (X) {/Times-Roman cf} 2 4 0.000 1.000 128 -48 pinlabel
@@ -4300,7 +4300,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::diode {
-<</@strength (1) (lindex {1 2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
+<</@strength (1) (lindex {2} 0) pop /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@VPB 
 (vdd1v8) /@VNB (gnd) >> begingate
 1.000 0.000 0.000 scb
 (DIODE) {/Times-Roman cf} 2 7 0.000 1.000 -96 32 pinlabel
@@ -4323,7 +4323,7 @@ endgate
 } def
 
 /sky130_fd_sc_hd::bufinv {
-<</@strength (1) (lindex {1 2 4 6 8 12 16} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
+<</@strength (1) (lindex {8 16} 0) pop /@index (?) /@VPWR (vdd1v8) /@VGND 
 (gnd) /@VPB (vdd1v8) /@VNB (gnd) >> begingate
 0 1.000 48 -40 48 40 120 0 3 polygon
 1 1.000 128 0 8 0.000 360.000 xcarc
@@ -4351,7 +4351,7 @@ endgate
 
 /sky130_fd_sc_hd::bufbuf {
 <</@VNB (gnd) /@VPB (vdd1v8) /@VGND (gnd) /@VPWR (vdd1v8) /@index (?) /@strength 
-(1) (lindex {1 2 4 6 8 12 16} 0) pop >> begingate
+(1) (lindex {8 16} 0) pop >> begingate
 0 1.000 48 -40 48 40 120 0 3 polygon
 1 1.000 -32 0 -64 0 2 polygon
 1 1.000 120 0 128 0 2 polygon

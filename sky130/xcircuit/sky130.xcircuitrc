@@ -8,3 +8,121 @@ library make TECHNAME_analog
 library 3 load sky130_fd_pr
 library make TECHNAME_digital
 library 4 load sky130_fd_sc_hd
+#
+# Load math libraries
+namespace path {::tcl::mathop ::tcl::mathfunc}
+
+# Deal with SPICE-type unit suffixes
+proc unit_val {unit} {
+    if {$unit == "T"} {
+	return 1.0E9
+    } elseif {$unit == "G"} {
+	return 1.0E9
+    } elseif {$unit == "M"} {
+	return 1.0E6
+    } elseif {$unit == "k"} {
+	return 1.0E3
+    } elseif {$unit == "m"} {
+	return 1.0E-3 
+    } elseif {$unit == "u"} {
+	return 1.0E-6
+    } elseif {$unit == "n"} {
+	return 1.0E-9
+    } elseif {$unit == "p"} {
+	return 1.0E-12
+    } elseif {$unit == "f"} {
+	return 1.0E-15
+    } elseif {$unit == "a"} {
+	return 1.0E-18
+    } else {
+	return 1.0
+    }
+}
+
+#-----------------------------------------------
+# Procedures used with sky130_fd_pr library
+#-----------------------------------------------
+
+proc limit_low {value limit} {
+    if {$value < $limit} {
+        set rval $limit
+    } else {
+        set rval $value
+    }
+    return [format "%1.3f" $rval]
+}
+
+# Return MiM cap capacitance value in fF
+proc get_mim_value {l w mult} {
+    return [* $l $w $mult]
+}
+
+# Return high-res poly resistor value in kOhms
+proc get_xres_value {l name} {
+    case $name in \
+    res_high_po_0p35 {set rval [* 2.0 [/ $l 0.35]]} \
+    res_high_po_0p69 {set rval [* 2.0 [/ $l 0.69]]} \
+    res_high_po_1p41 {set rval [* 2.0 [/ $l 1.41]]} \
+    res_high_po_2p85 {set rval [* 2.0 [/ $l 2.85]]} \
+    res_high_po_5p73 {set rval [* 2.0 [/ $l 5.73]]} \
+    default {set rval 0}
+    return [format "%1.3f" $rval]
+}
+
+# Get VPP cap values according to model (values in fF)
+proc get_vpp_noshield_value {name mult} {
+    case $name in \
+    02p4x04p6_m1m2_noshield {set cval 4.627} \
+    02p7x06p1_m1m2m3m4_shieldl1_fingercap {set cval 12.549} \
+    02p7x11p1_m1m2m3m4_shieldl1_fingercap {set cval 12.399} \
+    02p7x21p1_m1m2m3m4_shieldl1_fingercap {set cval 46.896} \
+    02p7x41p1_m1m2m3m4_shieldl1_fingercap {set cval 93.188} \
+    02p9x06p1_m1m2m3m4_shieldl1_fingercap2 {set cval 13.125} \
+    04p4x04p6_l1m1m2_noshield {set cval 10.281} \
+    04p4x04p6_m1m2_noshield {set cval 8.150} \
+    04p4x04p6_m1m2_noshield_o2 {set cval 9.841} \
+    04p4x04p6_m1m2_shieldl1 {set cval 8.879} \
+    04p4x04p6_m1m2m3_shieldl1 {set cval 11.117} \
+    08p6x07p8_l1m1m2_noshield {set cval 41.828} \
+    08p6x07p8_m1m2_noshield {set cval 35.826} \
+    08p6x07p8_m1m2_shieldl1 {set cval 34.782} \
+    08p6x07p8_m1m2m3_shieldl1 {set cval 43.728} \
+    11p3x11p3_m1m2m3m4_shieldl1_wafflecap {set cval 112.497} \
+    11p5x11p7_l1m1m2_noshield {set cval 96.064} \
+    11p5x11p7_m1m2_noshield {set cval 75.963} \
+    11p5x11p7_m1m2_shieldl1 {set cval 78.124} \
+    11p5x11p7_m1m2m3_shieldl1 {set cval 98.696} \
+    11p5x11p7_m1m4_noshield {set cval 111.693} \
+    44p7x23p1_pol1m1m2m3m4m5_noshield {set cval 1495.053} \
+    default {set cval 0}
+    return [* $cval $mult]
+}
+
+proc get_vpp_shield_value {name mult} {
+    case $name in \
+    04p4x04p6_m1m2m3_shieldl1m5_floatm4 {set cval 11.443} \
+    04p4x04p6_m1m2m3_shieldl1m5_floatm4_top {set cval 12.098} \
+    05p9x05p9_m1m2m3m4_shieldl1_wafflecap {set cval 28.577} \
+    06p8x06p1_l1m1m2m3_shieldpom4 {set cval 36.122} \
+    06p8x06p1_l1m1m2m3_shieldpom4_top {set cval 36.666} \
+    06p8x06p1_m1m2m3_shieldl1m4 {set cval 28.220} \
+    06p8x06p1_m1m2m3_shieldl1m4_top {set cval 27.723} \
+    08p6x07p8_m1m2m3_shieldl1m5_floatm4 {set cval 43.643} \
+    08p6x07p8_m1m2m3_shieldl1m5_floatm4_top {set 6.363} \
+    11p3x11p8_l1m1m2m3m4_shieldm5_nhvtop {set cval 183.472} \
+    11p5x11p7_l1m1m2m3_shieldm4 {set cval 123.258} \
+    11p5x11p7_l1m1m2m3_shieldm4_top {set cval 493.018} \
+    11p5x11p7_l1m1m2m3_shieldpom4 {set cval 128.617} \
+    11p5x11p7_l1m1m2m3_shieldpom4_top {set cval 516.838} \
+    11p5x11p7_l1m1m2m3m4_shieldm5 {set cval 141.412} \
+    11p5x11p7_l1m1m2m3m4_shieldm5_top {set cval 565.641} \
+    11p5x11p7_l1m1m2m3m4_shieldpom5 {set cval 147.117} \
+    11p5x11p7_l1m1m2m3m4_shieldpom5_top {set cval 588.113} \
+    11p5x11p7_m1m2m3_shieldl1m5_floatm4 {set cval 100.308} \
+    11p5x11p7_m1m2m3_shieldl1m5_floatm4_top {set cval 78.913} \
+    11p5x11p7_m1m2m3m4_shieldl1m5 {set cval 120.658} \
+    11p5x11p7_m1m2m3m4_shieldl1m5_top {set cval 482.574} \
+    11p5x11p7_m1m2m3m4_shieldm5 {set cval 111.909} \
+    default {set cval 0}
+    return [* $cval $mult]
+}
