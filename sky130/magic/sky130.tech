@@ -4452,9 +4452,13 @@ variants (fast),(full)
  # Except:  Note that standard cells allow transistor width minimum 0.36um
  width pfetlvt 350 "LVT PMOS gate length < %d (poly.1b)"
 
- spacing allpolynonfet,polyfill *nsd 55 corner_ok varactor \
+ spacing allpolynonfet,polyfill *nsd 55 corner_ok var,varhvt,corenvar \
 	"poly spacing to diffusion tap < %d (poly.5)"
- spacing allpolynonfet,polyfill *mvnsd 55 corner_ok mvvaractor \
+ spacing allpolynonfet,polyfill *psd 55 corner_ok corepvar \
+	"poly spacing to diffusion tap < %d (poly.5)"
+ spacing allpolynonfet,polyfill *mvnsd 55 corner_ok mvvar \
+	"poly spacing to diffusion tap < %d (poly.5)"
+ spacing allpolynonfet,polyfill *mvpsd 55 touching_illegal \
 	"poly spacing to diffusion tap < %d (poly.5)"
 
  edge4way *psd *ndiff 300 ~(nfet,npass,npd,scnfet,nfetlvt,nsonos)/a *psd 300 \
