@@ -70,8 +70,6 @@ sky130_fd_sc_hd__maj3_4
 sky130_fd_sc_hd__mux2i_1
 sky130_fd_sc_hd__mux2i_2
 sky130_fd_sc_hd__mux2i_4
-sky130_fd_sc_hd__probe_p_8
-sky130_fd_sc_hd__probec_p_8
 sky130_fd_sc_hd__sdfbbn_1
 sky130_fd_sc_hd__sdfbbn_2
 sky130_fd_sc_hd__sdfbbp_1
