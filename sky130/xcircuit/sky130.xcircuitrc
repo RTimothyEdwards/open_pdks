@@ -43,15 +43,6 @@ proc unit_val {unit} {
 # Procedures used with sky130_fd_pr library
 #-----------------------------------------------
 
-proc limit_low {value limit} {
-    if {$value < $limit} {
-        set rval $limit
-    } else {
-        set rval $value
-    }
-    return [format "%1.3f" $rval]
-}
-
 # Return MiM cap capacitance value in fF
 proc get_mim_value {l w mult} {
     return [* $l $w $mult]

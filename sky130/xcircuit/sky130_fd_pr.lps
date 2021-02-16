@@ -362,7 +362,7 @@ endgate
 } def
 
 /sky130_fd_pr::MiMCap {
-<</@mult 1 /@model (m3_1) (lindex {m3_1 m3_2} 0) pop /@length (1) /@width (1) /p_yps2 
+<</@mult 1 /@model (m3_1) (lindex {m3_1 m3_2} 0) pop /@length (2) /@width (2) /p_yps2 
 -24 /p_xps2 48 /p_yps1 8 /p_xps1 48 /p_yps 72 /p_xps 48 /p_rot 0 /@class 
 (X) /@value (1) (get_mim_value @length @width @mult) pop /@index (?) /p_jst 
 20 >> begingate
