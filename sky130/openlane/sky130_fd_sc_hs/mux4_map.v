@@ -7,7 +7,7 @@ module \$_MUX4_ (
     input S,
     input T
     );
-  sky130_fd_sc_hs__mux4_4 _TECHMAP_MUX4 (
+  sky130_fd_sc_hs__mux4_1 _TECHMAP_MUX4 (
       .X(Y),
       .A0(A),
       .A1(B),

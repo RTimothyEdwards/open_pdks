@@ -4,7 +4,7 @@ module \$_MUX_ (
     input B,
     input S
     );
-  sky130_fd_sc_hdll__mux2_4 _TECHMAP_MUX (
+  sky130_fd_sc_hdll__mux2_1 _TECHMAP_MUX (
       .X(Y),
       .A0(A),
       .A1(B),
