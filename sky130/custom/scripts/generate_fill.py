@@ -250,6 +250,7 @@ if __name__ == '__main__':
         print('gets $ifile xbase', file=ofile)
         print('gets $ifile ybase', file=ofile)
         print('close $ifile', file=ofile)
+        print('cif ostyle wafflefill(tiled)', file=ofile)
 
     # Now create simple "fake" views of all the tiles.
     print('gds readonly true', file=ofile)
