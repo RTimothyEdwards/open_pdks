@@ -590,7 +590,8 @@ if __name__ == '__main__':
         print('***Error:  MET5 Density > 76%')
 
     if not keepmode:
-        os.remove(magpath + '/check_density.tcl')
+        if os.path.isfile(magpath + '/check_density.tcl'):
+            os.remove(magpath + '/check_density.tcl')
 
     print('')
     print('Done!')
