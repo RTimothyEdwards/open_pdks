@@ -544,7 +544,7 @@ if __name__ == '__main__':
     liaccum = sum(lifill) / atotal
     print('')
     print('LI Density: ' + str(liaccum))
-    if liaccum < 0.50:
+    if liaccum < 0.35:
         print('***Error:  LI Density < 35%')
     elif liaccum > 0.60:
         print('***Error:  LI Density > 60%')
