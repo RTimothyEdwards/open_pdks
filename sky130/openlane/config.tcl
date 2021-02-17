@@ -67,7 +67,7 @@ set ::env(CTS_TECH_DIR) "N/A"
 
 set ::env(CTS_SQR_CAP) 0.258e-3
 set ::env(CTS_SQR_RES) 0.125
-set ::env(FP_TAPCELL_DIST) 14
+set ::env(FP_TAPCELL_DIST) 13
 
 # Tracks info
 set ::env(TRACKS_INFO_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/tracks.info"
