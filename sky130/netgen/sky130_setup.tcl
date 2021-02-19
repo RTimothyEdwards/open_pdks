@@ -31,7 +31,6 @@ set cells2 [cells list -all -circuit2]
 
 set devices {}
 lappend devices sky130_fd_pr__res_iso_pw
-lappend devices sky130_fd_pr__res_generic_po
 lappend devices sky130_fd_pr__res_high_po_0p35
 lappend devices sky130_fd_pr__res_high_po_0p69
 lappend devices sky130_fd_pr__res_high_po_1p41
@@ -80,10 +79,11 @@ foreach dev $devices {
 }
 
 #-------------------------------------------
-# MRM (metal) resistors
+# MRM (metal) resistors and poly resistor
 #-------------------------------------------
 
 set devices {}
+lappend devices sky130_fd_pr__res_generic_po
 lappend devices sky130_fd_pr__res_generic_l1
 lappend devices sky130_fd_pr__res_generic_m1
 lappend devices sky130_fd_pr__res_generic_m2
@@ -95,7 +95,7 @@ lappend devices sky130_fd_pr__res_generic_m5
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
-	permute "-circuit1 $dev" 1 2
+	permute "-circuit1 $dev" end_a end_b
 	property "-circuit1 $dev" series enable
 	property "-circuit1 $dev" series {w critical}
 	property "-circuit1 $dev" series {l add}
@@ -108,7 +108,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" delete mult
     }
     if {[lsearch $cells2 $dev] >= 0} {
-	permute "-circuit2 $dev" 1 2
+	permute "-circuit2 $dev" end_a end_b
 	property "-circuit2 $dev" series enable
 	property "-circuit2 $dev" series {w critical}
 	property "-circuit2 $dev" series {l add}
