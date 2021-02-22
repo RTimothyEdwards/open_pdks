@@ -155,8 +155,6 @@ sky130_fd_sc_hdll__dfxbp_1
 sky130_fd_sc_hdll__dfxtp_1
 sky130_fd_sc_hdll__ebufn_1
 sky130_fd_sc_hdll__inv_1
-sky130_fd_sc_hdll__mux2_1
-sky130_fd_sc_hdll__mux4_1
 sky130_fd_sc_hdll__nand2_1
 sky130_fd_sc_hdll__nand2b_1
 sky130_fd_sc_hdll__nand3_1

@@ -158,8 +158,6 @@ sky130_fd_sc_ls__dfxbp_1
 sky130_fd_sc_ls__dfxtp_1
 sky130_fd_sc_ls__ebufn_1
 sky130_fd_sc_ls__inv_1
-sky130_fd_sc_ls__mux2_1
-sky130_fd_sc_ls__mux4_1
 sky130_fd_sc_ls__nand2_1
 sky130_fd_sc_ls__nand2b_1
 sky130_fd_sc_ls__nand3_1
