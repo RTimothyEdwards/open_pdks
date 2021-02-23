@@ -568,14 +568,14 @@ vendor-a:
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-ngspice sky130_fd_pr/latest/models/* \
 		filter=custom/scripts/rename_models.py \
-		|& tee -a ${SKY130A}_make.log
+		2>&1 | tee -a ${SKY130A}_make.log
 	# Install base device library from vendor files
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-gds %l/latest/cells/*/*.gds compile-only \
 		-cdl %l/latest/cells/*/*.cdl compile-only \
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
 		-spice %l/latest/cells/*/*.spice filter=custom/scripts/rename_cells.py \
-		-library primitive sky130_fd_pr |& tee -a ${SKY130A}_make.log
+		-library primitive sky130_fd_pr 2>&1 | tee -a ${SKY130A}_make.log
 	# Custom:  Add "short" resistor model and subcircuit to the r+c models file
 	cat ./custom/models/short.spice >> \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice
@@ -587,14 +587,14 @@ vendor-a:
 	# order of the "nf" and "mult" parameters.
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A} \
 		< custom/patches/sky130_fd_pr.patch \
-		|& tee -a ${SKY130A}_make.log || true
+		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Install custom additions to I/O pad library
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-verilog %l/verilog/*.v \
 		-cdl %l/cdl/*.cdl \
 		-gds %l/gds/*.gds \
 		-lef %l/lef/*.lef compile-only rename=sky130_ef_io \
-		-library general sky130_fd_io |& tee -a ${SKY130A}_make.log
+		-library general sky130_fd_io 2>&1 | tee -a ${SKY130A}_make.log
 	# Install SkyWater I/O pad library
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-spice %l/latest/cells/*/*.spice compile-only \
@@ -612,7 +612,7 @@ vendor-a:
 		-verilog %l/latest/cells/*/*.v exclude=*.*.v \
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=custom/scripts/sort_pdkfiles.py \
-		-library general sky130_fd_io |& tee -a ${SKY130A}_make.log
+		-library general sky130_fd_io 2>&1 | tee -a ${SKY130A}_make.log
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_io/verilog/*.*.v
@@ -621,7 +621,7 @@ vendor-a:
 		-gds %l/gds/*.gds \
 		-lef %l/lef/*.lef \
 		-verilog %l/verilog/*.v \
-		-library digital sky130_fd_sc_hd |& tee -a ${SKY130A}_make.log
+		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130A}_make.log
 	# Add a maskhint set for the GPIO pad .mag view to prevent problems writing
 	# when writing HVI to GDS during hierarchical adjustments.
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io__top_gpiov2 \
@@ -652,7 +652,7 @@ vendor-a:
 		-library digital sky130_fd_sc_hs \
 		-library digital sky130_fd_sc_ls \
 		-library digital sky130_fd_sc_ms \
-		-library digital sky130_fd_sc_lp |& tee -a ${SKY130A}_make.log
+		-library digital sky130_fd_sc_lp 2>&1 | tee -a ${SKY130A}_make.log
 	# Add a maskhint set for the tap cell .ag view to prevent problems writing
 	# when writing NSDM and PSDM to GDS during hierarchical adjustments.
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_sc_hd sky130_fd_sc_hd__tapvpwrvgnd_1 \
@@ -671,14 +671,14 @@ vendor-a:
 	# Apply extra PDK patches until they get fixed properly in the source
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hd/techlef \
 		< custom/patches/hd_minenclosed.squeaky.patch \
-		|& tee -a ${SKY130A}_make.log || true
+		2>&1 | tee -a ${SKY130A}_make.log || true
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hdll/techlef \
 		< custom/patches/hdll_minenclosed.squeaky.patch \
-		|& tee -a ${SKY130A}_make.log || true
+		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Install alphanumeric library.
 	${STAGE} -source ${ALPHA_PATH}/.. -target ${STAGING_PATH}/${SKY130A} \
 		-mag %l/mag/*.mag filter=custom/scripts/text2m5.py \
-		-library general sky130_ml_xx_hd |& tee -a ${SKY130A}_make.log
+		-library general sky130_ml_xx_hd 2>&1 | tee -a ${SKY130A}_make.log
 	# Install text2mag.py script for alphanumeric library
 	mkdir -p ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
 	cp custom/scripts/text2mag.py \
@@ -690,7 +690,7 @@ vendor-a:
 		-lef %l/latest/lef/*.lef compile-only \
 		-lib %l/latest/lib/*.lib \
 		-gds %l/latest/gds/*.gds compile-only \
-		-library digital sky130_osu_sc_t18 |& tee -a ${SKY130A}_make.log
+		-library digital sky130_osu_sc_t18 2>&1 | tee -a ${SKY130A}_make.log
 
 install:
 	if test "x${DIST_PATH}" == "x" ; then \
@@ -706,7 +706,7 @@ install-local-a:
 	${INSTALL} -source ${STAGING_PATH}/${SKY130A} \
 		-target ${LOCAL_PATH}/${SKY130A} \
 		-variable PDKPATH \
-		-link_from ${LINK_TARGETS} |& tee -a ${SKY130A}_install.log
+		-link_from ${LINK_TARGETS} 2>&1 | tee -a ${SKY130A}_install.log
 	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_install.log
 
 install-dist: install-dist-a
@@ -717,7 +717,7 @@ install-dist-a:
 		-target ${DIST_PATH}/${SKY130A} \
 		-variable PDKPATH \
 		-local ${LOCAL_PATH}/${SKY130A} \
-		-link_from ${DIST_LINK_TARGETS} |& tee -a ${SKY130A}_install.log
+		-link_from ${DIST_LINK_TARGETS} 2>&1 | tee -a ${SKY130A}_install.log
 	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_install.log
 
 clean: clean-a
