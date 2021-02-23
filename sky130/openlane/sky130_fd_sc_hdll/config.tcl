@@ -23,7 +23,7 @@ set ::env(PLACE_SITE_WIDTH) 0.460
 set ::env(PLACE_SITE_HEIGHT) 2.720
 
 # welltap and endcap cells
-#set ::env(FP_WELLTAP_CELL) "sky130_fd_sc_hd__tapvpwrvgnd_1"
+set ::env(FP_WELLTAP_CELL) "sky130_fd_sc_hdll__tapvpwrvgnd_1"
 set ::env(FP_ENDCAP_CELL) "sky130_fd_sc_hdll__decap_3"
 
 # defaults (can be overridden by designs):

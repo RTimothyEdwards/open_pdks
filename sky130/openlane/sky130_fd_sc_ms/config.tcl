@@ -48,7 +48,7 @@ set ::env(PL_LIB) $::env(LIB_TYPICAL)
 
 # Fillcell insertion
 set ::env(FILL_CELL) "sky130_fd_sc_ms__fill_"
-set ::env(DECAP_CELL) "sky130_fd_sc_ms__decap_"
+set ::env(DECAP_CELL) "sky130_fd_sc_ms__decap_4"
 set ::env(RE_BUFFER_CELL) "sky130_fd_sc_ms__buf_4"
 
 # Diode insertaion
