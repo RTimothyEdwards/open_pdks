@@ -2,11 +2,11 @@
 * Includes corner and fill cell subcircuits
 
 *----------------------------------------------------------
-* sky130_ef_io__vccd_hvc_pad 
+* sky130_ef_io__vccd_hvc_pad
 * Power pad connects pad to VCCD with unconnected HV clamp
 *----------------------------------------------------------
 
-.SUBCKT sky130_ef_io__vccd_hvc_pad 
+.SUBCKT sky130_ef_io__vccd_hvc_pad
 + AMUXBUS_A AMUXBUS_B DRN_HVC
 + SRC_BDY_HVC VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD
 + VSSIO VSSD VSSIO_Q
@@ -22,7 +22,7 @@ Xsky130_fd_io__top_power_hvc_base
 .ENDS
 
 *----------------------------------------------------------
-* sky130_ef_io__vccd_lvc_pad 
+* sky130_ef_io__vccd_lvc_pad
 * Power pad connects pad to VCCD with unconnected LV clamp
 *----------------------------------------------------------
 
@@ -42,7 +42,7 @@ Xsky130_fd_io__top_power_lvc_base
 .ENDS
 
 *----------------------------------------------------------
-* sky130_ef_io__vdda_lvc_pad 
+* sky130_ef_io__vdda_lvc_pad
 * Power pad connects pad to VDDA with unconnected LV clamp
 *----------------------------------------------------------
 
@@ -64,11 +64,11 @@ Xsky130_fd_io__top_power_lvc_base
 .ENDS
 
 *----------------------------------------------------------
-* sky130_ef_io__vdda_lvc_pad 
+* sky130_ef_io__vdda_lvc_pad
 * Power pad connects pad to VDDA with unconnected HV clamp
 *----------------------------------------------------------
 
-.SUBCKT sky130_ef_io__vdda_hvc_pad 
+.SUBCKT sky130_ef_io__vdda_hvc_pad
 + AMUXBUS_A AMUXBUS_B DRN_HVC
 + SRC_BDY_HVCVSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD
 + VSSIO VSSD VSSIO_Q
@@ -84,7 +84,7 @@ Xsky130_fd_io__top_power_hvc_base
 .ENDS
 
 *----------------------------------------------------------
-* sky130_ef_io__vddio_lvc_pad 
+* sky130_ef_io__vddio_lvc_pad
 * Power pad connects pad to VDDIO with unconnected LV clamp
 *----------------------------------------------------------
 
@@ -105,7 +105,7 @@ Xsky130_fd_io__top_power_lvc_base
 .ENDS
 
 *----------------------------------------------------------
-* sky130_ef_io__vddio_hvc_pad 
+* sky130_ef_io__vddio_hvc_pad
 * Power pad connects pad to VDDIO with unconnected HV clamp
 *----------------------------------------------------------
 
@@ -125,7 +125,7 @@ Xsky130_fd_io__top_power_hvc_base
 .ENDS
 
 *----------------------------------------------------------
-* sky130_ef_io__vssd_lvc_pad 
+* sky130_ef_io__vssd_lvc_pad
 * Ground pad connects pad to VSSD with unconnected LV clamp
 *----------------------------------------------------------
 
@@ -146,7 +146,7 @@ Xsky130_fd_io__top_ground_lvc_base
 .ENDS
 
 *----------------------------------------------------------
-* sky130_ef_io__vssd_hvc_pad 
+* sky130_ef_io__vssd_hvc_pad
 * Ground pad connects pad to VSSD with unconnected HV clamp
 *----------------------------------------------------------
 
@@ -166,7 +166,7 @@ Xsky130_fd_io__top_ground_hvc_base
 .ENDS
 
 *----------------------------------------------------------
-* sky130_ef_io__vssio_lvc_pad 
+* sky130_ef_io__vssio_lvc_pad
 * Ground pad connects pad to VSSIO with unconnected LV clamp
 *----------------------------------------------------------
 
@@ -187,7 +187,7 @@ Xsky130_fd_io__top_ground_lvc_base
 .ENDS
 
 *----------------------------------------------------------
-* sky130_ef_io__vssio_hvc_pad 
+* sky130_ef_io__vssio_hvc_pad
 * Ground pad connects pad to VSSIO with unconnected HV clamp
 *----------------------------------------------------------
 
@@ -207,7 +207,7 @@ Xsky130_fd_io__top_ground_hvc_base
 .ENDS
 
 *----------------------------------------------------------
-* sky130_ef_io__vssio_lvc_pad 
+* sky130_ef_io__vssio_lvc_pad
 * Ground pad connects pad to VSSIO with unconnected LV clamp
 *----------------------------------------------------------
 
@@ -228,7 +228,7 @@ Xsky130_fd_io__top_ground_lvc_base
 .ENDS
 
 *----------------------------------------------------------
-* sky130_ef_io__vssa_lvc_pad 
+* sky130_ef_io__vssa_lvc_pad
 * Ground pad connects pad to VSSA with unconnected HV clamp
 *----------------------------------------------------------
 
@@ -247,12 +247,12 @@ Xsky130_fd_io__top_ground_hvc_base
 .ENDS
 
 *----------------------------------------------------------
-* sky130_ef_io__corner_pad 
+* sky130_ef_io__corner_pad
 * Plain corner pad
 *----------------------------------------------------------
 
 .SUBCKT sky130_ef_io__corner_pad
-+ AMUXBUS_A AMUXBUS_B 
++ AMUXBUS_A AMUXBUS_B
 + VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD
 + VSSIO VSSD VSSIO_Q
 * Corner pad has no active circuitry
@@ -260,7 +260,7 @@ Xsky130_fd_io__top_ground_hvc_base
 
 *----------------------------------------------------------
 * sky130_fd_io__com_bus_slice
-* SkyWater padframe filler 
+* SkyWater padframe filler
 *----------------------------------------------------------
 
 .SUBCKT sky130_fd_io__com_bus_slice
@@ -272,7 +272,7 @@ Xsky130_fd_io__top_ground_hvc_base
 
 *----------------------------------------------------------
 * sky130_ef_io__com_bus_slice_1um
-* 1um wide padframe filler 
+* 1um wide padframe filler
 *----------------------------------------------------------
 
 .SUBCKT sky130_ef_io__com_bus_slice_1um
@@ -284,7 +284,7 @@ Xsky130_fd_io__top_ground_hvc_base
 
 *----------------------------------------------------------
 * sky130_ef_io__com_bus_slice_5um
-* 5um wide padframe filler 
+* 5um wide padframe filler
 *----------------------------------------------------------
 
 .SUBCKT sky130_ef_io__com_bus_slice_5um
@@ -296,7 +296,7 @@ Xsky130_fd_io__top_ground_hvc_base
 
 *----------------------------------------------------------
 * sky130_ef_io__com_bus_slice_10um
-* 10um wide padframe filler 
+* 10um wide padframe filler
 *----------------------------------------------------------
 
 .SUBCKT sky130_ef_io__com_bus_slice_10um
@@ -308,13 +308,49 @@ Xsky130_fd_io__top_ground_hvc_base
 
 *----------------------------------------------------------
 * sky130_ef_io__com_bus_slice_20um
-* 20um wide padframe filler 
+* 20um wide padframe filler
 *----------------------------------------------------------
 
 .SUBCKT sky130_ef_io__com_bus_slice_20um
 + AMUXBUS_A AMUXBUS_B
 + VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD
 + VSSIO VSSD VSSIO_Q
+* Bus filler has no active circuitry
+.ENDS
+
+*----------------------------------------------------------
+* sky130_ef_io__connect_vcchib_vccd_and_vswitch_vddio_slice_20um
+* A 20um-wide padframe filler that connects VCCHIB and VCCD as well as
+* VSWITCH and VDDIO
+*----------------------------------------------------------
+
+.SUBCKT sky130_ef_io__connect_vcchib_vccd_and_vswitch_vddio_slice_20um
++ AMUXBUS_A AMUXBUS_B
++ VSSA VDDA VDDIO_Q VDDIO VCCD VSSIO VSSD VSSIO_Q
+* Bus filler has no active circuitry
+.ENDS
+
+*----------------------------------------------------------
+* sky130_ef_io__disconnect_vdda_slice_5um
+* A 5um-wide padframe filler that doesn't connect VDDA
+* through it
+*----------------------------------------------------------
+
+.SUBCKT sky130_ef_io__disconnect_vdda_slice_5um
++ AMUXBUS_A AMUXBUS_B VSWITCH VDDIO_Q
++ VCCHIB VDDIO VCCD VSSIO VSSD VSSIO_Q
+* Bus filler has no active circuitry
+.ENDS
+
+*----------------------------------------------------------
+* sky130_ef_io__disconnect_vccd_slice_5um
+* A 5um-wide padframe filler that doesn't connect VCCD
+* through it
+*----------------------------------------------------------
+
+.SUBCKT sky130_ef_io__disconnect_vccd_slice_5um
++ AMUXBUS_A AMUXBUS_B VSSA VDDA VSWITCH
++ VDDIO_Q VCCHIB VDDIO VSSIO VSSIO_Q
 * Bus filler has no active circuitry
 .ENDS
 
@@ -329,7 +365,7 @@ Xsky130_fd_io__top_ground_hvc_base
 + ENABLE_INP_H OE_N TIE_HI_ESD TIE_LO_ESD SLOW VTRIP_SEL HLD_OVR
 + ANALOG_EN ANALOG_SEL ENABLE_VDDIO ENABLE_VSWITCH_H ANALOG_POL OUT
 + AMUXBUS_A AMUXBUS_B VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD
-+ VSSIO VSSD VSSIO_Q 
++ VSSIO VSSD VSSIO_Q
 
 * Instantiate original version with metal4-only power bus
 Xgpiov2_base
@@ -346,8 +382,32 @@ Xgpiov2_base
 
 .ENDS
 
+*----------------------------------------------------------
+* sky130_ef_io__gpiov2_pad_wrapped
+* Wrapper around sky130_ef_io__gpiov2_pad that forces
+* the core-facing pins on tracks
+*----------------------------------------------------------
+
+.SUBCKT sky130_ef_io__gpiov2_pad_wrapped
++ IN_H PAD_A_NOESD_H PAD_A_ESD_0_H PAD_A_ESD_1_H
++ PAD DM[2] DM[1] DM[0] HLD_H_N IN INP_DIS IB_MODE_SEL ENABLE_H ENABLE_VDDA_H
++ ENABLE_INP_H OE_N TIE_HI_ESD TIE_LO_ESD SLOW VTRIP_SEL HLD_OVR
++ ANALOG_EN ANALOG_SEL ENABLE_VDDIO ENABLE_VSWITCH_H ANALOG_POL OUT
++ AMUXBUS_A AMUXBUS_B VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD
++ VSSIO VSSD VSSIO_Q
+
+Xgpiov2_ef
++ IN_H PAD_A_NOESD_H PAD_A_ESD_0_H PAD_A_ESD_1_H
++ PAD DM[2] DM[1] DM[0] HLD_H_N IN INP_DIS IB_MODE_SEL ENABLE_H ENABLE_VDDA_H
++ ENABLE_INP_H OE_N TIE_HI_ESD TIE_LO_ESD SLOW VTRIP_SEL HLD_OVR
++ ANALOG_EN ANALOG_SEL ENABLE_VDDIO ENABLE_VSWITCH_H ANALOG_POL OUT
++ AMUXBUS_A AMUXBUS_B VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD
++ VSSIO VSSD VSSIO_Q sky130_ef_io__gpiov2_pad
+
+.ENDS
+
 *--------------------------------------------------------------------------
-* sky130_ef_io__vddio_hvc_clamped_pad 
+* sky130_ef_io__vddio_hvc_clamped_pad
 * sky130_ef_io__vddio_hvc_pad with HV clamp connections to VDDIO and VSSIO
 *--------------------------------------------------------------------------
 
@@ -367,7 +427,7 @@ Xsky130_fd_io__top_power_hvc_base
 .ENDS
 
 *--------------------------------------------------------------------------
-* sky130_ef_io__vssio_hvc_clamped_pad 
+* sky130_ef_io__vssio_hvc_clamped_pad
 * sky130_ef_io__vssio_hvc_pad with HV clamp connections to VDDIO and VSSIO
 *--------------------------------------------------------------------------
 
@@ -387,7 +447,7 @@ Xsky130_fd_io__top_ground_hvc_base
 .ENDS
 
 *--------------------------------------------------------------------------
-* sky130_ef_io__vdda_hvc_clamped_pad 
+* sky130_ef_io__vdda_hvc_clamped_pad
 * sky130_ef_io__vdda_hvc_pad with HV clamp connections to VDDA and VSSA
 *--------------------------------------------------------------------------
 
@@ -407,7 +467,7 @@ Xsky130_fd_io__top_power_hvc_base
 .ENDS
 
 *--------------------------------------------------------------------------
-* sky130_ef_io__vssa_hvc_clamped_pad 
+* sky130_ef_io__vssa_hvc_clamped_pad
 * sky130_ef_io__vssa_hvc_pad with HV clamp connections to VDDA and VSSA
 *--------------------------------------------------------------------------
 
@@ -427,7 +487,7 @@ Xsky130_fd_io__top_ground_hvc_base
 .ENDS
 
 *--------------------------------------------------------------------------
-* sky130_ef_io__vccd_lvc_clamped_pad 
+* sky130_ef_io__vccd_lvc_clamped_pad
 * sky130_ef_io__vccd_lvc_pad with LV clamp connections to VCCD/VSSIO and
 * VCCD/VSSD, and back-to-back diodes connecting VSSIO to VSSA
 *--------------------------------------------------------------------------
@@ -448,7 +508,7 @@ Xsky130_fd_io__top_power_lvc_base
 .ENDS
 
 *--------------------------------------------------------------------------
-* sky130_ef_io__vssd_lvc_clamped_pad 
+* sky130_ef_io__vssd_lvc_clamped_pad
 * sky130_ef_io__vssd_lvc_pad with LV clamp connections to VCCD/VSSIO and
 * VCCD/VSSD, and back-to-back diodes connecting VSSIO to VSSA
 *--------------------------------------------------------------------------
@@ -469,7 +529,7 @@ Xsky130_fd_io__top_ground_lvc_base
 .ENDS
 
 *--------------------------------------------------------------------------
-* sky130_ef_io__vccd_lvc_clamped2_pad 
+* sky130_ef_io__vccd_lvc_clamped2_pad
 * sky130_ef_io__vccd_lvc_pad with LV clamp connections to VCCD and VSSD,
 * and back-to-back diodes connecting VSSD to VSSIO
 *--------------------------------------------------------------------------
@@ -490,7 +550,7 @@ Xsky130_fd_io__top_power_lvc_base
 .ENDS
 
 *--------------------------------------------------------------------------
-* sky130_ef_io__vssd_lvc_clamped2_pad 
+* sky130_ef_io__vssd_lvc_clamped2_pad
 * sky130_ef_io__vssd_lvc_pad with LV clamp connections to VCCD and VSSD,
 * and back-to-back diodes connecting VSSD to VSSIO
 *--------------------------------------------------------------------------
