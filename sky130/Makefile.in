@@ -720,6 +720,31 @@ install-dist-a:
 		-link_from ${DIST_LINK_TARGETS} 2>&1 | tee -a ${SKY130A}_install.log
 	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_install.log
 
+uninstall:
+	if test "x${DIST_PATH}" == "x" ; then \
+	    ${MAKE} uninstall-local ; \
+	else \
+	    ${MAKE} uninstall-dist; \
+	fi
+
+uninstall-local: uninstall-local-a
+
+uninstall-local-a:
+	echo "Uninstalling SKY130 PDK from ${LOCAL_PATH}"
+	if test "x${LOCAL_PATH}" != "x" ; then \
+		${RM} -rf ${LOCAL_PATH}/${SKY130A} ; \
+	fi
+	echo "Finished SKY130 PDK uninstall"
+
+uninstall-dist: uninstall-dist-a
+
+uninstall-dist-a:
+	echo "Uninstalling SKY130 PDK from ${DIST_PATH}"
+	if test "x${DIST_PATH}" != "x" ; then \
+		${RM} -rf ${DIST_PATH}/${SKY130A} ; \
+	fi
+	echo "Finished SKY130 PDK uninstall"
+
 clean: clean-a
 
 clean-a:
