@@ -5161,9 +5161,6 @@ variants (),(si)
  device msubcircuit sky130_fd_pr__special_pfet_pass ppu \
 	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w \
 	a1=as p1=ps a2=ad p2=pd
- device msubcircuit sky130_fd_pr__special_pfet_pass ppu 1 \
-	*pdiff,pdiffres nwell error l=l w=w \
-	a1=as p1=ps a2=ad p2=pd
  device msubcircuit sky130_fd_pr__pfet_01v8_lvt pfetlvt \
 	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w \
 	a1=as p1=ps a2=ad p2=pd
