@@ -2286,7 +2286,7 @@ style  sky130 variants (),(vendor)
  and DNWELL
  labels PWRES
 
- templayer ndiffarea DIFF,DIFFTXT,DIFFPIN
+ templayer ndiffarea DIFF,DIFFTXT,DIFFPIN,barediff
  and-not POLY
  and-not NWELL
  and-not PSDM
@@ -2311,7 +2311,7 @@ style  sky130 variants (),(vendor)
  templayer xndifcheck ndifcheck
  copyup ndifcheck
 
- templayer mvndiffarea DIFF,DIFFTXT,DIFFPIN
+ templayer mvndiffarea DIFF,DIFFTXT,DIFFPIN,barediff
  and-not POLY
  and-not NWELL
  and-not PSDM
@@ -2335,7 +2335,7 @@ style  sky130 variants (),(vendor)
  templayer mvxndifcheck mvndifcheck
  copyup mvndifcheck
 
- layer ndiode DIFF
+ layer ndiode DIFF,barediff
  and NSDM
  and DIODE
  and-not NWELL
@@ -2345,7 +2345,7 @@ style  sky130 variants (),(vendor)
  and-not LVTN
  labels DIFF
 
- layer ndiodelvt DIFF
+ layer ndiodelvt DIFF,barediff
  and NSDM
  and DIODE
  and-not NWELL
@@ -2366,7 +2366,7 @@ style  sky130 variants (),(vendor)
  and-not HVI
  labels DIFF
 
- templayer pdiffarea DIFF,DIFFTXT,DIFFPIN
+ templayer pdiffarea DIFF,DIFFTXT,DIFFPIN,barediff
  and-not POLY
  and NWELL
  and-not NSDM
@@ -2384,7 +2384,7 @@ style  sky130 variants (),(vendor)
 
  layer pdiff pdiffarea
 
- layer mvndiode DIFF
+ layer mvndiode DIFF,barediff
  and NSDM
  and DIODE
  and HVI
@@ -2393,7 +2393,7 @@ style  sky130 variants (),(vendor)
  and-not LVTN
  labels DIFF
 
- layer nndiode DIFF
+ layer nndiode DIFF,barediff
  and NSDM
  and DIODE
  and HVI
@@ -2413,7 +2413,7 @@ style  sky130 variants (),(vendor)
  and HVI
  labels DIFF
 
- templayer mvpdiffarea DIFF,DIFFTXT,DIFFPIN
+ templayer mvpdiffarea DIFF,DIFFTXT,DIFFPIN,barediff
  and-not POLY
  and NWELL
  and-not NSDM
@@ -2436,7 +2436,7 @@ style  sky130 variants (),(vendor)
  templayer xpdifcheck pdifcheck
  copyup pdifcheck
 
- layer pdiode DIFF
+ layer pdiode DIFF,barediff
  and PSDM
  and-not POLY
  and-not NSDM
@@ -2446,7 +2446,7 @@ style  sky130 variants (),(vendor)
  and DIODE
  labels DIFF
 
- layer pdiodelvt DIFF
+ layer pdiodelvt DIFF,barediff
  and PSDM
  and-not POLY
  and-not NSDM
@@ -2456,7 +2456,7 @@ style  sky130 variants (),(vendor)
  and DIODE
  labels DIFF
 
- layer pdiodehvt DIFF
+ layer pdiodehvt DIFF,barediff
  and PSDM
  and-not POLY
  and-not NSDM
@@ -2473,10 +2473,11 @@ style  sky130 variants (),(vendor)
 
  # Define pfet areas as known pdiff, regardless of the presence of a well.
 
- templayer pfetarea DIFF
+ templayer pfetarea DIFF,barediff
+ and POLY
+ or baretrans
  and-not NSDM
  and-not HVI
- and POLY
 
  layer pfet pfetarea
  and-not LVTN
@@ -2529,7 +2530,7 @@ style  sky130 variants (),(vendor)
  templayer mvxpdifcheck mvpdifcheck
  copyup mvpdifcheck
 
- layer mvpdiode DIFF
+ layer mvpdiode DIFF,barediff
  and PSDM
  and-not POLY
  and-not NSDM
@@ -2546,10 +2547,11 @@ style  sky130 variants (),(vendor)
  # regardless of the presence of a
  # well.
 
- templayer mvpfetarea DIFF
+ templayer mvpfetarea DIFF,barediff
+ and POLY
+ or baretrans
  and-not NSDM
  and HVI
- and POLY
 
  layer mvpfet mvpfetarea
  and-not ESDID
@@ -2559,7 +2561,7 @@ style  sky130 variants (),(vendor)
  and ESDID
  labels DIFF
 
- layer pdiff DIFF,DIFFTXT,DIFFPIN
+ layer pdiff DIFF,DIFFTXT,DIFFPIN,barediff
  and-not NSDM
  and-not POLY
  and-not HVI
@@ -2579,8 +2581,9 @@ style  sky130 variants (),(vendor)
  and-not HVI
  labels DIFF
 
- layer nfet DIFF
+ layer nfet DIFF,barediff
  and POLY
+ or baretrans
  and-not PSDM
  and NSDM
  and-not HVI
@@ -2590,8 +2593,9 @@ style  sky130 variants (),(vendor)
  and-not COREID
  labels DIFF
 
- layer scnfet DIFF
+ layer scnfet DIFF,barediff
  and POLY
+ or baretrans
  and-not PSDM
  and NSDM
  and-not NWELL
@@ -2601,16 +2605,18 @@ style  sky130 variants (),(vendor)
  and STDCELL
  labels DIFF
 
- layer npass DIFF
+ layer npass DIFF,barediff
  and POLY
+ or baretrans
  and-not PSDM
  and NSDM
  and-not NWELL
  and COREID
  labels DIFF
 
- layer npd DIFF
+ layer npd DIFF,barediff
  and POLY
+ or baretrans
  and-not PSDM
  and NSDM
  and-not NWELL
@@ -2620,8 +2626,20 @@ style  sky130 variants (),(vendor)
  grow 70
  labels DIFF
 
- layer nfetlvt DIFF
+ # Devices abutting tap under gate are officially npd, not npass
+ layer npd TAP
+ grow 100
+ and DIFF
  and POLY
+ and-not PSDM
+ and NSDM
+ and-not NWELL
+ and COREID
+ labels DIFF
+
+ layer nfetlvt DIFF,barediff
+ and POLY
+ or baretrans
  and-not PSDM
  and NSDM
  and-not HVI
@@ -2629,8 +2647,9 @@ style  sky130 variants (),(vendor)
  and-not SONOS
  labels DIFF
 
- layer nsonos DIFF
+ layer nsonos DIFF,barediff
  and POLY
+ or baretrans
  and-not PSDM
  and NSDM
  and-not HVI
@@ -2698,7 +2717,7 @@ style  sky130 variants (),(vendor)
  templayer psdexpand psdarea
  grow 500
 
- layer mvpdiff DIFF,DIFFTXT,DIFFPIN
+ layer mvpdiff DIFF,DIFFTXT,DIFFPIN,barediff
  and-not NSDM
  and-not POLY
  and HVI
@@ -2718,24 +2737,27 @@ style  sky130 variants (),(vendor)
  and-not mvrdpioedge
  labels DIFF
 
- templayer mvnfetarea DIFF
+ templayer mvnfetarea DIFF,barediff
  and POLY
+ or baretrans
  and-not PSDM
  and NSDM
  and-not LVTN
  and HVI
  grow 350
 
- templayer mvnnfetarea DIFF,TAP
+ templayer mvnnfetarea DIFF,TAP,barediff
  and POLY
+ or baretrans
  and-not PSDM
  and NSDM
  and LVTN
  and HVI
  and-not mvnfetarea
 
- layer mvnfetesd DIFF
+ layer mvnfetesd DIFF,barediff
  and POLY
+ or baretrans
  and-not PSDM
  and NSDM
  and HVI
@@ -2743,8 +2765,9 @@ style  sky130 variants (),(vendor)
  and-not mvnnfetarea
  labels DIFF
 
- layer mvnfet DIFF
+ layer mvnfet DIFF,barediff
  and POLY
+ or baretrans
  and-not PSDM
  and NSDM
  and HVI
@@ -2779,7 +2802,7 @@ style  sky130 variants (),(vendor)
  templayer mvxnsubcheck mvnsubcheck
  copyup mvnsubcheck
 
- templayer mvpsdarea DIFF
+ templayer mvpsdarea DIFF,barediff
  and PSDM
  and-not NWELL
  and-not POLY
@@ -2934,10 +2957,12 @@ style  sky130 variants (),(vendor)
  labels POLY
 
  templayer ndcbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and NSDM
  and-not NWELL
- and LI
  and-not HVI
 
  layer ndc ndcbase
@@ -2949,10 +2974,12 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer nscbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF,TAP
  and NSDM
  and NWELL
- and LI
  and-not HVI
 
  layer nsc nscbase
@@ -2964,10 +2991,12 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer pdcbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and PSDM
  and NWELL
- and LI
  and-not HVI
 
  layer pdc pdcbase
@@ -2979,10 +3008,12 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer pdcnowell CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and PSDM
  and pfetexpand
- and LI
  and-not HVI
 
  layer pdc pdcnowell
@@ -2994,11 +3025,13 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer pscbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF,TAP
  and PSDM
  and-not NWELL
  and-not pfetexpand
- and LI
  and-not HVI
 
  layer psc pscbase
@@ -3010,10 +3043,12 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer pcbase CONT
+ or barecont
+ and LI
+ or licont
  and POLY
  and-not DIFF
  and-not RPM,URPM
- and LI
 
  layer pc pcbase
  grow 85
@@ -3024,6 +3059,9 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer ndicbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and NSDM
  and DIODE
@@ -3041,6 +3079,9 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer ndilvtcbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and NSDM
  and DIODE
@@ -3058,6 +3099,9 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer pdicbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and PSDM
  and DIODE
@@ -3076,6 +3120,9 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer pdilvtcbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and PSDM
  and DIODE
@@ -3094,6 +3141,9 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer pdihvtcbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and PSDM
  and DIODE
@@ -3112,10 +3162,12 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer mvndcbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and NSDM
  and-not NWELL
- and LI
  and HVI
 
  layer mvndc mvndcbase
@@ -3127,10 +3179,12 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer mvnscbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF,TAP
  and NSDM
  and NWELL
- and LI
  and HVI
 
  layer mvnsc mvnscbase
@@ -3142,10 +3196,12 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer mvpdcbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and PSDM
  and NWELL
- and LI
  and HVI
 
  layer mvpdc mvpdcbase
@@ -3157,6 +3213,9 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer mvpdcnowell CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and PSDM
  and mvpfetexpand
@@ -3172,11 +3231,13 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer mvpscbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF,TAP
  and PSDM
  and-not NWELL
  and-not mvpfetexpand
- and LI
  and HVI
 
  layer mvpsc mvpscbase
@@ -3188,6 +3249,9 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer mvndicbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and NSDM
  and DIODE
@@ -3205,6 +3269,9 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer nndicbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and NSDM
  and DIODE
@@ -3222,6 +3289,9 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  templayer mvpdicbase CONT
+ or barecont
+ and LI
+ or licont
  and DIFF
  and PSDM
  and DIODE
@@ -3458,14 +3528,14 @@ style  sky130 variants (),(vendor)
  and-not PSDM
  and-not NSDM
  and POLY
- copyup DIFF,POLY
+ copyup baretrans
 
  templayer gendiff DIFF,TAP
  and-not PSDM
  and-not NSDM
  and-not POLY
  and-not COREID
- copyup DIFF
+ copyup barediff
 
  # Handle contacts found by copyup
 
@@ -3638,7 +3708,7 @@ style  sky130 variants (),(vendor)
  and-not mvnsubcheck
  and-not mvpsubcheck
  and-not CORELI
- copyup CONT,LI
+ copyup barelicont
 
  templayer barecont CONT
  and-not LI
@@ -3647,7 +3717,7 @@ style  sky130 variants (),(vendor)
  and-not mvnsubcheck
  and-not mvpsubcheck
  and-not CORELI
- copyup CONT
+ copyup barecont
 
  layer glass GLASS,PADTXT,PADPIN
  labels GLASS
@@ -5091,6 +5161,9 @@ variants (),(si)
  device msubcircuit sky130_fd_pr__special_pfet_pass ppu \
 	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w \
 	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__special_pfet_pass ppu 1 \
+	*pdiff,pdiffres nwell error l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
  device msubcircuit sky130_fd_pr__pfet_01v8_lvt pfetlvt \
 	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w \
 	a1=as p1=ps a2=ad p2=pd
@@ -5106,6 +5179,9 @@ variants (),(si)
 	a1=as p1=ps a2=ad p2=pd
  device msubcircuit sky130_fd_pr__special_nfet_latch npd \
 	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__special_nfet_latch npd \
+	*ndiff,ndiffres *srampvar pwell,space/w error l=l w=w \
 	a1=as p1=ps a2=ad p2=pd
  device msubcircuit sky130_fd_pr__special_nfet_pass npass \
 	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w \
