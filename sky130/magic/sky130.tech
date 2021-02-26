@@ -2502,9 +2502,9 @@ style  sky130 variants (),(vendor)
  and-not LVTN
  and HVTP
  and COREID
- # Shrink-grow operation eliminates the smaller ppass device
- shrink 70
- grow 70
+ # Shrink-grow operation eliminates the smaller parasitie device
+ # shrink 70
+ # grow 70
  labels DIFF
 
  layer pfetlvt pfetarea
@@ -2607,9 +2607,6 @@ style  sky130 variants (),(vendor)
  and NSDM
  and-not NWELL
  and COREID
- # Shrink-grow operation eliminates the smaller npass device
- shrink 70
- grow 70
  labels DIFF
 
  layer npd DIFF
