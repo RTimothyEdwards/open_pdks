@@ -80,8 +80,9 @@
 #
 #	--enable-alpha-lib[=<path>]
 #		If enabled, install the sky130_ml_xx_hd font library from
-#		Paul Schulz on github.  If not specified, then the font
-#		library will be cloned from the git repository and installed.
+#		Paul Schulz on github.  If <path> is not specified, then the
+#		font library will be cloned from the git repository and
+#		installed.
 #
 #	--enable-xschem[=<path>]
 #		If enabled, install the Sky130 setup for the xschem schematic
@@ -89,6 +90,12 @@
 #		expected to be found rooted at the given path.  If not
 #		specified, then the xschem setup will be cloned from the
 #		repository and installed.
+#
+#	--enable-sram-lib[=<path>]
+#		If enabled, install the sky130_sram_macros library from
+#		efabless on github.   If <path> is not specified, then
+#		the SRAM library will be cloned from the repository and
+#		installed.
 #
 # The variables below are substituted from the configuration options:
 #
@@ -162,10 +169,12 @@ endif
 # Path to independent library sources (to be added to configuration options).
 ALPHA_PATH = @SKY130_ML_XX_HD_PATH@
 XSCHEM_PATH = @XSCHEM_SKY130_PATH@
+SRAM_PATH = @SKY130_SRAM_MACROS_PATH@
 
 PDK_URL = https://github.com/google/skywater-pdk
-ALPHA_URL = https://github.com/PaulSchulz/sky130_pshulz_xx_hd/archive/master.tar.gz
+ALPHA_URL = https://github.com/PaulSchulz/sky130_pschulz_xx_hd/archive/master.tar.gz
 XSCHEM_URL = https://github.com/StefanSchippers/xschem_sky130/archive/main.tar.gz
+SRAM_URL = https://github.com/efabless/sky130_sram_macros/archive/main.tar.gz
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
@@ -329,7 +338,7 @@ endif
 all: all-a
 
 # Handle prerequisites (fetch and install the PDK and requested libraries)
-prerequisites: pdk-repo alpha-repo xschem-repo
+prerequisites: pdk-repo alpha-repo xschem-repo sram-repo
 
 pdk-repo:
 	if test "x${SKYWATER_PATH}" != "x" ; then \
@@ -350,6 +359,107 @@ alpha-repo:
 			../scripts/download.sh ${ALPHA_URL} ${ALPHA_PATH} ; \
 		fi ; \
 	fi
+
+sram-repo:
+	if test "x${SRAM_PATH}" != "x" ; then \
+		if test -d "${SRAM_PATH}" ; then \
+			echo "Using existing installation of alphanumeric library from ${SRAM_PATH}" ; \
+		else \
+			echo "Downloading alphanumeric library from ${SRAM_URL}" ; \
+			../scripts/download.sh ${SRAM_URL} ${SRAM_PATH} ; \
+		fi ; \
+	fi
+
+xschem-repo:
+	if test "x${XSCHEM_PATH}" != "x" ; then \
+		if test -d "${XSCHEM_PATH}" ; then \
+			echo "Using existing installation of xschem setup from ${XSCHEM_PATH}" ; \
+		else \
+			echo "Downloading xschem setup from ${XSCHEM_URL}" ; \
+			../scripts/download.sh ${XSCHEM_URL} ${XSCHEM_PATH} ; \
+		fi ; \
+	fi
+
+all-a: prerequisites
+	echo "Starting sky130A PDK staging on "`date` > ${SKY130A}_make.log
+	${MAKE} tools-a
+	${MAKE} vendor-a
+	echo "Ended sky130A PDK staging on "`date` >> ${SKY130A}_make.log
+
+tools-a: $(addsuffix -a, $(TOOLS))
+
+general-a: ${TECH}.json
+	mkdir -p ${STAGING_PATH}/${SKY130A}/${CONFIG_DIR}
+	rm -f ${STAGING_PATH}/${SKY130A}/${CONFIG_DIR}/nodeinfo.json
+	${CPP} ${SKY130A_DEFS} ${TECH}.json \
+		${STAGING_PATH}/${SKY130A}/${CONFIG_DIR}/nodeinfo.json
+
+magic-a: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${TECH}.tcl
+	mkdir -p ${MAGICTOP_STAGING_A}
+	mkdir -p ${MAGIC_STAGING_A}
+	rm -f ${MAGICTOP_STAGING_A}/current
+	rm -f ${MAGIC_STAGING_A}/${SKY130A}.tech
+	rm -f ${MAGIC_STAGING_A}/${SKY130A}-GDS.tech
+	rm -f ${MAGIC_STAGING_A}/${SKY130A}.tcl
+	rm -f ${MAGIC_STAGING_A}/${SKY130A}-BindKeys
+	rm -f ${MAGIC_STAGING_A}/magicrc
+	if "${EF_STYLE}" == "1" ; then \
+	    (cd ${MAGICTOP_STAGING_A} ; ln -s ${REV_DIR} current) ; \
+	fi
+	cp -rp custom/scripts/seal_ring_generator ${MAGIC_STAGING_A}/.
+	cp -rp custom/scripts/bump_bond_generator ${MAGIC_STAGING_A}/.
+	cp custom/scripts/generate_fill.py ${MAGIC_STAGING_A}/.
+	cp custom/scripts/check_density.py ${MAGIC_STAGING_A}/.
+	${CPP} ${SKY130A_DEFS} magic/${TECH}.tech ${MAGIC_STAGING_A}/${SKY130A}.tech
+	${CPP} ${SKY130A_DEFS} magic/${TECH}gds.tech ${MAGIC_STAGING_A}/${SKY130A}-GDS.tech
+	${CPP} ${SKY130A_DEFS} magic/${TECH}.magicrc ${MAGIC_STAGING_A}/${SKY130A}.magicrc
+	${CPP} ${SKY130A_DEFS} ../common/pdk.bindkeys ${MAGIC_STAGING_A}/${SKY130A}-BindKeys
+	${CPP} ${SKY130A_DEFS} magic/${TECH}.tcl ${MAGIC_STAGING_A}/${SKY130A}.tcl
+	${CPP} ${SKY130A_DEFS} ../common/pdk.tcl >> ${MAGIC_STAGING_A}/${SKY130A}.tcl
+
+qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
+	mkdir -p ${QFLOWTOP_STAGING_A}
+	mkdir -p ${QFLOW_STAGING_A}
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}hd.sh
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}hd.par
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}hdll.sh
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}hdll.par
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}hs.sh
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}hs.par
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}hvl.sh
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}hvl.par
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}ls.sh
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}ls.par
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}lp.sh
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}lp.par
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}ms.sh
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}ms.par
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}osu.sh
+	rm -f ${QFLOW_STAGING_A}/${SKY130A}osu.par
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hd qflow/${TECH}.sh \
+		${QFLOW_STAGING_A}/${SKY130A}hd.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hdll qflow/${TECH}.sh \
+		${QFLOW_STAGING_A}/${SKY130A}hdll.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hvl qflow/${TECH}.sh \
+		${QFLOW_STAGING_A}/${SKY130A}hvl.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hs qflow/${TECH}.sh \
+		${QFLOW_STAGING_A}/${SKY130A}hs.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_lp qflow/${TECH}.sh \
+		${QFLOW_STAGING_A}/${SKY130A}lp.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ls qflow/${TECH}.sh \
+		${QFLOW_STAGING_A}/${SKY130A}ls.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ms qflow/${TECH}.sh \
+		${QFLOW_STAGING_A}/${SKY130A}ms.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_t18 qflow/sky130osu.sh \
+		${QFLOW_STAGING_A}/${SKY130A}osu.sh
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hd.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hdll.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hvl.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hs.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}ms.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}lp.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}ls.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}osu.par
 
 xschem-repo:
 	if test "x${XSCHEM_PATH}" != "x" ; then \
@@ -679,6 +789,21 @@ vendor-a:
 	${STAGE} -source ${ALPHA_PATH}/.. -target ${STAGING_PATH}/${SKY130A} \
 		-mag %l/mag/*.mag filter=custom/scripts/text2m5.py \
 		-library general sky130_ml_xx_hd 2>&1 | tee -a ${SKY130A}_make.log
+	# Install SRAM library.
+	${STAGE} -source ${SRAM_PATH}/.. -target ${STAGING_PATH}/${SKY130A} \
+		-lef %l/*/*.lef \
+		-lib %l/*/*.lib \
+		-gds %l/*/*.gds \
+		-spice %l/*/sky130_sram_1kbyte_1rw1r_32x256_8.lvs.sp \
+			rename=sky130_sram_1kbyte_1rw1r_32x256_8.spice \
+		-spice %l/*/sky130_sram_2kbyte_1rw1r_32x512_8.lvs.sp \
+			rename=sky130_sram_2kbyte_1rw1r_32x512_8.spice \
+		-spice %l/*/sky130_sram_4kbyte_1rw1r_32x1024_8.lvs.sp \
+			rename=sky130_sram_4kbyte_1rw1r_32x1024_8.spice \
+		-spice %l/*/sram_1rw1r_32_256_8_sky130.lvs.sp \
+			rename=sram_1rw1r_32_256_8_sky130.spice \
+		-verilog %l/*/*.v \
+		-library general sky130_sram_macros 2>&1 | tee -a ${SKY130A}_make.log
 	# Install text2mag.py script for alphanumeric library
 	mkdir -p ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
 	cp custom/scripts/text2mag.py \

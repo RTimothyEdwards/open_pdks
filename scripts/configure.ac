@@ -166,7 +166,7 @@ AC_DEFUN([M4_GEN_INSTALLATION], [
         flag,
         AS_HELP_STRING(
             [--enable-flag@<:@=path@:>@],
-            [Install target. If path is omitted, it'll be downloaded. @<:@default=disabled@:>@]
+            [Install target. If path is omitted, it'll be downloaded. @<:@default=enabled@:>@]
         ), [
             if test "$enableval" == "yes" -o "$enableval" == "YES"; then
                 AC_MSG_NOTICE([Package 'target' will be installed automatically during make.])
@@ -190,6 +190,7 @@ AC_DEFUN([M4_GEN_INSTALLATION], [
     AC_SUBST(targetvar[]_PATH)
 ])
 
+M4_GEN_INSTALLATION(sky130_sram_macros, sram-sky130, ../sources)
 M4_GEN_INSTALLATION(sky130_ml_xx_hd, alpha-sky130, ../sources)
 M4_GEN_INSTALLATION(xschem_sky130, xschem-sky130, ../sources)
 

@@ -589,6 +589,7 @@ LIBOBJS
 EF_STYLE
 XSCHEM_SKY130_PATH
 SKY130_ML_XX_HD_PATH
+SKY130_SRAM_MACROS_PATH
 PATCH
 MAGIC
 XSCHEM_DISABLED
@@ -664,6 +665,7 @@ enable_irsim
 enable_openlane
 enable_qflow
 enable_xschem
+enable_sram_sky130
 enable_alpha_sky130
 enable_xschem_sky130
 with_ef_style
@@ -1324,12 +1326,15 @@ Optional Features:
                 Enable or disable xschem setup [default=enabled]
 
 
+  --enable-sram-sky130[=path]
+                          Install sky130_sram_macros. If path is omitted, it'll be
+                          downloaded. [default=enabled]
   --enable-alpha-sky130[=path]
                           Install sky130_ml_xx_hd. If path is omitted, it'll be
-                          downloaded. [default=disabled]
+                          downloaded. [default=enabled]
   --enable-xschem-sky130[=path]
                           Install xschem_sky130. If path is omitted, it'll be
-                          downloaded. [default=disabled]
+                          downloaded. [default=enabled]
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -2431,6 +2436,48 @@ if test -z "$PATCH"; then
 fi
 
 # Other installations (libraries or tools if applicable)
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_SRAM_MACROS_PATH=""
+
+    # Check whether --enable-sram-sky130 was given.
+if test "${enable_sram_sky130+set}" = set; then :
+  enableval=$enable_sram_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_sram_macros' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_sram_macros' will be installed automatically during make." >&6;}
+        	export SKY130_SRAM_MACROS_PATH=../sources/sky130_sram_macros
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_sram_macros'" >&5
+$as_echo "$as_me: Disabling package 'sky130_sram_macros'" >&6;}
+    		export SKY130_SRAM_MACROS_PATH=""
+            else
+                SKY130_SRAM_MACROS_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_sram_macros' at $SKY130_SRAM_MACROS_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_sram_macros' at $SKY130_SRAM_MACROS_PATH" >&6;}
+            fi
+            SKY130_SRAM_MACROS_PATH=`realpath $SKY130_SRAM_MACROS_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_sram_macros' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_sram_macros' will be installed automatically during make." >&6;}
+	    SKY130_SRAM_MACROS_PATH=../sources/sky130_sram_macros
+
+
+fi
+
+
+
+
 
 
 
