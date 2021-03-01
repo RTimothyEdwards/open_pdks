@@ -328,6 +328,45 @@ if { [info exist ::env(MAGIC_EXT_USE_GDS)] && $::env(MAGIC_EXT_USE_GDS) } {
 }
 
 #---------------------------------------------------------------
+# Allow the fill, decap, etc., cells to be parallelized
+#---------------------------------------------------------------
+
+foreach cell $cells1 {
+    if {[regexp {sky130_fd_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
+	property "-circuit1 $cell" parallel enable
+    }
+    if {[regexp {sky130_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+	property "-circuit1 $cell" parallel enable
+    }
+    if {[regexp {sky130_fd_sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
+	property "-circuit1 $cell" parallel enable
+    }
+    if {[regexp {sky130_fd_sc_[^_]+__diode_[[:digit:]]+} $cell match]} {
+	property "-circuit1 $cell" parallel enable
+    }
+    if {[regexp {sky130_fd_sc_[^_]+__fill_diode_[[:digit:]]+} $cell match]} {
+	property "-circuit1 $cell" parallel enable
+    }
+}
+foreach cell $cells2 {
+    if {[regexp {sky130_fd_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
+	property "-circuit2 $cell" parallel enable
+    }
+    if {[regexp {sky130_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+	property "-circuit2 $cell" parallel enable
+    }
+    if {[regexp {sky130_fd_sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
+	property "-circuit2 $cell" parallel enable
+    }
+    if {[regexp {sky130_fd_sc_[^_]+__diode_[[:digit:]]+} $cell match]} {
+	property "-circuit2 $cell" parallel enable
+    }
+    if {[regexp {sky130_fd_sc_[^_]+__fill_diode_[[:digit:]]+} $cell match]} {
+	property "-circuit2 $cell" parallel enable
+    }
+}
+
+#---------------------------------------------------------------
 # Handle cells captured from Electric
 #
 # Find cells of the form "<library>__<cellname>" in the netlist
