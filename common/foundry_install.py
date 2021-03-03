@@ -123,7 +123,9 @@
 #	options:   Followed by "=" and the name of a script.  Behavior
 #		    is dependent on the mode;  if applied to "-gds",
 #		    then the script is inserted before the GDS read
-#		    in the Tcl generate script passed to magic.
+#		    in the Tcl generate script passed to magic.  If
+#		    what follows the "=" is not a file, then it is
+#		    Tcl code to be inserted verbatim.
 #
 # NOTE:  This script can be called once for all libraries if all file
 # types (gds, cdl, lef, etc.) happen to all work with the same wildcards.
@@ -1234,8 +1236,13 @@ if __name__ == '__main__':
 
                 print('Creating magic generation script to generate magic database files.') 
                 if tclscript:
-                    with open(tclscript, 'r') as ifile:
-                        tcllines = ifile.read().splitlines()
+                    # If tclscript is a file, then read it.  Otherwise, assume
+                    # that the option contents should be inserted verbatim.
+                    if os.path.isfile(tclscript):
+                        with open(tclscript, 'r') as ifile:
+                            tcllines = ifile.read().splitlines()
+                    else:
+                        tcllines = list(tclscript)
 
                 with open(destlibdir + '/generate_magic.tcl', 'w') as ofile:
                     print('#!/usr/bin/env wish', file=ofile)
