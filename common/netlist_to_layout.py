@@ -217,7 +217,7 @@ def generate_layout_end(ofile=sys.stdout):
     print('writeall force', file=ofile)
     print('quit -noprompt', file=ofile)
 
-def parse_layout(topname, lines, ofile):
+def parse_layout(topname, lines, library, ofile):
     global debugmode
 
     subrex = re.compile('.subckt[ \t]+(.*)$', re.IGNORECASE)
@@ -356,7 +356,7 @@ if __name__ == '__main__':
 
     with open(scriptpath, 'w') as ofile:
         generate_layout_start(library, ofile)
-        parse_layout(topname, spicelines, ofile)
+        parse_layout(topname, spicelines, library, ofile)
         generate_layout_end(ofile)
 
     myenv = os.environ.copy()

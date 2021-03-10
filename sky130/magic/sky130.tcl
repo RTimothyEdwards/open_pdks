@@ -29,24 +29,7 @@ set Opts(callback) [subst {sky130::addtechmenu \$framename; $Opts(callback)}]
 
 # Set options specific to this PDK
 set Opts(hidelocked) 1
-set Opts(hidespecial) 1
-
-# Create new "tool" proc that doesn't have the netlist tool.
-proc magic::nexttool {} {
-   global Opts
-
-   # Don't attempt to switch tools while a selection drag is active
-   if {$Opts(motion) == {}} {
-      switch $Opts(tool) {
-         box { magic::tool wiring }
-         wiring { magic::tool pick }
-         default { magic::tool box }
-      }
-   }
-}
-
-# This shoule be part of sitedef. . .
-macro space magic::nexttool
+set Opts(hidespecial) 0
 
 # Wrap the closewrapper procedure so that closing the last
 # window is equivalent to quitting.
@@ -215,7 +198,12 @@ proc sky130::addtechmenu {framename} {
    magic::add_toolkit_command $layoutframe "vpp 4.4x4.6 m1-m2 l1 shield" \
 	    "magic::gencell sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_l1shield" pdk2
 
+   # Additional DRC style for routing only---add this to the DRC menu
    ${layoutframe}.titlebar.mbuttons.drc.toolmenu add command -label "DRC Routing" -command {drc style drc(routing)}
+
+   # Add SPICE import function to File menu
+   ${layoutframe}.titlebar.mbuttons.file.toolmenu insert 4 command -label "Import SPICE" -command {sky130::importspice}
+   ${layoutframe}.titlebar.mbuttons.file.toolmenu insert 4 separator
 
    # Add command entry window by default if enabled
    if {[info exists Opts(cmdentry)]} {
@@ -225,6 +213,22 @@ proc sky130::addtechmenu {framename} {
    }
    if {$Winopts(${framename},cmdentry) == 1} {
       addcommandentry $framename
+   }
+}
+
+#----------------------------------------------------------------
+# Menu callback function to read a SPICE netlist and generate an
+# initial layout using the SKYWATER TECHNAME gencells.
+#----------------------------------------------------------------
+
+proc sky130::importspice {} {
+   global CAD_ROOT
+
+   set Layoutfilename [ tk_getOpenFile -filetypes \
+	    {{SPICE {.spice .spc .spi .ckt .cir .sp \
+	    {.spice .spc .spi .ckt .cir .sp}}} {"All files" {*}}}]
+   if {$Layoutfilename != ""} {
+      magic::netlist_to_layout $Layoutfilename sky130
    }
 }
 
