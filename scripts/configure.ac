@@ -1,5 +1,7 @@
 AC_INIT([open_pdks], [1.0], [github.com/RTimothyEdwards/open_pdks])
 
+AC_PREFIX_DEFAULT(/usr/share)
+
 ## REQUIRES: https://www.gnu.org/software/autoconf-archive/ax_python_module.html#ax_python_module
 AM_PATH_PYTHON([3.4])
 AX_PYTHON_MODULE([distutils],[])

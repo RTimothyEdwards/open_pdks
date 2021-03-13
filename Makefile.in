@@ -62,7 +62,7 @@ TECHS_VERYCLEAN = $(addprefix veryclean-,$(TECHS))
 all: $(TECHS_ALL)
 	@echo $(DONE_MESSAGE)
 
-install: $(TECHS_INSTALL)
+install: $(TECHS_INSTALL) common_install
 	@echo $(DONE_MESSAGE)
 
 uninstall: $(TECHS_UNINSTALL)
@@ -77,6 +77,13 @@ veryclean: $(TECHS_VERYCLEAN)
 distclean: $(TECHS_VERYCLEAN)
 	${RM} -rf sources
 	@echo $(DONE_MESSAGE)
+
+#---------------------------------------------------
+
+common_install:
+	mkdir -p @prefix@/pdk/bin/
+	cp common/cleanup_unref.py @prefix@/pdk/bin/
+	cp common/soc_floorplanner.py @prefix@/pdk/bin/
 
 #---------------------------------------------------
 
