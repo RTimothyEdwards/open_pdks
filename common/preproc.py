@@ -584,4 +584,11 @@ if __name__ == '__main__':
     runpp(keys, keyrex, defines, ccomm, incdirs, inputfile, ofile)
     if ofile != sys.stdout:
         ofile.close()
+
+    # Set mode of outputfile to be equal to that of inputfile (if not stdout)
+    if outputfile:
+        statinfo = os.stat(inputfile)
+        mode = statinfo.st_mode
+        os.chmod(outputfile, mode)
+
     sys.exit(0)

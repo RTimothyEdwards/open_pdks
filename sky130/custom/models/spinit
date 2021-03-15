@@ -1,0 +1,3 @@
+* ngspice initialization for sky130
+* assert BSIM compatibility mode with "nf" vs. "W"
+set ngbehavior=spe

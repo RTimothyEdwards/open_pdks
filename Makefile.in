@@ -80,11 +80,15 @@ distclean: $(TECHS_VERYCLEAN)
 
 #---------------------------------------------------
 
+CPP = common/preproc.py
+
 common_install:
 	mkdir -p @prefix@/pdk/bin/
 	cp common/cleanup_unref.py @prefix@/pdk/bin/
 	cp common/soc_floorplanner.py @prefix@/pdk/bin/
-
+	${CPP} -DPREFIX=@prefix@ common/create_project.py \
+		@prefix@/pdk/bin/create_project.py
+	
 #---------------------------------------------------
 
 tech_sky130:
