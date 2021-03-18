@@ -128,8 +128,15 @@
 SHELL = bash
 MV = mv
 
-REVISION    = `git describe --long`
-TECH	= sky130
+# Use git revision if this is a cloned repo;  otherwise get the revision
+# from the VERSION file in the directory above.
+GITREV = $(shell git describe --long)
+ifeq (${GITREV},)
+    REVISION = $(shell cat ../VERSION)
+else
+    REVISION = ${GITREV}
+endif
+TECH = sky130
 
 # If EF_STYLE is set to 1, then efabless naming conventions are
 # used, otherwise the generic naming conventions are used.
@@ -143,7 +150,7 @@ EF_STYLE = @EF_STYLE@
 # although /tmp or a dedicated staging area are also fine, as long
 # as the install process can write to the path.
 
-STAGING_PATH = `pwd`
+STAGING_PATH = $(shell pwd)
 
 # If LINK_TARGETS is set to "none", then files are copied
 # from the SkyWater sources to the target.  If set to "source",
