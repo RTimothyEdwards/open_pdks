@@ -2286,6 +2286,11 @@ style  sky130 variants (),(vendor)
  layer pwell TAP
  and-not NWELL
 
+ # Always draw pwell in deep-nwell P-regions
+ layer pwell DNWELL
+ and-not NWELL
+ and-not NPNID
+
  layer dnwell DNWELL
  labels DNWELL
 
