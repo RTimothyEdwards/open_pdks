@@ -2282,9 +2282,13 @@ style  sky130 variants (),(vendor)
  variants *
  labels SUBPIN port
 
- # Always draw pwell under p-tap
- layer pwell TAP
+ # Always draw pwell under p-tap and n-diff.  This is not always
+ # necessary but works better with deep nwell for correct extraction.
+ layer pwell TAP,DIFF
  and-not NWELL
+ grow 130
+ grow 420
+ shrink 420
 
  # Always draw pwell in deep-nwell P-regions
  layer pwell DNWELL
