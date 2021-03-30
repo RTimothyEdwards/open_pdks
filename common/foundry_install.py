@@ -1249,6 +1249,8 @@ if __name__ == '__main__':
                     print('#--------------------------------------------', file=ofile)
                     print('# Script to generate .mag files from .gds    ', file=ofile)
                     print('#--------------------------------------------', file=ofile)
+                    print('crashbackups stop', file=ofile)
+                    print('drc off', file=ofile)
                     print('gds readonly true', file=ofile)
                     print('gds flatten true', file=ofile)
                     print('gds rescale false', file=ofile)

@@ -4,3 +4,4 @@
 # primitive devices from being split across the hierarchy, which causes
 # magic to misinterpret the device type.
 gds flatglob *__example_*
+cif istyle sky130(vendor)
