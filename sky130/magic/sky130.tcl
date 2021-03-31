@@ -4185,7 +4185,8 @@ proc sky130::sky130_fd_pr__nfet_01v8_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
-		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} \
+		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
+		sky130_fd_pr__nfet_03v3_nvt} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0}
 }
@@ -4196,7 +4197,8 @@ proc sky130::sky130_fd_pr__nfet_01v8_lvt_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
-		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} \
+		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
+		sky130_fd_pr__nfet_03v3_nvt} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0}
 }
@@ -4207,7 +4209,8 @@ proc sky130::sky130_fd_bs_flash__special_sonosfet_star_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
-		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} \
+		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
+		sky130_fd_pr__nfet_03v3_nvt} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0}
 }
@@ -4218,18 +4221,32 @@ proc sky130::sky130_fd_pr__nfet_g5v0d10v5_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.50 wmin 0.42 \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
-		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} \
+		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
+		sky130_fd_pr__nfet_03v3_nvt} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 proc sky130::sky130_fd_pr__nfet_05v0_nvt_defaults {} {
+    return {w 0.42 l 0.90 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.90 wmin 0.42 \
+		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
+		sky130_fd_bs_flash__special_sonosfet_star \
+		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
+		sky130_fd_pr__nfet_03v3_nvt} \
+		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
+}
+
+proc sky130::sky130_fd_pr__nfet_03v3_nvt_defaults {} {
     return {w 0.42 l 0.50 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.50 wmin 0.42 \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
-		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt} \
+		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
+		sky130_fd_pr__nfet_03v3_nvt} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0}
 }
@@ -4333,6 +4350,10 @@ proc sky130::sky130_fd_pr__nfet_05v0_nvt_convert {parameters} {
     return [sky130::mos_convert $parameters]
 }
 
+proc sky130::sky130_fd_pr__nfet_03v3_nvt_convert {parameters} {
+    return [sky130::mos_convert $parameters]
+}
+
 proc sky130::sky130_fd_pr__pfet_01v8_convert {parameters} {
     return [sky130::mos_convert $parameters]
 }
@@ -4432,6 +4453,10 @@ proc sky130::sky130_fd_pr__nfet_g5v0d10v5_dialog {parameters} {
 
 proc sky130::sky130_fd_pr__nfet_05v0_nvt_dialog {parameters} {
     sky130::mos_dialog sky130_fd_pr__nfet_05v0_nvt $parameters
+}
+
+proc sky130::sky130_fd_pr__nfet_03v3_nvt_dialog {parameters} {
+    sky130::mos_dialog sky130_fd_pr__nfet_03v3_nvt $parameters
 }
 
 proc sky130::sky130_fd_pr__pfet_01v8_dialog {parameters} {
@@ -5579,6 +5604,24 @@ proc sky130::sky130_fd_pr__nfet_05v0_nvt_draw {parameters} {
     return [sky130::mos_draw $drawdict]
 }
 
+proc sky130::sky130_fd_pr__nfet_03v3_nvt_draw {parameters} {
+    set newdict [dict create \
+	    gate_type		nnfet \
+	    diff_type 		mvndiff \
+	    diff_contact_type	mvndc \
+	    plus_diff_type	mvpsd \
+	    plus_contact_type	mvpsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		psub \
+	    diff_spacing	0.30 \
+	    diff_tap_space	0.38 \
+	    diff_gate_space	0.38 \
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::mos_draw $drawdict]
+}
+
 #------------------------
 # MOS varactor (1.8V)
 #------------------------
@@ -5835,6 +5878,10 @@ proc sky130::sky130_fd_pr__nfet_g5v0d10v5_check {parameters} {
 
 proc sky130::sky130_fd_pr__nfet_05v0_nvt_check {parameters} {
    return [sky130::mos_check sky130_fd_pr__nfet_05v0_nvt $parameters]
+}
+
+proc sky130::sky130_fd_pr__nfet_03v3_nvt_check {parameters} {
+   return [sky130::mos_check sky130_fd_pr__nfet_03v3_nvt $parameters]
 }
 
 proc sky130::sky130_fd_pr__pfet_01v8_check {parameters} {
