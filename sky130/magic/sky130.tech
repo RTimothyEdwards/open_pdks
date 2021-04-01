@@ -2291,10 +2291,24 @@ style  sky130 variants (),(vendor)
  variants *
  labels SUBPIN port
 
+ templayer nwellarea NWELL
+ copyup nwelcheck
+
+ # Copy nwell areas up for diffusion checks
+ templayer xnwelcheck nwelcheck
+ copyup nwelcheck
+
+ templayer hvarea HVI
+ copyup hvcheck
+
+ # Copy high-voltage (HVI) areas up for diffusion checks
+ templayer xhvcheck hvcheck
+ copyup hvcheck
+
  # Always draw pwell under p-tap and n-diff.  This is not always
  # necessary but works better with deep nwell for correct extraction.
  layer pwell TAP,DIFF
- and-not NWELL
+ and-not NWELL,nwelcheck
  grow 130
  grow 420
  shrink 420
@@ -2303,7 +2317,7 @@ style  sky130 variants (),(vendor)
  labels DNWELL
 
  layer npn DNWELL
- and-not NWELL
+ and-not NWELL,nwelcheck
  and NPNID
 
  layer rpw PWRES
@@ -2312,11 +2326,11 @@ style  sky130 variants (),(vendor)
 
  templayer ndiffarea DIFF,DIFFTXT,DIFFPIN,barediff
  and-not POLY
- and-not NWELL
+ and-not NWELL,nwelcheck
  and-not PSDM
  and-not DIODE
  and-not DIFFRES
- and-not HVI
+ and-not HVI,hvcheck
  and NSDM
  and-not CORELI
  copyup ndifcheck
@@ -2336,11 +2350,11 @@ style  sky130 variants (),(vendor)
 
  templayer mvndiffarea DIFF,DIFFTXT,DIFFPIN,barediff
  and-not POLY
- and-not NWELL
+ and-not NWELL,nwelcheck
  and-not PSDM
  and-not DIODE
  and-not DIFFRES
- and HVI
+ and HVI,hvcheck
  and NSDM
  copyup ndifcheck
  labels DIFF
@@ -2361,40 +2375,40 @@ style  sky130 variants (),(vendor)
  layer ndiode DIFF,barediff
  and NSDM
  and DIODE
- and-not NWELL
+ and-not NWELL,nwelcheck
  and-not POLY
  and-not PSDM
- and-not HVI
+ and-not HVI,hvcheck
  and-not LVTN
  labels DIFF
 
  layer ndiodelvt DIFF,barediff
  and NSDM
  and DIODE
- and-not NWELL
+ and-not NWELL,nwelcheck
  and-not POLY
  and-not PSDM
- and-not HVI
+ and-not HVI,hvcheck
  and LVTN
  labels DIFF
 
  templayer ndiodearea DIODE
  and NSDM
- and-not HVI
- and-not NWELL
+ and-not HVI,hvcheck
+ and-not NWELL,nwelcheck
  copyup DIODE,NSDM
 
  layer ndiffres DIFFRES
  and NSDM
- and-not HVI
+ and-not HVI,hvcheck
  labels DIFF
 
  templayer pdiffarea DIFF,DIFFTXT,DIFFPIN,barediff
  and-not POLY
- and NWELL
+ and NWELL,nwelcheck
  and-not NSDM
  and-not DIODE
- and-not HVI
+ and-not HVI,hvcheck
  and PSDM
  copyup pdifcheck
  labels DIFF 
@@ -2410,7 +2424,7 @@ style  sky130 variants (),(vendor)
  layer mvndiode DIFF,barediff
  and NSDM
  and DIODE
- and HVI
+ and HVI,hvcheck
  and-not POLY
  and-not PSDM
  and-not LVTN
@@ -2419,7 +2433,7 @@ style  sky130 variants (),(vendor)
  layer nndiode DIFF,barediff
  and NSDM
  and DIODE
- and HVI
+ and HVI,hvcheck
  and-not POLY
  and-not PSDM
  and LVTN
@@ -2427,20 +2441,20 @@ style  sky130 variants (),(vendor)
 
  templayer mvndiodearea DIODE
  and NSDM
- and HVI
- and-not NWELL
+ and HVI,hvcheck
+ and-not NWELL,nwelcheck
  copyup DIODE,NSDM
 
  layer mvndiffres DIFFRES
  and NSDM
- and HVI
+ and HVI,hvcheck
  labels DIFF
 
  templayer mvpdiffarea DIFF,DIFFTXT,DIFFPIN,barediff
  and-not POLY
- and NWELL
+ and NWELL,nwelcheck
  and-not NSDM
- and HVI
+ and HVI,hvcheck
  and-not DIODE
  and-not DIFFRES
  and PSDM
@@ -2463,7 +2477,7 @@ style  sky130 variants (),(vendor)
  and PSDM
  and-not POLY
  and-not NSDM
- and-not HVI
+ and-not HVI,hvcheck
  and-not LVTN
  and-not HVTP
  and DIODE
@@ -2473,7 +2487,7 @@ style  sky130 variants (),(vendor)
  and PSDM
  and-not POLY
  and-not NSDM
- and-not HVI
+ and-not HVI,hvcheck
  and LVTN
  and-not HVTP
  and DIODE
@@ -2483,7 +2497,7 @@ style  sky130 variants (),(vendor)
  and PSDM
  and-not POLY
  and-not NSDM
- and-not HVI
+ and-not HVI,hvcheck
  and-not LVTN
  and HVTP
  and DIODE
@@ -2491,7 +2505,7 @@ style  sky130 variants (),(vendor)
 
  templayer pdiodearea DIODE
  and PSDM
- and-not HVI
+ and-not HVI,hvcheck
  copyup DIODE,PSDM
 
  # Define pfet areas as known pdiff, regardless of the presence of a well.
@@ -2500,7 +2514,7 @@ style  sky130 variants (),(vendor)
  and POLY
  or baretrans
  and-not NSDM
- and-not HVI
+ and-not HVI,hvcheck
 
  layer pfet pfetarea
  and-not LVTN
@@ -2557,13 +2571,13 @@ style  sky130 variants (),(vendor)
  and PSDM
  and-not POLY
  and-not NSDM
- and HVI
+ and HVI,hvcheck
  and DIODE
  labels DIFF
 
  templayer mvpdiodearea DIODE
  and PSDM
- and HVI
+ and HVI,hvcheck
  copyup DIODE,PSDM
 
  # Define pfet areas as known pdiff,
@@ -2574,7 +2588,7 @@ style  sky130 variants (),(vendor)
  and POLY
  or baretrans
  and-not NSDM
- and HVI
+ and HVI,hvcheck
 
  layer mvpfet mvpfetarea
  and-not ESDID
@@ -2587,7 +2601,7 @@ style  sky130 variants (),(vendor)
  layer pdiff DIFF,DIFFTXT,DIFFPIN,barediff
  and-not NSDM
  and-not POLY
- and-not HVI
+ and-not HVI,hvcheck
  and-not DIODE
  and-not DIFFRES
  labels DIFF
@@ -2600,8 +2614,8 @@ style  sky130 variants (),(vendor)
 
  layer pdiffres DIFFRES
  and PSDM
- and NWELL
- and-not HVI
+ and NWELL,nwelcheck
+ and-not HVI,hvcheck
  labels DIFF
 
  layer nfet DIFF,barediff
@@ -2609,7 +2623,7 @@ style  sky130 variants (),(vendor)
  or baretrans
  and-not PSDM
  and NSDM
- and-not HVI
+ and-not HVI,hvcheck
  and-not LVTN
  and-not SONOS
  and-not STDCELL
@@ -2621,8 +2635,8 @@ style  sky130 variants (),(vendor)
  or baretrans
  and-not PSDM
  and NSDM
- and-not NWELL
- and-not HVI
+ and-not NWELL,nwelcheck
+ and-not HVI,hvcheck
  and-not LVTN
  and-not SONOS
  and STDCELL
@@ -2633,7 +2647,7 @@ style  sky130 variants (),(vendor)
  or baretrans
  and-not PSDM
  and NSDM
- and-not NWELL
+ and-not NWELL,nwelcheck
  and COREID
  labels DIFF
 
@@ -2642,7 +2656,7 @@ style  sky130 variants (),(vendor)
  or baretrans
  and-not PSDM
  and NSDM
- and-not NWELL
+ and-not NWELL,nwelcheck
  and COREID
  # Shrink-grow operation eliminates the smaller npass device
  shrink 70
@@ -2656,7 +2670,7 @@ style  sky130 variants (),(vendor)
  and POLY
  and-not PSDM
  and NSDM
- and-not NWELL
+ and-not NWELL,nwelcheck
  and COREID
  labels DIFF
 
@@ -2665,7 +2679,7 @@ style  sky130 variants (),(vendor)
  or baretrans
  and-not PSDM
  and NSDM
- and-not HVI
+ and-not HVI,hvcheck
  and LVTN
  and-not SONOS
  labels DIFF
@@ -2675,17 +2689,17 @@ style  sky130 variants (),(vendor)
  or baretrans
  and-not PSDM
  and NSDM
- and-not HVI
+ and-not HVI,hvcheck
  and LVTN
  and SONOS
  labels DIFF
 
  templayer nsdarea TAP
  and NSDM
- and NWELL
+ and NWELL,nwelcheck
  and-not POLY
  and-not PSDM
- and-not HVI
+ and-not HVI,hvcheck
  and-not CORELI
  copyup nsubcheck
 
@@ -2695,7 +2709,7 @@ style  sky130 variants (),(vendor)
  layer nsd TAP,TAPTXT
  and NSDM
  and-not POLY
- and-not HVI
+ and-not HVI,hvcheck
  labels TAP
  labels TAPTXT text
 
@@ -2714,10 +2728,10 @@ style  sky130 variants (),(vendor)
 
  templayer psdarea TAP
  and PSDM
- and-not NWELL
+ and-not NWELL,nwelcheck
  and-not POLY
  and-not NSDM
- and-not HVI
+ and-not HVI,hvcheck
  and-not pfetexpand
  copyup psubcheck
 
@@ -2727,7 +2741,7 @@ style  sky130 variants (),(vendor)
  layer psd TAP
  and PSDM
  and-not POLY
- and-not HVI
+ and-not HVI,hvcheck
  labels TAP
  labels TAPTXT text
 
@@ -2743,7 +2757,7 @@ style  sky130 variants (),(vendor)
  layer mvpdiff DIFF,DIFFTXT,DIFFPIN,barediff
  and-not NSDM
  and-not POLY
- and HVI
+ and HVI,hvcheck
  and mvpfetexpand
  labels DIFF
  variants (vendor)
@@ -2755,8 +2769,8 @@ style  sky130 variants (),(vendor)
 
  layer mvpdiffres DIFFRES
  and PSDM
- and NWELL
- and HVI
+ and NWELL,nwelcheck
+ and HVI,hvcheck
  and-not mvrdpioedge
  labels DIFF
 
@@ -2766,7 +2780,7 @@ style  sky130 variants (),(vendor)
  and-not PSDM
  and NSDM
  and-not LVTN
- and HVI
+ and HVI,hvcheck
  grow 350
 
  templayer mvnnfetarea DIFF,TAP,barediff
@@ -2775,7 +2789,7 @@ style  sky130 variants (),(vendor)
  and-not PSDM
  and NSDM
  and LVTN
- and HVI
+ and HVI,hvcheck
  and-not mvnfetarea
 
  layer mvnfetesd DIFF,barediff
@@ -2783,7 +2797,7 @@ style  sky130 variants (),(vendor)
  or baretrans
  and-not PSDM
  and NSDM
- and HVI
+ and HVI,hvcheck
  and ESDID
  and-not mvnnfetarea
  labels DIFF
@@ -2793,7 +2807,7 @@ style  sky130 variants (),(vendor)
  or baretrans
  and-not PSDM
  and NSDM
- and HVI
+ and HVI,hvcheck
  and-not ESDID
  and-not mvnnfetarea
  labels DIFF
@@ -2808,10 +2822,10 @@ style  sky130 variants (),(vendor)
 
  templayer mvnsdarea TAP
  and NSDM
- and NWELL
+ and NWELL,nwelcheck
  and-not POLY
  and-not PSDM
- and HVI
+ and HVI,hvcheck
  copyup mvnsubcheck
 
  layer mvnsd mvnsdarea
@@ -2819,7 +2833,7 @@ style  sky130 variants (),(vendor)
 
  layer mvnsd TAP,TAPTXT
  and NSDM
- and HVI
+ and HVI,hvcheck
  labels TAP
  labels TAPTXT text
 
@@ -2832,10 +2846,10 @@ style  sky130 variants (),(vendor)
 
  templayer mvpsdarea DIFF,barediff
  and PSDM
- and-not NWELL
+ and-not NWELL,nwelcheck
  and-not POLY
  and-not NSDM
- and HVI
+ and HVI,hvcheck
  and-not mvpfetexpand
  copyup mvpsubcheck
 
@@ -2844,7 +2858,7 @@ style  sky130 variants (),(vendor)
 
  layer mvpsd TAP,TAPTXT
  and PSDM
- and HVI
+ and HVI,hvcheck
  labels TAP
  labels TAPTXT text
 
@@ -2862,7 +2876,7 @@ style  sky130 variants (),(vendor)
  and-not PSDM
  and-not NSDM
  and-not POLY
- and-not HVI
+ and-not HVI,hvcheck
  and-not pfetexpand
  and psdexpand
 
@@ -2870,14 +2884,14 @@ style  sky130 variants (),(vendor)
  and-not PSDM
  and-not NSDM
  and-not POLY
- and-not HVI
+ and-not HVI,hvcheck
  and nsdexpand
 
  layer mvpsd TAP
  and-not PSDM
  and-not NSDM
  and-not POLY
- and HVI
+ and HVI,hvcheck
  and-not mvpfetexpand
  and mvpsdexpand
 
@@ -2885,7 +2899,7 @@ style  sky130 variants (),(vendor)
  and-not PSDM
  and-not NSDM
  and-not POLY
- and HVI
+ and HVI,hvcheck
  and mvnsdexpand
 
  templayer hresarea POLY
@@ -2897,11 +2911,11 @@ style  sky130 variants (),(vendor)
  grow 3000
 
  templayer diffresarea DIFFRES
- and-not HVI
+ and-not HVI,hvcheck
  grow 3000
 
  templayer mvdiffresarea DIFFRES
- and HVI
+ and HVI,hvcheck
  grow 3000
 
  templayer resarea diffresarea,mvdiffresarea,hresarea,uresarea
@@ -2990,8 +3004,8 @@ style  sky130 variants (),(vendor)
  or licont
  and DIFF
  and NSDM
- and-not NWELL
- and-not HVI
+ and-not NWELL,nwelcheck
+ and-not HVI,hvcheck
 
  layer ndc ndcbase
  grow 85
@@ -3007,8 +3021,8 @@ style  sky130 variants (),(vendor)
  or licont
  and DIFF,TAP
  and NSDM
- and NWELL
- and-not HVI
+ and NWELL,nwelcheck
+ and-not HVI,hvcheck
 
  layer nsc nscbase
  grow 85
@@ -3024,8 +3038,8 @@ style  sky130 variants (),(vendor)
  or licont
  and DIFF
  and PSDM
- and NWELL
- and-not HVI
+ and NWELL,nwelcheck
+ and-not HVI,hvcheck
 
  layer pdc pdcbase
  grow 85
@@ -3042,7 +3056,7 @@ style  sky130 variants (),(vendor)
  and DIFF
  and PSDM
  and pfetexpand
- and-not HVI
+ and-not HVI,hvcheck
 
  layer pdc pdcnowell
  grow 85
@@ -3058,9 +3072,9 @@ style  sky130 variants (),(vendor)
  or licont
  and DIFF,TAP
  and PSDM
- and-not NWELL
+ and-not NWELL,nwelcheck
  and-not pfetexpand
- and-not HVI
+ and-not HVI,hvcheck
 
  layer psc pscbase
  grow 85
@@ -3095,7 +3109,7 @@ style  sky130 variants (),(vendor)
  and DIODE
  and-not POLY
  and-not PSDM
- and-not HVI
+ and-not HVI,hvcheck
  and-not LVTN
 
  layer ndic ndicbase
@@ -3115,7 +3129,7 @@ style  sky130 variants (),(vendor)
  and DIODE
  and-not POLY
  and-not PSDM
- and-not HVI
+ and-not HVI,hvcheck
  and LVTN
 
  layer ndilvtc ndilvtcbase
@@ -3135,7 +3149,7 @@ style  sky130 variants (),(vendor)
  and DIODE
  and-not POLY
  and-not NSDM
- and-not HVI
+ and-not HVI,hvcheck
  and-not LVTN
  and-not HVTP
 
@@ -3156,7 +3170,7 @@ style  sky130 variants (),(vendor)
  and DIODE
  and-not POLY
  and-not NSDM
- and-not HVI
+ and-not HVI,hvcheck
  and LVTN
  and-not HVTP
 
@@ -3177,7 +3191,7 @@ style  sky130 variants (),(vendor)
  and DIODE
  and-not POLY
  and-not NSDM
- and-not HVI
+ and-not HVI,hvcheck
  and-not LVTN
  and HVTP
 
@@ -3195,8 +3209,8 @@ style  sky130 variants (),(vendor)
  or licont
  and DIFF
  and NSDM
- and-not NWELL
- and HVI
+ and-not NWELL,nwelcheck
+ and HVI,hvcheck
 
  layer mvndc mvndcbase
  grow 85
@@ -3212,8 +3226,8 @@ style  sky130 variants (),(vendor)
  or licont
  and DIFF,TAP
  and NSDM
- and NWELL
- and HVI
+ and NWELL,nwelcheck
+ and HVI,hvcheck
 
  layer mvnsc mvnscbase
  grow 85
@@ -3229,8 +3243,8 @@ style  sky130 variants (),(vendor)
  or licont
  and DIFF
  and PSDM
- and NWELL
- and HVI
+ and NWELL,nwelcheck
+ and HVI,hvcheck
 
  layer mvpdc mvpdcbase
  grow 85
@@ -3248,7 +3262,7 @@ style  sky130 variants (),(vendor)
  and PSDM
  and mvpfetexpand
  and MET1
- and HVI
+ and HVI,hvcheck
 
  layer mvpdc mvpdcnowell
  grow 85
@@ -3264,9 +3278,9 @@ style  sky130 variants (),(vendor)
  or licont
  and DIFF,TAP
  and PSDM
- and-not NWELL
+ and-not NWELL,nwelcheck
  and-not mvpfetexpand
- and HVI
+ and HVI,hvcheck
 
  layer mvpsc mvpscbase
  grow 85
@@ -3286,7 +3300,7 @@ style  sky130 variants (),(vendor)
  and-not POLY
  and-not PSDM
  and-not LVTN
- and HVI
+ and HVI,hvcheck
 
  layer mvndic mvndicbase
  grow 85
@@ -3306,7 +3320,7 @@ style  sky130 variants (),(vendor)
  and-not POLY
  and-not PSDM
  and LVTN
- and HVI
+ and HVI,hvcheck
 
  layer nndic nndicbase
  grow 85
@@ -3325,7 +3339,7 @@ style  sky130 variants (),(vendor)
  and DIODE
  and-not POLY
  and-not NSDM
- and HVI
+ and HVI,hvcheck
 
  layer mvpdic mvpdicbase
  grow 85
@@ -3574,7 +3588,7 @@ style  sky130 variants (),(vendor)
  and LI
  and DIODE
  and NSDM
- and-not HVI
+ and-not HVI,hvcheck
 
  layer ndic ndiccopy
  grow 85
@@ -3588,7 +3602,7 @@ style  sky130 variants (),(vendor)
  and LI
  and DIODE
  and NSDM
- and HVI
+ and HVI,hvcheck
 
  layer mvndic mvndiccopy
  grow 85
@@ -3602,7 +3616,7 @@ style  sky130 variants (),(vendor)
  and LI
  and DIODE
  and PSDM
- and-not HVI
+ and-not HVI,hvcheck
 
  layer pdic pdiccopy
  grow 85
@@ -3616,7 +3630,7 @@ style  sky130 variants (),(vendor)
  and LI
  and DIODE
  and PSDM
- and HVI
+ and HVI,hvcheck
 
  layer mvpdic mvpdiccopy
  grow 85
@@ -3778,8 +3792,8 @@ style  sky130 variants (),(vendor)
  layer var POLY
  and TAP
  and NSDM
- and NWELL
- and-not HVI
+ and NWELL,nwelcheck
+ and-not HVI,hvcheck
  and-not HVTP
  # NOTE:  Else forms a varactor that is not in the vendor netlist.
  and-not COREID
@@ -3788,16 +3802,16 @@ style  sky130 variants (),(vendor)
  layer varhvt POLY
  and TAP
  and NSDM
- and NWELL
- and-not HVI
+ and NWELL,nwelcheck
+ and-not HVI,hvcheck
  and HVTP
  labels POLY
 
  layer mvvar POLY
  and TAP
  and NSDM
- and NWELL
- and HVI
+ and NWELL,nwelcheck
+ and HVI,hvcheck
  labels POLY
 
  calma NWELL 64 20
