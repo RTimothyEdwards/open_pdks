@@ -141,6 +141,7 @@ end
 types
 # Deep nwell
   dwell dnwell,dnw
+  dwell isosubstrate,isosub
 
 # Wells
   well nwell,nw
@@ -459,6 +460,7 @@ end
 styles
  styletype mos
   dnwell    cwell
+  isosub    subcircuit
   nwell     nwell
   pwell	    pwell
   rpwell    pwell 	ptransistor_stripes
@@ -2283,14 +2285,6 @@ style  sky130 variants (),(vendor)
  variants *
  labels WELLPIN port
 
- layer pwell SUBTXT,SUBPIN
- variants (vendor)
- labels SUBTXT port
- variants ()
- labels SUBTXT text
- variants *
- labels SUBPIN port
-
  templayer nwellarea NWELL
  copyup nwelcheck
 
@@ -2310,8 +2304,15 @@ style  sky130 variants (),(vendor)
  layer pwell TAP,DIFF
  and-not NWELL,nwelcheck
  grow 130
+ or SUBTXT,SUBPIN
  grow 420
  shrink 420
+ variants (vendor)
+ labels SUBTXT port
+ variants ()
+ labels SUBTXT text
+ variants *
+ labels SUBPIN port
 
  layer dnwell DNWELL
  labels DNWELL
@@ -4920,7 +4921,7 @@ extract
 
  tiedown alldiffnonfet
 
- substrate *ppdiff,*mvppdiff,space/w,pwell well $SUB -dnwell
+ substrate *ppdiff,*mvppdiff,space/w,pwell well $SUB -dnwell,isosub
 
 # Layer resistance: Use document xp018-PDS-v4_2_1.pdf
 
