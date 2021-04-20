@@ -1651,6 +1651,30 @@ style drc
  shrink  345
  and-not hvntm_block
 
+ # RPM spacing checks require recreating RPM
+ templayer rpm_generate
+ bloat-all xhrpoly,uhrpoly xpc
+ grow 200
+ grow-min 1270
+ grow 420
+ shrink 420
+
+ # Check distance RPM to NSDM
+ templayer rpm_nsd_check rpm_generate
+ grow 325
+ and allndifflv,allndiffmv
+
+ # Check distance RPM to (unrelated) POLY
+ templayer rpm_poly_check rpm_generate
+ grow 200
+ and-not xhrpoly,uhrpoly,xpc
+ and allpoly
+
+ # Check distance RPM to HVNTM
+ templayer rpm_hvntm_check rpm_generate
+ grow 385
+ and allndiffmvnontap
+
  templayer m1_small_hole allm1,obsm1,obsmcon
  close   140000
 
@@ -4177,12 +4201,28 @@ variants (fast),(full)
  spacing xhrpoly,uhrpoly,xpc xhrpoly,uhrpoly,xpc 1240 touching_illegal \
 	"Distance between precision resistors < %d (rpm.2 + 2 * rpm.3)"
 
- spacing xhrpoly,uhrpoly,xpc allndifflv,allndiffmv 780 touching_illegal \
+ variants (fast)
+
+ spacing xhrpoly,uhrpoly,xpc allndifflv,allndiffmv 525 touching_illegal \
 	"Distance from precision resistor to N+ diffusion < %d (rpm.3 + rpm.6 + nsd.5a)"
  spacing xhrpoly,uhrpoly,xpc *poly 400 touching_illegal \
 	"Distance from precision resistor to unrelated poly < %d (rpm.3 + rpm.7)"
- spacing xhrpoly,uhrpoly,xpc allndiffmvnontap 830 touching_illegal \
-	"Distance from precision resistor to MV N+ diffusion < %d (rpm.3 + rpm.9)"
+ spacing xhrpoly,uhrpoly,xpc allndiffmvnontap 585 touching_illegal \
+	"Distance from precision resistor to MV N+ device < %d (rpm.3 + rpm.9 + hvntm.3)"
+
+ # Minimum width requirement means actual spacing from res to ndiff has to be
+ # constructed from mask rules.  These supercede the simpler checks.
+
+ variants (full)
+
+ cifmaxwidth rpm_nsd_check 0 bend_illegal \
+	"Distance from precision resistor to N+ diffusion < 0.525um (rpm.3 + rpm.6 + nsd.5a)"
+ cifmaxwidth rpm_poly_check 0 bend_illegal \
+	"Distance from precision resistor to unrelated poly < 0.4um (rpm.3 + rpm.7)"
+ cifmaxwidth rpm_hvntm_check 0 bend_illegal \
+	"Distance from precision resistor to MV N+ device < 0.585um (rpm.3 + rpm.9 + hvntm.3)"
+
+ variants (fast,full)
 
  angles allpoly,polyfill 90 "Only 90 degree angles permitted on poly (x.2)"
 
