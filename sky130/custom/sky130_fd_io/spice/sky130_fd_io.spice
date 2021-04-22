@@ -14,6 +14,12 @@
 *
 * SPDX-License-Identifier: Apache-2.0
 
+* Placeholder for "condiode", which probably represents the parasitic
+* well-to-substrate diode, although it does not take any parameters.
+.SUBCKT sky130_fd_io__condiode NEG POS
+.ENDS
+
+
 .SUBCKT sky130_fd_io__amuxsplitv2_delay ENABLE_VDDA_H HLD_VDDA_H_N HOLD RESET
 + VCC_IO VGND
 *.PININFO ENABLE_VDDA_H:I HLD_VDDA_H_N:I HOLD:O RESET:O VCC_IO:B
