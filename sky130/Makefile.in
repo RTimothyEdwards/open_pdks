@@ -78,24 +78,51 @@
 # External (third-party) libraries and tool setups are the following (enabled
 # by default):
 #
-#	--enable-alpha-lib[=<path>]
+#	--enable-alpha-sky130[=<path>]
 #		If enabled, install the sky130_ml_xx_hd font library from
 #		Paul Schulz on github.  If <path> is not specified, then the
 #		font library will be cloned from the git repository and
 #		installed.
 #
-#	--enable-xschem[=<path>]
+#	--enable-xschem-sky130[=<path>]
 #		If enabled, install the Sky130 setup for the xschem schematic
 #		editor.  If <path> is specified, then the xschem setup is
 #		expected to be found rooted at the given path.  If not
 #		specified, then the xschem setup will be cloned from the
 #		repository and installed.
 #
-#	--enable-sram-lib[=<path>]
+# External (third-party) libraries and tool setups are the following (disabled
+# by default):
+#
+#	--enable-sram-sky130[=<path>]
 #		If enabled, install the sky130_sram_macros library from
 #		efabless on github.   If <path> is not specified, then
 #		the SRAM library will be cloned from the repository and
 #		installed.
+#
+#	--enable-osu-sky130[=<path>]
+#		If enabled, install the sky130_osu_sc library from
+#		foss-eda-tools on googlesource.   If <path> is not
+#		specified, then the OSU standard cell library will be
+#		clones from the repository and installed.
+#
+#	--enable-osu-t12-sky130[=<path>]
+#		If enabled, install the sky130_osu_sc_t12 libraries from
+#		foss-eda-tools on googlesource.   If <path> is not
+#		specified, then the OSU standard cell library will be
+#		clones from the repository and installed.
+#
+#	--enable-osu-t15-sky130[=<path>]
+#		If enabled, install the sky130_osu_sc_t15 libraries from
+#		foss-eda-tools on googlesource.   If <path> is not
+#		specified, then the OSU standard cell library will be
+#		clones from the repository and installed.
+#
+#	--enable-osu-t18-sky130[=<path>]
+#		If enabled, install the sky130_osu_sc_t18 libraries from
+#		foss-eda-tools on googlesource.   If <path> is not
+#		specified, then the OSU standard cell library will be
+#		clones from the repository and installed.
 #
 # The variables below are substituted from the configuration options:
 #
@@ -177,11 +204,19 @@ endif
 ALPHA_PATH = @SKY130_ML_XX_HD_PATH@
 XSCHEM_PATH = @XSCHEM_SKY130_PATH@
 SRAM_PATH = @SKY130_SRAM_MACROS_PATH@
+OSU_PATH = @SKY130_OSU_PATH@
+OSU_T12_PATH = @SKY130_OSU_T12_PATH@
+OSU_T15_PATH = @SKY130_OSU_T15_PATH@
+OSU_T18_PATH = @SKY130_OSU_T18_PATH@
 
 PDK_URL = https://github.com/google/skywater-pdk
 ALPHA_URL = https://github.com/PaulSchulz/sky130_pschulz_xx_hd/archive/master.tar.gz
 XSCHEM_URL = https://github.com/StefanSchippers/xschem_sky130/archive/main.tar.gz
 SRAM_URL = https://github.com/efabless/sky130_sram_macros/archive/main.tar.gz
+OSU_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc/+archive/refs/heads/master.tar.gz
+OSU_T12_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t12/+archive/refs/heads/master.tar.gz
+OSU_T15_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t15/+archive/refs/heads/master.tar.gz
+OSU_T18_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t18/+archive/refs/heads/master.tar.gz
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
@@ -345,7 +380,7 @@ endif
 all: all-a
 
 # Handle prerequisites (fetch and install the PDK and requested libraries)
-prerequisites: pdk-repo alpha-repo xschem-repo sram-repo
+prerequisites: pdk-repo alpha-repo xschem-repo sram-repo osu-repo osu-t12-repo osu-t15-repo osu-t18-repo
 
 pdk-repo:
 	if test "x${SKYWATER_PATH}" != "x" ; then \
@@ -370,9 +405,9 @@ alpha-repo:
 sram-repo:
 	if test "x${SRAM_PATH}" != "x" ; then \
 		if test -d "${SRAM_PATH}" ; then \
-			echo "Using existing installation of alphanumeric library from ${SRAM_PATH}" ; \
+			echo "Using existing installation of SRAM macro library from ${SRAM_PATH}" ; \
 		else \
-			echo "Downloading alphanumeric library from ${SRAM_URL}" ; \
+			echo "Downloading SRAM macro library from ${SRAM_URL}" ; \
 			../scripts/download.sh ${SRAM_URL} ${SRAM_PATH} ; \
 		fi ; \
 	fi
@@ -384,6 +419,46 @@ xschem-repo:
 		else \
 			echo "Downloading xschem setup from ${XSCHEM_URL}" ; \
 			../scripts/download.sh ${XSCHEM_URL} ${XSCHEM_PATH} ; \
+		fi ; \
+	fi
+
+osu-repo:
+	if test "x${OSU_PATH}" != "x" ; then \
+		if test -d "${OSU_PATH}" ; then \
+			echo "Using existing installation of OSU standard cell library from ${OSU_PATH}" ; \
+		else \
+			echo "Downloading OSU standard cell library from ${OSU_URL}" ; \
+			../scripts/download.sh ${OSU_URL} ${OSU_PATH} 0 ; \
+		fi ; \
+	fi
+
+osu-t12-repo:
+	if test "x${OSU_T12_PATH}" != "x" ; then \
+		if test -d "${OSU_T12_PATH}" ; then \
+			echo "Using existing installation of OSU T12 standard cell library from ${OSU_T12_PATH}" ; \
+		else \
+			echo "Downloading OSU standard T12 cell library from ${OSU_T12_URL}" ; \
+			../scripts/download.sh ${OSU_T12_URL} ${OSU_T12_PATH} 0 ; \
+		fi ; \
+	fi
+
+osu-t15-repo:
+	if test "x${OSU_T15_PATH}" != "x" ; then \
+		if test -d "${OSU_T15_PATH}" ; then \
+			echo "Using existing installation of OSU T15 standard cell library from ${OSU_T15_PATH}" ; \
+		else \
+			echo "Downloading OSU standard T15 cell library from ${OSU_T15_URL}" ; \
+			../scripts/download.sh ${OSU_T15_URL} ${OSU_T15_PATH} 0 ; \
+		fi ; \
+	fi
+
+osu-t18-repo:
+	if test "x${OSU_T18_PATH}" != "x" ; then \
+		if test -d "${OSU_T18_PATH}" ; then \
+			echo "Using existing installation of OSU T18 standard cell library from ${OSU_T18_PATH}" ; \
+		else \
+			echo "Downloading OSU standard T18 cell library from ${OSU_T18_URL}" ; \
+			../scripts/download.sh ${OSU_T18_URL} ${OSU_T18_PATH} 0 ; \
 		fi ; \
 	fi
 
@@ -591,8 +666,9 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	${CPP} -quiet ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/tracks.info \
 		${OPENLANE_STAGING_A}/sky130_osu_sc_t18/tracks.info
 
-vendor-a:
-	# Modify the LEF files to update hs and ms libraries
+vendor-a: primitive-a io-a digital-a alpha-a sram-a osu-base-a osu-t12-a osu-t15-a osu-t18-a
+
+primitive-a:
 	# Install device subcircuits from vendor files
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-ngspice sky130_fd_pr/latest/models/* \
@@ -622,10 +698,12 @@ vendor-a:
 	cat ./custom/models/spinit >> \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/spinit
 
+io-a:
 	# Install custom additions to I/O pad library
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-verilog %l/verilog/*.v \
 		-cdl %l/cdl/*.cdl \
+		-spice %l/spice/*.spice \
 		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
 		-lef %l/lef/*.lef compile-only rename=sky130_ef_io \
 		-library general sky130_fd_io 2>&1 | tee -a ${SKY130A}_make.log
@@ -660,6 +738,8 @@ vendor-a:
 	# when writing HVI to GDS during hierarchical adjustments.
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io__top_gpiov2 \
 		"MASKHINTS_HVI 1346 17198 5828 19224 13700 1890 15920 2360 24 17522 1778 20612" -mag
+
+digital-a:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-techlef %l/latest/tech/*.tlef \
@@ -710,10 +790,18 @@ vendor-a:
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hdll/techlef \
 		< custom/patches/hdll_minenclosed.squeaky.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
+
+alpha-a:
 	# Install alphanumeric library.
 	${STAGE} -source ${ALPHA_PATH}/.. -target ${STAGING_PATH}/${SKY130A} \
 		-mag %l/mag/*.mag filter=custom/scripts/text2m5.py \
 		-library general sky130_ml_xx_hd 2>&1 | tee -a ${SKY130A}_make.log
+	# Install text2mag.py script for alphanumeric library
+	mkdir -p ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
+	cp custom/scripts/text2mag.py \
+		${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
+
+sram-a:
 	# Install SRAM library.
 	${STAGE} -source ${SRAM_PATH}/.. -target ${STAGING_PATH}/${SKY130A} \
 		-lef %l/*/*.lef \
@@ -729,19 +817,104 @@ vendor-a:
 			rename=sram_1rw1r_32_256_8_sky130.spice \
 		-verilog %l/*/*.v \
 		-library general sky130_sram_macros 2>&1 | tee -a ${SKY130A}_make.log
-	# Install text2mag.py script for alphanumeric library
-	mkdir -p ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
-	cp custom/scripts/text2mag.py \
-		${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
+
+osu-base-a:
 	# Install OSU digital standard cells.
-	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef %l/latest/lef/sky130_osu_sc.tlef rename=sky130_osu_sc_t18.tlef \
+	${STAGE} -source ${OSU_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef %l/tech/sky130_osu_sc.lef rename=sky130_osu_sc.tlef \
 		-cdl %l/latest/cdl/*.cdl ignore=topography compile-only \
 		-lef %l/latest/lef/*.lef compile-only \
 		-lib %l/latest/lib/*.lib \
 		-gds %l/latest/gds/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
-		-library digital sky130_osu_sc_t18 2>&1 | tee -a ${SKY130A}_make.log
+		-library digital sky130_osu_sc 2>&1 | tee -a ${SKY130A}_make.log
+
+osu-t12-a:
+	# Install OSU T12 hs digital standard cells.
+	${STAGE} -source ${OSU_T12_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef sky130_osu_sc_12T.tlef rename=sky130_osc_sc_12t_hs.tlef \
+		-spice 12T_hs/cdl/*.spice compile-only exclude=*.*.spice \
+		-lef 12T_hs/lef/*.lef \
+		-lib 12T_hs/lib/*.lib \
+		-gds 12T_hs/gds/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+		-library digital sky130_osu_sc_12t_hs 2>&1 | tee -a ${SKY130A}_make.log
+	# Install OSU T12 ms digital standard cells.
+	${STAGE} -source ${OSU_T12_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef sky130_osu_sc_12T.tlef rename=sky130_osc_sc_12t_ms.tlef \
+		-spice 12T_ms/cdl/*.spice compile-only exclude=*.*.spice \
+		-lef 12T_ms/lef/*.lef \
+		-lib 12T_ms/lib/*.lib \
+		-gds 12T_ms/gds/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+		-library digital sky130_osu_sc_12t_ms 2>&1 | tee -a ${SKY130A}_make.log
+	# Install OSU T12 ls digital standard cells.
+	${STAGE} -source ${OSU_T12_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef sky130_osu_sc_12T.tlef rename=sky130_osc_sc_12t_ls.tlef \
+		-spice 12T_ls/cdl/*.spice compile-only exclude=*.*.spice \
+		-lef 12T_ls/lef/*.lef \
+		-lib 12T_ls/lib/*.lib \
+		-gds 12T_ls/gds/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+		-library digital sky130_osu_sc_12t_ls 2>&1 | tee -a ${SKY130A}_make.log
+
+osu-t15-a:
+	# Install OSU T15 hs digital standard cells.
+	${STAGE} -source ${OSU_T15_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef sky130_osu_sc_15T.tlef rename=sky130_osc_sc_15t_hs.tlef \
+		-spice 15T_hs/cdl/*.spice compile-only exclude=*.*.spice \
+		-lef 15T_hs/lef/*.lef \
+		-lib 15T_hs/lib/*.lib \
+		-gds 15T_hs/gds/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+		-library digital sky130_osu_sc_15t_hs 2>&1 | tee -a ${SKY130A}_make.log
+	# Install OSU T15 ms digital standard cells.
+	${STAGE} -source ${OSU_T15_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef sky130_osu_sc_15T.tlef rename=sky130_osc_sc_15t_ms.tlef \
+		-spice 15T_ms/cdl/*.spice compile-only exclude=*.*.spice \
+		-lef 15T_ms/lef/*.lef \
+		-lib 15T_ms/lib/*.lib \
+		-gds 15T_ms/gds/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+		-library digital sky130_osu_sc_15t_ms 2>&1 | tee -a ${SKY130A}_make.log
+	# Install OSU T15 ls digital standard cells.
+	${STAGE} -source ${OSU_T15_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef sky130_osu_sc_15T.tlef rename=sky130_osc_sc_15t_ls.tlef \
+		-spice 15T_ls/cdl/*.spice compile-only exclude=*.*.spice \
+		-lef 15T_ls/lef/*.lef \
+		-lib 15T_ls/lib/*.lib \
+		-gds 15T_ls/gds/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+		-library digital sky130_osu_sc_15t_ls 2>&1 | tee -a ${SKY130A}_make.log
+
+osu-t18-a:
+	# Install OSU T18 hs digital standard cells.
+	${STAGE} -source ${OSU_T18_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef sky130_osu_sc_18T.tlef rename=sky130_osc_sc_18t_hs.tlef \
+		-spice 18T_hs/cdl/*.spice compile-only exclude=*.*.spice \
+		-lef 18T_hs/lef/*.lef \
+		-lib 18T_hs/lib/*.lib \
+		-gds 18T_hs/gds/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+		-library digital sky130_osu_sc_18t_hs 2>&1 | tee -a ${SKY130A}_make.log
+	# Install OSU T18 ms digital standard cells.
+	${STAGE} -source ${OSU_T18_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef sky130_osu_sc_18T.tlef rename=sky130_osc_sc_18t_ms.tlef \
+		-spice 18T_ms/cdl/*.spice compile-only exclude=*.*.spice \
+		-lef 18T_ms/lef/*.lef \
+		-lib 18T_ms/lib/*.lib \
+		-gds 18T_ms/gds/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+		-library digital sky130_osu_sc_18t_ms 2>&1 | tee -a ${SKY130A}_make.log
+	# Install OSU T18 ls digital standard cells.
+	${STAGE} -source ${OSU_T18_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef sky130_osu_sc_18T.tlef rename=sky130_osc_sc_18t_ls.tlef \
+		-spice 18T_ls/cdl/*.spice compile-only exclude=*.*.spice \
+		-lef 18T_ls/lef/*.lef \
+		-lib 18T_ls/lib/*.lib \
+		-gds 18T_ls/gds/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+		-library digital sky130_osu_sc_18t_ls 2>&1 | tee -a ${SKY130A}_make.log
 
 install:
 	if test "x${DIST_PATH}" == "x" ; then \

@@ -52,13 +52,13 @@ by open_pdks and can be queried using
 At a minimum you will want to pass a configure option to declare the location
 of the PDK vendor source distribution (which can be obtained separately),
 
-    ./configure --with-[PDK_name]-source=[path]
+    ./configure --enable-[PDK_name]-pdk=[path]
 
 The open_pdks version of the PDK can be built locally within open_pdks without
 the need to declare an install target or run "make install".  However, it is
 recommended to declare a target location and install there, using
 
-    ./configure --with-[PDK_name]-source=[path] --with-[PDK_name]-local-path=[path]
+    ./configure --enable-[PDK_name]-pdk=[path] --with-[PDK_name]-local-path=[path]
 
 followed by "make" and "make install".
 

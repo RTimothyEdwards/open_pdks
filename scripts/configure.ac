@@ -168,7 +168,7 @@ AC_DEFUN([M4_GEN_INSTALLATION], [
         flag,
         AS_HELP_STRING(
             [--enable-flag@<:@=path@:>@],
-            [Install target. If path is omitted, it'll be downloaded. @<:@default=enabled@:>@]
+            [Install target. If path is omitted, the repository will be downloaded. @<:@default=enabled@:>@]
         ), [
             if test "$enableval" == "yes" -o "$enableval" == "YES"; then
                 AC_MSG_NOTICE([Package 'target' will be installed automatically during make.])
@@ -192,9 +192,52 @@ AC_DEFUN([M4_GEN_INSTALLATION], [
     AC_SUBST(targetvar[]_PATH)
 ])
 
-M4_GEN_INSTALLATION(sky130_sram_macros, sram-sky130, ../sources)
+# Optional installations (like the above, but disabled by default)
+AC_DEFUN([M4_OPT_INSTALLATION], [
+    m4_define([target], $1)
+    m4_define([targetvar], [m4_normalize(m4_esyscmd(echo target | tr "a-z-" "A-Z_"))])
+    m4_define([flag], $2)
+    m4_define([location], $3)
+
+    # echo target targetvar flag location
+
+    targetvar[]_PATH=""
+
+    AC_ARG_ENABLE(
+        flag,
+        AS_HELP_STRING(
+            [--enable-flag@<:@=path@:>@],
+            [Install target. If path is omitted, the repository will be downloaded. @<:@default=enabled@:>@]
+        ), [
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                AC_MSG_NOTICE([Package 'target' will be installed automatically during make.])
+        	export targetvar[]_PATH=location/target
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                AC_MSG_NOTICE([Disabling package 'target'])
+    		export targetvar[]_PATH=""
+            else
+                targetvar[]_PATH=$enableval
+                AC_MSG_NOTICE([Enabling package 'target' at $[]targetvar[]_PATH])
+            fi
+            targetvar[]_PATH=`realpath $[]targetvar[]_PATH`
+        ],[
+            AC_MSG_NOTICE([Package 'target' will not be installed.])
+	]
+    )
+
+    $4
+
+    AC_SUBST(targetvar[]_PATH)
+])
+
 M4_GEN_INSTALLATION(sky130_ml_xx_hd, alpha-sky130, ../sources)
 M4_GEN_INSTALLATION(xschem_sky130, xschem-sky130, ../sources)
+
+M4_OPT_INSTALLATION(sky130_sram_macros, sram-sky130, ../sources)
+M4_OPT_INSTALLATION(sky130_osu, osu-sky130, ../sources)
+M4_OPT_INSTALLATION(sky130_osu_t12, osu-t12-sky130, ../sources)
+M4_OPT_INSTALLATION(sky130_osu_t15, osu-t15-sky130, ../sources)
+M4_OPT_INSTALLATION(sky130_osu_t18, osu-t18-sky130, ../sources)
 
 AC_DEFUN([M4_GEN_WITH_TOOLS], [
     m4_foreach_w(tool, $1, [

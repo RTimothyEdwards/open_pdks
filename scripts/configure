@@ -588,9 +588,13 @@ ac_default_prefix=/usr/share
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 EF_STYLE
+SKY130_OSU_T18_PATH
+SKY130_OSU_T15_PATH
+SKY130_OSU_T12_PATH
+SKY130_OSU_PATH
+SKY130_SRAM_MACROS_PATH
 XSCHEM_SKY130_PATH
 SKY130_ML_XX_HD_PATH
-SKY130_SRAM_MACROS_PATH
 PATCH
 MAGIC
 XSCHEM_DISABLED
@@ -666,9 +670,13 @@ enable_irsim
 enable_openlane
 enable_qflow
 enable_xschem
-enable_sram_sky130
 enable_alpha_sky130
 enable_xschem_sky130
+enable_sram_sky130
+enable_osu_sky130
+enable_osu_t12_sky130
+enable_osu_t15_sky130
+enable_osu_t18_sky130
 with_ef_style
 '
       ac_precious_vars='build_alias
@@ -1327,15 +1335,27 @@ Optional Features:
                 Enable or disable xschem setup [default=enabled]
 
 
-  --enable-sram-sky130[=path]
-                          Install sky130_sram_macros. If path is omitted, it'll be
-                          downloaded. [default=enabled]
   --enable-alpha-sky130[=path]
-                          Install sky130_ml_xx_hd. If path is omitted, it'll be
-                          downloaded. [default=enabled]
+                          Install sky130_ml_xx_hd. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
   --enable-xschem-sky130[=path]
-                          Install xschem_sky130. If path is omitted, it'll be
-                          downloaded. [default=enabled]
+                          Install xschem_sky130. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-sram-sky130[=path]
+                          Install sky130_sram_macros. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-osu-sky130[=path]
+                          Install sky130_osu. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-osu-t12-sky130[=path]
+                          Install sky130_osu_t12. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-osu-t15-sky130[=path]
+                          Install sky130_osu_t15. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-osu-t18-sky130[=path]
+                          Install sky130_osu_t18. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -2441,46 +2461,7 @@ fi
 # Other installations (libraries or tools if applicable)
 
 
-
-
-
-
-
-
-    # echo target targetvar flag location
-
-    SKY130_SRAM_MACROS_PATH=""
-
-    # Check whether --enable-sram-sky130 was given.
-if test "${enable_sram_sky130+set}" = set; then :
-  enableval=$enable_sram_sky130;
-            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_sram_macros' will be installed automatically during make." >&5
-$as_echo "$as_me: Package 'sky130_sram_macros' will be installed automatically during make." >&6;}
-        	export SKY130_SRAM_MACROS_PATH=../sources/sky130_sram_macros
-            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_sram_macros'" >&5
-$as_echo "$as_me: Disabling package 'sky130_sram_macros'" >&6;}
-    		export SKY130_SRAM_MACROS_PATH=""
-            else
-                SKY130_SRAM_MACROS_PATH=$enableval
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_sram_macros' at $SKY130_SRAM_MACROS_PATH" >&5
-$as_echo "$as_me: Enabling package 'sky130_sram_macros' at $SKY130_SRAM_MACROS_PATH" >&6;}
-            fi
-            SKY130_SRAM_MACROS_PATH=`realpath $SKY130_SRAM_MACROS_PATH`
-
-else
-
-            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_sram_macros' will be installed automatically during make." >&5
-$as_echo "$as_me: Package 'sky130_sram_macros' will be installed automatically during make." >&6;}
-	    SKY130_SRAM_MACROS_PATH=../sources/sky130_sram_macros
-
-
-fi
-
-
-
-
+# Optional installations (like the above, but disabled by default)
 
 
 
@@ -2558,6 +2539,212 @@ else
             { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'xschem_sky130' will be installed automatically during make." >&5
 $as_echo "$as_me: Package 'xschem_sky130' will be installed automatically during make." >&6;}
 	    XSCHEM_SKY130_PATH=../sources/xschem_sky130
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_SRAM_MACROS_PATH=""
+
+    # Check whether --enable-sram-sky130 was given.
+if test "${enable_sram_sky130+set}" = set; then :
+  enableval=$enable_sram_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_sram_macros' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_sram_macros' will be installed automatically during make." >&6;}
+        	export SKY130_SRAM_MACROS_PATH=../sources/sky130_sram_macros
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_sram_macros'" >&5
+$as_echo "$as_me: Disabling package 'sky130_sram_macros'" >&6;}
+    		export SKY130_SRAM_MACROS_PATH=""
+            else
+                SKY130_SRAM_MACROS_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_sram_macros' at $SKY130_SRAM_MACROS_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_sram_macros' at $SKY130_SRAM_MACROS_PATH" >&6;}
+            fi
+            SKY130_SRAM_MACROS_PATH=`realpath $SKY130_SRAM_MACROS_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_sram_macros' will not be installed." >&5
+$as_echo "$as_me: Package 'sky130_sram_macros' will not be installed." >&6;}
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_OSU_PATH=""
+
+    # Check whether --enable-osu-sky130 was given.
+if test "${enable_osu_sky130+set}" = set; then :
+  enableval=$enable_osu_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_osu' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_osu' will be installed automatically during make." >&6;}
+        	export SKY130_OSU_PATH=../sources/sky130_osu
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_osu'" >&5
+$as_echo "$as_me: Disabling package 'sky130_osu'" >&6;}
+    		export SKY130_OSU_PATH=""
+            else
+                SKY130_OSU_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_osu' at $SKY130_OSU_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_osu' at $SKY130_OSU_PATH" >&6;}
+            fi
+            SKY130_OSU_PATH=`realpath $SKY130_OSU_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_osu' will not be installed." >&5
+$as_echo "$as_me: Package 'sky130_osu' will not be installed." >&6;}
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_OSU_T12_PATH=""
+
+    # Check whether --enable-osu-t12-sky130 was given.
+if test "${enable_osu_t12_sky130+set}" = set; then :
+  enableval=$enable_osu_t12_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_osu_t12' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_osu_t12' will be installed automatically during make." >&6;}
+        	export SKY130_OSU_T12_PATH=../sources/sky130_osu_t12
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_osu_t12'" >&5
+$as_echo "$as_me: Disabling package 'sky130_osu_t12'" >&6;}
+    		export SKY130_OSU_T12_PATH=""
+            else
+                SKY130_OSU_T12_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_osu_t12' at $SKY130_OSU_T12_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_osu_t12' at $SKY130_OSU_T12_PATH" >&6;}
+            fi
+            SKY130_OSU_T12_PATH=`realpath $SKY130_OSU_T12_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_osu_t12' will not be installed." >&5
+$as_echo "$as_me: Package 'sky130_osu_t12' will not be installed." >&6;}
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_OSU_T15_PATH=""
+
+    # Check whether --enable-osu-t15-sky130 was given.
+if test "${enable_osu_t15_sky130+set}" = set; then :
+  enableval=$enable_osu_t15_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_osu_t15' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_osu_t15' will be installed automatically during make." >&6;}
+        	export SKY130_OSU_T15_PATH=../sources/sky130_osu_t15
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_osu_t15'" >&5
+$as_echo "$as_me: Disabling package 'sky130_osu_t15'" >&6;}
+    		export SKY130_OSU_T15_PATH=""
+            else
+                SKY130_OSU_T15_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_osu_t15' at $SKY130_OSU_T15_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_osu_t15' at $SKY130_OSU_T15_PATH" >&6;}
+            fi
+            SKY130_OSU_T15_PATH=`realpath $SKY130_OSU_T15_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_osu_t15' will not be installed." >&5
+$as_echo "$as_me: Package 'sky130_osu_t15' will not be installed." >&6;}
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_OSU_T18_PATH=""
+
+    # Check whether --enable-osu-t18-sky130 was given.
+if test "${enable_osu_t18_sky130+set}" = set; then :
+  enableval=$enable_osu_t18_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_osu_t18' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_osu_t18' will be installed automatically during make." >&6;}
+        	export SKY130_OSU_T18_PATH=../sources/sky130_osu_t18
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_osu_t18'" >&5
+$as_echo "$as_me: Disabling package 'sky130_osu_t18'" >&6;}
+    		export SKY130_OSU_T18_PATH=""
+            else
+                SKY130_OSU_T18_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_osu_t18' at $SKY130_OSU_T18_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_osu_t18' at $SKY130_OSU_T18_PATH" >&6;}
+            fi
+            SKY130_OSU_T18_PATH=`realpath $SKY130_OSU_T18_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_osu_t18' will not be installed." >&5
+$as_echo "$as_me: Package 'sky130_osu_t18' will not be installed." >&6;}
 
 
 fi
