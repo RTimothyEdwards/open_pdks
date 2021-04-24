@@ -102,8 +102,21 @@ def run_full_drc(layout_name, output_file):
 
     # Generate the DRC Tcl script
 
+    # If magpath is writeable, then continue.  If not, then if the
+    # current working directory is writeable, use it.
+    if not os.access(magpath, os.W_OK):
+        if os.access(os.getcwd(), os.W_OK):
+            scriptpath = os.getcwd()
+            # The output .txt file won't be writeable, either.
+            output_file = os.path.join(scriptpath, os.path.split(output_file)[1])
+        else:
+            print('Error:  Neither the path of the layout or the current directory is writeable.')
+            return
+    else:
+        scriptpath = magpath
+
     print('Evaluating full DRC results for layout ' + layout_name)
-    with open(magpath + '/run_magic_drc.tcl', 'w') as ofile:
+    with open(scriptpath + '/run_magic_drc.tcl', 'w') as ofile:
         print('# run_magic_drc.tcl ---', file=ofile)
         print('#    batch script for running DRC', file=ofile)
         print('', file=ofile)
@@ -149,7 +162,7 @@ def run_full_drc(layout_name, output_file):
     print('Running: magic -dnull -noconsole -rcfile ' + rcfile + ' run_magic_drc.tcl')
     print('Running in directory: ' + magpath)
     mproc = subprocess.run(['magic', '-dnull', '-noconsole', '-rcfile',
-		rcfile, 'run_magic_drc.tcl'],
+		rcfile, scriptpath + '/run_magic_drc.tcl'],
 		env = myenv, cwd = magpath,
 		stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
 		stderr = subprocess.PIPE, universal_newlines = True)
