@@ -2,7 +2,7 @@ VERSION 5.7 ;
   NOWIREEXTENSIONATPIN ON ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
-MACRO sky130_fd_ef__analog_pad
+MACRO sky130_ef_io__analog_pad
   CLASS BLOCK ;
   FOREIGN sky130_ef_io__analog_pad ;
   ORIGIN 0.000 0.000 ;
@@ -340,6 +340,6 @@ MACRO sky130_fd_ef__analog_pad
         RECT 2.565 15.035 72.435 18.285 ;
         RECT 2.870 2.135 72.130 15.035 ;
   END
-END sky130_fd_io__analog_pad
+END sky130_ef_io__analog_pad
 END LIBRARY
 
