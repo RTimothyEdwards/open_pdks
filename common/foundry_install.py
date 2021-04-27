@@ -2027,6 +2027,11 @@ if __name__ == '__main__':
                 print('gds rescale false', file=ofile)
                 print('tech unlock *', file=ofile)
 
+                # Add custom Tcl script lines before "gds read".
+                if tclscript:
+                    for line in tcllines:
+                        print(line, file=ofile)
+
                 if not os.path.isfile(allgdslibname):
                     for gdsfile in glist:
                         print('gds read ' + gdsfile, file=ofile)
