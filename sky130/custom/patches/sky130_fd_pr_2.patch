@@ -1,0 +1,10 @@
+--- sky130A_patched/libs.tech/ngspice/r+c.mrp1monte.spice	2021-02-13 15:52:18.387658549 +0000
++++ sky130A/libs.tech/ngspice/r+c.mrp1monte.spice	2021-02-13 16:16:04.480347264 +0000
+@@ -30,6 +30,6 @@
+ .param  w = 1 l = 0 mult = 1 r = 0 tc1 = {tc1rsgpu*sky130_fd_pr__res_generic_po__tc1_slope} tc2 = {tc2rsgpu*sky130_fd_pr__res_generic_po__tc2_slope}
+ + rp1_mm = {rp1*sky130_fd_pr__res_generic_po__slope/sqrt(2.0*l*w*mult+rp1/100000.0)}
+ + r_tot = {(rp1+rp1_mm)*l/(w-1e6*(-tol_poly-poly_dw))+r}
++rsky130_fd_pr__res_generic_po r0 r1 sky130_fd_pr__res_generic_po__monte r = {r_tot} tc1 = {tc1} tc2 = {tc2}
+-sky130_fd_pr__res_generic_po r0 r1 sky130_fd_pr__res_generic_po__monte r = {r_tot} tc1r = {tc1} tc2r = {tc2}
+ .model sky130_fd_pr__res_generic_po__monte r tref = 30.0
+ .ends sky130_fd_pr__res_generic_po

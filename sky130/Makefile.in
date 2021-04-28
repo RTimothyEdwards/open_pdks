@@ -270,6 +270,7 @@ KLAYOUTTOP = libs.tech/klayout
 OPENLANETOP = libs.tech/openlane
 XSCHEMTOP = libs.tech/xschem
 XCIRCUITTOP = libs.tech/xcircuit
+NGSPICETOP = libs.tech/ngspice
 
 ifeq (${EF_STYLE}, 1)
     MAGICPATH = ${MAGICTOP}/${REVISION}
@@ -287,6 +288,7 @@ KLAYOUTPATH = ${KLAYOUTTOP}
 OPENLANEPATH = ${OPENLANETOP}
 XSCHEMPATH = ${XSCHEMTOP}
 XCIRCUITPATH = ${XCIRCUITTOP}
+NGSPICEPATH = ${NGSPICETOP}
 
 MAGICTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${MAGICTOP}
 NETGENTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NETGENTOP}
@@ -296,6 +298,7 @@ KLAYOUTTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${KLAYOUTTOP}
 OPENLANETOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${OPENLANETOP}
 XSCHEMTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XSCHEMTOP}
 XCIRCUITTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XCIRCUITTOP}
+NGSPICETOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NGSPICETOP}
 
 MAGIC_STAGING_A = ${STAGING_PATH}/${SKY130A}/${MAGICPATH}
 NETGEN_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NETGENPATH}
@@ -305,6 +308,7 @@ KLAYOUT_STAGING_A = ${STAGING_PATH}/${SKY130A}/${KLAYOUTPATH}
 OPENLANE_STAGING_A = ${STAGING_PATH}/${SKY130A}/${OPENLANEPATH}
 XSCHEM_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XSCHEMPATH}
 XCIRCUIT_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XCIRCUITPATH}
+NGSPICE_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NGSPICEPATH}
 
 SKY130A_DEFS += -DMAGIC_CURRENT=${MAGICCURRENT}
 
@@ -375,6 +379,35 @@ endif
 XCIRCUIT_DISABLED = @XCIRCUIT_DISABLED@
 ifneq (${XCIRCUIT_DISABLED}, 1)
         TOOLS += xcircuit
+endif
+
+# These definitions depend on the setting of EF_STYLE
+ifeq (${EF_STYLE}, 1)
+	IO_VERILOG = verilog/sky130_fd_io
+	HD_VERILOG = verilog/sky130_fd_sc_hd
+	HDLL_VERILOG = verilog/sky130_fd_sc_hdll
+	HVL_VERILOG = verilog/sky130_fd_sc_hvl
+	HS_VERILOG = verilog/sky130_fd_sc_hs
+	MS_VERILOG = verilog/sky130_fd_sc_ms
+	LS_VERILOG = verilog/sky130_fd_sc_ls
+	LP_VERILOG = verilog/sky130_fd_sc_lp
+	HD_TECHLEF = techLEF/sky130_fd_sc_hd
+	HDLL_TECHLEF = techLEF/sky130_fd_sc_hdll
+	MLXX_SCRIPTS = scripts/sky130_ml_xx_hd
+	PR_SPICE = spi/sky130_fd_pr
+else
+	IO_VERILOG = sky130_fd_io/verilog
+	HD_VERILOG = sky130_fd_sc_hd/verilog
+	HDLL_VERILOG = sky130_fd_sc_hdll/verilog
+	HVL_VERILOG = sky130_fd_sc_hvl/verilog
+	HS_VERILOG = sky130_fd_sc_hs/verilog
+	MS_VERILOG = sky130_fd_sc_ms/verilog
+	LS_VERILOG = sky130_fd_sc_ls/verilog
+	LP_VERILOG = sky130_fd_sc_lp/verilog
+	HD_TECHLEF = sky130_fd_sc_hd/techlef
+	HDLL_TECHLEF = sky130_fd_sc_hdll/techlef
+	MLXX_SCRIPTS = sky130_ml_xx_hd/scripts
+	PR_SPICE = sky130_fd_pr/spice
 endif
 
 all: all-a
@@ -691,8 +724,11 @@ primitive-a:
 
 	# Custom:  Patch the models to work around ngspice issue with the relative
 	# order of the "nf" and "mult" parameters.
-	patch -p1 -f -d ${STAGING_PATH}/${SKY130A} \
+	patch -p4 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${PR_SPICE} \
 		< custom/patches/sky130_fd_pr.patch \
+		2>&1 | tee -a ${SKY130A}_make.log || true
+	patch -p1 -f -d ${STAGING_PATH}/${SKY130A} \
+		< custom/patches/sky130_fd_pr_2.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Add "spinit" file
 	cat ./custom/models/spinit >> \
@@ -727,7 +763,7 @@ io-a:
 		-library general sky130_fd_io 2>&1 | tee -a ${SKY130A}_make.log
 	# Remove the base verilog files which have already been included into
 	# the libraries
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_io/verilog/*.*.v
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${IO_VERILOG}/*.*.v
 	# Install custom additions to standard cell libraries
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
@@ -776,18 +812,18 @@ digital-a:
 		"MASKHINTS_NSDM 0 280 92 506" -mag
 	# Remove the base verilog files which have already been included into
 	# the libraries
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hd/verilog/*.*.v
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hdll/verilog/*.*.v
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hvl/verilog/*.*.v
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hs/verilog/*.*.v
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_ms/verilog/*.*.v
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_ls/verilog/*.*.v
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_lp/verilog/*.*.v
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${HD_VERILOG}/*.*.v
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${HDLL_VERILOG}/*.*.v
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${HVL_VERILOG}/*.*.v
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${HS_VERILOG}/*.*.v
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${MS_VERILOG}/*.*.v
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${LS_VERILOG}/*.*.v
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${LP_VERILOG}/*.*.v
 	# Apply extra PDK patches until they get fixed properly in the source
-	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hd/techlef \
+	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HD_TECHLEF} \
 		< custom/patches/hd_minenclosed.squeaky.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
-	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_fd_sc_hdll/techlef \
+	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HDLL_TECHLEF} \
 		< custom/patches/hdll_minenclosed.squeaky.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
 
@@ -797,9 +833,9 @@ alpha-a:
 		-mag %l/mag/*.mag filter=custom/scripts/text2m5.py \
 		-library general sky130_ml_xx_hd 2>&1 | tee -a ${SKY130A}_make.log
 	# Install text2mag.py script for alphanumeric library
-	mkdir -p ${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
+	mkdir -p ${STAGING_PATH}/${SKY130A}/libs.ref/${MLXX_SCRIPTS}
 	cp custom/scripts/text2mag.py \
-		${STAGING_PATH}/${SKY130A}/libs.ref/sky130_ml_xx_hd/scripts
+		${STAGING_PATH}/${SKY130A}/libs.ref/${MLXX_SCRIPTS}
 
 sram-a:
 	# Install SRAM library.  NOTE:  SRAM macros share some of the same
