@@ -730,6 +730,11 @@ primitive-a:
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A} \
 		< custom/patches/sky130_fd_pr_2.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
+	# Custom:  Patch the models to remove the substrate pin from the PNP
+	# device, which has no independent substrate pin (collector=substrate)
+	patch -p4 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${PR_SPICE} \
+		< custom/patches/sky130_fd_pr_3.patch \
+		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Add "spinit" file
 	cat ./custom/models/spinit >> \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/spinit
