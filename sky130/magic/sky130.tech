@@ -5285,9 +5285,9 @@ variants (),(si)
 	*mvnndiff nwell error l=l w=w a1=as a2=ad p1=ps p2=pd
 
  # Bipolars
- device msubcircuit sky130_fd_pr__npn_05v0 npn dnwell *ndiff space/w error a2=area
- device msubcircuit sky130_fd_pr__pnp_05v0 pnp pwell,space/w *pdiff a2=area
- device msubcircuit sky130_fd_pr__npn_11v0 npn dnwell *mvndiff space/w error a2=area
+ device msubcircuit sky130_fd_pr__npn_05v0 npn *ndiff dnwell space/w error a2=area
+ device msubcircuit sky130_fd_pr__pnp_05v0 pnp *pdiff pwell,space/w a2=area
+ device msubcircuit sky130_fd_pr__npn_11v0 npn *mvndiff dnwell space/w error a2=area
 
  # Ignore the extended-drain FET geometry that forms part of the high-voltage
  # bipolar devices.
@@ -5470,9 +5470,9 @@ variants (),(si)
  device pdiode sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area
  device pdiode sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area
 
- device bjt sky130_fd_pr__npn_05v5 npn dnwell *ndiff space/w error a2=area
- device bjt sky130_fd_pr__pnp_05v5 pnp pwell,space/w *pdiff a2=area
- device bjt sky130_fd_pr__npn_11v0 npn dnwell *mvndiff space/w error a2=area
+ device bjt sky130_fd_pr__npn_05v5 npn *ndiff dnwell space/w error a2=area
+ device bjt sky130_fd_pr__pnp_05v5 pnp *pdiff pwell,space/w a2=area
+ device bjt sky130_fd_pr__npn_11v0 npn *mvndiff dnwell space/w error a2=area
 
 #ifdef MIM
  device capacitor sky130_fd_pr__cap_mim_m3_1 *mimcap  *m3 1
