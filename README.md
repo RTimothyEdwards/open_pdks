@@ -42,7 +42,7 @@ Instructions:
     cd open_pdks
     ./configure [options]
     make
-    make install
+    [sudo] make install
 
 where the configure [options] are specific to each foundry PDK supported
 by open_pdks and can be queried using

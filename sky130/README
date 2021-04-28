@@ -95,12 +95,12 @@ Prerequisites:
 	git submodule init libraries/sky130_fd_io/latest
 	git submodule init libraries/sky130_fd_pr/latest
 	git submodule init libraries/sky130_fd_sc_hd/latest
-	git submodule init libraries/sky130_fd_sc_hdll/latest
-	git submodule init libraries/sky130_fd_sc_hs/latest
-	git submodule init libraries/sky130_fd_sc_ms/latest
-	git submodule init libraries/sky130_fd_sc_ls/latest
-	git submodule init libraries/sky130_fd_sc_lp/latest
 	git submodule init libraries/sky130_fd_sc_hvl/latest
+	[git submodule init libraries/sky130_fd_sc_hdll/latest]
+	[git submodule init libraries/sky130_fd_sc_hs/latest]
+	[git submodule init libraries/sky130_fd_sc_ms/latest]
+	[git submodule init libraries/sky130_fd_sc_ls/latest]
+	[git submodule init libraries/sky130_fd_sc_lp/latest]
 	git submodule update
 
     The liberty (.lib) files are the largest of all and so individual files
@@ -109,7 +109,12 @@ Prerequisites:
 
 	make timing
 
-    That installs all of the Google/Skywater files.
+    That installs all of the Google/Skywater files.  To keep the overhead low,
+    you may initialize only the submodules that you need.  At a minimum, the
+    I/O library, primitive devices, and the high density and high voltage
+    digital standard cell libraries should be installed.  The remaining standard
+    cell libraries are optional, as needed for low-leakage, high speed, low power,
+    etc., applications.
 
     Then follow the instructions below for generating the additional files
     for supporting the open source EDA tool flows.
@@ -196,6 +201,29 @@ Step 1:
 		option or the path is not specified, then the library
 		will be downloaded from github automatically.  To disable
 		this package, use "--disable-xschem-sky130".
+
+	--enable-sram-sky130[=<path>]
+		This 3rd party library contains pre-compiled and verified
+		memory blocks from the OpenRAM open source memory compiler.
+		It is disabled by default due to the length of time
+		required to install, but it is recommended if you will be
+		using SRAM in a design.
+
+	--enable-osu-sky130[=<path>]
+		This 3rd party library is a set of open-source digital
+		standard cells.
+
+	--enable-osu-t12--sky130[=<path>]
+		This 3rd party library is a set of open-source digital
+		standard cells at 12 track pitch height.
+
+	--enable-osu-t15--sky130[=<path>]
+		This 3rd party library is a set of open-source digital
+		standard cells at 15 track pitch height.
+
+	--enable-osu-t18--sky130[=<path>]
+		This 3rd party library is a set of open-source digital
+		standard cells at 18 track pitch height.
 
 Step 2:
 	Run:
