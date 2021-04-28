@@ -207,7 +207,7 @@ AC_DEFUN([M4_OPT_INSTALLATION], [
         flag,
         AS_HELP_STRING(
             [--enable-flag@<:@=path@:>@],
-            [Install target. If path is omitted, the repository will be downloaded. @<:@default=enabled@:>@]
+            [Install target. If path is omitted, the repository will be downloaded. @<:@default=disabled@:>@]
         ), [
             if test "$enableval" == "yes" -o "$enableval" == "YES"; then
                 AC_MSG_NOTICE([Package 'target' will be installed automatically during make.])

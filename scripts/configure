@@ -1343,19 +1343,19 @@ Optional Features:
                           will be downloaded. [default=enabled]
   --enable-sram-sky130[=path]
                           Install sky130_sram_macros. If path is omitted, the repository
-                          will be downloaded. [default=enabled]
+                          will be downloaded. [default=disabled]
   --enable-osu-sky130[=path]
                           Install sky130_osu. If path is omitted, the repository
-                          will be downloaded. [default=enabled]
+                          will be downloaded. [default=disabled]
   --enable-osu-t12-sky130[=path]
                           Install sky130_osu_t12. If path is omitted, the repository
-                          will be downloaded. [default=enabled]
+                          will be downloaded. [default=disabled]
   --enable-osu-t15-sky130[=path]
                           Install sky130_osu_t15. If path is omitted, the repository
-                          will be downloaded. [default=enabled]
+                          will be downloaded. [default=disabled]
   --enable-osu-t18-sky130[=path]
                           Install sky130_osu_t18. If path is omitted, the repository
-                          will be downloaded. [default=enabled]
+                          will be downloaded. [default=disabled]
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
