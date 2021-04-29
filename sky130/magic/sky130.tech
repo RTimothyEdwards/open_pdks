@@ -4939,8 +4939,8 @@ extract
  height mimcc	     2.6661 0.12
  height mim2cc	     3.9311 0.09
 #ifdef REDISTRIBUTION
- height mrdlc	     6.6311 5.2523
- height mrdl	    11.8834 4.0
+ height mrdlc	     6.6311 0.63
+ height mrdl	     7.2611 3.0
 #endif (!REDISTRIBUTION)
 #endif (!METAL5)
 
