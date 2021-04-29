@@ -1,0 +1,14 @@
+diff -Naur libs.ref/sky130_fd_sc_hvl/cdl/sky130_fd_sc_hvl.cdl libs.ref.fixed/sky130_fd_sc_hvl/cdl/sky130_fd_sc_hvl.cdl
+--- libs.ref/sky130_fd_sc_hvl/cdl/sky130_fd_sc_hvl.cdl	2021-04-29 14:04:04.666906207 -0400
++++ libs.ref.fixed/sky130_fd_sc_hvl/cdl/sky130_fd_sc_hvl.cdl	2021-04-29 14:42:56.278560406 -0400
+@@ -2228,8 +2228,8 @@
+
+ .SUBCKT sky130_fd_sc_hvl__schmittbuf_1 A VGND VNB VPB VPWR X
+ *.PININFO A:I VGND:I VNB:I VPB:I VPWR:I X:O
+-rI39 net069 VGND mrdn_hv m=1 w=0.29 l=1.355 isHV=TRUE
+-rI38 VPWR net32 mrdp_hv m=1 w=0.29 l=3.11 isHV=TRUE
++rI39 net069 VGND sky130_fd_pr__res_generic_nd__hv m=1 w=0.29 l=1.355 isHV=TRUE
++rI38 VPWR net32 sky130_fd_pr__res_generic_pd__hv m=1 w=0.29 l=3.11 isHV=TRUE
+ MI5 net32 net36 net40 VNB nfet_g5v0d10v5 m=1 w=0.42 l=0.5 mult=1
+ + sa=0.265 sb=0.265 sd=0.28 topography=normal area=0.063 perim=1.14
+ MMN0 net36 A net40 VNB nfet_g5v0d10v5 m=1 w=0.42 l=0.5 mult=1 sa=0.265

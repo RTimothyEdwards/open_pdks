@@ -395,6 +395,8 @@ ifeq (${EF_STYLE}, 1)
 	HDLL_TECHLEF = techLEF/sky130_fd_sc_hdll
 	MLXX_SCRIPTS = scripts/sky130_ml_xx_hd
 	PR_SPICE = spi/sky130_fd_pr
+	HVL_SPICE = spi/sky130_fd_sc_hvl
+	HVL_CDL = cdl/sky130_fd_sc_hvl
 else
 	IO_VERILOG = sky130_fd_io/verilog
 	HD_VERILOG = sky130_fd_sc_hd/verilog
@@ -408,6 +410,8 @@ else
 	HDLL_TECHLEF = sky130_fd_sc_hdll/techlef
 	MLXX_SCRIPTS = sky130_ml_xx_hd/scripts
 	PR_SPICE = sky130_fd_pr/spice
+	HVL_SPICE = sky130_fd_sc_hvl/spice
+	HVL_CDL = sky130_fd_sc_hvl/cdl
 endif
 
 all: all-a
@@ -721,6 +725,9 @@ primitive-a:
 	# Custom:  Add diodes as subcircuits to the r+c models file
 	cat ./custom/models/diode.spice >> \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice
+	# Custom:  Add resistors as subcircuits to the r+c models file
+	cat ./custom/models/resistor.spice >> \
+		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice
 
 	# Custom:  Patch the models to work around ngspice issue with the relative
 	# order of the "nf" and "mult" parameters.
@@ -734,6 +741,10 @@ primitive-a:
 	# device, which has no independent substrate pin (collector=substrate)
 	patch -p4 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${PR_SPICE} \
 		< custom/patches/sky130_fd_pr_3.patch \
+		2>&1 | tee -a ${SKY130A}_make.log || true
+	# Custom:  Patch the ngspice models to add the HV diffusion resistor subcircuits
+	patch -p2 -f -d ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice \
+		< custom/patches/sky130_fd_pr_5.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Add "spinit" file
 	cat ./custom/models/spinit >> \
@@ -830,6 +841,13 @@ digital-a:
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HDLL_TECHLEF} \
 		< custom/patches/hdll_minenclosed.squeaky.patch \
+		2>&1 | tee -a ${SKY130A}_make.log || true
+	# Custom:  Patch the HVL library to correct the resistor device names
+	patch -p3 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HVL_SPICE} \
+		< custom/patches/sky130_fd_pr_4.patch \
+		2>&1 | tee -a ${SKY130A}_make.log || true
+	patch -p3 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HVL_CDL} \
+		< custom/patches/sky130_fd_pr_6.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
 
 alpha-a:
