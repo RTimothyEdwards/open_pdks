@@ -629,9 +629,11 @@ xschem-a: ${XSCHEM_PATH}
 	# Re-copy the xschemrc, with one change to add the PDK install path as
 	# a component of XSCHEM_LIBRARY_PATH
 	cat ${XSCHEM_PATH}/xschemrc | \
-		sed -e "/PWD/a\append XSCHEM_LIBRARY_PATH :${XSCHEM_STAGING_A}" | \
+		sed -e "/PWD/a\
+		append XSCHEM_LIBRARY_PATH :${XSCHEM_STAGING_A}" | \
 		sed -e "/sky130_models.tcl/s#scripts#${XSCHEM_STAGING_A}/scripts#" | \
-		sed -e "/netlist_dir/a\set netlist_dir ." \
+		sed -e "/netlist_dir/a\
+		set netlist_dir ." \
 		> ${XSCHEM_STAGING_A}/xschemrc
 
 openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
