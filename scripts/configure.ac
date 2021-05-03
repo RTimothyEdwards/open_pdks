@@ -6,6 +6,14 @@ AC_PREFIX_DEFAULT(/usr/share)
 AM_PATH_PYTHON([3.4])
 AX_PYTHON_MODULE([distutils],[])
 
+# Check for Mac OS X gsed vs. sed
+m4_ifndef([AC_PROG_SED],
+    [AC_DEFUN([AC_PROG_SED],[AC_ARG_VAR([SED])
+	AC_CHECK_PROGS([SED],[gsed sed])])])
+
+AC_PROG_SED
+AC_SUBST(SED)
+
 realpath() {
     # Cross-platform, handles ~
     python3 -c 'import os,sys;print(os.path.realpath(os.path.expanduser(sys.argv@<:@1@:>@)))' $1
