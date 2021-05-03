@@ -747,6 +747,17 @@ primitive-a:
 	patch -p2 -f -d ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice \
 		< custom/patches/sky130_fd_pr_5.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
+	# Custom:  Parse the (commented out) statistics blocks and generate
+	# ngspice-compatible monte carlo parameters for mismatch and process
+	# (currently under test)
+	# ./custom/scripts/mismatch_params.py \
+	#	2>&1 | tee -a ${SKY130A}_make.log || true
+	# ./custom/scripts/mismatch_params.py \
+	#	${STAGING_PATH}/${SKY130A}/libs.tech/ngspice \
+	#	2>&1 | tee -a ${SKY130A}_make.log || true
+	# ./custom/scripts/process_params.py \
+	#	2>&1 | tee -a ${SKY130A}_make.log || true
+
 	# Custom:  Add "spinit" file
 	cat ./custom/models/spinit >> \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/spinit
