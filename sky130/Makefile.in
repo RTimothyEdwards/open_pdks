@@ -214,10 +214,10 @@ PDK_URL = https://github.com/google/skywater-pdk
 ALPHA_URL = https://github.com/PaulSchulz/sky130_pschulz_xx_hd/archive/master.tar.gz
 XSCHEM_URL = https://github.com/StefanSchippers/xschem_sky130/archive/main.tar.gz
 SRAM_URL = https://github.com/efabless/sky130_sram_macros/archive/main.tar.gz
-OSU_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc/+archive/refs/heads/master.tar.gz
-OSU_T12_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t12/+archive/refs/heads/master.tar.gz
-OSU_T15_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t15/+archive/refs/heads/master.tar.gz
-OSU_T18_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t18/+archive/refs/heads/master.tar.gz
+OSU_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc/+archive/refs/heads/main.tar.gz
+OSU_T12_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t12/+archive/refs/heads/main.tar.gz
+OSU_T15_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t15/+archive/refs/heads/main.tar.gz
+OSU_T18_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t18/+archive/refs/heads/main.tar.gz
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
