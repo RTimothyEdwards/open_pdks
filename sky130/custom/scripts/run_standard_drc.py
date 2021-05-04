@@ -1,4 +1,19 @@
-#!/bin/env python3
+#!/usr/bin/env python3
+# Copyright 2020 R. Timothy Edwards
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# SPDX-License-Identifier: Apache-2.0
 #-------------------------------------------------------------------------
 # run_standard_drc.py ---  A script to run magic in batch mode and apply
 # full DRC checks on a layout.  This inclues full DRC but excludes
@@ -116,7 +131,8 @@ def run_full_drc(layout_name, output_file):
         scriptpath = magpath
 
     print('Evaluating full DRC results for layout ' + layout_name)
-    with open(scriptpath + '/run_magic_drc.tcl', 'w') as ofile:
+    magic_script = scriptpath + "/run_magic_drc_%s.tcl" % os.path.basename(layout_name)
+    with open(magic_script, 'w') as ofile:
         print('# run_magic_drc.tcl ---', file=ofile)
         print('#    batch script for running DRC', file=ofile)
         print('', file=ofile)
@@ -159,10 +175,10 @@ def run_full_drc(layout_name, output_file):
 
     # Run the DRC Tcl script
 
-    print('Running: magic -dnull -noconsole -rcfile ' + rcfile + ' run_magic_drc.tcl')
+    print('Running: magic -dnull -noconsole -rcfile ' + rcfile + ' ' + magic_script)
     print('Running in directory: ' + magpath)
     mproc = subprocess.run(['magic', '-dnull', '-noconsole', '-rcfile',
-		rcfile, scriptpath + '/run_magic_drc.tcl'],
+		rcfile, magic_script],
 		env = myenv, cwd = magpath,
 		stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
 		stderr = subprocess.PIPE, universal_newlines = True)
