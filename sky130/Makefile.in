@@ -524,7 +524,7 @@ magic-a: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${
 	rm -f ${MAGIC_STAGING_A}/${SKY130A}.tcl
 	rm -f ${MAGIC_STAGING_A}/${SKY130A}-BindKeys
 	rm -f ${MAGIC_STAGING_A}/magicrc
-	if "${EF_STYLE}" == "1" ; then \
+	if test "${EF_STYLE}" == "1" ; then \
 	    (cd ${MAGICTOP_STAGING_A} ; ln -s ${REV_DIR} current) ; \
 	fi
 	cp -rp custom/scripts/seal_ring_generator ${MAGIC_STAGING_A}/.

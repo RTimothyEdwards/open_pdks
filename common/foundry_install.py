@@ -975,7 +975,7 @@ if __name__ == '__main__':
                     create_lef_library(destlibdir, compname, do_compile_only, excludelist)
 
                 if do_compile_only == True:
-                    if newname:
+                    if newname and targname:
                         if os.path.isfile(targname):
                             os.remove(targname)
 
@@ -1082,6 +1082,7 @@ if __name__ == '__main__':
             for item in option:
                 if item.split('=')[0] == 'options':
                     tclscript = item.split('=')[1]
+                    tcllines = []
                     print('Adding Tcl script options from file ' + tclscript)
 
 	# Option 'noconvert' is a standalone keyword.
@@ -1125,6 +1126,16 @@ if __name__ == '__main__':
  
     devlist = []
     pdklibrary = None
+
+    if tclscript:
+        # If tclscript is a file, then read it.  Otherwise, assume
+        # that the option contents should be inserted verbatim.
+        if os.path.isfile(tclscript):
+            with open(tclscript, 'r') as ifile:
+                tcllines = ifile.read().splitlines()
+        else:
+            tcllines = list(tclscript)
+
 
     if have_gds and not no_gds_convert:
         print("Migrating GDS files to layout.")
@@ -1235,15 +1246,6 @@ if __name__ == '__main__':
                 # .mag files from the database.
 
                 print('Creating magic generation script to generate magic database files.') 
-                if tclscript:
-                    # If tclscript is a file, then read it.  Otherwise, assume
-                    # that the option contents should be inserted verbatim.
-                    if os.path.isfile(tclscript):
-                        with open(tclscript, 'r') as ifile:
-                            tcllines = ifile.read().splitlines()
-                    else:
-                        tcllines = list(tclscript)
-
                 with open(destlibdir + '/generate_magic.tcl', 'w') as ofile:
                     print('#!/usr/bin/env wish', file=ofile)
                     print('#--------------------------------------------', file=ofile)
