@@ -116,8 +116,10 @@ for infile_name in filelist:
     infile.close()
     outfile.close()
     if replaced_something:
-        print("Something was replaced in '{}', backed up original file and replaced with processed one.".format(infile_name))
-        os.rename(infile_name, infile_name + '.orig')
+        # print("Something was replaced in '{}', backed up original file"
+        #	+ " and replaced with processed one.".format(infile_name))
+        print("Something was replaced in '{}'".format(infile_name))
+        # os.rename(infile_name, infile_name + '.orig')
         os.rename(outfile_name, infile_name)
     else:
         print("Nothing was replaced in '{}'.".format(infile_name))

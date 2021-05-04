@@ -749,14 +749,21 @@ primitive-a:
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Parse the (commented out) statistics blocks and generate
 	# ngspice-compatible monte carlo parameters for mismatch and process
-	# (currently under test)
-	# ./custom/scripts/mismatch_params.py \
-	#	2>&1 | tee -a ${SKY130A}_make.log || true
-	# ./custom/scripts/mismatch_params.py \
-	#	${STAGING_PATH}/${SKY130A}/libs.tech/ngspice \
-	#	2>&1 | tee -a ${SKY130A}_make.log || true
-	# ./custom/scripts/process_params.py \
-	#	2>&1 | tee -a ${SKY130A}_make.log || true
+	./custom/scripts/mismatch_params.py \
+		2>&1 | tee -a ${SKY130A}_make.log || true
+	./custom/scripts/mismatch_params.py \
+		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice \
+		2>&1 | tee -a ${SKY130A}_make.log || true
+	./custom/scripts/process_params.py \
+		2>&1 | tee -a ${SKY130A}_make.log || true
+	# Custom:  Add "mc" section to sky130.lib.spice
+	head -n-1 ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice \
+		| ${SED} -e '/^\.lib/a.param mc_pr_switch=0' \
+		> ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice.head
+	cat ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice.head \
+		custom/models/sky130.lib.spice.extra > \
+		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice
+	rm ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice.head
 
 	# Custom:  Add "spinit" file
 	cat ./custom/models/spinit >> \

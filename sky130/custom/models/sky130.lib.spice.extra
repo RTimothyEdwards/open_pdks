@@ -1,0 +1,12 @@
+
+* Monte Carlo process variation
+
+.lib mc
+
+.param mc_mm_switch=0
+.param mc_pr_switch=1
+
+.include "parameters/critical.spice"
+.include "parameters/montecarlo.spice"
+
+.endl
