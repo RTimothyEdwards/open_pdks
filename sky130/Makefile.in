@@ -738,11 +738,6 @@ primitive-a:
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A} \
 		< custom/patches/sky130_fd_pr_2.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
-	# Custom:  Patch the models to remove the substrate pin from the PNP
-	# device, which has no independent substrate pin (collector=substrate)
-	patch -p4 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${PR_SPICE} \
-		< custom/patches/sky130_fd_pr_3.patch \
-		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Patch the ngspice models to add the HV diffusion resistor subcircuits
 	patch -p2 -f -d ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice \
 		< custom/patches/sky130_fd_pr_5.patch \
@@ -755,6 +750,11 @@ primitive-a:
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice \
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	./custom/scripts/process_params.py \
+		2>&1 | tee -a ${SKY130A}_make.log || true
+	# Custom:  Patch the models to remove the substrate pin from the PNP
+	# device, which has no independent substrate pin (collector=substrate)
+	patch -p4 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${PR_SPICE} \
+		< custom/patches/sky130_fd_pr_3.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Add "mc" section to sky130.lib.spice
 	head -n-1 ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice \

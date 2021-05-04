@@ -9,8 +9,8 @@ diff -Naur sky130A/libs.ref/sky130_fd_pr/spice/sky130_fd_pr__pnp_05v5_W0p68L0p68
 +.subckt  sky130_fd_pr__pnp_05v5_W0p68L0p68 c b e
  + 
  .param  mult = 1.0
- + sky130_fd_pr__pnp_05v5_W0p68L0p68__bf_mm = {(19.35*dkbfpp*MC_SWITCH*AGAUSS(0,0.05537,1)/sqrt(mult))}
- + sky130_fd_pr__pnp_05v5_W0p68L0p68__is_mm = {(1.5075e-018*dkispp*MC_SWITCH*AGAUSS(0,0.01662,1)/sqrt(mult))}
+ + sky130_fd_pr__pnp_05v5_W0p68L0p68__bf_mm = {(19.35*dkbfpp*MC_MM_SWITCH*AGAUSS(0,0.05537,1)/sqrt(mult))}
+ + sky130_fd_pr__pnp_05v5_W0p68L0p68__is_mm = {(1.5075e-018*dkispp*MC_MM_SWITCH*AGAUSS(0,0.01662,1)/sqrt(mult))}
 -qsky130_fd_pr__pnp_05v5_W0p68L0p68 c b e s sky130_fd_pr__pnp_05v5_W0p68L0p68__model
 +qsky130_fd_pr__pnp_05v5_W0p68L0p68 c b e c sky130_fd_pr__pnp_05v5_W0p68L0p68__model
  .model sky130_fd_pr__pnp_05v5_W0p68L0p68__model pnp level = 1.0
