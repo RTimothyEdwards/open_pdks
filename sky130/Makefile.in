@@ -712,9 +712,16 @@ primitive-a:
 		-ngspice sky130_fd_pr/latest/models/* \
 		filter=custom/scripts/rename_models.py \
 		2>&1 | tee -a ${SKY130A}_make.log
+	# Install device layouts from custom sources 
+	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
+		-gds sky130_fd_pr/*.gds \
+			options=custom/scripts/gds_import_setup.tcl \
+		-library primitive sky130_fd_pr 2>&1 | tee -a ${SKY130A}_make.log
 	# Install base device library from vendor files
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-gds %l/latest/cells/*/*.gds compile-only \
+		-gds %l/latest/cells/*/*.gds \
+			exclude=sky130_fd_pr__pnp_05v5_W3p40L3p40.gds \
+			compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 		-cdl %l/latest/cells/*/*.cdl compile-only \
 		-lef %l/latest/cells/*/*.magic.lef compile-only \

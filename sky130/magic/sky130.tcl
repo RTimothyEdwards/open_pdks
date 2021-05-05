@@ -111,6 +111,8 @@ proc sky130::addtechmenu {framename} {
 	    "magic::gencell sky130::sky130_fd_pr__rf_npn_05v5_W1p00L1p00" pdk1
    magic::add_toolkit_command $layoutframe "NPN 1.0 x 2.0" \
 	    "magic::gencell sky130::sky130_fd_pr__rf_npn_05v5_W1p00L2p00" pdk1
+   magic::add_toolkit_command $layoutframe "PNP 0.68 x 0.68" \
+	    "magic::gencell sky130::sky130_fd_pr__pnp_05v5_W0p68L0p68" pdk1
    magic::add_toolkit_command $layoutframe "PNP 3.4 x 3.4" \
 	    "magic::gencell sky130::sky130_fd_pr__pnp_05v5_W3p40L3p40" pdk1
 
@@ -6390,6 +6392,7 @@ proc sky130::sky130_fd_pr__cap_var_check {parameters} {
 # sky130_fd_pr__rf_npn_05v5_W1p00L1p00
 # sky130_fd_pr__rf_npn_05v5_W1p00L2p00
 # sky130_fd_pr__pnp_05v5_W3p40L3p40
+# sky130_fd_pr__pnp_05v5_W0p68L0p68
 #
 # Parallel Plate Capacitors:
 #
@@ -6409,6 +6412,10 @@ proc sky130::sky130_fd_pr__rf_npn_05v5_W1p00L1p00_defaults {} {
 }
 proc sky130::sky130_fd_pr__rf_npn_05v5_W1p00L2p00_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 7.03 ystep 8.03}
+}
+
+proc sky130::sky130_fd_pr__pnp_05v5_W0p68L0p68_defaults {} {
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 3.72 ystep 3.72}
 }
 
 proc sky130::sky130_fd_pr__pnp_05v5_W3p40L3p40_defaults {} {
@@ -6461,6 +6468,10 @@ proc sky130::sky130_fd_pr__rf_npn_05v5_W1p00L1p00_convert {parameters} {
 }
 
 proc sky130::sky130_fd_pr__rf_npn_05v5_W1p00L2p00_convert {parameters} {
+    return [sky130::fixed_convert $parameters]
+}
+
+proc sky130::sky130_fd_pr__pnp_05v5_W0p68L0p68_convert {parameters} {
     return [sky130::fixed_convert $parameters]
 }
 
@@ -6544,6 +6555,10 @@ proc sky130::sky130_fd_pr__rf_npn_05v5_W1p00L2p00_dialog {parameters} {
     sky130::fixed_dialog $parameters
 }
 
+proc sky130::sky130_fd_pr__pnp_05v5_W0p68L0p68_dialog {parameters} {
+    sky130::fixed_dialog $parameters
+}
+
 proc sky130::sky130_fd_pr__pnp_05v5_W3p40L3p40_dialog {parameters} {
     sky130::fixed_dialog $parameters
 }
@@ -6617,6 +6632,10 @@ proc sky130::sky130_fd_pr__rf_npn_05v5_W1p00L1p00_draw {parameters} {
 
 proc sky130::sky130_fd_pr__rf_npn_05v5_W1p00L2p00_draw {parameters} {
     return [sky130::fixed_draw sky130_fd_pr__rf_npn_05v5_W1p00L2p00 $parameters]
+}
+
+proc sky130::sky130_fd_pr__pnp_05v5_W0p68L0p68_draw {parameters} {
+    return [sky130::fixed_draw sky130_fd_pr__pnp_05v5_W0p68L0p68 $parameters]
 }
 
 proc sky130::sky130_fd_pr__pnp_05v5_W3p40L3p40_draw {parameters} {
