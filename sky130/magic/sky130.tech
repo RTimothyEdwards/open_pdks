@@ -2586,6 +2586,7 @@ style  sky130 variants (),(vendor)
 
  # Always force nwell under pfet (nwell encloses pdiff by 0.18)
  layer nwell pfetarea
+ and-not COREID
  grow 180
 
  # Copy mvpdiff areas up for contact checks
