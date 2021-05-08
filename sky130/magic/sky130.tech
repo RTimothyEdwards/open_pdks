@@ -63,9 +63,9 @@ end
 # sky130_fd_pr__diode_pd2nw_05v5_lvt pdiodelvt	low Vt p+ diff diode
 # sky130_fd_pr__diode_pd2nw_05v5_hvt pdiodehvt	high Vt p+ diff diode
 # sky130_fd_pr__diode_pd2nw_11v0 mvpdiode	thickox p+ diff diode
-# sky130_fd_pr__npn_05v0	pbase		NPN in deep nwell
+# sky130_fd_pr__npn_05v5	pbase		NPN in deep nwell
 # sky130_fd_pr__npn_11v0	pbase		thick oxide gated NPN
-# sky130_fd_pr__pnp_05v0	nbase		PNP
+# sky130_fd_pr__pnp_05v5	nbase		PNP
 # sky130_fd_pr__cap_mim_m3_1	mimcap		MiM cap 1st plate
 # sky130_fd_pr__cap_mim_m3_2	mimcap2		MiM cap 2nd plate
 # sky130_fd_pr__res_generic_nd	rdn		n+ diff resistor
@@ -5286,8 +5286,8 @@ variants (),(si)
 	*mvnndiff nwell error l=l w=w a1=as a2=ad p1=ps p2=pd
 
  # Bipolars
- device msubcircuit sky130_fd_pr__npn_05v0 npn *ndiff dnwell space/w error a2=area
- device msubcircuit sky130_fd_pr__pnp_05v0 pnp *pdiff pwell,space/w a2=area
+ device msubcircuit sky130_fd_pr__npn_05v5 npn *ndiff dnwell space/w error a2=area
+ device msubcircuit sky130_fd_pr__pnp_05v5 pnp *pdiff pwell,space/w a2=area
  device msubcircuit sky130_fd_pr__npn_11v0 npn *mvndiff dnwell space/w error a2=area
 
  # Ignore the extended-drain FET geometry that forms part of the high-voltage
