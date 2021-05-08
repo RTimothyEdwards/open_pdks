@@ -4223,7 +4223,7 @@ variants (fast),(full)
  cifmaxwidth rpm_hvntm_check 0 bend_illegal \
 	"Distance from precision resistor to MV N+ device < 0.585um (rpm.3 + rpm.9 + hvntm.3)"
 
- variants (fast,full)
+ variants (fast),(full)
 
  angles allpoly,polyfill 90 "Only 90 degree angles permitted on poly (x.2)"
 
