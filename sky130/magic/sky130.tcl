@@ -184,9 +184,9 @@ proc sky130::addtechmenu {framename} {
 #endif (METAL5)
 
 #ifdef MIM
-   magic::add_toolkit_command $layoutframe "MiM cap - 1fF/um^2 (metal3)" \
+   magic::add_toolkit_command $layoutframe "MiM cap - 2fF/um^2 (metal3)" \
 	    "magic::gencell sky130::sky130_fd_pr__cap_mim_m3_1" pdk2
-   magic::add_toolkit_command $layoutframe "MiM cap - 1fF/um^2 (metal4)" \
+   magic::add_toolkit_command $layoutframe "MiM cap - 2fF/um^2 (metal4)" \
 	    "magic::gencell sky130::sky130_fd_pr__cap_mim_m3_2" pdk2
 #endif (MIM)
    magic::add_toolkit_separator	$layoutframe pdk2
@@ -1427,13 +1427,13 @@ proc sky130::sky130_fd_pr__diode_pd2nw_11v0_draw {parameters} {
 
 #ifdef MIM
 proc sky130::sky130_fd_pr__cap_mim_m3_1_defaults {} {
-    return {w 2.00 l 2.00 val 4.0 carea 1.00 cperi 0.17 \
+    return {w 2.00 l 2.00 val 8.0 carea 2.00 cperi 0.19 \
 		nx 1 ny 1 dummy 0 square 0 lmin 2.00 wmin 2.00 \
 		lmax 30.0 wmax 30.0 dc 0 bconnect 1 tconnect 1 \
 		ccov 100}
 }
 proc sky130::sky130_fd_pr__cap_mim_m3_2_defaults {} {
-    return {w 2.00 l 2.00 val 4.0 carea 1.00 cperi 0.17 \
+    return {w 2.00 l 2.00 val 8.0 carea 2.00 cperi 0.19 \
 		nx 1 ny 1 dummy 0 square 0 lmin 2.00 wmin 2.00 \
 		lmax 30.0 wmax 30.0 dc 0 bconnect 1 tconnect 1 \
 		ccov 100}
