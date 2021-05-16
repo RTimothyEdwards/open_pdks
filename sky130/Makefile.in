@@ -827,6 +827,7 @@ digital-a:
 		-techlef %l/latest/tech/*.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=custom/scripts/sort_pdkfiles.py \
+			filter=custom/scripts/fix_device_models.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			sort=custom/scripts/sort_pdkfiles.py \
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
