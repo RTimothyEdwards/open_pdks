@@ -76,22 +76,6 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
 		AC_MSG_NOTICE([PDK 'pdk' will be downloaded automatically during make.])
 	    fi
 
-            # --with-pdk-local-path=PDK_LOCAL_PATH
-            AC_ARG_WITH(pdk-local-path,
-                [AS_HELP_STRING([--with-pdk-local-path=/path/to/install/pdk], "run-time location of the PDK")],
-                [pdkvar[]_LOCAL_PATH=$withval]
-            )
-            
-            # Require this argument
-            AC_MSG_NOTICE([Checking whether local path is specified for 'pdk'])
-            if test "x$[]pdkvar[]_LOCAL_PATH" == "x" ; then
-                AC_MSG_ERROR([Option --with-pdk-local-path=<path> not specified!])
-                pdkvar[]_LOCAL_PATH=""
-            else
-            	AC_MSG_NOTICE([Install path for 'pdk' is $[]pdkvar[]_LOCAL_PATH])
-                pdkvar[]_LOCAL_PATH=`realpath $[]pdkvar[]_LOCAL_PATH`
-            fi
-
             # --with-pdk-dist-path=PDK_DIST_PATH
             AC_ARG_WITH(pdk-dist-path,
                 [AS_HELP_STRING([--with-pdk-dist-path=/path/to/install/pdk], "staging location to install the PDK for distribution (optional)")],
@@ -105,6 +89,25 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
                 pdkvar[]_DIST_PATH=""
             else
                 pdkvar[]_DIST_PATH=`realpath $[]pdkvar[]_DIST_PATH`
+            fi
+
+            # --with-pdk-local-path=PDK_LOCAL_PATH
+            AC_ARG_WITH(pdk-local-path,
+                [AS_HELP_STRING([--with-pdk-local-path=/path/to/install/pdk], "run-time location of the PDK")],
+                [pdkvar[]_LOCAL_PATH=$withval]
+            )
+            
+            # Require this argument
+            AC_MSG_NOTICE([Checking whether local path is specified for 'pdk'])
+            if test "x$[]pdkvar[]_LOCAL_PATH" == "x" ; then
+                AC_MSG_ERROR([Option --with-pdk-local-path=<path> not specified!])
+                pdkvar[]_LOCAL_PATH=""
+            else
+            	AC_MSG_NOTICE([Install path for 'pdk' is $[]pdkvar[]_LOCAL_PATH])
+		# If dist-path is specified then do not try to expand local-path
+		if test "$[]pdkvar[]_DIST_PATH" == "" ; then
+		    pdkvar[]_LOCAL_PATH=`realpath $[]pdkvar[]_LOCAL_PATH`
+		fi
             fi
 
             # --with-pdk-link-targets=PDK_LINK_TARGETS

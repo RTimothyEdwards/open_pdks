@@ -47,8 +47,8 @@ set ::env(GPIO_PADS_LEF_CORE_SIDE) "\
 
 # magic setup
 #ifdef EF_FORMAT
-set ::env(MAGIC_MAGICRC) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/20200508/TECHNAME.magicrc"
-set ::env(MAGIC_TECH_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/20200508/TECHNAME.tech"
+set ::env(MAGIC_MAGICRC) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/current/TECHNAME.magicrc"
+set ::env(MAGIC_TECH_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/current/TECHNAME.tech"
 #else (!EF_FORMAT)
 set ::env(MAGIC_MAGICRC) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/TECHNAME.magicrc"
 set ::env(MAGIC_TECH_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/TECHNAME.tech"
