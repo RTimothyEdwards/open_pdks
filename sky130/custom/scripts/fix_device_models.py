@@ -40,10 +40,16 @@ def filter(inname, outname):
         # Check for incorrect resistor reference
         smatch = shortrex.match(line)
         if dmatch:
-            fixedlines.append(re.sub('pw2nd', 'pw2nd_05v5', line))
+            fline = re.sub('pw2nd', 'pw2nd_05v5', line)
+            fline = re.sub('^X', 'D', fline)
+            fline = re.sub('a=', 'area=', fline)
+            fline = re.sub('p=', 'pj=', fline)
+            fixedlines.append(fline)
             modified = True
         elif smatch:
-            fixedlines.append(re.sub('short', 'sky130_fd_pr__res_generic_po', line))
+            fline = re.sub('short', 'sky130_fd_pr__res_generic_po', line)
+            fline = re.sub('^X', 'R', fline)
+            fixedlines.append(fline)
             modified = True
         else:
             fixedlines.append(line)
