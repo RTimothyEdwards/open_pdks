@@ -397,6 +397,7 @@ ifeq (${EF_STYLE}, 1)
 	MLXX_SCRIPTS = scripts/sky130_ml_xx_hd
 	PR_SPICE = spi/sky130_fd_pr
 	HVL_SPICE = spi/sky130_fd_sc_hvl
+	HVL_PATCH4 = 4b
 	HVL_CDL = cdl/sky130_fd_sc_hvl
 else
 	IO_VERILOG = sky130_fd_io/verilog
@@ -412,6 +413,7 @@ else
 	MLXX_SCRIPTS = sky130_ml_xx_hd/scripts
 	PR_SPICE = sky130_fd_pr/spice
 	HVL_SPICE = sky130_fd_sc_hvl/spice
+	HVL_PATCH4 = 4
 	HVL_CDL = sky130_fd_sc_hvl/cdl
 endif
 
@@ -875,7 +877,7 @@ digital-a:
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Patch the HVL library to correct the resistor device names
 	patch -p3 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HVL_SPICE} \
-		< custom/patches/sky130_fd_pr_4.patch \
+		< custom/patches/sky130_fd_pr_${HVL_PATCH4}.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	patch -p3 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HVL_CDL} \
 		< custom/patches/sky130_fd_pr_6.patch \

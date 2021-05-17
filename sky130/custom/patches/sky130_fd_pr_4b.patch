@@ -1,0 +1,14 @@
+diff -Naur libs.ref/spi/sky130_fd_sc_hvl/sky130_fd_sc_hvl.spi libs.ref.fixed/spi/sky130_fd_sc_hvl/sky130_fd_sc_hvl.spi
+--- libs.ref/spi/sky130_fd_sc_hvl/sky130_fd_sc_hvl.spi	2021-04-27 15:36:47.000000000 -0400
++++ libs.ref.fixed/spi/sky130_fd_sc_hvl/sky130_fd_sc_hvl.spi	2021-04-29 13:47:15.748574423 -0400
+@@ -1860,8 +1860,8 @@
+ .subckt sky130_fd_sc_hvl__schmittbuf_1 A VGND VNB VPB VPWR X
+ X0 a_117_181# A a_231_463# VPB sky130_fd_pr__pfet_g5v0d10v5 w=750000u l=500000u
+ X1 a_117_181# A a_217_207# VNB sky130_fd_pr__nfet_g5v0d10v5 w=420000u l=500000u
+-X2 a_78_463# VGND VNB mrdn_hv w=290000u l=1.355e+06u
+-X3 a_64_207# VPWR VPB mrdp_hv w=290000u l=3.11e+06u
++X2 a_78_463# VGND VNB sky130_fd_pr__res_generic_nd__hv w=290000u l=1.355e+06u
++X3 a_64_207# VPWR VPB sky130_fd_pr__res_generic_pd__hv w=290000u l=3.11e+06u
+ X4 a_231_463# A VPWR VPB sky130_fd_pr__pfet_g5v0d10v5 w=750000u l=500000u
+ X5 a_64_207# a_117_181# a_217_207# VNB sky130_fd_pr__nfet_g5v0d10v5 w=420000u l=500000u
+ X6 VGND a_117_181# X VNB sky130_fd_pr__nfet_g5v0d10v5 w=750000u l=500000u
