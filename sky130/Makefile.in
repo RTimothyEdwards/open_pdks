@@ -706,7 +706,49 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	${CPP} -quiet ${SKY130A_DEFS} openlane/sky130_osu_sc_t18/tracks.info \
 		${OPENLANE_STAGING_A}/sky130_osu_sc_t18/tracks.info
 
-vendor-a: primitive-a io-a digital-a alpha-a sram-a osu-base-a osu-t12-a osu-t15-a osu-t18-a
+vendor-a:
+	# Build targets conditionally based on what repositories or submodules
+	# were selected or initialized.  To be done:  Allow a library version
+	# to be specified that overrides "latest".
+	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_pr/latest/cells ; then \
+		echo "Building primitives library and simulation models" ;\
+		make primitive-a;\
+	fi
+	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells ; then \
+		echo "Building padframe I/O libraries" ;\
+		make io-a ;\
+	fi
+	# This assumes that at least the HD library submodule exists.  Also it
+	# assumes that the same library version is used for all libraries, which
+	# is fine with "latest" but otherwise probably invalid.
+	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_hd/latest/cells ; then \
+		echo "Building digital standard cell libraries" ;\
+		make digital-a ;\
+	fi
+	if test -d ${ALPHA_PATH} ; then \
+		echo "Building alphanumeric layout libraries" ;\
+		make alpha-a ;\
+	fi
+	if test -d ${SRAM_PATH} ; then \
+		echo "Building SRAM macro library" ;\
+		make sram-a ;\
+	fi
+	if test -d ${OSU_PATH} ; then \
+		echo "Building OSU full source library" ;\
+		make osu-base-a ;\
+	fi
+	if test -d ${OSU_T12_PATH} ; then \
+		echo "Building OSU 12-track-high standard cell library" ;\
+		make osu-t12-a ;\
+	fi
+	if test -d ${OSU_T15_PATH} ; then \
+		echo "Building OSU 15-track-high standard cell library" ;\
+		make osu-t15-a ;\
+	fi
+	if test -d ${OSU_T18_PATH} ; then \
+		echo "Building OSU 18-track-high standard cell library" ;\
+		make osu-t18-a ;\
+	fi
 
 primitive-a:
 	# Install device subcircuits from vendor files
