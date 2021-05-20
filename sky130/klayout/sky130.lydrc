@@ -45,7 +45,7 @@ backend_flow = AL
 # enable / disable rule groups
 FEOL    = false # front-end-of-line checks
 BEOL    = true # back-end-of-line checks
-OFFGRID = false # manufacturing grid/angle checks
+OFFGRID = true # manufacturing grid/angle checks
 
 # klayout setup
 ########################
