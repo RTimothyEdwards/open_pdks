@@ -746,6 +746,7 @@ proc sky130::compute_aptot {parameters} {
 
 proc sky130::diode_check {parameters} {
 
+    set guard 0
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
         set $key [dict get $parameters $key]

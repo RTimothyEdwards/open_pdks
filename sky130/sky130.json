@@ -45,7 +45,10 @@
 	"sky130_fd_sc_lp",
 	"sky130_fd_sc_ls",
 	"sky130_fd_sc_ms",
-	"sky130_osu130"
+	"sky130_osu_sc",
+	"sky130_osu_sc_t12",
+	"sky130_osu_sc_t15",
+	"sky130_osu_sc_t18"
     ],
     "iocells" : [
         "sky130_fd_io"
