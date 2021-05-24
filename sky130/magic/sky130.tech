@@ -1468,6 +1468,13 @@ style drc
  templayer mim2_bottom
  bloat-all *mimcap2 *metal4
 
+ # Define areas where mim2cc is inside the boundary of mimcc
+ # by more than the contact surround
+ templayer mim2_contact_overlap
+ bloat-all *mimcap2 mimcc
+ shrink 60
+ and-not *mimcap2
+
  # Note that metal fill is performed by the foundry and so is not
  # an option for a cifoutput style.
 
@@ -4767,12 +4774,15 @@ variants (fast),(full)
 
  surround *mimcap2 *metal4/m4 140 absence_illegal \
 	"Metal4 must surround MiM2 cap by %d (cap2m.3)"
- spacing via3,mimcc *mimcap2 80 touching_illegal \
+ spacing via3 *mimcap2 80 touching_illegal \
 	"MiM2 cap spacing to via3 < %d (cap2m.8 - via3.4)"
  spacing *mimcap2 *metal4/m4 500 surround_ok \
 	"MiM2 cap spacing to unrelated metal4 < %d (cap2m.11)"
 
 variants (full)
+ cifmaxwidth mim2_contact_overlap 0 bend_illegal \
+	"MiM2 cap contact must not cross MiM cap contact (cap2m.8)"
+ 
  cifspacing mim2_bottom mim2_bottom 1200 touching_ok \
  	"MiM2 cap bottom plate spacing < %d (cap2m.2b)"
 variants (fast),(full)
