@@ -811,6 +811,8 @@ primitive-a:
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	./custom/scripts/process_params.py \
 		2>&1 | tee -a ${SKY130A}_make.log || true
+	./custom/scripts/montecarlo_hack.py \
+		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Add "mc" section to sky130.lib.spice
 	head -n-1 ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice \
 		| ${SED} -e '/^\.lib/a.param mc_pr_switch=0' \

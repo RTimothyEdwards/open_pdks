@@ -25,17 +25,6 @@ endrex = re.compile('^\*[ \t]*\}')
 
 filelist = []
 
-# Manual hack---flag all parameters that have the same name as devices.
-# These parameters are unused and must be deleted.
-
-excludelist = ['sky130_fd_pr__nfet_20v0_nvt', 'sky130_fd_pr__nfet_20v0_nvt_iso',
-	'sky130_fd_pr__nfet_20v0', 'sky130_fd_pr__nfet_20v0_iso',
-	'sky130_fd_pr__nfet_20v0_zvt', 'sky130_fd_pr__pfet_20v0',
-	'sky130_fd_pr__nfet_01v8_lvt', 'sky130_fd_pr__special_nfet_pass_lvt',
-	'sky130_fd_pr__nfet_g5v0d16v0', 'sky130_fd_pr__pfet_01v8_mvt',
-	'sky130_fd_pr__pnp_05v5_W0p68L0p68', 'sky130_fd_pr__pfet_01v8',
-	'sky130_fd_pr__pfet_g5v0d16v0']
-
 #--------------------------------------------------------------------
 # Step 1.  Gather variables
 #--------------------------------------------------------------------
@@ -68,15 +57,8 @@ for dirpath, dirnames, filenames in os.walk(walkpath):
                         if 'vary' in tokens:
                             if ('dist=gauss' in tokens) or ('gauss' in tokens):
                                 process_param = tokens[2]
-                                # Issue:  There are improper parameters that
-                                # shadow device names.  They are not used and
-                                # should be detected and elminated.
-                                if (process_param in excludelist):
-                                    print('Found parameter ' + process_param + ' that shadows a device name.')
-                                    replacement = ''
-                                else:
-                                    std_dev = float(tokens[-1].split('=')[-1])
-                                    replacement = ' + {}*AGAUSS(0,{!s},1)'.format(pr_switch_param, std_dev)
+                                std_dev = float(tokens[-1].split('=')[-1])
+                                replacement = ' + {}*AGAUSS(0,{!s},1)'.format(pr_switch_param, std_dev)
                                 process_params.append((process_param, replacement))
 
             infile.close()
@@ -125,12 +107,9 @@ for infile_name in filelist:
                     newline = line
                     for (param, replacement) in process_params:
                         if ' ' + param + ' ' in newline:
+                            newline = newline.strip('\n') + replacement + '\n'
+                            print("  Line {}: Found process parameter '{}' and appended '{}'.".format(line_number, param, replacement))
                             replaced_something = True
-                            if replacement == '':
-                                newline = '** ' + newline
-                            else:
-                                newline = newline.strip('\n') + replacement + '\n'
-                                print("  Line {}: Found process parameter '{}' and appended '{}'.".format(line_number, param, replacement))
                     outfile.write(newline)
                 else:
                     outfile.write(line)
