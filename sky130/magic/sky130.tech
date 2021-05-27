@@ -5316,6 +5316,7 @@ variants (),(si)
 	pwell,space/w +pnp0p68
  device msubcircuit sky130_fd_pr__pnp_05v5_W3p40L3p40 pnp *pdiff \
 	pwell,space/w +pnp3p40
+ device msubcircuit sky130_fd_pr__pnp_05v5 pnp *pdiff pwell,space/w a2=area
  device msubcircuit sky130_fd_pr__npn_11v0_W1p00L1p00 npn *mvndiff \
 	dnwell space/w error +npn11p0
  device msubcircuit sky130_fd_pr__npn_11v0 npn *mvndiff dnwell space/w error a2=area
