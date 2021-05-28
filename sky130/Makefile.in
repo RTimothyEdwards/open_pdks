@@ -821,6 +821,10 @@ primitive-a:
 		custom/models/sky130.lib.spice.extra > \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice
 	rm ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice.head
+	# Custom:  Add special device ID layers to bipolar layouts in magic
+	# to make the extraction models correct.
+	./custom/scripts/add_bipolar_ids.py \
+		2>&1 | tee -a ${SKY130A}_make.log || true
 
 	# Custom:  Add "spinit" file
 	cat ./custom/models/spinit >> \
