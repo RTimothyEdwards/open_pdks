@@ -11,7 +11,7 @@
 
 module sky130_ef_io__vccd_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
 	SRC_BDY_HVC, VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
-	VSSIO, VSSD, VSSIO_Q
+	VCCD_PAD, VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
   inout AMUXBUS_B;
@@ -22,6 +22,7 @@ module sky130_ef_io__vccd_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
   inout VDDIO_Q;
   inout VDDA;
   inout VCCD;
+  inout VCCD_PAD;
   inout VSWITCH;
   inout VCCHIB;
   inout VSSA;
@@ -41,7 +42,8 @@ module sky130_ef_io__vccd_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.P_PAD(VCCD),
+	.P_CORE(VCCD),
+	.P_PAD(PAD_VCCD),
 	.OGC_HVC(),
 	.AMUXBUS_A(AMUXBUS_A),
 	.AMUXBUS_B(AMUXBUS_B),
@@ -53,7 +55,7 @@ endmodule
 
 module sky130_ef_io__vccd_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 	DRN_LVC1, DRN_LVC2, SRC_BDY_LVC1, SRC_BDY_LVC2, BDY2_B2B,
-	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
+	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD, VCCD_PAD,
 	VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
@@ -68,6 +70,7 @@ module sky130_ef_io__vccd_lvc_pad (AMUXBUS_A, AMUXBUS_B,
   inout VDDIO_Q;	
   inout VDDA;
   inout VCCD;
+  inout VCCD_PAD;
   inout VSWITCH;
   inout VCCHIB;
   inout VSSA;
@@ -87,7 +90,8 @@ module sky130_ef_io__vccd_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.P_PAD(VCCD),
+	.P_CORE(VCCD),
+	.P_PAD(VCCD_PAD),
 	.OGC_LVC(),
 	.BDY2_B2B(BDY2_B2B),
 	.AMUXBUS_A(AMUXBUS_A),
@@ -102,7 +106,7 @@ endmodule
 
 module sky130_ef_io__vdda_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 	DRN_LVC1, DRN_LVC2, SRC_BDY_LVC1, SRC_BDY_LVC2, BDY2_B2B,
-	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
+	VSSA, VDDA, VDDA_PAD, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
 	VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
@@ -116,6 +120,7 @@ module sky130_ef_io__vdda_lvc_pad (AMUXBUS_A, AMUXBUS_B,
   inout VDDIO;	
   inout VDDIO_Q;	
   inout VDDA;
+  inout VDDA_PAD;
   inout VCCD;
   inout VSWITCH;
   inout VCCHIB;
@@ -136,7 +141,8 @@ module sky130_ef_io__vdda_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.P_PAD(VDDA),
+	.P_CORE(VDDA),
+	.P_PAD(VDDA_PAD),
 	.OGC_LVC(),
 	.BDY2_B2B(BDY2_B2B),
 	.AMUXBUS_A(AMUXBUS_A),
@@ -150,8 +156,8 @@ module sky130_ef_io__vdda_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 endmodule
 
 module sky130_ef_io__vdda_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
-	SRC_BDY_HVC,VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
-	VSSIO, VSSD, VSSIO_Q
+	SRC_BDY_HVC,VSSA, VDDA, VDDA_PAD, VSWITCH, VDDIO_Q, VCCHIB,
+	VDDIO, VCCD, VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
   inout AMUXBUS_B;
@@ -161,6 +167,7 @@ module sky130_ef_io__vdda_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
   inout VDDIO;	
   inout VDDIO_Q;	
   inout VDDA;
+  inout VDDA_PAD;
   inout VCCD;
   inout VSWITCH;
   inout VCCHIB;
@@ -181,7 +188,8 @@ module sky130_ef_io__vdda_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.P_PAD(VDDA),
+	.P_CORE(VDDA),
+	.P_PAD(VDDA_PAD),
 	.OGC_HVC(),
 	.AMUXBUS_A(AMUXBUS_A),
 	.AMUXBUS_B(AMUXBUS_B),
@@ -193,7 +201,7 @@ endmodule
 
 module sky130_ef_io__vddio_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 	DRN_LVC1, DRN_LVC2, SRC_BDY_LVC1, SRC_BDY_LVC2, BDY2_B2B,
-	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
+	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VDDIO_PAD, VCCD,
 	VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
@@ -205,6 +213,7 @@ module sky130_ef_io__vddio_lvc_pad (AMUXBUS_A, AMUXBUS_B,
   inout SRC_BDY_LVC2;
   inout BDY2_B2B;
   inout VDDIO;	
+  inout VDDIO_PAD;	
   inout VDDIO_Q;	
   inout VDDA;
   inout VCCD;
@@ -227,7 +236,8 @@ module sky130_ef_io__vddio_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.P_PAD(VDDIO),
+	.P_CORE(VDDIO),
+	.P_PAD(VDDIO_PAD),
 	.OGC_LVC(),
 	.BDY2_B2B(BDY2_B2B),
 	.AMUXBUS_A(AMUXBUS_A),
@@ -243,8 +253,8 @@ module sky130_ef_io__vddio_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 endmodule
 
 module sky130_ef_io__vddio_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
-	SRC_BDY_HVC,VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
-	VSSIO, VSSD, VSSIO_Q
+	SRC_BDY_HVC,VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO,
+	VDDIO_PAD, VCCD, VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
   inout AMUXBUS_B;
@@ -252,6 +262,7 @@ module sky130_ef_io__vddio_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
   inout DRN_HVC;
   inout SRC_BDY_HVC;
   inout VDDIO;	
+  inout VDDIO_PAD;	
   inout VDDIO_Q;	
   inout VDDA;
   inout VCCD;
@@ -274,7 +285,8 @@ module sky130_ef_io__vddio_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.P_PAD(VDDIO),
+	.P_CORE(VDDIO),
+	.P_PAD(VDDIO_PAD),
 	.OGC_HVC(),
 	.AMUXBUS_A(AMUXBUS_A),
 	.AMUXBUS_B(AMUXBUS_B),
@@ -289,7 +301,7 @@ endmodule
 module sky130_ef_io__vssd_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 	DRN_LVC1, DRN_LVC2, SRC_BDY_LVC1, SRC_BDY_LVC2, BDY2_B2B,
 	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
-	VSSIO, VSSD, VSSIO_Q
+	VSSIO, VSSD, VSSD_PAD, VSSIO_Q
 );
   inout AMUXBUS_A;
   inout AMUXBUS_B;
@@ -307,6 +319,7 @@ module sky130_ef_io__vssd_lvc_pad (AMUXBUS_A, AMUXBUS_B,
   inout VCCHIB;
   inout VSSA;
   inout VSSD;
+  inout VSSD_PAD;
   inout VSSIO_Q;
   inout VSSIO;
 
@@ -322,7 +335,8 @@ module sky130_ef_io__vssd_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.G_PAD(VSSD),
+	.G_CORE(VSSD),
+	.G_PAD(VSSD_PAD),
 	.OGC_LVC(),
 	.BDY2_B2B(BDY2_B2B),
 	.AMUXBUS_A(AMUXBUS_A),
@@ -337,7 +351,7 @@ endmodule
 
 module sky130_ef_io__vssd_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
 	SRC_BDY_HVC, VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
-	VSSIO, VSSD, VSSIO_Q
+	VSSIO, VSSD, VSSD_PAD, VSSIO_Q
 );
   inout AMUXBUS_A;
   inout AMUXBUS_B;
@@ -352,6 +366,7 @@ module sky130_ef_io__vssd_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
   inout VCCHIB;
   inout VSSA;
   inout VSSD;
+  inout VSSD_PAD;
   inout VSSIO_Q;
   inout VSSIO;
 
@@ -367,7 +382,8 @@ module sky130_ef_io__vssd_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.G_PAD(VSSD),
+	.G_CORE(VSSD),
+	.G_PAD(VSSD_PAD),
 	.OGC_HVC(),
 	.AMUXBUS_A(AMUXBUS_A),
 	.AMUXBUS_B(AMUXBUS_B),
@@ -380,7 +396,7 @@ endmodule
 module sky130_ef_io__vssio_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 	DRN_LVC1, DRN_LVC2, SRC_BDY_LVC1, SRC_BDY_LVC2, BDY2_B2B,
 	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
-	VSSIO, VSSD, VSSIO_Q
+	VSSIO, VSSIO_PAD, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
   inout AMUXBUS_B;
@@ -400,6 +416,7 @@ module sky130_ef_io__vssio_lvc_pad (AMUXBUS_A, AMUXBUS_B,
   inout VSSD;
   inout VSSIO_Q;
   inout VSSIO;
+  inout VSSIO_PAD;
 
   // Instantiate the underlying ground pad (connects G_PAD and VSSIO_Q to VSSIO)
   sky130_fd_io__top_ground_lvc_wpad sky130_fd_io__top_ground_lvc_base ( 
@@ -413,7 +430,8 @@ module sky130_ef_io__vssio_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.G_PAD(VSSIO),
+	.G_CORE(VSSIO),
+	.G_PAD(VSSIO_PAD),
 	.OGC_LVC(),
 	.BDY2_B2B(BDY2_B2B),
 	.AMUXBUS_A(AMUXBUS_A),
@@ -431,7 +449,7 @@ endmodule
 
 module sky130_ef_io__vssio_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
 	SRC_BDY_HVC,VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
-	VSSIO, VSSD, VSSIO_Q
+	VSSIO, VSSIO_PAD, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
   inout AMUXBUS_B;
@@ -448,6 +466,7 @@ module sky130_ef_io__vssio_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
   inout VSSD;
   inout VSSIO_Q;
   inout VSSIO;
+  inout VSSIO_PAD;
 
   // Instantiate the underlying ground pad (connects G_PAD and VSSIO_Q to VSSIO)
   sky130_fd_io__top_ground_hvc_wpad sky130_fd_io__top_ground_hvc_base ( 
@@ -461,7 +480,8 @@ module sky130_ef_io__vssio_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.G_PAD(VSSIO),
+	.G_CORE(VSSIO),
+	.G_PAD(VSSIO_PAD),
 	.OGC_HVC(),
 	.AMUXBUS_A(AMUXBUS_A),
 	.AMUXBUS_B(AMUXBUS_B),
@@ -475,7 +495,7 @@ endmodule
 
 module sky130_ef_io__vssa_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 	DRN_LVC1, DRN_LVC2, SRC_BDY_LVC1, SRC_BDY_LVC2, BDY2_B2B,
-	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
+	VSSA, VSSA_PAD, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
 	VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
@@ -493,6 +513,7 @@ module sky130_ef_io__vssa_lvc_pad (AMUXBUS_A, AMUXBUS_B,
   inout VSWITCH;
   inout VCCHIB;
   inout VSSA;
+  inout VSSA_PAD;
   inout VSSD;
   inout VSSIO_Q;
   inout VSSIO;
@@ -509,7 +530,8 @@ module sky130_ef_io__vssa_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.G_PAD(VSSA),
+	.G_CORE(VSSA),
+	.G_PAD(VSSA_PAD),
 	.OGC_LVC(),
 	.BDY2_B2B(BDY2_B2B),
 	.AMUXBUS_A(AMUXBUS_A),
@@ -523,8 +545,8 @@ module sky130_ef_io__vssa_lvc_pad (AMUXBUS_A, AMUXBUS_B,
 endmodule
 
 module sky130_ef_io__vssa_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
-	SRC_BDY_HVC,VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
-	VSSIO, VSSD, VSSIO_Q
+	SRC_BDY_HVC,VSSA, VSSA_PAD, VDDA, VSWITCH, VDDIO_Q, VCCHIB,
+	VDDIO, VCCD, VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
   inout AMUXBUS_B;
@@ -538,6 +560,7 @@ module sky130_ef_io__vssa_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
   inout VSWITCH;
   inout VCCHIB;
   inout VSSA;
+  inout VSSA_PAD;
   inout VSSD;
   inout VSSIO_Q;
   inout VSSIO;
@@ -554,7 +577,8 @@ module sky130_ef_io__vssa_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.G_PAD(VSSA),
+	.G_CORE(VSSA),
+	.G_PAD(VSSA_PAD),
 	.OGC_HVC(),
 	.AMUXBUS_A(AMUXBUS_A),
 	.AMUXBUS_B(AMUXBUS_B),
@@ -776,13 +800,14 @@ endmodule
 // sky130_ef_io__vddio_hvc_pad with HV clamp connections to VDDIO and VSSIO
 
 module sky130_ef_io__vddio_hvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
-	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
+	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VDDIO_PAD, VCCD,
 	VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
   inout AMUXBUS_B;
 
-  inout VDDIO;	
+  inout VDDIO;
+  inout VDDIO_PAD;
   inout VDDIO_Q;	
   inout VDDA;
   inout VCCD;
@@ -805,6 +830,7 @@ module sky130_ef_io__vddio_hvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
+	.P_CORE(VDDIO_PAD),
 	.P_PAD(VDDIO),
 	.OGC_HVC(),
 	.AMUXBUS_A(AMUXBUS_A),
@@ -821,7 +847,7 @@ endmodule
 
 module sky130_ef_io__vssio_hvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
 	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
-	VSSIO, VSSD, VSSIO_Q
+	VSSIO, VSSIO_PAD, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
   inout AMUXBUS_B;
@@ -836,6 +862,7 @@ module sky130_ef_io__vssio_hvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
   inout VSSD;
   inout VSSIO_Q;
   inout VSSIO;
+  inout VSSIO_PAD;
 
   // Instantiate the underlying ground pad (connects G_PAD and VSSIO_Q to VSSIO)
   sky130_fd_io__top_ground_hvc_wpad sky130_fd_io__top_ground_hvc_base ( 
@@ -849,7 +876,8 @@ module sky130_ef_io__vssio_hvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.G_PAD(VSSIO),
+	.G_CORE(VSSIO),
+	.G_PAD(VSSIO_PAD),
 	.OGC_HVC(),
 	.AMUXBUS_A(AMUXBUS_A),
 	.AMUXBUS_B(AMUXBUS_B),
@@ -864,7 +892,7 @@ endmodule
 // sky130_ef_io__vdda_hvc_pad with HV clamp connections to VDDA and VSSA
 
 module sky130_ef_io__vdda_hvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
-	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
+	VSSA, VDDA, VDDA_PAD, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
 	VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
@@ -873,6 +901,7 @@ module sky130_ef_io__vdda_hvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
   inout VDDIO;	
   inout VDDIO_Q;	
   inout VDDA;
+  inout VDDA_PAD;
   inout VCCD;
   inout VSWITCH;
   inout VCCHIB;
@@ -893,7 +922,8 @@ module sky130_ef_io__vdda_hvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.P_PAD(VDDA),
+	.P_CORE(VDDA),
+	.P_PAD(VDDA_PAD),
 	.OGC_HVC(),
 	.AMUXBUS_A(AMUXBUS_A),
 	.AMUXBUS_B(AMUXBUS_B),
@@ -906,7 +936,7 @@ endmodule
 // sky130_ef_io__vssa_hvc_pad with HV clamp connections to VDDA and VSSA
 
 module sky130_ef_io__vssa_hvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
-	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
+	VSSA_PAD, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
 	VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
@@ -919,6 +949,7 @@ module sky130_ef_io__vssa_hvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
   inout VSWITCH;
   inout VCCHIB;
   inout VSSA;
+  inout VSSA_PAD;
   inout VSSD;
   inout VSSIO_Q;
   inout VSSIO;
@@ -935,7 +966,8 @@ module sky130_ef_io__vssa_hvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.G_PAD(VSSA),
+	.G_CORE(VSSA),
+	.G_PAD(VSSA_PAD),
 	.OGC_HVC(),
 	.AMUXBUS_A(AMUXBUS_A),
 	.AMUXBUS_B(AMUXBUS_B),
@@ -949,7 +981,7 @@ endmodule
 // and back-to-back diodes connecting VSSIO to VSSA
 
 module sky130_ef_io__vccd_lvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
-	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
+	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD, VCCD_PAD,
 	VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
@@ -959,6 +991,7 @@ module sky130_ef_io__vccd_lvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
   inout VDDIO_Q;	
   inout VDDA;
   inout VCCD;
+  inout VCCD_PAD;
   inout VSWITCH;
   inout VCCHIB;
   inout VSSA;
@@ -978,7 +1011,8 @@ module sky130_ef_io__vccd_lvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.P_PAD(VCCD),
+	.P_CORE(VCCD),
+	.P_PAD(VCCD_PAD),
 	.OGC_LVC(),
 	.BDY2_B2B(VSSA),
 	.AMUXBUS_A(AMUXBUS_A),
@@ -996,7 +1030,7 @@ endmodule
 
 module sky130_ef_io__vssd_lvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
 	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
-	VSSIO, VSSD, VSSIO_Q
+	VSSIO, VSSD, VSSD_PAD, VSSIO_Q
 );
   inout AMUXBUS_A;
   inout AMUXBUS_B;
@@ -1009,6 +1043,7 @@ module sky130_ef_io__vssd_lvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
   inout VCCHIB;
   inout VSSA;
   inout VSSD;
+  inout VSSD_PAD;
   inout VSSIO_Q;
   inout VSSIO;
 
@@ -1024,7 +1059,8 @@ module sky130_ef_io__vssd_lvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.G_PAD(VSSD),
+	.G_CORE(VSSD),
+	.G_PAD(VSSD_PAD),
 	.OGC_LVC(),
 	.BDY2_B2B(VSSA),
 	.AMUXBUS_A(AMUXBUS_A),
@@ -1041,7 +1077,7 @@ endmodule
 // and back-to-back diodes connecting VSSD to VSSIO
 
 module sky130_ef_io__vccd_lvc_clamped2_pad (AMUXBUS_A, AMUXBUS_B,
-	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
+	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD, VCCD_PAD,
 	VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
@@ -1051,6 +1087,7 @@ module sky130_ef_io__vccd_lvc_clamped2_pad (AMUXBUS_A, AMUXBUS_B,
   inout VDDIO_Q;	
   inout VDDA;
   inout VCCD;
+  inout VCCD_PAD;
   inout VSWITCH;
   inout VCCHIB;
   inout VSSA;
@@ -1070,7 +1107,8 @@ module sky130_ef_io__vccd_lvc_clamped2_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
-	.P_PAD(VCCD),
+	.P_CORE(VCCD),
+	.P_PAD(VCCD_PAD),
 	.OGC_LVC(),
 	.BDY2_B2B(VSSIO),
 	.AMUXBUS_A(AMUXBUS_A),
@@ -1088,7 +1126,7 @@ endmodule
 
 module sky130_ef_io__vssd_lvc_clamped2_pad (AMUXBUS_A, AMUXBUS_B,
 	VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
-	VSSIO, VSSD, VSSIO_Q
+	VSSIO, VSSD, VSSD_PAD, VSSIO_Q
 );
   inout AMUXBUS_A;
   inout AMUXBUS_B;
@@ -1101,6 +1139,7 @@ module sky130_ef_io__vssd_lvc_clamped2_pad (AMUXBUS_A, AMUXBUS_B,
   inout VCCHIB;
   inout VSSA;
   inout VSSD;
+  inout VSSD_PAD;
   inout VSSIO_Q;
   inout VSSIO;
 
@@ -1116,6 +1155,7 @@ module sky130_ef_io__vssd_lvc_clamped2_pad (AMUXBUS_A, AMUXBUS_B,
 	.VSSIO(VSSIO),
 	.VSSD(VSSD),
 	.VSSIO_Q(VSSIO_Q),
+	.G_CORE(VSSD_PAD),
 	.G_PAD(VSSD),
 	.OGC_LVC(),
 	.BDY2_B2B(VSSIO),
@@ -1125,6 +1165,53 @@ module sky130_ef_io__vssd_lvc_clamped2_pad (AMUXBUS_A, AMUXBUS_B,
 	.DRN_LVC2(VCCD),
 	.SRC_BDY_LVC1(VSSD),
 	.SRC_BDY_LVC2(VSSD)
+  );
+
+endmodule
+
+// 
+
+module sky130_ef_io__top_power_hvc (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
+	P_CORE, P_PAD, SRC_BDY_HVC, VSSA, VDDA, VSWITCH, VDDIO_Q,
+	VCCHIB, VDDIO, VCCD, VSSIO, VSSD, VSSIO_Q
+);
+  inout AMUXBUS_A;
+  inout AMUXBUS_B;
+
+  inout DRN_HVC;
+  inout P_CORE;
+  inout P_PAD;
+  inout SRC_BDY_HVC;
+  inout VDDIO;	
+  inout VDDIO_Q;
+  inout VDDA;
+  inout VCCD;
+  inout VSWITCH;
+  inout VCCHIB;
+  inout VSSA;
+  inout VSSD;
+  inout VSSIO_Q;
+  inout VSSIO;
+
+  // Instantiate the underlying power pad (connects P_PAD to VCCD)
+  sky130_fd_io__top_power_hvc_wpadv2 sky130_fd_io__top_power_hvc_base ( 
+	.VSSA(VSSA),
+	.VDDA(VDDA),
+	.VSWITCH(VSWITCH),
+	.VDDIO_Q(VDDIO_Q),
+	.VCCHIB(VCCHIB),
+	.VDDIO(VDDIO),
+	.VCCD(VCCD),
+	.VSSIO(VSSIO),
+	.VSSD(VSSD),
+	.VSSIO_Q(VSSIO_Q),
+	.P_CORE(P_CORE),
+	.P_PAD(P_PAD),
+	.OGC_HVC(),
+	.AMUXBUS_A(AMUXBUS_A),
+	.AMUXBUS_B(AMUXBUS_B),
+	.DRN_HVC(DRN_HVC),
+	.SRC_BDY_HVC(SRC_BDY_HVC)
   );
 
 endmodule

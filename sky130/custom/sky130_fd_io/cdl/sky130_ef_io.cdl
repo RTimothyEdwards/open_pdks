@@ -569,4 +569,26 @@ Xsky130_fd_io__top_ground_lvc_base
 
 .ENDS
 
+*----------------------------------------------------------
+* sky130_ef_io__top_power_hvc
+* Power pad instantiates top_power_hvc_wpadv2 unchanged
+* except for tripling the amount of metal at the core
+* connection, for high-current supply applications.
+*----------------------------------------------------------
+
+.SUBCKT sky130_ef_io__top_power_hvc
++ AMUXBUS_A AMUXBUS_B DRN_HVC P_CORE P_PAD
++ SRC_BDY_HVC VCCD_PAD VSSA VDDA VSWITCH VDDIO_Q VCCHIB
++ VDDIO VCCD VSSIO VSSD VSSIO_Q
+
+* Instantiate the underlying power pad (connects P_PAD to VCCD)
+Xsky130_fd_io__top_power_hvc_base
++ AMUXBUS_A AMUXBUS_B DRN_HVC VDDIO
++ P_CORE P_PAD
++ SRC_BDY_HVC VCCD VCCHIB VDDA VDDIO VDDIO_Q
++ VSSA VSSD VSSIO VSSIO_Q VSWITCH
++ sky130_fd_io__top_power_hvc_wpadv2
+
+.ENDS
+
 *--------------------------------------------------------------------------
