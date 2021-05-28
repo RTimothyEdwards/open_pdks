@@ -936,7 +936,7 @@ endmodule
 // sky130_ef_io__vssa_hvc_pad with HV clamp connections to VDDA and VSSA
 
 module sky130_ef_io__vssa_hvc_clamped_pad (AMUXBUS_A, AMUXBUS_B,
-	VSSA_PAD, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
+	VSSA, VSSA_PAD, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
 	VSSIO, VSSD, VSSIO_Q
 );
   inout AMUXBUS_A;
