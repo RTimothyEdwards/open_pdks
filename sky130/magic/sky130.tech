@@ -1633,7 +1633,16 @@ style drc
  bridge	700 600
 
  # Simple spacing checks to lvnwell must use CIF-DRC rule
+ # Note that HVI may *abut* lvnwell;  this can only be handled
+ # with mask-hints layers.
+
+ templayer drawn_hvi
+	mask-hints HVI
+
  templayer allmvdiffnowell *mvndiff,*mvpsd
+ and-not drawn_hvi
+
+ templayer nwell_or_hvi nwell,drawn_hvi
 
  templayer lvnwell nwell
  and-not mvnwell
@@ -4145,6 +4154,8 @@ drc
 variants (full)
  cifspacing allmvdiffnowell lvnwell 825 touching_illegal \
 	"MV diffusion to LV nwell spacing < %d (hvi.5 + nsd/psd.5)"
+ cifspacing nwell_or_hvi nwell_or_hvi 700 touching_ok \
+	"HVI to HVI or LV nwell spacing < %d (hvi.5)"
 variants (fast),(full)
 
  spacing allnfets allpactivenonfet 270 touching_illegal \

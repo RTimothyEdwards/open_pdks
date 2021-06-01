@@ -907,6 +907,10 @@ digital-a:
 		"MASKHINTS_PSDM 0 38 92 196" -mag
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_sc_hd sky130_fd_sc_hd__tapvpwrvgnd_1 \
 		"MASKHINTS_NSDM 0 280 92 506" -mag
+	# Add a maskhint to the HVL level shifter to represent the HVI layer as
+	# drawn in the GDS, and so eliminate the HVI-to-nwell DRC error.
+	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_sc_hvl sky130_fd_sc_hvl__lsbufhv2lv_1 \
+		"MASKHINTS_HVI 22 34 706 1316" -mag
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${HD_VERILOG}/*.*.v
