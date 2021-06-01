@@ -747,7 +747,7 @@ style gdsii
 # DNWELL
 #----------------------------------------------------------------
 
- layer DNWELL	dnwell,pnp
+ layer DNWELL	dnwell,npn
 	calma	64 18
 
  layer PWRES    rpw
