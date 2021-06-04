@@ -4075,7 +4075,7 @@ drc
 
  width dnwell 3000 "Deep N-well width < %d (dnwell.2)"
  spacing dnwell dnwell 6300 touching_ok "Deep N-well spacing < %d (dnwell.3)"
- spacing dnwell allnwell 4500 surround_ok \
+ spacing allnwell dnwell 4500 surround_ok \
 	"Deep N-well spacing to N-well < %d (nwell.7)"
 
  variants (full)
@@ -4616,7 +4616,7 @@ variants (full)
  width metrdl 10000 "RDL width < %d (rdl.1)"
  spacing metrdl metrdl 10000 touching_ok "RDL spacing < %d (rdl.2)"
  surround glass metrdl 10750 absence_ok "RDL must surround glass cut by %d (rdl.3)"
- spacing metrdl padl 19660 surround_ok "RDL spacing to unrelated pad < %d (rdl.6)"
+ spacing padl metrdl 19660 surround_ok "RDL spacing to unrelated pad < %d (rdl.6)"
 
 variants (fast),(full)
 
