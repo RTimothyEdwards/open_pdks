@@ -106,6 +106,9 @@ if __name__ == '__main__':
                 sys.exit(1)
 
             bstring = celldata[dataptr + 4: dataptr + reclen]
+            # Odd length strings end in null byte which needs to be removed
+            if bstring[-1] == 0:
+                bstring = bstring[:-1]
             strname = bstring.decode('ascii')
             if strname == cellname:
                 print('Cell ' + cellname + ' found at position ' + str(saveptr))
@@ -163,6 +166,9 @@ if __name__ == '__main__':
                 sys.exit(1)
 
             bstring = gdsdata[dataptr + 4: dataptr + reclen]
+            # Odd length strings end in null byte which needs to be removed
+            if bstring[-1] == 0:
+                bstring = bstring[:-1]
             strname = bstring.decode('ascii')
             if strname == cellname:
                 print('Cell ' + cellname + ' found at position ' + str(saveptr))
