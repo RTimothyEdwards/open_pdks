@@ -87,6 +87,9 @@ common_install:
 		mkdir -p @prefix@/pdk/bin/ ;\
 		cp common/cleanup_unref.py @prefix@/pdk/bin/ ;\
 		cp common/soc_floorplanner.py @prefix@/pdk/bin/ ;\
+		cp common/change_gds_cell.py @prefix@/pdk/bin/ ;\
+		cp common/find_gds_prefix.py @prefix@/pdk/bin/ ;\
+		cp common/change_gds_string.py @prefix@/pdk/bin/ ;\
 		${CPP} -DPREFIX=@prefix@ common/create_project.py \
 			@prefix@/pdk/bin/create_project.py ;\
 		echo "Common install:  Done." ;\

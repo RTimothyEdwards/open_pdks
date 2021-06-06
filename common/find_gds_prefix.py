@@ -84,7 +84,7 @@ if __name__ == '__main__':
             strname = bstring.decode('ascii')
             if strname[3:] == cellname:
                 print('Cell ' + strname + ' found at position ' + str(saveptr))
-                print('Prefix: ' + strname[0:2])
+                print('Prefix: ' + strname[0:3])
                 found = True
                 break
             elif strname == cellname:

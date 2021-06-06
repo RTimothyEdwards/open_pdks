@@ -6,13 +6,15 @@
 # string around the search text, and adjusting the record bounds accordingly.
 
 import os
+import re
 import sys
 
 def usage():
-    print('change_gds_string.py <old_string> <new_string> <path_to_gds_in> [<path_to_gds_out>]')
+    print('change_gds_string.py <old_string> <new_string> [...] <path_to_gds_in> [<path_to_gds_out>]')
 
 if __name__ == '__main__':
-    debug = False
+    debug = 0
+    verbatim = False
 
     if len(sys.argv) == 1:
         print("No options given to change_gds_string.py.")
@@ -28,23 +30,38 @@ if __name__ == '__main__':
         else:
             arguments.append(option)
 
-    if len(arguments) < 3 or len(arguments) > 4:
+    if len(arguments) < 3:
         print("Wrong number of arguments given to change_gds_string.py.")
         usage()
         sys.exit(0)
 
-    if '-debug' in optionlist:
-        debug = True
+    for option in optionlist:
+        opval = option.split('=')
+        if opval[0] == '-debug':
+            if len(opval) == 2:
+                debug = int(opval[1])
+            else:
+                debug = 1
+        elif opval[0] == '-verbatim':
+            verbatim = True
 
-    oldstring = arguments[0]
-    newstring = arguments[1]
-    source = arguments[2]
-
-    # If only three arguments are provided, then overwrite the source file.
-    if len(arguments) == 4:
-        dest = arguments[3]
+    # If next-to-last argument is a valid path, then the last argument should
+    # be the path to GDS out.  Otherwise, overwrite the source file.
+    
+    if os.path.isfile(arguments[-2]):
+        dest = arguments[-1]
+        source = arguments[-2]
+        oldstrings = arguments[0:-2:2]
+        newstrings = arguments[1:-2:2]
     else:
-        dest = arguments[2]
+        dest = arguments[-1]
+        source = arguments[-1]
+        oldstrings = arguments[0:-1:2]
+        newstrings = arguments[1:-1:2]
+
+    if len(oldstrings) != len(newstrings):
+        print('Error:  List of strings and replacements is not in pairs.')
+        sys.exit(1)
 
     sourcedir = os.path.split(source)[0]
     gdsinfile = os.path.split(source)[1]
@@ -61,11 +78,15 @@ if __name__ == '__main__':
 
     recordtypes = ['libname', 'strname', 'sname', 'string']
     recordfilter = [2, 6, 18, 25]
-    bsearch = bytes(oldstring, 'ascii')
-    brep = bytes(newstring, 'ascii')
+    bsearchlist = list(bytes(item, 'ascii') for item in oldstrings)
+    breplist = list(bytes(item, 'ascii') for item in newstrings)
+
+    if debug > 1:
+        print('Search list = ' + str(bsearchlist))
+        print('Replace list = ' + str(breplist))
 
     datalen = len(gdsdata)
-    if debug:
+    if debug > 0:
         print('Original data length = ' + str(datalen))
     dataptr = 0
     while dataptr < datalen:
@@ -83,40 +104,53 @@ if __name__ == '__main__':
         if rectype in recordfilter:
             # Datatype 6 is STRING
             if datatype == 6:
-                if debug:
-                    print('Record type = ' + str(rectype) + ' data type = ' + str(datatype) + ' length = ' + str(reclen))
-
                 bstring = gdsdata[dataptr + 4: dataptr + reclen]
-                repstring = bstring.replace(bsearch, brep)
-                if repstring != bstring:
-                    before = gdsdata[0:dataptr]
-                    after = gdsdata[dataptr + reclen:]
-                    newlen = len(repstring) + 4
-                    # Record sizes must be even
-                    if newlen % 2 != 0:
-                        # Was original string padded with null byte?  If so,
-                        # remove the null byte and reduce newlen.  Otherwise,
-                        # add a null byte and increase newlen.
+                if debug > 1:
+                    idx = recordfilter.index(rectype)
+                    print(recordtypes[idx] + ' string = ' + str(bstring))
+
+                for bsearch,brep in zip(bsearchlist, breplist):
+                    # Verbatim option:  search string must match GDS string exactly
+                    if verbatim:
+                        blen = reclen - 4
                         if bstring[-1] == 0:
-                            repstring = repstring[0:-1]
-                            newlen -= 1
-                        else:
-                            repstring += b'\x00'
-                            newlen += 1
+                            blen = blen - 1
+                        if len(bsearch) != blen:
+                            continue
+                    repstring = re.sub(bsearch, brep, bstring)
+                    if repstring != bstring:
+                        before = gdsdata[0:dataptr]
+                        after = gdsdata[dataptr + reclen:]
+                        newlen = len(repstring) + 4
+                        # Record sizes must be even
+                        if newlen % 2 != 0:
+                            # Was original string padded with null byte?  If so,
+                            # remove the null byte and reduce newlen.  Otherwise,
+                            # add a null byte and increase newlen.
+                            if bstring[-1] == 0:
+                                repstring = repstring[0:-1]
+                                newlen -= 1
+                            else:
+                                repstring += b'\x00'
+                                newlen += 1
                             
-                    bnewlen = newlen.to_bytes(2, byteorder='big')
-                    brectype = rectype.to_bytes(1, byteorder='big')
-                    bdatatype = datatype.to_bytes(1, byteorder='big')
+                        bnewlen = newlen.to_bytes(2, byteorder='big')
+                        brectype = rectype.to_bytes(1, byteorder='big')
+                        bdatatype = datatype.to_bytes(1, byteorder='big')
 
-                    # Assemble the new record
-                    newrecord = bnewlen + brectype + bdatatype + repstring
-                    # Reassemble the GDS data around the new record
-                    gdsdata = before + newrecord[0:newlen] + after
-                    # Adjust the data end location
-                    datalen += (newlen - reclen)
+                        # Assemble the new record
+                        newrecord = bnewlen + brectype + bdatatype + repstring
+                        # Reassemble the GDS data around the new record
+                        gdsdata = before + newrecord[0:newlen] + after
+                        # Adjust the data end location
+                        datalen += (newlen - reclen)
 
-                    if debug:
-                        print('Replaced ' + str(bstring) + ' with ' + str(repstring)) 
+                        if debug > 0:
+                            print('Replaced ' + str(bstring) + ' with ' + str(repstring)) 
+            else:
+                if debug > 1:
+                    idx = recordfilter.index(rectype)
+                    print(recordtypes[idx] + ' record = ' + str(datatype) + ' is not a string')
 
         # Advance the pointer past the data
         dataptr += newlen
