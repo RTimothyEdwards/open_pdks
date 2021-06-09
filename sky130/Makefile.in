@@ -764,7 +764,7 @@ primitive-a:
 	# Install base device library from vendor files
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-gds %l/latest/cells/*/*.gds \
-			exclude=sky130_fd_pr__pnp_05v5_W3p40L3p40.gds \
+			exclude=sky130_fd_pr__pnp_05v5_W3p40L3p40.gds,sky130_fd_pr__npn_11v0_W1p00L1p00.gds \
 			compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 		-cdl %l/latest/cells/*/*.cdl compile-only \
@@ -813,14 +813,15 @@ primitive-a:
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	./custom/scripts/montecarlo_hack.py \
 		2>&1 | tee -a ${SKY130A}_make.log || true
-	# Custom:  Add "mc" section to sky130.lib.spice
-	head -n-1 ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice \
-		| ${SED} -e '/^\.lib/a.param mc_pr_switch=0' \
-		> ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice.head
-	cat ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice.head \
-		custom/models/sky130.lib.spice.extra > \
-		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice
-	rm ${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice.head
+	# Custom:  Change vt to local_vt in one file for Xyce compatibilty
+	./custom/scripts/xyce_hack.py \
+		${STAGING_PATH}/${SKY130A}/libs.ref/${PR_SPICE}/sky130_fd_pr__res_iso_pw.model.spice \
+		2>&1 | tee -a ${SKY130A}_make.log || true
+	# Custom:  Make corrections/additions so sky130.lib.spice
+	./custom/scripts/build_lib_spice.py \
+		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice \
+		custom/models/sky130.lib.spice.extra \
+		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Add special device ID layers to bipolar layouts in magic
 	# to make the extraction models correct.
 	./custom/scripts/add_bipolar_ids.py \

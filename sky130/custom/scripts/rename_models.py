@@ -34,6 +34,11 @@ def filter(inname, outname):
 
         # Fix: Replace "../cells/<name>/" with "../../libs.ref/sky130_fd_pr/spice/"
         fixedline = re.sub('\.\./cells/[^/]+/', '../../libs.ref/sky130_fd_pr/spice/', line)
+
+        # This subsitution makes SPICE files compatible with Xyce without
+        # breaking ngspice compatibility ('$' comments changed to ';')
+        fixedline = re.sub('(.*[ \t]+)\$([ \t+].*)', '\g<1>;\g<2>', fixedline)
+
         fixedlines.append(fixedline)
         if fixedline != line:
             modified = True

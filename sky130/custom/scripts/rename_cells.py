@@ -36,6 +36,14 @@ def filter(inname, outname):
         fixedline = re.sub('\.\./\.\./models/', '../../../libs.tech/ngspice/', line)
         fixedline = re.sub('\.\./[^/\.]+/', '', fixedline)
 
+        # This substitution fixes a single error in the file
+        # sky130_fd_pr__nfet_05v0_nvt.pm3.spice
+        fixedline = re.sub('^include.*', '', fixedline)
+
+        # This subsitution makes SPICE files compatible with Xyce without
+        # breaking ngspice compatibility ('$' comments changed to ';')
+        fixedline = re.sub('(.*[ \t]+)\$([ \t+].*)', '\g<1>;\g<2>', fixedline)
+
         fixedlines.append(fixedline)
         if fixedline != line:
             modified = True

@@ -69,6 +69,13 @@ for (mismatch_param, replacement) in mismatch_params:
 print('') 
 
 #--------------------------------------------------------------------
+# Create regexp for the alternative PSPICE "dev/gauss" syntax used in
+# a number of places in the models.
+#--------------------------------------------------------------------
+
+gaussrex = re.compile('\'[ \t]+dev\/gauss=\'', re.IGNORECASE)
+
+#--------------------------------------------------------------------
 # Step 2.  Make replacements
 #--------------------------------------------------------------------
 
@@ -86,19 +93,25 @@ for infile_name in filelist:
 
     for line in infile:
         line_number += 1
+        newline = line
+
+        gmatch = gaussrex.search(newline)
+        if gmatch:
+            newline = gaussrex.sub('+' + mm_switch_param + '*AGAUSS(0,1.0,1)*', newline)
+            replaced_something = True
+            print("  Line {}: Found PSPICE dev/gauss and replaced.".format(line_number))
 
         if state == 'before_mismatch':
-            outfile.write(line)
-            mmatch = mmrex.match(line)
+            outfile.write(newline)
+            mmatch = mmrex.match(newline)
             if mmatch:
                 state = 'in_mismatch'
         elif state == 'in_mismatch':
-            outfile.write(line)
-            ematch = endrex.match(line)
+            outfile.write(newline)
+            ematch = endrex.match(newline)
             if ematch:
                 state = 'after_mismatch'
         elif state == 'after_mismatch':
-            newline = line
             for (param, replacement) in mismatch_params:
                 if param in newline:
                     newline = newline.replace(param, replacement)
