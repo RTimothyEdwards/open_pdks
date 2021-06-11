@@ -211,13 +211,13 @@ OSU_T15_PATH = @SKY130_OSU_T15_PATH@
 OSU_T18_PATH = @SKY130_OSU_T18_PATH@
 
 PDK_URL = https://github.com/google/skywater-pdk
-ALPHA_URL = https://github.com/PaulSchulz/sky130_pschulz_xx_hd/archive/master.tar.gz
-XSCHEM_URL = https://github.com/StefanSchippers/xschem_sky130/archive/main.tar.gz
-SRAM_URL = https://github.com/efabless/sky130_sram_macros/archive/main.tar.gz
-OSU_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc/+archive/refs/heads/main.tar.gz
-OSU_T12_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t12/+archive/refs/heads/main.tar.gz
-OSU_T15_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t15/+archive/refs/heads/main.tar.gz
-OSU_T18_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t18/+archive/refs/heads/main.tar.gz
+ALPHA_URL = https://github.com/PaulSchulz/sky130_pschulz_xx_hd
+XSCHEM_URL = https://github.com/StefanSchippers/xschem_sky130
+SRAM_URL = https://github.com/efabless/sky130_sram_macros
+OSU_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc
+OSU_T12_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t12
+OSU_T15_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t15
+OSU_T18_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t18
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
@@ -255,6 +255,65 @@ SKY130A_DEFS += -DMETAL5 -DMIM -DREDISTRIBUTION
 
 # Add staging path
 SKY130A_DEFS += -DSTAGING_PATH=${STAGING_PATH}
+
+# Record commit numbers for the nodeinfo.json file
+OPEN_PDKS_COMMIT = $(shell git rev-parse HEAD)
+ifeq (${OPEN_PDKS_COMMIT},)
+    COMMIT_DEFS = -DOPEN_PDKS_COMMIT=${REVISION}
+else
+    COMMIT_DEFS = -DOPEN_PDKS_COMMIT=${OPEN_PDKS_COMMIT}
+endif
+ifeq (${ALPHA_PATH},)
+    COMMIT_DEFS += -DALPHA_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DALPHA_COMMIT=$(shell cd ${ALPHA_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${SRAM_PATH},)
+    COMMIT_DEFS += -DSRAM_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DSRAM_COMMIT=$(shell cd ${SRAM_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${OSU_PATH},)
+    COMMIT_DEFS += -DOSU_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DOSU_COMMIT=$(shell cd ${OSU_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${OSU_T12_PATH},)
+    COMMIT_DEFS += -DOSU_T12_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DOSU_T12_COMMIT=$(shell cd ${OSU_T12_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${OSU_T15_PATH},)
+    COMMIT_DEFS += -DOSU_T15_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DOSU_T15_COMMIT=$(shell cd ${OSU_T15_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${OSU_T18_PATH},)
+    COMMIT_DEFS += -DOSU_T18_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DOSU_T18_COMMIT=$(shell cd ${OSU_T18_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${SKYWATER_PATH},)
+    COMMIT_DEFS += -DFD_PR_COMMIT="unknown"
+    COMMIT_DEFS += -DFD_IO_COMMIT="unknown"
+    COMMIT_DEFS += -DFD_SC_HD_COMMIT="unknown"
+    COMMIT_DEFS += -DFD_SC_HDLL_COMMIT="unknown"
+    COMMIT_DEFS += -DFD_SC_HVL_COMMIT="unknown"
+    COMMIT_DEFS += -DFD_SC_HS_COMMIT="unknown"
+    COMMIT_DEFS += -DFD_SC_MS_COMMIT="unknown"
+    COMMIT_DEFS += -DFD_SC_LS_COMMIT="unknown"
+    COMMIT_DEFS += -DFD_SC_LP_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DFD_PR_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_pr/latest)
+    COMMIT_DEFS += -DFD_IO_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_io/latest)
+    COMMIT_DEFS += -DFD_SC_HD_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hd/latest)
+    COMMIT_DEFS += -DFD_SC_HDLL_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hdll/latest)
+    COMMIT_DEFS += -DFD_SC_HVL_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hvl/latest)
+    COMMIT_DEFS += -DFD_SC_HS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hs/latest)
+    COMMIT_DEFS += -DFD_SC_MS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_ms/latest)
+    COMMIT_DEFS += -DFD_SC_LS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_ls/latest)
+    COMMIT_DEFS += -DFD_SC_LP_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_lp/latest)
+endif
 
 ifeq (${EF_STYLE}, 1)
     EF_FORMAT = -ef_format
@@ -512,7 +571,7 @@ all-a: prerequisites
 general-a: ${TECH}.json
 	mkdir -p ${STAGING_PATH}/${SKY130A}/${CONFIG_DIR}
 	rm -f ${STAGING_PATH}/${SKY130A}/${CONFIG_DIR}/nodeinfo.json
-	${CPP} ${SKY130A_DEFS} ${TECH}.json \
+	${CPP} ${SKY130A_DEFS} ${COMMIT_DEFS} ${TECH}.json \
 		${STAGING_PATH}/${SKY130A}/${CONFIG_DIR}/nodeinfo.json
 
 tools-a: $(addsuffix -a, $(TOOLS))
@@ -842,8 +901,6 @@ io-a:
 		-library general sky130_fd_io 2>&1 | tee -a ${SKY130A}_make.log
 	# Install SkyWater I/O pad library
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-spice %l/latest/cells/*/*.spice compile-only \
-			sort=custom/scripts/sort_pdkfiles.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			sort=custom/scripts/sort_pdkfiles.py \
 		-lef %l/latest/cells/*/*.magic.lef compile-only \

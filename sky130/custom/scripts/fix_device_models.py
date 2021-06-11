@@ -31,16 +31,26 @@ def filter(inname, outname):
     modified = False
 
     dioderex = re.compile('.*[ \t]+sky130_fd_pr__diode_pw2nd[ \t]+')
+    ndioderex = re.compile('.*[ \t]+ndiode_h[ \t]+')
     shortrex = re.compile('.*[ \t]+short[ \t]+')
 
     for line in slines:
 
         # Check for incorrect diode reference
         dmatch = dioderex.match(line)
+        # Check for incorrect HVL diode ("ndiode_h") reference
+        nmatch = ndioderex.match(line)
         # Check for incorrect resistor reference
         smatch = shortrex.match(line)
         if dmatch:
             fline = re.sub('pw2nd', 'pw2nd_05v5', line)
+            fline = re.sub('^X', 'D', fline)
+            fline = re.sub('a=', 'area=', fline)
+            fline = re.sub('p=', 'pj=', fline)
+            fixedlines.append(fline)
+            modified = True
+        elif nmatch:
+            fline = re.sub('ndiode_h', 'sky130_fd_pr__diode_pw2nd_11v0', line)
             fline = re.sub('^X', 'D', fline)
             fline = re.sub('a=', 'area=', fline)
             fline = re.sub('p=', 'pj=', fline)

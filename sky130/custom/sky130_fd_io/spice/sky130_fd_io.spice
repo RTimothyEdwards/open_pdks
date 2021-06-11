@@ -2910,7 +2910,6 @@ XI94 nsw_en nsw_enb PD_H[2] PD_H[3] VCC_IO VGND_IO
 XI288 N0 net193 VGND_IO sky130_fd_pr__res_generic_nd__hv W=0.5 L=113.375 m=1 isHV=TRUE
 XI287 vdiode net190 VGND_IO sky130_fd_pr__res_generic_nd__hv W=0.5 L=113.375 m=1
 + isHV=TRUE
-xI99
 XI206 N0 en VGND_IO VGND_IO sky130_fd_pr__nfet_g5v0d10v5 m=1 w=5.0 l=0.5 mult=1
 + sa=0.265 sb=0.265 sd=0.28 topography=normal area=0.063 perim=1.14
 XI190 net531 en VGND_IO VGND_IO sky130_fd_pr__nfet_g5v0d10v5 m=1 w=5.0 l=0.5
