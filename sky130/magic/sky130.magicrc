@@ -18,6 +18,10 @@ drc euclidean on
 # e.g., "random seed 12345"
 catch {random seed}
 
+# Turn off the scale option on ext2spice or else it conflicts with the
+# scale in the model files.
+ext2spice scale off
+
 # Allow override of PDK path from environment variable PDKPATH
 if {[catch {set PDKPATH $env(PDKPATH)}]} {
     set PDKPATH "STAGING_PATH/TECHNAME"
