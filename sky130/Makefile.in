@@ -397,7 +397,7 @@ INSTALL = ../common/staging_install.py ${EF_FORMAT}
 ADDPROP = ../common/insert_property.py ${EF_FORMAT}
 
 # List the EDA tools to install local setup files for
-TOOLS = 
+TOOLS =
 
 # KLAYOUT_DISABLED = 0 | 1
 KLAYOUT_DISABLED = @KLAYOUT_DISABLED@
@@ -833,7 +833,7 @@ primitive-a:
 		-ngspice sky130_fd_pr/latest/models/* \
 		filter=custom/scripts/rename_models.py \
 		2>&1 | tee -a ${SKY130A}_make.log
-	# Install device layouts from custom sources 
+	# Install device layouts from custom sources
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-gds sky130_fd_pr/*.gds \
 			options=custom/scripts/gds_import_setup.tcl \
