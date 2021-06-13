@@ -60,7 +60,11 @@ build-pdk: $(PDK_ROOT)/skywater-pdk
 		rm -rf $(PDK_ROOT)/sky130A) || \
 		true
 	cd $(OPEN_PDKS_ROOT) && \
-		./configure --with-sky130-source=$(PDK_ROOT)/skywater-pdk/libraries --with-sky130-local-path=$(PDK_ROOT) && \
+		./configure \
+			--prefix=$(PDK_ROOT) \
+			--datarootdir=$(PDK_ROOT) \
+			--enable-sky130-pdk=$(PDK_ROOT)/skywater-pdk \
+			&& \
 		cd sky130 && \
 		$(MAKE) veryclean && \
 		$(MAKE) && \
