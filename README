@@ -46,7 +46,7 @@ Introduction:
     Each foundry process is a subdirectory of the open_pdks top level and
     has its own Makefile.  The typical install process is to cd to the
     foundry top level and run "make" (see below for details).
-    
+
     The general file structure created by open_pdks is as follows:
 
 	<foundry_root>/
@@ -70,7 +70,7 @@ Introduction:
 			...
 			<name_of_file_format_x>
 			    <vendor_files>
-			
+
     Note that this format is very general and does not constrain the
     EDA tools supported or file formats supported, so long as there
     are scripts in the system to provide that support.  It is intended
@@ -86,7 +86,7 @@ Introduction:
 	klayout	    klayout
 	qflow	    qflow
 	openlane    openlane
-		
+
     Current IP library file formats supported in this version of open_pdks*:
 	Format	    Directory name
 	--------------------------
@@ -215,43 +215,43 @@ How to make or update an open PDK:
     preproc.py Usage:
 
         preproc.py input_file [output_file] [-D<variable> ...]
- 
+
 	  Where <variable> may be a keyword or a key=value pair
- 
+
 	  Syntax:  Basically like cpp.  However, this preprocessor handles
 	  only a limited set of keywords, so it does not otherwise mangle
 	  the file in the belief that it must be C code.  Handling of boolean
 	  relations is important, so these are thoroughly defined (see below)
- 
+
 	        #if defined(<variable>) [...]
 	        #ifdef <variable>
 	        #ifndef <variable>
 	        #elseif <variable>
 	        #else
 	        #endif
- 
+
 	        #define <variable> [...]
 	        #undef <variable>
- 
+
 	        #include <filename>
- 
+
 	  <variable> may be
 	        <keyword>
 	        <keyword>=<value>
- 
+
 	        <keyword> without '=' is effectively the same as <keyword>=1
 	        Lack of a keyword is equivalent to <keyword>=0, in a conditional.
- 
+
 	  Boolean operators (in order of precedence):
 	        !       NOT
 	        &&      AND
 	        ||      OR
- 
+
 	  Comments:
 	        Most comments (C-like or Tcl-like) are output as-is.  A
 	        line beginning with "###" is treated as a preprocessor
 	        comment and is not copied to the output.
- 
+
 	  Examples;
 	        #if defined(X) || defined(Y)
 	        #else
@@ -278,7 +278,7 @@ How to make or update an open PDK:
 	missing and need to be generated.
 
 	Global options:
-	    -link_from <type>  
+	    -link_from <type>
 			    Make symbolic links to vendor files from target
 			    Types are: "none", "source", or a PDK name.
 			    Default "none" (copy all files from source)
@@ -321,7 +321,7 @@ How to make or update an open PDK:
 	 Each IP library install option has the syntax:
 
 		-<file_format_name> <path> [<option_arguments>]
-	
+
 	 The <path> is a directory path that is relative to the path prefix
 	 given by the -source option.  The path may be wildcarded with the
 	 escape string "%l", which is replaced by the name of the library,
@@ -347,9 +347,9 @@ How to make or update an open PDK:
 	 being passed to the install script.)
 
 	 Library option:
-	
+
 	       -library <type> <name> [<target>]
-	
+
 	    <type> may be one of the following:
 
 		digital		Digital standard cells
@@ -370,9 +370,9 @@ How to make or update an open PDK:
 	 formats (gds, cdl, lef, etc.) happen to all work with the same wildcards.
 	 But it is generally most common to declare only one library name per
 	 call to foundry_install.py.
-	
+
 	 Common foundry_install.py options when used with "-library":
-	
+
 	       -techlef <path> [option_arguments]   Technology LEF file
 	       -doc <path> [option_arguments]	    library documentation
 	       -lef <path> [option_arguments]	    LEF file
@@ -400,17 +400,17 @@ How to make or update an open PDK:
 		    from <number> levels above the files indicated by <path>.
 		    For example, if liberty files are kept in multiple
 		    directories according to voltage level, then
-	
+
 			-liberty x/y/z/PVT_*/*.lib
-	
+
 		    would install all .lib files directly into
 		    libs.ref/<libname>/liberty/*.lib while
-	
+
 			-liberty x/y/z/PVT_*/*.lib up=1
-	
+
 		    would install all .lib files into
 		    libs.ref/liberty/<libname>/PVT_*/*.lib.
-	
+
 	       nospec
 	            Remove timing specification before installing (used with
 		    verilog files only;  could be extended to liberty files).
@@ -527,7 +527,7 @@ How to make or update an open PDK:
 	master file that is parsed by preproc.py;  therefore when specifying
 	"options", use #undef before specifying each option name so that the
 	option name itself is ignored by the pre-processor.
-	
+
 
 Goals of the open_pdks project:
 
