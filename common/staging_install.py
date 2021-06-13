@@ -1,29 +1,54 @@
 #!/usr/bin/env python3
-#
-# staging_install.py
-#
-# This file copies the staging area created by foundry_install.py
-# into the target directory area, changing paths to match the target,
-# and creating symbolic links where requested and allowed.
-#
-# Options:
-#    -link_from <type>	Make symbolic links to vendor files from target
-#			Types are: "none", "source", or a PDK name.
-#			Default "none" (copy all files from source)
-#    -ef_format		Use efabless naming (libs.ref/techLEF),
-#			otherwise use generic naming (libs.tech/lef)
-#
-#    -staging <path>	Path to staging top level directory
-#    -target <path>	Path to target top level directory
-#    -local <path>	For distributed installs, this is the local
-#			path to target top level directory.
-#    -source <path>     Path to original source top level directory,
-#                       if link_from is "source".  This option may
-#                       be called multiple times if there are multiple
-#                       sources.
-#    -variable <name>	Specify a variable name that is used for the
-#			target path.  This variable name must be enforced
-#			in setup scripts like .magicrc
+
+"""
+staging_install.py [options...]
+
+This file copies the staging area created by foundry_install.py
+into the target directory area, changing paths to match the target,
+and creating symbolic links where requested and allowed.
+
+Options:
+  -staging <path>    Path to staging top level directory that the files
+                     will be installed from.
+
+  -target <path>     Final install path in system file system.
+
+                     Normally, '$(prefix)/pdks/<unique pdk name>'.
+
+                     If -local is not given, this will be the top level
+                     directory location the files are installed too.
+
+  -local <path>      Actual file system location to write the files too.
+                     The result can then be packaged and distributed.
+
+                     For usage with things like package managers and other
+                     administrator installation tooling.  The resulting
+                     files still need to be installed at '-target' on the
+                     final system.
+
+                     Think 'DESTDIR', see
+                     https://www.gnu.org/prep/standards/html_node/DESTDIR.html
+
+  -source <path>     Path to original source top level directory, if
+                     link_from is "source".  This option may be called
+                     multiple times if there are multiple sources.
+
+  -variable <name>   Specify a variable name that is used for the
+                     target path.  This variable name must be enforced
+                     in setup scripts like .magicrc
+
+Less common options:
+  -link_from <type>  Make symbolic links to vendor files from target.
+
+                     Types are: "none", "source", or a PDK name.
+
+                     Default "none" (copy all files from source)
+
+  -ef_format         Use efabless naming (libs.ref/techLEF),
+                     otherwise use generic naming (libs.tech/lef)
+
+If <target> is unspecified then <name> is used for the target.
+"""
 
 import re
 import os
@@ -37,20 +62,6 @@ import subprocess
 # NOTE:  This version of copy_tree from distutils works like shutil.copytree()
 # in Python 3.8 and up ONLY using "dirs_exist_ok=True".
 from distutils.dir_util import copy_tree
-
-def usage():
-    print("staging_install.py [options...]")
-    print("   -link_from <name> Make symbolic links from target to <name>")
-    print("                     where <name> can be 'source' or a PDK name.")
-    print("                     Default behavior is to copy all files.")
-    print("   -copy             Copy files from source to target (default)")
-    print("   -ef_format        Use efabless naming conventions for local directories")
-    print("")
-    print("   -staging <path>   Path to top of staging directory tree")
-    print("   -target <path>    Path to top of target directory tree")
-    print("   -local <path>	Local path to top of target directory tree for distributed install")
-    print("")
-    print(" If <target> is unspecified then <name> is used for the target.")
 
 def makeuserwritable(filepath):
     if os.path.exists(filepath):
@@ -225,7 +236,7 @@ if __name__ == '__main__':
 
     if len(sys.argv) == 1:
         print("No options given to staging_install.py.")
-        usage()
+        print(__doc__)
         sys.exit(0)
 
     optionlist = []
