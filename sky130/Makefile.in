@@ -1006,18 +1006,13 @@ alpha-a:
 sram-a:
 	# Install SRAM library.  NOTE:  SRAM macros share some of the same
 	# cell names, so use special option script gds_import_sram.tcl
+	# To do:  Add option to process each GDS file individually in magic,
+	# instead of all at once.
 	${STAGE} -source ${SRAM_PATH}/.. -target ${STAGING_PATH}/${SKY130A} \
 		-lef %l/*/*.lef \
 		-lib %l/*/*.lib \
 		-gds %l/*/*.gds options=custom/scripts/gds_import_sram.tcl \
-		-spice %l/*/sky130_sram_1kbyte_1rw1r_32x256_8.lvs.sp \
-			rename=sky130_sram_1kbyte_1rw1r_32x256_8.spice \
-		-spice %l/*/sky130_sram_2kbyte_1rw1r_32x512_8.lvs.sp \
-			rename=sky130_sram_2kbyte_1rw1r_32x512_8.spice \
-		-spice %l/*/sky130_sram_4kbyte_1rw1r_32x1024_8.lvs.sp \
-			rename=sky130_sram_4kbyte_1rw1r_32x1024_8.spice \
-		-spice %l/*/sram_1rw1r_32_256_8_sky130.lvs.sp \
-			rename=sram_1rw1r_32_256_8_sky130.spice \
+		-spice %l/*/*.lvs.sp filter=custom/scripts/sp_to_spice.py \
 		-verilog %l/*/*.v \
 		-library general sky130_sram_macros 2>&1 | tee -a ${SKY130A}_make.log
 
