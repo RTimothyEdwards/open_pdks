@@ -39,14 +39,14 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
         pdkvar[]_LOCAL_PATH="/usr/share/[pdk]"
         pdkvar[]_DIST_PATH=""
         pdkvar[]_LINK_TARGETS="none"
-        pdkvar[]_AUTO="0" 
+        pdkvar[]_AUTO="0"
 
         AC_ARG_ENABLE(pdk-[pdk],
             [AS_HELP_STRING([--enable-pdk-[pdk]=@<:@/path/to/pdk/@:>@ --disable-pdk-[pdk]], "location of the source files for the pdk (pdks with a [pdk]_url file can automatically download them if the path is omitted)")],
             [
                 if test "$enableval" == "yes" -o "$enableval" == "YES"; then
                     export pdkvar[]_SOURCE_PATH=../sources/pdk-[pdk]
-            	    pdkvar[]_AUTO="1" 
+            	    pdkvar[]_AUTO="1"
                 elif test "$enableval" == "no" -o "$enableval" == "NO"; then
                     echo "Disabling pdk..."
                 else
@@ -81,7 +81,7 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
                 [AS_HELP_STRING([--with-pdk-dist-path=/path/to/install/pdk], "staging location to install the PDK for distribution (optional)")],
                 [pdkvar[]_DIST_PATH=$withval]
             )
-            
+
             # "Require" this argument
             AC_MSG_NOTICE([Checking whether distribution path is specified for 'pdk'])
             if test "x$[]pdkvar[]_DIST_PATH" == "x" ; then
@@ -96,7 +96,7 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
                 [AS_HELP_STRING([--with-pdk-local-path=/path/to/install/pdk], "run-time location of the PDK")],
                 [pdkvar[]_LOCAL_PATH=$withval]
             )
-            
+
             # Require this argument
             AC_MSG_NOTICE([Checking whether local path is specified for 'pdk'])
             if test "x$[]pdkvar[]_LOCAL_PATH" == "x" ; then

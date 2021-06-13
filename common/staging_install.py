@@ -99,14 +99,14 @@ def filter_recursive(tooldir, stagingdir, localdir):
             with open(filepath, 'w') as ofile:
                 for line in flines:
                     newline = line.replace(stagingdir, localdir)
-                    print(newline, file=ofile) 
+                    print(newline, file=ofile)
                     if newline != line:
                         modified = True
 
             if modified:
                 total += 1
     return total
-        
+
 # To avoid problems with various library functions that copy hierarchical
 # directory trees, remove all the files from the target that are going to
 # be replaced by the contents of staging.  This avoids problems with
@@ -227,7 +227,7 @@ if __name__ == '__main__':
         print("No options given to staging_install.py.")
         usage()
         sys.exit(0)
-    
+
     optionlist = []
     newopt = []
 
@@ -479,7 +479,7 @@ if __name__ == '__main__':
                     if total > 0:
                         substr = 'substitutions' if total > 1 else 'substitution'
                         print('      ' + filetype + ' (' + str(total) + ' ' + substr + ')')
-        
+
     # If "link_from" is "source", then check all files against the source
     # directory, and replace the file with a symbolic link if the file
     # contents match.  The "foundry_install.py" script should have added a
@@ -628,6 +628,6 @@ if __name__ == '__main__':
                                 os.remove(libfilepath)
                             elif os.path.splitext(libfile)[1] == '.ext':
                                 os.remove(libfilepath)
-        
+
     print('Done with PDK migration.')
     sys.exit(0)
