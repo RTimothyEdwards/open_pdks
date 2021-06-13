@@ -133,41 +133,53 @@ How to use open_pdks:
     need to be installed and distributed (relocated to the final run-time
     location) before the IP libraries are installed.
 
-    There are two distinct install types supported by open_pdks:
+    Users installing on the same host they are running on will want to
+    use the typical flow of;
 
-    (1) Local install:  Use a local install when the EDA tools will be run
-    on a single host, and all the PDK data are on the same host.
-
-    The local install sequence is:
-
-	configure			See options for setting paths
+	./configure			See options for setting paths
 	make				Generate local staging area
-	make install-local		Migrate to install directory
+	sudo make install   		Install onto local system
 
-    (2) Distributed install:  Use the distributed install when the PDK
-    will be run from multiple hosts, but will be installed into a
-    different location such as a git repo which is then distributed to
-    all hosts, and may not itself reside in the same root directory tree.
+    Which will install to /usr/local/share/pdks directory.
 
-    The distributed install sequence is:
+    Users can also elect to install somewhere by giving ./configure the
+    `--prefix` and other similar standard ./configure options.
 
-	configure			See options for setting paths
-	make				Generate local staging area
-	make install-dist		Migrate to distribution directory
+    For example;
 
-    Note that local installs may opt to make symbolic links back to the
-    foundry sources, where possible (see options for foundry_install.py,
-    below).  Distributed installs and local installs may also make
-    symbolic links from any PDK variant back to a "master" PDK variant,
-    where possible (that is, where the files are the same).  For example,
-    a standard cell library will probably be compatible with all metal
-    back-end stacks, and so only one copy of all the library files is
-    needed in one of the PDK variants.  For the other PDK variants, the
-    same files are all symbolic links to the files in the first PDK
-    variant.  But an I/O library would have different layouts for different
-    metal back-end stacks, so layout-dependent files like GDS would be
-    different for each PDK, but layout-independent files like verilog
-    might be symbolic links to files in the first PDK.
+	    Installing to /usr/share/pdks;
+
+		./configure --prefix=/usr
+		make
+		sudo make install
+
+	    Installing to /opt/share/pdks;
+
+		./configure --prefix=/opt
+		make
+		sudo make install
+
+	    Installing to ~/pdks;
+
+		./configure --prefix=$HOME --datarootdir=$HOME
+		make
+		make install
+
+    Packagers and administrators that want to create a directory which
+    is destined to be installed on other machines should set`--prefix`
+    to be the final install location and use `DESTDIR` with
+    `make install` to the directory where the files should be staged,
+    see the following example;
+
+        ./configure --prefix=/usr
+	make
+	# Need to use sudo so the file end up with the right
+	# permissions.
+	sudo make DESTDIR=/tmp/package
+	(cd /tmp/package; tar -cvf ../dist.tar)
+
+    Then on the final install machine you would want to do;
+        (sudo cd /usr; tar -xvf dist.tar)
 
 Prerequisites:
 
