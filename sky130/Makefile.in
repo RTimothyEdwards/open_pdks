@@ -182,7 +182,7 @@ EF_STYLE = @EF_STYLE@
 # although /tmp or a dedicated staging area are also fine, as long
 # as the install process can write to the path.
 
-STAGING_PATH = $(shell pwd)
+STAGING_PATH = $(shell pwd)/build
 
 # If LINK_TARGETS is set to "none", then files are copied
 # from the SkyWater sources to the target.  If set to "source",
