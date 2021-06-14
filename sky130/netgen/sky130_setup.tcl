@@ -313,6 +313,9 @@ if { [info exist ::env(MAGIC_EXT_USE_GDS)] && $::env(MAGIC_EXT_USE_GDS) } {
         if {[regexp {sky130_fd_sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
             ignore class "-circuit1 $cell"
         }
+        if {[regexp {sky130_ef_sc_[^_]+__fakediode_[[:digit:]]+} $cell match]} {
+            ignore class "-circuit1 $cell"
+        }
     }
     foreach cell $cells2 {
 #        if {[regexp {sky130_fd_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
@@ -322,6 +325,9 @@ if { [info exist ::env(MAGIC_EXT_USE_GDS)] && $::env(MAGIC_EXT_USE_GDS) } {
             ignore class "-circuit2 $cell"
         }
         if {[regexp {sky130_fd_sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
+            ignore class "-circuit2 $cell"
+        }
+        if {[regexp {sky130_ef_sc_[^_]+__fakediode_[[:digit:]]+} $cell match]} {
             ignore class "-circuit2 $cell"
         }
     }
