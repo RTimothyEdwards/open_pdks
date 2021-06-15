@@ -505,14 +505,15 @@ if __name__ == '__main__':
                 elif int(mag_version_info[0]) == 8:
                     if int(mag_version_info[1]) >= 2:
                         have_mag_8_2 = True
-                        print('Magic version 8.2 available on the system.')
+                        print('Magic version 8.2 (or better) available on the system.')
             except ValueError:
                 print('Error: "magic --version" did not return valid version number.')
     except FileNotFoundError:
         print('Error: Failed to find executable for magic in standard search path.')
 
     if not have_mag_8_2:
-        print('WARNING:  Magic version 8.2 cannot be executed from the standard executable search path.')
+        print('WARNING:  Magic version 8.2 (or beter) cannot be executed ')
+        print('from the standard executable search path.')
         print('Please install or correct the search path.')
         print('Magic database files will not be created, and other missing file formats may not be generated.')
 

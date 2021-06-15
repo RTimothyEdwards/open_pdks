@@ -31,6 +31,14 @@ MACRO sky130_ef_io__vddio_hvc_clamped_pad
         RECT 0.000 46.330 1.270 49.310 ;
     END
   END AMUXBUS_B
+  PIN VDDIO_PAD
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER met5 ;
+        RECT 7.050 103.085 67.890 163.910 ;
+    END
+  END VDDIO_PAD
   PIN VSSA
     DIRECTION INOUT ;
     USE GROUND ;
@@ -166,10 +174,6 @@ MACRO sky130_ef_io__vddio_hvc_clamped_pad
   PIN VDDIO
     DIRECTION INOUT ;
     USE POWER ;
-    PORT
-      LAYER met5 ;
-        RECT 7.050 103.085 67.890 163.910 ;
-    END
     PORT
       LAYER met3 ;
         RECT 50.390 -2.035 74.290 17.765 ;
@@ -309,7 +313,7 @@ MACRO sky130_ef_io__vddio_hvc_clamped_pad
   END VSSIO_Q
   OBS
       LAYER pwell ;
-        RECT 3.625 -0.970 11.155 21.885 ;
+        RECT 3.495 -1.100 11.285 21.755 ;
       LAYER nwell ;
         RECT 11.860 -1.350 70.965 0.170 ;
       LAYER li1 ;

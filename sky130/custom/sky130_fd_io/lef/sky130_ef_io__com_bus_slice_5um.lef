@@ -160,11 +160,11 @@ MACRO sky130_ef_io__com_bus_slice_5um
     USE POWER ;
     PORT
       LAYER met5 ;
-        RECT 0.000 68.000 1.000 92.950 ;
+        RECT 0.000 68.000 5.000 92.950 ;
     END
     PORT
       LAYER met4 ;
-        RECT 0.000 68.000 1.000 92.965 ;
+        RECT 0.000 68.000 5.000 92.965 ;
     END
     PORT
       LAYER met5 ;
@@ -281,11 +281,11 @@ MACRO sky130_ef_io__com_bus_slice_5um
   END VSSIO_Q
   OBS
       LAYER met4 ;
-        RECT 0.000 66.900 5.000 95.000 ;
-        RECT 0.000 172.000 5.000 197.965 ;
+        RECT 0.000 93.365 5.000 197.965 ;
+        RECT 0.000 66.900 5.000 67.600 ;
         RECT 0.000 61.050 5.000 61.650 ;
         RECT 0.000 55.100 5.000 55.800 ;
-        RECT 0.000 49.710 5.000 50.690 ;
+        RECT 0.000 49.610 5.000 50.790 ;
   END
 END sky130_ef_io__com_bus_slice_5um
 END LIBRARY

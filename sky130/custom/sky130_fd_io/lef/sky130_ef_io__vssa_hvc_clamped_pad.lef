@@ -31,13 +31,17 @@ MACRO sky130_ef_io__vssa_hvc_clamped_pad
         RECT 0.000 46.330 1.270 49.310 ;
     END
   END AMUXBUS_B
-  PIN VSSA
+  PIN VSSA_PAD
     DIRECTION INOUT ;
     USE GROUND ;
     PORT
       LAYER met5 ;
         RECT 7.050 103.085 67.890 163.910 ;
     END
+  END VSSA_PAD
+  PIN VSSA
+    DIRECTION INOUT ;
+    USE GROUND ;
     PORT
       LAYER met3 ;
         RECT 0.495 -2.035 24.395 30.480 ;

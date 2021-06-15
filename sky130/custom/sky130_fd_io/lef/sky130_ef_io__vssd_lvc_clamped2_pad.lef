@@ -31,6 +31,14 @@ MACRO sky130_ef_io__vssd_lvc_clamped2_pad
         RECT 0.000 46.330 1.270 49.310 ;
     END
   END AMUXBUS_B
+  PIN VSSD_PAD
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER met5 ;
+        RECT 10.270 99.865 64.670 167.130 ;
+    END
+  END VSSD_PAD
   PIN VSSA
     DIRECTION INOUT ;
     USE GROUND ;
@@ -258,10 +266,6 @@ MACRO sky130_ef_io__vssd_lvc_clamped2_pad
   PIN VSSD
     DIRECTION INOUT ;
     USE GROUND ;
-    PORT
-      LAYER met5 ;
-        RECT 10.270 99.865 64.670 167.130 ;
-    END
     PORT
       LAYER met3 ;
         RECT 50.755 -0.035 74.700 39.565 ;

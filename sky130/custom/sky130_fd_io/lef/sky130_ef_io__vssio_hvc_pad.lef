@@ -55,6 +55,14 @@ MACRO sky130_ef_io__vssio_hvc_pad
         RECT 25.895 -2.035 36.895 10.390 ;
     END
   END SRC_BDY_HVC
+  PIN VSSIO_PAD
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER met5 ;
+        RECT 7.050 103.085 67.890 163.910 ;
+    END
+  END VSSIO_PAD
   PIN VSSA
     DIRECTION INOUT ;
     USE GROUND ;
@@ -247,10 +255,6 @@ MACRO sky130_ef_io__vssio_hvc_pad
     DIRECTION INOUT ;
     USE GROUND ;
     PORT
-      LAYER met5 ;
-        RECT 6.100 101.975 68.800 164.590 ;
-    END
-    PORT
       LAYER met4 ;
         RECT 0.630 189.565 0.640 189.575 ;
     END
@@ -385,10 +389,10 @@ MACRO sky130_ef_io__vssio_hvc_pad
         RECT 0.965 5.850 74.035 6.450 ;
         RECT 1.670 0.000 73.330 5.850 ;
       LAYER met5 ;
-        RECT 0.000 166.190 75.000 197.965 ;
-        RECT 0.000 100.375 4.500 166.190 ;
-        RECT 70.400 100.375 75.000 166.190 ;
-        RECT 0.000 94.550 75.000 100.375 ;
+        RECT 0.000 165.510 75.000 197.965 ;
+        RECT 0.000 101.485 5.450 165.510 ;
+        RECT 69.490 101.485 75.000 165.510 ;
+        RECT 0.000 94.550 75.000 101.485 ;
         RECT 2.870 34.805 72.130 94.550 ;
         RECT 0.000 34.800 75.000 34.805 ;
         RECT 2.870 16.250 72.130 34.800 ;

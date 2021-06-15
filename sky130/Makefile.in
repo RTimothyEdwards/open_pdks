@@ -166,6 +166,10 @@ else
 endif
 TECH = sky130
 
+# The run-time environment uses PDKPATH to override the PDK location,
+# so prevent that from happening during PDK install.
+unexport PDKPATH 
+
 # If EF_STYLE is set to 1, then efabless naming conventions are
 # used, otherwise the generic naming conventions are used.
 # Mainly, the hierarchy of library names and file types is reversed
@@ -918,18 +922,18 @@ io-a:
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${IO_VERILOG}/*.*.v
-	# Install custom additions to standard cell libraries
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
-		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
-		-lef %l/lef/*.lef \
-		-verilog %l/verilog/*.v \
-		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130A}_make.log
 	# Add a maskhint set for the GPIO pad .mag view to prevent problems writing
 	# when writing HVI to GDS during hierarchical adjustments.
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io__top_gpiov2 \
 		"MASKHINTS_HVI 1346 17198 5828 19224 13700 1890 15920 2360 24 17522 1778 20612" -mag
 
 digital-a:
+	# Install custom additions to standard cell libraries
+	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
+		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
+		-lef %l/lef/*.lef \
+		-verilog %l/verilog/*.v \
+		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130A}_make.log
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-techlef %l/latest/tech/*.tlef \

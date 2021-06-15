@@ -71,6 +71,14 @@ MACRO sky130_ef_io__vssa_lvc_pad
         RECT 34.440 -0.035 44.440 0.290 ;
     END
   END BDY2_B2B
+  PIN VSSA_PAD
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER met5 ;
+        RECT 10.270 99.865 64.670 167.130 ;
+    END
+  END VSSA_PAD
   PIN VSSA
     DIRECTION INOUT ;
     USE GROUND ;
@@ -129,10 +137,6 @@ MACRO sky130_ef_io__vssa_lvc_pad
     PORT
       LAYER met3 ;
         RECT 50.755 -0.035 74.700 34.725 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 9.315 100.105 65.955 167.535 ;
     END
   END VSSA
   PIN VDDA
@@ -395,10 +399,10 @@ MACRO sky130_ef_io__vssa_lvc_pad
         RECT 0.965 5.850 74.035 6.450 ;
         RECT 1.670 0.000 73.330 5.850 ;
       LAYER met5 ;
-        RECT 0.000 169.135 75.000 197.965 ;
-        RECT 0.000 98.505 7.715 169.135 ;
-        RECT 67.555 98.505 75.000 169.135 ;
-        RECT 0.000 94.550 75.000 98.505 ;
+        RECT 0.000 168.730 75.000 197.965 ;
+        RECT 0.000 98.265 8.670 168.730 ;
+        RECT 66.270 98.265 75.000 168.730 ;
+        RECT 0.000 94.550 75.000 98.265 ;
         RECT 2.870 34.805 72.130 94.550 ;
         RECT 0.000 34.800 75.000 34.805 ;
         RECT 2.870 16.250 72.130 34.800 ;
