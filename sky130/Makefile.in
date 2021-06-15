@@ -902,57 +902,56 @@ io-a:
 	# Install SkyWater I/O pad library
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
-			sort=../common/sort_pdkfiles.py \
+			sort=custom/scripts/sort_pdkfiles.py \
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
-			sort=../common/sort_pdkfiles.py \
+			sort=custom/scripts/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib \
 		-gds %l/latest/cells/*/*.gds compile-only \
-			sort=../common/sort_pdkfiles.py \
+			sort=custom/scripts/sort_pdkfiles.py \
 			options=custom/scripts/sky130_fd_io_import.tcl \
 		-verilog %l/latest/cells/*/*.*.v \
 		-verilog %l/latest/cells/*/*.v exclude=*.*.v \
 			compile-only filter=custom/scripts/inc_verilog.py \
-			sort=../common/sort_pdkfiles.py \
+			sort=custom/scripts/sort_pdkfiles.py \
 		-library general sky130_fd_io 2>&1 | tee -a ${SKY130A}_make.log
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${IO_VERILOG}/*.*.v
-	# Add a maskhint set for the GPIO pad .mag view to prevent problems writing
-	# when writing HVI to GDS during hierarchical adjustments.
-	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io__top_gpiov2 \
-		"MASKHINTS_HVI 1346 17198 5828 19224 13700 1890 15920 2360 24 17522 1778 20612" -mag
-
-digital-a:
 	# Install custom additions to standard cell libraries
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
 		-lef %l/lef/*.lef \
 		-verilog %l/verilog/*.v \
 		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130A}_make.log
+	# Add a maskhint set for the GPIO pad .mag view to prevent problems writing
+	# when writing HVI to GDS during hierarchical adjustments.
+	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io__top_gpiov2 \
+		"MASKHINTS_HVI 1346 17198 5828 19224 13700 1890 15920 2360 24 17522 1778 20612" -mag
+
+digital-a:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-techlef %l/latest/tech/*.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
-			sort=../common/sort_pdkfiles.py \
+			sort=custom/scripts/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
-			sort=../common/sort_pdkfiles.py \
+			sort=custom/scripts/sort_pdkfiles.py \
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
-			sort=../common/sort_pdkfiles.py \
+			sort=custom/scripts/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib \
 		-gds %l/latest/cells/*/*.gds compile-only \
-			exclude=sky130_fd_sc_hd__buf_16.gds,sky130_fd_sc_hd__a2111oi_0.gds,sky130_fd_sc_hd__clkdlybuf4s15_1.gds,sky130_fd_sc_hd__clkdlybuf4s18_1.gds \
 			options=custom/scripts/gds_import_setup.tcl \
-			sort=../common/sort_pdkfiles.py \
+			sort=custom/scripts/sort_pdkfiles.py \
 		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
-			sort=../common/sort_pdkfiles.py \
+			sort=custom/scripts/sort_pdkfiles.py \
 		-verilog %l/latest/cells/*/*.*.v \
 		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
 			compile-only filter=custom/scripts/inc_verilog.py \
-			sort=../common/sort_pdkfiles.py \
+			sort=custom/scripts/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hd \
 		-library digital sky130_fd_sc_hdll \
 		-library digital sky130_fd_sc_hvl \

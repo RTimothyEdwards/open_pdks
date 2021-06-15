@@ -95,11 +95,6 @@
 #		    exclude these files/modules/subcircuits.  Names may
 #		    also be wildcarded in "glob" format.
 #
-#	include :   This is the complement of "exclude";  name additional
-#		    files placed in the target directory by a previous
-#		    run of the script, then add them to the list of files
-#		    to process.  Syntax is the same as "exclude".
-#
 #	rename :   Followed by "=" and an alternative name.  For any
 #		    file that is a single entry, change the name of
 #		    the file in the target directory to this (To-do:
@@ -732,15 +727,7 @@ if __name__ == '__main__':
         except IndexError:
             excludelist = []
         else:
-            print('Excluding files from source: ' + (',').join(excludelist))
-
-        # Option 'include' has an argument
-        try:
-            includelist = list(item.split('=')[1].split(',') for item in option if item.startswith('incl'))[0]
-        except IndexError:
-            includelist = []
-        else:
-            print('Including files for processing: ' + (',').join(includelist))
+            print('Excluding files: ' + (',').join(excludelist))
 
         # Option 'rename' has an argument
         try:
@@ -922,53 +909,10 @@ if __name__ == '__main__':
 
                 destfilelist.append(os.path.split(targname)[1])
 
-            # "exclude" applies the exclusion only to the gathering of source
-            # files.  If any of the files that were excluded from the source
-            # (pre-)exists in the destination, then add it to destfilelist
-            # for all additional processing.
-
-            # Get list of all file names in the target directory, not just
-            # the ones that were installed.
-            destallfiles = glob.glob(destlibdir + destpath + '/**')
-            destallnames = list(os.path.split(item)[1] for item in destallfiles)
-
-            # Match names against the exclude list, using fnmatch wildcarding
-            intarglist = []
-            for file in excludelist:
-                intarglist.extend(fnmatch.filter(destallnames, file))
-
-            # Any file from the exclude list that is found to be in the
-            # destination is added back to the list of files to be processed.
-            if intarglist != []:
-                for file in intarglist:
-                    if file not in destfilelist:
-                        print('Adding back file ' + file + ' for processing.')
-                        destfilelist.append(file)
-                excludelist = []
-            elif len(excludelist) > 0:
-                print('Note:  No files from exclude list were found in the target.')
-
-            # Any "include" option adds additional files to destfilelist,
-            # if they are found in the target directory.
-            intarglist = []
-            for file in includelist:
-                intarglist.extend(fnmatch.filter(destallnames, file))
-
-            if intarglist != []:
-                for file in intarglist:
-                    if file not in destfilelist:
-                        print('Adding file ' + file + ' for processing.')
-                        destfilelist.append(file)
-            elif len(includelist) > 0:
-                print('Note:  No files from include list were found in the target.')
-
-            # Write unsorted file
-            with open(destlibdir + '/filelist.txt', 'w') as ofile:
-                for destfile in destfilelist:
-                    print(destfile, file=ofile)
-
-            # Apply sorting and rewrite file with sorted contents
             if sortscript:
+                with open(destlibdir + '/filelist.txt', 'w') as ofile:
+                    for destfile in destfilelist:
+                        print(destfile, file=ofile)
                 if os.path.isfile(sortscript):
                     print('Diagnostic:  Sorting files with ' + sortscript)
                     subprocess.run([sortscript, destlibdir],
@@ -1046,8 +990,9 @@ if __name__ == '__main__':
                         os.rename(origname, targrename)
       
             # If "filelist.txt" was created, remove it
-            if os.path.isfile(destlibdir + '/filelist.txt'):
-                os.remove(destlibdir + '/filelist.txt')
+            if sortscript:
+                if os.path.isfile(destlibdir + '/filelist.txt'):
+                    os.remove(destlibdir + '/filelist.txt')
 
         # Find any libraries/options marked as "privileged" (or "private") and
         # move the files from libs.tech or libs.ref to libs.priv, leaving a
