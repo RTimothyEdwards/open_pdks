@@ -35,6 +35,7 @@ set stdcell_core {
 	    $::env(FP_PDN_UPPER_LAYER) {width $::env(FP_PDN_HWIDTH) pitch $::env(FP_PDN_HPITCH) offset $::env(FP_PDN_HOFFSET)}
     }
     connect {{$::env(FP_PDN_LOWER_LAYER) $::env(FP_PDN_UPPER_LAYER)}}
+    pins { $::env(FP_PDN_UPPER_LAYER) }
 }
 
 # Used if the design is a macro in the core
