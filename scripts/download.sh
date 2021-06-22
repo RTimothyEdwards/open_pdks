@@ -24,7 +24,9 @@
 # the form on github where the filename is spelled out as ".tar.gz" and
 # not ".tgz")
 
-if ${1: -3} == ".gz"; then
+set -e
+
+if [ "${1: -3}" == ".gz"; ] then
 
     # Neither curl or wget are guaranteed to be included in all *nix systems,
     # (but most have *one* of them). This tools tries its best to find one.
