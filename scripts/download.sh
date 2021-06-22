@@ -26,7 +26,7 @@
 
 set -e
 
-if [ "${1: -3}" == ".gz"; ] then
+if [ "${1: -3}" == ".gz" ] ; then
 
     # Neither curl or wget are guaranteed to be included in all *nix systems,
     # (but most have *one* of them). This tools tries its best to find one.
@@ -75,3 +75,4 @@ else
 fi
 
 exit 0
+
