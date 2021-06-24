@@ -1,9 +1,9 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1622214725
+timestamp 1624544534
 use sky130_ef_io__vddio_hvc_clamped_pad  sky130_ef_io__vddio_hvc_clamped_pad_0
-timestamp 1622214725
+timestamp 1624544022
 transform 1 0 -778 0 1 -5714
 box 0 -434 15000 39593
 use sky130_ef_io__vdda_hvc_clamped_pad  sky130_ef_io__vdda_hvc_clamped_pad_0
@@ -31,9 +31,13 @@ timestamp 1622214725
 transform 1 0 118340 0 1 -5714
 box 0 -2107 17239 39593
 use sky130_ef_io__vssd_lvc_clamped2_pad  sky130_ef_io__vssd_lvc_clamped2_pad_0
-timestamp 1622214725
-transform 1 0 138664 0 1 -6040
-box 0 -2107 17239 39593
+timestamp 1617120349
+transform 1 0 141083 0 1 -5048
+box -2195 -2184 17228 39593
+use sky130_ef_io__top_power_hvc  sky130_ef_io__top_power_hvc_0
+timestamp 1624544534
+transform 1 0 163508 0 1 -6325
+box 0 -407 33800 39593
 use sky130_ef_io__vssd_lvc_pad  sky130_ef_io__vssd_lvc_pad_0
 timestamp 1622214725
 transform 1 0 -480 0 1 46173
@@ -114,8 +118,4 @@ use sky130_fd_io__top_gpio_ovtv2  sky130_ef_fd__top_gpio_ovtv2_0 $PDKPATH/libs.r
 timestamp 1622147639
 transform 1 0 160920 0 1 92540
 box -80 -147 28211 40151
-use sky130_ef_io__top_power_hvc  sky130_ef_io__top_power_hvc_0
-timestamp 1622214725
-transform 1 0 165360 0 1 -16306
-box 0 8966 33800 48993
 << end >>
