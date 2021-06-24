@@ -907,7 +907,7 @@ io-a:
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			sort=custom/scripts/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.magic.lef compile-only \
+		-lef %l/latest/cells/*/*.lef compile-only \
 			sort=custom/scripts/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib \
