@@ -63,4 +63,8 @@
     "other" : [
 	"sky130_ml_xx_hd" : "ALPHA_COMMIT"
     ]
+    "build" : [
+	"magic" : "MAGIC_VERSION",
+	"open_pdks" : "OPEN_PDKS_VERSION"
+    ]
 }

@@ -318,6 +318,8 @@ else
     COMMIT_DEFS += -DFD_SC_LS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_ls/latest)
     COMMIT_DEFS += -DFD_SC_LP_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_lp/latest)
 endif
+COMMIT_DEFS += -DMAGIC_VERSION=$(shell magic -dnull -noconsole --version)
+COMMIT_DEFS += -DOPEN_PDKS_VERSION=$(shell cat ../VERSION)
 
 ifeq (${EF_STYLE}, 1)
     EF_FORMAT = -ef_format
