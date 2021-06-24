@@ -1,5 +1,5 @@
 MACRO sky130_fd_io__top_gpio_ovtv2
-  CLASS BLOCK ;
+  CLASS PAD ;
   FOREIGN sky130_fd_io__top_gpio_ovtv2 ;
   ORIGIN 0.400 0.735 ;
   SIZE 141.455 BY 201.490 ;

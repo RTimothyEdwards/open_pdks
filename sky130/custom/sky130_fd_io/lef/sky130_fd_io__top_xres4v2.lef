@@ -1,5 +1,5 @@
 MACRO sky130_fd_io__top_xres4v2
-  CLASS BLOCK ;
+  CLASS PAD ;
   FOREIGN sky130_fd_io__top_xres4v2 ;
   ORIGIN 0.515 0.000 ;
   SIZE 76.135 BY 200.000 ;
