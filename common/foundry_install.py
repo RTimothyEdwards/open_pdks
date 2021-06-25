@@ -658,7 +658,8 @@ if __name__ == '__main__':
 
     for option in optionlist[:]:
         if option[0] == 'lef':
-            have_lef = True
+            have_lefanno = True if 'annotate' in option or 'anno' in option else False
+            have_lef = True if not have_lefanno else False
         if option[0] == 'techlef' or option[0] == 'techLEF':
             have_techlef = True
         elif option[0] == 'gds':
@@ -683,6 +684,9 @@ if __name__ == '__main__':
 
         # Diagnostic
         print("Install option: " + str(option[0]))
+
+        if option[0] == 'lef' and have_lefanno:
+            print("LEF files used for annotation only.  Temporary install.")
 
         # For ef_format:  always make techlef -> techLEF and spice -> spi
 
@@ -746,17 +750,6 @@ if __name__ == '__main__':
             sortscript = scriptdir + '/sort_pdkfiles.py'
         else:
             print('Sorting files with script ' + sortscript)
-
-        # 'anno' may be specified for LEF, in which case the LEF is used only
-        # to annotate GDS and is not itself installed;  this allows LEF to
-        # be generated from Magic and avoids quirky use of obstruction layers.
-        have_lefanno = True if 'annotate' in option or 'anno' in option else False
-        if have_lefanno: 
-            if option[0] != 'lef':
-                print("Warning: 'annotate' option specified outside of -lef.  Ignoring.")
-            else:
-                # Mark as NOT having LEF since we want to use it only for annotation.
-                have_lef = False
 
         # For each library, create the library subdirectory
         for library in libraries:
@@ -1058,6 +1051,8 @@ if __name__ == '__main__':
     no_gds_convert = False
     no_lef_convert = False
     cdl_compile_only = False
+    lef_compile = False
+    lef_compile_only = False
 
     cdl_exclude = []
     lef_exclude = []
@@ -1105,10 +1100,18 @@ if __name__ == '__main__':
                 lef_reflib = '/libs.priv/'
 
         # If CDL is marked 'compile-only' then CDL should only convert the
-        # compiled file to SPICE if conversion is needed.
+        # compiled file to SPICE if conversion is needed.  If LEF is marked
+        # 'compile' or 'compile-only' in annotate mode, then create a LEF
+        # library from magic LEF output.
+
         if 'compile-only' in option:
             if option[0] == 'cdl':
                 cdl_compile_only = True
+            elif option[0] == 'lef':
+                lef_compile_only = True
+        elif 'compile' in option:
+            if option[0] == 'lef':
+                lef_compile = True
 
         # Find exclude list for any option
         for item in option:
@@ -1136,7 +1139,6 @@ if __name__ == '__main__':
                 tcllines = ifile.read().splitlines()
         else:
             tcllines = list(tclscript)
-
 
     if have_gds and not no_gds_convert:
         print("Migrating GDS files to layout.")
@@ -1288,10 +1290,7 @@ if __name__ == '__main__':
                     else:
                         # Use LEF files to set the port properties
                         if have_lefanno or have_lef:
-                            if have_lefanno:
-                                lefdirname = 'lefanno'
-                            else:
-                                lefdirname = 'lef'
+                            lefdirname = 'lef'
 
                             # Find LEF file names in the source
                             if ef_format:
@@ -1303,7 +1302,20 @@ if __name__ == '__main__':
 
                             leffiles = os.listdir(lefsrclibdir)
                             leffiles = list(item for item in leffiles if os.path.splitext(item)[1] == '.lef')
-                            print('puts stdout "Annotating cells from LEF"', file=ofile)
+                            if len(leffiles) > 0:
+                                lefnames = list(os.path.split(item)[1] for item in leffiles)
+                                notlefnames = []
+                                for exclude in lef_exclude:
+                                    notlefnames.extend(fnmatch.filter(lefnames, exclude))
+
+                                # Apply exclude list
+                                if len(notlefnames) > 0:
+                                    for file in leffiles[:]:
+                                        if os.path.split(file)[1] in notlefnames:
+                                            leffiles.remove(file)
+
+                            if len(leffiles) > 0:
+                                print('puts stdout "Annotating cells from LEF"', file=ofile)
                             for leffile in leffiles:
                                 print('lef read ' + lefsrclibdir + '/' + leffile, file=ofile)
                      
@@ -1333,17 +1345,17 @@ if __name__ == '__main__':
                     if have_lefanno:
                         # Find LEF file names in the source
                         if ef_format:
-                            lefsrcdir = targetdir + lef_reflib + 'lefanno'
+                            lefsrcdir = targetdir + lef_reflib + 'lef'
                             lefsrclibdir = lefsrcdir + '/' + destlib
                         else:
-                            lefsrcdir = targetdir + lef_reflib + destlib + '/lefanno'
+                            lefsrcdir = targetdir + lef_reflib + destlib + '/lef'
                             lefsrclibdir = lefsrcdir
 
                         leffiles = os.listdir(lefsrclibdir)
                         leffiles = list(item for item in leffiles if os.path.splitext(item)[1] == '.lef')
                         # Get list of abstract views to make from LEF macros
                         for leffile in leffiles:
-                            with open(leffile, 'r') as ifile:
+                            with open(lefsrclibdir + '/' + leffile, 'r') as ifile:
                                 ltext = ifile.read()
                                 llines = ltext.splitlines()
                                 for lline in llines:
@@ -1467,13 +1479,18 @@ if __name__ == '__main__':
                         # write procedure, but we still need the pin use and class
                         # information from the LEF file, and maybe the bounding box.
 
+                        
+                        # For annotation, the LEF file output will overwrite the
+                        # original source LEF file.
+                        lefdest = lefsrclibdir + '/' if have_lefanno else ''
+
                         for leffile in leffiles:
                             if have_lefanno:
                                 print('lef read ' + lefsrclibdir + '/' + leffile, file=ofile)
                         for lefmacro in lefmacros:
                             print('if {[cellname list exists ' + lefmacro + '] != 0} {', file=ofile)
                             print('   load ' + lefmacro, file=ofile)
-                            print('   lef write ' + lefmacro + ' -hide', file=ofile)
+                            print('   lef write ' + lefdest + lefmacro + ' -hide', file=ofile)
                             print('}', file=ofile)
 
                     print('puts stdout "Done."', file=ofile)
@@ -1498,69 +1515,23 @@ if __name__ == '__main__':
                     if mproc.returncode != 0:
                         print('ERROR:  Magic exited with status ' + str(mproc.returncode))
 
-                if not have_lef:
-                    print('No LEF file install;  need to generate LEF.')
-                    # Remove the lefanno/ target and its contents.
-                    if have_lefanno:
-                        if ef_format:
-                            lefannosrcdir = targetdir + lef_reflib + 'lefanno'
-                        else:
-                            lefannosrcdir = targetdir + lef_reflib + destlib + '/lefanno'
-                        if os.path.isdir(lefannosrcdir):
-                            shutil.rmtree(lefannosrcdir)
-
-                    if ef_format:
-                        destlefdir = targetdir + lef_reflib + 'lef'
-                        destleflibdir = destlefdir + '/' + destlib
-                    else:
-                        destlefdir = targetdir + lef_reflib + destlib + '/lef'
-                        destleflibdir = destlefdir
-
-                    os.makedirs(destleflibdir, exist_ok=True)
-                    leflist = os.listdir(destlibdir)
-                    leflist = list(item for item in leflist if os.path.splitext(item)[1] == '.lef')
-
-                    # All macros will go into one file
-                    destleflib = destleflibdir + '/' + destlib + '.lef'
-                    # Remove any existing library file from the target directory
-                    if os.path.isfile(destleflib):
-                        print('Removing existing library ' + destleflib)
-                        os.remove(destleflib)
-
-                    first = True
-                    with open(destleflib, 'w') as ofile:
-                        for leffile in leflist:
-                            # Remove any existing single file from the target directory
-                            if os.path.isfile(destleflibdir + '/' + leffile):
-                                print('Removing ' + destleflibdir + '/' + leffile)
-                                os.remove(destleflibdir + '/' + leffile)
-
-                            # Append contents
-                            sourcelef =  destlibdir + '/' + leffile
-                            with open(sourcelef, 'r') as ifile:
-                                leflines = ifile.read().splitlines()
-                                if not first:
-                                    # Remove header from all but the first file
-                                    leflines = leflines[8:]
-                                else:
-                                    first = False
-
-                            for line in leflines:
-                                print(line, file=ofile)
-
-                            # Remove file from the source directory
-                            print('Removing source file ' + sourcelef)
-                            os.remove(sourcelef)
-
-                    # Set have_lef now that LEF files were made, so they
-                    # can be used to generate the maglef/ databases.
-                    have_lef = True
+                # Set have_lef now that LEF files were made, so they
+                # can be used to generate the maglef/ databases.
+                have_lef = True
 
             elif not have_mag_8_2:
                 print('The installer is not able to run magic.')
             else:
                 print("Master PDK magic startup file not found.  Did you install")
                 print("PDK tech files before PDK vendor files?")
+
+    if have_lefanno:
+        # LEF files were used for annotation.  If "compile" or "compile-only"
+        # was also passed as an option, then build the LEF library now from
+        # the LEF output from magic.
+        print("Compiling LEF library from magic output.")
+        if lef_compile or lef_compile_only:
+            create_lef_library(lefsrclibdir, destlib, lef_compile_only, lef_exclude)
 
     if have_lef and not no_lef_convert:
         print("Migrating LEF files to layout.")
