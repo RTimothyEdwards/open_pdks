@@ -1342,7 +1342,10 @@ if __name__ == '__main__':
 
                     leffiles = []
                     lefmacros = []
-                    if have_lefanno:
+                    if have_lef:
+                        # Nothing to do;  LEF macros were already installed.
+                        pass
+                    elif have_lefanno:
                         # Find LEF file names in the source
                         if ef_format:
                             lefsrcdir = targetdir + lef_reflib + 'lef'
@@ -1353,7 +1356,23 @@ if __name__ == '__main__':
 
                         leffiles = os.listdir(lefsrclibdir)
                         leffiles = list(item for item in leffiles if os.path.splitext(item)[1] == '.lef')
+                        # Create exclude list with glob-style matching using fnmatch
+                        if len(leffiles) > 0:
+                            lefnames = list(os.path.split(item)[1] for item in leffiles)
+                            notlefnames = []
+                            for exclude in lef_exclude:
+                                notlefnames.extend(fnmatch.filter(lefnames, exclude))
+
+                            # Apply exclude list
+                            if len(notlefnames) > 0:
+                                for file in leffiles[:]:
+                                    if os.path.split(file)[1] in notlefnames:
+                                        leffiles.remove(file)
+
                         # Get list of abstract views to make from LEF macros
+                        # (Note:  exclude list can only contain the file being
+                        # read, not individual macro names in the file;  might
+                        # need some additional feature to accommodate this.)
                         for leffile in leffiles:
                             with open(lefsrclibdir + '/' + leffile, 'r') as ifile:
                                 ltext = ifile.read()
@@ -1363,23 +1382,24 @@ if __name__ == '__main__':
                                     if ltok[0] == 'MACRO':
                                         lefmacros.append(ltok[1])
 
-                        # Create exclude list with glob-style matching using fnmatch
-                        if len(lefmacros) > 0:
-                            lefnames = list(os.path.split(item)[1] for item in lefmacros)
-                            notlefnames = []
-                            for exclude in lef_exclude:
-                                notlefnames.extend(fnmatch.filter(lefnames, exclude))
-
-                            # Apply exclude list
-                            if len(notlefnames) > 0:
-                                for file in lefmacros[:]:
-                                    if os.path.split(file)[1] in notlefnames:
-                                        lefmacros.remove(file)
-
                     elif have_verilog and os.path.isdir(vlibdir):
                         # Get list of abstract views to make from verilog modules
+                        # (NOTE:  no way to apply exclude list here!)
                         vfiles = os.listdir(vlibdir)
                         vfiles = list(item for item in vfiles if os.path.splitext(item)[1] == '.v')
+                        # Create exclude list with glob-style matching using fnmatch
+                        if len(vfiles) > 0:
+                            vnames = list(os.path.split(item)[1] for item in vfiles)
+                            notvnames = []
+                            for exclude in verilog_exclude:
+                                notvnames.extend(fnmatch.filter(vnames, exclude))
+
+                            # Apply exclude list
+                            if len(notvnames) > 0:
+                                for file in vfiles[:]:
+                                    if os.path.split(file)[1] in notvnames:
+                                        vfiles.remove(file)
+
                         for vfile in vfiles:
                             with open(vlibdir + '/' + vfile, 'r') as ifile:
                                 vtext = ifile.read()
@@ -1393,23 +1413,23 @@ if __name__ == '__main__':
                                     except:
                                         pass
 
-                        # Create exclude list with glob-style matching using fnmatch
-                        if len(lefmacros) > 0:
-                            lefnames = list(os.path.split(item)[1] for item in lefmacros)
-                            notlefnames = []
-                            for exclude in verilog_exclude:
-                                notlefnames.extend(fnmatch.filter(lefnames, exclude))
-
-                            # Apply exclude list
-                            if len(notlefnames) > 0:
-                                for file in lefmacros[:]:
-                                    if os.path.split(file)[1] in notlefnames:
-                                        lefmacros.remove(file)
-
                     elif have_cdl and os.path.isdir(clibdir):
                         # Get list of abstract views to make from CDL subcircuits
                         cfiles = os.listdir(clibdir)
                         cfiles = list(item for item in cfiles if os.path.splitext(item)[1] == '.cdl')
+                        # Create exclude list with glob-style matching using fnmatch
+                        if len(cfiles) > 0:
+                            cnames = list(os.path.split(item)[1] for item in cfiles)
+                            notcnames = []
+                            for exclude in cdl_exclude:
+                                notcnames.extend(fnmatch.filter(cnames, exclude))
+
+                            # Apply exclude list
+                            if len(notcnames) > 0:
+                                for file in cfiles[:]:
+                                    if os.path.split(file)[1] in notcnames:
+                                        cfiles.remove(file)
+
                         for cfile in cfiles:
                             with open(clibdir + '/' + cfile, 'r') as ifile:
                                 ctext = ifile.read()
@@ -1423,23 +1443,24 @@ if __name__ == '__main__':
                                     except:
                                         pass
 
-                        # Create exclude list with glob-style matching using fnmatch
-                        if len(lefmacros) > 0:
-                            lefnames = list(os.path.split(item)[1] for item in lefmacros)
-                            notlefnames = []
-                            for exclude in cdl_exclude:
-                                notlefnames.extend(fnmatch.filter(lefnames, exclude))
-
-                            # Apply exclude list
-                            if len(notlefnames) > 0:
-                                for file in lefmacros[:]:
-                                    if os.path.split(file)[1] in notlefnames:
-                                        lefmacros.remove(file)
-
                     elif have_spice and os.path.isdir(slibdir):
                         # Get list of abstract views to make from SPICE subcircuits
                         sfiles = os.listdir(slibdir)
                         sfiles = list(item for item in sfiles)
+
+                        # Create exclude list with glob-style matching using fnmatch
+                        if len(sfiles) > 0:
+                            snames = list(os.path.split(item)[1] for item in sfiles)
+                            notsnames = []
+                            for exclude in spice_exclude:
+                                notsnames.extend(fnmatch.filter(snames, exclude))
+
+                            # Apply exclude list
+                            if len(notsnames) > 0:
+                                for file in sfiles[:]:
+                                    if os.path.split(file)[1] in notsnames:
+                                        sfiles.remove(file)
+
                         for sfile in sfiles:
                             with open(slibdir + '/' + sfile, 'r') as ifile:
                                 stext = ifile.read()
@@ -1452,19 +1473,6 @@ if __name__ == '__main__':
                                                 lefmacros.append(stok[1])
                                     except:
                                         pass
-
-                        # Create exclude list with glob-style matching using fnmatch
-                        if len(lefmacros) > 0:
-                            lefnames = list(os.path.split(item)[1] for item in lefmacros)
-                            notlefnames = []
-                            for exclude in spice_exclude:
-                                notlefnames.extend(fnmatch.filter(lefnames, exclude))
-
-                            # Apply exclude list
-                            if len(notlefnames) > 0:
-                                for file in lefmacros[:]:
-                                    if os.path.split(file)[1] in notlefnames:
-                                        lefmacros.remove(file)
 
                     if not lefmacros:
                         print('No source for abstract views:  Abstract views not made.')
