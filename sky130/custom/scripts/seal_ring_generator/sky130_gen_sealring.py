@@ -53,8 +53,13 @@ import re
 
 def generate_sealring(width, height, target_dir, force, keep):
 
+    # Find directory where the script and relevant files exists
+    
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(abspath)
+    
     # All files of interest are listed below.
-
+    
     script = 'generate_gds.tcl'
     tech = 'sky130seal_ring.tech'
     corner = 'seal_ring_corner.mag'
@@ -71,15 +76,30 @@ def generate_sealring(width, height, target_dir, force, keep):
 	    'sr_polygon00005.mag', 'sr_polygon00023.mag', 'sr_polygon00039.mag',
 	    'sr_polygon00006.mag', 'sr_polygon00024.mag']
 
+    # Check if working directory is writable
 
+    if not os.access(os.getcwd(), os.W_OK):
+        print('Write access is not given. Please make sure the working directory is writable.')
+        sys.exit(0)
+        
     # Create temporary directory
-    if os.path.exists('temp'):
-        print('temp/ directory exists.  Please remove it before running.')
+    
+    temp_names=['temp','tmp']
+    temp_dir=''
+    	
+    for i in temp_names:
+    	if not os.path.exists(i):
+    	    temp_dir=i
+    	    break
+    
+    if temp_dir=='':
+        print('The following directories already exist: '+str(temp_names)+'. Please remove one of them before running.')
         sys.exit(0)
 
-    os.makedirs('temp')
-    os.chdir('temp')
-
+    
+    os.makedirs(temp_dir)
+    os.chdir(temp_dir)
+    
     # Copy all .mag files, .magicrc file, and sky130seal_ring.tech file to temp/
     files_to_copy = polygons[:]
     files_to_copy.append(nikon)
@@ -91,7 +111,7 @@ def generate_sealring(width, height, target_dir, force, keep):
     files_to_copy.append(script)
 
     for file in files_to_copy:
-        shutil.copy('../' + file, '.')
+        shutil.copy(dname +"/" + file, '.')
 
     # Seal ring is placed 6um outside of the chip, so add 12um to width and height
     fwidth = float(width) + 12
@@ -289,24 +309,24 @@ def generate_sealring(width, height, target_dir, force, keep):
 
     print('Installing files to ' + target_dir)
     if force or not os.path.exists(target_dir + '/advSeal_6um_gen.gds'):
-        shutil.copy('temp/advSeal_6um_gen.gds', target_dir)
+        shutil.copy(temp_dir+'/advSeal_6um_gen.gds', target_dir)
     else:
         print('ERROR: advSeal_6um_gen.gds already exists at target!  Use -force to overwrite.')
     if force or not os.path.exists(target_dir + '/advSeal_6um_gen.mag'):
-        shutil.copy('temp/seal_ring.mag', target_dir + '/advSeal_6um_gen.mag')
+        shutil.copy(temp_dir+'/seal_ring.mag', target_dir + '/advSeal_6um_gen.mag')
     else:
         print('ERROR: advSeal_6um_gen.mag already exists at target!  Use -force to overwrite.')
     if force or not os.path.exists(target_dir + '/seal_ring_corner_abstract.mag'):
-        shutil.copy('temp/seal_ring_corner_abstract.mag', target_dir)
+        shutil.copy(temp_dir+'/seal_ring_corner_abstract.mag', target_dir)
     else:
         print('ERROR: seal_ring_corner_abstract.mag already exists at target!  Use -force to overwrite.')
     
     # Remove the temporary directory and its contents
-
+    
     if not keep:
-        shutil.rmtree('temp')
+        shutil.rmtree(temp_dir)
     else:
-        print('Retaining generated files in temp/ directory')
+        print('Retaining generated files in '+temp_dir+'/ directory')
 
     # Done!
     print('Done generating files advSeal_6um_gen.gds and advSeal_6um_gen.mag in ' + target_dir)
