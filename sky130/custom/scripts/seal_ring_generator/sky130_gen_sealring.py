@@ -53,10 +53,12 @@ import re
 
 def generate_sealring(width, height, target_dir, force, keep):
 
+    starting_dir=os.getcwd()
+    
     # Find directory where the script and relevant files exists
     
     abspath = os.path.abspath(__file__)
-    dname = os.path.dirname(abspath)
+    script_dir = os.path.dirname(abspath)
     
     # All files of interest are listed below.
     
@@ -75,29 +77,38 @@ def generate_sealring(width, height, target_dir, force, keep):
 	    'sr_polygon00004.mag', 'sr_polygon00020.mag', 'sr_polygon00036.mag',
 	    'sr_polygon00005.mag', 'sr_polygon00023.mag', 'sr_polygon00039.mag',
 	    'sr_polygon00006.mag', 'sr_polygon00024.mag']
-
-    # Check if working directory is writable
-
-    if not os.access(os.getcwd(), os.W_OK):
-        print('Write access is not given. Please make sure the working directory is writable.')
-        sys.exit(0)
         
-    # Create temporary directory
+    # Tries to create 'temp' directory
     
-    temp_names=['temp','tmp']
-    temp_dir=''
-    	
-    for i in temp_names:
-    	if not os.path.exists(i):
-    	    temp_dir=i
-    	    break
+    temp_dir='temp'
     
-    if temp_dir=='':
-        print('The following directories already exist: '+str(temp_names)+'. Please remove one of them before running.')
-        sys.exit(0)
+    if os.path.exists('temp'):
+    	print('temp/ directory already exists, trying to create /tmp/sky130_sealring...')
+    	temp_dir='/tmp/sky130_sealring'
+    else:
+    	try:
+    	    os.makedirs('temp')
+    	except:
+    	    print('Couldn\'t create the temp/ directory, trying to create /tmp/sky130_sealring...')
+    	    temp_dir='/tmp/sky130_sealring'
+    
+    # Tries to create /tmp/sky130_sealring if 'temp' is unavailable
+
+    if temp_dir!='temp':
+        try:
+            if os.path.exists(temp_dir):
+                error='Couldn\'t delete files from /tmp/sky130_sealring'
+                for filename in os.listdir(temp_dir):
+                    file_path = os.path.join(temp_dir, filename)
+                    os.unlink(file_path)
+            else:
+                error='Couldn\'t create /tmp/sky130_sealring'
+                os.makedirs(temp_dir)
+        except:
+            print(error)
+            sys.exit(1)
 
     
-    os.makedirs(temp_dir)
     os.chdir(temp_dir)
     
     # Copy all .mag files, .magicrc file, and sky130seal_ring.tech file to temp/
@@ -111,7 +122,7 @@ def generate_sealring(width, height, target_dir, force, keep):
     files_to_copy.append(script)
 
     for file in files_to_copy:
-        shutil.copy(dname +"/" + file, '.')
+        shutil.copy(script_dir +"/" + file, '.')
 
     # Seal ring is placed 6um outside of the chip, so add 12um to width and height
     fwidth = float(width) + 12
@@ -302,7 +313,7 @@ def generate_sealring(width, height, target_dir, force, keep):
 
     # Copy the GDS file and the abstract view to the target directory
 
-    os.chdir('..')
+    os.chdir(starting_dir)
 
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
