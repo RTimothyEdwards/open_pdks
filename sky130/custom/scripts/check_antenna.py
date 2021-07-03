@@ -40,9 +40,9 @@ def run_antenna(layout_name, output_file):
                 print('Error:  Cannot find file ' + layout_name + '.mag')
                 return
             else:
-                magpath = os.getcwd + '/mag'
+                magpath = os.getcwd() + '/mag'
         else:
-            magpath = os.getcwd
+            magpath = os.getcwd()
 
     if output_file == '':
         output_file = layout_name + '_ant.txt'
@@ -52,8 +52,10 @@ def run_antenna(layout_name, output_file):
 
     myenv = os.environ.copy()
     myenv['MAGTYPE'] = 'mag'
-
-    if os.path.isfile(magpath + '/.magicrc'):
+    
+    if os.path.isfile('/usr/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc'):
+       rcfile = '/usr/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc'
+    elif os.path.isfile(magpath + '/.magicrc'):
        rcfile = magpath + '/.magicrc'
     elif os.path.isfile(os.getcwd() + '/.magicrc'):
        rcfile = os.getcwd() + '/.magicrc'
@@ -67,7 +69,7 @@ def run_antenna(layout_name, output_file):
         else:
             print('Error: Cannot get magic rcfile for the technology!')
             return
-
+    
     # Generate the antenna check Tcl script
 
     print('Evaluating antenna rule violations on layout ' + layout_name)
@@ -93,7 +95,7 @@ def run_antenna(layout_name, output_file):
     print('Antenna violation checks on cell ' + layout_name, file=ofile)
     print('--------------------------------------------', file=ofile)
 
-    print('Running: magic -dnull -noconsole 
+    print('Running: magic -dnull -noconsole') 
 
     mproc = subprocess.run(['magic', '-dnull', '-noconsole',
 		'-rcfile', rcfile, 'run_magic_antenna.tcl'],

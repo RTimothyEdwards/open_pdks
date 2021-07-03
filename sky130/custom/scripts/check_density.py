@@ -55,34 +55,33 @@ if __name__ == '__main__':
         print("Wrong number of arguments given to check_density.py.")
         usage()
         sys.exit(0)
+        
+    relative_path=arguments[0]
 
-    gds_filepath = arguments[0]
-
-    gdspath = os.path.split(gds_filepath)[0]
+    gdspath = os.getcwd()+'/'+os.path.split(relative_path)[0]+'/'
     if gdspath == '':
         gdspath = os.getcwd()
 
+    gds_filepath = os.path.split(relative_path)[1]
+    
     if os.path.splitext(gds_filepath)[1] != '.gds':
         if os.path.splitext(gds_filepath)[1] == '':
             gds_filepath += '.gds'
         else:
             print('Error:  Project is not a GDS file!')
             sys.exit(1)
+    
+    gdsname = os.path.split(gds_filepath)[1]
+    gdsroot = os.path.splitext(gdsname)[0]
 
     # Check for valid path to the GDS file
 
     if not os.path.isdir(gdspath):
         print('Error:  Project path "' + gds_filepath + '" does not exist or is not readable.')
         sys.exit(1)
-
-    # Check for valid path to the layout directory (NOTE:  Should check for
-    # additional argument or open_pdks install if not in a standard project space;
-    # this needs to be done.)
-
-    gdsroot = os.path.split(gdspath)[0]
-    magpath = gdsroot + '/mag'
-    if not os.path.isdir(magpath):
-        print('Error:  Layout path "' + magpath + '" does not exist or is not readable.')
+        
+    if not os.path.isfile(gdspath+gds_filepath):
+        print('Error:  Project "' + gdspath+gds_filepath + '" does not exist or is not readable.')
         sys.exit(1)
 
     if '-debug' in optionlist:
@@ -92,9 +91,25 @@ if __name__ == '__main__':
 
     # NOTE:  There should be some attempt to find the installed PDK magicrc file
     # if there is no mag/ directory.
-    rcfile = magpath + '/.magicrc'
+    
+    
+    # Searching for rcfile
+    
+    rcfile_paths=[gdspath+'/.magicrc','/$PDK_PATH/libs.tech/magic/sky130A.magicrc','/usr/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc']
+    
+    rcfile=''
+    
+    for rc_path in rcfile_paths:
+        if os.path.isfile(rc_path):
+            rcfile=rc_path
+            break
+    
+    if rcfile=='':
+        print('Error: .magicrc file not found.')
+        sys.exit(1)
 
-    with open(magpath + '/check_density.tcl', 'w') as ofile:
+    
+    with open(gdspath + '/check_density.tcl', 'w') as ofile:
         print('#!/bin/env wish', file=ofile)
         print('crashbackups stop', file=ofile)
         print('drc off', file=ofile)
@@ -110,6 +125,11 @@ if __name__ == '__main__':
         print('gds readonly true', file=ofile)
         print('gds rescale false', file=ofile)
         print('gds read ' + gds_filepath, file=ofile)
+        print('', file=ofile)
+
+        # NOTE:  This assumes that the name of the GDS file is the name of the
+        # topmost cell (which should be passed as an option)
+        print('load ' + gdsroot)
         print('', file=ofile)
 
         print('set midtime [orig_clock format [orig_clock seconds] -format "%D %T"]', file=ofile)
@@ -196,7 +216,7 @@ if __name__ == '__main__':
         print('        flush stdout', file=ofile)
         print('        update idletasks', file=ofile)
 
-        print('        load ' + project_with_id, file=ofile)
+        print('        load ' + gdsroot, file=ofile)
         print('        cellname delete tile', file=ofile)
 
         print('    }', file=ofile)
@@ -211,13 +231,13 @@ if __name__ == '__main__':
     myenv['MAGTYPE'] = 'mag'
 
     print('Running density checks on file ' + gds_filepath, flush=True)
-
+    
     mproc = subprocess.Popen(['magic', '-dnull', '-noconsole',
-		'-rcfile', rcfile, magpath + '/check_density.tcl'],
+		'-rcfile', rcfile, gdspath + '/check_density.tcl'],
 		stdin = subprocess.DEVNULL,
 		stdout = subprocess.PIPE,
 		stderr = subprocess.PIPE,
-		cwd = magpath,
+		cwd = gdspath,
 		env = myenv,
 		universal_newlines = True)
 
@@ -590,8 +610,8 @@ if __name__ == '__main__':
         print('***Error:  MET5 Density > 76%')
 
     if not keepmode:
-        if os.path.isfile(magpath + '/check_density.tcl'):
-            os.remove(magpath + '/check_density.tcl')
+        if os.path.isfile(gdspath + '/check_density.tcl'):
+            os.remove(gdspath + '/check_density.tcl')
 
     print('')
     print('Done!')
