@@ -755,6 +755,13 @@ style gdsii
 	calma	64 13
 
 #----------------------------------------------------------------
+# SUBCUT
+#----------------------------------------------------------------
+
+ layer SUBCUT	isosub
+	calma	81 53
+
+#----------------------------------------------------------------
 # NWELL
 #----------------------------------------------------------------
 
@@ -2368,6 +2375,9 @@ style  sky130 variants (),(vendor)
  layer dnwell DNWELL
  labels DNWELL
 
+ layer isosub SUBCUT
+ labels SUBCUT
+
  layer npn DNWELL
  and-not NWELL,nwelcheck
  and NPNID
@@ -3870,6 +3880,7 @@ style  sky130 variants (),(vendor)
  calma NWELL 64 20
  calma DIFF 65 20
  calma DNWELL 64 18
+ calma SUBCUT 81 53
  calma PWRES 64 13
  calma TAP  65 44
  # LVTN
@@ -4995,8 +5006,6 @@ extract
  tiedown alldiffnonfet
 
  substrate *ppdiff,*mvppdiff,space/w,pwell well $SUB -dnwell,isosub
-
-# Layer resistance: Use document xp018-PDS-v4_2_1.pdf
 
 # Resistances are in milliohms per square
 # Optional 3rd argument is the corner adjustment fraction
