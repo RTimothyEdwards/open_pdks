@@ -462,6 +462,7 @@ ifeq (${EF_STYLE}, 1)
 	MLXX_SCRIPTS = scripts/sky130_ml_xx_hd
 	PR_SPICE = spi/sky130_fd_pr
 	HVL_SPICE = spi/sky130_fd_sc_hvl
+	HD_SPICE = spi/sky130_fd_sc_hd
 	HVL_PATCH4 = 4b
 	HVL_CDL = cdl/sky130_fd_sc_hvl
 else
@@ -478,6 +479,7 @@ else
 	MLXX_SCRIPTS = sky130_ml_xx_hd/scripts
 	PR_SPICE = sky130_fd_pr/spice
 	HVL_SPICE = sky130_fd_sc_hvl/spice
+	HD_SPICE = sky130_fd_sc_hd/spice
 	HVL_PATCH4 = 4
 	HVL_CDL = sky130_fd_sc_hvl/cdl
 endif
@@ -699,9 +701,11 @@ xschem-a: ${XSCHEM_PATH}
 	cat ${XSCHEM_PATH}/xschemrc | \
 		${SED} -e "/PWD/aappend XSCHEM_LIBRARY_PATH :${XSCHEM_STAGING_A}" | \
 		${SED} -e "/sky130_models.tcl/s#scripts#${XSCHEM_STAGING_A}/scripts#" | \
-		${SED} -e "/netlist_dir/aset netlist_dir ." \
+		${SED} -e "/netlist_dir/aset netlist_dir ." | \
+		${SED} -e "/SKYWATER_MODELS/s#~/pdks/sky130A/libs.tech/ngspice#${NGSPICE_STAGING_A}#" | \
+		${SED} -e "/SKYWATER_STDCELLS/s#~/pdks/sky130A/libs.ref/sky130_fd_sc_hd/spice#${STAGING_PATH}/${SKY130A}/libs.ref/${HD_SPICE}#" \
 		> ${XSCHEM_STAGING_A}/xschemrc
-
+		
 openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_A}
 	mkdir -p ${OPENLANE_STAGING_A}
