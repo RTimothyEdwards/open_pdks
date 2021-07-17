@@ -173,6 +173,11 @@ if __name__ == '__main__':
         # Need to know what fraction of a full tile is the last row and column
         print('set xfrac [expr {($xtiles * $stepsizex - $fullwidth + 0.0) / $stepsizex}]', file=ofile)
         print('set yfrac [expr {($ytiles * $stepsizey - $fullheight + 0.0) / $stepsizey}]', file=ofile)
+
+        # If the last row/column fraction is zero, then set to 1
+        print('if {$xfrac == 0.0} {set xfrac 1.0}', file=ofile)
+        print('if {$yfrac == 0.0} {set yfrac 1.0}', file=ofile)
+
         print('puts stdout "XFRAC: $xfrac"', file=ofile)
         print('puts stdout "YFRAC: $yfrac"', file=ofile)
 
@@ -224,6 +229,7 @@ if __name__ == '__main__':
 
         print('set endtime [orig_clock format [orig_clock seconds] -format "%D %T"]', file=ofile)
         print('puts stdout "Ended: $endtime"', file=ofile)
+        print('quit -noprompt', file=ofile)
         print('', file=ofile)
 
 
@@ -336,6 +342,10 @@ if __name__ == '__main__':
         print('Failed to read XTILES or YTILES from output.')
         sys.exit(1)
 
+    if xtiles < 10 or ytiles < 10:
+        print('Layout is < 700um x 700um;  cannot run density checks.')
+        sys.exit(1)
+
     total_tiles = (ytiles - 9) * (xtiles - 9)
 
     print('')
@@ -346,7 +356,12 @@ if __name__ == '__main__':
 
     sideadjust = 90.0 + (10.0 * xfrac)
     topadjust = 90.0 + (10.0 * yfrac)
+
     corneradjust = 81.0 + (9.0 * xfrac) + (9.0 * yfrac) + (xfrac * yfrac)
+
+    print('Side adjustment = ' + str(sideadjust))
+    print('Top adjustment = ' + str(topadjust))
+    print('Corner adjustment = ' + str(corneradjust))
 
     print('')
     print('FOM Density:')

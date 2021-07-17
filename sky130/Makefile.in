@@ -462,7 +462,7 @@ ifeq (${EF_STYLE}, 1)
 	MLXX_SCRIPTS = scripts/sky130_ml_xx_hd
 	PR_SPICE = spi/sky130_fd_pr
 	HVL_SPICE = spi/sky130_fd_sc_hvl
-	HD_SPICE = spice/sky130_fd_sc_hd
+	HD_SPICE = spi/sky130_fd_sc_hd
 	HVL_PATCH4 = 4b
 	HVL_CDL = cdl/sky130_fd_sc_hvl
 else
