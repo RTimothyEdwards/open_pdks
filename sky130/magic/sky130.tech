@@ -2299,7 +2299,7 @@ cifinput
 # or else magic will scale below the allowed layout grid size
 #-----------------------------------------------------------------------
 
-style  sky130 variants (),(vendor)
+style  sky130 variants (vendor),()
  scalefactor 10 nanometers
  gridlimit 5
 
