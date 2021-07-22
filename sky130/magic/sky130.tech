@@ -1020,6 +1020,7 @@ style gdsii
  	grow 	345
  	shrink 	345
 	and-not hvntm_block
+	mask-hints HVNTM
 	calma 125 20
 
 #----------------------------------------------------------------
