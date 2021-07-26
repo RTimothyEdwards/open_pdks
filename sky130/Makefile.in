@@ -696,6 +696,14 @@ xschem-a: ${XSCHEM_PATH}
 	if test "x${XSCHEM_PATH}" != "x" ; then \
 	    cp -rp ${XSCHEM_PATH}/* ${XSCHEM_STAGING_A} ; \
 	fi
+	
+	#add the correct libraries into the test files
+	for file in ${XSCHEM_STAGING_A}/sky130_tests/* ; do \
+		${SED} -i '/.include \\\\\\\\$$\:\:SKYWATER_MODELS/d' $$file ; \
+		grep -zl 'sky130.lib.spice' $$file || ${SED} -z 's|format="tcleval( @value )"\nvalue="|format="tcleval( @value )"\nvalue="\n.lib \\\\\\\\$$\:\:SKYWATER_MODELS\\\\\\\\/sky130.lib.spice tt |' -i $$file ; \
+		grep -zl 'format="tcleval( @value )".*value="' $$file || printf 'C {devices/code.sym} -170 0 0 0 {name=TT_MODELS\nonly_toplevel=true\nformat="tcleval( @value )"\nvalue="\n.lib \\\\\\\\$$\:\:SKYWATER_MODELS\\\\\\\\/sky130.lib.spice tt\n"}' >> $$file ; \
+	done
+	
 	# Re-copy the xschemrc, with one change to add the PDK install path as
 	# a component of XSCHEM_LIBRARY_PATH
 	

@@ -358,12 +358,12 @@ nsdm.with_area(0..0.265).output("n/psdm.10a", "n/psdm.10a : min. nsdm area : 0.2
 psdm.with_area(0..0.265).output("n/psdm.10b", "n/psdm.10b : min. psdm area : 0.265um²")
 
 #   licon
-licon.not(poly.interacting(poly_rs)).edges.without_length(0.17).output("licon.1", "licon.1 : minimum/maximum width of licon : 0.17um")
-licon.and(poly.interacting(poly_rs)).not_interacting((licon.and(poly.interacting(poly_rs)).edges.with_length(0.19)).or(licon.and(poly.interacting(poly_rs)).edges.with_length(2.0))).output("licon.1b/c", "licon.1b/c : minimum/maximum width/length of licon inside poly resistor : 2.0/0.19um")
+licon.not(poly.interacting(poly_rs).and(rpm)).edges.without_length(0.17).output("licon.1", "licon.1 : minimum/maximum width of licon : 0.17um")
+licon.and(poly.interacting(poly_rs).and(rpm)).not_interacting((licon.and(poly.interacting(poly_rs).and(rpm)).edges.with_length(0.19)).or(licon.and(poly.interacting(poly_rs).and(rpm)).edges.with_length(2.0))).output("licon.1b/c", "licon.1b/c : minimum/maximum width/length of licon inside poly resistor : 2.0/0.19um")
 licon.isolated(0.17, euclidian).output("licon.2", "licon.2 : min. licon spacing : 0.17um")
-licon.and(poly.interacting(poly_rs)).edges.with_length(0.19).space(0.35, euclidian).output("licon.2b", "licon.2b : min. licon 0.19um edge on resistor spacing : 0.35um")
-licon.interacting(licon.and(poly.interacting(poly_rs)).edges.with_length(2.0)).separation(licon.and(poly.interacting(poly_rs)), 0.51, euclidian).output("licon.2c", "licon.2c : min. licon 2.0um edge on resistor spacing : 0.51um")
-licon.and(poly.interacting(poly_rs)).separation(licon.not(poly.interacting(poly_rs)), 0.51, euclidian).output("licon.2d", "licon.2d : min. licon on resistor spacing other licon : 0.51um")
+licon.and(poly.interacting(poly_rs).and(rpm)).edges.with_length(0.19).space(0.35, euclidian).output("licon.2b", "licon.2b : min. licon 0.19um edge on resistor spacing : 0.35um")
+licon.interacting(licon.and(poly.interacting(poly_rs).and(rpm)).edges.with_length(2.0)).separation(licon.and(poly.interacting(poly_rs).and(rpm)), 0.51, euclidian).output("licon.2c", "licon.2c : min. licon 2.0um edge on resistor spacing : 0.51um")
+licon.and(poly.interacting(poly_rs).and(rpm)).separation(licon.not(poly.interacting(poly_rs).and(rpm)), 0.51, euclidian).output("licon.2d", "licon.2d : min. licon on resistor spacing other licon : 0.51um")
 # rule licon.3 not coded
 licon.not(li).not(poly.or(diff).or(tap)).output("licon.4", "licon.4 : min. licon must overlap li and (poly or tap or diff) ")
 diff.enclosing(licon, 0.04, euclidian).output("licon.5", "licon.5 : min. diff enclosure of licon : 0.04um")

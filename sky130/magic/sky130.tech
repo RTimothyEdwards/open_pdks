@@ -456,6 +456,10 @@ aliases
   allpad	padl
 
   psub		pwell
+
+  obstypes	obswell,obsactive,obsli,obsmcon,obsm1,obsm2,obsm3,obsm4,obsm5,obsmrdl,obscomment
+  idtypes	res0p35,res0p69,res1p41,res2p85,res5p73,pnp0p68,pnp3p40,npn1p00,npn2p00,npn11p0
+  blocktypes	fillblock,fillblock4
   
 end
 
@@ -1020,6 +1024,7 @@ style gdsii
  	grow 	345
  	shrink 	345
 	and-not hvntm_block
+	mask-hints HVNTM
 	calma 125 20
 
 #----------------------------------------------------------------
@@ -2299,7 +2304,7 @@ cifinput
 # or else magic will scale below the allowed layout grid size
 #-----------------------------------------------------------------------
 
-style  sky130 variants (),(vendor)
+style  sky130 variants (vendor),()
  scalefactor 10 nanometers
  gridlimit 5
 
@@ -5041,6 +5046,12 @@ extract
 #ifdef REDISTRIBUTION
  resist mrdl/metali		     5
 #endif (REDISTRIBUTION)
+
+ # These types should not be considered as electrical nodes
+ resist blocktypes	 	 None
+ resist obstypes	 	 None
+ resist idtypes	 	 	 None
+ resist comment	 	 	 None
 
  contact ndc,nsc		 15000
  contact pdc,psc		 15000
