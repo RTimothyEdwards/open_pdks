@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/ef/efabless/opengalaxy/venv/bin/python3
 #
 #--------------------------------------------------------
 """
@@ -16,7 +16,7 @@ import sys
 import tkinter
 
 class ConsoleText(tkinter.Text):
-    linelimit = 500
+    linelimit = 10000
     class IORedirector(object):
         '''A general class for redirecting I/O to this Text widget.'''
         def __init__(self,text_area):
