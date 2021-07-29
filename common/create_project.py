@@ -56,8 +56,9 @@ if __name__ == '__main__':
     if pdkname:
         if pdkname.startswith('/'):
             pdkpath = pdkname
+            pdkname = os.path.split(pdkpath)[1]
         else:
-            pdkpath = os.path.join('PREFIX', 'pdk', pdkname)
+            pdkpath = os.path.join('/usr/share', 'pdk', pdkname)
     else:
         try:
             pdkpath = os.getenv()['PDK_PATH']
@@ -119,6 +120,10 @@ if __name__ == '__main__':
     else:
         dongspice = True
 
+    if not os.path.isdir(pdkpath + '/.ef-config') and not os.path.isdir(pdkpath + '/.config'):
+        print('PDK does not contain .config or .ef-config directory, cannot create project.')
+        sys.exit(1)
+        
     if domagic or donetgen or doxschem or dongspice:
         print('Creating project ' + projectname)
         os.makedirs(projectpath)
@@ -126,6 +131,14 @@ if __name__ == '__main__':
         print('No setup files were found . . .  bailing.')
         sys.exit(1)
 
+    if os.path.isdir(pdkpath + '/.ef-config'):
+        os.makedirs(projectpath + '/.ef-config')
+        os.symlink(pdkpath, projectpath + '/.ef-config/techdir')
+    elif os.path.isdir(pdkpath + '/.config'):
+        os.makedirs(projectpath + '/.config')
+        os.symlink(pdkpath, projectpath + '/.config/techdir')
+        
+    
     if domagic:
         magpath = os.path.join(projectpath, 'mag')
         os.makedirs(magpath)

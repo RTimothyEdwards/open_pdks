@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/ef/efabless/opengalaxy/venv/bin/python3
 #
 # Dialog class for tkinter
 
