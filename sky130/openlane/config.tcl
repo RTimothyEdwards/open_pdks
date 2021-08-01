@@ -25,6 +25,13 @@ set ::env(GPIO_PADS_VERILOG) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/verilog/sky130_fd_io/sky130_ef_io.v\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/verilog/sky130_fd_io/sky130_ef_io__gpiov2_pad_wrapped.v\
 	"
+
+# Optimization library 
+set ::env(TECH_LEF_OPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/techLEF/$::env(STD_CELL_LIBRARY_OPT)/$::env(STD_CELL_LIBRARY_OPT).tlef"
+set ::env(CELLS_LEF_OPT) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lef/$::env(STD_CELL_LIBRARY_OPT)/*.lef"]
+set ::env(GDS_FILES_OPT) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/gds/$::env(STD_CELL_LIBRARY_OPT)/*.gds"]
+set ::env(STD_CELL_LIBRARY_OPT_CDL)	"$::env(PDK_ROOT)/$::env(PDK)/libs.ref/cdl/$::env(STD_CELL_LIBRARY_OPT)/$::env(STD_CELL_LIBRARY_OPT).cdl"
+
 #else (!EF_FORMAT)
 set ::env(TECH_LEF) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/$::env(STD_CELL_LIBRARY).tlef"
 set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lef/*.lef"]
@@ -40,7 +47,22 @@ set ::env(GPIO_PADS_VERILOG) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/verilog/sky130_ef_io.v\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/verilog/sky130_ef_io__gpiov2_pad_wrapped.v\
 	"
+
+# Optimization library 
+set ::env(TECH_LEF_OPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/techlef/$::env(STD_CELL_LIBRARY_OPT).tlef"
+set ::env(CELLS_LEF_OPT) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/lef/*.lef"]
+set ::env(GDS_FILES_OPT) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/gds/*.gds"]
+set ::env(STD_CELL_LIBRARY_OPT_CDL)	"$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/cdl/$::env(STD_CELL_LIBRARY_OPT).cdl"
+
 #endif (!EF_FORMAT)
+
+# Optimization library slowest corner 
+set tmp $::env(STD_CELL_LIBRARY)
+set ::env(STD_CELL_LIBRARY) $::env(STD_CELL_LIBRARY_OPT)
+source "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY_OPT)/config.tcl"
+set ::env(LIB_SLOWEST_OPT) $::env(LIB_SLOWEST)
+set ::env(STD_CELL_LIBRARY) $tmp 
+source "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/config.tcl"
 
 set ::env(GPIO_PADS_LEF_CORE_SIDE) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/custom_cells/lef/sky130_fd_io_core.lef\
@@ -94,6 +116,9 @@ set ::env(NO_SYNTH_CELL_LIST) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$
 
 # Default DRC Exclude List
 set ::env(DRC_EXCLUDE_CELL_LIST) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/drc_exclude.cells"
+
+# DRC Exclude List for Optimization library 
+set ::env(DRC_EXCLUDE_CELL_LIST_OPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY_OPT)/drc_exclude.cells"
 
 set ::env(GLB_RT_L1_ADJUSTMENT) 0.99
 
