@@ -100,7 +100,7 @@ from symbolbuilder import SymbolBuilder
 from make_icon_from_soft import create_symbol
 from profile import Profile
 
-import og_config
+import config
 
 # Global name for design directory
 designdir = 'design'
@@ -655,7 +655,7 @@ class OpenGalaxyManager(ttk.Frame):
         self.help = HelpWindow(self, fontsize=fontsize)
         
         with io.StringIO() as buf, contextlib.redirect_stdout(buf):
-            self.help.add_pages_from_file(og_config.apps_path + '/manager_help.txt')
+            self.help.add_pages_from_file(config.apps_path + '/manager_help.txt')
             message = buf.getvalue()
         
 
@@ -2847,7 +2847,7 @@ class OpenGalaxyManager(ttk.Frame):
         
         try:
             
-            subprocess.Popen([og_config.apps_path + '/create_project.py', newproject, newpdk])
+            subprocess.Popen([config.apps_path + '/create_project.py', newproject, newpdk])
             
         except IOError as e:
             print('Error copying files: ' + str(e))
@@ -3370,7 +3370,7 @@ class OpenGalaxyManager(ttk.Frame):
             if datasheet:
                 # use Popen, not run, so that application does not wait for it to exit.
                 dsheetroot = os.path.splitext(datasheet)[0]
-                subprocess.Popen([og_config.apps_path + '/og_gui_characterize.py',
+                subprocess.Popen([config.apps_path + '/cace.py',
 				datasheet])
         else:
             print("You must first select a project.", file=sys.stderr)
@@ -3417,19 +3417,19 @@ class OpenGalaxyManager(ttk.Frame):
 
                 print('Synthesize design in qflow project directory ' + pname)
                 if development:
-                    subprocess.Popen([og_config.apps_path + '/qflow_manager.py',
+                    subprocess.Popen([config.apps_path + '/qflow_manager.py',
 				design, '-development', '-subproject=' + pname])
                 else:
-                    subprocess.Popen([og_config.apps_path + '/qflow_manager.py',
+                    subprocess.Popen([config.apps_path + '/qflow_manager.py',
 				design, '-subproject=' + pname])
             else:
                 print('Synthesize design ' + designname + ' (' + design + ')')
                 # use Popen, not run, so that application does not wait for it to exit.
                 if development:
-                    subprocess.Popen([og_config.apps_path + '/qflow_manager.py',
+                    subprocess.Popen([config.apps_path + '/qflow_manager.py',
 				design, designname, '-development'])
                 else:
-                    subprocess.Popen([og_config.apps_path + '/qflow_manager.py',
+                    subprocess.Popen([config.apps_path + '/qflow_manager.py',
 				design, designname])
         else:
             print("You must first select a project.", file=sys.stderr)
