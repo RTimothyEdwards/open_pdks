@@ -1,4 +1,4 @@
-#!/ef/efabless/opengalaxy/venv/bin/python3
+#!/usr/bin/env python3
 #
 #--------------------------------------------------------------------
 # Characterization Report Window for the Open Galaxy project manager

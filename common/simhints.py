@@ -1,4 +1,4 @@
-#!/ef/efabless/opengalaxy/venv/bin/python3
+#!/usr/bin/env python3
 #
 #-----------------------------------------------------------
 # Simulation hints management for the Open Galaxy

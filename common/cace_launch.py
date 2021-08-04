@@ -1,4 +1,4 @@
-#!/ef/efabless/opengalaxy/venv/bin/python3
+#!/usr/bin/env python3
 """
 cace_launch.py
 A simple script that pulls in a JSON file and uses the hash key to find the

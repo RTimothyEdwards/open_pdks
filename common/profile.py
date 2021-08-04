@@ -1,4 +1,4 @@
-#!/ef/efabless/opengalaxy/venv/bin/python3
+#!/usr/bin/env python3
 #
 #------------------------------------------------------------
 # Profile settings window for the Open Galaxy project manager

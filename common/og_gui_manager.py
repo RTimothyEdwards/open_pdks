@@ -1,4 +1,4 @@
-#!/ef/efabless/opengalaxy/venv/bin/python3 -B
+#!/usr/bin/env python3 -B
 #
 #--------------------------------------------------------
 # Open Galaxy Project Manager GUI.
@@ -3351,7 +3351,7 @@ class OpenGalaxyManager(ttk.Frame):
             designname = self.project_name
             print('Run LVS on design ' + designname + ' (' + design + ')')
             # use Popen, not run, so that application does not wait for it to exit.
-            subprocess.Popen([og_config.apps_path + '/lvs_manager.py', design, designname])
+            subprocess.Popen(['netgen','-gui',design, designname])
         else:
             print("You must first select a project.", file=sys.stderr)
 
