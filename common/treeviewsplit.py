@@ -1,4 +1,4 @@
-#!/ef/efabless/opengalaxy/venv/bin/python3
+#!/usr/bin/env python3
 #
 # Simple ttk treeview with split view, scrollbar, and
 # row of callback buttons

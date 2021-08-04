@@ -1,4 +1,4 @@
-#!/ef/efabless/opengalaxy/venv/bin/python3
+#!/usr/bin/env python3
 '''Michael Lange <klappnase (at) freakmail (dot) de>
 The ToolTip class provides a flexible tooltip widget for tkinter; it is based on IDLE's ToolTip
 module which unfortunately seems to be broken (at least the version I saw).

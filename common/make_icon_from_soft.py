@@ -1,4 +1,4 @@
-#!/ef/efabless/opengalaxy/venv/bin/python3 -B
+#!/usr/bin/env python3 -B
 #--------------------------------------------------------
 # make_icon_from_soft.py --
 #

@@ -1,4 +1,4 @@
-#!/ef/efabless/opengalaxy/venv/bin/python3
+#!/usr/bin/env python3
 """
 cace_makeplot.py
 Plot routines for CACE using matplotlib

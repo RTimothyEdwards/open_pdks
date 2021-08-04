@@ -1,4 +1,4 @@
-#!/ef/efabless/opengalaxy/venv/bin/python3
+#!/usr/bin/env python3
 """
 cace_gensim.py
 This is the main part of the automatic characterization engine.  It takes

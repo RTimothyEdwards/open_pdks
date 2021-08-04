@@ -1,4 +1,4 @@
-#!/ef/efabless/opengalaxy/venv/bin/python3 -B
+#!/usr/bin/env python3 -B
 #
 # cace_datasheet_upload.py
 #
