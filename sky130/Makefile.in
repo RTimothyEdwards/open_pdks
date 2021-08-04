@@ -706,13 +706,6 @@ xschem-a: ${XSCHEM_PATH}
 	
 	# Re-copy the xschemrc, with one change to add the PDK install path as
 	# a component of XSCHEM_LIBRARY_PATH
-	
-	#add the correct libraries into the test files
-	for file in ${XSCHEM_STAGING_A}/sky130_tests/* ; do \
-		${SED} -i '/.include/d' $$file ; \
-		${SED} -z 's|format="tcleval( @value )"\nvalue="|format="tcleval( @value )"\nvalue="\n.lib ${NGSPICE_STAGING_A}/sky130.lib.spice tt |' -i $$file ; \
-		grep -zl 'format="tcleval( @value )".*value="' $$file || printf 'C {devices/code.sym} -170 0 0 0 {name=TT_MODELS\nonly_toplevel=true\nformat="tcleval( @value )"\nvalue="\n.lib ${NGSPICE_STAGING_A}/sky130.lib.spice tt\n"}' >> $$file ; \
-	done
 	cat ${XSCHEM_PATH}/xschemrc | \
 		${SED} -e "/PWD/aappend XSCHEM_LIBRARY_PATH :${XSCHEM_STAGING_A}" | \
 		${SED} -e "/sky130_models.tcl/s#scripts#${XSCHEM_STAGING_A}/scripts#" | \
@@ -1205,4 +1198,5 @@ veryclean-a: clean-a
 	${RM} ${SKY130A}_install.log
 	# Legacy name
 	${RM} ${SKY130A}_migrate.log
+
 

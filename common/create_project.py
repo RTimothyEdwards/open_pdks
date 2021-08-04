@@ -58,7 +58,7 @@ if __name__ == '__main__':
             pdkpath = pdkname
             pdkname = os.path.split(pdkpath)[1]
         else:
-            pdkpath = os.path.join('/usr/share', 'pdk', pdkname)
+            pdkpath = os.path.join('PREFIX', 'pdk', pdkname)
     else:
         try:
             pdkpath = os.getenv()['PDK_PATH']

@@ -46,7 +46,7 @@ from editparam import EditParam
 from settings import Settings
 from simhints import SimHints
 
-import og_config
+import config
 
 # User preferences file (if it exists)
 prefsfile = '~/design/.profile/prefs.json'
@@ -176,7 +176,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         self.help = HelpWindow(self, fontsize = fontsize)
 
         with io.StringIO() as buf, contextlib.redirect_stdout(buf):
-            self.help.add_pages_from_file(og_config.apps_path + '/characterize_help.txt')
+            self.help.add_pages_from_file(config.apps_path + '/characterize_help.txt')
             message = buf.getvalue()
 
         # Set the help display to the first page
@@ -222,7 +222,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         else:
             userid = os.environ['USER']
             p = subprocess.run(['/ef/apps/bin/withnet',
-			og_config.apps_path + '/og_uid_service.py', userid],
+			config.apps_path + '/og_uid_service.py', userid],
                         stdout = subprocess.PIPE)
             if p.stdout:
                 uid_string = p.stdout.splitlines()[0].decode('utf-8')
@@ -541,7 +541,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         designname = os.path.splitext(datasheet)[0]
         print('Cancel characterization of ' + designname + ' (' + dspath + ' )')
         subprocess.run(['/ef/apps/bin/withnet',
-			og_config.apps_path + '/cace_design_upload.py', '-cancel',
+			config.apps_path + '/cace_design_upload.py', '-cancel',
                         dspath])
         self.removeprogress()
         self.bbar.upload_button.configure(text='Submit', state = 'enabled',
@@ -724,7 +724,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
             self.progress_bar_setup(dspath)
             self.update_idletasks()
         subprocess.run(['/ef/apps/bin/withnet',
-			og_config.apps_path + '/cace_design_upload.py',
+			config.apps_path + '/cace_design_upload.py',
                         dspath])
 
         # Remove the settings file
@@ -1043,7 +1043,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         print(' -layoutdir=' + dspath + '/mag' + ' -testbenchdir=' + dspath + '/testbench')
         print(' -datasheet=datasheet.json')
         
-        self.caceproc = subprocess.Popen([og_config.apps_path + '/cace_gensim.py', dspath,
+        self.caceproc = subprocess.Popen([config.apps_path + '/cace_gensim.py', dspath,
 			*modetext,
 			'-method=' + method,  # Call local mode w/method
 			'-simdir=' + dsdir,
