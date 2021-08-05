@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 #-----------------------------------------------------------
-# Simulation hints management for the Open Galaxy
+# Simulation hints management for the
 # characterization tool
 #-----------------------------------------------------------
 # Written by Tim Edwards

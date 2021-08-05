@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 #-----------------------------------------------------------
-# Settings window for the Open Galaxy characterization tool
+# Settings window for the characterization tool
 #
 #-----------------------------------------------------------
 # Written by Tim Edwards
@@ -15,7 +15,7 @@ import tkinter
 from tkinter import ttk
 
 class Settings(tkinter.Toplevel):
-    """Open Galaxy characterization tool settings management."""
+    """characterization tool settings management."""
 
     def __init__(self, parent=None, fontsize = 11, callback = None, *args, **kwargs):
         '''See the __init__ for Tkinter.Toplevel.'''
@@ -26,7 +26,7 @@ class Settings(tkinter.Toplevel):
         self.protocol("WM_DELETE_WINDOW", self.close)
         self.parent = parent
         self.withdraw()
-        self.title('Open Galaxy Characterization Tool Settings')
+        self.title('Characterization Tool Settings')
         self.sframe = tkinter.Frame(self)
         self.sframe.grid(column = 0, row = 0, sticky = "news")
 

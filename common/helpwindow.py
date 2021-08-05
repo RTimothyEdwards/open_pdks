@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 #--------------------------------------------------------
-# Help Window for the Open Galaxy project manager
+# Help Window for the Project manager
 #
 #--------------------------------------------------------
 # Written by Tim Edwards
@@ -15,7 +15,7 @@ import tkinter
 from tkinter import ttk
 
 class HelpWindow(tkinter.Toplevel):
-    """Open Galaxy help window."""
+    """help window"""
 
     def __init__(self, parent=None, fontsize = 11, *args, **kwargs):
         '''See the __init__ for Tkinter.Toplevel.'''
@@ -26,7 +26,7 @@ class HelpWindow(tkinter.Toplevel):
         self.protocol("WM_DELETE_WINDOW", self.close)
 
         self.withdraw()
-        self.title('Open Galaxy Help')
+        self.title('Help')
 
         self.helptitle = ttk.Label(self, style='title.TLabel', text = '(no text)')
         self.helptitle.grid(column = 0, row = 0, sticky = "news")

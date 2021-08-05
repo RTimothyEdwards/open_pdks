@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 #--------------------------------------------------------
-# Symbol Builder for the Open Galaxy project manager
+# Symbol Builder for the project manager
 #
 #--------------------------------------------------------
 # Written by Tim Edwards
@@ -14,7 +14,7 @@ import tkinter
 from tkinter import ttk
 
 class SymbolBuilder(tkinter.Toplevel):
-    """Open Galaxy symbol builder."""
+    """symbol builder."""
 
     def __init__(self, parent = None, pinlist = None, fontsize = 11, *args, **kwargs):
         '''See the __init__ for Tkinter.Toplevel.'''
@@ -25,7 +25,7 @@ class SymbolBuilder(tkinter.Toplevel):
         s = ttk.Style()
         s.configure('normal.TButton', font=('Helvetica', fontsize), border = 3, relief = 'raised')
 
-        self.title('Open Galaxy Symbol Builder')
+        self.title('Symbol Builder')
         self.pframe = tkinter.Frame(self)
         self.pframe.grid(column = 0, row = 0, sticky = "news")
 

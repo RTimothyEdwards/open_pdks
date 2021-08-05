@@ -53,7 +53,7 @@ doSplash = not deferLoad # splash IFF GUI-construction includes slow loading of 
 #------------------------------------------------------
 
 class SplashScreen(tkinter.Toplevel):
-    """Open Galaxy Project Management Splash Screen"""
+    """Project Management Splash Screen"""
 
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
@@ -576,11 +576,11 @@ class ConfirmInstallDialog(tksimpledialog.Dialog):
         return 'okay'
 
 #------------------------------------------------------
-# Open Galaxy Manager class
+# Project Manager class
 #------------------------------------------------------
 
 class OpenGalaxyManager(ttk.Frame):
-    """Open Galaxy Project Management GUI."""
+    """Project Management GUI."""
 
     def __init__(self, parent, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
@@ -669,7 +669,7 @@ class OpenGalaxyManager(ttk.Frame):
         self.project_name = ""
 
         # Root window title
-        self.root.title('Open Galaxy Project Manager')
+        self.root.title('Project Manager')
         self.root.option_add('*tearOff', 'FALSE')
         self.pack(side = 'top', fill = 'both', expand = 'true')
 
@@ -2142,7 +2142,7 @@ class OpenGalaxyManager(ttk.Frame):
         pname = os.path.split(ppath)[1]
 
         print('Cloudv project name is ' + str(oname))
-        print('New Open Galaxy project name is ' + str(pname))
+        print('New project name is ' + str(pname))
 
         os.makedirs(ppath + '/verilog', exist_ok=True)
 

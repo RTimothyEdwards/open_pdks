@@ -1,7 +1,7 @@
 #!/usr/bin/env python3 -B
 #
 #--------------------------------------------------------
-# Open Galaxy Project Manager GUI.
+# Project Manager GUI.
 #
 # This is a Python tkinter script that handles local
 # project management.  Much of this involves the
@@ -89,7 +89,7 @@ class PuntDialog(tksimpledialog.Dialog):
 #------------------------------------------------------
 
 class OpenGalaxyCharacterize(ttk.Frame):
-    """Open Galaxy local characterization GUI."""
+    """local characterization GUI."""
 
     def __init__(self, parent, *args, **kwargs):
         ttk.Frame.__init__(self, parent, *args, **kwargs)
@@ -207,7 +207,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         self.logfile = None
 
         # Root window title
-        self.root.title('Open Galaxy Characterization')
+        self.root.title('Characterization')
         self.root.option_add('*tearOff', 'FALSE')
         self.pack(side = 'top', fill = 'both', expand = 'true')
 

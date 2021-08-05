@@ -78,7 +78,7 @@ class CoreSizeDialog(tksimpledialog.Dialog):
 #------------------------------------------------
 
 class SoCFloorplanner(ttk.Frame):
-    """Open Galaxy Pad Frame Generator."""
+    """Pad Frame Generator."""
 
     def __init__(self, parent = None, *args, **kwargs):
         '''See the __init__ for Tkinter.Toplevel.'''

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 #------------------------------------------------------------
-# Profile settings window for the Open Galaxy project manager
+# Profile settings window for the project manager
 #
 #------------------------------------------------------------
 # Written by Tim Edwards
@@ -20,7 +20,7 @@ from tkinter import ttk
 import config
 
 class Profile(tkinter.Toplevel):
-    """Open Galaxy project manager profile settings management."""
+    """Project manager profile settings management."""
 
     def __init__(self, parent=None, fontsize = 11, *args, **kwargs):
         '''See the __init__ for Tkinter.Toplevel.'''
@@ -31,7 +31,7 @@ class Profile(tkinter.Toplevel):
         self.protocol("WM_DELETE_WINDOW", self.close)
         self.parent = parent
         self.withdraw()
-        self.title('Open Galaxy Project Manager Profile Settings')
+        self.title('Project Manager Profile Settings')
         self.sframe = tkinter.Frame(self)
         self.sframe.grid(column = 0, row = 0, sticky = "news")
 

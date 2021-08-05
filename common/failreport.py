@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 #--------------------------------------------------------------------
-# Characterization Report Window for the Open Galaxy project manager
+# Characterization Report Window for the project manager
 #
 #--------------------------------------------------------------------
 # Written by Tim Edwards
@@ -21,7 +21,7 @@ import tooltip
 import cace_makeplot
 
 class FailReport(tkinter.Toplevel):
-    """Open Galaxy failure report window."""
+    """failure report window."""
 
     def __init__(self, parent=None, fontsize=11, *args, **kwargs):
         '''See the __init__ for Tkinter.Toplevel.'''
@@ -48,7 +48,7 @@ class FailReport(tkinter.Toplevel):
                         foreground = 'brown', border = 0, relief = 'groove')
 
         self.withdraw()
-        self.title('Open Galaxy Local Characterization Report')
+        self.title('Local Characterization Report')
         self.root = parent.root
         self.rowconfigure(0, weight = 1)
         self.columnconfigure(0, weight = 1)

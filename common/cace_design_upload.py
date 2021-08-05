@@ -22,7 +22,7 @@ import local_uid_services
 import config
 
 """
- Open Galaxy standalone script.
+ standalone script.
  Makes rest calls to marketplace REST server to save datasheet
  and associated file(s).  Request hash is generated so the two
  requests can be associated on the server side.  This action
