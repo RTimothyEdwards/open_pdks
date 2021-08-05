@@ -435,13 +435,10 @@ class EditLayoutDialog(tksimpledialog.Dialog):
         # Only allow 'makeproject' checkbox if there is no project.json file
         jname = ppath + '/project.json'
         if not os.path.exists(jname):
-            dname = os.path.split(ppath)[1]
-            jname = ppath + '/' + dname + '.json'
-            if not os.path.exists(jname):
-                self.makeproject = ttk.Checkbutton(self.layoutbox,
+            self.makeproject = ttk.Checkbutton(self.layoutbox,
 			text='Make default project name',
 			variable = self.confirm)
-                self.makeproject.grid(row = 2, column = 0, columnspan = 2, sticky = 'ewns')
+            self.makeproject.grid(row = 2, column = 0, columnspan = 2, sticky = 'ewns')
         return self.layoutselect # initial focus
 
     def handle_choice(self, event):
@@ -1080,7 +1077,7 @@ class OpenGalaxyManager(ttk.Frame):
             # 
             #EFABLESS PLATFORM
             p = subprocess.run(['/ef/apps/bin/withnet' ,
-			og_config.apps_path + '/og_uid_service.py', userid],
+			config.apps_path + '/og_uid_service.py', userid],
 			stdout = subprocess.PIPE)
             if p.stdout:
                 uid_string = p.stdout.splitlines()[0].decode('utf-8')
@@ -1297,11 +1294,14 @@ class OpenGalaxyManager(ttk.Frame):
         description = ''
         status = 'active'
         if pdkdir:
+            # Code should only be for efabless platform
+            '''
             split = os.path.split(os.path.realpath(pdkdir))
             # Full path should be [<something>/]<foundry>[.ext]/<node>
             node = split[1]
             foundry = os.path.split(split[0])[1]
             foundry = os.path.splitext(foundry)[0]
+            '''
             # Check for nodeinfo.json
             infofile = pdkdir + '/.config/nodeinfo.json'
             if os.path.exists(infofile):
@@ -1437,6 +1437,13 @@ class OpenGalaxyManager(ttk.Frame):
             if os.path.isfile(root + ext):
                 return root + ext
         return None
+        
+    def yaml2targz(self, yamlPath):
+        root = os.path.splitext(yamlPath)[0]
+        for ext in ('.tgz', '.tar.gz'):
+            if os.path.isfile(root + ext):
+                return root + ext
+        return None
 
     #------------------------------------------------------------------------
     # Remove a .json and associated tar.gz (or .tgz) if any.
@@ -1503,7 +1510,7 @@ class OpenGalaxyManager(ttk.Frame):
             if os.path.isdir(ipath):
                 if os.path.islink(ipath) or not self.validProjectName(item) \
                    or self.importProjNameBadrex1.match(item) \
-                   or not os.path.isfile(ipath + '/project.json'):
+                   or not os.path.isfile(ipath + '/info.yaml'):
                     importlist.remove(item)
                     continue
             else:
@@ -1549,7 +1556,7 @@ class OpenGalaxyManager(ttk.Frame):
     # Import for json documents and related tarballs (.gz or .tgz):  
     #------------------------------------------------------------------------
 
-    def importjson(self, projname, importfile):
+    def importyaml(self, projname, importfile):
         # (1) Check if there is a tarball with the same root name as the JSON
         importroot = os.path.splitext(importfile)[0]
         badrex1 = re.compile("^\.")
@@ -1585,29 +1592,18 @@ class OpenGalaxyManager(ttk.Frame):
             with tarfile.open(tarname, mode='r:gz') as archive:
                 for member in archive:
                     archive.extract(member, newproject)
-        # (5) Copy the JSON document into the new directory.  Keep the
+        # (5) Copy the YAML document into the new directory.  Keep the
         # original name of the project, so as to overwrite any existing
         # document, then change the name to match that of the project
         # folder.
-        # New behavior 12/2018:  JSON file is always called 'project.json'.
-        # Also support legacy JSON name if it exists (don't generate files with
-        # both names)
 
-        jsonfile = newproject + '/project.json'
-        if not os.path.isfile(jsonfile):
-            if os.path.isfile(newproject + '/' + projname + '.json'):
-                jsonfile = newproject + '/' + projname + '.json'
+        yamlfile = newproject + '/info.yaml'
 
         try:
-            shutil.copy(importfile, jsonfile)
+            shutil.copy(importfile, yamlfile)
         except IOError as e:
             print('Error copying files: ' + str(e))
             return None
-        else:
-            # If filename is 'project.json' then it does not need to be changed.
-            # This is for legacy name support only.
-            if jsonfile != newproject + '/project.json':
-                shutil.move(jsonfile, newproject + '/' + newname + '.json')
 
         # (6) Remove the original files from the import folder
         os.remove(importfile)
@@ -1833,7 +1829,15 @@ class OpenGalaxyManager(ttk.Frame):
         if not tar: return None, None, None
 
         return self.tarVglImportable(tar)
+    
+    def yamlTarVglImportable(self, path):
+        ext = os.path.splitext(path)[1]
+        if ext != '.yaml': return None, None, None
 
+        tar = self.yaml2targz(path)
+        if not tar: return None, None, None
+
+        return self.tarVglImportable(tar)
     #------------------------------------------------------------------------
     # Get a single named member (memPath) out of a JSON's tar file.
     # This is thin wrapper around tarMember2tempfile. Find the JSON's associated
@@ -1845,6 +1849,15 @@ class OpenGalaxyManager(ttk.Frame):
         if ext != '.json': return None
 
         tar = self.json2targz(path)
+        if not tar: return None
+
+        return self.tarMember2tempfile(tar, memPath)
+        
+    def yamlTarMember2tempfile(self, path, memPath):
+        ext = os.path.splitext(path)[1]
+        if ext != '.yaml': return None
+
+        tar = self.yaml2targz(path)
         if not tar: return None
 
         return self.tarMember2tempfile(tar, memPath)
@@ -1978,13 +1991,16 @@ class OpenGalaxyManager(ttk.Frame):
         # necessary entries to define a project.
         jData = {}
         jDS = {}
+        '''
         jDS['ip-name'] = ipname
+        
         pdkdir = self.get_pdk_dir(pname, path=True)
         try:
             jDS['foundry'], jDS['node'], pdk_desc, pdk_stat = self.pdkdir2fnd( pdkdir )
         except:
             # Cannot parse PDK name, so foundry and node will remain undefined
             pass
+        '''
         jDS['format'] = '3'
         pparams = []
         param = {}
@@ -2040,6 +2056,24 @@ class OpenGalaxyManager(ttk.Frame):
 
         return jData
 
+#------------------------------------------------------------------------
+    # Create info.yaml file (automatically done in create_project.py in case it's executed from the command line)
+    #------------------------------------------------------------------------
+   
+    def create_yaml(self, ipname, pname, description="(Add project description here)"):
+        # ipname: Project Name
+        # pname: PDK directory
+        data = {}
+        project={}
+        project['description'] = description
+        try:
+            project['foundry'], project['process'], pdk_desc, pdk_stat = self.pdkdir2fnd( pname )
+        except:
+            # Cannot parse PDK name, so foundry and node will remain undefined
+            pass
+        project['project_name'] = ipname
+        data['project']=project
+        return data
     #------------------------------------------------------------------------
     # For a single named member (memPath) out of an open tarfile (tarf),
     # determine if it is a JSON file, and attempt to extract value of entry
@@ -2400,6 +2434,7 @@ class OpenGalaxyManager(ttk.Frame):
     # Else PROMPT for new projectName and CREATE it (and use elecLib of same name).
     #------------------------------------------------------------------------
 
+    
     def importvgl(self, newfile, importfile, newname=None, seedname=None):
         elecLib = None
         isnew = not newname
@@ -2724,7 +2759,7 @@ class OpenGalaxyManager(ttk.Frame):
         if not confirm == 'okay':
             print('Warning: Must quit and restart to get any fixes or updates.')
             return
-        os.execl('/ef/efabless/opengalaxy/og_gui_manager.py', 'appsel_zenity.sh')
+        os.execl('/ef/efabless/opengalaxy/project_manager.py', 'appsel_zenity.sh')
         # Does not return; replaces existing process.
 
     #----------------------------------------------------------------------
@@ -2847,7 +2882,7 @@ class OpenGalaxyManager(ttk.Frame):
         
         try:
             
-            subprocess.Popen([config.apps_path + '/create_project.py', newproject, newpdk])
+            subprocess.Popen([config.apps_path + '/create_project.py', newproject, newpdk]).wait()
             
         except IOError as e:
             print('Error copying files: ' + str(e))
@@ -2856,7 +2891,7 @@ class OpenGalaxyManager(ttk.Frame):
         except:
             print('Error making project.')
             return None
-            
+        
         return newname
         '''
         # Find what tools are compatible with the given PDK
@@ -3110,36 +3145,33 @@ class OpenGalaxyManager(ttk.Frame):
             print('Error copying files: ' + str(e))
             return
 
-        # NOTE:  Behavior is for project files to depend on "ip-name".  Using
+        # NOTE:  Behavior is for project files to depend on "project_name".  Using
         # the project filename as a project name is a fallback behavior.  If
-        # there is a project.json file, and it defines an ip-name entry, then
+        # there is a info.yaml file, and it defines a project_name entry, then
         # there is no need to make changes within the project.  If there is
-        # no project.json file, then create one and set the ip-name entry to
+        # no info.yaml file, then create one and set the project_name entry to
         # the old project name, which avoids the need to make changes within
         # the project.
 
         else:
-            # Check project.json
-            jsonname = newproject + '/project.json'
-            legacyname = newproject + '/' + oldname + '.json'
-            if not os.path.isfile(jsonname):
-                if os.path.isfile(legacyname):
-                    jsonname = legacyname
+            # Check info.yaml
+            yamlname = newproject + '/info.yaml'
 
             found = False
-            if os.path.isfile(jsonname):
+            if os.path.isfile(yamlname):
                 # Pull the ipname into local store (may want to do this with the
                 # datasheet as well)
-                with open(jsonname, 'r') as f:
-                    datatop = json.load(f)
-                    dsheet = datatop['data-sheet']
-                    if 'ip-name' in dsheet:
+                with open(yamlname, 'r') as f:
+                    datatop = yaml.safe_load(f)                
+                    if 'project_name' in datatop['project']:
                         found = True
 
             if not found:
-                jData = self.create_ad_hoc_json(oldname, newproject)
-                with open(newproject + '/project.json', 'w') as ofile:
-                    json.dump(jData, ofile, indent = 4)
+                pdkdir = self.get_pdk_dir(newproject, path=True)
+                yData = self.create_yaml(oldname, pdkdir)                               
+                with open(newproject + '/info.yaml', 'w') as ofile:
+                    print('---',file=ofile)
+                    yaml.dump(yData, ofile)
 
         # If ngspice and electric prefs were not copied from the source
         # to the target, as recommended, then copy these from the
@@ -3174,27 +3206,23 @@ class OpenGalaxyManager(ttk.Frame):
         badrex2 = re.compile(".*[/ \t\n\\\><\*\?].*")
         projname = value['text']
 
-        # Find the IP name for project projname.  If it has a JSON file, then
+        # Find the IP name for project projname.  If it has a YAML file, then
         # read it and pull the ip-name record.  If not, the fallback position
         # is to assume that the project filename is the project name.
 
-        # Check project.json
+        # Check info.yaml
         projectpath = self.projectdir + '/' + projname
-        jsonname = projectpath + '/project.json'
-        legacyname = projectpath + '/' + projname + '.json'
-        if not os.path.isfile(jsonname):
-            if os.path.isfile(legacyname):
-                jsonname = legacyname
+        yamlname = projectpath + '/info.yaml'
 
         oldname = projname
-        if os.path.isfile(jsonname):
+        if os.path.isfile(yamlname):
             # Pull the ipname into local store (may want to do this with the
             # datasheet as well)
-            with open(jsonname, 'r') as f:
-                datatop = json.load(f)
-                dsheet = datatop['data-sheet']
-                if 'ip-name' in dsheet:
-                    oldname = dsheet['ip-name']
+            with open(yamlname, 'r') as f:
+                datatop = yaml.safe_load(f)   
+                project_data = datatop['project']          
+                if 'project_name' in project_data:
+                    oldname = project_data['project_name']
 
         warning = 'Rename IP "' + oldname + '" for project ' + projname + ':'
         print(warning)
@@ -3962,7 +3990,7 @@ class OpenGalaxyManager(ttk.Frame):
             designname = self.project_name
             print('Upload design ' + designname + ' (' + design + ' )')
             subprocess.run(['/ef/apps/bin/withnet',
-			og_config.apps_path + '/cace_design_upload.py',
+			config.apps_path + '/cace_design_upload.py',
 			design, '-test'])
 	'''
 
@@ -3973,7 +4001,7 @@ class OpenGalaxyManager(ttk.Frame):
     # def make_challenge(self):
     #      importp = self.cur_import
     #      print("Make a Challenge from import " + importp + "!")
-    #      # subprocess.run([og_config.apps_path + '/cace_import_upload.py', importp, '-test'])
+    #      # subprocess.run([config.apps_path + '/cace_import_upload.py', importp, '-test'])
 
     def setcurrent(self, value):
         global currdesign
@@ -4061,27 +4089,28 @@ class OpenGalaxyManager(ttk.Frame):
         # it.
         # NOTE:  project.json is the preferred name for the datasheet
         # file.  However, the .spi file, .delib file, etc., all have the name of the
-        # project from "ip-name" in the datasheet.
-        # "<project_folder_name>.json" is the legacy name for the datasheet, deprecated.
+        # project from "project_name" in the info.yaml file, which is separate from the datasheet.
 
         found = False
         ppath = selection['values'][0]
+        yamlname = ppath + '/info.yaml'
+        
+        if os.path.isfile(yamlname):
+            # Pull the project_name into local store
+            with open(yamlname, 'r') as f:
+                datatop = yaml.safe_load(f)
+                project_data = datatop['project']
+                ipname = project_data['project_name']
+                self.project_name = ipname
+        else:
+            print('Setting project ip-name from the project folder name.')
+            self.project_name = pname
         jsonname = ppath + '/project.json'
-        legacyname = ppath + '/' + pname + '.json'
-        if not os.path.isfile(jsonname):
-            if os.path.isfile(legacyname):
-                jsonname = legacyname
-
         if os.path.isfile(jsonname):
-            # Pull the ipname into local store (may want to do this with the
-            # datasheet as well)
             with open(jsonname, 'r') as f:
                 datatop = json.load(f)
                 dsheet = datatop['data-sheet']
-                ipname = dsheet['ip-name']
-                self.project_name = ipname
                 found = True
-       
             # Do not specifically prohibit opening the characterization app if
             # there is no schematic or netlist.  Otherwise the user is prevented
             # even from seeing the electrical parameters.  Let the characterization
@@ -4097,8 +4126,6 @@ class OpenGalaxyManager(ttk.Frame):
         else:
             # Use 'pname' as the default project name.
             print('No characterization file ' + jsonname)
-            print('Setting project ip-name from the project folder name.')
-            self.project_name = pname
 
         # If datasheet has physical parameters but not electrical parameters, then it's okay
         # for it not to have a testbench directory;  it's still valid.  However, having

@@ -71,11 +71,11 @@ from functools import reduce
 from spiceunits import spice_unit_convert
 from fix_libdirs import fix_libdirs
 
-import og_config
+import config
 
-# Values obtained from og_config:
+# Values obtained from config:
 #
-apps_path = og_config.apps_path
+apps_path = config.apps_path
 launchproc = []
 
 def construct_dut_from_path(pname, pathname, pinlist, foundry, node):

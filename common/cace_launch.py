@@ -31,13 +31,13 @@ from spiceunits import spice_unit_convert
 import file_compressor
 import cace_makeplot
 
-import og_config
+import config
 
-# Values imported from og_config:
+# Values imported from config:
 #
-mktp_server_url = og_config.mktp_server_url
-# obs: og_server_url = og_config.og_server_url
-simulation_path = og_config.simulation_path
+mktp_server_url = config.mktp_server_url
+# obs: og_server_url = config.og_server_url
+simulation_path = config.simulation_path
 
 # Variables needing to be global until this file is properly made into a class
 simfiles_path = []
@@ -1185,7 +1185,7 @@ if __name__ == '__main__':
         if root_path:
             simfiles_path = root_path + '/' + hashname
         else:
-            simfiles_path = og_config.simulation_path + '/' + hashname
+            simfiles_path = config.simulation_path + '/' + hashname
 
     if not os.path.isdir(simfiles_path):
         print('Error:  Simulation folder ' + simfiles_path + ' does not exist.')

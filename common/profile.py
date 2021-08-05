@@ -17,7 +17,7 @@ import tkinter
 import subprocess
 from tkinter import ttk
 
-import og_config
+import config
 
 class Profile(tkinter.Toplevel):
     """Open Galaxy project manager profile settings management."""
@@ -77,7 +77,7 @@ class Profile(tkinter.Toplevel):
             userid = os.environ['USER']
             '''
             p = subprocess.run(['/ef/apps/bin/withnet',
-                        og_config.apps_path + '/og_uid_service.py', userid],
+                        config.apps_path + '/og_uid_service.py', userid],
                         stdout = subprocess.PIPE)
             
             if p.stdout:

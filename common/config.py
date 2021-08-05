@@ -6,7 +6,7 @@
 # default if fail to read/parse the etc file is STAGING. These values:
 #          ef_variant=DEV       ef_variant=STAGING       ef_variant=PROD
 # yield respectively:
-#    import og_config_DEV import og_config_STAGING import og_config_PROD
+#    import config_DEV import config_STAGING import config_PROD
 #
 # Survive (try:) missing,improper,unreadable /etc/sysconfig/ef-config.
 # DO NOT survive (no try:) failed imports (non-existent file, bad syntax, etc.).
@@ -27,7 +27,7 @@ except:
 ef_variant = config.get('null','ef_variant', fallback='STAGING').strip('\'"')
 
 #
-# emulate: import og_config_<ef_variant>
+# emulate: import config_<ef_variant>
 #
-#cfgModule = __import__("og_config_"+ef_variant)
+#cfgModule = __import__("config_"+ef_variant)
 #globals().update(vars(cfgModule))

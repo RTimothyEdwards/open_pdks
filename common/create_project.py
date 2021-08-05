@@ -15,6 +15,7 @@ import os
 import re
 import sys
 import json
+import yaml
 
 def usage():
     print('Usage:')
@@ -58,7 +59,7 @@ if __name__ == '__main__':
             pdkpath = pdkname
             pdkname = os.path.split(pdkpath)[1]
         else:
-            pdkpath = os.path.join('PREFIX', 'pdk', pdkname)
+            pdkpath = os.path.join('/usr/share', 'pdk', pdkname)
     else:
         try:
             pdkpath = os.getenv()['PDK_PATH']
@@ -162,13 +163,25 @@ if __name__ == '__main__':
         os.makedirs(ngspicepath)
         os.symlink(pdkpath + '/libs.tech/ngspice/spinit',
 		ngspicepath + '/.spiceinit')
-
+    
+    data = {}
+    project={}
+    project['description'] = "(Add project description here)"
+    
+    infofile = pdkpath + '/.config/nodeinfo.json'
+    if os.path.exists(infofile):
+        with open(infofile, 'r') as ifile:
+            nodeinfo = json.load(ifile)
+        if 'foundry' in nodeinfo:
+            project['foundry'] = nodeinfo['foundry']
+    
+    project['process']=pdkname
+    project['project_name'] = projectname
+    data['project']=project
+    
     with open(projectpath + '/info.yaml', 'w') as ofile:
         print('---', file=ofile)
-        print('project:', file=ofile)
-        print('   description: "(Add project description here)"', file=ofile)
-        print('   process: "' + pdkname + '"', file=ofile)
-        print('   project_name: "' + projectname + '"', file=ofile)
-        
+        yaml.dump(data, ofile)
+    
     print('Done!')
     sys.exit(0)

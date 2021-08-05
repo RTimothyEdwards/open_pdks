@@ -17,7 +17,7 @@ import subprocess
 import file_compressor
 import file_request_hash
 
-import og_config
+import config
 
 """
  Open Galaxy standalone script.
@@ -27,7 +27,7 @@ import og_config
  has no other side effects.
 """
 
-mktp_server_url = og_config.mktp_server_url
+mktp_server_url = config.mktp_server_url
 
 # Make request to server sending json passed in.
 def send_doc(doc):
