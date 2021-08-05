@@ -1666,10 +1666,10 @@ style drc
  and-not nwell_with_tap
 
  templayer tap_with_licon
- bloat-all psc,mvpsc psd,mvpsd
- bloat-all nsc,mvnsc nsd,mvnsd
+ bloat-all allpactivetap psd,mvpsd
+ bloat-all allnactivetap nsd,mvnsd
 
- templayer tap_missing_licon psd,nsd,mvpsd,mvnsd
+ templayer tap_missing_licon allnactivetap,allpactivetap
  and-not tap_with_licon
 
  # Make sure varactor nwell contains no P diffusion
