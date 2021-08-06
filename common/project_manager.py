@@ -742,22 +742,21 @@ class OpenGalaxyManager(ttk.Frame):
         height = min(10, max(prjPaneMinh, 2 + len(projectlist)))
         self.projectselect = TreeViewChoice(self.toppane, fontsize=fontsize, deferLoad=deferLoad, selectVal=pnameCur, natSort=True)
         self.projectselect.populate("Available Projects:", projectlist,
-			[["Create", True, self.createproject],
+			[["New", True, self.createproject],
+			 ["Flow", False, self.synthesize],
 			 ["Copy", False, self.copyproject],
-			 ["Rename IP", False, self.renameproject],
-			 ["<CloudV", True, self.cloudvimport],
-			 ["Clean", False, self.cleanproject],
+			 ["Rename", False, self.renameproject],
 			 ["Delete", False, self.deleteproject]],
 			height=height, columns=[0, 1])
         self.projectselect.grid(row = 3, sticky = 'news')
         self.projectselect.bindselect(self.setcurrent)
 
-        tooltip.ToolTip(self.projectselect.get_button(0), text="Create a new project")
-        tooltip.ToolTip(self.projectselect.get_button(1), text="Make a copy of an entire project")
-        tooltip.ToolTip(self.projectselect.get_button(2), text="Rename a project folder")
-        tooltip.ToolTip(self.projectselect.get_button(3), text="Import CloudV project as new project")
-        tooltip.ToolTip(self.projectselect.get_button(4), text="Clean simulation data from project")
-        tooltip.ToolTip(self.projectselect.get_button(5), text="Delete an entire project")
+        tooltip.ToolTip(self.projectselect.get_button(0), text="Create a new project/subproject")
+        #TODO: Try to have tooltip display what type of flow if possible
+        tooltip.ToolTip(self.projectselect.get_button(1), text="Start design flow")
+        tooltip.ToolTip(self.projectselect.get_button(2), text="Make a copy of an entire project")
+        tooltip.ToolTip(self.projectselect.get_button(3), text="Rename a project folder")
+        tooltip.ToolTip(self.projectselect.get_button(4), text="Delete an entire project")
 
         pdklist = self.get_pdk_list(projectlist)
         self.projectselect.populate2("PDK", projectlist, pdklist)
@@ -1028,7 +1027,7 @@ class OpenGalaxyManager(ttk.Frame):
             tooltip.ToolTip(self.toppane.appbar.layout_button, text="Start 'Magic' layout editor")
             
     def config_path(self, path):
-        #returns the directory that path contains between .config and .ef-config
+        #returns the config directory that 'path' contains between .config and .ef-config
         if (os.path.exists(path + '/.config')):
             return '/.config'
         elif (os.path.exists(path + '/.ef-config')):
@@ -1041,7 +1040,7 @@ class OpenGalaxyManager(ttk.Frame):
 
     def blacklisted(self, dirname):
         # Blacklist:  Do not show files of these names:
-        blacklist = [importdir, 'ip', 'upload', 'export', 'lost+found']
+        blacklist = [importdir, 'ip', 'upload', 'export', 'lost+found', 'subcells']
         if dirname in blacklist:
             return True
         else:
@@ -1141,22 +1140,33 @@ class OpenGalaxyManager(ttk.Frame):
         badrex2 = re.compile(".*[ \t\n].*")
 
         # Get contents of directory.  Look only at directories
-        projectlist = list(item for item in os.listdir(self.projectdir) if
-			os.path.isdir(self.projectdir + '/' + item))
-
+     
+        projectlist = []
+        
+        for item in os.listdir(self.projectdir):
+            if os.path.isdir(self.projectdir + '/' + item):
+                projectpath = self.projectdir + '/' + item
+                projectlist.append(projectpath)
+                
+                #check for subprojects and add them
+                if os.path.isdir(projectpath + '/subcells'):
+                    for subproj in os.listdir(projectpath + '/subcells'):
+                        if os.path.isdir(projectpath + '/subcells/' + subproj):
+                            projectlist.append(projectpath + '/subcells/' + subproj)
+            
+         
+                        
         # 'import' and others in the blacklist are not projects!
         # Files beginning with '.' and files with whitespace are
         # also not listed.
         for item in projectlist[:]:
-            if self.blacklisted(item):
+            name = os.path.split(item)[1]
+            if self.blacklisted(name):
                 projectlist.remove(item)
-            elif badrex1.match(item):
+            elif badrex1.match(name):
                 projectlist.remove(item)
-            elif badrex2.match(item):
+            elif badrex2.match(name):
                 projectlist.remove(item)
-
-        # Add pathname to all items in projectlist
-        projectlist = [self.projectdir + '/' + item for item in projectlist]
         return projectlist
 
     #------------------------------------------------------------------------
@@ -1423,7 +1433,7 @@ class OpenGalaxyManager(ttk.Frame):
         for project in projectlist:
             pdkdir = self.get_pdk_dir(project)
             pdklist.append(pdkdir)
-
+            
         return pdklist
 
     #------------------------------------------------------------------------
@@ -4003,16 +4013,17 @@ class OpenGalaxyManager(ttk.Frame):
     #      print("Make a Challenge from import " + importp + "!")
     #      # subprocess.run([config.apps_path + '/cace_import_upload.py', importp, '-test'])
 
+    # Runs whenever a user selects a project
     def setcurrent(self, value):
         global currdesign
         treeview = value.widget
         selection = treeview.item(treeview.selection())
         pname = selection['text']
         #print("setcurrent returned value " + pname)
-        efmetapath = os.path.expanduser(currdesign)
-        if not os.path.exists(efmetapath):
-            os.makedirs(os.path.split(efmetapath)[0], exist_ok=True)
-        with open(efmetapath, 'w') as f:
+        metapath = os.path.expanduser(currdesign)
+        if not os.path.exists(metapath):
+            os.makedirs(os.path.split(metapath)[0], exist_ok=True)
+        with open(metapath, 'w') as f:
             f.write(pname + '\n')
 
         # Pick up the PDK from "values", use it to find the PDK folder, determine
@@ -4020,6 +4031,7 @@ class OpenGalaxyManager(ttk.Frame):
         # button accordingly
         
         svalues = selection['values']
+        #print("svalues :"+str(svalues))
         pdkitems = svalues[1].split()
         pdkdir = ''
         
@@ -4043,47 +4055,7 @@ class OpenGalaxyManager(ttk.Frame):
             except:
                 print('PDK ' + pdkname + ' has no layout setup; layout editing disabled')
                 self.toppane.appbar.layout_button.config(state='disabled') 
-        '''
-        svalues = selection['values'][1]
-        print('selection: '+str(selection))
-        pdkitems = svalues.split()
-        print('Contents of pdkitems: '+str(pdkitems))
-        pdkname = ''
-        if ':' in pdkitems:
-            pdkitems.remove(':')
-        if len(pdkitems) == 2:
-            # New behavior Sept. 2017, have to cope with <foundry>.<N> directories, ugh.
-            pdkdirs = os.listdir('/usr/share/pdk/')
-            #TODO: pdkdirs = os.listdir('PREFIX/pdk/')
-            
-            for pdkdir in pdkdirs:
-                if pdkitems[0] == pdkdir:
-                    pdkname = pdkdir
-                    #TODO: PREFIX
-                    if os.path.exists('/usr/share/pdk/' + pdkname + '/' + pdkitems[1]):
-                        break
-                else:
-                    pdkpair = pdkdir.split('.')
-                    if pdkpair[0] == pdkitems[0]:
-                        pdkname = pdkdir
-                        #TODO: PREFIX
-                        if os.path.exists('/usr/share/pdk/' + pdkname + '/' + pdkitems[1]):
-                            break
-            if pdkname == '':
-                print('No pdkname found; layout editing disabled')
-                self.toppane.appbar.layout_button.config(state='disabled')
-            else:
-                try:
-                    subf = os.listdir('/ef/tech/' + pdkname + '/' + pdkitems[1] + '/libs.tech/magic/current')
-                except:
-                    print('PDK ' + pdkname + ' has no layout setup; layout editing disabled')
-                    self.toppane.appbar.layout_button.config(state='disabled')
-                else:
-                    self.toppane.appbar.layout_button.config(state='enabled')
-        else:
-            print('No PDK returned in project selection data;  layout editing disabled.')
-            self.toppane.appbar.layout_button.config(state='disabled')
-        '''
+        
         # If the selected project directory has a JSON file and netlists in the "spi"
         # and "testbench" folders, then enable the "Characterize" button;  else disable
         # it.

@@ -98,6 +98,8 @@ class TreeViewChoice(ttk.Frame):
         self.lastselected = selection
         self.lasttag = oldtag
 
+    
+    #Populate the project view
     def repopulate(self, itemlist=[], versioning=False):
 
         # Remove all children of treeview
@@ -113,6 +115,9 @@ class TreeViewChoice(ttk.Frame):
             self.itemlist.sort()
 
         mode = 'even'
+        
+        m=0
+        
         for item in self.itemlist:
             # Special handling of JSON files.  The following reads a JSON file and
             # finds key 'ip-name' in dictionary 'data-sheet', if such exists.  If
@@ -142,14 +147,16 @@ class TreeViewChoice(ttk.Frame):
                 # If versioning is true, then the last path component is the
                 # version number, and the penultimate path component is the
                 # name.
-                version = os.path.split(item)[1]
+                version = os.path.split(item)[1]   
                 name = os.path.split(os.path.split(item)[0])[1] + ' (v' + version + ')'
             else:
                 name = os.path.split(item)[1]
 
             # Watch for duplicate items!
+            
             n = 0
             origname = name
+            
             while self.treeView.exists(name):
                 n += 1
                 name = origname + '(' + str(n) + ')'
@@ -157,12 +164,28 @@ class TreeViewChoice(ttk.Frame):
             # Note: iid value with spaces in it is a bad idea.
             if ' ' in name:
                 name = name.replace(' ', '_')
-
+            
             # optionally: Mark directories with trailing slash
             if self.markDir and os.path.isdir(item):
                 origname += "/"
                 
             self.treeView.insert('', 'end', text=origname, iid=name, value=item, tag=mode)
+            
+            
+            if 'subcells' in os.path.split(item)[0]:
+            # If a project is a subproject, move it under its parent
+                parent_path = os.path.split(os.path.split(item)[0])[0]
+                parent_name = os.path.split(parent_path)[1]
+                self.treeView.move(name,parent_name,m)
+                m+=1
+            else:
+            # If its not a subproject, create a "subproject" of itself
+            # iid shouldn't be repeated since it starts with '.'
+                self.treeView.insert('', 'end', text=origname, iid='.'+name, value=item, tag=mode)
+                self.treeView.move('.'+name,name,0)
+                m=1
+            
+                        
         if self.initSelected and self.treeView.exists(self.initSelected):
             self.setselect(self.initSelected)
             self.initSelected = None
@@ -189,7 +212,7 @@ class TreeViewChoice(ttk.Frame):
             valuelist.append(value)
         return valuelist
 
-    # Return items from the treeview
+    # Return items (id's) from the treeview
     def getlist(self):
         return self.treeView.get_children()
 
@@ -201,15 +224,30 @@ class TreeViewChoice(ttk.Frame):
         # Populate another column
         self.treeView.heading(1, text = title)
         self.treeView.column(1, anchor='center')
+        children=list(self.getlist()) 
+        
+        # Add id's of subprojects
+        i=1
+        for c in list(self.getlist()):
+            grandchildren=self.treeView.get_children(item=c)
+            for g in grandchildren:
+                children.insert(i,g)
+                i+=1
+            i+=1
+        
         n = 0
         for item in valuelist:
-            child = os.path.split(itemlist[n])[1]
-            # Get the item at this index
+            child = children[n]
+            # Get the value at this index
             oldvalue = self.treeView.item(child, 'values')
             newvalue = (oldvalue, item)
             self.treeView.item(child, values = newvalue)
+            # Add pdk for the "copy" of the project that is made in the treeview
+            if (n+1<len(children) and children[n+1]=='.'+child):
+                valuelist.insert(n,item)
             n += 1
-
+        
+        
     def func_callback(self, callback, event=None):
         callback(self.treeView.item(self.treeView.selection()))
 
