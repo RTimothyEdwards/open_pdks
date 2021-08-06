@@ -97,7 +97,6 @@ class TreeViewChoice(ttk.Frame):
             self.selectcallback(value)
         self.lastselected = selection
         self.lasttag = oldtag
-
     
     #Populate the project view
     def repopulate(self, itemlist=[], versioning=False):
@@ -115,9 +114,7 @@ class TreeViewChoice(ttk.Frame):
             self.itemlist.sort()
 
         mode = 'even'
-        
         m=0
-        
         for item in self.itemlist:
             # Special handling of JSON files.  The following reads a JSON file and
             # finds key 'ip-name' in dictionary 'data-sheet', if such exists.  If
@@ -153,10 +150,8 @@ class TreeViewChoice(ttk.Frame):
                 name = os.path.split(item)[1]
 
             # Watch for duplicate items!
-            
             n = 0
             origname = name
-            
             while self.treeView.exists(name):
                 n += 1
                 name = origname + '(' + str(n) + ')'
@@ -171,7 +166,6 @@ class TreeViewChoice(ttk.Frame):
                 
             self.treeView.insert('', 'end', text=origname, iid=name, value=item, tag=mode)
             
-            
             if 'subcells' in os.path.split(item)[0]:
             # If a project is a subproject, move it under its parent
                 parent_path = os.path.split(os.path.split(item)[0])[0]
@@ -184,7 +178,6 @@ class TreeViewChoice(ttk.Frame):
                 self.treeView.insert('', 'end', text=origname, iid='.'+name, value=item, tag=mode)
                 self.treeView.move('.'+name,name,0)
                 m=1
-            
                         
         if self.initSelected and self.treeView.exists(self.initSelected):
             self.setselect(self.initSelected)
