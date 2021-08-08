@@ -246,7 +246,7 @@ class CopyProjectDialog(tksimpledialog.Dialog):
 #-------------------------------------------------------
 
 class NewProjectDialog(tksimpledialog.Dialog):
-    def body(self, master, warning, seed='', importnode=None, development=False):
+    def body(self, master, warning, seed='', importnode=None, development=False, parent_pdk=''):
         if warning:
             ttk.Label(master, text=warning).grid(row = 0, columnspan = 2, sticky = 'wns')
         ttk.Label(master, text="Enter new project name:").grid(row = 1, column = 0)
@@ -294,6 +294,9 @@ class NewProjectDialog(tksimpledialog.Dialog):
             raise ValueError( "assertion failed, no available PDKs found")
         pdk_def = (pdk_def or pdklist[0])
 
+        if parent_pdk != '':
+            pdk_def = parent_pdk
+            
         self.pvar.set(pdk_def)
 
         # Restrict list to single entry if importnode was non-NULL and
@@ -303,13 +306,12 @@ class NewProjectDialog(tksimpledialog.Dialog):
 	# disabled for creating new projects (but available for projects
         # that already have them).
         
-        if importnode:
+        if importnode or parent_pdk != '':
             self.pdkselect = ttk.Label(master, text = pdk_def, style='blue.TLabel')
         else:
             pdkactive = list(item for item in pdklist if self.pdkstat[item] == 'active')
             if development:
                 pdkactive.extend(list(item for item in pdklist if self.pdkstat[item] == 'development'))
-
             self.pdkselect = ttk.OptionMenu(master, self.pvar, pdk_def, *pdkactive,
     			style='blue.TMenubutton', command=self.show_info)
         self.pdkselect.grid(row = 2, column = 1)
@@ -730,17 +732,18 @@ class OpenGalaxyManager(ttk.Frame):
 			text='(' + self.projectdir + '/)', style='normal.TLabel')
         self.toppane.design_frame.design_header2.pack(side = 'left', padx = 5)
 
-        # Get current project from ~/.efmeta/currdesign and set the selection.
+        # Get current project from ~/.open_pdks/currdesign and set the selection.
         try:
             with open(os.path.expanduser(currdesign), 'r') as f:
-                pnameCur = f.read().rstrip()
+                pdirCur = f.read().rstrip()
         except:
-            pnameCur = None
+            pdirCur = None
 
+        
         # Create listbox of projects
         projectlist = self.get_project_list() if not deferLoad else []
         height = min(10, max(prjPaneMinh, 2 + len(projectlist)))
-        self.projectselect = TreeViewChoice(self.toppane, fontsize=fontsize, deferLoad=deferLoad, selectVal=pnameCur, natSort=True)
+        self.projectselect = TreeViewChoice(self.toppane, fontsize=fontsize, deferLoad=deferLoad, selectVal=pdirCur, natSort=True)
         self.projectselect.populate("Available Projects:", projectlist,
 			[["New", True, self.createproject],
 			 ["Flow", False, self.synthesize],
@@ -761,14 +764,14 @@ class OpenGalaxyManager(ttk.Frame):
         pdklist = self.get_pdk_list(projectlist)
         self.projectselect.populate2("PDK", projectlist, pdklist)
 
-        if pnameCur:
+        if pdirCur:
             try:
-                curitem = next(item for item in projectlist if pnameCur == os.path.split(item)[1])
+                curitem = next(item for item in projectlist if pdirCur == item)
             except StopIteration:
                 pass
             else:
                 if curitem:
-                    self.projectselect.setselect(pnameCur)
+                    self.projectselect.setselect(pdirCur)
 
         # Check that the import directory exists, and create it if not
         if not os.path.isdir(self.projectdir + '/' + importdir):
@@ -2733,7 +2736,7 @@ class OpenGalaxyManager(ttk.Frame):
     def update_project_views(self, force=False):
         # More than updating project views, this updates projects, imports, and
         # IP libraries.
-
+        
         projectlist = self.get_project_list()
         self.projectselect.repopulate(projectlist)
         pdklist = self.get_pdk_list(projectlist)
@@ -2780,6 +2783,7 @@ class OpenGalaxyManager(ttk.Frame):
         if not value['values']:
             print('No project selected.')
             return
+        path = value['values'][0]
         print('Delete project ' + value['values'][0])
         # Require confirmation
         warning = 'Confirm delete entire project ' + value['text'] + '?'
@@ -2787,6 +2791,8 @@ class OpenGalaxyManager(ttk.Frame):
         if not confirm == 'okay':
             return
         shutil.rmtree(value['values'][0])
+        if ('subcells' in path):
+            self.update_project_views()      
 
     #----------------------------------------------------------------------
     # Clean out the simulation folder.  Traditionally this was named
@@ -2859,6 +2865,7 @@ class OpenGalaxyManager(ttk.Frame):
     #----------------------------------------------------------------------
 
     def createproject(self, value, seedname=None, importnode=None):
+        global currdesign
         # Note:  value is current selection, if any, and is ignored
         # Require new project location and confirmation
         badrex1 = re.compile("^\.")
@@ -2866,19 +2873,49 @@ class OpenGalaxyManager(ttk.Frame):
         warning = 'Create new project:'
         print(warning)
         development = self.prefs['development']
+        
+        # Find out whether the user wants to create a subproject or project
+        parent_pdk = ''
+        try:
+            with open(os.path.expanduser(currdesign), 'r') as f:
+                pdirCur = f.read().rstrip()
+                if ('subcells' in pdirCur):
+                    # subproject is selected
+                    parent_path = os.path.split(os.path.split(pdirCur)[0])[0]
+                    pdkdir = self.get_pdk_dir(parent_path, path=True)
+                    (foundry, node, desc, status) = self.pdkdir2fnd( pdkdir )
+                    parent_pdk = foundry + '/' + node
+                    warning = 'Create new subproject in '+ parent_path + ':'
+                elif (pdirCur[0] == '.'):
+                    # the project's 'subproject' of itself is selected
+                    parent_path = pdirCur[1:]
+                    pdkdir = self.get_pdk_dir(parent_path, path=True)
+                    (foundry, node, desc, status) = self.pdkdir2fnd( pdkdir )
+                    parent_pdk = foundry + '/' + node
+                    warning = 'Create new subproject in '+ parent_path + ':'
+                
+        except:
+            pass
+        
         while True:
             try:
                 if seedname:
-                    newname, newpdk = NewProjectDialog(self, warning, seed=seedname, importnode=importnode, development=development).result
+                    newname, newpdk = NewProjectDialog(self, warning, seed=seedname, importnode=importnode, development=development, parent_pdk=parent_pdk).result
                 else:
-                    newname, newpdk = NewProjectDialog(self, warning, seed='', importnode=importnode, development=development).result
+                    newname, newpdk = NewProjectDialog(self, warning, seed='', importnode=importnode, development=development, parent_pdk=parent_pdk).result
             except TypeError:
                 # TypeError occurs when "Cancel" is pressed, just handle exception.
                 return None
             if not newname:
                 return None	# Canceled, no action.
-
-            newproject = self.projectdir + '/' + newname
+            
+            if parent_pdk == '':
+                newproject = self.projectdir + '/' + newname
+            else:
+                if not os.path.isdir(parent_path + '/subcells'):
+                    os.makedirs(parent_path + '/subcells')
+                newproject = parent_path + '/subcells/' + newname
+            
             if self.blacklisted(newname):
                 warning = newname + ' is not allowed for a project name.'
             elif badrex1.match(newname):
@@ -2891,8 +2928,11 @@ class OpenGalaxyManager(ttk.Frame):
                 break
         
         try:
-            
             subprocess.Popen([config.apps_path + '/create_project.py', newproject, newpdk]).wait()
+            
+            # Show subproject in project view
+            if parent_pdk != '':
+                self.update_project_views()
             
         except IOError as e:
             print('Error copying files: ' + str(e))
@@ -4019,12 +4059,13 @@ class OpenGalaxyManager(ttk.Frame):
         treeview = value.widget
         selection = treeview.item(treeview.selection())
         pname = selection['text']
+        pdir = treeview.selection()[0]
         #print("setcurrent returned value " + pname)
         metapath = os.path.expanduser(currdesign)
         if not os.path.exists(metapath):
             os.makedirs(os.path.split(metapath)[0], exist_ok=True)
         with open(metapath, 'w') as f:
-            f.write(pname + '\n')
+            f.write(pdir + '\n')
 
         # Pick up the PDK from "values", use it to find the PDK folder, determine
         # if it has a "magic" subfolder, and enable/disable the "Edit Layout"

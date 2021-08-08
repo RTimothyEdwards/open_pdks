@@ -100,7 +100,6 @@ class TreeViewChoice(ttk.Frame):
     
     #Populate the project view
     def repopulate(self, itemlist=[], versioning=False):
-
         # Remove all children of treeview
         self.treeView.delete(*self.treeView.get_children())
 
@@ -164,23 +163,27 @@ class TreeViewChoice(ttk.Frame):
             if self.markDir and os.path.isdir(item):
                 origname += "/"
                 
-            self.treeView.insert('', 'end', text=origname, iid=name, value=item, tag=mode)
+            self.treeView.insert('', 'end', text=origname, iid=item, value=item, tag=mode)
             
             if 'subcells' in os.path.split(item)[0]:
             # If a project is a subproject, move it under its parent
                 parent_path = os.path.split(os.path.split(item)[0])[0]
                 parent_name = os.path.split(parent_path)[1]
-                self.treeView.move(name,parent_name,m)
+                self.treeView.move(item,parent_path,m)
                 m+=1
             else:
             # If its not a subproject, create a "subproject" of itself
             # iid shouldn't be repeated since it starts with '.'
-                self.treeView.insert('', 'end', text=origname, iid='.'+name, value=item, tag=mode)
-                self.treeView.move('.'+name,name,0)
+                self.treeView.insert('', 'end', text=origname, iid='.'+item, value=item, tag=mode)
+                self.treeView.move('.'+item,item,0)
                 m=1
                         
         if self.initSelected and self.treeView.exists(self.initSelected):
-            self.setselect(self.initSelected)
+            if 'subcells' in self.initSelected:
+                parent_path = os.path.split(os.path.split(self.initSelected)[0])[0]
+                self.setselect(parent_path)
+            else:
+                self.setselect(self.initSelected)
             self.initSelected = None
 
         for button in self.func_buttons:
