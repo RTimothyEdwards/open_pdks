@@ -95,8 +95,9 @@ class TreeViewChoice(ttk.Frame):
                 pass
         if self.selectcallback:
             self.selectcallback(value)
-        self.lastselected = selection
-        self.lasttag = oldtag
+        if (selection!=self.lastselected):
+            self.lastselected = selection
+            self.lasttag = oldtag
     
     #Populate the project view
     def repopulate(self, itemlist=[], versioning=False):
@@ -154,7 +155,6 @@ class TreeViewChoice(ttk.Frame):
             while self.treeView.exists(name):
                 n += 1
                 name = origname + '(' + str(n) + ')'
-            mode = 'even' if mode == 'odd' else 'odd'
             # Note: iid value with spaces in it is a bad idea.
             if ' ' in name:
                 name = name.replace(' ', '_')
@@ -162,8 +162,12 @@ class TreeViewChoice(ttk.Frame):
             # optionally: Mark directories with trailing slash
             if self.markDir and os.path.isdir(item):
                 origname += "/"
-                
-            self.treeView.insert('', 'end', text=origname, iid=item, value=item, tag=mode)
+            
+            if ('subcells' not in item):
+                mode = 'even' if mode == 'odd' else 'odd'
+                self.treeView.insert('', 'end', text=origname, iid=item, value=item, tag=mode)
+            else:
+                self.treeView.insert('', 'end', text=origname, iid=item, value=item, tag='odd')
             
             if 'subcells' in os.path.split(item)[0]:
             # If a project is a subproject, move it under its parent
@@ -174,17 +178,21 @@ class TreeViewChoice(ttk.Frame):
             else:
             # If its not a subproject, create a "subproject" of itself
             # iid shouldn't be repeated since it starts with '.'
-                self.treeView.insert('', 'end', text=origname, iid='.'+item, value=item, tag=mode)
+                self.treeView.insert('', 'end', text=origname, iid='.'+item, value=item, tag='odd')
                 self.treeView.move('.'+item,item,0)
                 m=1
-                        
+        
+                       
         if self.initSelected and self.treeView.exists(self.initSelected):
             if 'subcells' in self.initSelected:
-                parent_path = os.path.split(os.path.split(self.initSelected)[0])[0]
+                parent_path = os.path.split(os.path.split(self.initSelected)[0])[0]               
                 self.setselect(parent_path)
+            elif self.initSelected[0]=='.':
+                self.setselect(self.initSelected[1:])
             else:
                 self.setselect(self.initSelected)
             self.initSelected = None
+        
 
         for button in self.func_buttons:
             button[0].pack_forget()
