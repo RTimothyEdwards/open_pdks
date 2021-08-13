@@ -162,6 +162,8 @@ class TreeViewChoice(ttk.Frame):
             # optionally: Mark directories with trailing slash
             if self.markDir and os.path.isdir(item):
                 origname += "/"
+            if os.path.islink(item):
+                origname += " (link)"
             
             if ('subcells' not in item):
                 mode = 'even' if mode == 'odd' else 'odd'
@@ -225,19 +227,26 @@ class TreeViewChoice(ttk.Frame):
     # though, or else tuples will have to be generated differently.
 
     def populate2(self, title, itemlist=[], valuelist=[]):
-        # Populate another column
+        # Populate the pdk column
         self.treeView.heading(1, text = title)
         self.treeView.column(1, anchor='center')
         children=list(self.getlist()) 
         
         # Add id's of subprojects
         i=1
-        for c in list(self.getlist()):
-            grandchildren=self.treeView.get_children(item=c)
+        def add_ids(grandchildren):
+            # Recursively add id's of all descendants to the list
+            nonlocal i
             for g in grandchildren:
                 children.insert(i,g)
                 i+=1
+                descendants=self.treeView.get_children(item=g)
+                add_ids(descendants)
             i+=1
+        
+        for c in list(self.getlist()):
+            grandchildren=self.treeView.get_children(item=c)
+            add_ids(grandchildren)
         
         n = 0
         for item in valuelist:
