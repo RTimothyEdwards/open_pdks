@@ -277,7 +277,7 @@ class NewProjectDialog(tksimpledialog.Dialog):
         #TODO: Replace with PREFIX
         for pdkdir_lr in glob.glob('/usr/share/pdk/*/libs.tech/'):
             pdkdir = os.path.split( os.path.split( pdkdir_lr )[0])[0]    # discard final .../libs.tech/
-            (foundry, foundry_name, node, desc, status) = OpenGalaxyManager.pdkdir2fnd( pdkdir )
+            (foundry, foundry_name, node, desc, status) = ProjectManager.pdkdir2fnd( pdkdir )
             if not foundry or not node:
                 continue
             key = foundry + '/' + node
@@ -582,46 +582,144 @@ class ConfirmInstallDialog(tksimpledialog.Dialog):
 #------------------------------------------------------
 
 class ImportDialog(tksimpledialog.Dialog):
-    def body(self, master, warning, seed):
+    def body(self, master, warning, seed, parent_pdk, parent_path, project_dir):
+        self.badrex1 = re.compile("^\.")
+        self.badrex2 = re.compile(".*[/ \t\n\\\><\*\?].*")
+        
+        self.projectpath = ""
+        self.project_pdkdir = ""
+        self.foundry = ""
+        self.node = ""
+        self.parentpdk = parent_pdk
+        self.parentpath = parent_path
+        self.projectdir = project_dir #folder that contains all projects
+        
         if warning:
             ttk.Label(master, text=warning).grid(row = 0, columnspan = 2, sticky = 'wns')
         ttk.Label(master, text="Enter new project name:").grid(row = 1, column = 0)
-        self.nentry = ttk.Entry(master)
+        
+        self.entry_v = tkinter.StringVar()
+        
+        self.nentry = ttk.Entry(master, textvariable = self.entry_v)
         self.nentry.grid(row = 1, column = 1, sticky = 'ewns')
-        self.projectpath = ""
+        
+        self.entry_v.trace('w', self.text_validate)
+        
+
         ttk.Button(master,
                         text = "Choose Project...",
                         command = self.browseFiles).grid(row = 3, column = 0)
                         
-        self.pathlabel = ttk.Label(master, text = ("No project selected" if self.projectpath =="" else self.projectpath), style = 'brown.TLabel', wraplength=250)
+        self.pathlabel = ttk.Label(master, text = ("No project selected" if self.projectpath =="" else self.projectpath), style = 'red.TLabel', wraplength=250)
         
         self.pathlabel.grid(row = 3, column = 1)
         
-
+        ttk.Label(master, text="Foundry/node:").grid(row = 4, column = 0)
+        
+        self.pdklabel = ttk.Label(master, text="N/A", style = 'red.TLabel')
+        self.pdklabel.grid(row = 4, column = 1)
+        
+        self.importoption = tkinter.StringVar()
+        
+        self.importoption.set(("copy" if parent_pdk!='' else "link"))
+        
+        self.linkbutton = ttk.Radiobutton(master, text="Make symbolic link", variable=self.importoption, value="link")
+        self.linkbutton.grid(row = 5, column = 0)
+        ttk.Radiobutton(master, text="Copy project", variable=self.importoption, value="copy").grid(row = 5, column = 1)
+        
+        self.error_label = ttk.Label(master, text="", style = 'red.TLabel', wraplength=300)
+        self.error_label.grid(row = 6, column = 0, columnspan = 2)
+        
+        self.entry_error = ttk.Label(master, text="", style = 'red.TLabel', wraplength=300)
+        self.entry_error.grid(row = 2, column = 0, columnspan = 2)
+        
         return self.nentry
     
+    def text_validate(self, *args):
+        newname = self.entry_v.get()
+        projectpath = ''
+        if self.parentpath!='':
+            projectpath = self.parentpath + '/subcells/' + newname
+        else:
+            projectpath = self.projectdir + '/' + newname
+             
+        if ProjectManager.blacklisted( newname):
+            self.entry_error.configure(text = newname + ' is not allowed for a project name.')
+        elif newname == "":
+            self.entry_error.configure(text = "")
+        elif self.badrex1.match(newname):
+            self.entry_error.configure(text =  'project name may not start with "."')
+        elif self.badrex2.match(newname):
+            self.entry_error.configure(text = 'project name contains illegal characters or whitespace.')
+        elif os.path.exists(projectpath):
+            self.entry_error.configure(text = newname + ' is already a project name.')
+        else:
+            self.entry_error.configure(text = '')
+            return True
+        return False
+        
+    def validate(self, *args):
+        return self.text_validate(self) and self.pdk_validate(self)
+        
     def browseFiles(self):
         initialdir = "~/"
         if os.path.isdir(self.projectpath):
             initialdir = os.path.split(self.projectpath)[0]
             
-        selected_dir = filedialog.askdirectory(initialdir = initialdir, title = "Select a Project",)
+        selected_dir = filedialog.askdirectory(initialdir = initialdir, title = "Select a Project to Import",)
                                           
         if os.path.isdir(str(selected_dir)):
+            self.error_label.configure(text = '')
+            self.linkbutton.configure(state="normal")
+            
             self.projectpath = selected_dir
-            self.pathlabel.configure(text=self.projectpath)
+            self.pathlabel.configure(text=self.projectpath, style = 'blue.TLabel')
             # Change label contents
             if (self.nentry.get() == ''):
                 self.nentry.insert(0, os.path.split(self.projectpath)[1])
                 
+            self.pdk_validate(self)
+    
+    def pdk_validate(self, *args):
+        if not os.path.exists(self.projectpath):
+            self.error_label.configure(text = 'Invalid directory')
+            return False
+            
+        #Find project pdk
+        if os.path.exists(self.projectpath + '/.config/techdir') or os.path.exists(self.projectpath + '/.ef-config/techdir'):
+            self.project_pdkdir = os.path.realpath(self.projectpath + ProjectManager.config_path( self.projectpath) + '/techdir')
+            self.foundry, foundry_name, self.node, desc, status = ProjectManager.pdkdir2fnd( self.project_pdkdir )
+        else:
+            if not os.path.exists(self.projectpath + '/info.yaml'):
+                self.error_label.configure(text = self.projectpath + ' does not contain an info.yaml file.')
+                self.project_pdkdir = ""
+                self.foundry = ""
+                self.node = ""
+            else:                    
+                self.project_pdkdir, self.foundry, self.node = ProjectManager.get_import_pdk( self.projectpath)
+            
+        if self.project_pdkdir == "":
+            self.pdklabel.configure(text="Not found", style='red.TLabel')
+            return False
+        else:
+            if (self.parentpdk!="" and self.parentpdk != self.foundry + '/' + self.node):
+                self.importoption.set("copy")
+                self.linkbutton.configure(state="disabled")
+                self.error_label.configure(text = 'Warning: Parent project uses '+self.parentpdk+' instead of '+self.foundry + '/' + self.node+'. The imported project will be copied and cleaned.')
+            self.pdklabel.configure(text=self.foundry + '/' + self.node, style='blue.TLabel')     
+            return True
+        
+    
     def apply(self):
-        return self.nentry.get(), self.projectpath
+        return self.nentry.get(), self.project_pdkdir, self.projectpath, self.importoption.get()
+    
+    
         
 #------------------------------------------------------
 # Project Manager class
 #------------------------------------------------------
 
-class OpenGalaxyManager(ttk.Frame):
+class ProjectManager(ttk.Frame):
     """Project Management GUI."""
 
     def __init__(self, parent, *args, **kwargs):
@@ -1072,8 +1170,9 @@ class OpenGalaxyManager(ttk.Frame):
             tooltip.ToolTip(self.toppane.appbar.layout_button, text="Start 'KLayout' layout editor")
         else:
             tooltip.ToolTip(self.toppane.appbar.layout_button, text="Start 'Magic' layout editor")
-            
-    def config_path(self, path):
+    
+    @classmethod
+    def config_path(cls, path):
         #returns the config directory that 'path' contains between .config and .ef-config
         if (os.path.exists(path + '/.config')):
             return '/.config'
@@ -1084,8 +1183,9 @@ class OpenGalaxyManager(ttk.Frame):
     #------------------------------------------------------------------------
     # Check if a name is blacklisted for being a project folder
     #------------------------------------------------------------------------
-
-    def blacklisted(self, dirname):
+    
+    @classmethod
+    def blacklisted(cls, dirname):
         # Blacklist:  Do not show files of these names:
         blacklist = [importdir, 'ip', 'upload', 'export', 'lost+found', 'subcells']
         if dirname in blacklist:
@@ -1190,17 +1290,19 @@ class OpenGalaxyManager(ttk.Frame):
      
         projectlist = []
         
+        def add_projects(projectpath):
+            # Recursively add subprojects to projectlist
+            projectlist.append(projectpath)
+            #check for subprojects and add them
+            if os.path.isdir(projectpath + '/subcells'):
+                for subproj in os.listdir(projectpath + '/subcells'):
+                    if os.path.isdir(projectpath + '/subcells/' + subproj):
+                        add_projects(projectpath + '/subcells/' + subproj)
+        
         for item in os.listdir(self.projectdir):
             if os.path.isdir(self.projectdir + '/' + item):
                 projectpath = self.projectdir + '/' + item
-                projectlist.append(projectpath)
-                
-                #check for subprojects and add them
-                if os.path.isdir(projectpath + '/subcells'):
-                    for subproj in os.listdir(projectpath + '/subcells'):
-                        if os.path.isdir(projectpath + '/subcells/' + subproj):
-                            projectlist.append(projectpath + '/subcells/' + subproj)
-            
+                add_projects(projectpath)
          
                         
         # 'import' and others in the blacklist are not projects!
@@ -1476,9 +1578,11 @@ class OpenGalaxyManager(ttk.Frame):
 
         return pdkdir
 #------------------------------------------------------------------------
-    # Get PDK directory for projects to be imported (without a techdir)
+    # Get PDK directory for projects without a techdir (most likely the project is being imported)
     #------------------------------------------------------------------------
-    def get_import_pdk(self, projectpath):
+    @classmethod
+    def get_import_pdk(cls, projectpath):
+        print(projectpath)
         yamlname = projectpath + '/info.yaml'
        
         with open(yamlname, 'r') as f:
@@ -1491,7 +1595,7 @@ class OpenGalaxyManager(ttk.Frame):
        
         for pdkdir_lr in glob.glob('/usr/share/pdk/*/libs.tech/'):
             pdkdir = os.path.split( os.path.split( pdkdir_lr )[0])[0]
-            foundry, foundry_name, node, desc, status = OpenGalaxyManager.pdkdir2fnd( pdkdir )
+            foundry, foundry_name, node, desc, status = ProjectManager.pdkdir2fnd( pdkdir )
             if not foundry or not node:
                 continue
             if (foundry == project_foundry or foundry_name == project_foundry) and node == project_process:
@@ -2143,14 +2247,13 @@ class OpenGalaxyManager(ttk.Frame):
     # Create info.yaml file (automatically done in create_project.py in case it's executed from the command line)
     #------------------------------------------------------------------------
    
-    def create_yaml(self, ipname, pname, description="(Add project description here)"):
+    def create_yaml(self, ipname, pdk_dir, description="(Add project description here)"):
         # ipname: Project Name
-        # pname: PDK directory
         data = {}
         project={}
         project['description'] = description
         try:
-            project['foundry'], foundry_name, project['process'], pdk_desc, pdk_stat = self.pdkdir2fnd( pname )
+            project['foundry'], foundry_name, project['process'], pdk_desc, pdk_stat = self.pdkdir2fnd( pdk_dir )
         except:
             # Cannot parse PDK name, so foundry and node will remain undefined
             pass
@@ -2887,6 +2990,10 @@ class OpenGalaxyManager(ttk.Frame):
         confirm = ConfirmDialog(self, warning).result
         if not confirm == 'okay':
             return
+        else:
+            self.clean(ppath)
+            
+    def clean(self, ppath):
         if os.path.isdir(ppath + '/simulation'):
             simpath = 'simulation'
         elif os.path.isdir(ppath + '/ngspice'):
@@ -3390,7 +3497,7 @@ class OpenGalaxyManager(ttk.Frame):
                     self.projNameBadrex2.match(name))
 
 #----------------------------------------------------------------------
-    # Import/link a project or subproject to the project manager
+    # Import a project or subproject to the project manager
     #----------------------------------------------------------------------
     
     def importproject(self, value):
@@ -3399,8 +3506,9 @@ class OpenGalaxyManager(ttk.Frame):
         badrex2 = re.compile(".*[/ \t\n\\\><\*\?].*")
         print(warning)
         
-        # Find out whether the user wants to import a subproject or project
+        # Find out whether the user wants to import a subproject or project based on what they selected in the treeview
         parent_pdk = ''
+        parent_path = ''
         try:
             with open(os.path.expanduser(currdesign), 'r') as f:
                 pdirCur = f.read().rstrip()
@@ -3424,7 +3532,7 @@ class OpenGalaxyManager(ttk.Frame):
         
         while True:
             try:
-                newname, projectpath = ImportDialog(self, warning, seed='').result
+                newname, project_pdkdir, projectpath, importoption = ImportDialog(self, warning, seed='', parent_pdk = parent_pdk, parent_path = parent_path, project_dir = self.projectdir).result
             except TypeError:
                 # TypeError occurs when "Cancel" is pressed, just handle exception.
                 return None
@@ -3435,53 +3543,51 @@ class OpenGalaxyManager(ttk.Frame):
                 newproject = self.projectdir + '/' + newname
             else:
                 newproject = parent_path + '/subcells/' + newname
-            
-            if self.blacklisted(newname):
-                warning = newname + ' is not allowed for a project name.'
-            elif badrex1.match(newname):
-                warning = 'project name may not start with "."'
-            elif badrex2.match(newname):
-                warning = 'project name contains illegal characters or whitespace.'
-            elif os.path.exists(newproject):
-                warning = newname + ' is already a project name.'
-            elif not os.path.exists(projectpath + '/info.yaml'):
-                warning = projectpath + 'does not contain an info.yaml file.'
-            else:
-                techdir_exists = False
-                if os.path.exists(projectpath + '/.config/techdir'):
-                    project_pdkdir = os.path.realpath(projectpath + '/.config/techdir')
-                    techdir_exists = True
-                else:
-                    project_pdkdir, foundry, node = self.get_import_pdk(projectpath)
-                
-                if project_pdkdir == '':
-                    warning = 'Could not find PDK directory for ' + projectpath
-                elif parent_pdk!='' and project_pdkdir!=parent_pdkdir:
-                    warning = 'Parent PDK is different from PDK for ' + projectpath
-                else:
-                    break
-        if not techdir_exists:
+            break
+        
+        def make_techdirs(projectpath, project_pdkdir):
+            # Recursively create techdirs in project and subproject folders
             if not (os.path.exists(projectpath + '/.config') or os.path.exists(projectpath + '/.ef-config')):
                 os.makedirs(projectpath + '/.config')
-            os.symlink(project_pdkdir, projectpath + self.config_path(projectpath) + '/techdir')
+            if not os.path.exists(projectpath + self.config_path(projectpath) + '/techdir'):
+                os.symlink(project_pdkdir, projectpath + self.config_path(projectpath) + '/techdir')
+            if os.path.isdir(projectpath + '/subcells'):
+                for subproject in os.listdir(projectpath + '/subcells'):
+                    subproject_path = projectpath + '/subcells/' + subproject
+                    make_techdirs(subproject_path, project_pdkdir)
+                    
+        make_techdirs(projectpath, project_pdkdir)
         
-        # Make techdirs if necessary in the subprojects
-        for subproject in os.listdir(projectpath + '/subcells'):
-            subproject_path = projectpath + '/subcells/' + subproject
-            if not (os.path.exists(subproject_path + '/.config') or os.path.exists(subproject_path + '/.ef-config')):
-                os.makedirs(subproject_path + '/.config')
-                os.symlink(project_pdkdir, subproject_path + '/.config/techdir')
-            elif not os.path.exists(subproject_path + self.config_path(subproject_path) + '/techdir'):
-                os.symlink(project_pdkdir, subproject_path + self.config_path(subproject_path) + '/techdir')
-            
-        #Make symbolic link to imported project
-        if parent_pdk=='':
-            os.symlink(projectpath, self.projectdir + '/' + newname)
+        # Make symbolic link/copy projects
+        if parent_path=='':
+            # Create a regular project
+            if importoption == "link":
+                os.symlink(projectpath, self.projectdir + '/' + newname)
+            else:
+                print("Importing project...this may take a while if the project is large.")
+                shutil.copytree(projectpath, self.projectdir + '/' + newname, symlinks = True)
+            if not os.path.exists(projectpath + '/info.yaml'):
+                yData = self.create_yaml(newname, project_pdkdir)                             
+                with open(projectpath + '/info.yaml', 'w') as ofile:
+                    print('---',file=ofile)
+                    yaml.dump(yData, ofile)
         else:
+            #Create a subproject
             if not os.path.exists(parent_path + '/subcells'):
                 os.makedirs(parent_path + '/subcells')
-            os.symlink(projectpath, parent_path + '/subcells/' + newname)
-            self.update_project_views()
+            if importoption == "copy":
+                print("Importing subproject...this may take a while if the project is large.")
+                shutil.copytree(projectpath, parent_path + '/subcells/' + newname, symlinks = True)
+                if parent_pdkdir != project_pdkdir:
+                    self.clean(parent_path + '/subcells/' + newname)
+            else:
+                os.symlink(projectpath, parent_path + '/subcells/' + newname)
+            if not os.path.exists(parent_path + '/subcells/' + newname + '/info.yaml'):
+                yData = self.create_yaml(newname, project_pdkdir)                             
+                with open(parent_path + '/subcells/' + newname + '/info.yaml', 'w') as ofile:
+                    print('---',file=ofile)
+                    yaml.dump(yData, ofile)
+            self.update_project_views() 
         #----------------------------------------------------------------------
     # "Import As" a dir in import/ as a project. based on renameproject().
     # addWarn is used to augment confirm-dialogue if redirected here via erroneous ImportInto
@@ -4341,7 +4447,7 @@ class OpenGalaxyManager(ttk.Frame):
 
 # main app. fyi: there's a 2nd/earlier __main__ section for splashscreen
 if __name__ == '__main__':
-    OpenGalaxyManager(root)
+    ProjectManager(root)
     if deferLoad:
         # Without this, mainloop may find&run very short clock-delayed events BEFORE main form display.
         # With it 1st project-load can be scheduled using after-time=0 (needn't tune a delay like 100ms).
