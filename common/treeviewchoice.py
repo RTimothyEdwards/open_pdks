@@ -187,10 +187,19 @@ class TreeViewChoice(ttk.Frame):
                        
         if self.initSelected and self.treeView.exists(self.initSelected):
             if 'subcells' in self.initSelected:
-                parent_path = os.path.split(os.path.split(self.initSelected)[0])[0]               
-                self.setselect(parent_path)
+                # ancestor projects must be expanded before setting current
+                item_path = self.initSelected
+                ancestors = []
+                while 'subcells' in item_path:
+                    item_path = os.path.split(os.path.split(item_path)[0])[0]
+                    ancestors.insert(0,item_path)
+                for a in ancestors:
+                    self.treeView.item(a, open=True)       
+                self.setselect(self.initSelected)
             elif self.initSelected[0]=='.':
-                self.setselect(self.initSelected[1:])
+                parent_path = self.initSelected[1:]
+                self.treeView.item(parent_path, open=True) 
+                self.setselect(self.initSelected)
             else:
                 self.setselect(self.initSelected)
             self.initSelected = None
@@ -242,11 +251,11 @@ class TreeViewChoice(ttk.Frame):
                 i+=1
                 descendants=self.treeView.get_children(item=g)
                 add_ids(descendants)
-            i+=1
         
         for c in list(self.getlist()):
             grandchildren=self.treeView.get_children(item=c)
             add_ids(grandchildren)
+            i+=1
         
         n = 0
         for item in valuelist:
@@ -260,7 +269,6 @@ class TreeViewChoice(ttk.Frame):
                 valuelist.insert(n,item)
             n += 1
         
-        
     def func_callback(self, callback, event=None):
         callback(self.treeView.item(self.treeView.selection()))
 
@@ -269,7 +277,7 @@ class TreeViewChoice(ttk.Frame):
 
     def setselect(self, value):
         self.treeView.selection_set(value)
-
+        
     def selected(self):
         value = self.treeView.item(self.treeView.selection())
         if value['values']:

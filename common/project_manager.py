@@ -595,7 +595,7 @@ class ImportDialog(tksimpledialog.Dialog):
         self.projectdir = project_dir #folder that contains all projects
         
         if warning:
-            ttk.Label(master, text=warning).grid(row = 0, columnspan = 2, sticky = 'wns')
+            ttk.Label(master, text=warning, wraplength=250).grid(row = 0, columnspan = 2, sticky = 'wns')
         ttk.Label(master, text="Enter new project name:").grid(row = 1, column = 0)
         
         self.entry_v = tkinter.StringVar()
@@ -610,7 +610,7 @@ class ImportDialog(tksimpledialog.Dialog):
                         text = "Choose Project...",
                         command = self.browseFiles).grid(row = 3, column = 0)
                         
-        self.pathlabel = ttk.Label(master, text = ("No project selected" if self.projectpath =="" else self.projectpath), style = 'red.TLabel', wraplength=250)
+        self.pathlabel = ttk.Label(master, text = ("No project selected" if self.projectpath =="" else self.projectpath), style = 'red.TLabel', wraplength=300)
         
         self.pathlabel.grid(row = 3, column = 1)
         
@@ -684,7 +684,10 @@ class ImportDialog(tksimpledialog.Dialog):
         if not os.path.exists(self.projectpath):
             self.error_label.configure(text = 'Invalid directory')
             return False
-            
+        
+        if self.parentpath != "" and self.projectpath in self.parentpath:
+            self.error_label.configure(text = 'Cannot import a parent directory into itself.')
+            return False
         #Find project pdk
         if os.path.exists(self.projectpath + '/.config/techdir') or os.path.exists(self.projectpath + '/.ef-config/techdir'):
             self.project_pdkdir = os.path.realpath(self.projectpath + ProjectManager.config_path( self.projectpath) + '/techdir')
@@ -888,7 +891,8 @@ class ProjectManager(ttk.Frame):
 			 ["Flow", False, self.synthesize],
 			 ["Copy", False, self.copyproject],
 			 ["Rename", False, self.renameproject],
-			 ["Delete", False, self.deleteproject],],
+			 ["Delete", False, self.deleteproject],
+			 ],
 			height=height, columns=[0, 1])
         self.projectselect.grid(row = 3, sticky = 'news')
         self.projectselect.bindselect(self.setcurrent)
@@ -3353,6 +3357,8 @@ class ProjectManager(ttk.Frame):
             newproject = self.projectdir + '/' + newname
             if self.blacklisted(newname):
                 warning = newname + ' is not allowed for a project name.'
+            elif newname == "":
+                warning = 'Please enter a project name.'
             elif badrex1.match(newname):
                 warning = 'project name may not start with "."'
             elif badrex2.match(newname):
@@ -3373,8 +3379,11 @@ class ProjectManager(ttk.Frame):
 
         print("New project name will be " + newname)
         try:
-            shutil.copytree(oldpath, newproject, symlinks = True,
-			ignore = shutil.ignore_patterns(*patterns))
+            if os.path.islink(oldpath):
+                os.symlink(oldpath, newproject)
+            else:
+                shutil.copytree(oldpath, newproject, symlinks = True,
+			    ignore = shutil.ignore_patterns(*patterns))
         except IOError as e:
             print('Error copying files: ' + str(e))
             return
@@ -3418,6 +3427,7 @@ class ProjectManager(ttk.Frame):
                 os.makedirs(newproject + '/ngspice/run/.allwaves')
             except FileExistsError:
                 pass
+        '''
         if not elprefs:
             # Copy preferences
             deskel = '/ef/efabless/deskel'
@@ -3425,6 +3435,7 @@ class ProjectManager(ttk.Frame):
                 shutil.copytree(deskel + '/dotjava', newproject + '/elec/.java', symlinks = True)
             except IOError as e:
                 print('Error copying files: ' + e)
+        '''
 
     #----------------------------------------------------------------------
     # Change a project IP to a different name.
@@ -3564,7 +3575,6 @@ class ProjectManager(ttk.Frame):
             if importoption == "link":
                 os.symlink(projectpath, self.projectdir + '/' + newname)
             else:
-                print("Importing project...this may take a while if the project is large.")
                 shutil.copytree(projectpath, self.projectdir + '/' + newname, symlinks = True)
             if not os.path.exists(projectpath + '/info.yaml'):
                 yData = self.create_yaml(newname, project_pdkdir)                             
@@ -3576,7 +3586,6 @@ class ProjectManager(ttk.Frame):
             if not os.path.exists(parent_path + '/subcells'):
                 os.makedirs(parent_path + '/subcells')
             if importoption == "copy":
-                print("Importing subproject...this may take a while if the project is large.")
                 shutil.copytree(projectpath, parent_path + '/subcells/' + newname, symlinks = True)
                 if parent_pdkdir != project_pdkdir:
                     self.clean(parent_path + '/subcells/' + newname)
@@ -4334,9 +4343,9 @@ class ProjectManager(ttk.Frame):
     def setcurrent(self, value):
         global currdesign
         treeview = value.widget
-        selection = treeview.item(treeview.selection())
+        selection = treeview.item(treeview.selection()) # dict with text, values, tags, etc. as keys
         pname = selection['text']
-        pdir = treeview.selection()[0]
+        pdir = treeview.selection()[0]  # iid of the selected project
         #print("setcurrent returned value " + pname)
         metapath = os.path.expanduser(currdesign)
         if not os.path.exists(metapath):
