@@ -120,6 +120,17 @@ set ::env(DRC_EXCLUDE_CELL_LIST) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlan
 # DRC Exclude List for Optimization library 
 set ::env(DRC_EXCLUDE_CELL_LIST_OPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY_OPT)/drc_exclude.cells"
 
+# Open-RCX Rules File 
+set ::env(RCX_RULES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rcx_rules.info"
+
+# VIA RC Extraction Values
+set ::env(VIAS_RC) "\
+    mcon 9.249146E-3,\
+    via 4.5E-3,\
+    via2 3.368786E-3,\
+    via3 0.376635E-3,\
+    via4 0.00580E-3"
+
 set ::env(GLB_RT_L1_ADJUSTMENT) 0.99
 
 # Extra PDN configs
