@@ -73,9 +73,9 @@ class TreeViewChoice(ttk.Frame):
         self.lasttag = None
         self.treeView.bind('<<TreeviewSelect>>', self.retag)
         self.repopulate(itemlist, versioning)
-        self.treeView.bind('<Double-1>', self.test_callback)
+        self.treeView.bind('<Double-1>', self.double_click)
 
-    def test_callback(self, event):
+    def double_click(self, event):
         self.flowcallback(self.treeView.item(self.treeView.selection()))
         
     def get_button(self, index):
@@ -275,10 +275,6 @@ class TreeViewChoice(ttk.Frame):
             if (n+1<len(children) and children[n+1]=='.'+child):
                 valuelist.insert(n,item)
             n += 1
-        
-    def double_click(self, event):
-        item = self.treeView.selection()[0]
-        print("you clicked on", self.treeView.item(item,"text"))
         
     def func_callback(self, callback, event=None):
         callback(self.treeView.item(self.treeView.selection()))

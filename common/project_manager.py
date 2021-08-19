@@ -717,7 +717,7 @@ class ImportDialog(tksimpledialog.Dialog):
         return self.nentry.get(), self.project_pdkdir, self.projectpath, self.importoption.get()
     
 #------------------------------------------------------
-# Dialog to import a project into the project manager
+# Dialog to allow users to select a flow
 #------------------------------------------------------
     
 class SelectFlowDialog(tksimpledialog.Dialog):
