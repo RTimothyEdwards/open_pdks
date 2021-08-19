@@ -123,13 +123,22 @@ set ::env(DRC_EXCLUDE_CELL_LIST_OPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/ope
 # Open-RCX Rules File 
 set ::env(RCX_RULES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rcx_rules.info"
 
-# VIA RC Extraction Values
+# VIAS RC Values
 set ::env(VIAS_RC) "\
     mcon 9.249146E-3,\
     via 4.5E-3,\
     via2 3.368786E-3,\
     via3 0.376635E-3,\
     via4 0.00580E-3"
+
+# Layer RC Values
+set ::env(LAYERS_RC)"\
+	li1 1.499e-04 7.176e-02,\
+	met1 1.449e-04 8.929e-04,\
+	met2 1.331e-04 8.929e-04,\
+	met3 1.464e-04 1.567e-04,\
+	met4 1.297e-04 1.567e-04,\
+	met5  1.501e-04 1.781e-05"
 
 set ::env(GLB_RT_L1_ADJUSTMENT) 0.99
 
