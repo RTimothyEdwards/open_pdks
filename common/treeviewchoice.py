@@ -60,17 +60,24 @@ class TreeViewChoice(ttk.Frame):
             # button widget, and the second is a boolean that is True if the
             # button is to be present always, False if the button is only
             # present when there are entries in the itemlist.
+            if(button[0]=='Flow'):
+                self.flowcallback = func
+                
             self.func_buttons.append([ttk.Button(buttonFrame, text=button[0],
 			style = 'normal.TButton',
 			command = lambda func=func: self.func_callback(func)),
 			button[1]])
-
+			
         self.selectcallback = None
         self.lastselected = None
         self.lasttag = None
         self.treeView.bind('<<TreeviewSelect>>', self.retag)
         self.repopulate(itemlist, versioning)
+        self.treeView.bind('<Double-1>', self.test_callback)
 
+    def test_callback(self, event):
+        self.flowcallback(self.treeView.item(self.treeView.selection()))
+        
     def get_button(self, index):
         if index >= 0 and index < len(self.func_buttons):
             return self.func_buttons[index][0]
@@ -268,6 +275,10 @@ class TreeViewChoice(ttk.Frame):
             if (n+1<len(children) and children[n+1]=='.'+child):
                 valuelist.insert(n,item)
             n += 1
+        
+    def double_click(self, event):
+        item = self.treeView.selection()[0]
+        print("you clicked on", self.treeView.item(item,"text"))
         
     def func_callback(self, callback, event=None):
         callback(self.treeView.item(self.treeView.selection()))

@@ -716,7 +716,60 @@ class ImportDialog(tksimpledialog.Dialog):
     def apply(self):
         return self.nentry.get(), self.project_pdkdir, self.projectpath, self.importoption.get()
     
+#------------------------------------------------------
+# Dialog to import a project into the project manager
+#------------------------------------------------------
     
+class SelectFlowDialog(tksimpledialog.Dialog):
+    def body(self, master, warning, seed='', is_subproject = False):
+        self.wait_visibility()
+        if warning:
+            ttk.Label(master, text=warning).grid(row = 0, columnspan = 2, sticky = 'wns')
+        
+        ttk.Label(master, text="Flow:").grid(row = 1, column = 0)
+        
+        project_flows = {
+            'Analog':'Schematic, Simulation, Layout, DRC, LVS',
+            'Digital':'Preparation, Synthesis, Placement, Static Timing Analysis, Routing, Post-Route STA, Migration, DRC, LVS, GDS, Cleanup',
+            'Mixed-Signal':'',
+            'Assembly':'',
+        }
+        
+        subproject_flows = {
+            'Analog':'Schematic, Simulation, Layout, DRC, LVS',
+            'Digital':'Preparation, Synthesis, Placement, Static Timing Analysis, Routing, Post-Route STA, Migration, DRC, LVS, GDS, Cleanup',
+            'Mixed-Signal': '',
+        }
+        self.flows = subproject_flows if is_subproject else project_flows
+        self.flowvar = tkinter.StringVar(master, value = 'Analog')
+        
+        self.infolabel = ttk.Label(master, text=self.flows[self.flowvar.get()], style = 'brown.TLabel', wraplength=250)
+        self.infolabel.grid(row = 2, column = 0, columnspan = 2, sticky = 'news')
+        
+        self.option_menu = ttk.OptionMenu(
+            master,
+            self.flowvar,
+            self.flowvar.get(),
+            *self.flows.keys(),
+            command=self.show_info
+        )
+        
+        self.option_menu.grid(row = 1, column = 1)
+
+        return self.option_menu# initial focus
+    
+    def show_info(self, args):
+        key = self.flowvar.get()
+        print(key)
+        desc = self.flows[key]
+        if desc == '':
+            self.infolabel.config(text='(no description available)')
+        else:
+            self.infolabel.config(text=desc)
+    
+
+    def apply(self):
+        return str(self.flowvar.get())  # Note converts StringVar to string
         
 #------------------------------------------------------
 # Project Manager class
@@ -888,7 +941,7 @@ class ProjectManager(ttk.Frame):
         self.projectselect.populate("Available Projects:", projectlist,
 			[["New", True, self.createproject],
 			 ["Import", True, self.importproject],
-			 ["Flow", False, self.synthesize],
+			 ["Flow", False, self.startflow],
 			 ["Copy", False, self.copyproject],
 			 ["Rename", False, self.renameproject],
 			 ["Delete", False, self.deleteproject],
@@ -2254,7 +2307,7 @@ class ProjectManager(ttk.Frame):
     def create_yaml(self, ipname, pdk_dir, description="(Add project description here)"):
         # ipname: Project Name
         data = {}
-        project={}
+        project= {}
         project['description'] = description
         try:
             project['foundry'], foundry_name, project['process'], pdk_desc, pdk_stat = self.pdkdir2fnd( pdk_dir )
@@ -2262,6 +2315,7 @@ class ProjectManager(ttk.Frame):
             # Cannot parse PDK name, so foundry and node will remain undefined
             pass
         project['project_name'] = ipname
+        project['flow'] = 'none'
         data['project']=project
         return data
     #------------------------------------------------------------------------
@@ -3437,7 +3491,57 @@ class ProjectManager(ttk.Frame):
                 print('Error copying files: ' + e)
         '''
 
+#----------------------------------------------------------------------
+    # Allow the user to choose the flow of the project
     #----------------------------------------------------------------------
+    
+    def startflow(self, value):
+        projectpath = value['values'][0]
+        flow = ''
+        warning = 'Select a flow for '+value['text']
+        is_subproject = False
+        try:
+            with open(os.path.expanduser(currdesign), 'r') as f:
+                pdirCur = f.read().rstrip()
+                if ('subcells' in pdirCur):
+                    # subproject is selected
+                    is_subproject = True      
+        except:
+            pass
+        if not os.path.exists(projectpath + '/info.yaml'):
+            project_pdkdir = self.get_pdk_dir(projectpath, path=True)
+            data = self.create_yaml(os.path.split(projectpath)[1], project_pdkdir)
+            with open(projectpath + '/info.yaml', 'w') as ofile:
+                print('---',file=ofile)
+                yaml.dump(data, ofile)
+        
+        # Read yaml file for the selected flow
+        with open(projectpath + '/info.yaml','r') as f:
+            data = yaml.safe_load(f)
+            project = data['project']
+            if 'flow' in project.keys() and project['flow']=='none' or 'flow' not in project.keys():
+                while True:
+                    try:
+                        flow = SelectFlowDialog(self, warning, seed='', is_subproject = is_subproject).result
+                    except TypeError:
+                        # TypeError occurs when "Cancel" is pressed, just handle exception.
+                        return None
+                    if not flow:
+                        return None	# Canceled, no action.
+                    break
+                project['flow']=flow
+                data['project']=project
+                with open(projectpath + '/info.yaml', 'w') as ofile:
+                    print('---',file=ofile)
+                    yaml.dump(data, ofile)
+            else:
+                flow = project['flow']
+        
+        print("Starting "+flow+" flow...")
+        if flow.lower() == 'digital':
+            self.synthesize()
+        
+ #----------------------------------------------------------------------
     # Change a project IP to a different name.
     #----------------------------------------------------------------------
 
@@ -3744,9 +3848,9 @@ class ProjectManager(ttk.Frame):
 
     def synthesize(self):
         value = self.projectselect.selected()
-        print(value)
         if value:
-            design = value['values'][0]
+            design = value['values'][0] # project path
+            pdkdir = self.get_pdk_dir(design, path = True)
             # designname = value['text']
             designname = self.project_name
             development = self.prefs['devstdcells']
@@ -3763,7 +3867,6 @@ class ProjectManager(ttk.Frame):
             # file.  If there is more than one, then present a list.  If there is
             # only one but it is not in 'qflow/', then be sure to pass the actual
             # directory name to the qflow manager.
-
             qvlist = glob.glob(design + '/*/qflow_vars.sh')
             qvlist.extend(glob.glob(design + '/qflow/*/qflow_vars.sh'))
             if len(qvlist) > 1 or (len(qvlist) == 1 and not os.path.exists(design + '/qflow/qflow_vars.sh')):
@@ -3780,21 +3883,24 @@ class ProjectManager(ttk.Frame):
                 pname = ppath.replace(design + '/', '')
 
                 print('Synthesize design in qflow project directory ' + pname)
+                print('Loading digital flow manager...')
+                #TODO: replace hard-coded path with function that gets the qflow manager path
                 if development:
-                    subprocess.Popen([config.apps_path + '/qflow_manager.py',
+                    subprocess.Popen(['/usr/local/share/qflow/scripts/qflow_manager.py',
 				design, '-development', '-subproject=' + pname])
                 else:
-                    subprocess.Popen([config.apps_path + '/qflow_manager.py',
+                    subprocess.Popen(['/usr/local/share/qflow/scripts/qflow_manager.py',
 				design, '-subproject=' + pname])
             else:
                 print('Synthesize design ' + designname + ' (' + design + ')')
+                print('Loading digital flow manager...')
                 # use Popen, not run, so that application does not wait for it to exit.
                 if development:
-                    subprocess.Popen([config.apps_path + '/qflow_manager.py',
-				design, designname, '-development'])
+                    subprocess.Popen(['/usr/local/share/qflow/scripts/qflow_manager.py',
+				pdkdir, design, designname, '-development'])
                 else:
-                    subprocess.Popen([config.apps_path + '/qflow_manager.py',
-				design, designname])
+                    subprocess.Popen(['/usr/local/share/qflow/scripts/qflow_manager.py',
+                pdkdir, design, designname])
         else:
             print("You must first select a project.", file=sys.stderr)
 
