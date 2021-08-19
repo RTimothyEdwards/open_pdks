@@ -138,7 +138,7 @@ set ::env(LAYERS_RC)"\
 	met2 1.331e-04 8.929e-04,\
 	met3 1.464e-04 1.567e-04,\
 	met4 1.297e-04 1.567e-04,\
-	met5  1.501e-04 1.781e-05"
+	met5 1.501e-04 1.781e-05"
 
 set ::env(GLB_RT_L1_ADJUSTMENT) 0.99
 
