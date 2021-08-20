@@ -4153,6 +4153,8 @@ drc
  width mvpdiffres 150 "MV P-Diffusion resistor width < %d (diff/tap.14a)"
  spacing alldifflv,var,varhvt,fomfill alldifflv,var,varhvt,fomfill 270 touching_ok \
 	"Diffusion spacing < %d (diff/tap.3)"
+ spacing alldifflv,var,varhvt alldiffmv,mvvar 270 touching_illegal \
+	"LV to MV Diffusion spacing < %d (diff/tap.3)"
  spacing alldiffmvnontap,mvvar alldiffmvnontap,mvvar 300 touching_ok \
 	"MV Diffusion spacing < %d (diff/tap.15a)"
  spacing alldiffmv *mvnsd,*mvpsd 270 touching_ok \
