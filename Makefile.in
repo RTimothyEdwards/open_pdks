@@ -83,18 +83,18 @@ distclean: $(TECHS_VERYCLEAN)
 CPP = common/preproc.py
 
 common_install:
-	@if test -w @prefix@ ; then \
-		mkdir -p @prefix@/share/pdk/bin/ ;\
-		cp common/cleanup_unref.py @prefix@/share/pdk/bin/ ;\
-		cp common/soc_floorplanner.py @prefix@/share/pdk/bin/ ;\
-		cp common/change_gds_cell.py @prefix@/share/pdk/bin/ ;\
-		cp common/find_gds_prefix.py @prefix@/share/pdk/bin/ ;\
-		cp common/change_gds_string.py @prefix@/share/pdk/bin/ ;\
-		${CPP} -DPREFIX=@prefix@/share common/create_project.py \
-			@prefix@/share/pdk/bin/create_project.py ;\
+	@if test -w @datadir@ ; then \
+		mkdir -p @datadir@/pdk/bin/ ;\
+		cp common/cleanup_unref.py @datadir@/pdk/bin/ ;\
+		cp common/soc_floorplanner.py @datadir@/pdk/bin/ ;\
+		cp common/change_gds_cell.py @datadir@/pdk/bin/ ;\
+		cp common/find_gds_prefix.py @datadir@/pdk/bin/ ;\
+		cp common/change_gds_string.py @datadir@/pdk/bin/ ;\
+		${CPP} -DPREFIX=@datadir@ common/create_project.py \
+			@datadir@/pdk/bin/create_project.py ;\
 		echo "Common install:  Done." ;\
 	else \
-		echo "Common install:  @prefix@ is not writeable (ignoring)." ;\
+		echo "Common install:  @datadir@ is not writeable (ignoring)." ;\
 	fi
 	
 #---------------------------------------------------
