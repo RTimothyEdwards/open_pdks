@@ -167,15 +167,14 @@ How to use open_pdks:
 
     Packagers and administrators that want to create a directory which
     is destined to be installed on other machines should set`--prefix`
-    to be the final install location and use `DESTDIR` with
-    `make install` to the directory where the files should be staged,
-    see the following example:
+    to be the directory where the files should be staged, and use
+    `DESTDIR` with `make install` to the final install location.
+    See the following example:
 
-        ./configure --prefix=/usr
+        ./configure --prefix=/tmp/package
 	make
-	# Need to use sudo so the file ends up with the right
-	# permissions.
-	sudo make DESTDIR=/tmp/package
+	# Need to use sudo so the file ends up with the right permissions.
+	sudo make DESTDIR=/usr install
 	(cd /tmp/package; tar -cvf ../dist.tar)
 
     Then on the final install machine you would want to do:
