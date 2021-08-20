@@ -585,7 +585,6 @@ PACKAGE_STRING='open_pdks 1.0'
 PACKAGE_BUGREPORT='github.com/RTimothyEdwards/open_pdks'
 PACKAGE_URL=''
 
-ac_default_prefix=/usr/share
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 EF_STYLE
@@ -662,8 +661,6 @@ ac_subst_files=''
 ac_user_opts='
 enable_option_checking
 enable_sky130_pdk
-with_sky130_dist_path
-with_sky130_local_path
 with_sky130_link_targets
 enable_klayout
 enable_magic
@@ -1362,11 +1359,6 @@ Optional Features:
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-sky130-dist-path=/path/to/install/sky130
-                          "staging location to install the PDK for
-                          distribution (optional)"
-  --with-sky130-local-path=/path/to/install/sky130
-                          "run-time location of the PDK"
   --with-sky130-link-targets=none|source
                           "make symbolic links to existing files
                           [default=none]"
@@ -1933,7 +1925,7 @@ $as_echo_n "checking for $am_display_PYTHON version... " >&6; }
 if ${am_cv_python_version+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:3])"`
+  am_cv_python_version=`$PYTHON -c "import sys; print('%u.%u' % sys.version_info[:2])"`
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
 $as_echo "$am_cv_python_version" >&6; }
@@ -2205,7 +2197,7 @@ $as_echo "$as_me: Found technology directories: sky130" >&6;}
 
 
         SKY130_SOURCE_PATH=""
-        SKY130_LOCAL_PATH="/usr/share/pdk"
+        SKY130_LOCAL_PATH="${datadir}/pdk"
         SKY130_DIST_PATH=""
         SKY130_LINK_TARGETS="none"
         SKY130_AUTO="0"
@@ -2269,50 +2261,6 @@ fi
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: PDK 'sky130' will be downloaded automatically during make." >&5
 $as_echo "$as_me: PDK 'sky130' will be downloaded automatically during make." >&6;}
 	    fi
-
-            # --with-pdk-dist-path=PDK_DIST_PATH
-
-# Check whether --with-sky130-dist-path was given.
-if test "${with_sky130_dist_path+set}" = set; then :
-  withval=$with_sky130_dist_path; SKY130_DIST_PATH=$withval
-
-fi
-
-
-            # "Require" this argument
-            { $as_echo "$as_me:${as_lineno-$LINENO}: Checking whether distribution path is specified for 'sky130'" >&5
-$as_echo "$as_me: Checking whether distribution path is specified for 'sky130'" >&6;}
-            if test "x$SKY130_DIST_PATH" == "x" ; then
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Option --with-sky130-dist-path=<path> not specified.  Local install only." >&5
-$as_echo "$as_me: Option --with-sky130-dist-path=<path> not specified.  Local install only." >&6;}
-                SKY130_DIST_PATH=""
-            else
-                SKY130_DIST_PATH=`realpath $SKY130_DIST_PATH`
-            fi
-
-            # --with-pdk-local-path=PDK_LOCAL_PATH
-
-# Check whether --with-sky130-local-path was given.
-if test "${with_sky130_local_path+set}" = set; then :
-  withval=$with_sky130_local_path; SKY130_LOCAL_PATH=$withval
-
-fi
-
-
-            # Require this argument
-            { $as_echo "$as_me:${as_lineno-$LINENO}: Checking whether local path is specified for 'sky130'" >&5
-$as_echo "$as_me: Checking whether local path is specified for 'sky130'" >&6;}
-            if test "x$SKY130_LOCAL_PATH" == "x" ; then
-                as_fn_error $? "Option --with-sky130-local-path=<path> not specified!" "$LINENO" 5
-                SKY130_LOCAL_PATH=""
-            else
-            	{ $as_echo "$as_me:${as_lineno-$LINENO}: Install path for 'sky130' is $SKY130_LOCAL_PATH" >&5
-$as_echo "$as_me: Install path for 'sky130' is $SKY130_LOCAL_PATH" >&6;}
-		# If dist-path is specified then do not try to expand local-path
-		if test "$SKY130_DIST_PATH" == "" ; then
-		    SKY130_LOCAL_PATH=`realpath $SKY130_LOCAL_PATH`
-		fi
-            fi
 
             # --with-pdk-link-targets=PDK_LINK_TARGETS
 

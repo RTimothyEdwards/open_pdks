@@ -1,6 +1,6 @@
 AC_INIT([open_pdks], [1.0], [github.com/RTimothyEdwards/open_pdks])
 
-AC_PREFIX_DEFAULT(/usr/share)
+AC_CONFIG_MACRO_DIR(m4)
 
 ## REQUIRES: https://www.gnu.org/software/autoconf-archive/ax_python_module.html#ax_python_module
 AM_PATH_PYTHON([3.4])
@@ -36,8 +36,6 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
         m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z-" "A-Z_"))])
 
         pdkvar[]_SOURCE_PATH=""
-        pdkvar[]_LOCAL_PATH="/usr/share/[pdk]"
-        pdkvar[]_DIST_PATH=""
         pdkvar[]_LINK_TARGETS="none"
         pdkvar[]_AUTO="0"
 
@@ -55,7 +53,6 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
             ], [
             ]
         )
-	    # # Require this argument
 
         if @<:@ "$[]pdkvar[]_SOURCE_PATH" != "" @:>@; then
             pdkvar[]_SOURCE_PATH=`realpath $[]pdkvar[]_SOURCE_PATH`
@@ -76,40 +73,6 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
 		AC_MSG_NOTICE([PDK 'pdk' will be downloaded automatically during make.])
 	    fi
 
-            # --with-pdk-dist-path=PDK_DIST_PATH
-            AC_ARG_WITH(pdk-dist-path,
-                [AS_HELP_STRING([--with-pdk-dist-path=/path/to/install/pdk], "staging location to install the PDK for distribution (optional)")],
-                [pdkvar[]_DIST_PATH=$withval]
-            )
-
-            # "Require" this argument
-            AC_MSG_NOTICE([Checking whether distribution path is specified for 'pdk'])
-            if test "x$[]pdkvar[]_DIST_PATH" == "x" ; then
-                AC_MSG_NOTICE([Option --with-pdk-dist-path=<path> not specified.  Local install only.])
-                pdkvar[]_DIST_PATH=""
-            else
-                pdkvar[]_DIST_PATH=`realpath $[]pdkvar[]_DIST_PATH`
-            fi
-
-            # --with-pdk-local-path=PDK_LOCAL_PATH
-            AC_ARG_WITH(pdk-local-path,
-                [AS_HELP_STRING([--with-pdk-local-path=/path/to/install/pdk], "run-time location of the PDK")],
-                [pdkvar[]_LOCAL_PATH=$withval]
-            )
-
-            # Require this argument
-            AC_MSG_NOTICE([Checking whether local path is specified for 'pdk'])
-            if test "x$[]pdkvar[]_LOCAL_PATH" == "x" ; then
-                AC_MSG_ERROR([Option --with-pdk-local-path=<path> not specified!])
-                pdkvar[]_LOCAL_PATH=""
-            else
-            	AC_MSG_NOTICE([Install path for 'pdk' is $[]pdkvar[]_LOCAL_PATH])
-		# If dist-path is specified then do not try to expand local-path
-		if test "$[]pdkvar[]_DIST_PATH" == "" ; then
-		    pdkvar[]_LOCAL_PATH=`realpath $[]pdkvar[]_LOCAL_PATH`
-		fi
-            fi
-
             # --with-pdk-link-targets=PDK_LINK_TARGETS
             AC_ARG_WITH(pdk-link-targets,
                 [AS_HELP_STRING([--with-pdk-link-targets=none|source], "make symbolic links to existing files @<:@default=none@:>@")],
@@ -120,8 +83,6 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
         fi
 
         AC_SUBST(pdkvar[]_SOURCE_PATH)
-        AC_SUBST(pdkvar[]_LOCAL_PATH)
-        AC_SUBST(pdkvar[]_DIST_PATH)
         AC_SUBST(pdkvar[]_LINK_TARGETS)
     ])
 ])
