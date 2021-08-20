@@ -169,7 +169,7 @@ EF_STYLE = @EF_STYLE@
 # although /tmp or a dedicated staging area are also fine, as long
 # as the install process can write to the path.
 
-STAGING_PATH = $(shell pwd)/build
+STAGING_PATH = $(shell pwd)
 
 SHARED_PDKS_PATH = $(datadir)/pdk
 
