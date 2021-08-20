@@ -140,16 +140,16 @@ How to use open_pdks:
 	make				Generate local staging area
 	sudo make install   		Install onto local system
 
-    which will install to /usr/share/pdk directory.
+    which will install to /usr/local/share/pdk directory.
 
     Users can also elect to install somewhere by giving ./configure the
     `--prefix` and other similar standard ./configure options.
 
     For example;
 
-	    Installing to /usr/local/share/pdk;
+	    Installing to /usr/share/pdk;
 
-		./configure --prefix=/usr/local
+		./configure --prefix=/usr
 		make
 		sudo make install
 
