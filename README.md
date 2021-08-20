@@ -58,7 +58,7 @@ The open_pdks version of the PDK can be built locally within open_pdks without
 the need to declare an install target or run "make install".  However, it is
 recommended to declare a target location and install there, using
 
-    ./configure --prefix=[/opt/pdks] --enable-[PDK_name]-pdk=[path]
+    ./configure --prefix=[path] --enable-[PDK_name]-pdk=[path]
 
 followed by "make" and "make install".
 

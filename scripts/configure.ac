@@ -1,5 +1,6 @@
 AC_INIT([open_pdks], [1.0], [github.com/RTimothyEdwards/open_pdks])
 
+AC_PREFIX_DEFAULT(/usr)
 AC_CONFIG_MACRO_DIR(m4)
 
 ## REQUIRES: https://www.gnu.org/software/autoconf-archive/ax_python_module.html#ax_python_module

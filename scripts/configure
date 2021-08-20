@@ -585,6 +585,7 @@ PACKAGE_STRING='open_pdks 1.0'
 PACKAGE_BUGREPORT='github.com/RTimothyEdwards/open_pdks'
 PACKAGE_URL=''
 
+ac_default_prefix=/usr
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 EF_STYLE
@@ -604,8 +605,6 @@ IRSIM_DISABLED
 NETGEN_DISABLED
 MAGIC_DISABLED
 KLAYOUT_DISABLED
-SKY130_DIST_PATH
-SKY130_LOCAL_PATH
 SKY130_SOURCE_PATH
 SKY130_LINK_TARGETS
 SED
@@ -637,7 +636,6 @@ infodir
 docdir
 oldincludedir
 includedir
-runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -720,7 +718,6 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
-runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
@@ -973,15 +970,6 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
-  -runstatedir | --runstatedir | --runstatedi | --runstated \
-  | --runstate | --runstat | --runsta | --runst | --runs \
-  | --run | --ru | --r)
-    ac_prev=runstatedir ;;
-  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
-  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
-  | --run=* | --ru=* | --r=*)
-    runstatedir=$ac_optarg ;;
-
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -1119,7 +1107,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir runstatedir
+		libdir localedir mandir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -1272,7 +1260,6 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
-  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -1802,6 +1789,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
+
 ## REQUIRES: https://www.gnu.org/software/autoconf-archive/ax_python_module.html#ax_python_module
 
 
@@ -1844,7 +1832,7 @@ if ${am_cv_pathless_PYTHON+:} false; then :
   $as_echo_n "(cached) " >&6
 else
 
-	for am_cv_pathless_PYTHON in python python2 python3  python3.9 python3.8 python3.7 python3.6 python3.5 python3.4 python3.3  python3.2 python3.1 python3.0  python2.7 python2.6 python2.5 python2.4 python2.3 python2.2 python2.1  python2.0 none; do
+	for am_cv_pathless_PYTHON in python python2 python3 python3.3 python3.2 python3.1 python3.0 python2.7  python2.6 python2.5 python2.4 python2.3 python2.2 python2.1 python2.0 none; do
 	  test "$am_cv_pathless_PYTHON" = none && break
 	  prog="import sys
 # split strings by '.' and convert to numeric.  Append some zeros
@@ -1925,7 +1913,7 @@ $as_echo_n "checking for $am_display_PYTHON version... " >&6; }
 if ${am_cv_python_version+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  am_cv_python_version=`$PYTHON -c "import sys; print('%u.%u' % sys.version_info[:2])"`
+  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:3])"`
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
 $as_echo "$am_cv_python_version" >&6; }
@@ -2197,8 +2185,6 @@ $as_echo "$as_me: Found technology directories: sky130" >&6;}
 
 
         SKY130_SOURCE_PATH=""
-        SKY130_LOCAL_PATH="${datadir}/pdk"
-        SKY130_DIST_PATH=""
         SKY130_LINK_TARGETS="none"
         SKY130_AUTO="0"
 
@@ -2216,7 +2202,6 @@ if test "${enable_sky130_pdk+set}" = set; then :
 
 fi
 
-	    # # Require this argument
 
         if [ "$SKY130_SOURCE_PATH" != "" ]; then
             SKY130_SOURCE_PATH=`realpath $SKY130_SOURCE_PATH`
@@ -2274,8 +2259,6 @@ fi
             { $as_echo "$as_me:${as_lineno-$LINENO}: Link targets set to $SKY130_LINK_TARGETS" >&5
 $as_echo "$as_me: Link targets set to $SKY130_LINK_TARGETS" >&6;}
         fi
-
-
 
 
 

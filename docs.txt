@@ -140,26 +140,26 @@ How to use open_pdks:
 	make				Generate local staging area
 	sudo make install   		Install onto local system
 
-    Which will install to /usr/local/share/pdks directory.
+    which will install to /usr/share/pdk directory.
 
     Users can also elect to install somewhere by giving ./configure the
     `--prefix` and other similar standard ./configure options.
 
     For example;
 
-	    Installing to /usr/share/pdks;
+	    Installing to /usr/local/share/pdk;
 
-		./configure --prefix=/usr
+		./configure --prefix=/usr/local
 		make
 		sudo make install
 
-	    Installing to /opt/share/pdks;
+	    Installing to /opt/share/pdk;
 
 		./configure --prefix=/opt
 		make
 		sudo make install
 
-	    Installing to ~/pdks;
+	    Installing to ~/pdk;
 
 		./configure --prefix=$HOME --datarootdir=$HOME
 		make
@@ -169,16 +169,16 @@ How to use open_pdks:
     is destined to be installed on other machines should set`--prefix`
     to be the final install location and use `DESTDIR` with
     `make install` to the directory where the files should be staged,
-    see the following example;
+    see the following example:
 
         ./configure --prefix=/usr
 	make
-	# Need to use sudo so the file end up with the right
+	# Need to use sudo so the file ends up with the right
 	# permissions.
 	sudo make DESTDIR=/tmp/package
 	(cd /tmp/package; tar -cvf ../dist.tar)
 
-    Then on the final install machine you would want to do;
+    Then on the final install machine you would want to do:
         (sudo cd /usr; tar -xvf dist.tar)
 
 Prerequisites:

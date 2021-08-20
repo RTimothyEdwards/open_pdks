@@ -171,7 +171,7 @@ EF_STYLE = @EF_STYLE@
 
 STAGING_PATH = $(shell pwd)/build
 
-SHARED_PDKS_PATH = $(datadir)/pdks
+SHARED_PDKS_PATH = $(datadir)/pdk
 
 # If LINK_TARGETS is set to "none", then files are copied
 # from the SkyWater sources to the target.  If set to "source",
@@ -375,7 +375,7 @@ CPP   = ../common/preproc.py
 # copying or linking the foundry vendor files to the target directory.
 STAGE = set -f ; ../common/foundry_install.py ${EF_FORMAT}
 ifneq ($(DESTDIR), )
-INSTALL = ../common/staging_install.py -local $(DESTDIR)
+INSTALL = ../common/staging_install.py -local $(DESTDIR) ${EF_FORMAT}
 else
 INSTALL = ../common/staging_install.py ${EF_FORMAT}
 endif
@@ -1153,11 +1153,11 @@ veryclean-a: clean-a
 	# Legacy name
 	${RM} ${SKY130A}_migrate.log
 
-# Old aliases for compatibility
-# -------------------------------------------------------------------------------------
+# Old aliases (retained for compatibility)
 install-dist:
 	$(warning "'make install-dist' has been replaced with 'make install'")
 	make install
+
 install-local:
 	$(warning "'make install-local' has been replaced with 'make install'")
 	make install
@@ -1165,6 +1165,7 @@ install-local:
 uninstall-dist:
 	$(warning "'make uninstall-dist' has been replaced with 'make uninstall'")
 	make uninstall
+
 uninstall-local:
 	$(warning "'make uninstall-local' has been replaced with 'make uninstall'")
 	make uninstall
@@ -1172,6 +1173,7 @@ uninstall-local:
 install-dist-a:
 	$(warning "'make install-dist-a' has been replaced with 'make install'")
 	make install
+
 install-local-a:
 	$(warning "'make install-local-a' has been replaced with 'make install'")
 	make install
@@ -1179,6 +1181,7 @@ install-local-a:
 uninstall-dist-a:
 	$(warning "'make uninstall-dist-a' has been replaced with 'make uninstall'")
 	make uninstall
+
 uninstall-local-a:
 	$(warning "'make uninstall-local-a' has been replaced with 'make uninstall'")
 	make uninstall
