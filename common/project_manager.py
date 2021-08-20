@@ -3851,6 +3851,7 @@ class ProjectManager(ttk.Frame):
         if value:
             design = value['values'][0] # project path
             pdkdir = self.get_pdk_dir(design, path = True)
+            qflowdir = pdkdir + 'libs.tech/qflow'
             # designname = value['text']
             designname = self.project_name
             development = self.prefs['devstdcells']
@@ -3887,20 +3888,20 @@ class ProjectManager(ttk.Frame):
                 #TODO: replace hard-coded path with function that gets the qflow manager path
                 if development:
                     subprocess.Popen(['/usr/local/share/qflow/scripts/qflow_manager.py',
-				design, '-development', '-subproject=' + pname])
+				qflowdir, design, '-development', '-subproject=' + pname])
                 else:
                     subprocess.Popen(['/usr/local/share/qflow/scripts/qflow_manager.py',
-				design, '-subproject=' + pname])
+				qflowdir, design, '-subproject=' + pname])
             else:
                 print('Synthesize design ' + designname + ' (' + design + ')')
                 print('Loading digital flow manager...')
                 # use Popen, not run, so that application does not wait for it to exit.
                 if development:
                     subprocess.Popen(['/usr/local/share/qflow/scripts/qflow_manager.py',
-				pdkdir, design, designname, '-development'])
+				qflowdir, design, designname, '-development'])
                 else:
                     subprocess.Popen(['/usr/local/share/qflow/scripts/qflow_manager.py',
-                pdkdir, design, designname])
+                qflowdir, design, designname])
         else:
             print("You must first select a project.", file=sys.stderr)
 
