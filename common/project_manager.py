@@ -3851,7 +3851,7 @@ class ProjectManager(ttk.Frame):
         if value:
             design = value['values'][0] # project path
             pdkdir = self.get_pdk_dir(design, path = True)
-            qflowdir = pdkdir + 'libs.tech/qflow'
+            qflowdir = pdkdir + '/libs.tech/qflow'
             # designname = value['text']
             designname = self.project_name
             development = self.prefs['devstdcells']
