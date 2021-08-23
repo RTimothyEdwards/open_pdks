@@ -585,7 +585,6 @@ PACKAGE_STRING='open_pdks 1.0'
 PACKAGE_BUGREPORT='github.com/RTimothyEdwards/open_pdks'
 PACKAGE_URL=''
 
-ac_default_prefix=/usr
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
 EF_STYLE
@@ -1787,7 +1786,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-
+# AC_PREFIX_DEFAULT(/usr)
 
 
 ## REQUIRES: https://www.gnu.org/software/autoconf-archive/ax_python_module.html#ax_python_module
