@@ -629,8 +629,8 @@ qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
 		${QFLOW_STAGING_A}/sky130_fd_sc_ls.sh
 	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ms qflow/${TECH}.sh \
 		${QFLOW_STAGING_A}/sky130_fd_sc_ms.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_t18 qflow/sky130_osu_sc_t18.sh \
-		${QFLOW_STAGING_A}/${SKY130A}osu.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_t18 qflow/sky130osu.sh \
+		${QFLOW_STAGING_A}/sky130_osu_sc_t18.sh
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hd.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hdll.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hvl.par
