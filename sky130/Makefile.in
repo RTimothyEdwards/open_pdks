@@ -599,22 +599,22 @@ magic-a: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${
 qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
 	mkdir -p ${QFLOWTOP_STAGING_A}
 	mkdir -p ${QFLOW_STAGING_A}
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}hd.sh
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}hd.par
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}hdll.sh
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}hdll.par
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}hs.sh
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}hs.par
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}hvl.sh
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}hvl.par
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}ls.sh
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}ls.par
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}lp.sh
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}lp.par
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}ms.sh
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}ms.par
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}osu.sh
-	rm -f ${QFLOW_STAGING_A}/${SKY130A}osu.par
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_hd.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_hd.par
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_hdll.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_hdll.par
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_hs.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_hs.par
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_hvl.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_hvl.par
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_ls.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_ls.par
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_lp.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_lp.par
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_ms.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_ms.par
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_t18.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_t18.par
 	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hd qflow/${TECH}.sh \
 		${QFLOW_STAGING_A}/sky130_fd_sc_hd.sh
 	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hdll qflow/${TECH}.sh \
@@ -631,14 +631,14 @@ qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
 		${QFLOW_STAGING_A}/sky130_fd_sc_ms.sh
 	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_t18 qflow/sky130osu.sh \
 		${QFLOW_STAGING_A}/sky130_osu_sc_t18.sh
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hd.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hdll.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hvl.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}hs.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}ms.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}lp.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}ls.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/${SKY130A}osu.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_hd.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_hdll.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_hvl.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_hs.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_ms.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/$sky130_fd_sc_lp.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_ls.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_osu_sc_t18.par
 
 netgen-a: netgen/${TECH}_setup.tcl
 	mkdir -p ${NETGENTOP_STAGING_A}
