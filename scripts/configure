@@ -1917,7 +1917,9 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
 $as_echo "$am_cv_python_version" >&6; }
   PYTHON_VERSION=$am_cv_python_version
-
+  if (( $(echo "$PYTHON_VERSION > 3" |bc -l) )); then
+    pip3 install natsort
+  fi
 
 
   PYTHON_PREFIX='${prefix}'

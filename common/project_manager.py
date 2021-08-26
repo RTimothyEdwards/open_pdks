@@ -1,4 +1,4 @@
-#!/usr/bin/env python3 -B
+#!/usr/bin/env -S python3 -B
 #
 #--------------------------------------------------------
 # Open Galaxy Project Manager GUI.
