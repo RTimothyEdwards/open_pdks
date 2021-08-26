@@ -132,7 +132,7 @@ set ::env(VIAS_RC) "\
     via4 0.00580E-3"
 
 # Layer RC Values
-set ::env(LAYERS_RC)"\
+set ::env(LAYERS_RC) "\
 	li1 1.499e-04 7.176e-02,\
 	met1 1.449e-04 8.929e-04,\
 	met2 1.331e-04 8.929e-04,\
