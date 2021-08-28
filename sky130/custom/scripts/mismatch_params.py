@@ -12,10 +12,21 @@ import sys
 
 mm_switch_param = 'MC_MM_SWITCH'
 
+options = []
+arguments = []
+for item in sys.argv[1:]:
+    if item.find('-', 0) == 0:
+        options.append(item[1:])
+    else:
+        arguments.append(item)
+
 walkpath = 'sky130A/libs.ref/sky130_fd_pr/spice'
 
-if len(sys.argv) > 1:
-    walkpath = sys.argv[1]
+if len(options) > 0:
+    if options[0] == 'ef_format':
+        walkpath = 'sky130A/libs.ref/spi/sky130_fd_pr'
+elif len(arguments) > 0:
+    walkpath = arguments[0]
 
 mismatch_params = []
 

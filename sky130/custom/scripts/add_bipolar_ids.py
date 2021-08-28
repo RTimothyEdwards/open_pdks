@@ -11,10 +11,20 @@ import os
 import re
 import sys
 
-magpath = 'sky130A/libs.ref/sky130_fd_pr/mag'
+options = []
+arguments = []
+for item in sys.argv[1:]:
+    if item.find('-', 0) == 0:
+        options.append(item[1:])
+    else:
+        arguments.append(item)
 
-if len(sys.argv) > 1:
-    magpath = sys.argv[1]
+magpath = 'sky130A/libs.ref/sky130_fd_pr/mag'
+if len(options) > 0:
+    if options[0] == 'ef_format':
+        magpath = 'sky130A/libs.ref/mag/sky130_fd_pr'
+elif len(arguments) > 0:
+    magpath = arguments[0]
 
 baserex = re.compile('<< [np]base >>')
 

@@ -818,7 +818,7 @@ primitive-a:
 	# Install device subcircuits from vendor files
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-ngspice sky130_fd_pr/latest/models/* \
-		filter=custom/scripts/rename_models.py \
+		filter=custom/scripts/rename_models.py ${EF_FORMAT} \
 		2>&1 | tee -a ${SKY130A}_make.log
 	# Install device layouts from custom sources
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
@@ -867,12 +867,12 @@ primitive-a:
 	tail -39 ${STAGING_PATH}/${SKY130A}/libs.ref/${PR_SPICE}/sky130_fd_pr__pnp_05v5_W3p40L3p40.model.spice >> ${STAGING_PATH}/${SKY130A}/libs.ref/${PR_SPICE}/temp
 	mv ${STAGING_PATH}/${SKY130A}/libs.ref/${PR_SPICE}/temp  ${STAGING_PATH}/${SKY130A}/libs.ref/${PR_SPICE}/sky130_fd_pr__pnp_05v5_W3p40L3p40.model.spice
 	# Custom:  Add the PNP 3.4x3.4um device model to the includes in "all.spice"
-	./custom/scripts/fix_spice_includes.py \
+	./custom/scripts/fix_spice_includes.py ${EF_FORMAT} \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/all.spice \
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Parse the (commented out) statistics blocks and generate
 	# ngspice-compatible monte carlo parameters for mismatch and process
-	./custom/scripts/mismatch_params.py \
+	./custom/scripts/mismatch_params.py ${EF_FORMAT} \
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	./custom/scripts/mismatch_params.py \
 		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice \
@@ -903,7 +903,7 @@ primitive-a:
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Add special device ID layers to bipolar layouts in magic
 	# to make the extraction models correct.
-	./custom/scripts/add_bipolar_ids.py \
+	./custom/scripts/add_bipolar_ids.py ${EF_FORMAT} \
 		2>&1 | tee -a ${SKY130A}_make.log || true
 
 	# Custom:  Add "spinit" file

@@ -15,12 +15,25 @@ import sys
 newdevs = []
 newdevs.append('sky130_fd_pr__pnp_05v5_W3p40L3p40')
 
-if len(sys.argv) <= 1:
-    print('Usage: fix_spice_includes.py <path_to_file>')
+options = []
+arguments = []
+for item in sys.argv[1:]:
+    if item.find('-', 0) == 0:
+        options.append(item[1:])
+    else:
+        arguments.append(item)
+
+if len(arguments) < 1:
+    print('Usage: fix_spice_includes.py <path_to_file> [-ef_format]')
     sys.exit(1)
 
 else:
-    infile_name = sys.argv[1]
+    infile_name = arguments[0]
+
+    libpath = 'sky130_fd_pr/spice/'
+    if len(options) > 0:
+        if options[0] == 'ef_format':
+            libpath = 'spi/sky130_fd_pr/'
 
     filepath = os.path.split(infile_name)[0]
     outfile_name = os.path.join(filepath, 'temp')
@@ -36,7 +49,7 @@ else:
         if 'pnp_05v5' in line:
             # Insert these additional lines
             for newdev in newdevs:
-                newline = '.include "../../libs.ref/sky130_fd_pr/spice/' + newdev + '.model.spice"\n'
+                newline = '.include "../../libs.ref/' + libpath + newdev + '.model.spice"\n'
                 outfile.write(newline)
             replaced_something = True
 

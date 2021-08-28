@@ -14,7 +14,12 @@ import re
 import os
 import sys
 
-def filter(inname, outname):
+def filter(inname, outname, ef_format = True):
+
+    if ef_format:
+        libpath = 'spi/sky130_fd_pr/'
+    else:
+        libpath = 'sky130_fd_pr/spice/'
 
     # Read input
     try:
@@ -33,7 +38,7 @@ def filter(inname, outname):
     for line in spilines:
 
         # Fix: Replace "../cells/<name>/" with "../../libs.ref/sky130_fd_pr/spice/"
-        fixedline = re.sub('\.\./cells/[^/]+/', '../../libs.ref/sky130_fd_pr/spice/', line)
+        fixedline = re.sub('\.\./cells/[^/]+/', '../../libs.ref/' + libpath, line)
 
         # This subsitution makes SPICE files compatible with Xyce without
         # breaking ngspice compatibility ('$' comments changed to ';')
@@ -82,11 +87,19 @@ if __name__ == '__main__':
 
     if len(arguments) > 0:
         infilename = arguments[0]
+    else:
+        print('Usage: rename_models.py <filename> [<outfilename>] [-ef_format]')
+        sys.exit(1)
 
     if len(arguments) > 1:
         outfilename = arguments[1]
     else:
         outfilename = None
 
-    result = filter(infilename, outfilename)
+    ef_format = False
+    if len(options) > 0:
+        if options[0] == 'ef_format':
+            ef_format = True
+
+    result = filter(infilename, outfilename, ef_format)
     sys.exit(result)
