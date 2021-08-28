@@ -101,25 +101,17 @@ common_install:
 		cp runtime/compare_dirs.py @datadir@/pdk/scripts/ ;\
 		cp runtime/config.py @datadir@/pdk/scripts/ ;\
 		cp runtime/consoletext.py @datadir@/pdk/scripts/ ;\
-		cp runtime/create_gds_library.py @datadir@/pdk/scripts/ ;\
-		cp runtime/create_lef_library.py @datadir@/pdk/scripts/ ;\
-		cp runtime/create_lib_library.py @datadir@/pdk/scripts/ ;\
 		${CPP} -DPREFIX=@datadir@ runtime/create_project.py \
 			@datadir@/pdk/scripts/create_project.py ;\
-		cp runtime/create_spice_library.py @datadir@/pdk/scripts/ ;\
-		cp runtime/create_verilog_library.py @datadir@/pdk/scripts/ ;\
 		cp runtime/editparam.py @datadir@/pdk/scripts/ ;\
 		cp runtime/failreport.py @datadir@/pdk/scripts/ ;\
 		cp runtime/find_all_devices.py @datadir@/pdk/scripts/ ;\
 		cp runtime/find_gds_prefix.py @datadir@/pdk/scripts/ ;\
 		cp runtime/fix_subckt_params.py @datadir@/pdk/scripts/ ;\
 		cp runtime/fixspice.py @datadir@/pdk/scripts/ ;\
-		cp runtime/foundry_install.py @datadir@/pdk/scripts/ ;\
 		cp runtime/foundry_nodes.py @datadir@/pdk/scripts/ ;\
-		cp runtime/gate_list.txt @datadir@/pdk/scripts/ ;\
 		cp runtime/get_gds_date.py @datadir@/pdk/scripts/ ;\
 		cp runtime/helpwindow.py @datadir@/pdk/scripts/ ;\
-		cp runtime/insert_property.py @datadir@/pdk/scripts/ ;\
 		cp runtime/listboxchoice.py @datadir@/pdk/scripts/ ;\
 		cp runtime/lvs_help.txt @datadir@/pdk/scripts/ ;\
 		cp runtime/make_icon_from_soft.py @datadir@/pdk/scripts/ ;\
@@ -127,7 +119,6 @@ common_install:
 		cp runtime/manager_help.txt @datadir@/pdk/scripts/ ;\
 		cp runtime/netlist_to_layout.py @datadir@/pdk/scripts/ ;\
 		cp runtime/padframe_generator.py @datadir@/pdk/scripts/ ;\
-		cp runtime/preproc.py @datadir@/pdk/scripts/ ;\
 		cp runtime/print_subckt_params.py @datadir@/pdk/scripts/ ;\
 		cp runtime/profile.py @datadir@/pdk/scripts/ ;\
 		${CPP} -DPREFIX=@datadir@ runtime/project_manager.py \
@@ -144,7 +135,6 @@ common_install:
 		cp runtime/split_gds.py @datadir@/pdk/scripts/ ;\
 		cp runtime/split_one_spice.py @datadir@/pdk/scripts/ ;\
 		cp runtime/split_spice.py @datadir@/pdk/scripts/ ;\
-		cp runtime/staging_install.py @datadir@/pdk/scripts/ ;\
 		cp runtime/symbolbuilder.py @datadir@/pdk/scripts/ ;\
 		cp runtime/tksimpledialog.py @datadir@/pdk/scripts/ ;\
 		cp runtime/tooltip.py @datadir@/pdk/scripts/ ;\
