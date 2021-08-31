@@ -5,6 +5,7 @@
 # This script renames include paths from SPICE files in the cells
 # (libs.ref/sky130_fd_pr) directory that point to other cells
 # directories, to point to the correct location in libs.ref/sky130_fd_pr/spice/
+# (or libs.ref/spi/sky130_fd_pr, if -ef_format is specified).
 #
 #
 # This script is a filter to be run by setting the name of this script as

@@ -320,7 +320,7 @@ def vfilter(targetroot):
 # script using the "filter" option.
 #----------------------------------------------------------------------------
 
-def tfilter(targetroot, filterscript, outfile=[]):
+def tfilter(targetroot, filterscript, ef_format=False, outfile=[]):
     filterroot = os.path.split(filterscript)[1]
     if os.path.isfile(targetroot):
         print('   Filtering file ' + targetroot + ' with ' + filterroot)
@@ -331,7 +331,12 @@ def tfilter(targetroot, filterscript, outfile=[]):
             # Make sure this file is writable (as the original may not be)
             makeuserwritable(outfile)
 
-        fproc = subprocess.run([filterscript, targetroot, outfile],
+        if ef_format:
+            arguments = [filterscript, targetroot, outfile, '-ef_format']
+        else:
+            arguments = [filterscript, targetroot, outfile]
+
+        fproc = subprocess.run(arguments,
 			stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
 			stderr = subprocess.PIPE, universal_newlines = True)
         if fproc.stdout:
@@ -570,7 +575,7 @@ if __name__ == '__main__':
 
                     for filter_script in filter_scripts:
                         # Apply filter script to all files in the target directory
-                        tfilter(targname, filter_script)
+                        tfilter(targname, filter_script, ef_format)
 
                 optionlist.remove(option)
 
@@ -632,7 +637,7 @@ if __name__ == '__main__':
 
                             for filter_script in filter_scripts:
                                 # Apply filter script to all files in the target directory
-                                tfilter(subtargname, filter_script)
+                                tfilter(subtargname, filter_script, ef_format)
 
                     else:
                         # Remove any existing file
@@ -648,7 +653,7 @@ if __name__ == '__main__':
 
                         for filter_script in filter_scripts:
                             # Apply filter script to all files in the target directory
-                            tfilter(targname, filter_script)
+                            tfilter(targname, filter_script, ef_format)
 
                 optionlist.remove(option)
 
@@ -899,7 +904,7 @@ if __name__ == '__main__':
 
                 for filter_script in local_filter_scripts:
                     # Apply filter script to all files in the target directory
-                    tfilter(targname, filter_script)
+                    tfilter(targname, filter_script, ef_format)
 
                 destfilelist.append(os.path.split(targname)[1])
 
