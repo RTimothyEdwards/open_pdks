@@ -45,6 +45,7 @@ set stdcell_macro {
 	    $::env(FP_PDN_LOWER_LAYER) {width $::env(FP_PDN_VWIDTH) pitch $::env(FP_PDN_VPITCH) offset $::env(FP_PDN_VOFFSET)}
     }
     connect {}
+    pins { $::env(FP_PDN_LOWER_LAYER) }
 }
 
 # Assesses whether the deisgn is the core of the chip or not based on the value of $::env(DESIGN_IS_CORE) and uses the appropriate stdcell section
@@ -105,3 +106,4 @@ set ::rails_start_with "POWER" ;
 
 # POWER or GROUND #Upper metal stripes starting with power or ground rails at the left/bottom of the core area
 set ::stripes_start_with "POWER" ;
+
