@@ -701,7 +701,7 @@ xschem-a: ${XSCHEM_PATH}
 		${SED} -e "/SKYWATER_STDCELLS/s#~/pdks/sky130A/libs.ref/sky130_fd_sc_hd/spice#${STAGING_PATH}/${SKY130A}/libs.ref/${HD_SPICE}#" \
 		> ${XSCHEM_STAGING_A}/xschemrc
 		
-openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
+openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/rcx_rules.info openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_A}
 	mkdir -p ${OPENLANE_STAGING_A}
 	rm -rf ${OPENLANE_STAGING_A}/custom_cells/*
@@ -739,6 +739,7 @@ openlane-a: openlane/common_pdn.tcl openlane/config.tcl openlane/sky130_fd_sc_hd
 	cp -r openlane/custom_cells ${OPENLANE_STAGING_A}
 	${CPP} ${SKY130A_DEFS} openlane/common_pdn.tcl ${OPENLANE_STAGING_A}/common_pdn.tcl
 	${CPP} ${SKY130A_DEFS} openlane/config.tcl ${OPENLANE_STAGING_A}/config.tcl
+	${CPP} ${SKY130A_DEFS} openlane/rcx_rules.info ${OPENLANE_STAGING_A}/rcx_rules.info
 
 	for file in ${OPENLANE_COMMON} ; do \
 	    ${CPP} -quiet ${SKY130A_DEFS} openlane/sky130_fd_sc_hd/$$file \
