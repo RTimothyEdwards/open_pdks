@@ -82,55 +82,58 @@ distclean: $(TECHS_VERYCLEAN)
 
 CPP = common/preproc.py
 
+prefix = @prefix@
+datarootdir = @datarootdir@
+datadir = @datadir@
+
 common_install:
-	@if test -w @datadir@ ; then \
-		mkdir -p @datadir@/pdk/scripts/ ;\
-		cp runtime/cace.py @datadir@/pdk/scripts/ ;\
-		cp runtime/cace_datasheet_upload.py @datadir@/pdk/scripts/ ;\
-		cp runtime/cace_design_upload.py @datadir@/pdk/scripts/ ;\
-		cp runtime/cace_gensim.py @datadir@/pdk/scripts/ ;\
-		cp runtime/cace_launch.py @datadir@/pdk/scripts/ ;\
-		cp runtime/cace_makeplot.py @datadir@/pdk/scripts/ ;\
-		cp runtime/cdl2spi.py @datadir@/pdk/scripts/ ;\
-		cp runtime/change_gds_cell.py @datadir@/pdk/scripts/ ;\
-		cp runtime/change_gds_date.py @datadir@/pdk/scripts/ ;\
-		cp runtime/change_gds_string.py @datadir@/pdk/scripts/ ;\
-		cp runtime/changepath.py @datadir@/pdk/scripts/ ;\
-		cp runtime/characterize_help.txt @datadir@/pdk/scripts/ ;\
-		cp runtime/cleanup_unref.py @datadir@/pdk/scripts/ ;\
-		cp runtime/config.py @datadir@/pdk/scripts/ ;\
-		cp runtime/consoletext.py @datadir@/pdk/scripts/ ;\
-		${CPP} -DPREFIX=@datadir@ runtime/create_project.py \
-			@datadir@/pdk/scripts/create_project.py ;\
-		cp runtime/editparam.py @datadir@/pdk/scripts/ ;\
-		cp runtime/failreport.py @datadir@/pdk/scripts/ ;\
-		cp runtime/find_gds_prefix.py @datadir@/pdk/scripts/ ;\
-		cp runtime/foundry_nodes.py @datadir@/pdk/scripts/ ;\
-		cp runtime/helpwindow.py @datadir@/pdk/scripts/ ;\
-		cp runtime/listboxchoice.py @datadir@/pdk/scripts/ ;\
-		cp runtime/lvs_help.txt @datadir@/pdk/scripts/ ;\
-		cp runtime/make_icon_from_soft.py @datadir@/pdk/scripts/ ;\
-		cp runtime/makestub.py @datadir@/pdk/scripts/ ;\
-		cp runtime/manager_help.txt @datadir@/pdk/scripts/ ;\
-		cp runtime/netlist_to_layout.py @datadir@/pdk/scripts/ ;\
-		cp runtime/padframe_generator.py @datadir@/pdk/scripts/ ;\
-		cp runtime/profile.py @datadir@/pdk/scripts/ ;\
-		${CPP} -DPREFIX=@datadir@ runtime/project_manager.py \
-			@datadir@/pdk/scripts/project_manager.py ;\
-		cp runtime/qflow_help.txt @datadir@/pdk/scripts/ ;\
-		cp runtime/rename_project.py @datadir@/pdk/scripts/ ;\
-		cp runtime/requirements.txt @datadir@/pdk/scripts/ ;\
-		cp runtime/settings.py @datadir@/pdk/scripts/ ;\
-		cp runtime/simhints.py @datadir@/pdk/scripts/ ;\
-		cp runtime/soc_floorplanner.py @datadir@/pdk/scripts/ ;\
-		cp runtime/symbolbuilder.py @datadir@/pdk/scripts/ ;\
-		cp runtime/tksimpledialog.py @datadir@/pdk/scripts/ ;\
-		cp runtime/tooltip.py @datadir@/pdk/scripts/ ;\
-		cp runtime/treeviewchoice.py @datadir@/pdk/scripts/ ;\
-		cp runtime/treeviewsplit.py @datadir@/pdk/scripts/ ;\
+	@if test -w $(datadir) ; then \
+		mkdir -p $(datadir)/pdk/scripts/ ;\
+		cp runtime/cace.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/cace_datasheet_upload.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/cace_design_upload.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/cace_gensim.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/cace_launch.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/cace_makeplot.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/cdl2spi.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/change_gds_cell.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/change_gds_date.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/change_gds_string.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/changepath.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/characterize_help.txt $(datadir)/pdk/scripts/ ;\
+		cp runtime/cleanup_unref.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/config.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/consoletext.py $(datadir)/pdk/scripts/ ;\
+		${CPP} -DPREFIX=$(datadir) runtime/create_project.py \
+			$(datadir)/pdk/scripts/create_project.py ;\
+		cp runtime/editparam.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/failreport.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/find_gds_prefix.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/foundry_nodes.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/helpwindow.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/listboxchoice.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/lvs_help.txt $(datadir)/pdk/scripts/ ;\
+		cp runtime/make_icon_from_soft.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/makestub.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/manager_help.txt $(datadir)/pdk/scripts/ ;\
+		cp runtime/netlist_to_layout.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/padframe_generator.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/profile.py $(datadir)/pdk/scripts/ ;\
+		${CPP} -DPREFIX=$(datadir) runtime/project_manager.py \
+			$(datadir)/pdk/scripts/project_manager.py ;\
+		cp runtime/qflow_help.txt $(datadir)/pdk/scripts/ ;\
+		cp runtime/rename_project.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/settings.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/simhints.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/soc_floorplanner.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/symbolbuilder.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/tksimpledialog.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/tooltip.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/treeviewchoice.py $(datadir)/pdk/scripts/ ;\
+		cp runtime/treeviewsplit.py $(datadir)/pdk/scripts/ ;\
 		echo "Common install:  Done." ;\
 	else \
-		echo "Common install:  @datadir@ is not writeable (ignoring)." ;\
+		echo "Common install:  $(datadir) is not writeable (ignoring)." ;\
 	fi
 	
 #---------------------------------------------------
