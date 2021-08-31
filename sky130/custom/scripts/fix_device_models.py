@@ -57,7 +57,8 @@ def filter(inname, outname):
             fixedlines.append(fline)
             modified = True
         elif smatch:
-            fline = re.sub('short', 'sky130_fd_pr__res_generic_po', line)
+            fline = re.sub(' VNB short', ' sky130_fd_pr__res_generic_po', line)
+            fline = re.sub('short', 'sky130_fd_pr__res_generic_po', fline)
             fline = re.sub('^X', 'R', fline)
             fixedlines.append(fline)
             modified = True
