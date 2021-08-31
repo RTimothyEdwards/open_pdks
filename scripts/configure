@@ -1918,8 +1918,6 @@ fi
 $as_echo "$am_cv_python_version" >&6; }
   PYTHON_VERSION=$am_cv_python_version
 
-
-
   PYTHON_PREFIX='${prefix}'
 
   PYTHON_EXEC_PREFIX='${exec_prefix}'

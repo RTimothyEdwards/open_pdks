@@ -1,4 +1,4 @@
-#!/usr/bin/env python3 -B
+#!/usr/bin/env -S python3 -B
 #
 # rename_project.py ---  Perform all tasks required for renaming a project.
 #

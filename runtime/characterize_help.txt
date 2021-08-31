@@ -1,0 +1,60 @@
+1.
+Selecting a datasheet
+-------
+Start by selecting a datasheet.  This step is only necessary if the application is started from the command line.  If started from the project manager, then it can only be run if a datasheet exists for the project, in which case that datasheet is automatically loaded.
+
+If running from the command line, there is a button at the top with the text 'Datasheet:' and '(no selection)'. Push this button to get a file browser.  Find a project datasheet, which is a JSON (.json) file.  A challenge datasheet should be found in the design folder for each accepted challenge.  The project design folders are in the 'design' subfolder in the user's home directory.  The challenge datasheet has the name of the project and the file extension '.json'.
+
+When the JSON file is selected, a full display should be shown with each electrical parameter critical to the challenge, and its status.
+.
+2.
+Characterization
+------------
+The purpose of the characterization tool is to check the netlist against the official characterization specification for a challenge.  The tool allows a quick check of the circuit design against the datasheet values, and presents a summary of results to the user.  The purpose of these simulations is to see whether or not the design will pass or fail the challenge.  Details from these simulations are limited to the characterization values.  They are not intended to replace the simulations done in the normal course of a circuit design.
+
+The list of electrical parameters will vary by challenge.  However, each electrical paramater has a common set of properties that are listed in columns across the window.  These are:
+
+(1) "Electrical Parameter" --- The name of the electrical parameter.
+(2) "Method" --- The method corresponds to a netlist filename with the same name as the method and the extension ".spi" (SPICE netlist) that can be found in the "testbench" folder of the project, a folder whose contents are imported along with the challenge.  The testbench netlists are in a special format that allows them to be altered by substitution for a specific challenge measurement.  Any user changes to these testbench files risks making the files unusable or invalidating the simulation result.
+(3) "Min" --- The minimum limit (if any) of the electrical parameter.  After simulation, also shows the measured result of the circuit.
+(4) "Typ" --- The typical value (if any) of the electrical parameter.  After simulation, also shows the measured result of the circuit.
+(5) "Max" --- The maximum limit (if any) of the electrical parameter.  After simulation, also shows the measured result of the circuit.
+(6) "Status" --- Is one of "(not simulated)" if the circuit has not yet been simulated, "(in progress)" if the simulation is ongoing;  "pass" if the circuit has been simulated and passed the specification for the eletrical parameter, and "fail" if it failed the specification.   If the status is "pass" or "fail", this entry is a button that can be pressed to see a detailed view of the results.
+(7) "Simulate" --- This is a button that will initiate an ngspice simulation of the electrical parameter.
+
+At the bottom of the window is a space for program messages, warnings, and errors.  Below that is a button bar with the following buttons:
+
+"Quit" --- Quits the characterization tool.  If new results have been simulated but not saved, the user will have to respond to a prompt.
+
+"Save" --- Saves the current characterization results.  These results will be loaded the next time the characterization tool is run, unless there is a design netlist newer than the saved results.
+
+"Help" --- Activates this help window.
+
+"Submit" --- Lets the user submit the design to the Marketplace for characterization.  If any parameters have not been simulated, or if there are simulation failures, then the user is prompted for a response and strongly warned against submitting.
+
+2.1
+Generating a netlist
+-------
+Design your project schematic in Electric and generate a netlist.  See the project manager help text and the Electric user manual for details.  The netlist is generated from the Electric menu "Tools"->"Simulation (Spice)"->"Write CDL Deck".
+
+2.2
+Simulation
+-------
+To simulate a single electrical parameter, click the 'Simulate' button for each electrical parameter.  This will combine the design netlist with a testbench and simulate using ngspice.  While ngspice is running, 
+
+2.3
+Results
+--------
+Every electrical parameter is specified over a range of conditions.  This results in a series of simulations, usually one simulation run per unique set of conditions.  Each simulation typically provides one result value, and the set of all values from all simulated conditions is used to find the minimum, typical, and maximum results that are printed on the main characterization page.
+
+When an electrical parameter has finished simulating, clicking on the "Status" entry will generate a window showing details of the simulation.  The window has one line per unique set of conditions simulated.  For each line, the result value is given in the leftmost column.  The remaining columns show each variable condition, and the value it had for the given simulation.  The top of the column shows the range of values for the given parameter.  This graph allows the user to quickly determine what are the conditions under which a circuit may be failing, and the degree to which the value is out of range of the specification.  Rows in which the result is outside of the specified limit are shown in red.
+
+In the results window, click on the title 'Results' to change the view from having results ordered highest to lowest, to lowest to highest.
+
+2.4
+Challenge Submission
+--------
+When all electrical parameters have a status of 'Pass' or 'Done', then the design may be submitted to the efabless marketplace with the 'Submit' button.  The 'Submit' will happen without further prompt if the circuit has been simulated and all electrical parameters have passed.  If simulations are missing, or if simulations have failed, this will not prevent a submission, but the user will be prompted for confirmation and given a warning about the missing or failed simulations.
+
+Once a design is submitted, the 'Submit' button is replaced with a 'Cancel' button, allowing the submission to be canceled at any time prior to completion.  The characterization simulations are done on a remote server, but the designer can keep track of the progress on a progress bar shown at the bottom of the window.  Once the characterization is complete, the progress bar is removed and the button returns to being a 'Submit' button.  At that point, the designer can go to the efabless website and click on 'CACE results'.  The characterization results are in a list, and can be identified by project name and simulation date and time.  Click on the 'Details' button next to each one to view the datasheet values, which should match those from the local simulations.
+.

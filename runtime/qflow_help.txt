@@ -1,0 +1,5 @@
+1.
+Selecting a project
+-------
+Start by selecting a project.  This step is only necessary if the application is started from the command line.  If started from the project manager, then it can only be run if a project was selected.
+.
