@@ -32,7 +32,7 @@ def filter(inname, outname):
 
     dioderex = re.compile('.*[ \t]+sky130_fd_pr__diode_pw2nd[ \t]+')
     ndioderex = re.compile('.*[ \t]+ndiode_h[ \t]+')
-    shortrex = re.compile('.*[ \t]+short[ \t]+')
+    shortrex = re.compile('(.*[ \t]+)(\S+)([ \t]+short[ \t]+.*)')
 
     for line in slines:
 
@@ -57,8 +57,9 @@ def filter(inname, outname):
             fixedlines.append(fline)
             modified = True
         elif smatch:
-            fline = re.sub('short', 'sky130_fd_pr__res_generic_po', line)
-            fline = re.sub('^X', 'R', fline)
+            fline = ( re.sub('^X', 'R', smatch.group(1)) 
+                    + re.sub('short', 'sky130_fd_pr__res_generic_po', smatch.group(3)) 
+                    + " $SUB=" + smatch.group(2) )
             fixedlines.append(fline)
             modified = True
         else:
