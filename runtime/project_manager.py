@@ -274,7 +274,7 @@ class NewProjectDialog(tksimpledialog.Dialog):
         # TODO: stop hardwired default EFXH035B: get from an overall flow /ef/tech/.ef-config/plist.json
         # (or get it from the currently selected project)
         #EFABLESS PLATFORM
-        for pdkdir_lr in glob.glob('PREFIX'+'/*/libs.tech/'):
+        for pdkdir_lr in glob.glob('PREFIX/*/libs.tech/'):
             pdkdir = os.path.split( os.path.split( pdkdir_lr )[0])[0]    # discard final .../libs.tech/
             (foundry, foundry_name, node, desc, status) = ProjectManager.pdkdir2fnd( pdkdir )
             if not foundry or not node:

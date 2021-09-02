@@ -16,8 +16,7 @@
 #
 import configparser
 #TODO: replace path with PREFIX
-apps_path="/usr/share/pdk/bin"
-#apps_path="PREFIX/pdk/bin"
+apps_path="PREFIX/pdk/bin"
 
 config = configparser.ConfigParser(strict=False, allow_no_value=True)
 try:
