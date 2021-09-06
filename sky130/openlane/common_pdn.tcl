@@ -27,6 +27,8 @@ if { [info exists ::env(FP_PDN_ENABLE_GLOBAL_CONNECTIONS)] } {
     }
 }
 
+set pdngen::voltage_domains { CORE { primary_power VPWR primary_ground VGND } } 
+
 # Used if the design is the core of the chip
 set stdcell_core {
     name grid
