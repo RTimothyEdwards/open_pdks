@@ -787,8 +787,32 @@ vendor-a:
 	# assumes that the same library version is used for all libraries, which
 	# is fine with "latest" but otherwise probably invalid.
 	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_hd/latest/cells ; then \
-		echo "Building digital standard cell libraries" ;\
-		make digital-a ;\
+		echo "Building digital high-density standard cell library" ;\
+		make digital-hd-a ;\
+	fi
+	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_hvl/latest/cells ; then \
+		echo "Building digital high-voltage standard cell library" ;\
+		make digital-hvl-a ;\
+	fi
+	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_hdll/latest/cells ; then \
+		echo "Building digital high-density low-leakage standard cell library" ;\
+		make digital-hdll-a ;\
+	fi
+	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_lp/latest/cells ; then \
+		echo "Building digital low-power standard cell library" ;\
+		make digital-lp-a ;\
+	fi
+	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_hs/latest/cells ; then \
+		echo "Building digital high-speed standard cell library" ;\
+		make digital-hs-a ;\
+	fi
+	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_ms/latest/cells ; then \
+		echo "Building digital medium-speed standard cell library" ;\
+		make digital-ms-a ;\
+	fi
+	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_ls/latest/cells ; then \
+		echo "Building digital low-speed standard cell library" ;\
+		make digital-ls-a ;\
 	fi
 	if test "x${ALPHA_PATH}" != "x" ; then \
 		echo "Building alphanumeric layout libraries" ;\
@@ -945,7 +969,7 @@ io-a:
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io__top_gpiov2 \
 		"MASKHINTS_HVI 1346 17198 5828 19224 13700 1890 15920 2360 24 17522 1778 20612" -mag
 
-digital-a:
+digital-hd-a:
 	# Install custom additions to standard cell libraries
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
@@ -974,39 +998,88 @@ digital-a:
 		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
-		-library digital sky130_fd_sc_hd \
-		-library digital sky130_fd_sc_hdll \
-		-library digital sky130_fd_sc_hvl \
-		-library digital sky130_fd_sc_hs \
-		-library digital sky130_fd_sc_ls \
-		-library digital sky130_fd_sc_ms \
-		-library digital sky130_fd_sc_lp 2>&1 | tee -a ${SKY130A}_make.log
-	# Add a maskhint set for the tap cell .ag view to prevent problems writing
+		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130A}_make.log
+	# Add a maskhint set for the tap cell .mag view to prevent problems writing
 	# when writing NSDM and PSDM to GDS during hierarchical adjustments.
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_sc_hd sky130_fd_sc_hd__tapvpwrvgnd_1 \
 		"MASKHINTS_PSDM 0 38 92 196" -mag
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_sc_hd sky130_fd_sc_hd__tapvpwrvgnd_1 \
 		"MASKHINTS_NSDM 0 280 92 506" -mag
+	# Remove the base verilog files which have already been included into
+	# the libraries
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${HD_VERILOG}/*.*.v
+	# Apply extra PDK patches until they get fixed properly in the source
+	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HD_TECHLEF} \
+		< custom/patches/hd_minenclosed.squeaky.patch \
+		2>&1 | tee -a ${SKY130A}_make.log || true
+
+digital-hdll-a:
+	# Install all SkyWater digital standard cells.
+	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef %l/latest/tech/*.tlef \
+		-spice %l/latest/cells/*/*.spice compile-only \
+			sort=../common/sort_pdkfiles.py \
+			filter=custom/scripts/fix_device_models.py \
+		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+			sort=../common/sort_pdkfiles.py \
+		-lef %l/latest/cells/*/*.magic.lef compile-only \
+			sort=../common/sort_pdkfiles.py \
+		-doc %l/latest/cells/*/*.pdf \
+		-lib %l/latest/timing/*.lib \
+		-gds %l/latest/cells/*/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+			sort=../common/sort_pdkfiles.py \
+		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+			rename=primitives filter=custom/scripts/inc_verilog.py \
+			sort=../common/sort_pdkfiles.py \
+		-verilog %l/latest/cells/*/*.*.v \
+		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
+			compile-only filter=custom/scripts/inc_verilog.py \
+			sort=../common/sort_pdkfiles.py \
+		-library digital sky130_fd_sc_hdll 2>&1 | tee -a ${SKY130A}_make.log
+	# Remove the base verilog files which have already been included into
+	# the libraries
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${HDLL_VERILOG}/*.*.v
+	# Apply extra PDK patches until they get fixed properly in the source
+	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HDLL_TECHLEF} \
+		< custom/patches/hdll_minenclosed.squeaky.patch \
+		2>&1 | tee -a ${SKY130A}_make.log || true
+
+digital-hvl-a:
+	# Install custom additions to standard cell libraries
+	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
+		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
+		-library digital sky130_fd_sc_hvl 2>&1 | tee -a ${SKY130A}_make.log
+	# Install all SkyWater digital standard cells.
+	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef %l/latest/tech/*.tlef \
+		-spice %l/latest/cells/*/*.spice compile-only \
+			sort=../common/sort_pdkfiles.py \
+			filter=custom/scripts/fix_device_models.py \
+		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+			sort=../common/sort_pdkfiles.py \
+		-lef %l/latest/cells/*/*.magic.lef compile-only \
+			sort=../common/sort_pdkfiles.py \
+		-doc %l/latest/cells/*/*.pdf \
+		-lib %l/latest/timing/*.lib \
+		-gds %l/latest/cells/*/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+			sort=../common/sort_pdkfiles.py \
+		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+			rename=primitives filter=custom/scripts/inc_verilog.py \
+			sort=../common/sort_pdkfiles.py \
+		-verilog %l/latest/cells/*/*.*.v \
+		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
+			compile-only filter=custom/scripts/inc_verilog.py \
+			sort=../common/sort_pdkfiles.py \
+		-library digital sky130_fd_sc_hvl 2>&1 | tee -a ${SKY130A}_make.log
 	# Add a maskhint to the HVL level shifter to represent the HVI layer as
 	# drawn in the GDS, and so eliminate the HVI-to-nwell DRC error.
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_sc_hvl sky130_fd_sc_hvl__lsbufhv2lv_1 \
 		"MASKHINTS_HVI 22 34 706 1316" -mag
 	# Remove the base verilog files which have already been included into
 	# the libraries
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${HD_VERILOG}/*.*.v
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${HDLL_VERILOG}/*.*.v
 	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${HVL_VERILOG}/*.*.v
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${HS_VERILOG}/*.*.v
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${MS_VERILOG}/*.*.v
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${LS_VERILOG}/*.*.v
-	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${LP_VERILOG}/*.*.v
-	# Apply extra PDK patches until they get fixed properly in the source
-	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HD_TECHLEF} \
-		< custom/patches/hd_minenclosed.squeaky.patch \
-		2>&1 | tee -a ${SKY130A}_make.log || true
-	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HDLL_TECHLEF} \
-		< custom/patches/hdll_minenclosed.squeaky.patch \
-		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Patch the HVL library to correct the resistor device names
 	patch -p3 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HVL_SPICE} \
 		< custom/patches/sky130_fd_pr_${HVL_PATCH4}.patch \
@@ -1014,6 +1087,123 @@ digital-a:
 	patch -p3 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HVL_CDL} \
 		< custom/patches/sky130_fd_pr_6.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
+
+digital-lp-a:
+	# Install all SkyWater digital standard cells.
+	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef %l/latest/tech/*.tlef \
+		-spice %l/latest/cells/*/*.spice compile-only \
+			sort=../common/sort_pdkfiles.py \
+			filter=custom/scripts/fix_device_models.py \
+		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+			sort=../common/sort_pdkfiles.py \
+		-lef %l/latest/cells/*/*.magic.lef compile-only \
+			sort=../common/sort_pdkfiles.py \
+		-doc %l/latest/cells/*/*.pdf \
+		-lib %l/latest/timing/*.lib \
+		-gds %l/latest/cells/*/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+			sort=../common/sort_pdkfiles.py \
+		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+			rename=primitives filter=custom/scripts/inc_verilog.py \
+			sort=../common/sort_pdkfiles.py \
+		-verilog %l/latest/cells/*/*.*.v \
+		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
+			compile-only filter=custom/scripts/inc_verilog.py \
+			sort=../common/sort_pdkfiles.py \
+		-library digital sky130_fd_sc_lp 2>&1 | tee -a ${SKY130A}_make.log
+	# Remove the base verilog files which have already been included into
+	# the libraries
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${LP_VERILOG}/*.*.v
+
+digital-hs-a:
+	# Install custom additions to standard cell libraries
+	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
+		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
+		-library digital sky130_fd_sc_hs 2>&1 | tee -a ${SKY130A}_make.log
+	# Install all SkyWater digital standard cells.
+	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef %l/latest/tech/*.tlef \
+		-spice %l/latest/cells/*/*.spice compile-only \
+			sort=../common/sort_pdkfiles.py \
+			filter=custom/scripts/fix_device_models.py \
+		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+			sort=../common/sort_pdkfiles.py \
+		-lef %l/latest/cells/*/*.magic.lef compile-only \
+			sort=../common/sort_pdkfiles.py \
+		-doc %l/latest/cells/*/*.pdf \
+		-lib %l/latest/timing/*.lib \
+		-gds %l/latest/cells/*/*.gds compile-only \
+			exclude=sky130_fd_sc_hs__decap_8.gds \
+			options=custom/scripts/gds_import_setup.tcl \
+			sort=../common/sort_pdkfiles.py \
+		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+			rename=primitives filter=custom/scripts/inc_verilog.py \
+			sort=../common/sort_pdkfiles.py \
+		-verilog %l/latest/cells/*/*.*.v \
+		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
+			compile-only filter=custom/scripts/inc_verilog.py \
+			sort=../common/sort_pdkfiles.py \
+		-library digital sky130_fd_sc_hs 2>&1 | tee -a ${SKY130A}_make.log
+	# Remove the base verilog files which have already been included into
+	# the libraries
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${HS_VERILOG}/*.*.v
+
+digital-ms-a:
+	# Install all SkyWater digital standard cells.
+	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef %l/latest/tech/*.tlef \
+		-spice %l/latest/cells/*/*.spice compile-only \
+			sort=../common/sort_pdkfiles.py \
+			filter=custom/scripts/fix_device_models.py \
+		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+			sort=../common/sort_pdkfiles.py \
+		-lef %l/latest/cells/*/*.magic.lef compile-only \
+			sort=../common/sort_pdkfiles.py \
+		-doc %l/latest/cells/*/*.pdf \
+		-lib %l/latest/timing/*.lib \
+		-gds %l/latest/cells/*/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+			sort=../common/sort_pdkfiles.py \
+		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+			rename=primitives filter=custom/scripts/inc_verilog.py \
+			sort=../common/sort_pdkfiles.py \
+		-verilog %l/latest/cells/*/*.*.v \
+		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
+			compile-only filter=custom/scripts/inc_verilog.py \
+			sort=../common/sort_pdkfiles.py \
+		-library digital sky130_fd_sc_ms 2>&1 | tee -a ${SKY130A}_make.log
+	# Remove the base verilog files which have already been included into
+	# the libraries
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${MS_VERILOG}/*.*.v
+
+digital-ls-a:
+	# Install all SkyWater digital standard cells.
+	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
+		-techlef %l/latest/tech/*.tlef \
+		-spice %l/latest/cells/*/*.spice compile-only \
+			sort=../common/sort_pdkfiles.py \
+			filter=custom/scripts/fix_device_models.py \
+		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+			sort=../common/sort_pdkfiles.py \
+		-lef %l/latest/cells/*/*.magic.lef compile-only \
+			sort=../common/sort_pdkfiles.py \
+		-doc %l/latest/cells/*/*.pdf \
+		-lib %l/latest/timing/*.lib \
+		-gds %l/latest/cells/*/*.gds compile-only \
+			options=custom/scripts/gds_import_setup.tcl \
+			sort=../common/sort_pdkfiles.py \
+		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+			rename=primitives filter=custom/scripts/inc_verilog.py \
+			sort=../common/sort_pdkfiles.py \
+		-verilog %l/latest/cells/*/*.*.v \
+		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
+			compile-only filter=custom/scripts/inc_verilog.py \
+			sort=../common/sort_pdkfiles.py \
+		-library digital sky130_fd_sc_ls 2>&1 | tee -a ${SKY130A}_make.log
+	# Remove the base verilog files which have already been included into
+	# the libraries
+	${RM} ${STAGING_PATH}/${SKY130A}/libs.ref/${LS_VERILOG}/*.*.v
 
 alpha-a:
 	# Install alphanumeric library.
