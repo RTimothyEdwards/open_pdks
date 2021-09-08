@@ -86,6 +86,11 @@ prefix = @prefix@
 datarootdir = @datarootdir@
 datadir = @datadir@
 
+# NOTE:  All scripts used by the project and design flow management
+# system are in the "runtime" directory, except for cdl2spi.py, which
+# is the one file used by scripts in both the common/ and runtime/
+# directories.
+
 common_install:
 	@if test -w $(datadir) ; then \
 		mkdir -p $(datadir)/pdk/scripts/ ;\
@@ -99,8 +104,6 @@ common_install:
 			$(datadir)/pdk/$$file ;\
 		done ;\
 		mv $(datadir)/pdk/runtime/* $(datadir)/pdk/scripts ;\
-		# cdl2spi.py is the one file used by scripts in both the
-		# common/ and runtime/ directories.
 		${CPP} -DPREFIX=$(datadir) common/cdl2spi.py $(datadir)/pdk/scripts ;\
 		rm -r -f $(datadir)/pdk/runtime ;\
 		echo "Common install:  Done." ;\
