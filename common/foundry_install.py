@@ -432,10 +432,16 @@ if __name__ == '__main__':
     for option in optionlist[:]:
         if option[0] == 'source':
             optionlist.remove(option)
-            sourcedir = option[1]
+            if len(option) > 1:
+                sourcedir = option[1]
+            else:
+                print('Error: Option "source" used with no value.')
         elif option[0] == 'target':
             optionlist.remove(option)
-            targetdir = option[1]
+            if len(option) > 1:
+                targetdir = option[1]
+            else:
+                print('Error: Option "target" used with no value.')
 
     if not targetdir:
         print("No target directory specified.  Exiting.")
@@ -1598,8 +1604,10 @@ if __name__ == '__main__':
                 os.symlink(startup_script, destlibdir + '/.magicrc')
  
                 # Find LEF file names in the source
-                leffiles = os.listdir(srclibdir)
-                leffiles = list(item for item in leffiles if os.path.splitext(item)[1].lower() == '.lef')
+                leffiles = []
+                if os.path.isdir(srclibdir):
+                    leffiles = os.listdir(srclibdir)
+                    leffiles = list(item for item in leffiles if os.path.splitext(item)[1].lower() == '.lef')
 
                 # Get list of abstract views to make from LEF macros
                 lefmacros = []
