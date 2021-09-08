@@ -99,6 +99,9 @@ common_install:
 			$(datadir)/pdk/$$file ;\
 		done ;\
 		mv $(datadir)/pdk/runtime/* $(datadir)/pdk/scripts ;\
+		# cdl2spi.py is the one file used by scripts in both the
+		# common/ and runtime/ directories.
+		${CPP} -DPREFIX=$(datadir) common/cdl2spi.py $(datadir)/pdk/scripts ;\
 		rm -r -f $(datadir)/pdk/runtime ;\
 		echo "Common install:  Done." ;\
 	else \

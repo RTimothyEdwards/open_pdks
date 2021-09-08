@@ -1,4 +1,4 @@
-#!/usr/bin/env -S python3 -B
+#!/usr/bin/env python3
 #
 #--------------------------------------------------------
 # Project Manager GUI.
