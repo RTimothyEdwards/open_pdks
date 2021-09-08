@@ -790,27 +790,27 @@ vendor-a:
 		echo "Building digital standard cell libraries" ;\
 		make digital-a ;\
 	fi
-	if test -d ${ALPHA_PATH} ; then \
+	if test "x${ALPHA_PATH}" != "x" ; then \
 		echo "Building alphanumeric layout libraries" ;\
 		make alpha-a ;\
 	fi
-	if test -d ${SRAM_PATH} ; then \
+	if test "x${SRAM_PATH}" != "x" ; then \
 		echo "Building SRAM macro library" ;\
 		make sram-a ;\
 	fi
-	if test -d ${OSU_PATH} ; then \
+	if test "x${OSU_PATH}" != "x" ; then \
 		echo "Building OSU full source library" ;\
 		make osu-base-a ;\
 	fi
-	if test -d ${OSU_T12_PATH} ; then \
+	if test "x${OSU_T12_PATH}" != "x" ; then \
 		echo "Building OSU 12-track-high standard cell library" ;\
 		make osu-t12-a ;\
 	fi
-	if test -d ${OSU_T15_PATH} ; then \
+	if test "x${OSU_T15_PATH}" != "x" ; then \
 		echo "Building OSU 15-track-high standard cell library" ;\
 		make osu-t15-a ;\
 	fi
-	if test -d ${OSU_T18_PATH} ; then \
+	if test "x${OSU_T18_PATH}" != "x" ; then \
 		echo "Building OSU 18-track-high standard cell library" ;\
 		make osu-t18-a ;\
 	fi
