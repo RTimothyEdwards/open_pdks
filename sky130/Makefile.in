@@ -301,37 +301,37 @@ else
     else
 	COMMIT_DEFS += -DFD_IO_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_io/latest)
     endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_hd/latest/cells),)
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_hd/latest/cells),)
 	COMMIT_DEFS += -DFD_SC_HD_COMMIT="unknown"
     else
 	COMMIT_DEFS += -DFD_SC_HD_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hd/latest)
     endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_hdll/latest/cells),)
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_hdll/latest/cells),)
 	COMMIT_DEFS += -DFD_SC_HDLL_COMMIT="unknown"
     else
 	COMMIT_DEFS += -DFD_SC_HDLL_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hdll/latest)
     endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_hvl/latest/cells),)
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_hvl/latest/cells),)
 	COMMIT_DEFS += -DFD_SC_HVL_COMMIT="unknown"
     else
 	COMMIT_DEFS += -DFD_SC_HVL_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hvl/latest)
     endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_hs/latest/cells),)
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_hs/latest/cells),)
 	COMMIT_DEFS += -DFD_SC_HS_COMMIT="unknown"
     else
 	COMMIT_DEFS += -DFD_SC_HS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hs/latest)
     endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_ms/latest/cells),)
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_ms/latest/cells),)
 	COMMIT_DEFS += -DFD_SC_MS_COMMIT="unknown"
     else
 	COMMIT_DEFS += -DFD_SC_MS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_ms/latest)
     endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_ls/latest/cells),)
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_ls/latest/cells),)
 	COMMIT_DEFS += -DFD_SC_LS_COMMIT="unknown"
     else
 	COMMIT_DEFS += -DFD_SC_LS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_ls/latest)
     endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_lp/latest/cells),)
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_lp/latest/cells),)
 	COMMIT_DEFS += -DFD_SC_LP_COMMIT="unknown"
     else
 	COMMIT_DEFS += -DFD_SC_LP_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_lp/latest)

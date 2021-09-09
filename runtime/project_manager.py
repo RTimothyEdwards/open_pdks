@@ -3242,7 +3242,7 @@ class ProjectManager(ttk.Frame):
                 self.create_electric_header_file(newproject, newname)
 
             if 'magic' in layoutapps:
-                shutil.copy(newpdk + '/libs.tech/magic/current/' + pdkname + '.magicrc', newproject + '/mag/.magicrc')
+                shutil.copy(newpdk + '/libs.tech/magic/' + pdkname + '.magicrc', newproject + '/mag/.magicrc')
 
             if 'xcircuit' in schemapps:
                 xcircrc = newpdk + '/libs.tech/xcircuit/' + pdkname + '.' + 'xcircuitrc'
@@ -3256,6 +3256,9 @@ class ProjectManager(ttk.Frame):
                 xschemrc = newpdk + '/libs.tech/xschem/xschemrc'
                 if os.path.exists(xschemrc):
                     shutil.copy(xschemrc, newproject + '/xschem/xschemrc')
+                spinit = newpdk + '/libs.tech/ngpsice/spinit'
+                if os.path.exists(spinit):
+                    shutil.copy(spinit, newproject + '/xschem/.spiceinit')
 
         except IOError as e:
             print('Error copying files: ' + str(e))
