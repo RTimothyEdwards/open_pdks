@@ -291,15 +291,51 @@ ifeq (${SKYWATER_PATH},)
     COMMIT_DEFS += -DFD_SC_LS_COMMIT="unknown"
     COMMIT_DEFS += -DFD_SC_LP_COMMIT="unknown"
 else
-    COMMIT_DEFS += -DFD_PR_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_pr/latest)
-    COMMIT_DEFS += -DFD_IO_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_io/latest)
-    COMMIT_DEFS += -DFD_SC_HD_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hd/latest)
-    COMMIT_DEFS += -DFD_SC_HDLL_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hdll/latest)
-    COMMIT_DEFS += -DFD_SC_HVL_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hvl/latest)
-    COMMIT_DEFS += -DFD_SC_HS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hs/latest)
-    COMMIT_DEFS += -DFD_SC_MS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_ms/latest)
-    COMMIT_DEFS += -DFD_SC_LS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_ls/latest)
-    COMMIT_DEFS += -DFD_SC_LP_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_lp/latest)
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_pr/latest/cells),)
+	COMMIT_DEFS += -DFD_PR_COMMIT="unknown"
+    else
+	COMMIT_DEFS += -DFD_PR_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_pr/latest)
+    endif
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_io/latest/cells),)
+	COMMIT_DEFS += -DFD_IO_COMMIT="unknown"
+    else
+	COMMIT_DEFS += -DFD_IO_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_io/latest)
+    endif
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_hd/latest/cells),)
+	COMMIT_DEFS += -DFD_SC_HD_COMMIT="unknown"
+    else
+	COMMIT_DEFS += -DFD_SC_HD_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hd/latest)
+    endif
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_hdll/latest/cells),)
+	COMMIT_DEFS += -DFD_SC_HDLL_COMMIT="unknown"
+    else
+	COMMIT_DEFS += -DFD_SC_HDLL_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hdll/latest)
+    endif
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_hvl/latest/cells),)
+	COMMIT_DEFS += -DFD_SC_HVL_COMMIT="unknown"
+    else
+	COMMIT_DEFS += -DFD_SC_HVL_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hvl/latest)
+    endif
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_hs/latest/cells),)
+	COMMIT_DEFS += -DFD_SC_HS_COMMIT="unknown"
+    else
+	COMMIT_DEFS += -DFD_SC_HS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hs/latest)
+    endif
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_ms/latest/cells),)
+	COMMIT_DEFS += -DFD_SC_MS_COMMIT="unknown"
+    else
+	COMMIT_DEFS += -DFD_SC_MS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_ms/latest)
+    endif
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_ls/latest/cells),)
+	COMMIT_DEFS += -DFD_SC_LS_COMMIT="unknown"
+    else
+	COMMIT_DEFS += -DFD_SC_LS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_ls/latest)
+    endif
+    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_lp/latest/cells),)
+	COMMIT_DEFS += -DFD_SC_LP_COMMIT="unknown"
+    else
+	COMMIT_DEFS += -DFD_SC_LP_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_lp/latest)
+    endif
 endif
 COMMIT_DEFS += -DMAGIC_VERSION=$(shell magic -dnull -noconsole --version)
 COMMIT_DEFS += -DOPEN_PDKS_VERSION=$(shell cat ../VERSION)
