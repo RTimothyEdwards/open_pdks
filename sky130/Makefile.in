@@ -488,6 +488,7 @@ ifeq (${EF_STYLE}, 1)
 	HD_SPICE = spi/sky130_fd_sc_hd
 	HVL_PATCH4 = 4b
 	HVL_CDL = cdl/sky130_fd_sc_hvl
+	SPIEXT = spi
 else
 	IO_VERILOG = sky130_fd_io/verilog
 	HD_VERILOG = sky130_fd_sc_hd/verilog
@@ -505,6 +506,7 @@ else
 	HD_SPICE = sky130_fd_sc_hd/spice
 	HVL_PATCH4 = 4
 	HVL_CDL = sky130_fd_sc_hvl/cdl
+	SPIEXT = spice
 endif
 
 all: all-a
@@ -681,7 +683,8 @@ netgen-a: netgen/${TECH}_setup.tcl
 	mkdir -p ${NETGEN_STAGING_A}
 	rm -f ${NETGEN_STAGING_A}/${SKY130A}_setup.tcl
 	rm -f ${NETGEN_STAGING_A}/setup.tcl
-	${CPP} ${SKY130A_DEFS} netgen/${TECH}_setup.tcl ${NETGEN_STAGING_A}/${SKY130A}_setup.tcl
+	${CPP} ${SKY130A_DEFS} netgen/${TECH}_setup.tcl \
+		${NETGEN_STAGING_A}/${SKY130A}_setup.tcl
 	(cd ${NETGEN_STAGING_A} ; ln -s ${SKY130A}_setup.tcl setup.tcl)
 
 irsim-a: irsim
@@ -698,7 +701,8 @@ klayout-a: klayout/${TECH}.lyp klayout/${TECH}.lyt
 	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyp ${KLAYOUT_STAGING_A}/${SKY130A}.lyp
 	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyt ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
 	cp klayout/${TECH}.lydrc ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc
-	./custom/scripts/gen_run_drc.py -l ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc -o ${KLAYOUT_STAGING_A}/${SKY130A}.drc
+	./custom/scripts/gen_run_drc.py -l ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc \
+		-o ${KLAYOUT_STAGING_A}/${SKY130A}.drc
 
 xcircuit-a: xcircuit/${TECH}.xcircuitrc
 	rm -rf ${XCIRCUIT_STAGING_A}
@@ -707,9 +711,12 @@ xcircuit-a: xcircuit/${TECH}.xcircuitrc
 	rm -f ${XCIRCUIT_STAGING_A}/*.lps
 	rm -f ${XCIRCUIT_STAGING_A}/${SKY130A}.xcircuitrc
 	${CPP} ${SKY130A_DEFS} xcircuit/ngspice.lps ${XCIRCUIT_STAGING_A}/ngspice.lps
-	${CPP} ${SKY130A_DEFS} xcircuit/sky130_fd_pr.lps ${XCIRCUIT_STAGING_A}/sky130_fd_pr.lps
-	${CPP} ${SKY130A_DEFS} -DHD_SPICE=${HD_SPICE} xcircuit/sky130_fd_sc_hd.lps ${XCIRCUIT_STAGING_A}/sky130_fd_sc_hd.lps
-	${CPP} ${SKY130A_DEFS} xcircuit/${TECH}.xcircuitrc ${XCIRCUIT_STAGING_A}/${SKY130A}.xcircuitrc
+	${CPP} ${SKY130A_DEFS} xcircuit/sky130_fd_pr.lps \
+		${XCIRCUIT_STAGING_A}/sky130_fd_pr.lps
+	${CPP} ${SKY130A_DEFS} -DHD_SPICE=${HD_SPICE} -DSPIEXT=${SPIEXT} \
+		xcircuit/sky130_fd_sc_hd.lps ${XCIRCUIT_STAGING_A}/sky130_fd_sc_hd.lps
+	${CPP} ${SKY130A_DEFS} xcircuit/${TECH}.xcircuitrc \
+		${XCIRCUIT_STAGING_A}/${SKY130A}.xcircuitrc
 
 xschem-a: ${XSCHEM_PATH}
 	rm -rf ${XSCHEM_STAGING_A}

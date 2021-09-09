@@ -1,5 +1,7 @@
 set XCOps(liboverride) 1
-config search libraries .:STAGING_PATH/TECHNAME/libs.tech/xcircuit:$XCIRCUIT_LIB_DIR
+set PDK_ROOT STAGING_PATH
+global PDK_ROOT
+config search libraries .:$PDK_ROOT/TECHNAME/libs.tech/xcircuit:$XCIRCUIT_LIB_DIR
 library make generic
 library 1 load generic
 library make ngspice

@@ -91,6 +91,11 @@ def filter_recursive(tooldir, stagingdir, localdir):
     # Add any non-ASCII file types here
     bintypes = ['.gds', '.gds2', '.gdsii', '.png', '.swp']
 
+    # Also do substitutions on strings containing the stagingdir parent
+    # directory (replace with the localdir parent directory).
+    stagingparent = os.path.split(stagingdir)[0]
+    localparent = os.path.split(localdir)[0]
+
     if not os.path.exists(tooldir):
         return 0
     elif os.path.islink(tooldir):
@@ -124,6 +129,7 @@ def filter_recursive(tooldir, stagingdir, localdir):
             with open(filepath, 'w') as ofile:
                 for line in flines:
                     newline = line.replace(stagingdir, localdir)
+                    newline = newline.replace(stagingparent, localparent)
                     print(newline, file=ofile)
                     if newline != line:
                         modified = True
