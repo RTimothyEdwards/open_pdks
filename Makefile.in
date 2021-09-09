@@ -110,7 +110,7 @@ common_install:
 	else \
 		echo "Common install:  $(datadir) is not writeable (ignoring)." ;\
 	fi
-	
+
 #---------------------------------------------------
 
 tech_sky130:

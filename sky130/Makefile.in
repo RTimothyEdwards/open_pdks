@@ -708,7 +708,7 @@ xcircuit-a: xcircuit/${TECH}.xcircuitrc
 	rm -f ${XCIRCUIT_STAGING_A}/${SKY130A}.xcircuitrc
 	${CPP} ${SKY130A_DEFS} xcircuit/ngspice.lps ${XCIRCUIT_STAGING_A}/ngspice.lps
 	${CPP} ${SKY130A_DEFS} xcircuit/sky130_fd_pr.lps ${XCIRCUIT_STAGING_A}/sky130_fd_pr.lps
-	${CPP} ${SKY130A_DEFS} xcircuit/sky130_fd_sc_hd.lps ${XCIRCUIT_STAGING_A}/sky130_fd_sc_hd.lps
+	${CPP} ${SKY130A_DEFS} -DHD_SPICE=${HD_SPICE} xcircuit/sky130_fd_sc_hd.lps ${XCIRCUIT_STAGING_A}/sky130_fd_sc_hd.lps
 	${CPP} ${SKY130A_DEFS} xcircuit/${TECH}.xcircuitrc ${XCIRCUIT_STAGING_A}/${SKY130A}.xcircuitrc
 
 xschem-a: ${XSCHEM_PATH}

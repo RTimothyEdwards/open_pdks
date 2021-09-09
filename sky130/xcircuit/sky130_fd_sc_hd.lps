@@ -16,7 +16,7 @@ mark @strength ( %pHI %pLO sky130_fd_sc_hd__conb_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -192 -192 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -53,7 +53,7 @@ mark @strength ( %pY sky130_fd_sc_hd__inv_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -32 -136 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -32 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 0 24 label
@@ -76,7 +76,7 @@ mark @strength ( %pX sky130_fd_sc_hd__buf_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -32 -112 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -32 -80 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 0 24 label
@@ -108,7 +108,7 @@ label
 mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 sce
 1 1.000 -96 32 -64 32 2 polygon
@@ -133,7 +133,7 @@ mark @strength ( %pY sky130_fd_sc_hd__nand3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -165,7 +165,7 @@ mark @strength ( %pY sky130_fd_sc_hd__nand4_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
 -64 -144 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -112 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -208,7 +208,7 @@ sce
 1 1.000 -64 -32 -56 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 sce
 1 1.000 96 0 64 0 2 polygon
@@ -228,7 +228,7 @@ mark @strength ( %pY sky130_fd_sc_hd__nor3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
@@ -264,7 +264,7 @@ mark @strength ( %pY sky130_fd_sc_hd__nor4_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
 -64 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
@@ -305,7 +305,7 @@ mark @strength ( %pX sky130_fd_sc_hd__and2_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -334,7 +334,7 @@ mark @strength ( %pX sky130_fd_sc_hd__and3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -365,7 +365,7 @@ mark @strength ( %pX sky130_fd_sc_hd__and4_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
 -64 -144 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -112 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -393,7 +393,7 @@ mark @strength ( %pX skty130_fd_sc_hd__or2_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -424,7 +424,7 @@ mark @strength ( %pX skty130_fd_sc_hd__or3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -458,7 +458,7 @@ mark @strength ( %pX sky130_fd_sc_hd__or4_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
 -64 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
@@ -497,7 +497,7 @@ mark @strength ( %pX sky130_fd_sc_hd__xor2_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -24 -32 
@@ -529,7 +529,7 @@ mark @strength ( %pX sky130_fd_sc_hd__xor3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -24 -32 
@@ -564,7 +564,7 @@ mark @strength ( %pY sky130_fd_sc_hd__xnor2_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -24 -32 
@@ -597,7 +597,7 @@ mark @strength ( %pY sky130_fd_sc_hd__xnor3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -24 -32 
@@ -636,7 +636,7 @@ mark @strength ( %pZ sky130_fd_sc_hd__einvn_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pTE_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -176 
 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -176 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 24 24 label
@@ -666,7 +666,7 @@ mark @strength ( %pZ sky130_fd_sc_hd__einvp_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pTE ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -176 -128 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -176 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 24 24 label
@@ -695,7 +695,7 @@ mark @strength ( %pZ sky130_fd_sc_hd__ebufn_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pTE_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -176 
 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -176 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 24 24 label
@@ -724,7 +724,7 @@ mark @strength ( %pY sky130_fd_sc_hd__clkinv_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pA ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -32 -112 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -32 -80 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 0 24 label
@@ -750,7 +750,7 @@ mark @strength ( %pX sky130_fd_sc_hd__clkbuf_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pA ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -32 -112 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -32 -80 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 0 24 label
@@ -774,7 +774,7 @@ mark @strength ( %pX sky130_fd_sc_hd__mux2_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA0 %pA1 %pS ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -128 
 -176 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -128 -144 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 16 -24 
@@ -807,7 +807,7 @@ mark @strength ( %pY sky130_fd_sc_hd__mux2i_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA0 %pA1 %pS ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -128 
 -176 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -128 -144 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 16 -24 
@@ -841,7 +841,7 @@ mark @strength ( %pX sky130_fd_sc_hd__mux4_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA0 %pA1 %pA2 %pA3 %pS0 %pS1 ) @index (spice:X) {/Times-Roman cf} ctmk 16 
 360.000 0.700 -128 -176 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -128 -144 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 40 32 label
@@ -895,7 +895,7 @@ label
 mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 16 label
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 sce
 1 1.000 -96 32 -80 32 2 polygon
@@ -921,7 +921,7 @@ mark @strength ( %pY sky130_fd_sc_hd__nand3b_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pA_N %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
 0.700 -64 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -954,7 +954,7 @@ mark @strength ( %pY sky130_fd_sc_hd__nand4b_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pA_N %pB %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
 0.700 -64 -144 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -112 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -988,7 +988,7 @@ mark @strength ( %pY sky130_fd_sc_hd__nand4bb_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pA_N %pB_N %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 
 360.000 0.700 -64 -144 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -112 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -1033,7 +1033,7 @@ sce
 1 1.000 -80 -32 -72 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 sce
 1 1.000 96 0 64 0 2 polygon
@@ -1054,7 +1054,7 @@ mark @strength ( %pY sky130_fd_sc_hd__nor3b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
@@ -1091,7 +1091,7 @@ mark @strength ( %pY sky130_fd_sc_hd__nor4b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC %pD_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
 -64 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
@@ -1132,7 +1132,7 @@ mark @strength ( %pY sky130_fd_sc_hd__nor4bb_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pA %pB %pC_N %pD_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 
 360.000 0.700 -64 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
@@ -1175,7 +1175,7 @@ mark @strength ( %pX sky130_fd_sc_hd__and2b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA_N %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -1205,7 +1205,7 @@ mark @strength ( %pX sky130_fd_sc_hd__and3b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA_N %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -1237,7 +1237,7 @@ mark @strength ( %pX sky130_fd_sc_hd__and4b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA_N %pB %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
 -64 -144 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -112 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -1270,7 +1270,7 @@ mark @strength ( %pX sky130_fd_sc_hd__and4bb_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pA_N %pB_N %pC %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 
 360.000 0.700 -64 -144 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -112 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -1300,7 +1300,7 @@ mark @strength ( %pX skty130_fd_sc_hd__or2b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 -128 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -1332,7 +1332,7 @@ mark @strength ( %pX skty130_fd_sc_hd__or3b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -64 
 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -40 -32 
@@ -1368,7 +1368,7 @@ mark @strength ( %pY sky130_fd_sc_hd__or4b_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC %pD_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
 -64 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
@@ -1409,7 +1409,7 @@ mark @strength ( %pY sky130_fd_sc_hd__or4bb_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC_N %pD_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
 0.700 -64 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -64 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -32 -32 
@@ -1449,7 +1449,7 @@ mark @strength ( %pQ sky130_fd_sc_hd__dfxtp_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pCLK %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -192 
 -192 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1482,7 +1482,7 @@ mark @strength ( %pQ sky130_fd_sc_hd__dfrtn_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pCLK_N %pD %pRESET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
 0.700 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1520,7 +1520,7 @@ mark @strength ( %pQ sky130_fd_sc_hd__dfstp_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pCLK %pD %pSET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1558,7 +1558,7 @@ mark @strength ( %pQ sky130_fd_sc_hd__dfrtp_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pCLK %pD %pRESET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
 0.700 -192 -192 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1595,7 +1595,7 @@ mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dfsbp_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pCLK %pD %pSET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
 0.700 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1638,7 +1638,7 @@ mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dfbbn_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pCLK_N %pD %pSET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 
 360.000 0.700 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1687,7 +1687,7 @@ mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dfxbp_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pCLK %pD ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1725,7 +1725,7 @@ mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dfrbp_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pCLK %pD %pRESET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 
 360.000 0.700 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1768,7 +1768,7 @@ mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dfbbp_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pCLK %pD %pSET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
 0.700 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1815,7 +1815,7 @@ mark @strength ( %pQ sky130_fd_sc_hd__dlrtp_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pD %GATE %pRESET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
 0.700 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1853,7 +1853,7 @@ mark @strength ( %pQ sky130_fd_sc_hd__dlxtn_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pD %GATE_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -192 
 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1886,7 +1886,7 @@ mark @strength ( %pQ sky130_fd_sc_hd__dlxtp_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pD %GATE ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -192 
 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1919,7 +1919,7 @@ mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dlrbp_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pD %GATE %pRESET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 
 360.000 0.700 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -1962,7 +1962,7 @@ mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dlxbn_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pD %GATE_N ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -2000,7 +2000,7 @@ mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dlxbp_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pD %GATE ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -2038,7 +2038,7 @@ mark @strength ( %pQ %pQ_N sky130_fd_sc_hd__dlrbn_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pD %GATE_N %pRESET_B ) @index (spice:X) {/Times-Roman cf} ctmk 16 
 360.000 0.700 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -2081,7 +2081,7 @@ mark @strength ( %pGCLK sky130_fd_sc_hd__dlclkp_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pCLK %GATE ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 
 -192 -224 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -192 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 32 
@@ -2114,7 +2114,7 @@ mark @strength ( %pCOUT %pSUM sky130_fd_sc_hd__ha_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pA %pB ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -192 
 -192 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 0 32 label
@@ -2153,7 +2153,7 @@ mark @strength ( %pCOUT %pSUM sky130_fd_sc_hd__fah_) @VPWR ( ) @VPB ( ) @VNB
 ( ) @VGND ( %pA %pB %pCI ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
 0.700 -192 -192 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 0 32 label
@@ -2197,7 +2197,7 @@ mark @strength ( %pCOUT_N %pSUM sky130_fd_sc_hd__fahcon_) @VPWR ( ) @VPB ( )
 @VNB ( ) @VGND ( %pA %pB %pCI ) @index (spice:X) {/Times-Roman cf} ctmk 16 
 360.000 0.700 -192 -192 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 0 32 label
@@ -2242,7 +2242,7 @@ mark @strength ( %pCOUT %pSUM sky130_fd_sc_hd__fahcin_) @VPWR ( ) @VPB ( ) @VNB
 ( ) @VGND ( %pA %pB %pCIN ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 
 0.700 -192 -192 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 0 32 label
@@ -2301,7 +2301,7 @@ sce
 1 1.000 -64 48 -35 48 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 96 0 64 0 2 polygon
@@ -2351,7 +2351,7 @@ sce
 1 1.000 -192 -32 -56 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -96 infolabel
 sce
 1 1.000 96 0 64 0 2 polygon
@@ -2390,7 +2390,7 @@ sce
 1 1.000 -192 0 -38 0 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -128 infolabel
 sce
 1 1.000 96 0 82 0 2 polygon
@@ -2432,7 +2432,7 @@ sce
 1 1.000 -48 32 -19 32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 128 -32 98 -32 2 polygon
@@ -2483,7 +2483,7 @@ sce
 1 1.000 -192 -32 -56 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -96 infolabel
 sce
 1 1.000 64 0 48 0 2 polygon
@@ -2521,7 +2521,7 @@ sce
 1 1.000 -192 -32 -64 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -96 infolabel
 sce
 1 1.000 64 0 48 0 2 polygon
@@ -2560,7 +2560,7 @@ sce
 1 1.000 -192 -32 -56 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -96 infolabel
 sce
 1 1.000 96 0 64 0 2 polygon
@@ -2605,7 +2605,7 @@ sce
 1 1.000 -192 -32 -56 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -96 infolabel
 sce
 1 1.000 96 0 64 0 2 polygon
@@ -2648,7 +2648,7 @@ sce
 1 1.000 -192 -32 -72 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -96 infolabel
 sce
 1 1.000 96 0 64 0 2 polygon
@@ -2689,7 +2689,7 @@ sce
 1 1.000 -64 48 -35 48 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 96 0 64 0 2 polygon
@@ -2735,7 +2735,7 @@ sce
 1 1.000 -192 0 -38 0 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -128 infolabel
 sce
 1 1.000 96 0 82 0 2 polygon
@@ -2780,7 +2780,7 @@ sce
 1 1.000 -48 32 -19 32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -224 infolabel
 sce
 1 1.000 128 -32 98 -32 2 polygon
@@ -2836,7 +2836,7 @@ sce
 1 1.000 -192 0 -24 0 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -128 infolabel
 sce
 1 1.000 128 -16 98 -16 2 polygon
@@ -2882,7 +2882,7 @@ sce
 1 1.000 -48 48 -19 48 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 96 0 80 0 2 polygon
@@ -2929,7 +2929,7 @@ sce
 1 1.000 -64 48 -35 48 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 64 0 48 0 2 polygon
@@ -2978,7 +2978,7 @@ sce
 1 1.000 -192 0 -24 0 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -128 infolabel
 sce
 1 1.000 96 -16 82 -16 2 polygon
@@ -3023,7 +3023,7 @@ sce
 1 1.000 -176 64 -147 64 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 80 -32 64 -32 2 polygon
@@ -3064,7 +3064,7 @@ sce
 1 1.000 -192 -32 -56 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -96 infolabel
 sce
 1 1.000 64 0 48 0 2 polygon
@@ -3107,7 +3107,7 @@ sce
 1 1.000 -176 64 -147 64 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 96 -32 64 -32 2 polygon
@@ -3144,7 +3144,7 @@ label
 mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 -16 label
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 96 -32 64 -32 2 polygon
@@ -3196,7 +3196,7 @@ sce
 1 1.000 -64 48 -35 48 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 64 0 48 0 2 polygon
@@ -3241,7 +3241,7 @@ sce
 1 1.000 -192 0 -38 0 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -128 infolabel
 sce
 1 1.000 96 0 64 0 2 polygon
@@ -3282,7 +3282,7 @@ sce
 1 1.000 -48 32 -19 32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 96 -32 82 -32 2 polygon
@@ -3333,7 +3333,7 @@ sce
 1 1.000 -192 -32 -72 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -96 infolabel
 sce
 1 1.000 64 0 48 0 2 polygon
@@ -3374,7 +3374,7 @@ sce
 1 1.000 -192 -32 -56 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -96 infolabel
 sce
 1 1.000 64 0 48 0 2 polygon
@@ -3416,7 +3416,7 @@ sce
 1 1.000 -192 0 -38 0 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -128 infolabel
 sce
 1 1.000 96 0 64 0 2 polygon
@@ -3462,7 +3462,7 @@ sce
 1 1.000 -192 -32 -80 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -96 infolabel
 sce
 1 1.000 96 0 64 0 2 polygon
@@ -3503,7 +3503,7 @@ sce
 1 1.000 -192 -32 -64 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 96 -32 80 -32 2 polygon
@@ -3542,7 +3542,7 @@ sce
 1 1.000 -176 64 -147 64 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -192 infolabel
 sce
 1 1.000 96 -32 64 -32 2 polygon
@@ -3593,7 +3593,7 @@ sce
 1 1.000 -192 -32 -32 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 128 -48 112 -48 2 polygon
@@ -3637,7 +3637,7 @@ sce
 1 1.000 -176 64 -147 64 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -192 infolabel
 sce
 1 1.000 96 -32 64 -32 2 polygon
@@ -3690,7 +3690,7 @@ sce
 1 1.000 -192 -32 -64 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 96 -32 80 -32 2 polygon
@@ -3732,7 +3732,7 @@ sce
 1 1.000 -176 64 -147 64 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -192 infolabel
 sce
 1 1.000 96 -32 64 -32 2 polygon
@@ -3784,7 +3784,7 @@ sce
 1 1.000 -147 -96 96 30.000 90.000 xcarc
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -192 infolabel
 sce
 1 1.000 128 -48 112 -48 2 polygon
@@ -3836,7 +3836,7 @@ sce
 1 1.000 -147 -96 96 30.000 90.000 xcarc
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -192 infolabel
 sce
 1 1.000 128 -48 96 -48 2 polygon
@@ -3888,7 +3888,7 @@ sce
 1 1.000 -176 64 -147 64 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 64 -32 48 -32 2 polygon
@@ -3932,7 +3932,7 @@ sce
 1 1.000 -192 -32 -80 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -96 infolabel
 sce
 1 1.000 64 0 48 0 2 polygon
@@ -3964,7 +3964,7 @@ label
 mark @index (U) {/Times-RomanISO cf} ctmk 28 0.000 0.700 -40 -16 label
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 64 -32 48 -32 2 polygon
@@ -4014,7 +4014,7 @@ sce
 1 1.000 -176 64 -147 64 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -192 infolabel
 sce
 1 1.000 64 -32 48 -32 2 polygon
@@ -4067,7 +4067,7 @@ sce
 1 1.000 -192 -32 -64 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 96 -32 64 -32 2 polygon
@@ -4108,7 +4108,7 @@ sce
 1 1.000 -192 -32 -64 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 96 -32 64 -32 2 polygon
@@ -4149,7 +4149,7 @@ sce
 1 1.000 -176 64 -147 64 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -192 infolabel
 sce
 1 1.000 64 -32 48 -32 2 polygon
@@ -4198,7 +4198,7 @@ sce
 1 1.000 -176 64 -147 64 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -192 infolabel
 sce
 1 1.000 64 -32 48 -32 2 polygon
@@ -4248,7 +4248,7 @@ sce
 1 1.000 -192 -32 -32 -32 2 polygon
 0.180 0.545 0.341 scb
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -256 -160 infolabel
 sce
 1 1.000 128 -48 96 -48 2 polygon
@@ -4282,7 +4282,7 @@ mark @strength ( %pX sky130_fd_sc_hd__maj3_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pA %pB %pC ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -96 
 -128 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -96 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 -24 0 label
@@ -4309,7 +4309,7 @@ mark @strength ( %pQ sky130_fd_sc_hd__diode_) @VPWR ( ) @VPB ( ) @VNB ( ) @VGND
 ( %pDIODE ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -192 -192 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -192 -160 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 21 0.000 0.600 -16 0 label
@@ -4337,7 +4337,7 @@ mark @strength ( %pY sky130_fd_sc_hd__bufinv_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pA ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -96 -136 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -96 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 80 24 label
@@ -4363,7 +4363,7 @@ mark @strength ( %pX sky130_fd_sc_hd__bufbuf_) @VPWR ( ) @VPB ( ) @VNB ( )
 @VGND ( %pA ) @index (spice:X) {/Times-Roman cf} ctmk 16 360.000 0.700 -96 -136 
 infolabel
 
-(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice) 
+(spice@1:%FSTAGING_PATH/TECHNAME/libs.ref/HD_SPICE/sky130_fd_sc_hd.spice) 
 {/Times-Roman cf} 2 16 0.000 0.700 -96 -96 infolabel
 0.647 0.165 0.165 scb
 mark @strength {qS} (\327) {/Times-RomanISO cf} ctmk 16 0.000 0.600 80 24 label
