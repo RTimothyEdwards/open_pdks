@@ -104,7 +104,7 @@ common_install:
 			$(datadir)/pdk/$$file ;\
 		done ;\
 		mv $(datadir)/pdk/runtime/* $(datadir)/pdk/scripts ;\
-		${CPP} -DPREFIX=$(datadir) common/cdl2spi.py $(datadir)/pdk/scripts ;\
+		${CPP} -DPREFIX=$(datadir) common/cdl2spi.py $(datadir)/pdk/scripts/cdl2spi.py ;\
 		rm -r -f $(datadir)/pdk/runtime ;\
 		echo "Common install:  Done." ;\
 	else \
