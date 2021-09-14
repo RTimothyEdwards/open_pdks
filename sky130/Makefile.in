@@ -986,10 +986,9 @@ primitive-a:
 		${STAGING_PATH}/${SKY130A}/libs.ref/${PR_SPICE}/sky130_fd_pr__special_nfet_latch.pm3.spice \
 		2>&1 | tee -a ${SKY130A}_make.log || true
 
-	# Custom:  Make corrections/additions so sky130.lib.spice
-	./custom/scripts/build_lib_spice.py \
-		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice/sky130.lib.spice \
-		custom/models/sky130.lib.spice.extra \
+	# Install custom corrected/enhanced sky130.lib.spice
+	cp custom/models/sky130.lib.spice \
+		${STAGING_PATH}/${SKY130A}/libs.tech/ngspice \
 		2>&1 | tee -a ${SKY130A}_make.log || true
 	# Custom:  Add special device ID layers to bipolar layouts in magic
 	# to make the extraction models correct.
