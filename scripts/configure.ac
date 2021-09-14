@@ -207,7 +207,6 @@ M4_GEN_INSTALLATION(sky130_ml_xx_hd, alpha-sky130, ../sources)
 M4_GEN_INSTALLATION(xschem_sky130, xschem-sky130, ../sources)
 
 M4_OPT_INSTALLATION(sky130_sram_macros, sram-sky130, ../sources)
-M4_OPT_INSTALLATION(sky130_osu, osu-sky130, ../sources)
 M4_OPT_INSTALLATION(sky130_osu_t12, osu-t12-sky130, ../sources)
 M4_OPT_INSTALLATION(sky130_osu_t15, osu-t15-sky130, ../sources)
 M4_OPT_INSTALLATION(sky130_osu_t18, osu-t18-sky130, ../sources)

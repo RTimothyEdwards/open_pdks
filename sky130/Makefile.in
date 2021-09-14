@@ -88,12 +88,6 @@
 #		the SRAM library will be cloned from the repository and
 #		installed.
 #
-#	--enable-osu-sky130[=<path>]
-#		If enabled, install the sky130_osu_sc library from
-#		foss-eda-tools on googlesource.   If <path> is not
-#		specified, then the OSU standard cell library will be
-#		clones from the repository and installed.
-#
 #	--enable-osu-t12-sky130[=<path>]
 #		If enabled, install the sky130_osu_sc_t12 libraries from
 #		foss-eda-tools on googlesource.   If <path> is not
@@ -198,7 +192,6 @@ endif
 ALPHA_PATH = @SKY130_ML_XX_HD_PATH@
 XSCHEM_PATH = @XSCHEM_SKY130_PATH@
 SRAM_PATH = @SKY130_SRAM_MACROS_PATH@
-OSU_PATH = @SKY130_OSU_PATH@
 OSU_T12_PATH = @SKY130_OSU_T12_PATH@
 OSU_T15_PATH = @SKY130_OSU_T15_PATH@
 OSU_T18_PATH = @SKY130_OSU_T18_PATH@
@@ -207,7 +200,6 @@ PDK_URL = https://github.com/google/skywater-pdk
 ALPHA_URL = https://github.com/PaulSchulz/sky130_pschulz_xx_hd
 XSCHEM_URL = https://github.com/StefanSchippers/xschem_sky130
 SRAM_URL = https://github.com/efabless/sky130_sram_macros
-OSU_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc
 OSU_T12_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t12
 OSU_T15_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t15
 OSU_T18_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t18
@@ -259,11 +251,6 @@ ifeq (${SRAM_PATH},)
     COMMIT_DEFS += -DSRAM_COMMIT="unknown"
 else
     COMMIT_DEFS += -DSRAM_COMMIT=$(shell cd ${SRAM_PATH} ; git rev-parse HEAD)
-endif
-ifeq (${OSU_PATH},)
-    COMMIT_DEFS += -DOSU_COMMIT="unknown"
-else
-    COMMIT_DEFS += -DOSU_COMMIT=$(shell cd ${OSU_PATH} ; git rev-parse HEAD)
 endif
 ifeq (${OSU_T12_PATH},)
     COMMIT_DEFS += -DOSU_T12_COMMIT="unknown"
@@ -512,7 +499,7 @@ endif
 all: all-a
 
 # Handle prerequisites (fetch and install the PDK and requested libraries)
-prerequisites: pdk-repo alpha-repo xschem-repo sram-repo osu-repo osu-t12-repo osu-t15-repo osu-t18-repo
+prerequisites: pdk-repo alpha-repo xschem-repo sram-repo osu-t12-repo osu-t15-repo osu-t18-repo
 
 pdk-repo:
 	if test "x${SKYWATER_PATH}" != "x" ; then \
@@ -551,16 +538,6 @@ xschem-repo:
 		else \
 			echo "Downloading xschem setup from ${XSCHEM_URL}" ; \
 			../scripts/download.sh ${XSCHEM_URL} ${XSCHEM_PATH} ; \
-		fi ; \
-	fi
-
-osu-repo:
-	if test "x${OSU_PATH}" != "x" ; then \
-		if test -d "${OSU_PATH}" ; then \
-			echo "Using existing installation of OSU standard cell library from ${OSU_PATH}" ; \
-		else \
-			echo "Downloading OSU standard cell library from ${OSU_URL}" ; \
-			../scripts/download.sh ${OSU_URL} ${OSU_PATH} 0 ; \
 		fi ; \
 	fi
 
@@ -651,8 +628,24 @@ qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
 	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_lp.par
 	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_ms.sh
 	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_ms.par
-	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_t18.sh
-	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_t18.par
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_12t_ls.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_12t_ls.par
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_12t_ms.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_12t_ms.par
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_12t_hs.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_12t_hs.par
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_15t_ls.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_15t_ls.par
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_15t_ms.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_15t_ms.par
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_15t_hs.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_15t_hs.par
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_18t_ls.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_18t_ls.par
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_18t_ms.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_18t_ms.par
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_18t_hs.sh
+	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_18t_hs.par
 	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hd -DVOLTAGE=1v95 \
 		qflow/${TECH}.sh ${QFLOW_STAGING_A}/sky130_fd_sc_hd.sh
 	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hdll -DVOLTAGE=1v95 \
@@ -667,8 +660,24 @@ qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
 		qflow/${TECH}.sh ${QFLOW_STAGING_A}/sky130_fd_sc_ls.sh
 	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ms -DVOLTAGE=1v95 \
 		qflow/${TECH}.sh ${QFLOW_STAGING_A}/sky130_fd_sc_ms.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_t18 qflow/sky130osu.sh \
-		${QFLOW_STAGING_A}/sky130_osu_sc_t18.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_12t_ls qflow/sky130osu.sh \
+		${QFLOW_STAGING_A}/sky130_osu_sc_12t_ls.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_12t_ms qflow/sky130osu.sh \
+		${QFLOW_STAGING_A}/sky130_osu_sc_12t_ms.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_12t_hs qflow/sky130osu.sh \
+		${QFLOW_STAGING_A}/sky130_osu_sc_12t_hs.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_15t_ls qflow/sky130osu.sh \
+		${QFLOW_STAGING_A}/sky130_osu_sc_15t_ls.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_15t_ms qflow/sky130osu.sh \
+		${QFLOW_STAGING_A}/sky130_osu_sc_15t_ms.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_15t_hs qflow/sky130osu.sh \
+		${QFLOW_STAGING_A}/sky130_osu_sc_15t_hs.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_18t_ls qflow/sky130osu.sh \
+		${QFLOW_STAGING_A}/sky130_osu_sc_18t_ls.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_18t_ms qflow/sky130osu.sh \
+		${QFLOW_STAGING_A}/sky130_osu_sc_18t_ms.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_18t_hs qflow/sky130osu.sh \
+		${QFLOW_STAGING_A}/sky130_osu_sc_18t_hs.sh
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_hd.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_hdll.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_hvl.par
@@ -676,7 +685,24 @@ qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_ms.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_lp.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_ls.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_osu_sc_t18.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par \
+			${QFLOW_STAGING_A}/sky130_osu_sc_12t_ls.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par \
+			${QFLOW_STAGING_A}/sky130_osu_sc_12t_ms.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par \
+			${QFLOW_STAGING_A}/sky130_osu_sc_12t_hs.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par \
+			${QFLOW_STAGING_A}/sky130_osu_sc_15t_ls.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par \
+			${QFLOW_STAGING_A}/sky130_osu_sc_15t_ms.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par \
+			${QFLOW_STAGING_A}/sky130_osu_sc_15t_hs.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par \
+			${QFLOW_STAGING_A}/sky130_osu_sc_18t_ls.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par \
+			${QFLOW_STAGING_A}/sky130_osu_sc_18t_ms.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par \
+			${QFLOW_STAGING_A}/sky130_osu_sc_18t_hs.par
 
 netgen-a: netgen/${TECH}_setup.tcl
 	mkdir -p ${NETGENTOP_STAGING_A}
@@ -864,10 +890,6 @@ vendor-a:
 	if test "x${SRAM_PATH}" != "x" ; then \
 		echo "Building SRAM macro library" ;\
 		make sram-a ;\
-	fi
-	if test "x${OSU_PATH}" != "x" ; then \
-		echo "Building OSU full source library" ;\
-		make osu-base-a ;\
 	fi
 	if test "x${OSU_T12_PATH}" != "x" ; then \
 		echo "Building OSU 12-track-high standard cell library" ;\
@@ -1271,21 +1293,10 @@ sram-a:
 		-verilog %l/*/*.v \
 		-library general sky130_sram_macros 2>&1 | tee -a ${SKY130A}_make.log
 
-osu-base-a:
-	# Install OSU digital standard cells.
-	${STAGE} -source ${OSU_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef %l/tech/sky130_osu_sc.lef rename=sky130_osu_sc.tlef \
-		-cdl %l/latest/cdl/*.cdl ignore=topography compile-only \
-		-lef %l/latest/lef/*.lef compile-only \
-		-lib %l/latest/lib/*.lib \
-		-gds %l/latest/gds/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
-		-library digital sky130_osu_sc 2>&1 | tee -a ${SKY130A}_make.log
-
 osu-t12-a:
 	# Install OSU T12 hs digital standard cells.
 	${STAGE} -source ${OSU_T12_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef sky130_osu_sc_12T.tlef rename=sky130_osc_sc_12t_hs.tlef \
+		-techlef sky130_osu_sc_12T.tlef rename=sky130_osu_sc_12t_hs.tlef \
 		-spice 12T_hs/cdl/*.spice compile-only exclude=*.*.spice \
 		-lef 12T_hs/lef/*.lef \
 		-lib 12T_hs/lib/*.lib \
@@ -1294,7 +1305,7 @@ osu-t12-a:
 		-library digital sky130_osu_sc_12t_hs 2>&1 | tee -a ${SKY130A}_make.log
 	# Install OSU T12 ms digital standard cells.
 	${STAGE} -source ${OSU_T12_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef sky130_osu_sc_12T.tlef rename=sky130_osc_sc_12t_ms.tlef \
+		-techlef sky130_osu_sc_12T.tlef rename=sky130_osu_sc_12t_ms.tlef \
 		-spice 12T_ms/cdl/*.spice compile-only exclude=*.*.spice \
 		-lef 12T_ms/lef/*.lef \
 		-lib 12T_ms/lib/*.lib \
@@ -1303,7 +1314,7 @@ osu-t12-a:
 		-library digital sky130_osu_sc_12t_ms 2>&1 | tee -a ${SKY130A}_make.log
 	# Install OSU T12 ls digital standard cells.
 	${STAGE} -source ${OSU_T12_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef sky130_osu_sc_12T.tlef rename=sky130_osc_sc_12t_ls.tlef \
+		-techlef sky130_osu_sc_12T.tlef rename=sky130_osu_sc_12t_ls.tlef \
 		-spice 12T_ls/cdl/*.spice compile-only exclude=*.*.spice \
 		-lef 12T_ls/lef/*.lef \
 		-lib 12T_ls/lib/*.lib \
@@ -1314,7 +1325,7 @@ osu-t12-a:
 osu-t15-a:
 	# Install OSU T15 hs digital standard cells.
 	${STAGE} -source ${OSU_T15_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef sky130_osu_sc_15T.tlef rename=sky130_osc_sc_15t_hs.tlef \
+		-techlef sky130_osu_sc_15T.tlef rename=sky130_osu_sc_15t_hs.tlef \
 		-spice 15T_hs/cdl/*.spice compile-only exclude=*.*.spice \
 		-lef 15T_hs/lef/*.lef \
 		-lib 15T_hs/lib/*.lib \
@@ -1323,7 +1334,7 @@ osu-t15-a:
 		-library digital sky130_osu_sc_15t_hs 2>&1 | tee -a ${SKY130A}_make.log
 	# Install OSU T15 ms digital standard cells.
 	${STAGE} -source ${OSU_T15_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef sky130_osu_sc_15T.tlef rename=sky130_osc_sc_15t_ms.tlef \
+		-techlef sky130_osu_sc_15T.tlef rename=sky130_osu_sc_15t_ms.tlef \
 		-spice 15T_ms/cdl/*.spice compile-only exclude=*.*.spice \
 		-lef 15T_ms/lef/*.lef \
 		-lib 15T_ms/lib/*.lib \
@@ -1332,7 +1343,7 @@ osu-t15-a:
 		-library digital sky130_osu_sc_15t_ms 2>&1 | tee -a ${SKY130A}_make.log
 	# Install OSU T15 ls digital standard cells.
 	${STAGE} -source ${OSU_T15_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef sky130_osu_sc_15T.tlef rename=sky130_osc_sc_15t_ls.tlef \
+		-techlef sky130_osu_sc_15T.tlef rename=sky130_osu_sc_15t_ls.tlef \
 		-spice 15T_ls/cdl/*.spice compile-only exclude=*.*.spice \
 		-lef 15T_ls/lef/*.lef \
 		-lib 15T_ls/lib/*.lib \
@@ -1343,7 +1354,7 @@ osu-t15-a:
 osu-t18-a:
 	# Install OSU T18 hs digital standard cells.
 	${STAGE} -source ${OSU_T18_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef sky130_osu_sc_18T.tlef rename=sky130_osc_sc_18t_hs.tlef \
+		-techlef sky130_osu_sc_18T.tlef rename=sky130_osu_sc_18t_hs.tlef \
 		-spice 18T_hs/cdl/*.spice compile-only exclude=*.*.spice \
 		-lef 18T_hs/lef/*.lef \
 		-lib 18T_hs/lib/*.lib \
@@ -1352,7 +1363,7 @@ osu-t18-a:
 		-library digital sky130_osu_sc_18t_hs 2>&1 | tee -a ${SKY130A}_make.log
 	# Install OSU T18 ms digital standard cells.
 	${STAGE} -source ${OSU_T18_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef sky130_osu_sc_18T.tlef rename=sky130_osc_sc_18t_ms.tlef \
+		-techlef sky130_osu_sc_18T.tlef rename=sky130_osu_sc_18t_ms.tlef \
 		-spice 18T_ms/cdl/*.spice compile-only exclude=*.*.spice \
 		-lef 18T_ms/lef/*.lef \
 		-lib 18T_ms/lib/*.lib \
@@ -1361,7 +1372,7 @@ osu-t18-a:
 		-library digital sky130_osu_sc_18t_ms 2>&1 | tee -a ${SKY130A}_make.log
 	# Install OSU T18 ls digital standard cells.
 	${STAGE} -source ${OSU_T18_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef sky130_osu_sc_18T.tlef rename=sky130_osc_sc_18t_ls.tlef \
+		-techlef sky130_osu_sc_18T.tlef rename=sky130_osu_sc_18t_ls.tlef \
 		-spice 18T_ls/cdl/*.spice compile-only exclude=*.*.spice \
 		-lef 18T_ls/lef/*.lef \
 		-lib 18T_ls/lib/*.lib \

@@ -591,7 +591,6 @@ EF_STYLE
 SKY130_OSU_T18_PATH
 SKY130_OSU_T15_PATH
 SKY130_OSU_T12_PATH
-SKY130_OSU_PATH
 SKY130_SRAM_MACROS_PATH
 XSCHEM_SKY130_PATH
 SKY130_ML_XX_HD_PATH
@@ -635,6 +634,7 @@ infodir
 docdir
 oldincludedir
 includedir
+runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -669,7 +669,6 @@ enable_xschem
 enable_alpha_sky130
 enable_xschem_sky130
 enable_sram_sky130
-enable_osu_sky130
 enable_osu_t12_sky130
 enable_osu_t15_sky130
 enable_osu_t18_sky130
@@ -717,6 +716,7 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
+runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
@@ -969,6 +969,15 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
+  -runstatedir | --runstatedir | --runstatedi | --runstated \
+  | --runstate | --runstat | --runsta | --runst | --runs \
+  | --run | --ru | --r)
+    ac_prev=runstatedir ;;
+  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
+  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
+  | --run=* | --ru=* | --r=*)
+    runstatedir=$ac_optarg ;;
+
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -1106,7 +1115,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir
+		libdir localedir mandir runstatedir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -1259,6 +1268,7 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
+  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -1328,9 +1338,6 @@ Optional Features:
                           will be downloaded. [default=enabled]
   --enable-sram-sky130[=path]
                           Install sky130_sram_macros. If path is omitted, the repository
-                          will be downloaded. [default=disabled]
-  --enable-osu-sky130[=path]
-                          Install sky130_osu. If path is omitted, the repository
                           will be downloaded. [default=disabled]
   --enable-osu-t12-sky130[=path]
                           Install sky130_osu_t12. If path is omitted, the repository
@@ -1831,7 +1838,7 @@ if ${am_cv_pathless_PYTHON+:} false; then :
   $as_echo_n "(cached) " >&6
 else
 
-	for am_cv_pathless_PYTHON in python python2 python3 python3.3 python3.2 python3.1 python3.0 python2.7  python2.6 python2.5 python2.4 python2.3 python2.2 python2.1 python2.0 none; do
+	for am_cv_pathless_PYTHON in python python2 python3  python3.9 python3.8 python3.7 python3.6 python3.5 python3.4 python3.3  python3.2 python3.1 python3.0  python2.7 python2.6 python2.5 python2.4 python2.3 python2.2 python2.1  python2.0 none; do
 	  test "$am_cv_pathless_PYTHON" = none && break
 	  prog="import sys
 # split strings by '.' and convert to numeric.  Append some zeros
@@ -1917,6 +1924,8 @@ fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
 $as_echo "$am_cv_python_version" >&6; }
   PYTHON_VERSION=$am_cv_python_version
+
+
 
   PYTHON_PREFIX='${prefix}'
 
@@ -2588,47 +2597,6 @@ else
 
             { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_sram_macros' will not be installed." >&5
 $as_echo "$as_me: Package 'sky130_sram_macros' will not be installed." >&6;}
-
-
-fi
-
-
-
-
-
-
-
-
-
-
-
-
-    # echo target targetvar flag location
-
-    SKY130_OSU_PATH=""
-
-    # Check whether --enable-osu-sky130 was given.
-if test "${enable_osu_sky130+set}" = set; then :
-  enableval=$enable_osu_sky130;
-            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_osu' will be installed automatically during make." >&5
-$as_echo "$as_me: Package 'sky130_osu' will be installed automatically during make." >&6;}
-        	export SKY130_OSU_PATH=../sources/sky130_osu
-            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_osu'" >&5
-$as_echo "$as_me: Disabling package 'sky130_osu'" >&6;}
-    		export SKY130_OSU_PATH=""
-            else
-                SKY130_OSU_PATH=$enableval
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_osu' at $SKY130_OSU_PATH" >&5
-$as_echo "$as_me: Enabling package 'sky130_osu' at $SKY130_OSU_PATH" >&6;}
-            fi
-            SKY130_OSU_PATH=`realpath $SKY130_OSU_PATH`
-
-else
-
-            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_osu' will not be installed." >&5
-$as_echo "$as_me: Package 'sky130_osu' will not be installed." >&6;}
 
 
 fi
