@@ -1900,23 +1900,9 @@ style wafflefill variants (),(tiled)
         shrink  2035
         grow    2035
 
-# Temporary:  pass1a fills in areas that are pathologically unable to
-# fit fomfill_pass1 due to offsets.  It should be fixed by implementing
-# a proper slots Y offset in addition to the X offset.
-
- templayer      obstruct_fom_pass1a fomfill_pass1
-	grow	1590
-	or	obstruct_fom
- templayer	fomfill_pass1a topbox
-	slots	0 4080 1600 0 4080 1600 1360 2840
-	and-not	obstruct_fom_pass1a
-	and	topbox
-	shrink	2035
-	grow	2035
-
 #---------------------------------------------------
 
- templayer      obstruct_poly_pass1 fomfill_pass1,fomfill_pass1a
+ templayer      obstruct_poly_pass1 fomfill_pass1
         grow    300
 	or	obstruct_poly
  templayer	polyfill_pass1 topbox
@@ -1928,7 +1914,7 @@ style wafflefill variants (),(tiled)
 
 #---------------------------------------------------
 
- templayer      obstruct_fom_pass2 fomfill_pass1,fomfill_pass1a
+ templayer      obstruct_fom_pass2 fomfill_pass1
         grow    1290
 	or	polyfill_pass1
         grow    300
@@ -1944,7 +1930,7 @@ style wafflefill variants (),(tiled)
 
  templayer      obstruct_poly_coarse polyfill_pass1
 	grow	60
-	or	fomfill_pass1,fomfill_pass1a,fomfill_pass2
+	or	fomfill_pass1,fomfill_pass2
 	grow	300
 	or	obstruct_poly
  templayer	polyfill_coarse topbox
@@ -1957,7 +1943,7 @@ style wafflefill variants (),(tiled)
 #---------------------------------------------------
  templayer      obstruct_poly_medium polyfill_pass1,polyfill_coarse
 	grow	60
-	or	fomfill_pass1,fomfill_pass1a,fomfill_pass2
+	or	fomfill_pass1,fomfill_pass2
         grow    300
 	or	obstruct_poly
  templayer	polyfill_medium topbox
@@ -1970,7 +1956,7 @@ style wafflefill variants (),(tiled)
 #---------------------------------------------------
  templayer      obstruct_poly_fine polyfill_pass1,polyfill_coarse,polyfill_medium
 	grow	60
-	or	fomfill_pass1,fomfill_pass1a,fomfill_pass2
+	or	fomfill_pass1,fomfill_pass2
 	grow	300
 	or	obstruct_poly
  templayer	polyfill_fine topbox
@@ -1982,7 +1968,7 @@ style wafflefill variants (),(tiled)
 
 #---------------------------------------------------
 
- templayer      obstruct_fom_coarse fomfill_pass1,fomfill_pass1a,fomfill_pass2
+ templayer      obstruct_fom_coarse fomfill_pass1,fomfill_pass2
         grow    1290
 	or	polyfill_pass1,polyfill_coarse,polyfill_medium,polyfill_fine
 	grow	300
@@ -1996,7 +1982,7 @@ style wafflefill variants (),(tiled)
 
 #---------------------------------------------------
 
- templayer      obstruct_fom_fine fomfill_pass1,fomfill_pass1a,fomfill_pass2,fomfill_coarse
+ templayer      obstruct_fom_fine fomfill_pass1,fomfill_pass2,fomfill_coarse
         grow    1290
 	or	polyfill_pass1,polyfill_coarse,polyfill_medium,polyfill_fine
 	grow	300
@@ -2010,7 +1996,6 @@ style wafflefill variants (),(tiled)
 
 #---------------------------------------------------
  layer  FOMFILL fomfill_pass1 
-	or	fomfill_pass1a
 	or	fomfill_pass2
 	or	fomfill_coarse
 	or	fomfill_fine
