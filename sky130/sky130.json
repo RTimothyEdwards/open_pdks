@@ -46,7 +46,6 @@
 	"sky130_fd_sc_lp": "FD_SC_LP_COMMIT",
 	"sky130_fd_sc_ls": "FD_SC_LS_COMMIT",
 	"sky130_fd_sc_ms": "FD_SC_MS_COMMIT",
-	"sky130_osu_sc": "OSU_COMMIT",
 	"sky130_osu_sc_t12": "OSU_T12_COMMIT",
 	"sky130_osu_sc_t15": "OSU_T15_COMMIT",
 	"sky130_osu_sc_t18": "OSU_T18_COMMIT"
