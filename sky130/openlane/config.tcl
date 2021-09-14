@@ -160,5 +160,7 @@ set ::env(FP_PDN_CORE_RING_HSPACING) 1.7
 set ::env(FP_PDN_CORE_RING_VOFFSET) 6
 set ::env(FP_PDN_CORE_RING_HOFFSET) 6
 
-# Used for estimate_parasitics
-set ::env(WIRE_RC_LAYER) "met1";
+# Used for parasitics estimation, IR drop analysis, etc
+set ::env(WIRE_RC_LAYER) "met1"
+set ::env(DATA_WIRE_RC_LAYER) "met2"
+set ::env(CLOCK_WIRE_RC_LAYER) "met5"
