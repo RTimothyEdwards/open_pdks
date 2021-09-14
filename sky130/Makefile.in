@@ -653,20 +653,20 @@ qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
 	rm -f ${QFLOW_STAGING_A}/sky130_fd_sc_ms.par
 	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_t18.sh
 	rm -f ${QFLOW_STAGING_A}/sky130_osu_sc_t18.par
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hd qflow/${TECH}.sh \
-		${QFLOW_STAGING_A}/sky130_fd_sc_hd.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hdll qflow/${TECH}.sh \
-		${QFLOW_STAGING_A}/sky130_fd_sc_hdll.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hvl qflow/${TECH}.sh \
-		${QFLOW_STAGING_A}/sky130_fd_sc_hvl.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hs qflow/${TECH}.sh \
-		${QFLOW_STAGING_A}/sky130_fd_sc_hs.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_lp qflow/${TECH}.sh \
-		${QFLOW_STAGING_A}/sky130_fd_sc_lp.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ls qflow/${TECH}.sh \
-		${QFLOW_STAGING_A}/sky130_fd_sc_ls.sh
-	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ms qflow/${TECH}.sh \
-		${QFLOW_STAGING_A}/sky130_fd_sc_ms.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hd -DVOLTAGE=1v95 \
+		qflow/${TECH}.sh ${QFLOW_STAGING_A}/sky130_fd_sc_hd.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hdll -DVOLTAGE=1v95 \
+		qflow/${TECH}.sh ${QFLOW_STAGING_A}/sky130_fd_sc_hdll.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hvl -DVOLTAGE=4v95 \
+		qflow/${TECH}.sh ${QFLOW_STAGING_A}/sky130_fd_sc_hvl.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_hs -DVOLTAGE=1v95 \
+		qflow/${TECH}.sh ${QFLOW_STAGING_A}/sky130_fd_sc_hs.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_lp -DVOLTAGE=1v95 \
+		qflow/${TECH}.sh ${QFLOW_STAGING_A}/sky130_fd_sc_lp.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ls -DVOLTAGE=1v95 \
+		qflow/${TECH}.sh ${QFLOW_STAGING_A}/sky130_fd_sc_ls.sh
+	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_fd_sc_ms -DVOLTAGE=1v95 \
+		qflow/${TECH}.sh ${QFLOW_STAGING_A}/sky130_fd_sc_ms.sh
 	${CPP} ${SKY130A_DEFS} -DLIBRARY=sky130_osu_sc_t18 qflow/sky130osu.sh \
 		${QFLOW_STAGING_A}/sky130_osu_sc_t18.sh
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_hd.par
@@ -674,7 +674,7 @@ qflow-a: qflow/${TECH}.sh qflow/${TECH}.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_hvl.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_hs.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_ms.par
-	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/$sky130_fd_sc_lp.par
+	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_lp.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_fd_sc_ls.par
 	${CPP} ${SKY130A_DEFS} qflow/${TECH}.par ${QFLOW_STAGING_A}/sky130_osu_sc_t18.par
 

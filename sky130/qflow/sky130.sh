@@ -21,9 +21,9 @@ set spicefile=STAGING_PATH/TECHNAME/libs.ref/LIBRARY/spice/LIBRARY.spice
 
 # The liberty format file containing standard cell timing and function information
 #ifdef EF_FORMAT
-set libertyfile=STAGING_PATH/TECHNAME/libs.ref/lib/LIBRARY/LIBRARY__ff_n40C_1v95.lib
+set libertyfile=STAGING_PATH/TECHNAME/libs.ref/lib/LIBRARY/LIBRARY__ff_n40C_VOLTAGE.lib
 #else (!EF_FORMAT)
-set libertyfile=STAGING_PATH/TECHNAME/libs.ref/LIBRARY/lib/LIBRARY__ff_n40C_1v95.lib
+set libertyfile=STAGING_PATH/TECHNAME/libs.ref/LIBRARY/lib/LIBRARY__ff_n40C_VOLTAGE.lib
 #endif (!EF_FORMAT)
 
 # If there is another LEF file containing technology information
