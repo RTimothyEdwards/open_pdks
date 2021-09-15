@@ -5017,8 +5017,8 @@ extract
 # Resistances are in milliohms per square
 # Optional 3rd argument is the corner adjustment fraction
 # Device values come from trtc.cor (typical corner)
+ resist (pwell,isosub)/well     4400000
  resist (dnwell)/dwell          2200000
- resist (pwell)/well            3050000
  resist (nwell)/well            1700000
  resist (rpw)/well              3050000 0.5
  resist (*ndiff,nsd)/active 	 120000
