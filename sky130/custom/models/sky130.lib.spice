@@ -14,23 +14,17 @@
 
 ******* SkyWater sky130 model library *********
 
-
 * Typical corner (tt)
 .lib tt
 .param mc_mm_switch=0
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/tt.spice"
-.include "corners/tt/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_typical__cap_typical.spice"
 .include "r+c/res_typical__cap_typical__lin.spice"
 * Special cells
 .include "corners/tt/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/tt/rf.spice"
 .endl tt
 
 * Slow-Fast corner (sf)
@@ -39,16 +33,11 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/sf.spice"
-.include "corners/sf/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_typical__cap_typical.spice"
 .include "r+c/res_typical__cap_typical__lin.spice"
 * Special cells
 .include "corners/sf/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/sf/rf.spice"
 .endl sf
 
 * Fast-Fast corner (ff)
@@ -57,16 +46,11 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/ff.spice"
-.include "corners/ff/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_typical__cap_typical.spice"
 .include "r+c/res_typical__cap_typical__lin.spice"
 * Special cells
 .include "corners/ff/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/ff/rf.spice"
 .endl ff
 
 * Slow-Slow corner (ss)
@@ -75,16 +59,11 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/ss.spice"
-.include "corners/ss/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_typical__cap_typical.spice"
 .include "r+c/res_typical__cap_typical__lin.spice"
 * Special cells
 .include "corners/ss/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/ss/rf.spice"
 .endl ss
 
 * Fast-Slow corner (fs)
@@ -93,16 +72,11 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/fs.spice"
-.include "corners/fs/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_typical__cap_typical.spice"
 .include "r+c/res_typical__cap_typical__lin.spice"
 * Special cells
 .include "corners/fs/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/fs/rf.spice"
 .endl fs
 
 * Low-Low corner (ll)
@@ -111,18 +85,12 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/tt.spice"
-.include "corners/tt/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_low__cap_low.spice"
 .include "r+c/res_low__cap_low__lin.spice"
 * Special cells
 .include "corners/tt/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/tt/rf.spice"
 .endl ll
-
 
 * High-High corner (hh)
 .lib hh
@@ -130,18 +98,12 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/tt.spice"
-.include "corners/tt/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_high__cap_high.spice"
 .include "r+c/res_high__cap_high__lin.spice"
 * Special cells
 .include "corners/tt/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/tt/rf.spice"
 .endl hh
-
 
 * High-Low corner (hl)
 .lib hl
@@ -149,18 +111,12 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/tt.spice"
-.include "corners/tt/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_high__cap_low.spice"
 .include "r+c/res_high__cap_low__lin.spice"
 * Special cells
 .include "corners/tt/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/tt/rf.spice"
 .endl hl
-
 
 * Low-High corner (lh)
 .lib lh
@@ -168,33 +124,24 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/tt.spice"
-.include "corners/tt/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_low__cap_high.spice"
 .include "r+c/res_low__cap_high__lin.spice"
 * Special cells
 .include "corners/tt/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/tt/rf.spice"
 .endl lh
+
 * Typical corner with mismatch (tt_mm)
 .lib tt_mm
 .param mc_mm_switch=1
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/tt.spice"
-.include "corners/tt/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_typical__cap_typical.spice"
 .include "r+c/res_typical__cap_typical__lin.spice"
 * Special cells
 .include "corners/tt/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/tt/rf.spice"
 .endl tt_mm
 
 * Slow-Fast corner with mismatch (sf_mm)
@@ -203,16 +150,11 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/sf.spice"
-.include "corners/sf/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_typical__cap_typical.spice"
 .include "r+c/res_typical__cap_typical__lin.spice"
 * Special cells
 .include "corners/sf/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/sf/rf.spice"
 .endl sf_mm
 
 * Fast-Fast corner with mismatch (ff_mm)
@@ -221,16 +163,11 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/ff.spice"
-.include "corners/ff/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_typical__cap_typical.spice"
 .include "r+c/res_typical__cap_typical__lin.spice"
 * Special cells
 .include "corners/ff/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/ff/rf.spice"
 .endl ff_mm
 
 * Slow-Slow corner with mismatch (ss_mm)
@@ -239,16 +176,11 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/ss.spice"
-.include "corners/ss/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_typical__cap_typical.spice"
 .include "r+c/res_typical__cap_typical__lin.spice"
 * Special cells
 .include "corners/ss/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/ss/rf.spice"
 .endl ss_mm
 
 * Fast-Slow corner with mismatch (fs_mm)
@@ -257,16 +189,11 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/fs.spice"
-.include "corners/fs/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_typical__cap_typical.spice"
 .include "r+c/res_typical__cap_typical__lin.spice"
 * Special cells
 .include "corners/fs/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/fs/rf.spice"
 .endl fs_mm
 
 * Low-Low corner with mismatch (ll_mm)
@@ -275,18 +202,12 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/tt.spice"
-.include "corners/tt/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_low__cap_low.spice"
 .include "r+c/res_low__cap_low__lin.spice"
 * Special cells
 .include "corners/tt/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/tt/rf.spice"
 .endl ll_mm
-
 
 * High-High corner with mismatch (hh_mm)
 .lib hh_mm
@@ -294,18 +215,12 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/tt.spice"
-.include "corners/tt/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_high__cap_high.spice"
 .include "r+c/res_high__cap_high__lin.spice"
 * Special cells
 .include "corners/tt/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/tt/rf.spice"
 .endl hh_mm
-
 
 * High-Low corner with mismatch (hl_mm)
 .lib hl_mm
@@ -313,18 +228,12 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/tt.spice"
-.include "corners/tt/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_high__cap_low.spice"
 .include "r+c/res_high__cap_low__lin.spice"
 * Special cells
 .include "corners/tt/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/tt/rf.spice"
 .endl hl_mm
-
 
 * Low-High corner with mismatch (lh_mm)
 .lib lh_mm
@@ -332,18 +241,12 @@
 .param mc_pr_switch=0
 * MOSFET
 .include "corners/tt.spice"
-.include "corners/tt/nonfet.spice"
 * Resistor/Capacitor
 .include "r+c/res_low__cap_high.spice"
 .include "r+c/res_low__cap_high__lin.spice"
 * Special cells
 .include "corners/tt/specialized_cells.spice"
-* All models
-.include "all.spice"
-* Corner
-.include "corners/tt/rf.spice"
 .endl lh_mm
-
 
 * Monte Carlo process variation
 
