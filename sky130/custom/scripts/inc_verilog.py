@@ -25,18 +25,10 @@ def filter(inname, outname):
         print('inc_verilog.py: failed to open ' + fnmIn + ' for reading.', file=sys.stderr)
         return 1
 
-    # Check if input file is a base cell or strength-specific cell, and check
-    # if it has a "specify" block file.  To enable this, change "False" to "True".
-    specfile = None
-    if False:
-        strrex = re.compile('(.+)_[0-9]+.v')
-        smatch = strrex.match(inname)
-        if smatch:
-            basename = smatch.group(1)
-            specname = basename + '.specify.v'
-            if os.path.exists(specname):
-                print('Specfile ' + specname + ' found for cell ' + inname)
-                specfile = specname
+    # Check if input file is a base cell or strength-specific cell, and
+    # check if it has a "specify" block file.  To enable this, change
+    # dospecify from False to True.
+    dospecify = False
 
     # Process input with regexp
 
@@ -49,6 +41,7 @@ def filter(inname, outname):
     inpath = os.path.split(inname)[0]
 
     for line in vlines:
+        isbehav = False
 
         # Check includes
         imatch = increx.match(line)
@@ -73,29 +66,36 @@ def filter(inname, outname):
                     incfilename = '.'.join(ilist)
                     print('   New filename is: ' + incfilename)
 
+                # If adding specify blocks, check if the include file is a
+                # behavioral base cell.
+                if dospecify:
+                    if '.behavioral.' in incfilename:
+                        specname = incfilename.split('.')[0] + '.specify.v'
+                        if os.path.exists(inpath + '/' + specname):
+                            print('Specfile ' + specname + ' found for cell ' + incfilename)
+                            isbehav = True
+
                 with open(inpath + '/' + incfilename, 'r') as incfile:
                     v2text = incfile.read()
                     v2lines = v2text.splitlines()
                     for line2 in v2lines:
                         i2match = increx.match(line2)
                         if not i2match:
+                            # Experimental:  Put back "specify" block.
+                            if isbehav:
+                                ematch = endrex.match(line2)
+                                if ematch:
+                                    with open(inpath + '/' + specname, 'r') as ispec:
+                                        v3text = ispec.read()
+                                        v3lines = v3text.splitlines()
+                                        for line3 in v3lines:
+                                            fixedlines.append(line3)
                             fixedlines.append(line2)
             else:
                 # single-dot:  Ignore this line
                 pass
             modified = True
         else:
-            # Experimental:  Put back "specify" block.
-            if specfile:
-                ematch = endrex.match(line)
-                if ematch:
-                    fixedlines.append('`ifndef FUNCTIONAL')
-                    with open(specfile, 'r') as ispec:
-                        v3text = ispec.read()
-                        v3lines = v3text.splitlines()
-                        for line3 in v3lines:
-                            fixedlines.append(line3)
-                    fixedlines.append('`endif')
             fixedlines.append(line)
 
     # Write output
