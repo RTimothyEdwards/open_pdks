@@ -13,10 +13,12 @@ set ::ground_nets $::env(GND_NET)
 
 if { [info exists ::env(FP_PDN_ENABLE_GLOBAL_CONNECTIONS)] } {
     if { $::env(FP_PDN_ENABLE_GLOBAL_CONNECTIONS) == 1 } {
-        add_global_connection -net $::env(VDD_NET) -inst_pattern .* -pin_pattern {VPWR} -power
-        add_global_connection -net $::env(VDD_NET) -inst_pattern .* -pin_pattern {VPB} -power
-        add_global_connection -net $::env(GND_NET) -inst_pattern .* -pin_pattern {VGND} -ground
-        add_global_connection -net $::env(GND_NET) -inst_pattern .* -pin_pattern {VNB} -ground
+        foreach power_pin $::env(STD_CELL_POWER_PINS) {
+            add_global_connection -net $::env(VDD_NET) -inst_pattern .* -pin_pattern $power_pin -power
+        }
+        foreach ground_pin $::env(STD_CELL_GROUND_PINS) {
+            add_global_connection -net $::env(GND_NET) -inst_pattern .* -pin_pattern $ground_pin -ground
+        }
     }
 }
 
@@ -58,7 +60,7 @@ set macro {
     orient {R0 R180 MX MY R90 R270 MXR90 MYR90}
     power_pins $::env(VDD_NET)
     ground_pins $::env(GND_NET)
-    blockages "li1 met1 met2 met3 met4"
+    blockages $::env(MACRO_BLOCKAGES_LAYER)
     straps {
     }
     connect {{$::env(FP_PDN_LOWER_LAYER)_PIN_ver $::env(FP_PDN_UPPER_LAYER)}}

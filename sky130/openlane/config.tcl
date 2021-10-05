@@ -8,6 +8,9 @@ set ::env(DEF_UNITS_PER_MICRON) 1000
 set ::env(VDD_PIN) "VPWR"
 set ::env(GND_PIN) "VGND"
 
+set ::env(STD_CELL_POWER_PINS) "VPWR VPB"
+set ::env(STD_CELL_GROUND_PINS) "VGND VNB"
+
 # Technology LEF
 #ifdef EF_FORMAT
 set ::env(TECH_LEF) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/techLEF/$::env(STD_CELL_LIBRARY)/$::env(STD_CELL_LIBRARY).tlef"
@@ -159,6 +162,9 @@ set ::env(FP_PDN_CORE_RING_VSPACING) 1.7
 set ::env(FP_PDN_CORE_RING_HSPACING) 1.7
 set ::env(FP_PDN_CORE_RING_VOFFSET) 6
 set ::env(FP_PDN_CORE_RING_HOFFSET) 6
+
+# PDN Macro blockages list
+set ::env(MACRO_BLOCKAGES_LAYER) "li1 met1 met2 met3 met4"
 
 # Used for parasitics estimation, IR drop analysis, etc
 set ::env(WIRE_RC_LAYER) "met1"
