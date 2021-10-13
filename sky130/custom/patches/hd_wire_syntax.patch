@@ -1,0 +1,18 @@
+--- verilog/sky130_fd_sc_hd.v	2021-10-13 14:50:14.821130287 -0400
++++ verilog_new/sky130_fd_sc_hd.v	2021-10-13 14:50:33.761129510 -0400
+@@ -37140,7 +37140,6 @@
+     wire D_delayed     ;
+     reg  notifier      ;
+     wire awake         ;
+-    wire 1             ;
+ 
+     //                                    Name     Output  Other arguments
+     not                                   not0    (GATE  , GATE_N_delayed                       );
+@@ -37282,7 +37281,6 @@
+     wire D_delayed     ;
+     reg  notifier      ;
+     wire awake         ;
+-    wire 1             ;
+ 
+     //                                    Name     Output  Other arguments
+     not                                   not0    (GATE  , GATE_N_delayed                       );

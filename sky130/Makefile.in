@@ -1076,6 +1076,9 @@ digital-hd-a:
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HD_TECHLEF} \
 		< custom/patches/hd_minenclosed.squeaky.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
+	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HD_VERILOG} \
+		< custom/patches/hd_wire_syntax.patch \
+		2>&1 | tee -a ${SKY130A}_make.log || true
 
 digital-hdll-a:
 	# Install all SkyWater digital standard cells.
