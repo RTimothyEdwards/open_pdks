@@ -30,7 +30,7 @@ set ::env(FP_WELLTAP_CELL) "sky130_fd_sc_ms__tapvpwrvgnd_1"
 set ::env(FP_ENDCAP_CELL) "sky130_fd_sc_ms__decap_4"
 
 # defaults (can be overridden by designs):
-set ::env(SYNTH_DRIVING_CELL) "sky130_fd_sc_ms__inv_8"
+set ::env(SYNTH_DRIVING_CELL) "sky130_fd_sc_ms__inv_1"
 #capacitance : 0.017653;
 set ::env(SYNTH_DRIVING_CELL_PIN) "Y"
 # update these

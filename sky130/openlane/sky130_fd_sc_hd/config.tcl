@@ -30,11 +30,11 @@ set ::env(FP_WELLTAP_CELL) "sky130_fd_sc_hd__tapvpwrvgnd_1"
 set ::env(FP_ENDCAP_CELL) "sky130_fd_sc_hd__decap_3"
 
 # defaults (can be overridden by designs):
-set ::env(SYNTH_DRIVING_CELL) "sky130_fd_sc_hd__inv_8"
+set ::env(SYNTH_DRIVING_CELL) "sky130_fd_sc_hd__inv_1"
 #capacitance : 0.017653;
 set ::env(SYNTH_DRIVING_CELL_PIN) "Y"
-# update these
-set ::env(SYNTH_CAP_LOAD) "17.65" ; # femtofarad __inv_8 pin A cap
+# update these 
+set ::env(SYNTH_CAP_LOAD) "33.442" ; # femtofarad __inv_16 pin A cap (https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hd/blob/main/cells/inv/sky130_fd_sc_hd__inv_16__tt_025C_1v80.lib.json)
 set ::env(SYNTH_MIN_BUF_PORT) "sky130_fd_sc_hd__buf_2 A X"
 set ::env(SYNTH_TIEHI_PORT) "sky130_fd_sc_hd__conb_1 HI"
 set ::env(SYNTH_TIELO_PORT) "sky130_fd_sc_hd__conb_1 LO"
