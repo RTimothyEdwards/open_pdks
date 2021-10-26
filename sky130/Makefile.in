@@ -469,6 +469,7 @@ ifeq (${EF_STYLE}, 1)
 	LP_VERILOG = verilog/sky130_fd_sc_lp
 	HD_TECHLEF = techLEF/sky130_fd_sc_hd
 	HDLL_TECHLEF = techLEF/sky130_fd_sc_hdll
+	HD_LIB = lib/sky130_fd_sc_hd
 	MLXX_SCRIPTS = scripts/sky130_ml_xx_hd
 	PR_SPICE = spi/sky130_fd_pr
 	HVL_SPICE = spi/sky130_fd_sc_hvl
@@ -487,6 +488,7 @@ else
 	LP_VERILOG = sky130_fd_sc_lp/verilog
 	HD_TECHLEF = sky130_fd_sc_hd/techlef
 	HDLL_TECHLEF = sky130_fd_sc_hdll/techlef
+	HD_LIB = sky130_fd_sc_hd/lib
 	MLXX_SCRIPTS = sky130_ml_xx_hd/scripts
 	PR_SPICE = sky130_fd_pr/spice
 	HVL_SPICE = sky130_fd_sc_hvl/spice
@@ -1032,6 +1034,7 @@ io-a:
 	${ADDPROP} ${STAGING_PATH}/${SKY130A} sky130_fd_io sky130_fd_io__top_gpiov2 \
 		"MASKHINTS_HVI 1346 17198 5828 19224 13700 1890 15920 2360 24 17522 1778 20612" -mag
 
+HD_LIB_FILES = $(shell ls ${STAGING_PATH}/${SKY130A}/libs.ref/${HD_LIB}/*.lib )
 digital-hd-a:
 	# Install custom additions to standard cell libraries
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
@@ -1078,6 +1081,12 @@ digital-hd-a:
 	patch -p1 -f -d ${STAGING_PATH}/${SKY130A}/libs.ref/${HD_VERILOG} \
 		< custom/patches/hd_wire_syntax.patch \
 		2>&1 | tee -a ${SKY130A}_make.log || true
+	# Apply patch to add WLM to the liberty files 
+	for file in ${HD_LIB_FILES} ; do \
+		patch -p1 -f --no-backup-if-mismatch $$file \
+		custom/patches/sky130_wlm.patch  \
+		2>&1 | tee -a ${SKY130A}_make.log || true ; \
+	done
 
 digital-hdll-a:
 	# Install all SkyWater digital standard cells.

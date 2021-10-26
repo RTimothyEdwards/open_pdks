@@ -1,0 +1,67 @@
+diff --git a/sky130_fd_sc_hd__tt_025C_1v80.lib b/sky130_fd_sc_hd__tt_025C_1v80_n.lib
+index 3340726..9f29aee 100644
+--- a/sky130_fd_sc_hd__tt_025C_1v80.lib
++++ b/sky130_fd_sc_hd__tt_025C_1v80_n.lib
+@@ -35,6 +35,62 @@ library ("sky130_fd_sc_hd__tt_025C_1v80") {
+         temperature : 25.000000000;
+         tree_type : "balanced_tree";
+     }
++    /* Wire load tables */
++
++    wire_load("Small") {
++      capacitance : 1.42e-05;
++      resistance : 0.0745;
++      slope : 8.3631;
++      fanout_length( 1, 23.2746);
++      fanout_length( 2, 32.1136);
++      fanout_length( 3, 48.4862);
++      fanout_length( 4, 64.0974);
++      fanout_length( 5, 86.2649);
++      fanout_length( 6, 84.2649);
++    }
++
++
++    wire_load("Medium") {
++      capacitance : 1.42e-05;
++      resistance : 0.0745;
++      slope : 8.3631;
++      fanout_length( 1, 23.2746);
++      fanout_length( 2, 32.1136);
++      fanout_length( 3, 48.4862);
++      fanout_length( 4, 64.0974);
++      fanout_length( 5, 86.2649);
++      fanout_length( 6, 84.2649);
++    }
++
++    wire_load("Large") {
++      capacitance : 1.42e-05;
++      resistance : 0.0745;
++      slope : 8.3631;
++      fanout_length( 1, 23.2746);
++      fanout_length( 2, 32.1136);
++      fanout_length( 3, 48.4862);
++      fanout_length( 4, 64.0974);
++      fanout_length( 5, 86.2649);
++      fanout_length( 6, 84.2649);
++    }
++
++
++    wire_load("Huge") {
++      capacitance : 1.42e-05;
++      resistance : 0.0745;
++      slope : 8.3631;
++      fanout_length( 1, 23.2746);
++      fanout_length( 2, 32.1136);
++      fanout_length( 3, 48.4862);
++      fanout_length( 4, 64.0974);
++      fanout_length( 5, 86.2649);
++      fanout_length( 6, 84.2649);
++    }
++
++
++    default_wire_load : "Small" ;
++    default_wire_load_mode : top;
++
+     power_lut_template ("power_inputs_1") {
+         variable_1 : "input_transition_time";
+         index_1("1, 2, 3, 4, 5, 6, 7");
