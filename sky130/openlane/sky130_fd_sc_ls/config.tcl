@@ -64,7 +64,7 @@ set ::env(ROOT_CLK_BUFFER) $::env(STD_CELL_LIBRARY)__clkbuf_16
 set ::env(CLK_BUFFER) $::env(STD_CELL_LIBRARY)__clkbuf_4
 set ::env(CLK_BUFFER_INPUT) A
 set ::env(CLK_BUFFER_OUTPUT) X
-set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_ls__clkbuf_1 sky130_fd_sc_ls__clkbuf_2 sky130_fd_sc_ls__clkbuf_4 sky130_fd_sc_ls__clkbuf_8"
+set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_ls__clkbuf_2 sky130_fd_sc_ls__clkbuf_4 sky130_fd_sc_ls__clkbuf_8"
 set ::env(CTS_MAX_CAP) 1.53169
 set ::env(DEFAULT_MAX_TRAN) 0.75
 set ::env(FP_PDN_RAIL_WIDTH) 0.48
