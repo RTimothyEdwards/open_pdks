@@ -76,7 +76,7 @@ rect 0 20 254 1070
 rect 14746 20 15000 1070
 use sky130_fd_io__overlay_vdda_hvc  sky130_fd_io__overlay_vdda_hvc_0 $PDKPATH/libs.ref/sky130_fd_io/mag
 timestamp 1617033437
-transform 1 0 0 0 1 -7
+transform 1 0 0 0 1 -407
 box 0 407 15000 40000
 use sky130_fd_io__top_power_hvc_wpadv2  sky130_fd_io__top_power_hvc_wpadv2_1 $PDKPATH/libs.ref/sky130_fd_io/mag
 timestamp 1617033437
