@@ -1050,7 +1050,7 @@ digital-hd-a:
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib \
+		-lib %l/latest/timing/*.lib filter=custom/scripts/add_wireloads.py \
 		-gds %l/latest/cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
@@ -1091,7 +1091,7 @@ digital-hdll-a:
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib \
+		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
 		-gds %l/latest/cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
@@ -1127,7 +1127,7 @@ digital-hvl-a:
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib \
+		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
 		-gds %l/latest/cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
@@ -1166,7 +1166,7 @@ digital-lp-a:
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib \
+		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
 		-gds %l/latest/cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
@@ -1198,7 +1198,7 @@ digital-hs-a:
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib \
+		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
 		-gds %l/latest/cells/*/*.gds compile-only \
 			exclude=sky130_fd_sc_hs__decap_8.gds \
 			options=custom/scripts/gds_import_setup.tcl \
@@ -1227,7 +1227,7 @@ digital-ms-a:
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib \
+		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
 		-gds %l/latest/cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
@@ -1255,7 +1255,7 @@ digital-ls-a:
 		-lef %l/latest/cells/*/*.magic.lef compile-only \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib \
+		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
 		-gds %l/latest/cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \

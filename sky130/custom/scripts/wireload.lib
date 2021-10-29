@@ -1,0 +1,53 @@
+    /* Wire load tables */
+
+    wire_load("Small") {
+      capacitance : 1.42e-05;
+      resistance : 0.0745;
+      slope : 8.3631;
+      fanout_length( 1, 23.2746);
+      fanout_length( 2, 32.1136);
+      fanout_length( 3, 48.4862);
+      fanout_length( 4, 64.0974);
+      fanout_length( 5, 86.2649);
+      fanout_length( 6, 84.2649);
+    }
+
+    wire_load("Medium") {
+      capacitance : 1.42e-05;
+      resistance : 0.0745;
+      slope : 8.3631;
+      fanout_length( 1, 23.2746);
+      fanout_length( 2, 32.1136);
+      fanout_length( 3, 48.4862);
+      fanout_length( 4, 64.0974);
+      fanout_length( 5, 86.2649);
+      fanout_length( 6, 84.2649);
+    }
+
+    wire_load("Large") {
+      capacitance : 1.42e-05;
+      resistance : 0.0745;
+      slope : 8.3631;
+      fanout_length( 1, 23.2746);
+      fanout_length( 2, 32.1136);
+      fanout_length( 3, 48.4862);
+      fanout_length( 4, 64.0974);
+      fanout_length( 5, 86.2649);
+      fanout_length( 6, 84.2649);
+    }
+
+    wire_load("Huge") {
+      capacitance : 1.42e-05;
+      resistance : 0.0745;
+      slope : 8.3631;
+      fanout_length( 1, 23.2746);
+      fanout_length( 2, 32.1136);
+      fanout_length( 3, 48.4862);
+      fanout_length( 4, 64.0974);
+      fanout_length( 5, 86.2649);
+      fanout_length( 6, 84.2649);
+    }
+
+    default_wire_load : "Small" ;
+    default_wire_load_mode : top;
+
