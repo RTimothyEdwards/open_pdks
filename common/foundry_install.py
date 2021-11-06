@@ -75,10 +75,12 @@
 #	nospec	:  Remove timing specification before installing
 #		    (used with verilog files;  needs to be extended to
 #		    liberty files)
+#
 #	compile :  Create a single library from all components.  Used
 #		    when a foundry library has inconveniently split
 #		    an IP library (LEF, CDL, verilog, etc.) into
 #		    individual files.
+#
 #	compile-only:	Like "compile" except that the individual
 #		    files are removed after the library file has been
 #		    created.
@@ -93,7 +95,27 @@
 #
 #	exclude :  Followed by "=" and a comma-separated list of names.
 #		    exclude these files/modules/subcircuits.  Names may
-#		    also be wildcarded in "glob" format.
+#		    also be wildcarded in "glob" format.  Cell names are
+#		    excluded from the copy and also from any libraries
+#		    that are generated.  If the pattern contains a directory
+#		    path, then patterns are added from files in the
+#		    specified directory instead of the source.
+#
+#	no-copy :  Followed by "=" and a comma-separated list of names.
+#		    exclude these files/modules/subcircuits.  Names may
+#		    also be wildcarded in "glob" format.  Cell names are
+#		    excluded from the copy only.  If the pattern contains
+#		    a directory path, then patterns are added from files
+#		    in the specified directory instead of the source.
+#
+#	include :  Followed by "=" and a comma-separated list of names.
+#		    include these files/modules/subcircuits.  Names may
+#		    also be wildcarded in "glob" format.  Cell names are
+#		    included in any libraries that are generated if they
+#		    exist in the target directory, even if they were not
+#		    in the source directory being copied.  If the pattern
+#		    contains a directory path, then patterns are added from
+#		    files in the specified directory instead of the source.
 #
 #	rename :   Followed by "=" and an alternative name.  For any
 #		    file that is a single entry, change the name of
@@ -117,7 +139,12 @@
 #		    If not specified, files are sorted by "natural sort"
 #		    order.
 #
-#	noconvert : Install only; do not attempt to convert to other
+#	annotate:  When used with "-lef", the LEF files are used only
+#		    for annotation of pins (use, direction, etc.), but
+#		    the LEF files should not be used and LEF should be
+#		    generated from layout.
+#
+#	noconvert: Install only; do not attempt to convert to other
 #		    formats (applies only to GDS, CDL, and LEF).
 #
 #	options:   Followed by "=" and the name of a script.  Behavior
@@ -738,12 +765,34 @@ if __name__ == '__main__':
         do_remove_spec = 'nospecify' in option or 'nospec' in option
 
         # Option 'exclude' has an argument
+        excludelist = []
         try:
             excludelist = list(item.split('=')[1].split(',') for item in option if item.startswith('excl'))[0]
         except IndexError:
-            excludelist = []
-        else:
+            pass
+
+        if len(excludelist) > 0:
             print('Excluding files: ' + (',').join(excludelist))
+
+        # Option 'no-copy' has an argument
+        nocopylist = []
+        try:
+            nocopylist = list(item.split('=')[1].split(',') for item in option if item.startswith('no-copy'))[0]
+        except IndexError:
+            pass
+
+        if len(nocopylist) > 0:
+            print('Not copying files: ' + (',').join(nocopylist))
+
+        # Option 'include' has an argument
+        includelist = []
+        try:
+            includelist = list(item.split('=')[1].split(',') for item in option if item.startswith('incl'))[0]
+        except IndexError:
+            pass
+
+        if len(includelist) > 0:
+            print('Including files: ' + (',').join(includelist))
 
         # Option 'rename' has an argument
         try:
@@ -800,7 +849,13 @@ if __name__ == '__main__':
                 liblistnames = list(os.path.split(item)[1] for item in liblist)
                 notliblist = []
                 for exclude in excludelist:
-                    notliblist.extend(fnmatch.filter(liblistnames, exclude))
+                    if '/' in exclude:
+                        # Names come from files in a path that is not the source
+                        excludefiles = os.listdir(os.path.split(exclude)[0])
+                        pattern = os.path.split(exclude)[1]
+                        notliblist.extend(fnmatch.filter(excludefiles, pattern))
+                    else:
+                        notliblist.extend(fnmatch.filter(liblistnames, exclude))
 
                 # Apply exclude list
                 if len(notliblist) > 0:
@@ -812,6 +867,17 @@ if __name__ == '__main__':
                     print('Warning:  Nothing from the exclude list found in sources.')
                     print('excludelist = ' + str(excludelist))
                     print('destlibdir = ' + destlibdir)
+
+            # Create a list of cell names not to be copied from "nocopylist"
+            nocopynames = []
+            for nocopy in nocopylist:
+                if '/' in nocopy:
+                    # Names come from files in a path that is not the source
+                    nocopyfiles = os.listdir(os.path.split(nocopy)[0])
+                    pattern = os.path.split(nocopy)[1]
+                    nocopynames.extend(fnmatch.filter(nocopyfiles, pattern))
+                else:
+                    nocopynames.extend(fnmatch.filter(liblistnames, nocopy))
 
             # Diagnostic
             print('Collecting files from ' + testpath)
@@ -831,6 +897,7 @@ if __name__ == '__main__':
 
             destfilelist = []
             for libname in liblist:
+     
                 # Note that there may be a hierarchy to the files in option[1],
                 # say for liberty timing files under different conditions, so
                 # make sure directories have been created as needed.
@@ -843,6 +910,8 @@ if __name__ == '__main__':
                     libfilepath = os.path.split(libfilepath)[0]
                 destpathcomp.reverse()
                 destpath = ''.join(destpathcomp)
+
+                dontcopy = True if libfile in nocopynames else False
 
                 if option[0] == 'verilog':
                     fileext = '.v'
@@ -880,16 +949,20 @@ if __name__ == '__main__':
 
                 # Remove any existing file
                 if os.path.isfile(targname):
-                    os.remove(targname)
+                    if not dontcopy:
+                        os.remove(targname)
                 elif os.path.isdir(targname):
-                    shutil.rmtree(targname)
+                    if not dontcopy:
+                        shutil.rmtree(targname)
 
                 # NOTE:  Diagnostic, probably much too much output.
                 print('   Install:' + libname + ' to ' + targname)
                 if os.path.isfile(libname):
-                    shutil.copy(libname, targname)
+                    if not dontcopy:
+                        shutil.copy(libname, targname)
                 else:
-                    shutil.copytree(libname, targname)
+                    if not dontcopy:
+                        shutil.copytree(libname, targname)
 
                 # File filtering options:  Two options 'stub' and 'nospec' are
                 # handled by scripts in ../common/.  Custom filters can also be
@@ -913,6 +986,19 @@ if __name__ == '__main__':
                     tfilter(targname, filter_script, ef_format)
 
                 destfilelist.append(os.path.split(targname)[1])
+
+            # Add names from "include" list to destfilelist before writing
+            # filelist.txt for library file compiling.
+
+            includenames = []
+            for incname in includelist:
+                if '/' in incname:
+                    # Names come from files in a path that is not the source
+                    incfiles = os.listdir(os.path.split(incname)[0])
+                    pattern = os.path.split(incname)[1]
+                    destfilelist.extend(fnmatch.filter(incfiles, pattern))
+                else:
+                    destfilelist.extend(fnmatch.filter(liblistnames, incname))
 
             if sortscript:
                 with open(destlibdir + '/filelist.txt', 'w') as ofile:

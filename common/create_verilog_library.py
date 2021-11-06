@@ -78,6 +78,9 @@ def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=F
         with open(alllibname, 'w') as ofile:
             allmodules = []
             for vfile in vlist:
+                if not os.path.exists(vfile):
+                    print('Error: File ' + vfile + ' not found (skipping).')
+                    continue
                 with open(vfile, 'r') as ifile:
                     # print('Adding ' + vfile + ' to library.')
                     vtext = ifile.read()

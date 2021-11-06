@@ -914,10 +914,11 @@ primitive-a:
 		-gds sky130_fd_pr/*.gds \
 			options=custom/scripts/gds_import_setup.tcl \
 		-library primitive sky130_fd_pr 2>&1 | tee -a ${SKY130A}_make.log
-	# Install base device library from vendor files
+	# Install base device library from vendor files.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-gds %l/latest/cells/*/*.gds \
-			exclude=sky130_fd_pr__pnp_05v5_W3p40L3p40.gds,sky130_fd_pr__npn_11v0_W1p00L1p00.gds \
+			no-copy=custom/sky130_fd_pr/*.gds \
+			include=custom/sky130_fd_pr/*.gds \
 			compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 		-cdl %l/latest/cells/*/*.cdl compile-only \
@@ -1010,8 +1011,10 @@ io-a:
 	# Install SkyWater I/O pad library
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+			include=custom/sky130_fd_io/cdl/*.cdl \
 			sort=../common/sort_pdkfiles.py \
 		-lef %l/latest/cells/*/*.lef annotate compile-only \
+			include=custom/sky130_fd_io/lef/*.lef \
 			exclude=*.magic.lef,sky130_ef_io.lef \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
@@ -1021,6 +1024,7 @@ io-a:
 			options=custom/scripts/sky130_fd_io_import.tcl \
 		-verilog %l/latest/cells/*/*.*.v \
 		-verilog %l/latest/cells/*/*.v exclude=*.*.v \
+			include=custom/sky130_fd_io/verilog/*.v \
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library general sky130_fd_io 2>&1 | tee -a ${SKY130A}_make.log
@@ -1047,14 +1051,20 @@ digital-hd-a:
 			filter=custom/scripts/fix_device_models.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.magic.lef compile-only \
+		-lef %l/latest/cells/*/*.magic.lef \
+			include=custom/sky130_fd_sc_hd/lef/sky130_ef*.lef \
+			compile-only \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib filter=custom/scripts/add_wireloads.py \
 		-gds %l/latest/cells/*/*.gds compile-only \
+			no-copy=custom/sky130_fd_sc_hd/gds/sky130_fd*.gds \
+			include=custom/sky130_fd_sc_hd/gds/sky130_ef*.gds \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+		-verilog %l/latest/models/*/*.v \
+			exclude=*.*.v include=custom/sky130_fd_sc_hd/verilog/*.v \
+			compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-verilog %l/latest/cells/*/*.*.v \
@@ -1129,6 +1139,7 @@ digital-hvl-a:
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
 		-gds %l/latest/cells/*/*.gds compile-only \
+			include=custom/sky130_fd_sc_hvl/gds/sky130_ef*.gds \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
 		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
@@ -1200,7 +1211,7 @@ digital-hs-a:
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
 		-gds %l/latest/cells/*/*.gds compile-only \
-			exclude=sky130_fd_sc_hs__decap_8.gds \
+			no-copy=custom/sky130_fd_sc_hs/gds/sky130_fd*.gds \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
 		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \

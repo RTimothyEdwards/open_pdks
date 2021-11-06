@@ -75,6 +75,9 @@ def create_lef_library(destlibdir, destlib, do_compile_only=False, excludelist=[
         with open(alllibname, 'w') as ofile:
             headerdone = False
             for lfile in llist:
+                if not os.path.exists(lfile):
+                    print('Error: File ' + lfile + ' not found (skipping).')
+                    continue
                 with open(lfile, 'r') as ifile:
                     # print('Adding ' + lfile + ' to library.')
                     ltext = ifile.read()

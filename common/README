@@ -457,8 +457,14 @@ How to make or update an open PDK:
 		    than taking the name of the library.
 
 	       exclude=<file>[,...]
-		    When using "compile" or "compile-only", exclude any
-		    file in the target directory matching the name <file>.
+		    Exclude file(s) from the comma-separated list when
+		    copying from source to target.  The list items may
+		    include glob-style wildcards.
+
+	       excludefrom=<dir>
+		    Exclude all files in the listing of directory <dir>
+		    from the comma-separated list when copying from source
+		    to target.
 
     File conversions handled by foundry_install.py:
 
