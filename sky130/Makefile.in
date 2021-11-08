@@ -165,7 +165,7 @@ EF_STYLE = @EF_STYLE@
 
 STAGING_PATH = $(shell pwd)
 
-SHARED_PDKS_PATH = $(datadir)/pdk
+SHARED_PDKS_PATH ?= $(datadir)/pdk
 
 # If LINK_TARGETS is set to "none", then files are copied
 # from the SkyWater sources to the target.  If set to "source",
