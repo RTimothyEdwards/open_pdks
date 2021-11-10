@@ -528,6 +528,50 @@ Xsky130_fd_io__top_ground_lvc_base
 .ENDS
 
 *--------------------------------------------------------------------------
+* sky130_ef_io__vccd_lvc_clamped3_pad
+* sky130_ef_io__vccd_lvc_pad with pad and LV clamp positive connection to
+* VCCD1, clamp negative connection to VSSD1, and and back-to-back diodes
+* connecting VSSIO to VSSD1
+*--------------------------------------------------------------------------
+
+.SUBCKT sky130_ef_io__vccd_lvc_clamped3_pad
++ AMUXBUS_A AMUXBUS_B VCCD_PAD
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD
++ VSSIO VSSD VSSIO_Q VCCD1 VSSD1
+
+* Instantiate the underlying power pad (connects P_PAD to VCCD)
+Xsky130_fd_io__top_power_lvc_base
++ AMUXBUS_A AMUXBUS_B VSSD1 VCCD1 VCCD1 VDDIO
++ VCCD1 VCCD_PAD
++ VSSIO VSSD1 VCCD VCCHIB VDDA VDDIO VDDIO_Q
++ VSSA VSSD VSSIO VSSIO_Q VSWITCH
++ sky130_fd_io__top_power_lvc_wpad
+
+.ENDS
+
+*--------------------------------------------------------------------------
+* sky130_ef_io__vssd_lvc_clamped3_pad
+* sky130_ef_io__vssd_lvc_pad with pad and LV clamp negative connection to
+* VSSD1, clamp positive connection to VCCD1, and back-to-back diodes
+* connecting VSSIO to VSSD1
+*--------------------------------------------------------------------------
+
+.SUBCKT sky130_ef_io__vssd_lvc_clamped3_pad
++ AMUXBUS_A AMUXBUS_B VSSD_PAD
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD
++ VSSIO VSSD VSSIO_Q VCCD1 VSSD1
+
+* Instantiate the underlying ground pad (connects G_PAD to VSSD)
+Xsky130_fd_io__top_ground_lvc_base
++ AMUXBUS_A AMUXBUS_B VSSIO VCCD1 VCCD1
++ VSSD1 VSSD_PAD
++ VDDIO VSSIO VSSD VCCD VCCHIB VDDA VDDIO VDDIO_Q
++ VSSA VSSD VSSIO VSSIO_Q VSWITCH
++ sky130_fd_io__top_ground_lvc_wpad
+
+.ENDS
+
+*--------------------------------------------------------------------------
 * sky130_ef_io__vccd_lvc_clamped_pad
 * sky130_ef_io__vccd_lvc_pad with LV clamp connections to VCCD and VSSD,
 * and back-to-back diodes connecting VSSD to VSSIO
