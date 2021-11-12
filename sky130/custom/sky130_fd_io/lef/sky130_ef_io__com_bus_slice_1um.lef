@@ -169,7 +169,7 @@ MACRO sky130_ef_io__com_bus_slice_1um
   END VSSIO_Q
   OBS
       LAYER met4 ;
-        RECT 0.000 93.365 1.000 197.965 ;
+        RECT 0.000 173.75 1.000 197.965 ;
         RECT 0.000 66.900 1.000 67.600 ;
         RECT 0.000 61.050 1.000 61.650 ;
         RECT 0.000 55.100 1.000 55.800 ;

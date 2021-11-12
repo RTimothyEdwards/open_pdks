@@ -144,6 +144,10 @@
 #		    the LEF files should not be used and LEF should be
 #		    generated from layout.
 #
+#	lefopts:   Followed by "=" and a comma-separated list of option
+#		    strings.  If LEF views are generated from magic, use the
+#		    options specified.
+#
 #	noconvert: Install only; do not attempt to convert to other
 #		    formats (applies only to GDS, CDL, and LEF).
 #
@@ -1063,7 +1067,8 @@ if __name__ == '__main__':
                     # then compile one, because one does not want to have to have
                     # an include line for every single cell used in a design.
 
-                    create_lef_library(destlibdir, compname, do_compile_only, excludelist)
+                    if not have_lefanno:
+                        create_lef_library(destlibdir, compname, do_compile_only, excludelist)
 
                 if do_compile_only == True:
                     if newname and targname:
@@ -1150,6 +1155,7 @@ if __name__ == '__main__':
     cdl_compile_only = False
     lef_compile = False
     lef_compile_only = False
+    lefopts = None
 
     cdl_exclude = []
     lef_exclude = []
@@ -1224,6 +1230,12 @@ if __name__ == '__main__':
                     spice_exclude = exclude_list
                 elif option[0] == 'verilog':
                     verilog_exclude = exclude_list
+
+        # Find options list for "lef write"
+        for item in option:
+            if item.split('=')[0] == 'lefopts':
+                if option[0] == 'lef':
+                    lefopts = item.split('=')[1].strip('"')
  
     devlist = []
     pdklibrary = None
@@ -1439,10 +1451,7 @@ if __name__ == '__main__':
 
                     leffiles = []
                     lefmacros = []
-                    if have_lef:
-                        # Nothing to do;  LEF macros were already installed.
-                        pass
-                    elif have_lefanno:
+                    if have_lefanno:
                         # Find LEF file names in the source
                         if ef_format:
                             lefsrcdir = targetdir + lef_reflib + 'lef'
@@ -1478,7 +1487,9 @@ if __name__ == '__main__':
                                     ltok = re.split(' |\t|\(', lline)
                                     if ltok[0] == 'MACRO':
                                         lefmacros.append(ltok[1])
-
+                    elif have_lef:
+                        # Nothing to do;  LEF macros were already installed.
+                        pass
                     elif have_verilog and os.path.isdir(vlibdir):
                         # Get list of abstract views to make from verilog modules
                         # (NOTE:  no way to apply exclude list here!)
@@ -1573,7 +1584,7 @@ if __name__ == '__main__':
 
                     if not lefmacros:
                         print('No source for abstract views:  Abstract views not made.')
-                    elif not have_lef:
+                    elif have_lefanno or not have_lef:
                         # This library has a GDS database but no LEF database.  Use
                         # magic to create abstract views of the GDS cells.  If
                         # option "annotate" is given, then read the LEF file after
@@ -1595,7 +1606,10 @@ if __name__ == '__main__':
                         for lefmacro in lefmacros:
                             print('if {[cellname list exists ' + lefmacro + '] != 0} {', file=ofile)
                             print('   load ' + lefmacro, file=ofile)
-                            print('   lef write ' + lefdest + lefmacro + ' -hide', file=ofile)
+                            if lefopts:
+                                print('   lef write ' + lefdest + lefmacro + ' ' + lefopts, file=ofile)
+                            else:
+                                print('   lef write ' + lefdest + lefmacro, file=ofile)
                             print('}', file=ofile)
 
                     print('puts stdout "Done."', file=ofile)

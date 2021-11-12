@@ -40,10 +40,6 @@ MACRO sky130_ef_io__corner_pad
     END
     PORT
       LAYER met5 ;
-        RECT 0.630 56.020 0.640 56.030 ;
-    END
-    PORT
-      LAYER met5 ;
         RECT 0.000 40.835 1.335 44.085 ;
     END
     PORT
@@ -69,10 +65,6 @@ MACRO sky130_ef_io__corner_pad
     PORT
       LAYER met5 ;
         RECT 47.735 0.000 56.735 27.155 ;
-    END
-    PORT
-      LAYER met5 ;
-        RECT 51.285 0.630 51.295 0.640 ;
     END
     PORT
       LAYER met4 ;
@@ -243,10 +235,6 @@ MACRO sky130_ef_io__corner_pad
         RECT 0.000 179.785 1.435 204.000 ;
     END
     PORT
-      LAYER met4 ;
-        RECT 0.630 194.865 0.640 194.875 ;
-    END
-    PORT
       LAYER met5 ;
         RECT 25.935 0.000 30.385 1.270 ;
     END
@@ -257,10 +245,6 @@ MACRO sky130_ef_io__corner_pad
     PORT
       LAYER met4 ;
         RECT 175.785 0.000 200.000 1.270 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 190.865 0.630 190.875 0.640 ;
     END
   END VSSIO
   PIN VSSD
@@ -338,7 +322,6 @@ MACRO sky130_ef_io__corner_pad
         RECT 0.000 17.935 47.335 18.535 ;
         RECT 4.185 12.485 47.335 17.935 ;
         RECT 0.000 11.885 47.335 12.485 ;
-        POLYGON 0.000 6.035 0.400 6.035 0.400 5.635 ;
         RECT 0.400 5.635 2.035 6.035 ;
         RECT 2.750 5.635 47.335 11.885 ;
         RECT 0.000 1.670 47.335 5.635 ;
@@ -373,7 +356,6 @@ MACRO sky130_ef_io__corner_pad
         RECT 3.125 22.285 46.135 28.335 ;
         RECT 3.070 19.035 46.135 22.285 ;
         RECT 5.385 11.385 46.135 19.035 ;
-        POLYGON 0.000 6.135 1.600 6.135 1.600 4.535 ;
         RECT 1.600 4.535 2.135 6.135 ;
         RECT 3.950 4.535 46.135 11.385 ;
         RECT 0.000 2.870 46.135 4.535 ;

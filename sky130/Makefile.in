@@ -1002,19 +1002,22 @@ primitive-a:
 io-a:
 	# Install custom additions to I/O pad library
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
-		-verilog %l/verilog/*.v \
+		-verilog %l/verilog/*.v compile-only rename=sky130_ef_io \
 		-cdl %l/cdl/*.cdl \
 		-spice %l/spice/*.spice \
 		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
-		-lef %l/lef/*.lef compile-only rename=sky130_ef_io \
+		-lef %l/lef/*.lef exclude=sky130_fd_io__top_xres4v2.lef \
+			compile-only rename=sky130_ef_io \
+		-lef %l/lef/sky130_fd_io__top_xres4v2.lef \
 		-library general sky130_fd_io 2>&1 | tee -a ${SKY130A}_make.log
 	# Install SkyWater I/O pad library
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			include=custom/sky130_fd_io/cdl/*.cdl \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.lef annotate compile-only \
-			include=custom/sky130_fd_io/lef/*.lef \
+		-lef %l/latest/cells/*/*.lef annotate lefopts=-hide compile-only \
+			no-copy=sky130_fd_io__top_xres4v2.lef \
+			include=sky130_fd_io__top_xres4v2.lef \
 			exclude=*.magic.lef,sky130_ef_io.lef \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
@@ -1022,9 +1025,7 @@ io-a:
 		-gds %l/latest/cells/*/*.gds compile-only \
 			sort=../common/sort_pdkfiles.py \
 			options=custom/scripts/sky130_fd_io_import.tcl \
-		-verilog %l/latest/cells/*/*.*.v \
-		-verilog %l/latest/cells/*/*.v exclude=*.*.v \
-			include=custom/sky130_fd_io/verilog/*.v \
+		-verilog %l/latest/cells/*/*.v exclude=*.*.v,sky130_ef_io.v \
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library general sky130_fd_io 2>&1 | tee -a ${SKY130A}_make.log
@@ -1051,9 +1052,10 @@ digital-hd-a:
 			filter=custom/scripts/fix_device_models.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.magic.lef \
+		-lef %l/latest/cells/*/*.lef \
+			exclude=*.magic.lef lefopts=-toplayer \
 			include=custom/sky130_fd_sc_hd/lef/sky130_ef*.lef \
-			compile-only \
+			annotate compile-only \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib filter=custom/scripts/add_wireloads.py \
@@ -1098,7 +1100,8 @@ digital-hdll-a:
 			filter=custom/scripts/fix_device_models.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.magic.lef compile-only \
+		-lef %l/latest/cells/*/*.lef annotate compile-only \
+			exclude=*.magic.lef lefopts=-toplayer \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
@@ -1134,7 +1137,8 @@ digital-hvl-a:
 			filter=custom/scripts/fix_device_models.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.magic.lef compile-only \
+		-lef %l/latest/cells/*/*.lef annotate compile-only \
+			exclude=*.magic.lef lefopts=-toplayer \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
@@ -1174,7 +1178,8 @@ digital-lp-a:
 			filter=custom/scripts/fix_device_models.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.magic.lef compile-only \
+		-lef %l/latest/cells/*/*.lef annotate compile-only \
+			exclude=*.magic.lef lefopts=-toplayer \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
@@ -1206,7 +1211,8 @@ digital-hs-a:
 			filter=custom/scripts/fix_device_models.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.magic.lef compile-only \
+		-lef %l/latest/cells/*/*.lef annotate compile-only \
+			exclude=*.magic.lef lefopts=-toplayer \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
@@ -1235,7 +1241,8 @@ digital-ms-a:
 			filter=custom/scripts/fix_device_models.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.magic.lef compile-only \
+		-lef %l/latest/cells/*/*.lef annotate compile-only \
+			exclude=*.magic.lef lefopts=-toplayer \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
@@ -1263,7 +1270,8 @@ digital-ls-a:
 			filter=custom/scripts/fix_device_models.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.magic.lef compile-only \
+		-lef %l/latest/cells/*/*.lef annotate compile-only \
+			exclude=*.magic.lef lefopts=-toplayer \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \
 		-lib %l/latest/timing/*.lib custom/scripts/add_wireloads.py \
