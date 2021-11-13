@@ -36,7 +36,7 @@ set ::env(PLACE_SITE_HEIGHT) 4.070
 set ::env(FP_ENDCAP_CELL) "sky130_fd_sc_hvl__decap_4"
 
 # defaults (can be overridden by designs):
-set ::env(SYNTH_DRIVING_CELL) "sky130_fd_sc_hvl__inv_1"
+set ::env(SYNTH_DRIVING_CELL) "sky130_fd_sc_hvl__inv_2"
 #capacitance : 0.017653;
 set ::env(SYNTH_DRIVING_CELL_PIN) "Y"
 # update these 
