@@ -61,6 +61,8 @@ Less common options:
   -ef_format         Use efabless naming (libs.ref/techLEF),
                      otherwise use generic naming (libs.tech/lef)
 
+  -verbose           Output more information about the install process.
+
 If <target> is unspecified then <name> is used for the target.
 """
 
@@ -143,7 +145,7 @@ def filter_recursive(tooldir, stagingdir, finaldir):
 # be replaced by the contents of staging.  This avoids problems with
 # symbolic links and such.
 
-def remove_target(stagingdir, targetdir):
+def remove_target(stagingdir, targetdir, verbose=False):
 
     slist = os.listdir(stagingdir)
     tlist = os.listdir(targetdir)
@@ -152,10 +154,17 @@ def remove_target(stagingdir, targetdir):
         if sfile in tlist:
             tpath = targetdir + '/' + sfile
             if os.path.islink(tpath):
+                if verbose:
+                    print("Removing link", tpath)
                 os.unlink(tpath)
             elif os.path.isdir(tpath):
-                remove_target(stagingdir + '/' + sfile, targetdir + '/' + sfile)
+                remove_target(
+                    stagingdir + '/' + sfile,
+                    targetdir + '/' + sfile,
+                    verbose)
             else:
+                if verbose:
+                    print("Removing", tpath)
                 os.remove(tpath)
 
 # Create a list of source files/directories from the contents of source.txt
@@ -262,6 +271,8 @@ if __name__ == '__main__':
     optionlist = []
     newopt = []
 
+    debug = False
+
     stagingdir = None
     link_from = None
     variable = None
@@ -300,6 +311,9 @@ if __name__ == '__main__':
         elif option[0] == 'uninstall':
             optionlist.remove(option)
             do_install = False
+        elif option[0] == 'debug':
+            optionlist.remove(option)
+            debug = True
 
     # Check for options "link_from", "staging", "target", and "local"
 
@@ -340,6 +354,8 @@ if __name__ == '__main__':
     # of the target (local installation assumed)
     if not writedir:
         writedir = finaldir
+    else:
+        writedir = writedir + finaldir
 
     # Take the target PDK name from the target path last component
     pdkname = os.path.split(writedir)[1]
@@ -412,7 +428,7 @@ if __name__ == '__main__':
 
     print('Copying staging files to target')
     # print('Diagnostic:  copy_tree ' + stagingdir + ' ' + writedir)
-    copy_tree(stagingdir, writedir, preserve_symlinks=True)
+    copy_tree(stagingdir, writedir, preserve_symlinks=True, verbose=debug)
     print('Done.')
 
     # Magic and qflow setup files have references to the staging area that have
