@@ -315,7 +315,9 @@ if __name__ == '__main__':
             optionlist.remove(option)
             debug = True
 
-    # Check for options "link_from", "staging", "target", and "local"
+    # Check for options "link_from", "staging", "writeto", and "finalpath"
+    # "target" and "local" are also parsed for backwards compatibility
+    # although the names were misleading.
 
     link_name = None
     for option in optionlist[:]:
@@ -331,10 +333,10 @@ if __name__ == '__main__':
         elif option[0] == 'staging' or option[0] == 'source':
             optionlist.remove(option)
             stagingdir = option[1]
-        elif option[0] == 'writeto':
+        elif option[0] == 'writeto' or option[0] == 'target':
             optionlist.remove(option)
             writedir = option[1]
-        elif option[0] == 'finalpath':
+        elif option[0] == 'finalpath' or option[0] == 'local':
             optionlist.remove(option)
             finaldir = option[1]
         elif option[0] == 'variable':
