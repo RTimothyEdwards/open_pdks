@@ -31,6 +31,7 @@ RUN yum install -y csh wget tcl-devel tk-devel libX11-devel cairo-devel ncurses-
 #General utils
 RUN yum install -y tcllib
 RUN yum install -y git tcl tk libjpeg libgomp libXext libSM libXft libffi cairo gettext Xvfb
+RUN yum install -y python3 python3-pip python3-tkinter python3-devel
 
 RUN git clone git://opencircuitdesign.com/magic magic_15102020
 
