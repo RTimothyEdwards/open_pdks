@@ -398,7 +398,7 @@ CPP   = ../common/preproc.py
 # copying or linking the foundry vendor files to the target directory.
 STAGE = set -f ; ../common/foundry_install.py ${EF_FORMAT}
 ifneq ($(DESTDIR), )
-INSTALL = ../common/staging_install.py -local $(DESTDIR) ${EF_FORMAT}
+INSTALL = ../common/staging_install.py -writeto $(DESTDIR) ${EF_FORMAT}
 else
 INSTALL = ../common/staging_install.py ${EF_FORMAT}
 endif
@@ -1406,7 +1406,7 @@ install-a:
 	echo "Starting SKY130 PDK migration on "`date` > ${SKY130A}_install.log
 	${INSTALL} \
 		-source ${STAGING_PATH}/${SKY130A} \
-		-target ${SHARED_PDKS_PATH}/${SKY130A} \
+		-finalpath ${SHARED_PDKS_PATH}/${SKY130A} \
 		-variable PDKPATH \
 		-link_from ${LINK_TARGETS} 2>&1 | tee -a ${SKY130A}_install.log
 	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_install.log
