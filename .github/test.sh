@@ -1,3 +1,4 @@
+#!/bin/bash
 # Copyright 2020 Efabless Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,10 +13,26 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# exit when any command fails
-set -e
+SKY130_DIR="$(pwd)/pdks/pdk/sky130A"
+if ! [[ -d $SKY130_DIR ]]; then
+    echo "Missing $SKY130_DIR"
+    exit -1
+fi
 
-mkdir -p logs/docker
-echo "dir created"
-docker build --rm -t magic . | tee logs/docker/magic.build.txt
+du -h $SKY130_DIR
 
+echo ::group::Output files
+echo
+find $SKY130_DIR | sort
+echo
+echo ::endgroup::
+
+SIZE=$(du -sb $SKY130_DIR | cut -f1)
+# 250MB = 131,072,000 bytes; a fair estimate of the size of one library, I guess.
+if [[ $SIZE -lt 131072000 ]]; then
+    echo 'size is less than 125MB'
+    exit -1
+fi
+echo 'Built without fatal errors'
+echo "sky130A size is $SIZE bytes"
+exit 0

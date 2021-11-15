@@ -1,4 +1,3 @@
-#!/bin/bash
 # Copyright 2020 Efabless Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if ! [[ -d $(pwd)/pdks/sky130A ]]; then exit -1; fi
+# exit when any command fails
+set -e
 
-SIZE=$(du -sb $(pwd)/pdks/sky130A | cut -f1)
-# 250MB = 131,072,000 bytes; a fair estimate of the size of one library, I guess.
-if [[ $SIZE -lt 131072000 ]]; then
-    echo 'size is less than 125MB'
-    exit -1
-fi
-echo 'Built without fatal errors'
-echo "sky130A size is $SIZE bytes"
-exit 0
+docker build --rm -t magic .
