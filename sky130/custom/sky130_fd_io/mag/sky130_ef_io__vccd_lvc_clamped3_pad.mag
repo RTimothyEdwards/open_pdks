@@ -1,18 +1,7 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1636574685
-<< checkpaint >>
-rect 1196 59270 3717 61791
-rect 2925 40853 18455 40854
-rect -1260 40846 18455 40853
-rect -3455 38669 18488 40846
-rect -5650 10928 18488 38669
-rect -5650 10286 18674 10928
-rect -5650 6546 19310 10286
-rect -5650 5974 18674 6546
-rect -5650 -3444 18488 5974
-rect -5650 -5621 16293 -3444
+timestamp 1637024123
 << metal1 >>
 rect 6867 95 7067 195
 rect 5242 -7 5540 69
@@ -33,7 +22,7 @@ tri 13940 -1512 14940 -512 nw
 << via2 >>
 rect 5250 -1456 9804 -564
 << metal3 >>
-rect 4790 6390 5306 11272
+rect 4790 8430 5306 13312
 rect 9812 6460 10328 11342
 rect 98 -1566 4900 862
 rect 5200 -7 7374 918
@@ -106,23 +95,19 @@ rect 0 1390 254 2280
 rect 14746 1390 15000 2280
 rect 0 20 254 1070
 rect 14746 20 15000 1070
-use sky130_ef_io__lvc_vccdy_overlay  sky130_ef_io__lvc_vccdy_overlay_0
-timestamp 1636574685
-transform 1 0 0 0 1 7
-box 4185 -2184 17187 39586
 use sky130_fd_io__top_power_lvc_wpad  sky130_fd_io__top_power_lvc_wpad_0 $PDKPATH/libs.ref/sky130_fd_io/mag
-timestamp 1636165381
+timestamp 1637016283
 transform 1 0 0 0 1 -7
 box 0 0 15000 39600
+use sky130_ef_io__lvc_vccdy_overlay  sky130_ef_io__lvc_vccdy_overlay_0
+timestamp 1636577591
+transform 1 0 0 0 1 7
+box 4185 -2184 17187 39586
 << labels >>
 flabel metal4 s 14873 37925 14873 37925 3 FreeSans 520 180 0 0 VSSIO
 port 16 nsew ground bidirectional
 flabel metal4 s 127 37925 127 37925 3 FreeSans 520 0 0 0 VSSIO
 port 16 nsew ground bidirectional
-flabel metal3 s 10151 -7 14940 862 0 FreeSans 4000 0 0 0 VCCD
-port 15 nsew power bidirectional
-flabel metal3 s 100 -7 4900 862 0 FreeSans 2000 0 0 0 VCCD
-port 15 nsew power bidirectional
 flabel metal5 s 14746 9140 15000 10940 3 FreeSans 520 180 0 0 VSSA
 port 9 nsew ground bidirectional
 flabel metal5 s 14807 2600 15000 3250 3 FreeSans 520 180 0 0 VDDA
@@ -143,8 +128,6 @@ flabel metal5 s 14746 12430 15000 13280 3 FreeSans 520 180 0 0 VDDIO_Q
 port 12 nsew power bidirectional
 flabel metal5 s 14746 13600 15000 18590 3 FreeSans 520 180 0 0 VDDIO
 port 14 nsew power bidirectional
-flabel metal5 s 14746 20 15000 1070 3 FreeSans 520 180 0 0 VCCHIB
-port 13 nsew power bidirectional
 flabel metal5 s 14746 3570 15000 4460 3 FreeSans 520 180 0 0 VDDIO
 port 14 nsew power bidirectional
 flabel metal5 s 0 13600 254 18590 3 FreeSans 520 0 0 0 VDDIO
@@ -169,8 +152,6 @@ flabel metal5 s 0 9140 254 10940 3 FreeSans 520 0 0 0 VSSA
 port 9 nsew ground bidirectional
 flabel metal5 s 0 6961 254 7610 3 FreeSans 520 0 0 0 VSSA
 port 9 nsew ground bidirectional
-flabel metal5 s 0 20 254 1070 3 FreeSans 520 0 0 0 VCCHIB
-port 13 nsew power bidirectional
 flabel metal4 s 14746 7910 15000 8840 3 FreeSans 520 180 0 0 VSSD
 port 17 nsew ground bidirectional
 flabel metal4 s 14807 2580 15000 3270 3 FreeSans 520 180 0 0 VDDA
@@ -185,8 +166,6 @@ flabel metal4 s 14746 9922 15000 10158 3 FreeSans 520 180 0 0 VSSA
 port 9 nsew ground bidirectional
 flabel metal4 s 14746 10874 15000 10940 3 FreeSans 520 180 0 0 VSSA
 port 9 nsew ground bidirectional
-flabel metal4 s 14746 0 15000 1090 3 FreeSans 520 180 0 0 VCCHIB
-port 13 nsew power bidirectional
 flabel metal4 s 14746 3550 15000 4480 3 FreeSans 520 180 0 0 VDDIO
 port 14 nsew power bidirectional
 flabel metal4 s 14746 9140 15000 9206 3 FreeSans 520 180 0 0 VSSA
@@ -219,8 +198,6 @@ flabel metal4 s 0 9140 254 9206 3 FreeSans 520 0 0 0 VSSA
 port 9 nsew ground bidirectional
 flabel metal4 s 0 5970 254 6660 3 FreeSans 520 0 0 0 VSWITCH
 port 11 nsew power bidirectional
-flabel metal4 s 0 0 254 1090 3 FreeSans 520 0 0 0 VCCHIB
-port 13 nsew power bidirectional
 flabel metal4 s 0 9922 254 10158 3 FreeSans 520 0 0 0 VSSA
 port 9 nsew ground bidirectional
 flabel metal4 s 0 11240 254 12130 3 FreeSans 520 0 0 0 VSSIO_Q
@@ -241,10 +218,12 @@ flabel metal4 s 0 9266 254 9862 3 FreeSans 520 0 0 0 AMUXBUS_B
 port 1 nsew signal bidirectional
 flabel metal5 s 6339 32546 10468 33417 0 FreeSans 2000 0 0 0 VCCD_PAD
 port 2 nsew power bidirectional
-flabel metal2 10008 -1384 13676 -582 0 FreeSans 4800 0 0 0 VSSD1
-port 20 nsew ground bidirectional
-flabel metal3 318 -1432 4614 -598 0 FreeSans 4800 0 0 0 VCCD1
+flabel metal3 100 -1566 4900 -202 0 FreeSans 4800 0 0 0 VCCD1
 port 19 nsew power bidirectional
+flabel metal3 10151 -1542 14940 -178 0 FreeSans 4800 0 0 0 VCCD1
+port 19 nsew power bidirectional
+flabel metal3 s 5190 -1506 9852 -502 0 FreeSans 4800 0 0 0 VSSD1
+port 20 nsew ground bidirectional
 << properties >>
 string LEFclass PAD POWER
 string FIXED_BBOX 0 0 15000 39593
