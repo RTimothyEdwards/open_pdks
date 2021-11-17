@@ -82,6 +82,7 @@ end
 # sky130_fd_pr__res_iso_pw	rpw		pwell resistor (in deep nwell)
 # sky130_fd_pr__esd_nfet_g5v0d10v5 mvnfetesd	ESD thickox nFET
 # sky130_fd_pr__esd_pfet_g5v0d10v5 mvpfetesd	ESD thickox pFET
+# sky130_fd_pr__photodiode	photo		Photodiode
 #
 # (*) Note that ppres may extract into some generic type called
 # "sky130_fd_pr__res_xhigh_po", but only specific sizes of xhrpoly are
@@ -142,6 +143,7 @@ types
 # Deep nwell
   dwell dnwell,dnw
   dwell isosubstrate,isosub
+  dwell photodiode,photo
 
 # Wells
   well nwell,nw
@@ -474,6 +476,7 @@ styles
   nwell     nwell
   pwell	    pwell
   rpwell    pwell 	ptransistor_stripes
+  photo	    nwell	nwell_field_implant
   ndiff     ndiffusion
   fomfill   ndiffusion
   pdiff     pdiffusion
@@ -693,7 +696,7 @@ end
 #-----------------------------------------------------
 
 connect
-  *nwell,*nsd,*mvnsd,dnwell,pnp *nwell,*nsd,*mvnsd,dnwell,pnp
+  *nwell,*nsd,*mvnsd,dnwell,pnp,photo *nwell,*nsd,*mvnsd,dnwell,pnp,photo
   pwell,*psd,*mvpsd,npn  pwell,*psd,*mvpsd,npn
   *li,coreli,lifill	*li,coreli,lifill
   *m1,m1fill,obsmcon	*m1,m1fill,obsmcon
@@ -751,7 +754,7 @@ style gdsii
 # DNWELL
 #----------------------------------------------------------------
 
- layer DNWELL	dnwell,npn
+ layer DNWELL	dnwell,npn,photo
 	calma	64 18
 
  layer PWRES    rpw
@@ -973,6 +976,9 @@ style gdsii
 	or pnparea
 	mask-hints PNPID
 	calma	82 44
+
+ layer PHOTO photo
+	calma	81 81
 
 #----------------------------------------------------------------
 # RPM
@@ -2386,6 +2392,9 @@ style  sky130 variants (vendor),()
  layer npn DNWELL
  and-not NWELL,nwelcheck
  and NPNID
+
+ layer photo DNWELL
+ and PHOTO
 
  layer rpw PWRES
  and DNWELL
@@ -3927,6 +3936,8 @@ style  sky130 variants (vendor),()
  calma CAPID 82 64
  # Core area ID mark
  calma COREID 81 2
+ # Photodiode ID mark
+ calma PHOTO 81 81
  # Standard cell ID mark
  calma STDCELL 81 4
  # Padframe cell ID mark
@@ -4103,6 +4114,11 @@ drc
  cifmaxwidth pdiff_crosses_dnwell 0 bend_illegal \
 	"P+ diff cannot straddle Deep N-well (dnwell.5)"
  variants (fast),(full)
+
+ width photo 3000 "Photodiode width < %d (photo.2)"
+ spacing photo photo 5000 touching_ok "Photodiode spacing < %d (photo.3)"
+ spacing photo dnwell 5300 touching_illegal \
+	"Photodiode spacing to deep nwell < %d (photo.4)"
 
 #-----------------------------
 # NWELL
@@ -5394,6 +5410,8 @@ variants (),(si)
  device resistor sky130_fd_pr__res_generic_m4 rm4 *m4
  device resistor sky130_fd_pr__res_generic_m5 rm5 *m5
 #endif (METAL5)
+ device ndiode   sky130_fd_pr__model__parasitic__diode_ps2dn \
+	photo pwell,space/w error a=area
 
  device rsubcircuit sky130_fd_pr__res_high_po_0p35 xhrpoly \
 	xpc pwell,space/w error +res0p35 l=l

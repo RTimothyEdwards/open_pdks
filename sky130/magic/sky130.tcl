@@ -101,6 +101,8 @@ proc sky130::addtechmenu {framename} {
 	    "magic::gencell sky130::sky130_fd_pr__diode_pw2nd_05v5" pdk1
    magic::add_toolkit_command $layoutframe "p-diode" \
 	    "magic::gencell sky130::sky130_fd_pr__diode_pd2nw_05v5" pdk1
+   magic::add_toolkit_command $layoutframe "photodiode" \
+	    "magic::gencell sky130::sky130_fd_pr__photodiode" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
    magic::add_toolkit_command $layoutframe "MOS varactor" \
@@ -868,6 +870,10 @@ proc sky130::sky130_fd_pr__diode_pw2nd_11v0_defaults {} {
 	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
+proc sky130::sky130_fd_pr__photodiode_defaults {} {
+    return {nx 1 ny 1 deltax 0 deltay 0 xstep 8.0 ystep 8.0}
+}
+
 proc sky130::sky130_fd_pr__diode_pd2nw_05v5_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
@@ -927,6 +933,10 @@ proc sky130::sky130_fd_pr__diode_pw2nd_11v0_convert {parameters} {
     return [sky130::diode_convert $parameters]
 }
 
+proc sky130::sky130_fd_pr__photodiode_convert {parameters} {
+    return [sky130::fixed_convert $parameters]
+}
+
 proc sky130::sky130_fd_pr__diode_pd2nw_05v5_convert {parameters} {
     return [sky130::diode_convert $parameters]
 }
@@ -961,6 +971,10 @@ proc sky130::sky130_fd_pr__diode_pw2nd_11v0_dialog {parameters} {
     sky130::diode_dialog sky130_fd_pr__diode_pw2nd_11v0 $parameters
 }
 
+proc sky130::sky130_fd_pr__photodiode_dialog {parameters} {
+    sky130::fixed_dialog $parameters
+}
+
 proc sky130::sky130_fd_pr__diode_pd2nw_05v5_dialog {parameters} {
     sky130::diode_dialog sky130_fd_pr__diode_pd2nw_05v5 $parameters
 }
@@ -993,6 +1007,10 @@ proc sky130::sky130_fd_pr__diode_pw2nd_05v5_nvt_check {parameters} {
 
 proc sky130::sky130_fd_pr__diode_pw2nd_11v0_check {parameters} {
     sky130::diode_check $parameters
+}
+
+proc sky130::sky130_fd_pr__photodiode_check {parameters} {
+    sky130::fixed_check $parameters
 }
 
 proc sky130::sky130_fd_pr__diode_pd2nw_05v5_check {parameters} {
@@ -1197,6 +1215,153 @@ proc sky130::diode_draw {parameters} {
 	pushbox
 	for {set yp 0} {$yp < $ny} {incr yp} {
 	    sky130::diode_device $parameters
+            box move n ${dy}um
+        }
+	popbox
+        box move e ${dx}um
+    }
+    popbox
+    popbox
+
+    tech revert
+}
+
+#----------------------------------------------------------------
+# Photodiode: Draw a single device
+#----------------------------------------------------------------
+
+proc sky130::photodiode_device {parameters} {
+
+    # Set a local variable for each parameter (e.g., $l, $w, etc.)
+    foreach key [dict keys $parameters] {
+        set $key [dict get $parameters $key]
+    }
+
+    # Draw the device
+    pushbox
+    box size 0 0
+
+    # Device has ntap fixed width of 0.41 x 0.41
+    # Surrounded by nwell 0.84 x 0.84
+    # Surrounded by deep nwell 3.0 x 3.0
+
+    pushbox
+    box grow c 0.205um
+    paint nsd
+    popbox
+    pushbox
+    box grow c 0.42um
+    paint nwell
+    popbox
+    pushbox
+    box grow c 1.5um
+    paint photo
+
+    set cext [sky130::getbox]
+
+    popbox
+
+    # Only enough space for one contact
+    set w ${contact_size}
+    set l ${contact_size}
+
+    set cext [sky130::unionbox $cext [sky130::draw_contact ${w} ${l} \
+		0 ${metal_surround} ${contact_size} \
+		nsd nsc li horz]]
+
+    popbox
+    return $cext
+}
+
+#----------------------------------------------------------------
+
+proc sky130::photodiode_draw {parameters} {
+
+    # Set a local variable for each parameter (e.g., $l, $w, etc.)
+    foreach key [dict keys $parameters] {
+        set $key [dict get $parameters $key]
+    }
+
+    pushbox
+    box values 0 0 0 0
+
+    # Determine the base device dimensions by drawing one device
+    # while all layers are locked (nothing drawn).  This allows the
+    # base drawing routine to do complicated geometry without having
+    # to duplicate it here with calculations.
+
+    tech lock *
+    set bbox [sky130::photodiode_device $parameters]
+    # puts stdout "Diagnostic: Device bounding box e $bbox (um)"
+    tech unlock *
+
+    set fw [- [lindex $bbox 2] [lindex $bbox 0]]
+    set fh [- [lindex $bbox 3] [lindex $bbox 1]]
+    set lw [+ [lindex $bbox 2] [lindex $bbox 0]]
+    set lh [+ [lindex $bbox 3] [lindex $bbox 1]]
+
+    # Determine tile width and height
+
+    set dx [+ $fw $end_spacing]
+    set dy [+ $fh $end_spacing]
+
+    # Determine core width and height
+    set corex [+ [* [- $nx 1] $dx] $fw]
+    set corey [+ [* [- $ny 1] $dy] $fh]
+    set corellx [/ [+ [- $corex $fw] $lw] 2.0]
+    set corelly [/ [+ [- $corey $fh] $lh] 2.0]
+
+    # Calculate guard ring size (measured to contact center)
+    # Spacing between photodiode (deep nwell) and deep nwell (other) is 5.3um
+    set gx [+ $corex 15.965]
+    set gy [+ $corey 15.965]
+
+    pushbox
+
+    # The deep nwell is offset 0.315 from the nwell ring center to get the
+    # right overlap.  The deep nwell ring has a minimum width of 3um.
+    set hgx [/ $gx 2.0]
+    set hgy [/ $gy 2.0]
+    set dwx [+ $hgx 0.315]
+    set dwy [+ $hgy 0.315]
+    box grow e ${dwx}um
+    box grow w ${dwx}um
+    box grow n ${dwy}um
+    box grow s ${dwy}um
+    paint dnwell
+    box grow e -3.0um
+    box grow w -3.0um
+    box grow n -3.0um
+    box grow s -3.0um
+    erase dnwell
+
+    popbox
+
+    # Draw the guard ring first.  0.63 is the amount nwell surrounds contact;
+    # 0.63 * 2 + 0.17 = total nwell width 1.43um, needed to cover dnwell edge.
+    set newdict [dict create	 \
+	sub_type    space	 \
+	guard_sub_type	 nwell	 \
+	guard_sub_surround  0.63 \
+	plus_diff_type   nsd	 \
+	plus_contact_type nsc	 \
+    ]
+    set guarddict [dict merge $parameters $newdict]
+    sky130::guard_ring $gx $gy $guarddict
+
+    # Draw outside P-ring and generated the 2nd ring
+    set gx [+ $gx [* 2.0 [+ 0.56 $diff_spacing $diff_surround]] $contact_size]
+    set gy [+ $gy [* 2.0 [+ 0.56 $diff_spacing $diff_surround]] $contact_size]
+    sky130::guard_ring $gx $gy $parameters
+
+    pushbox
+    box move w ${corellx}um
+    box move s ${corelly}um
+
+    for {set xp 0} {$xp < $nx} {incr xp} {
+	pushbox
+	for {set yp 0} {$yp < $ny} {incr yp} {
+	    sky130::photodiode_device $parameters
             box move n ${dy}um
         }
 	popbox
@@ -1419,6 +1584,31 @@ proc sky130::sky130_fd_pr__diode_pd2nw_11v0_draw {parameters} {
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::diode_draw $drawdict]
+}
+
+#----------------------------------------------------------------
+# The photodiode has its own drawing routine, so
+#----------------------------------------------------------------
+
+proc sky130::sky130_fd_pr__photodiode_draw {parameters} {
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $sky130::ruleset] {
+        set $key [dict get $sky130::ruleset $key]
+    }
+
+    set newdict [dict create \
+	    guard		1	\
+	    sub_type		space	\
+	    end_spacing		5.0	\
+	    end_surround	1.0	\
+	    sub_spacing		5.3	\
+	    guard_sub_type	pwell	\
+	    guard_sub_surround  0.18	\
+	    plus_diff_type	psd	\
+	    plus_contact_type	psc	\
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::photodiode_draw $drawdict]
 }
 
 #----------------------------------------------------------------
