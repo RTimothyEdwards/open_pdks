@@ -4251,7 +4251,7 @@ variants (fast),(full)
 	"poly spacing to Diffusion < %d (poly.4)"
  spacing npres *nsd 480 touching_illegal \
 	"poly resistor spacing to N-tap < %d (poly.9)"
- overhang *ndiff,rndiff nfet,scnfet,npd,npass 250 "N-Diffusion overhang of nFET < %d (poly.7)"
+ overhang *ndiff,rndiff nfet,scnfet,npd,npass,nsonos 250 "N-Diffusion overhang of nFET < %d (poly.7)"
  overhang *mvndiff,mvrndiff mvnfet,mvnnfet,nnfet 250 \
 	"N-Diffusion overhang of nFET < %d (poly.7)"
  overhang *pdiff,rpdiff pfet,scpfet,ppu 250 "P-Diffusion overhang of pmos < %d (poly.7)"
