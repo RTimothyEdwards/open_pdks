@@ -4361,11 +4361,14 @@ variants (fast),(full)
 	"poly contact spacing to P-diffusion < %d (licon.9 + psdm.5a)"
 
  spacing ndc,pdc nfet,nfetlvt,pfet,pfethvt,pfetlvt,pfetmvt 55 touching_illegal \
+2x
 	"Diffusion contact to gate < %d (licon.11)"
  spacing ndc,pdc scnfet,scpfet,scpfethvt 50 touching_illegal \
 	"Diffusion contact to standard cell gate < %d (licon.11)"
  spacing ndc,pdc npd,npass,ppu 40 touching_illegal \
 	"Diffusion contact to SRAM gate < %d (licon.11)"
+ spacing ndc,pdc nsonos 75 touching_illegal \
+	"Diffusion contact to SONOS gate < %d (licon.11)"
  spacing mvndc,mvpdc mvnfet,mvnfetesd,mvnnfet,nnfet,mvpfet,mvpfetesd 55 touching_illegal \
 	"Diffusion contact to gate < %d (licon.11)"
  spacing nsc varactor,varhvt 250 touching_illegal \
