@@ -14,10 +14,6 @@ MACRO sky130_ef_io__vssd_lvc_clamped3_pad
       LAYER met4 ;
         RECT 0.000 51.090 75.000 54.070 ;
     END
-    PORT
-      LAYER met4 ;
-        RECT 0.000 51.090 1.270 54.070 ;
-    END
   END AMUXBUS_A
   PIN AMUXBUS_B
     DIRECTION INOUT ;
@@ -25,10 +21,6 @@ MACRO sky130_ef_io__vssd_lvc_clamped3_pad
     PORT
       LAYER met4 ;
         RECT 0.000 46.330 75.000 49.310 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 0.000 46.330 1.270 49.310 ;
     END
   END AMUXBUS_B
   PIN VSSD_PAD
@@ -76,15 +68,7 @@ MACRO sky130_ef_io__vssd_lvc_clamped3_pad
     END
     PORT
       LAYER met4 ;
-        RECT 0.000 45.700 1.270 46.030 ;
-    END
-    PORT
-      LAYER met4 ;
         RECT 0.000 49.610 1.270 50.790 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 0.000 54.370 1.270 54.700 ;
     END
     PORT
       LAYER met4 ;
@@ -151,6 +135,26 @@ MACRO sky130_ef_io__vssd_lvc_clamped3_pad
         RECT 0.000 62.050 1.270 66.500 ;
     END
   END VDDIO_Q
+  PIN VCCHIB
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER met5 ;
+        RECT 73.730 0.100 75.000 5.350 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 0.100 1.270 5.350 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 0.000 75.000 5.450 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 0.000 1.270 5.450 ;
+    END
+  END VCCHIB
   PIN VDDIO
     DIRECTION INOUT ;
     USE POWER ;
@@ -229,14 +233,6 @@ MACRO sky130_ef_io__vssd_lvc_clamped3_pad
     PORT
       LAYER met4 ;
         RECT 73.730 23.800 75.000 28.450 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 73.730 173.750 75.000 197.965 ;
-    END
-    PORT
-      LAYER met4 ;
-        RECT 0.000 173.750 1.270 197.965 ;
     END
     PORT
       LAYER met4 ;
@@ -329,32 +325,33 @@ MACRO sky130_ef_io__vssd_lvc_clamped3_pad
         RECT 26.000 -2.290 36.880 0.000 ;
         RECT 38.380 -2.290 49.255 0.000 ;
       LAYER met4 ;
-        RECT 1.670 173.350 73.330 197.965 ;
+        RECT 1.605 173.350 73.825 197.965 ;
         RECT 76.470 173.750 85.935 197.965 ;
-        RECT 0.000 93.365 75.000 173.350 ;
+        RECT 0.965 93.365 75.000 173.350 ;
         RECT 1.670 67.600 73.330 93.365 ;
-        RECT 0.000 66.900 75.000 67.600 ;
+        RECT 0.965 66.900 75.000 67.600 ;
         RECT 1.670 61.650 73.330 66.900 ;
-        RECT 0.000 61.050 75.000 61.650 ;
+        RECT 0.965 61.050 75.000 61.650 ;
         RECT 1.670 55.800 73.330 61.050 ;
-        RECT 0.000 55.100 75.000 55.800 ;
+        RECT 0.965 55.100 75.000 55.800 ;
         RECT 1.670 49.710 73.330 50.690 ;
-        RECT 0.000 44.600 75.000 45.300 ;
+        RECT 0.965 44.600 75.000 45.300 ;
         RECT 1.670 39.150 73.330 44.600 ;
-        RECT 0.000 38.550 75.000 39.150 ;
+        RECT 0.965 38.550 75.000 39.150 ;
         RECT 1.670 34.300 73.330 38.550 ;
-        RECT 0.000 33.700 75.000 34.300 ;
+        RECT 0.965 33.700 75.000 34.300 ;
         RECT 1.670 29.450 73.330 33.700 ;
-        RECT 0.000 28.850 75.000 29.450 ;
+        RECT 0.965 28.850 75.000 29.450 ;
         RECT 1.670 23.400 73.330 28.850 ;
         RECT 75.000 23.800 85.935 28.450 ;
-        RECT 0.000 22.800 75.000 23.400 ;
+        RECT 0.965 22.800 75.000 23.400 ;
         RECT 1.670 17.350 73.330 22.800 ;
-        RECT 0.000 16.750 75.000 17.350 ;
+        RECT 0.965 16.750 75.000 17.350 ;
         RECT 1.365 12.500 73.635 16.750 ;
-        RECT 0.000 11.900 75.000 12.500 ;
+        RECT 0.965 11.900 75.000 12.500 ;
         RECT 1.670 6.450 73.330 11.900 ;
-        RECT 0.000 0.000 75.000 6.450 ;
+        RECT 0.965 5.850 75.000 6.450 ;
+        RECT 1.670 0.000 73.330 5.850 ;
       LAYER met5 ;
         RECT 0.000 168.730 75.000 197.965 ;
         RECT 0.000 98.265 8.670 168.730 ;
@@ -364,8 +361,7 @@ MACRO sky130_ef_io__vssd_lvc_clamped3_pad
         RECT 0.000 34.800 75.000 34.805 ;
         RECT 2.870 16.250 72.130 34.800 ;
         RECT 2.565 13.000 72.435 16.250 ;
-        RECT 2.870 5.350 72.130 13.000 ;
-        RECT 0.000 0.100 75.000 5.350 ;
+        RECT 2.870 0.100 72.130 13.000 ;
   END
 END sky130_ef_io__vssd_lvc_clamped3_pad
 END LIBRARY
