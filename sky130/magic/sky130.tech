@@ -4152,7 +4152,8 @@ drc
  extend *psd *ndiff 290 "Butting tap length < %d (diff/tap.4)"
  extend *nsd *pdiff 290 "Butting tap length < %d (diff/tap.4)"
  width mvpdiffres 150 "MV P-Diffusion resistor width < %d (diff/tap.14a)"
- spacing alldifflv,var,varhvt,fomfill alldifflv,var,varhvt,fomfill 270 touching_ok \
+ spacing alldifflv,var,varhvt,corenvar,corepvar,fomfill \
+	 alldifflv,var,varhvt,corenvar,corepvar,fomfill 270 touching_ok \
 	"Diffusion spacing < %d (diff/tap.3)"
  spacing alldifflv,var,varhvt alldiffmv,mvvar 270 touching_illegal \
 	"LV to MV Diffusion spacing < %d (diff/tap.3)"
@@ -4361,7 +4362,6 @@ variants (fast),(full)
 	"poly contact spacing to P-diffusion < %d (licon.9 + psdm.5a)"
 
  spacing ndc,pdc nfet,nfetlvt,pfet,pfethvt,pfetlvt,pfetmvt 55 touching_illegal \
-2x
 	"Diffusion contact to gate < %d (licon.11)"
  spacing ndc,pdc scnfet,scpfet,scpfethvt 50 touching_illegal \
 	"Diffusion contact to standard cell gate < %d (licon.11)"
@@ -4401,9 +4401,9 @@ variants (fast),(full)
  surround pdic/a *pdi 60 directional \
 	"P-diode overlap of N-diode contact < %d in one direction (licon.5c)"
 
- surround nsc/a *nsd 120 directional \
+ surround nsc/a *nsd,corenvar 120 directional \
 	"N-tap overlap of N-tap contact < %d in one direction (licon.7)"
- surround psc/a *psd 120 directional \
+ surround psc/a *psd,corepvar 120 directional \
 	"P-tap overlap of P-tap contact < %d in one direction (licon.7)"
 
  surround mvndc/a *mvndiff,mvnfet,mvnfetesd,mvrnd 40 absence_illegal \
