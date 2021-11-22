@@ -1917,7 +1917,9 @@ if __name__ == '__main__':
                                         print('string ' + prop, file=ofile)
                                 for prop in prop_lines:
                                     print('string ' + prop, file=ofile)
-
+                            # Clear timestamp in `.mag` files.
+                            if line.startswith('timestamp '):
+                                line = 'timestamp 0'
                             print(line, file=ofile)
                             pmatch = proprex.match(line)
                             if pmatch:
@@ -1950,6 +1952,9 @@ if __name__ == '__main__':
                                     else:
                                         line = 'port ' + tmatch.group(1) + ' ' + tmatch.group(2)
                                 ematch = endrex.match(line)
+                                # Clear timestamp in `.mag` files.
+                                if line.startswith('timestamp '):
+                                    line = 'timestamp 0'
                                 print(line, file=ofile)
                                 lmatch = flabrex.match(line)
                                 if not lmatch:
