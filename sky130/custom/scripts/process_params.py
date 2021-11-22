@@ -71,11 +71,11 @@ def getKey(item):
 
 process_params.sort(reverse=True, key=getKey)
 
-print('') 
+print('')
 print('Process parameters found:')
 for (process_param, addendum) in process_params:
      print(process_param + '  :' + addendum)
-print('') 
+print('')
 
 #--------------------------------------------------------------------
 # Step 2.  Make replacements

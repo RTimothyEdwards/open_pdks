@@ -51,7 +51,7 @@ if __name__ == '__main__':
     # Assume that celldata contains the cell in question.
     # Find the extend of the data from 'beginstr' to 'endstr'
     #----------------------------------------------------------------------
-    
+
     datalen = len(celldata)
     dataptr = 0
     found = False

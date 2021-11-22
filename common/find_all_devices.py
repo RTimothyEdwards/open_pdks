@@ -9,7 +9,7 @@
 #-----------------------------------------------------------
 
 import re
-import os 
+import os
 import sys
 
 #-----------------------------------------------------------
@@ -329,7 +329,7 @@ def do_find_all_devices(pathtop, sourcefile, cellname=None, feol='tt', beol='tt'
                         print('Something went dreadfully wrong with device "' + devname + '"')
 
                 isdev = False
-        
+
             smatch = devrex.match(line)
             if smatch:
                 instname = smatch.group(1)
@@ -470,7 +470,7 @@ if __name__ == "__main__":
     # Defaults:  Set up for the most recent PDK version.
     version = 'v0.20.1'
     pathtop = '../../libraries/sky130_fd_pr/' + version
-   
+
     # Default FEOL corner is "tt", and default BEOL corner is "tt"
     feol = 'tt'
     beol = 'tt'

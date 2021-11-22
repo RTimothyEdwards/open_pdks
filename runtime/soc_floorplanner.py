@@ -129,7 +129,7 @@ class SoCFloorplanner(ttk.Frame):
         s.configure('pad.TLabel', font=('Helvetica', fontsize), foreground = 'blue', relief = 'flat')
         s.configure('select.TLabel', font=('Helvetica', fontsize, 'bold'), foreground = 'white',
 			background = 'blue', relief = 'flat')
- 
+
         # parent.withdraw()
         self.root.title('Padframe Generator and Core Floorplanner')
         self.root.option_add('*tearOff', 'FALSE')
@@ -296,12 +296,12 @@ class SoCFloorplanner(ttk.Frame):
     # Set the project name(s).  This is the name of the top-level verilog.
     # The standard protocol is that the project directory contains a file
     # project.json that defines a name 'ip-name' that is the same as the
-    # layout name, the verilog module name, etc.  
+    # layout name, the verilog module name, etc.
 
     def set_project(self):
         # Check pwd
         pwdname = self.projectpath if self.projectpath else os.getcwd()
-        
+
         subdir = os.path.split(pwdname)[1]
         if subdir == 'mag' or subdir == 'verilog':
             projectpath = os.path.split(pwdname)[0]
@@ -573,7 +573,7 @@ class SoCFloorplanner(ttk.Frame):
         dist1 = wwidth
         pad0 = None
         pad1 = None
-          
+
         for npad in allpads:
             if npad == pad:
                 continue
@@ -708,7 +708,7 @@ class SoCFloorplanner(ttk.Frame):
             corecell = next(item for item in self.coregroup if item['name'] == tag)
         except:
             self.print('Error: cell ' + item['name'] + ' is not in coregroup!')
-        else:  
+        else:
             # Modify its position values
             corex = corecell['x']
             corey = corecell['y']
@@ -738,7 +738,7 @@ class SoCFloorplanner(ttk.Frame):
     # Redraw the chip frame view in response to changes in the pad list
     def redraw_frame(self):
         self.canvas.coords('boundary', self.llx, self.urx, self.lly, self.ury)
-   
+
     # Update the canvas scrollregion to incorporate all the interior windows
     def frame_configure(self, event):
         if self.do_gui == False:
@@ -793,7 +793,7 @@ class SoCFloorplanner(ttk.Frame):
             else:
                 urx = int(llx + padh)
                 ury = int(lly + padw)
-            
+
             pad['llx'] = llx
             pad['lly'] = lly
             pad['urx'] = urx
@@ -886,7 +886,7 @@ class SoCFloorplanner(ttk.Frame):
                 aurx = sllx + s
                 aury = slly
             self.canvas.create_line((allx, ally), (aurx, aury), tags=[tag_id])
- 
+
             # Rotate text on top and bottom rows if the tkinter version allows it.
             if tkinter.TclVersion >= 8.6:
                 if pad['o'] == 'N' or pad['o'] == 'S':
@@ -1018,9 +1018,9 @@ class SoCFloorplanner(ttk.Frame):
                 aurx = sllx + s
                 aury = slly
             self.canvas.create_line((allx, ally), (aurx, aury), tags=[tag_id])
- 
+
             # self.print('Created entry for cell ' + cell['name'] + ' at {0:g}, {1:g}'.format(cx, cy))
- 
+
             # Rotate text on top and bottom rows if the tkinter version allows it.
             if tkinter.TclVersion >= 8.6:
                 if 'N' in cell['o'] or 'S' in cell['o']:
@@ -1049,7 +1049,7 @@ class SoCFloorplanner(ttk.Frame):
         # dimension of the pad ring, not the outer (to check and to do).
 
         if corellx < self.llx:
-            offsetx = self.llx - corellx 
+            offsetx = self.llx - corellx
         if corelly < self.lly:
             offsety = self.lly - corelly
         if offsetx > 0 or offsety > 0:
@@ -1127,10 +1127,10 @@ class SoCFloorplanner(ttk.Frame):
         width = self.urx - self.llx
         height = self.ury - self.lly
         areatext = 'Chip dimensions (um): {0:g} x {1:g}'.format(width, height)
-        tag_id = 'chiparea' 
+        tag_id = 'chiparea'
         self.canvas.create_text((cx, cy), text=areatext, tags=[tag_id])
 
-    # Rotate orientation according to self.pad_rotation. 
+    # Rotate orientation according to self.pad_rotation.
 
     def rotate_orientation(self, orient_in):
         orient_v = ['N', 'E', 'S', 'W', 'N', 'E', 'S', 'W']
@@ -1208,7 +1208,7 @@ class SoCFloorplanner(ttk.Frame):
                             newmacro['x'] = float(iparse[1])
                             newmacro['y'] = float(iparse[2])
         return macros
-          
+
     # Read a list of cell names from a verilog file
     # If filename is relative, then check in the same directory as the verilog
     # top-level netlist (vlogpath) and in the subdirectory 'source/' of the top-
@@ -1332,7 +1332,7 @@ class SoCFloorplanner(ttk.Frame):
             config_dir = '/.config'
 
         # First find the process PDK name for this project.  Read the nodeinfo.json
-        # file and find the list of I/O cell libraries.  
+        # file and find the list of I/O cell libraries.
 
         if self.techpath:
             pdkpath = self.techpath
@@ -1607,7 +1607,7 @@ class SoCFloorplanner(ttk.Frame):
                             if bmatch:
                                 bushigh = int(bmatch.group(1))
                                 buslow = int(bmatch.group(2))
-                                
+
                         for i in range(buslow, bushigh + 1):
                             newpad = {}
                             if i >= 0:
@@ -1631,7 +1631,7 @@ class SoCFloorplanner(ttk.Frame):
                             if bmatch:
                                 bushigh = int(bmatch.group(1))
                                 buslow = int(bmatch.group(2))
-                                
+
                         for i in range(buslow, bushigh + 1):
                             newcorecell = {}
                             if i >= 0:
@@ -1685,7 +1685,7 @@ class SoCFloorplanner(ttk.Frame):
         for pad in self.vlogpads:
             newpadname = pad['name']
             try:
-                lpad = next(item for item in allpads if item['name'] == newpadname) 
+                lpad = next(item for item in allpads if item['name'] == newpadname)
             except:
                 addedpads.append(pad)
             else:
@@ -1695,7 +1695,7 @@ class SoCFloorplanner(ttk.Frame):
         for pad in allpads:
             newpadname = pad['name']
             try:
-                lpad = next(item for item in self.vlogpads if item['name'] == newpadname) 
+                lpad = next(item for item in self.vlogpads if item['name'] == newpadname)
             except:
                 removedpads.append(pad)
 
@@ -1760,7 +1760,7 @@ class SoCFloorplanner(ttk.Frame):
                 iscorner = True
             elif 'CORNER' in pad['cell'].upper():
                 iscorner = True
-           
+
             if iscorner:
                 if self.NWpad == []:
                     self.NWpad.append(pad)
@@ -1847,7 +1847,7 @@ class SoCFloorplanner(ttk.Frame):
         for cell in self.corecells:
             newcellname = cell['name']
             try:
-                lcore = next(item for item in self.coregroup if item['name'] == newcellname) 
+                lcore = next(item for item in self.coregroup if item['name'] == newcellname)
             except:
                 addedcore.append(cell)
             else:
@@ -1857,7 +1857,7 @@ class SoCFloorplanner(ttk.Frame):
         for cell in self.coregroup:
             newcellname = cell['name']
             try:
-                lcore = next(item for item in self.corecells if item['name'] == newcellname) 
+                lcore = next(item for item in self.corecells if item['name'] == newcellname)
             except:
                 removedcore.append(cell)
 
@@ -1968,7 +1968,7 @@ class SoCFloorplanner(ttk.Frame):
         # NOTE:  This compresses the chip to the minimum dimensions
         # allowed by the arrangement of pads.  Use a "core" block to
         # force the area larger than minimum (not yet implemented)
-        
+
         topwidth = 0
         for pad in self.Npads:
             if 'width' not in pad:
@@ -2129,7 +2129,7 @@ class SoCFloorplanner(ttk.Frame):
         padringopts.append('padframe.cfg')
 
         self.print('Running ' + str(padringopts))
-   
+
         p = subprocess.Popen(padringopts, stdout = subprocess.PIPE,
 		    stderr = subprocess.PIPE, cwd = mag_path)
         self.watch(p)
@@ -2143,7 +2143,7 @@ class SoCFloorplanner(ttk.Frame):
         if not os.path.isfile(mag_path + '/padframe.def'):
             if not precheck:
                 self.print('No file padframe.def:  pad frame was not generated.')
-            return False 
+            return False
 
         # Very simple DEF file parsing.  The placement DEF only contains a
         # COMPONENTS section.  Certain assumptions are made about the syntax
@@ -2176,7 +2176,7 @@ class SoCFloorplanner(ttk.Frame):
                     if lparse[0] == '-':
                         instname = lparse[1]
                         cellname = lparse[2]
-                        
+
                     elif lparse[0] == '+':
                         if lparse[1] == 'PLACED':
                             placex = lparse[3]
@@ -2197,7 +2197,7 @@ class SoCFloorplanner(ttk.Frame):
                                 newpad['height'] = celldef['height']
                                 newpad['class'] = celldef['class']
                                 newpad['subclass'] = celldef['subclass']
- 
+
                             newpad['x'] = float(placex) / float(units)
                             newpad['y'] = float(placey) / float(units)
                             newpad['o'] = placeo
@@ -2236,7 +2236,7 @@ class SoCFloorplanner(ttk.Frame):
                                     SEpad.append(newpad)
                                 else:
                                     NEpad.append(newpad)
-                                corners += 1       
+                                corners += 1
                             else:
                                 # Place according to orientation.  If orientation
                                 # is not standard, be sure to make it standard!
@@ -2320,7 +2320,7 @@ class SoCFloorplanner(ttk.Frame):
                 loclly = corelly
                 testlly = corelly
                 nextlly = corelly
-              
+
                 for cell in self.corecells:
 
                     testllx = locllx + cell['width']
@@ -2364,7 +2364,7 @@ class SoCFloorplanner(ttk.Frame):
                             # work around it, remove any path components.
                             cellpath = lparse[2]
                             cellname = os.path.split(cellpath)[1]
-                        
+
                         elif lparse[0] == '+':
                             if lparse[1] == 'PLACED':
                                 placex = lparse[3]
@@ -2385,7 +2385,7 @@ class SoCFloorplanner(ttk.Frame):
                                     newcore['height'] = celldef['height']
                                     newcore['class'] = celldef['class']
                                     newcore['subclass'] = celldef['subclass']
- 
+
                                 newcore['x'] = float(placex) / float(units)
                                 newcore['y'] = float(placey) / float(units)
                                 newcore['o'] = placeo
@@ -2459,7 +2459,7 @@ class SoCFloorplanner(ttk.Frame):
         if not os.path.isfile(mag_path + '/core.def'):
             if not precheck:
                 self.print('No file core.def:  core placement was not generated.')
-            return False 
+            return False
 
         # Very simple DEF file parsing, similar to the padframe.def reading
         # routine above.
@@ -2479,7 +2479,7 @@ class SoCFloorplanner(ttk.Frame):
                     if lparse[0] == '-':
                         instname = lparse[1]
                         cellname = lparse[2]
-                        
+
                     elif lparse[0] == '+':
                         if lparse[1] == 'PLACED':
                             placex = lparse[3]
@@ -2500,7 +2500,7 @@ class SoCFloorplanner(ttk.Frame):
                                 newcore['height'] = celldef['height']
                                 newcore['class'] = celldef['class']
                                 newcore['subclass'] = celldef['subclass']
- 
+
                             newcore['x'] = float(placex) / float(units)
                             newcore['y'] = float(placey) / float(units)
                             newcore['o'] = placeo

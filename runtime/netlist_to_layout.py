@@ -72,7 +72,7 @@ def generate_layout_start(library, ofile=sys.stdout):
         print('namespace import ${PDKNAMESPACE}::*', file=ofile)
     print('suspendall', file=ofile)
     return ofile
- 
+
 def generate_layout_add(subname, subpins, complist, library, ofile=sys.stdout):
     global debugmode
     if debugmode:
@@ -129,7 +129,7 @@ def generate_layout_add(subname, subpins, complist, library, ofile=sys.stdout):
                     rest = tmatch.group(2)
                 else:
                     rest = ''
-        
+
         while rest and rest != '':
             ematch = expr1rex.match(rest)
             if ematch:
@@ -209,7 +209,7 @@ def generate_layout_add(subname, subpins, complist, library, ofile=sys.stdout):
         print('}', file=ofile)
         print('', file=ofile)
     print('save ' + subname, file=ofile)
-                
+
 def generate_layout_end(ofile=sys.stdout):
     global debugmode
 
@@ -344,7 +344,7 @@ if __name__ == '__main__':
         if debugmode:
             print('Reading file ' + inputfile)
         spicetext = ifile.read()
-        
+
     # Contatenate continuation lines
     spicelines = spicetext.replace('\n+', ' ').splitlines()
 

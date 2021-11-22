@@ -73,11 +73,11 @@ for dirpath, dirnames, filenames in os.walk(walkpath):
 
             infile.close()
 
-print('') 
+print('')
 print('Mismatch parameters found:')
 for (mismatch_param, replacement) in mismatch_params:
      print(mismatch_param + ' : ' + replacement)
-print('') 
+print('')
 
 #--------------------------------------------------------------------
 # Create regexp for the alternative PSPICE "dev/gauss" syntax used in

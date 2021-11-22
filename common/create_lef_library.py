@@ -149,7 +149,7 @@ if __name__ == '__main__':
         else:
             argumentlist.append(option)
 
-    if len(argumentlist) < 2: 
+    if len(argumentlist) < 2:
         print("Not enough arguments given to create_lef_library.py.")
         usage()
         sys.exit(1)

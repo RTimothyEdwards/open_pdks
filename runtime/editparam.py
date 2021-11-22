@@ -599,7 +599,7 @@ class EditParam(tkinter.Toplevel):
                 if not (lmax == '(none)' or lmax == ''):
                     pmax['calc'] = cmax + '-' + lmax
                 else:
-                    pmax['calc'] = cmax 
+                    pmax['calc'] = cmax
             self.param['max'] = pmax
 
         condlist = []

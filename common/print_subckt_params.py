@@ -5,7 +5,7 @@
 # Print a list of subcircuit parameters, dividing them into those which
 # are declared on the subcircuit line, and those that are declared inside
 # the scope of the subcircuit.
-# 
+#
 # The single argument is <path_to_input>
 # <path_to_input> should be the path to a single file.
 
@@ -147,7 +147,7 @@ def parse_file(in_file, debug):
                         pinparams.extend(param_parse(line, debug))
                     else:
                         paramlist.extend(param_parse(line, debug))
-                            
+
             continue
 
         # Item 5.  Regexp matching

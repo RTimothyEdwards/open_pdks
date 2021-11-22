@@ -54,14 +54,14 @@ import re
 def generate_sealring(width, height, target_dir, force, keep):
 
     starting_dir=os.getcwd()
-    
+
     # Find directory where the script and relevant files exists
-    
+
     abspath = os.path.abspath(__file__)
     script_dir = os.path.dirname(abspath)
-    
+
     # All files of interest are listed below.
-    
+
     script = 'generate_gds.tcl'
     tech = 'sky130seal_ring.tech'
     corner = 'seal_ring_corner.mag'
@@ -77,11 +77,11 @@ def generate_sealring(width, height, target_dir, force, keep):
 	    'sr_polygon00004.mag', 'sr_polygon00020.mag', 'sr_polygon00036.mag',
 	    'sr_polygon00005.mag', 'sr_polygon00023.mag', 'sr_polygon00039.mag',
 	    'sr_polygon00006.mag', 'sr_polygon00024.mag']
-        
+
     # Tries to create 'temp' directory
-    
+
     temp_dir='temp'
-    
+
     if os.path.exists('temp'):
     	print('temp/ directory already exists, trying to create /tmp/sky130_sealring...')
     	temp_dir='/tmp/sky130_sealring'
@@ -91,7 +91,7 @@ def generate_sealring(width, height, target_dir, force, keep):
     	except:
     	    print('Couldn\'t create the temp/ directory, trying to create /tmp/sky130_sealring...')
     	    temp_dir='/tmp/sky130_sealring'
-    
+
     # Tries to create /tmp/sky130_sealring if 'temp' is unavailable
 
     if temp_dir!='temp':
@@ -108,9 +108,9 @@ def generate_sealring(width, height, target_dir, force, keep):
             print(error)
             sys.exit(1)
 
-    
+
     os.chdir(temp_dir)
-    
+
     # Copy all .mag files, .magicrc file, and sky130seal_ring.tech file to temp/
     files_to_copy = polygons[:]
     files_to_copy.append(nikon)
@@ -229,7 +229,7 @@ def generate_sealring(width, height, target_dir, force, keep):
         print('transform 1 0 0 0 -1 ' + dheight, file=ofile)
         print('box -30480 -30480 ' + swidth + ' ' + sheight, file=ofile)
 
-        # Mirrored in both X and Y 
+        # Mirrored in both X and Y
         print('use seal_ring_corner seal_ring_corner_2', file=ofile)
         print('timestamp 1584562315', file=ofile)
         print('transform -1 0 ' + dwidth + ' 0 -1 ' + dheight, file=ofile)
@@ -248,7 +248,7 @@ def generate_sealring(width, height, target_dir, force, keep):
         print('box 285 285 ' + swidth + ' ' + sheight, file=ofile)
 
         print('<< end >>', file=ofile)
-    
+
     # Create a new abstract layout TO BE called 'advSeal_6um_gen.mag'
     # This is the view in technology sky130A.  Since there is already
     # a cell with this name that is used to generate GDS, the cell
@@ -281,7 +281,7 @@ def generate_sealring(width, height, target_dir, force, keep):
         print('transform 1 0 0 0 -1 ' + xheight, file=ofile)
         print('box 0 0 ' + qwidth + ' ' + qheight, file=ofile)
 
-        # Mirrored in both X and Y 
+        # Mirrored in both X and Y
         print('use seal_ring_corner_abstract seal_ring_corner_abstract_2', file=ofile)
         print('timestamp 1584566221', file=ofile)
         print('transform -1 0 ' + xwidth + ' 0 -1 ' + xheight, file=ofile)
@@ -331,9 +331,9 @@ def generate_sealring(width, height, target_dir, force, keep):
         shutil.copy(temp_dir+'/seal_ring_corner_abstract.mag', target_dir)
     else:
         print('ERROR: seal_ring_corner_abstract.mag already exists at target!  Use -force to overwrite.')
-    
+
     # Remove the temporary directory and its contents
-    
+
     if not keep:
         shutil.rmtree(temp_dir)
     else:
@@ -382,5 +382,5 @@ if __name__ == '__main__':
         print("   -outer : Width and height are seal ring outer edge, not chip area")
         print("   -force : Overwrite any existing files at <target_dir>")
         print("   -keep :  Keep generated files in temp/ directory")
-    
+
 

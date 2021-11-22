@@ -58,7 +58,7 @@ if __name__ == '__main__':
     for file in sourcefiles:
         # print("Converting file " + file)
         with open(file, 'r') as ifile:
-            magtext = ifile.read().splitlines() 
+            magtext = ifile.read().splitlines()
 
         proprex = re.compile('string[ \t]+GDS_FILE[ \t]+([^ \t]+)')
         with open(file, 'w') as ofile:

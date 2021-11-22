@@ -35,10 +35,10 @@ class TreeViewChoice(ttk.Frame):
     def populate(self, title, itemlist=[], buttons=[], height=10, columns=[0],
 		versioning=False):
         self.itemlist = itemlist[:]
-        
+
         treeFrame = ttk.Frame(self)
         treeFrame.pack(side='top', padx=5, pady=5, fill='both', expand='true')
-        
+
         scrollBar = ttk.Scrollbar(treeFrame)
         scrollBar.pack(side='right', fill='y')
         self.treeView = ttk.Treeview(treeFrame, selectmode='browse', columns=columns, height=height)
@@ -62,7 +62,7 @@ class TreeViewChoice(ttk.Frame):
             # present when there are entries in the itemlist.
             if(button[0]=='Flow'):
                 self.flowcallback = func
-                
+
             self.func_buttons.append([ttk.Button(buttonFrame, text=button[0],
 			style = 'normal.TButton',
 			command = lambda func=func: self.func_callback(func)),
@@ -77,7 +77,7 @@ class TreeViewChoice(ttk.Frame):
 
     def double_click(self, event):
         self.flowcallback(self.treeView.item(self.treeView.selection()))
-        
+
     def get_button(self, index):
         if index >= 0 and index < len(self.func_buttons):
             return self.func_buttons[index][0]
@@ -105,7 +105,7 @@ class TreeViewChoice(ttk.Frame):
         if (selection!=self.lastselected):
             self.lastselected = selection
             self.lasttag = oldtag
-    
+
     #Populate the project view
     def repopulate(self, itemlist=[], versioning=False):
         # Remove all children of treeview
@@ -128,7 +128,7 @@ class TreeViewChoice(ttk.Frame):
             # not, it looks for key 'project' in the top level.  Failing that, it
             # lists the name of the JSON file (which is probably an ungainly hash
             # name).
-            
+
             fileext = os.path.splitext(item)
             if fileext[1] == '.json':
                 # Read contents of JSON file
@@ -151,7 +151,7 @@ class TreeViewChoice(ttk.Frame):
                 # If versioning is true, then the last path component is the
                 # version number, and the penultimate path component is the
                 # name.
-                version = os.path.split(item)[1]   
+                version = os.path.split(item)[1]
                 name = os.path.split(os.path.split(item)[0])[1] + ' (v' + version + ')'
             else:
                 name = os.path.split(item)[1]
@@ -165,19 +165,19 @@ class TreeViewChoice(ttk.Frame):
             # Note: iid value with spaces in it is a bad idea.
             if ' ' in name:
                 name = name.replace(' ', '_')
-            
+
             # optionally: Mark directories with trailing slash
             if self.markDir and os.path.isdir(item):
                 origname += "/"
             if os.path.islink(item):
                 origname += " (link)"
-            
+
             if ('subcells' not in item):
                 mode = 'even' if mode == 'odd' else 'odd'
                 self.treeView.insert('', 'end', text=origname, iid=item, value=item, tag=mode)
             else:
                 self.treeView.insert('', 'end', text=origname, iid=item, value=item, tag='odd')
-            
+
             if 'subcells' in os.path.split(item)[0]:
             # If a project is a subproject, move it under its parent
                 parent_path = os.path.split(os.path.split(item)[0])[0]
@@ -190,8 +190,8 @@ class TreeViewChoice(ttk.Frame):
                 self.treeView.insert('', 'end', text=origname, iid='.'+item, value=item, tag='odd')
                 self.treeView.move('.'+item,item,0)
                 m=1
-        
-                       
+
+
         if self.initSelected and self.treeView.exists(self.initSelected):
             if 'subcells' in self.initSelected:
                 # ancestor projects must be expanded before setting current
@@ -201,16 +201,16 @@ class TreeViewChoice(ttk.Frame):
                     item_path = os.path.split(os.path.split(item_path)[0])[0]
                     ancestors.insert(0,item_path)
                 for a in ancestors:
-                    self.treeView.item(a, open=True)       
+                    self.treeView.item(a, open=True)
                 self.setselect(self.initSelected)
             elif self.initSelected[0]=='.':
                 parent_path = self.initSelected[1:]
-                self.treeView.item(parent_path, open=True) 
+                self.treeView.item(parent_path, open=True)
                 self.setselect(self.initSelected)
             else:
                 self.setselect(self.initSelected)
             self.initSelected = None
-        
+
 
         for button in self.func_buttons:
             button[0].pack_forget()
@@ -246,8 +246,8 @@ class TreeViewChoice(ttk.Frame):
         # Populate the pdk column
         self.treeView.heading(1, text = title)
         self.treeView.column(1, anchor='center')
-        children=list(self.getlist()) 
-        
+        children=list(self.getlist())
+
         # Add id's of subprojects
         i=1
         def add_ids(grandchildren):
@@ -258,12 +258,12 @@ class TreeViewChoice(ttk.Frame):
                 i+=1
                 descendants=self.treeView.get_children(item=g)
                 add_ids(descendants)
-        
+
         for c in list(self.getlist()):
             grandchildren=self.treeView.get_children(item=c)
             add_ids(grandchildren)
             i+=1
-        
+
         n = 0
         for item in valuelist:
             child = children[n]
@@ -275,7 +275,7 @@ class TreeViewChoice(ttk.Frame):
             if (n+1<len(children) and children[n+1]=='.'+child):
                 valuelist.insert(n,item)
             n += 1
-        
+
     def func_callback(self, callback, event=None):
         callback(self.treeView.item(self.treeView.selection()))
 
@@ -284,7 +284,7 @@ class TreeViewChoice(ttk.Frame):
 
     def setselect(self, value):
         self.treeView.selection_set(value)
-        
+
     def selected(self):
         value = self.treeView.item(self.treeView.selection())
         if value['values']:

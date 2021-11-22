@@ -76,9 +76,9 @@ def filter(inname, outname, debug=False):
     # Regular expression to find 'agauss(a,b,c)' lines and record a, b, and c
     grex = re.compile('[^{]agauss\(([^,]*),([^,]*),([^)]*)\)', re.IGNORECASE)
 
-    # Regular expression to determine if the line is a .PARAM card    
+    # Regular expression to determine if the line is a .PARAM card
     paramrex = re.compile('^\.param', re.IGNORECASE)
-    # Regular expression to determine if the line is a .MODEL card    
+    # Regular expression to determine if the line is a .MODEL card
     modelrex = re.compile('^\.model', re.IGNORECASE)
     # Regular expression to detect a .SUBCKT card
     subcktrex = re.compile('^\.subckt', re.IGNORECASE)
@@ -150,7 +150,7 @@ def filter(inname, outname, debug=False):
                     fixedline = altered
                     if debug:
                         print('Changed version 4.3/4.5 ' + modeltype + ' to version 4.8.0')
-    
+
                 # Fix: Look for mulu0= (NOTE:  Might be supported for bsim4?)
                 altered = re.sub('mulu0[ ]*=[ ]*[0-9.e+-]*', '', fixedline, flags=re.IGNORECASE)
                 if altered != fixedline:

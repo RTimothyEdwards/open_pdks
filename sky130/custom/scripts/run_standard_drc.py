@@ -224,5 +224,5 @@ if __name__ == '__main__':
         print("Usage:  run_standard_drc.py <layout_name> [<output_file>] [options]")
         print("Options:")
         print("   (none)")
-    
+
 

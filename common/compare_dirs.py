@@ -55,7 +55,7 @@ def compare_dirs(path, styles, formats, debug):
         d6 = []
     d6e = list(item for item in d6 if os.path.splitext(item)[1] == '.v')
     d6r = list(os.path.splitext(os.path.splitext(item)[0])[0] for item in d6e)
- 
+
     d1r.sort()
     d2r.sort()
     d3r.sort()
@@ -132,7 +132,7 @@ def compare_dirs(path, styles, formats, debug):
     d_all.sort()
     d_complete.sort()
     d_notall.sort()
-    
+
     if debug:
         print('Selected styles option: ' + ','.join(styles))
         print('Selected formats option: ' + ','.join(formats))
@@ -262,7 +262,7 @@ def compare_dirs(path, styles, formats, debug):
                 print('Cells appearing in maglef/ but not in verilog/:')
                 for cell in d5_6:
                     print(cell)
-        
+
         if do_verilog:
             print('')
             if do_cdl and len(d6_1) > 0:

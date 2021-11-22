@@ -96,7 +96,7 @@ if __name__ == '__main__':
     magpath = os.getcwd()+'/'+os.path.split(user_project_path)[0]
     if magpath == '':
         magpath = os.getcwd()
-    
+
     if os.path.splitext(user_project_path)[1] != '.mag':
         if os.path.splitext(user_project_path)[1] == '':
             user_project_path += '.mag'
@@ -118,27 +118,27 @@ if __name__ == '__main__':
         distmode = True
 
     # Searching for rcfile
-    
+
     rcfile_paths=[magpath+'/.magicrc','/$PDK_PATH/libs.tech/magic/sky130A.magicrc','/usr/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc']
-    
+
     rcfile=''
-    
+
     for rc_path in rcfile_paths:
         if os.path.isfile(rc_path):
             rcfile=rc_path
             break
-    
+
     if rcfile=='':
         print('Error: .magicrc file not found.')
         sys.exit(1)
-    
+
     project = os.path.splitext(os.path.split(user_project_path)[1])[0]
 
     topdir = os.path.split(magpath)[0]
     gdsdir = topdir + '/gds'
     hasgdsdir = True if os.path.isdir(gdsdir) else False
-    
-    ofile = open(magpath + '/generate_fill.tcl', 'w') 
+
+    ofile = open(magpath + '/generate_fill.tcl', 'w')
 	
     print('#!/usr/bin/env wish', file=ofile)
     print('drc off', file=ofile)
@@ -303,7 +303,7 @@ if __name__ == '__main__':
     print('puts stdout "Ended: $endtime"', file=ofile)
     print('quit -noprompt', file=ofile)
     ofile.close()
-    
+
     myenv = os.environ.copy()
     myenv['MAGTYPE'] = 'mag'
 
@@ -312,7 +312,7 @@ if __name__ == '__main__':
         # print('This script will generate file ' + project + '_fill_pattern.gds')
         print('This script will generate files ' + project + '_fill_pattern_x_y.gds')
         print('Now generating fill patterns.  This may take. . . quite. . . a while.', flush=True)
-        
+
         mproc = subprocess.run(['magic', '-dnull', '-noconsole',
 		'-rcfile', rcfile, magpath + '/generate_fill.tcl'],
 		stdin = subprocess.DEVNULL,
@@ -321,7 +321,7 @@ if __name__ == '__main__':
 		cwd = magpath,
 		env = myenv,
 		universal_newlines = True)
-        
+
         if mproc.stdout:
             for line in mproc.stdout.splitlines():
                 print(line)

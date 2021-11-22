@@ -405,7 +405,7 @@ if __name__ == '__main__':
         print("No options given to foundry_install.py.")
         usage()
         sys.exit(0)
-    
+
     optionlist = []
     newopt = []
 
@@ -446,7 +446,7 @@ if __name__ == '__main__':
     for option in optionlist[:]:
         if option[0] == 'library':
             optionlist.remove(option)
-            libraries.append(option[1:]) 
+            libraries.append(option[1:])
 
     # Check for option "ef_format" or "std_format" or "clean"
     for option in optionlist[:]:
@@ -560,7 +560,7 @@ if __name__ == '__main__':
         print('Magic database files will not be created, and other missing file formats may not be generated.')
 
     # Populate any targets that do not specify a library, or where the library is
-    # specified as "primitive".  
+    # specified as "primitive".
 
     # Populate the techLEF and SPICE models, if specified.  Also, this section can add
     # to any directory in libs.tech/ as given by the option;  e.g., "-ngspice" will
@@ -580,7 +580,7 @@ if __name__ == '__main__':
             if len(libraries) > 0 and 'primitive' in libraries[0]:
                 if option[0] != 'techlef' and option[0] != 'techLEF' and option[0] != 'models':
                     continue
-  
+
             # Normally technology LEF files are associated with IP libraries.
             # However, if no library is specified or the library is 'primitive'
             # (legacy behavior), then put in the techLEF directory with no subdirectory.
@@ -649,7 +649,7 @@ if __name__ == '__main__':
                         if os.path.isdir(targname):
                             shutil.rmtree(targname)
                         os.makedirs(targname)
-    
+
                         # Recursively find and copy or link the whole directory
                         # tree from this point.
 
@@ -764,7 +764,7 @@ if __name__ == '__main__':
         # Option 'compile' is a standalone keyword ('comp' may be used).
         do_compile = 'compile' in option or 'comp' in option
         do_compile_only = 'compile-only' in option or 'comp-only' in option
- 
+
         # Option 'nospecify' is a standalone keyword ('nospec' may be used).
         do_remove_spec = 'nospecify' in option or 'nospec' in option
 
@@ -901,7 +901,7 @@ if __name__ == '__main__':
 
             destfilelist = []
             for libname in liblist:
-     
+
                 # Note that there may be a hierarchy to the files in option[1],
                 # say for liberty timing files under different conditions, so
                 # make sure directories have been created as needed.
@@ -1020,7 +1020,7 @@ if __name__ == '__main__':
                 # library into a compiled <destlib>.<ext> on another pass.
 
                 compname = destlib
-                    
+
                 # To do:  Make this compatible with linking from another PDK.
 
                 if option[0] == 'verilog':
@@ -1084,7 +1084,7 @@ if __name__ == '__main__':
                     targrename = destlibdir + destpath + '/' + newname
                     if os.path.isfile(origname):
                         os.rename(origname, targrename)
-      
+
             # If "filelist.txt" was created, remove it
             if sortscript:
                 if os.path.isfile(destlibdir + '/filelist.txt'):
@@ -1236,7 +1236,7 @@ if __name__ == '__main__':
             if item.split('=')[0] == 'lefopts':
                 if option[0] == 'lef':
                     lefopts = item.split('=')[1].strip('"')
- 
+
     devlist = []
     pdklibrary = None
 
@@ -1330,7 +1330,7 @@ if __name__ == '__main__':
                 if os.path.isfile(destlibdir + '/.magicrc'):
                     os.remove(destlibdir + '/.magicrc')
                 os.symlink(startup_script, destlibdir + '/.magicrc')
- 
+
                 # Find GDS file names in the source
                 print('Getting GDS file list from ' + srclibdir + '.')
                 gdsfilesraw = os.listdir(srclibdir)
@@ -1357,7 +1357,7 @@ if __name__ == '__main__':
                 # the target directory.  Use it as input to magic to create the
                 # .mag files from the database.
 
-                print('Creating magic generation script to generate magic database files.') 
+                print('Creating magic generation script to generate magic database files.')
                 with open(destlibdir + '/generate_magic.tcl', 'w') as ofile:
                     print('#!/usr/bin/env wish', file=ofile)
                     print('#--------------------------------------------', file=ofile)
@@ -1427,7 +1427,7 @@ if __name__ == '__main__':
                                 print('puts stdout "Annotating cells from LEF"', file=ofile)
                             for leffile in leffiles:
                                 print('lef read ' + lefsrclibdir + '/' + leffile, file=ofile)
-                     
+
                         # Use CDL or SPICE netlists to set the port order
                         if have_cdl or have_spice:
                             if have_cdl:
@@ -1595,7 +1595,7 @@ if __name__ == '__main__':
                         # write procedure, but we still need the pin use and class
                         # information from the LEF file, and maybe the bounding box.
 
-                        
+
                         # For annotation, the LEF file output will overwrite the
                         # original source LEF file.
                         lefdest = lefsrclibdir + '/' if have_lefanno else ''
@@ -1702,7 +1702,7 @@ if __name__ == '__main__':
                 if os.path.isfile(destlibdir + '/.magicrc'):
                     os.remove(destlibdir + '/.magicrc')
                 os.symlink(startup_script, destlibdir + '/.magicrc')
- 
+
                 # Find LEF file names in the source
                 leffiles = []
                 if os.path.isdir(srclibdir):
@@ -1971,7 +1971,7 @@ if __name__ == '__main__':
                 print("PDK tech files before PDK vendor files?")
 
     # If SPICE or CDL databases were specified, then convert them to
-    # a form that can be used by ngspice, using the cdl2spi.py script 
+    # a form that can be used by ngspice, using the cdl2spi.py script
 
     if have_spice:
         if ef_format:
@@ -2110,7 +2110,7 @@ if __name__ == '__main__':
             if not os.path.isfile(allleflibname):
                 llist = glob.glob(leflibdir + '/*.lef')
 
-            print('Creating magic generation script to generate SPICE library.') 
+            print('Creating magic generation script to generate SPICE library.')
             with open(destlibdir + '/generate_magic.tcl', 'w') as ofile:
                 print('#!/usr/bin/env wish', file=ofile)
                 print('#---------------------------------------------', file=ofile)

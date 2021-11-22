@@ -15,12 +15,12 @@ class ListBoxChoice(ttk.Frame):
     def populate(self, title, list=[]):
         self.value = None
         self.list = list[:]
-        
+
         ttk.Label(self, text=title).pack(padx=5, pady=5)
 
         listFrame = ttk.Frame(self)
         listFrame.pack(side='top', padx=5, pady=5, fill='both', expand='true')
-        
+
         scrollBar = ttk.Scrollbar(listFrame)
         scrollBar.pack(side='right', fill='y')
         self.listBox = tkinter.Listbox(listFrame, selectmode='single')

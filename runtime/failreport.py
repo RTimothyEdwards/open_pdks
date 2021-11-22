@@ -417,7 +417,7 @@ class FailReport(tkinter.Toplevel):
 
                 if len(range) == 1:
                     continue
-    
+
                 labtext = condname
                 plottext = condname
                 if j == 0:
@@ -490,7 +490,7 @@ class FailReport(tkinter.Toplevel):
                 if len(vrange) > 1:
 
                     condlimits = '( '
-                
+
                     # This is a bit of a hack;  results are assumed floating-point
                     # unless they can't be resolved as a number.  So numerical values
                     # that should be treated as integers or strings must be handled

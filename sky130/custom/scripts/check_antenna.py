@@ -52,7 +52,7 @@ def run_antenna(layout_name, output_file):
 
     myenv = os.environ.copy()
     myenv['MAGTYPE'] = 'mag'
-    
+
     if os.path.isfile('/usr/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc'):
        rcfile = '/usr/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc'
     elif os.path.isfile(magpath + '/.magicrc'):
@@ -69,7 +69,7 @@ def run_antenna(layout_name, output_file):
         else:
             print('Error: Cannot get magic rcfile for the technology!')
             return
-    
+
     # Generate the antenna check Tcl script
 
     print('Evaluating antenna rule violations on layout ' + layout_name)
@@ -95,7 +95,7 @@ def run_antenna(layout_name, output_file):
     print('Antenna violation checks on cell ' + layout_name, file=ofile)
     print('--------------------------------------------', file=ofile)
 
-    print('Running: magic -dnull -noconsole') 
+    print('Running: magic -dnull -noconsole')
 
     mproc = subprocess.run(['magic', '-dnull', '-noconsole',
 		'-rcfile', rcfile, 'run_magic_antenna.tcl'],
@@ -150,5 +150,5 @@ if __name__ == '__main__':
         print("Usage:  check_antenna.py <layout_name> [<output_file>] [options]")
         print("Options:")
         print("   (none)")
-    
+
 

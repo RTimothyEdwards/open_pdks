@@ -127,7 +127,7 @@ def convert_file(in_file, out_path, out_file):
                 # Watch for pin list continuation line.
                 subcktlines.append(line)
                 continue
-                
+
             else:
                 ematch = endsubrex.match(line)
                 if ematch:

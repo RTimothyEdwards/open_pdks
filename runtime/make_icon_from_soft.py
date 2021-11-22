@@ -125,7 +125,7 @@ def create_symbol(projectpath, verilogfile, project, destfile=None, debug=False,
         knownreal = {}
         knownpower = {}
         knownground = {}
-            
+
         if len(pinlist) > 0 and len(pinlist[0].split()) == 1:
 
             invecrex  = re.compile('\n[ \t]*input[ \t]*\[[ \t]*([0-9]+)[ \t]*:[ \t]*([0-9]+)[ \t]*\][ \t]*([^;]+);')
@@ -160,11 +160,11 @@ def create_symbol(projectpath, verilogfile, project, destfile=None, debug=False,
                 for pin in tpin:
                     pinname = pin.strip() + '[' + test.group(1) + ':' + test.group(2) + ']'
                     iovecs.append(pinname)
-          
+
             # Apply syntax checks (to do:  check for "real" above)
             powerrec = re.compile('VDD|VCC', re.IGNORECASE)
             groundrec = re.compile('VSS|GND|GROUND', re.IGNORECASE)
-            for pinname in inpins + outpins + iopins + invecs + outvecs + iovecs: 
+            for pinname in inpins + outpins + iopins + invecs + outvecs + iovecs:
                 pmatch = powerrec.match(pinname)
                 gmatch = groundrec.match(pinname)
                 if pmatch:
@@ -249,7 +249,7 @@ def create_symbol(projectpath, verilogfile, project, destfile=None, debug=False,
         print("Bidirectional pins of module " + project + ":")
         for pin in iopins:
             print(pin)
-    
+
     # If "dolist" is True, then create a list of pin records in the style used by
     # project.json, and return the list.
 
@@ -347,7 +347,7 @@ def create_symbol(projectpath, verilogfile, project, destfile=None, debug=False,
                 pinrec["Vmax"] = "VDD + 0.3"
             pinrec["dir"] = "inout"
             pinlist.append(pinrec)
-    
+
         return pinlist
 
     # Okay, we've got all the pins, now build the symbol.
@@ -486,7 +486,7 @@ def create_symbol(projectpath, verilogfile, project, destfile=None, debug=False,
             py += 10
 
         py = -(height / 2)
-        px = -(width / 2) + 45 
+        px = -(width / 2) + 45
         for pin in iopins:
             pnum += 1
             print('ASolid|net@' + str(nnum) + '|||FS0|pin@' + str(pnum) + '||' + str(px) + '|' + str(py) + '|pin@' + str(pnum + 1) + '||' + str(px) + '|' + str(py - 10), file=ofile)

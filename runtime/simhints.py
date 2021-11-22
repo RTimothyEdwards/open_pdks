@@ -196,7 +196,7 @@ class SimHints(tkinter.Toplevel):
         else:
             if 'hints' in self.param:
                 self.param['hints'].pop('reltol', None)
-            
+
     def apply_rshunt(self, value = ''):
         # "value" is passed from binding callback but is not used
         have_rshunt = self.do_rshunt.get()
@@ -210,7 +210,7 @@ class SimHints(tkinter.Toplevel):
         else:
             if 'hints' in self.param:
                 self.param['hints'].pop('rshunt', None)
-            
+
     def apply_itl1(self, value = ''):
         # "value" is passed from binding callback but is not used
         have_itl1 = self.do_itl1.get()
@@ -224,7 +224,7 @@ class SimHints(tkinter.Toplevel):
         else:
             if 'hints' in self.param:
                 self.param['hints'].pop('itl1', None)
-            
+
 
     def apply_nodeset(self, value = ''):
         # "value" is passed from binding callback but is not used
@@ -239,7 +239,7 @@ class SimHints(tkinter.Toplevel):
         else:
             if 'hints' in self.param:
                 self.param['hints'].pop('nodeset', None)
-            
+
     def apply_include(self, value = ''):
         # "value" is passed from binding callback but is not used
         have_include = self.do_include.get()
@@ -253,7 +253,7 @@ class SimHints(tkinter.Toplevel):
         else:
             if 'hints' in self.param:
                 self.param['hints'].pop('include', None)
-            
+
     def apply_method(self, value = ''):
         # "value" is passed from binding callback but is not used
         have_method = self.do_method.get()

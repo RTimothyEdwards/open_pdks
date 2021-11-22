@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
 # Convert VNB and VPB layers in a LEF file from "li1" or "met1" to
-# "pwell" and "nwell" masterslice layers, as they should be. 
+# "pwell" and "nwell" masterslice layers, as they should be.
 #
 
 import os
@@ -56,7 +56,7 @@ for line in leflines:
            lineout = subrex.sub(r'\1nwell\3', line)
         elif vnbpin:
            lineout = subrex.sub(r'\1pwell\3', line)
-    
+
     linesout.append(lineout)
 
 with open(lef_file_out, 'w') as ofile:

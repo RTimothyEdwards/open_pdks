@@ -83,7 +83,7 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=Fals
             os.symlink(startup_script, destlibdir + '/.magicrc')
 
         # A GDS library is binary and requires handling in Magic
-        print('Creating magic generation script to generate GDS library.') 
+        print('Creating magic generation script to generate GDS library.')
         with open(destlibdir + '/generate_magic.tcl', 'w') as ofile:
             print('#!/usr/bin/env wish', file=ofile)
             print('#--------------------------------------------', file=ofile)
@@ -106,9 +106,9 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=Fals
                 gdsroot = os.path.split(gdsfile)[1]
                 gdsname = os.path.splitext(gdsroot)[0]
                 print('getcell ' + gdsname, file=ofile)
-                # Could properly make space for the cell here. . . 
+                # Could properly make space for the cell here. . .
                 print('box move e 200', file=ofile)
-                                
+
             print('puts stdout "Writing GDS library ' + destlibroot + '"', file=ofile)
             print('gds library true', file=ofile)
             print('gds write ' + destlibroot, file=ofile)
@@ -188,7 +188,7 @@ if __name__ == '__main__':
         else:
             argumentlist.append(option)
 
-    if len(argumentlist) < 3: 
+    if len(argumentlist) < 3:
         print("Not enough arguments given to create_gds_library.py.")
         usage()
         sys.exit(1)

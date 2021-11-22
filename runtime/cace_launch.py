@@ -157,7 +157,7 @@ def calculate(record, rawdata, conditions, calcrec, score, units, param):
             condition = filtspec[0].upper()
             valuerange = filtspec[1].split(':')
             # Pick data according to filter, which specifies a condition and value, or condition
-            # and range of values in the form "a:b".  Syntax is limited and needs to be expanded. 
+            # and range of values in the form "a:b".  Syntax is limited and needs to be expanded.
             if condition in conditions:
                 condvec = conditions[condition]
                 if len(valuerange) == 2:
@@ -220,7 +220,7 @@ def calculate(record, rawdata, conditions, calcrec, score, units, param):
             limittype = 'below'
         else:
             return 0
-    
+
     # Quick format sanity check---may need binary or hex conversion
     # using the new method of letting units be 'b or 'h, etc.
     # (to be done:  signed conversion, see cace_makeplot.py)
@@ -607,7 +607,7 @@ def apply_measure(varresult, measure, variables):
         condition = measure['condition']
         if condition == 'RESULT':
             # 'RESULT' can either be a specified name (not recommended), or else it is
-            # taken to be the variable set as the result variable. 
+            # taken to be the variable set as the result variable.
             try:
                 activevar = next(item for item in variables if item['condition'] == condition)
             except StopIteration:
@@ -618,7 +618,7 @@ def apply_measure(varresult, measure, variables):
                     return 0
                 else:
                     condition = activevar['condition']
-                
+
     else:
         condition = 'TIME'
 
@@ -646,7 +646,7 @@ def apply_measure(varresult, measure, variables):
         return
 
     rsize = len(activetrace)
- 
+
     if 'TIME' in varresult:
         timevector = varresult['TIME']
         try:
@@ -686,24 +686,24 @@ def apply_measure(varresult, measure, variables):
     elif calctype == 'ABS':
         # Take absolute value of activetrace.
         varresult[condition] = [abs(i) for i in activetrace]
-        
+
     elif calctype == 'NEGATE':
         # Negate the specified vector
         varresult[condition] = [-i for i in activetrace]
-        
+
     elif calctype == 'ADD':
         if 'value' in measure:
             v = float(measure['value'])
             varresult[condition] = [i + v for i in activetrace]
-        else: 
+        else:
             # Add the specified vector to the result and replace the result
             varresult[condition] = [i + j for i, j in zip(activetrace, paramresult)]
-        
+
     elif calctype == 'SUBTRACT':
         if 'value' in measure:
             v = float(measure['value'])
             varresult[condition] = [i - v for i in activetrace]
-        else: 
+        else:
             # Subtract the specified vector from the result
             varresult[condition] = [j - i for i, j in zip(activetrace, paramresult)]
 
@@ -711,10 +711,10 @@ def apply_measure(varresult, measure, variables):
         if 'value' in measure:
             v = float(measure['value'])
             varresult[condition] = [i * v for i in activetrace]
-        else: 
+        else:
             # Multiply the specified vector by the result (e.g., to get power)
             varresult[condition] = [j * i for i, j in zip(activetrace, paramresult)]
-        
+
     elif calctype == 'CLIP':
         if timevector == []:
             return
@@ -722,7 +722,7 @@ def apply_measure(varresult, measure, variables):
         if 'from' in measure:
             fromtime = float(spice_unit_convert([timeunit, measure['from'], 'time']))
         else:
-            fromtime = timevector[0] 
+            fromtime = timevector[0]
         if 'to' in measure:
             totime = float(spice_unit_convert([timeunit, measure['to'], 'time']))
         else:
@@ -748,12 +748,12 @@ def apply_measure(varresult, measure, variables):
         if timevector == []:
             return
 
-        # Get the mean value of all traces in the indicated range.  Results are 
+        # Get the mean value of all traces in the indicated range.  Results are
 	# collapsed to the single mean value.
         if 'from' in measure:
             fromtime = float(spice_unit_convert([timeunit, measure['from'], 'time']))
         else:
-            fromtime = timevector[0] 
+            fromtime = timevector[0]
         if 'to' in measure:
             totime = float(spice_unit_convert([timeunit, measure['to'], 'time']))
         else:
@@ -790,7 +790,7 @@ def apply_measure(varresult, measure, variables):
                 varresult[key] = [vtot / tsum]
 
         rsize = 1
-        
+
     elif calctype == 'RISINGEDGE':
         if timevector == []:
             return
@@ -805,7 +805,7 @@ def apply_measure(varresult, measure, variables):
         if 'from' in measure:
             fromtime = float(spice_unit_convert([timeunit, measure['from'], 'time']))
         else:
-            fromtime = timevector[0] 
+            fromtime = timevector[0]
         if 'to' in measure:
             totime = float(spice_unit_convert([timeunit, measure['to'], 'time']))
         else:
@@ -855,7 +855,7 @@ def apply_measure(varresult, measure, variables):
             varresult[key] = vector[istart:istop]
 
         rsize = istop - istart
-        
+
     elif calctype == 'FALLINGEDGE':
         if timevector == []:
             return
@@ -870,7 +870,7 @@ def apply_measure(varresult, measure, variables):
         if 'from' in measure:
             fromtime = float(spice_unit_convert([timeunit, measure['from'], 'time']))
         else:
-            fromtime = timevector[0] 
+            fromtime = timevector[0]
         if 'to' in measure:
             totime = float(spice_unit_convert([timeunit, measure['to'], 'time']))
         else:
@@ -934,7 +934,7 @@ def apply_measure(varresult, measure, variables):
         if 'from' in measure:
             fromtime = float(spice_unit_convert([timeunit, measure['from'], 'time']))
         else:
-            fromtime = timevector[0] 
+            fromtime = timevector[0]
         if 'to' in measure:
             totime = float(spice_unit_convert([timeunit, measure['to'], 'time']))
         else:
@@ -994,7 +994,7 @@ def apply_measure(varresult, measure, variables):
         if 'from' in measure:
             fromtime = float(spice_unit_convert([timeunit, measure['from'], 'time']))
         else:
-            fromtime = timevector[0] 
+            fromtime = timevector[0]
         if 'to' in measure:
             totime = float(spice_unit_convert([timeunit, measure['to'], 'time']))
         else:
@@ -1431,7 +1431,7 @@ if __name__ == '__main__':
                                         print('information may be incomplete.')
                                         var = {}
                                         var['condition'] = varname
-                                        pvars.append(var)                                    
+                                        pvars.append(var)
 
                                 # By default, the 2nd result is the result
                                 if len(extra) > 2:
@@ -1458,7 +1458,7 @@ if __name__ == '__main__':
                                         # Diagnostic
                                         # print("after measure, rsize = " + str(rsize))
                                         # print("locvarresult = " + str(locvarresult))
-    
+
                                     # Now recast locvarresult back into loccondresult.
                                     for varname in locvarresult:
                                         varrec = next(item for item in pvars if item['condition'] == varname)
@@ -1491,7 +1491,7 @@ if __name__ == '__main__':
                             rsize = 0
 
                         # To-do:  Handle raw files in similar manner to ASCII files.
-                          
+
                         while rest:
                             # This code depends on values coming first, followed by conditions.
                             matchtext = dictrex.match(rest)
@@ -1647,7 +1647,7 @@ if __name__ == '__main__':
                         else:
                             if fileext == '.lxt' or fileext == '.vcd' or fileext == '.tvo' or fileext == '.vpi':
                                 os.remove(filename)
-               
+
 
             # Other files to clean up
             if os.path.exists('b3v32check.log'):
@@ -1692,10 +1692,10 @@ if __name__ == '__main__':
             for key in condresult:
                 outnames.append(key)
                 try:
-                    condrec = next(item for item in param['conditions'] if item['condition'] == key) 
+                    condrec = next(item for item in param['conditions'] if item['condition'] == key)
                 except:
                     try:
-                        condrec = next(item for item in param['variables'] if item['condition'] == key) 
+                        condrec = next(item for item in param['variables'] if item['condition'] == key)
                     except:
                         outunits.append('')
                     else:
@@ -1879,7 +1879,7 @@ if __name__ == '__main__':
                     try:
                         outvalues.append(str(value[p]))
                     except IndexError:
-                        # Note:  This should not happen. . . 
+                        # Note:  This should not happen. . .
                         print("Error:  number of values in result and conditions do not match!")
                         print("Result: " + str(len(pconv)))
                         print("Conditions: " + str(len(condresult)))
