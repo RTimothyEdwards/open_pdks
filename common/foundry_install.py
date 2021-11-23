@@ -250,10 +250,21 @@ def subprocess_run(name, cmd, stdin=subprocess.DEVNULL, cwd=None):
             print(line)
 
     if fproc.returncode != 0:
-        emsg = "Command {} failed with exit code: {}\n".format(
-            name, fproc.returncode)
-        emsg += "  " + " ".join(cmd)
-        raise SystemError(emsg)
+        emsg = [
+            "Command {} failed with exit code: {}\n".format(
+                name, fproc.returncode),
+            "  " + " ".join(cmd),
+        ]
+        if stdin != subprocess.DEVNULL:
+            stdin.seek(0)
+            input_script = stdin.read()
+            emsg += [
+                "\nInput script was:\n",
+                '-'*75,'\n',
+                input_script,'\n',
+                '-'*75,'\n',
+            ]
+        raise SystemError("".join(emsg))
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
