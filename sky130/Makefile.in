@@ -129,7 +129,12 @@
 #
 #--------------------------------------------------------------------
 # This Makefile contains bash-isms
-SHELL = bash
+SHELL := /bin/bash
+export SHELL
+# We use pipes to save output to files, without pipefail they will always be
+# seen by make as having succeeded.
+SHELLOPTS := pipefail
+export SHELLOPTS
 MV = mv
 SED = @SED@
 
