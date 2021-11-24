@@ -35,6 +35,8 @@ cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
 	    exit -1
 	fi
 
+	echo ::group::PDK tarball
+
 	cd ${SKY130_DIR}
 	tar \
 		--create \
@@ -49,6 +51,8 @@ cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
 		--pax-option=exthdr.name=%d/PaxHeaders/%f,delete=atime,delete=ctime \
 		\
 		--file ${GITHUB_WORKSPACE}/output/pdk-SKY130A-${STD_CELL_LIBRARY}.tar.xz .
+
+	echo ::endgroup::
 )
 
 echo ::group::Output files
