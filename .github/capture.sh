@@ -19,9 +19,21 @@ if ! [[ -d $SKY130_DIR ]]; then
     exit -1
 fi
 
+mkdir -p ${GITHUB_WORKSPACE}/output/
+
+# Copy build log.
+cp ./sky130/sky130A_install.log ${GITHUB_WORKSPACE}/output/
+
+# Copy any core dupmps into the output directory.
+find -name core -not \( -path */skywater-pdk/* -prune \) | \
+	awk -v ln=1 '{print "cp " $0 " ${GITHUB_WORKSPACE}/output/core." ln++ }' | \
+	bash
+
+# Copy the magic tarball into output
+cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
+
 # Try to create a deterministic tar file
 # https://reproducible-builds.org/docs/archives/
-mkdir ${GITHUB_WORKSPACE}/output/
 (
 	cd ${SKY130_DIR}
 	tar \
