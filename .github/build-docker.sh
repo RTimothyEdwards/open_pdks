@@ -16,3 +16,8 @@
 set -e
 
 docker build --rm -t magic .
+
+# Copy the build.tar.gz out of the docker container
+docker run --name magic magic:latest
+docker cp magic:/build.tar.gz ./magic.tar.gz
+docker rm magic
