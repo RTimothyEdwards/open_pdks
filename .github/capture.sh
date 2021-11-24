@@ -50,3 +50,9 @@ cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
 		\
 		--file ${GITHUB_WORKSPACE}/output/pdk-SKY130A-${STD_CELL_LIBRARY}.tar.xz .
 )
+
+echo ::group::Output files
+find  ${GITHUB_WORKSPACE}/output/
+echo ::endgroup::
+
+exit 0
