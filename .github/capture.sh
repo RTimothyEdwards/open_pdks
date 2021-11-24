@@ -13,12 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-SKY130_DIR="$(pwd)/pdks/pdk/sky130A"
-if ! [[ -d $SKY130_DIR ]]; then
-    echo "Missing $SKY130_DIR"
-    exit -1
-fi
-
 mkdir -p ${GITHUB_WORKSPACE}/output/
 
 # Copy build log.
@@ -35,6 +29,12 @@ cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
 # Try to create a deterministic tar file
 # https://reproducible-builds.org/docs/archives/
 (
+	SKY130_DIR="$(pwd)/pdks/pdk/sky130A"
+	if ! [[ -d $SKY130_DIR ]]; then
+	    echo "Missing $SKY130_DIR"
+	    exit -1
+	fi
+
 	cd ${SKY130_DIR}
 	tar \
 		--create \
