@@ -19,7 +19,7 @@ mkdir -p ${GITHUB_WORKSPACE}/output/
 cp ./sky130/sky130A_install.log ${GITHUB_WORKSPACE}/output/
 
 # Copy any core dupmps into the output directory.
-find -name core -not \( -path */skywater-pdk/* -prune \) | \
+find . -name core -not \( -path */skywater-pdk/* -prune \) | \
 	awk -v ln=1 '{print "cp " $0 " ${GITHUB_WORKSPACE}/output/core." ln++ }' | \
 	bash
 
