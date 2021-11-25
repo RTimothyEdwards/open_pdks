@@ -5526,7 +5526,7 @@ variants (),(si)
  device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area p=pj
 
 #ifdef RERAM
- device csubcircuit sky130_fd_pr__reram reram m1 a=area_ox
+ device csubcircuit sky130_fd_pr__reram_reram_cell reram m1 a=area_ox
 #endif (RERAM)
 
 #ifdef MIM
