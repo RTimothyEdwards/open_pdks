@@ -252,6 +252,10 @@ types
   metal1 padl
  -metal1 m1fill
 
+#ifdef RERAM
+  metal2 reram,rr
+#endif
+
 # Metal 2
   metal2 metal2,m2,met2
   metal2 rmetal2,rm2,rmet2
@@ -448,7 +452,11 @@ aliases
 
   allli		*locali,coreli,rli
   allm1		*m1,rm1
+#ifdef RERAM
+  allm2		*m2,rm2,reram
+#else (!RERAM)
   allm2		*m2,rm2
+#endif (!RERAM)
   allm3		*m3,rm3
 #ifdef METAL5
   allm4	   	*m4,rm4
@@ -575,6 +583,11 @@ styles
   rm1       metal2         poly_resist_stripes
   obsm1     metal2
   m2c       metal2         metal3  via2arrow
+
+#ifdef RERAM
+  reram	    metal2	   metal3  via2 contact_X'es
+#endif (RERAM)
+
   metal2    metal3
   m2fill    metal3
   rm2       metal3         poly_resist_stripes
@@ -700,7 +713,11 @@ connect
   pwell,*psd,*mvpsd,npn  pwell,*psd,*mvpsd,npn
   *li,coreli,lifill	*li,coreli,lifill
   *m1,m1fill,obsmcon	*m1,m1fill,obsmcon
+#ifdef RERAM
+  *m2,m2fill,reram	*m2,m2fill,reram
+#else (!RERAM)
   *m2,m2fill	*m2,m2fill
+#endif (!RERAM)
   *m3,m3fill	*m3,m3fill
 #ifdef METAL5
   *m4,m4fill	*m4,m4fill
@@ -1246,6 +1263,14 @@ style gdsii
  layer VIA2 	via2
  	squares-grid 40 200 200
  	calma 	69 44
+
+#ifdef RERAM
+#undef RERAM
+ layer RERAM	reram
+ 	squares-grid 55 230 230
+	calma	201 20
+#define RERAM
+#endif (RERAM)
 
 #----------------------------------------------------------------
 # MET3
@@ -3511,8 +3536,17 @@ style  sky130 variants (vendor),()
 
 #endif (MIM)
 
+#ifdef RERAM
+ layer reram RERAM
+ and VIA1
+ grow 55
+#endif (RERAM)
+
  templayer m2cbase VIA1
  and-not COREID
+#ifdef RERAM
+ and-not RERAM
+#endif (RERAM)
  grow 5
  or VIA1
  grow 50
@@ -3957,6 +3991,9 @@ style  sky130 variants (vendor),()
 
  calma MET1 68 20
  calma VIA1 68 44
+#ifdef RERAM
+ calma RERAM 201 20
+#endif (RERAM)
  calma MET2 69 20
  calma VIA2 69 44
  calma MET3 70 20
@@ -4526,6 +4563,22 @@ variants *
 
  exact_overlap v1/m1
 
+#ifdef RERAM
+#--------------------------------------------------
+# ReRAM
+#--------------------------------------------------
+
+ width reram 340 "ReRAM width < %d (rr1.1)"
+ spacing reram reram 55 touching_illegal "ReRAM spacing < %d (rr1.2)"
+ surround reram *m1,rm1 30 directional \
+	"Metal1 overlap of ReRAM < %d in one direction (via.5a - via.4a)"
+ surround reram *m2,rm2 30 directional \
+	"Metal2 overlap of ReRAM < %d in one direction (met2.5 - met2.4)"
+
+ no_overlap reram,v1 reram,v1
+
+#endif (RERAM)
+
 #--------------------------------------------------
 # METAL2 - 
 #--------------------------------------------------
@@ -4991,6 +5044,9 @@ extract
  height mcon	     1.0361 0.34
  height allm1	     1.3761 0.36
  height m1fill	     1.3761 0.36
+#ifdef RERAM
+ # TO-DO:  Rework all heights based on ReRAM!
+#endif (RERAM)
  height v1	     1.7361 0.27
  height allm2	     2.0061 0.36
  height m2fill	     1.3761 0.36
@@ -5175,6 +5231,10 @@ defaultareacap     nwell well 120
  defaultoverlap     allm1 metal1 allli locali 114
  defaultsideoverlap allm1 metal1 allli locali 59
  defaultsideoverlap allli locali allm1 metal1 35
+
+#ifdef RERAM
+# TO-DO:  Modify all metal stack parasitics above metal1 based on ReRAM!
+#endif (RERAM)
 
 #metal2
  defaultsidewall    allm2 metal2      50
@@ -5464,6 +5524,10 @@ variants (),(si)
  device ndiode sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area p=pj
  device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area p=pj
  device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area p=pj
+
+#ifdef RERAM
+ device csubcircuit sky130_fd_pr__reram reram m1 a=area_ox
+#endif (RERAM)
 
 #ifdef MIM
  device csubcircuit sky130_fd_pr__cap_mim_m3_1 *mimcap  *m3 w=w l=l
