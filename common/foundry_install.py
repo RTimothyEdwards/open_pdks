@@ -533,7 +533,8 @@ if __name__ == '__main__':
     os.makedirs(targetdir, exist_ok=True)
 
     # Here's where common scripts are found:
-    scriptdir = os.path.split(os.getcwd())[0] + '/common'
+    openpdksdir = os.path.dirname(os.path.realpath(__file__))
+    scriptdir = os.path.split(openpdksdir)[0] + '/common'
 
     #----------------------------------------------------------------
     # Installation part 1:  Install files into the staging directory
