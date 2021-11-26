@@ -47,8 +47,8 @@ ifeq ($(TECHS),)
 	DONE_MESSAGE = "No techs configured."
 endif
 
-TECHS_ALL = $(addprefix tech-,$(TECHS))
-TECHS_INSTALL = $(addprefix install-,$(TECHS))
+TECHS_ALL = $(addprefix tech-,$(ENABLED_TECHS))
+TECHS_INSTALL = $(addprefix install-,$(ENABLED_TECHS))
 TECHS_UNINSTALL = $(addprefix uninstall-,$(TECHS))
 TECHS_CLEAN = $(addprefix clean-,$(TECHS))
 TECHS_VERYCLEAN = $(addprefix veryclean-,$(TECHS))
