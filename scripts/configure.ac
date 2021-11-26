@@ -22,6 +22,9 @@ realpath() {
 
 ENABLED_TECHS=
 
+# Export the open_pdks top level directory
+OPENPDKS_TOP=`cd .. && pwd`
+
 # detect PDKs based on directories that include Makefile.in files
 m4_define([M4_GET_TECHS], [m4_normalize(m4_esyscmd(cd .. && find -H * -mindepth 1 -maxdepth 1 -name "Makefile.in" -exec dirname {} \; | tr "\n" " "))])
 
@@ -259,6 +262,8 @@ AC_ARG_WITH(
 AC_SUBST(EF_STYLE)
 # Export the list of enabled technologies to the Makefile
 AC_SUBST(ENABLED_TECHS)
+# Export the top level directory of open_pdks
+AC_SUBST(OPENPDKS_TOP)
 
 MAKEFILES=$(find -L .. -name "Makefile.in" | sed 's/\(.*\)\.in/\1/g')
 AC_CONFIG_FILES($MAKEFILES)

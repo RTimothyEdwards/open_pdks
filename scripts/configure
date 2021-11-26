@@ -587,6 +587,7 @@ PACKAGE_URL=''
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+OPENPDKS_TOP
 ENABLED_TECHS
 EF_STYLE
 SKY130_OSU_T18_PATH
@@ -2173,6 +2174,9 @@ realpath() {
 
 ENABLED_TECHS=
 
+# Export the open_pdks top level directory
+OPENPDKS_TOP=`cd .. && pwd`
+
 # detect PDKs based on directories that include Makefile.in files
 
 
@@ -2761,6 +2765,8 @@ fi
 
 
 # Export the list of enabled technologies to the Makefile
+
+# Export the top level directory of open_pdks
 
 
 MAKEFILES=$(find -L .. -name "Makefile.in" | sed 's/\(.*\)\.in/\1/g')
