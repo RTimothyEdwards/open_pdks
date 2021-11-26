@@ -48,7 +48,7 @@
 # on the files in the target directory.
 #
 # All options "-lef", "-spice", etc., can take the additional arguments
-# 	up  <number>
+# 	up=<number>
 #
 # to indicate that the source hierarchy should be copied from <number>
 # levels above the files.  For example, if liberty files are kept in
@@ -60,7 +60,7 @@
 # (if "-ef_format" option specified, then: libs.ref/<libname>/liberty/*.lib)
 # while
 #
-# 	-liberty x/y/z/PVT_*/*.lib up 1
+# 	-liberty x/y/z/PVT_*/*.lib up=1
 #
 # would install all .lib files into libs.ref/liberty/<libname>/PVT_*/*.lib
 # (if "-ef_format" option specified, then: libs.ref/<libname>/liberty/PVT_*/*.lib)
@@ -203,7 +203,7 @@ def usage():
     print(" All <path> names may be wild-carded with '*' ('glob'-style wild-cards)")
     print("")
     print(" All options with <path> other than source and target may take the additional")
-    print(" arguments 'up <number>', where <number> indicates the number of levels of")
+    print(" arguments 'up=<number>', where <number> indicates the number of levels of")
     print(" hierarchy of the source path to include when copying to the target.")
     print("")
     print(" Library <type> may be one of:")
