@@ -587,6 +587,7 @@ PACKAGE_URL=''
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+ENABLED_TECHS
 EF_STYLE
 SKY130_OSU_T18_PATH
 SKY130_OSU_T15_PATH
@@ -603,6 +604,7 @@ IRSIM_DISABLED
 NETGEN_DISABLED
 MAGIC_DISABLED
 KLAYOUT_DISABLED
+ALL_TECHS
 SKY130_SOURCE_PATH
 SKY130_LINK_TARGETS
 SED
@@ -2169,6 +2171,8 @@ realpath() {
     python3 -c 'import os,sys;print(os.path.realpath(os.path.expanduser(sys.argv[1])))' $1
 }
 
+ENABLED_TECHS=
+
 # detect PDKs based on directories that include Makefile.in files
 
 
@@ -2200,10 +2204,12 @@ if test "${enable_sky130_pdk+set}" = set; then :
                 if test "$enableval" == "yes" -o "$enableval" == "YES"; then
                     export SKY130_SOURCE_PATH=../sources/sky130-pdk
             	    SKY130_AUTO="1"
+		    ENABLED_TECHS="$ENABLED_TECHS sky130"
                 elif test "$enableval" == "no" -o "$enableval" == "NO"; then
                     echo "Disabling sky130..."
                 else
                     SKY130_SOURCE_PATH=$enableval
+		    ENABLED_TECHS="$ENABLED_TECHS sky130"
                 fi
 
 fi
@@ -2269,6 +2275,10 @@ $as_echo "$as_me: Link targets set to $SKY130_LINK_TARGETS" >&6;}
 
 
 
+
+
+# Export the list of known technologies to the Makefile
+ALL_TECHS="sky130"
 
 
 # Set variables for tool setups
@@ -2750,8 +2760,10 @@ fi
 
 
 
+# Export the list of enabled technologies to the Makefile
 
-MAKEFILES=$(find .. -name "Makefile.in" | sed 's/\(.*\)\.in/\1/g')
+
+MAKEFILES=$(find -L .. -name "Makefile.in" | sed 's/\(.*\)\.in/\1/g')
 ac_config_files="$ac_config_files $MAKEFILES"
 
 

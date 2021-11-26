@@ -39,25 +39,23 @@
 # The following definitions are tied to the contents
 # of this repository and should not be changed.
 
-TECHS =
-
-SKY130_SOURCE_PATH = @SKY130_SOURCE_PATH@
-ifneq ($(SKY130_SOURCE_PATH),)
-    TECHS += sky130
-endif
+TECHS = @ALL_TECHS@
+ENABLED_TECHS = @ENABLED_TECHS@
 
 DONE_MESSAGE = "Done."
 ifeq ($(TECHS),)
 	DONE_MESSAGE = "No techs configured."
 endif
 
-TECHS_ALL = $(addprefix tech_,$(TECHS))
+TECHS_ALL = $(addprefix tech-,$(TECHS))
 TECHS_INSTALL = $(addprefix install-,$(TECHS))
 TECHS_UNINSTALL = $(addprefix uninstall-,$(TECHS))
 TECHS_CLEAN = $(addprefix clean-,$(TECHS))
 TECHS_VERYCLEAN = $(addprefix veryclean-,$(TECHS))
 
 #---------------------------------------------------
+
+.PHONY: all install uninstall clean veryclean
 
 all: $(TECHS_ALL)
 	@echo $(DONE_MESSAGE)
@@ -113,21 +111,21 @@ common_install:
 
 #---------------------------------------------------
 
-tech_sky130:
-	(cd sky130 && ${MAKE} all)
+tech-%: %
+	(cd $* && ${MAKE} all)
 
 #---------------------------------------------------
 
-install-sky130:	sky130
-	(cd sky130 && ${MAKE} install)
+install-%: %
+	(cd $* && ${MAKE} install)
 
-uninstall-sky130: sky130
-	(cd sky130 && ${MAKE} uninstall)
+uninstall-%: %
+	(cd $* && ${MAKE} uninstall)
 
-clean-sky130:
-	(cd sky130 && ${MAKE} clean)
+clean-%:
+	(cd $* && ${MAKE} clean)
 
-veryclean-sky130:
-	(cd sky130 && ${MAKE} veryclean)
+veryclean-%:
+	(cd $* && ${MAKE} veryclean)
 
 #---------------------------------------------------
