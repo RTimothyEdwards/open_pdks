@@ -40,7 +40,7 @@ cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
 	cd ${SKY130_DIR}
 	tar \
 		--create \
-		--xz \
+		--gzip \
 		--verbose \
 		\
 		--mtime='2020-05-07 00:00Z' \
@@ -50,7 +50,7 @@ cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
 		--numeric-owner \
 		--pax-option=exthdr.name=%d/PaxHeaders/%f,delete=atime,delete=ctime \
 		\
-		--file ${GITHUB_WORKSPACE}/output/pdk-SKY130A-${STD_CELL_LIBRARY}.tar.xz .
+		--file ${GITHUB_WORKSPACE}/output/pdk-SKY130A-${STD_CELL_LIBRARY}.tar.gz .
 
 	echo ::endgroup::
 )
