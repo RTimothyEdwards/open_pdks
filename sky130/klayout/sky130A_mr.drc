@@ -24,7 +24,6 @@ AL = true  # do not change
 CU = false  # do not change
 # choose betwen only one of  AL  or  CU  back-end flow here :
 backend_flow = AL
-SEAL = true
 
 # enable / disable rule groups
 if $feol == "0"
@@ -41,10 +40,6 @@ if $offgrid == "0"
     OFFGRID = false # manufacturing grid/angle checks
 else
     OFFGRID = true # manufacturing grid/angle checks
-end
-
-if $seal == "0"
-    SEAL = false
 end
 
 # klayout setup
@@ -290,12 +285,8 @@ log("END: 95/20 (npc)")
 
 #   licon
 log("START: 66/44 (licon)")
-if SEAL
-  ringLICON = licon.drc(with_holes > 0)
-  rectLICON = licon.not(ringLICON)
-else
-  rectLICON = licon
-end
+ringLICON = licon.drc(with_holes > 0)
+rectLICON = licon.not(ringLICON)
 xfom = difftap.not(poly)
 licon1ToXfom = licon.interacting(licon.and(xfom))
 licon1ToXfom_PERI = licon1ToXfom.not(areaid_ce)
@@ -354,23 +345,17 @@ log("END: 67/20 (li)")
 #   ct
 log("START: 67/44 (mcon)")
 mconnotace = mcon.not(areaid_ce)
-if SEAL
-  ringMCON = mcon.drc(with_holes > 0)
-  rectMCON = mcon.not(ringMCON)
-else
-  rectMCON = mcon
-end
+ringMCON = mcon.drc(with_holes > 0)
+rectMCON = mcon.not(ringMCON)
 rectMCON_peri = rectMCON.not(areaid_ce)
 rectMCON.non_rectangles.output("ct.1", "ct.1: non-ring mcon should be rectangular")
 # rectMCON_peri.edges.without_length(0.17).output("ct.1_a/b", "ct.1_a/b : minimum/maximum width of mcon : 0.17um")
 rectMCON_peri.drc(width < 0.17).output("ct.1_a", "ct.1_a : minimum width of mcon : 0.17um")
 rectMCON_peri.drc(length > 0.17).output("ct.1_b", "ct.1_b : maximum length of mcon : 0.17um")
 mcon.space(0.19, euclidian).output("ct.2", "ct.2 : min. mcon spacing : 0.19um")
-if SEAL
-  ringMCON.width(0.17, euclidian).output("ct.3", "ct.3 : min. width of ring-shaped mcon : 0.17um")
-  ringMCON.drc(width >= 0.175).output("ct.3_a", "ct.3_a : max. width of ring-shaped mcon : 0.175um")
-  ringMCON.not(areaid_sl).output("ct.3_b", "ct.3_b: ring-shaped mcon must be enclosed by areaid_sl")
-end
+ringMCON.width(0.17, euclidian).output("ct.3", "ct.3 : min. width of ring-shaped mcon : 0.17um")
+ringMCON.drc(width >= 0.175).output("ct.3_a", "ct.3_a : max. width of ring-shaped mcon : 0.175um")
+ringMCON.not(areaid_sl).output("ct.3_b", "ct.3_b: ring-shaped mcon must be enclosed by areaid_sl")
 mconnotace.not(li).output("ct.4", "ct.4 : mcon should covered by li")
 log("END: 67/44 (mcon)")
 
@@ -413,13 +398,8 @@ log("END: 68/20 (m1)")
 #   via
 log("START: 68/44 (via)")
 if backend_flow = AL
-  if SEAL
-    ringVIA = via.drc(with_holes > 0)
-    rectVIA = via.not(ringVIA)
-  else
-    rectVIA = via
-  end
-
+  ringVIA = via.drc(with_holes > 0)
+  rectVIA = via.not(ringVIA)
   via_not_mt = rectVIA.not(areaid_mt)
 
   via_not_mt.non_rectangles.output("via.1a", "via.1a : via outside of moduleCut should be rectangular")
@@ -429,11 +409,10 @@ if backend_flow = AL
 
   via.space(0.17, euclidian).output("via.2", "via.2 : min. via spacing : 0.17um")
 
-  if SEAL
-    ringVIA.width(0.2, euclidian).output("via.3", "via.3 : min. width of ring-shaped via : 0.2um")
-    ringVIA.drc(width >= 0.205).output("via.3_a", "via.3_a : max. width of ring-shaped via : 0.205um")
-    ringVIA.not(areaid_sl).output("via.3_b", "via.3_b: ring-shaped via must be enclosed by areaid_sl")
-  end
+  ringVIA.width(0.2, euclidian).output("via.3", "via.3 : min. width of ring-shaped via : 0.2um")
+  ringVIA.drc(width >= 0.205).output("via.3_a", "via.3_a : max. width of ring-shaped via : 0.205um")
+
+  ringVIA.not(areaid_sl).output("via.3_b", "via.3_b: ring-shaped via must be enclosed by areaid_sl")
 
   m1.edges.enclosing(rectVIA.drc(width == 0.15), 0.055, euclidian).output("via.4a", "via.4a : min. m1 enclosure of 0.15um via : 0.055um")
   rectVIA.squares.drc(width == 0.15).not(m1).output("via.4a_a", "via.4a_a : 0.15um via must be enclosed by met1")
@@ -476,25 +455,16 @@ log("END: 69/20 (m2)")
 #   via2
 log("START: 69/44 (via2)")
 if backend_flow = AL
-  if SEAL
-    ringVIA2 = via2.drc(with_holes > 0)
-    rectVIA2 = via2.not(ringVIA2)
-  else
-    rectVIA2 = via2
-  end
-
+  ringVIA2 = via2.drc(with_holes > 0)
+  rectVIA2 = via2.not(ringVIA2)
   via2_not_mt = rectVIA2.not(areaid_mt)
   via2_not_mt.non_rectangles.output("via2.1a", "via2.1a : via2 outside of moduleCut should be rectangular")
   via2_not_mt.width(0.2, euclidian).output("via2.1a_a", "via2.1a_a : min. width of via2 outside of moduleCut : 0.2um")
   via2_not_mt.edges.without_length(nil, 0.2 + 1.dbu).output("via2.1a_b", "via2.1a_b : maximum length of via2 : 0.2um")
   via2.space(0.2, euclidian).output("via2.2", "via2.2 : min. via2 spacing : 0.2um")
-
-  if SEAL
-    ringVIA2.width(0.2, euclidian).output("via2.3", "via2.3 : min. width of ring-shaped via2 : 0.2um")
-    ringVIA2.drc(width >= 0.205).output("via2.3_a", "via2.3_a : max. width of ring-shaped via2 : 0.205um")
-    ringVIA2.not(areaid_sl).output("via2.3_b", "via2.3_b: ring-shaped via2 must be enclosed by areaid_sl")
-  end
-
+  ringVIA2.width(0.2, euclidian).output("via2.3", "via2.3 : min. width of ring-shaped via2 : 0.2um")
+  ringVIA2.drc(width >= 0.205).output("via2.3_a", "via2.3_a : max. width of ring-shaped via2 : 0.205um")
+  ringVIA2.not(areaid_sl).output("via2.3_b", "via2.3_b: ring-shaped via2 must be enclosed by areaid_sl")
   m2.enclosing(via2, 0.04, euclidian).output("via2.4", "via2.4 : min. m2 enclosure of via2 : 0.04um")
   via2.not(m2).output("via2.4_a", "via2.4_a : via must be enclosed by met2")
 
@@ -526,13 +496,9 @@ log("END: 70/20 (m3)")
 #   via3
 log("START: 70/44 (via3)")
 if backend_flow = AL
-  if SEAL
-    ringVIA3 = via3.drc(with_holes > 0)
-    rectVIA3 = via3.not(ringVIA3)
-  else
-    rectVIA3 = via3
-  end
 
+  ringVIA3 = via3.drc(with_holes > 0)
+  rectVIA3 = via3.not(ringVIA3)
   via3_not_mt = rectVIA3.not(areaid_mt)
   via3_not_mt.non_rectangles.output("via3.1", "via3.1 : via3 outside of moduleCut should be rectangular")
   via3_not_mt.width(0.2, euclidian).output("via3.1_a", "via3.1_a : min. width of via3 outside of moduleCut : 0.2um")
@@ -571,26 +537,17 @@ log("END: 71/20 (m4)")
 
 #   via4
 log("START: 71/44 (via4)")
-if SEAL
-  ringVIA4 = via4.drc(with_holes > 0)
-  rectVIA4 = via4.not(ringVIA4)
-else
-  rectVIA4 = via4
-end
-
+ringVIA4 = via4.drc(with_holes > 0)
+rectVIA4 = via4.not(ringVIA4)
 via4_not_mt = rectVIA4.not(areaid_mt)
 via4_not_mt.non_rectangles.output("via4.1", "via4.1 : via4 outside of moduleCut should be rectangular")
 rectVIA4.width(0.8, euclidian).output("via4.1_a", "via4.1_a : min. width of via4 outside of moduleCut : 0.8um")
 rectVIA4.drc(length > 0.8).output("via4.1_b", "via4.1_b : maximum length of via4 : 0.8um")
 
 via4.space(0.8, euclidian).polygons.output("via4.2", "via4.2 : min. via4 spacing : 0.8um")
-
-if SEAL
-  ringVIA4.width(0.8, euclidian).output("via4.3", "via4.3 : min. width of ring-shaped via4 : 0.8um")
-  ringVIA4.drc(width >= 0.805).output("via4.3_a", "via4.3_a : max. width of ring-shaped via4 : 0.805um")
-  ringVIA4.not(areaid_sl).output("via4.3_b", "via4.3_b: ring-shaped via4 must be enclosed by areaid_sl")
-end
-
+ringVIA4.width(0.8, euclidian).output("via4.3", "via4.3 : min. width of ring-shaped via4 : 0.8um")
+ringVIA4.drc(width >= 0.805).output("via4.3_a", "via4.3_a : max. width of ring-shaped via4 : 0.805um")
+ringVIA4.not(areaid_sl).output("via4.3_b", "via4.3_b: ring-shaped via4 must be enclosed by areaid_sl")
 m4.enclosing(via4, 0.19, euclidian).output("via4.4", "via4.4 : min. m4 enclosure of via4 : 0.19um")
 rectVIA4.not(m4).output("via4.4_a", "via4.4_a : m4 must enclose all via4")
 log("END: 71/44 (via4)")
