@@ -735,8 +735,8 @@ klayout-a: klayout/${TECH}.lyp klayout/${TECH}.lyt
 	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyp ${KLAYOUT_STAGING_A}/${SKY130A}.lyp
 	${CPP} ${SKY130A_DEFS} klayout/${TECH}.lyt ${KLAYOUT_STAGING_A}/${SKY130A}.lyt
 	cp klayout/${TECH}.lydrc ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc
-	./custom/scripts/gen_run_drc.py -l ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc \
-		-o ${KLAYOUT_STAGING_A}/${SKY130A}.drc
+	#./custom/scripts/gen_run_drc.py -l ${KLAYOUT_STAGING_A}/${SKY130A}.lydrc \
+	#	-o ${KLAYOUT_STAGING_A}/${SKY130A}.drc
 
 xcircuit-a: xcircuit/${TECH}.xcircuitrc
 	rm -rf ${XCIRCUIT_STAGING_A}
