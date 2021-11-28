@@ -52,12 +52,29 @@ cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
 		\
 		--file ${GITHUB_WORKSPACE}/output/pdk-SKY130A-${STD_CELL_LIBRARY}.tar.bz2 .
 
-	# Remove the stuff we just put in the tarball so we don't run out of disk space.
-	rm -rf .
-
 	echo ::endgroup::
 )
 
+# Free up disk space so the GitHub Action runner doesn't die when collecting
+# the artifacts.
+echo ::group::Freeup space
+
+df -h
+
+for DIR in ${GITHUB_WORKSPACE}/*; do
+	if [ x$DIR = x"${GITHUB_WORKSPACE}/output" ]; then
+		continue
+	fi
+	echo
+	echo "Removing $DIR"
+	rm -rvf $DIR
+done
+
+df -h
+
+echo ::endgroup::
+
+# Output which files are being saved.
 echo ::group::Output files
 du -h  ${GITHUB_WORKSPACE}/output/*
 echo ::endgroup::
