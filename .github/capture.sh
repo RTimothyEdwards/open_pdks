@@ -56,7 +56,7 @@ cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
 )
 
 echo ::group::Output files
-find  ${GITHUB_WORKSPACE}/output/
+du -h  ${GITHUB_WORKSPACE}/output/*
 echo ::endgroup::
 
 exit 0
