@@ -151,6 +151,10 @@
 #	noconvert: Install only; do not attempt to convert to other
 #		    formats (applies only to GDS, CDL, and LEF).
 #
+#	dorcx: 	   Used with "-gds" and when no CDL or SPICE files are
+#		    specified for installation:  Do parasitic extraction
+#		    (NOTE:  Only does parasitic capacitance extraction).
+#
 #	options:   Followed by "=" and the name of a script.  Behavior
 #		    is dependent on the mode;  if applied to "-gds",
 #		    then the script is inserted before the GDS read
@@ -1185,6 +1189,7 @@ if __name__ == '__main__':
     no_cdl_convert = False
     no_gds_convert = False
     no_lef_convert = False
+    do_parasitics = False
     cdl_compile_only = False
     lef_compile = False
     lef_compile_only = False
@@ -1225,6 +1230,10 @@ if __name__ == '__main__':
                 no_gds_convert = True
             elif option[0] == 'lef':
                 no_lef_convert = True
+
+        if 'dorcx' in option:
+            if option[0] == 'gds':
+                do_parasitics = True
 
         # Option 'privileged' is a standalone keyword.
         if 'priv' in option or 'privileged' in option or 'private' in option:
@@ -1399,6 +1408,7 @@ if __name__ == '__main__':
                     print('crashbackups stop', file=ofile)
                     print('drc off', file=ofile)
                     print('gds readonly true', file=ofile)
+                    print('gds drccheck false', file=ofile)
                     print('gds flatten true', file=ofile)
                     print('gds rescale false', file=ofile)
                     print('tech unlock *', file=ofile)
@@ -2165,7 +2175,10 @@ if __name__ == '__main__':
                 # handle and should be fixed in the source.
                 print('ext2spice subcircuit top on', file=ofile)
 
-                print('ext2spice cthresh 0.1', file=ofile)
+                # Use option "dorcx" if parasitics should be extracted.
+                # NOTE:  Currently only does parasitic capacitance extraction.
+                if do_parasitics:
+                    print('ext2spice cthresh 0.1', file=ofile)
 
                 if os.path.isfile(allgdslibname):
                     print('select top cell', file=ofile)
