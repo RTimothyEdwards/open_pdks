@@ -1013,6 +1013,7 @@ io-a:
 		-verilog %l/verilog/*.v compile-only rename=sky130_ef_io \
 		-cdl %l/cdl/*.cdl \
 		-spice %l/spice/*.spice \
+		-lib %l/lib/*.lib \
 		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
 		-lef %l/lef/*.lef exclude=sky130_fd_io__top_xres4v2.lef \
 			compile-only rename=sky130_ef_io \
