@@ -27,7 +27,7 @@ def filter(inname, outname, ef_format = True):
             spitext = inFile.read()
             spilines = spitext.splitlines()
     except:
-        print('rename_models.py: failed to open ' + fnmIn + ' for reading.', file=sys.stderr)
+        print('rename_models.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
     # Process input with regexp

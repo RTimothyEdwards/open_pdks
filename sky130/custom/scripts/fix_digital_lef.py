@@ -22,7 +22,7 @@ def filter(inname, outname):
             ltext = inFile.read()
             llines = ltext.splitlines()
     except:
-        print('fix_digital_lef.py: failed to open ' + fnmIn + ' for reading.', file=sys.stderr)
+        print('fix_digital_lef.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
     # Process input with regexp

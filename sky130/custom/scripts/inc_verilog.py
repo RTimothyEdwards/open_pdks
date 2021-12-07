@@ -22,7 +22,7 @@ def filter(inname, outname):
             vtext = inFile.read()
             vlines = vtext.splitlines()
     except:
-        print('inc_verilog.py: failed to open ' + fnmIn + ' for reading.', file=sys.stderr)
+        print('inc_verilog.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
     # Check if input file is a base cell or strength-specific cell, and

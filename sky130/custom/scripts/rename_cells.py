@@ -23,7 +23,7 @@ def filter(inname, outname):
             spitext = inFile.read()
             spilines = spitext.splitlines()
     except:
-        print('rename_cells.py: failed to open ' + fnmIn + ' for reading.', file=sys.stderr)
+        print('rename_cells.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
     # Process input with regexp
