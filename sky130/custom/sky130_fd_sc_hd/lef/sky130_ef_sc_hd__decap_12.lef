@@ -33,6 +33,7 @@ MACRO sky130_ef_sc_hd__decap_12
   END VGND
   PIN VNB
     DIRECTION INPUT ;
+    USE GROUND ;
     PORT
       LAYER pwell ;
         RECT 0.080 -0.130 0.360 0.150 ;
@@ -40,6 +41,7 @@ MACRO sky130_ef_sc_hd__decap_12
   END VNB
   PIN VPB
     DIRECTION INPUT ;
+    USE POWER ;
     PORT
       LAYER nwell ;
         RECT -0.190 1.305 5.710 2.910 ;
