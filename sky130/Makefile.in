@@ -752,6 +752,9 @@ xcircuit-a: xcircuit/${TECH}.xcircuitrc
 	${CPP} ${SKY130A_DEFS} xcircuit/${TECH}.xcircuitrc \
 		${XCIRCUIT_STAGING_A}/${SKY130A}.xcircuitrc
 
+
+
+
 xschem-a: ${XSCHEM_PATH}
 	rm -rf ${XSCHEM_STAGING_A}
 	mkdir -p ${XSCHEMTOP_STAGING_A}
@@ -763,21 +766,19 @@ xschem-a: ${XSCHEM_PATH}
 	
 	#add the correct libraries into the test files
 	for file in ${XSCHEM_STAGING_A}/sky130_tests/* ; do \
-		${SED} -i '/.include \\\\\\\\$$\:\:SKYWATER_MODELS/d' $$file ; \
-		grep -zl 'sky130.lib.spice' $$file || ${SED} -z 's|format="tcleval( @value )"\nvalue="|format="tcleval( @value )"\nvalue="\n.lib \\\\\\\\$$\:\:SKYWATER_MODELS\\\\\\\\/sky130.lib.spice tt |' -i $$file ; \
-		grep -zl 'format="tcleval( @value )".*value="' $$file || printf 'C {devices/code.sym} -170 0 0 0 {name=TT_MODELS\nonly_toplevel=true\nformat="tcleval( @value )"\nvalue="\n.lib \\\\\\\\$$\:\:SKYWATER_MODELS\\\\\\\\/sky130.lib.spice tt\n"}' >> $$file ; \
+		${SED} -i '/.include $$\:\:SKYWATER_MODELS/d' $$file ; \
+		grep -zl 'sky130.lib.spice' $$file || ${SED} -z 's|format="tcleval( @value )"\nvalue="|format="tcleval( @value )"\nvalue="\n.lib $$\:\:SKYWATER_MODELS/sky130.lib.spice tt |' -i $$file ; \
 	done
 	
 	# Re-copy the xschemrc, with one change to add the PDK install path as
 	# a component of XSCHEM_LIBRARY_PATH
 	cat ${XSCHEM_PATH}/xschemrc | \
 		${SED} -e "/PWD/aappend XSCHEM_LIBRARY_PATH :${XSCHEM_STAGING_A}" | \
-		${SED} -e "/sky130_models.tcl/s#scripts#${XSCHEM_STAGING_A}/scripts#" | \
-		${SED} -e "/netlist_dir/aset netlist_dir ." | \
+		${SED} -e '/netlist_dir/aset netlist_dir $$env(PWD)' | \
 		${SED} -e "/SKYWATER_MODELS/s#~/pdks/sky130A/libs.tech/ngspice#${NGSPICE_STAGING_A}#" | \
 		${SED} -e "/SKYWATER_STDCELLS/s#~/pdks/sky130A/libs.ref/sky130_fd_sc_hd/spice#${STAGING_PATH}/${SKY130A}/libs.ref/${HD_SPICE}#" \
 		> ${XSCHEM_STAGING_A}/xschemrc
-		
+
 openlane-a: openlane/config.tcl openlane/rcx_rules.info openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_A}
 	mkdir -p ${OPENLANE_STAGING_A}
