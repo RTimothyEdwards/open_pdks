@@ -164,7 +164,7 @@ def sortkeys(keys):
             newkeys.append(keyword)
     return newkeys
 
-def runpp(keys, keyrex, defines, ccomm, incdirs, inputfile, ofile):
+def runpp(keys, keyrex, defines, ccomm, utf, incdirs, inputfile, ofile):
 
     includerex = re.compile('^[ \t]*#include[ \t]+"*([^ \t\n\r"]+)')
     definerex = re.compile('^[ \t]*#define[ \t]+([^ \t]+)[ \t]+(.+)')
@@ -196,7 +196,10 @@ def runpp(keys, keyrex, defines, ccomm, incdirs, inputfile, ofile):
 
     ifile = False
     try:
-        ifile = open(inputfile, 'r')
+        if not utf:
+            ifile = open(inputfile, 'r')
+        else:
+            ifile = open(inputfile, 'r', encoding='utf-8', errors='replace')
     except FileNotFoundError:
         for dir in incdirs:
             try:
@@ -488,7 +491,10 @@ def runpp(keys, keyrex, defines, ccomm, incdirs, inputfile, ofile):
                 break
                 
         # Output the line
-        print(line, file=ofile, end='')
+        if not utf:
+            print(line, file=ofile, end='')
+        else:
+            ofile.write(line.encode('utf-8'))
 
     if ifblock != -1 or ifstack != []:
         print("Error:  input file ended with an unterminated #if block.", file=sys.stderr)
@@ -535,6 +541,7 @@ if __name__ == '__main__':
     incdirs = []
     ccomm = False
     quiet = False
+    utf = False
     for item in options:
         result = item.split('=')
         if result[0] == '-help':
@@ -544,6 +551,8 @@ if __name__ == '__main__':
             ccomm = True
         elif result[0] == '-quiet':
             quiet = True
+        elif result[0] == '-utf8':
+            utf = True
         elif result[0][0:2] == '-I':
             incdirs.append(result[0][2:])
         elif result[0][0:2] == '-D':
@@ -557,7 +566,7 @@ if __name__ == '__main__':
             keys.append(keyword)
             keys = sortkeys(keys)
         else:
-            print('Bad option ' + item + ', options are -help, -quiet, -ccomm, -D<def> -I<dir>\n')
+            print('Bad option ' + item + ', options are -help, -quiet, -ccomm, -utf8, -D<def> -I<dir>\n')
             sys.exit(1)
 
     if not os.path.isfile(inputfile):
@@ -567,7 +576,10 @@ if __name__ == '__main__':
             sys.exit(0)
 
     if outputfile:
-        ofile = open(outputfile, 'w')
+        if not utf:
+            ofile = open(outputfile, 'w')
+        else:
+            ofile = open(outputfile, 'wb')
     else:
         ofile = sys.stdout
 
@@ -581,7 +593,7 @@ if __name__ == '__main__':
 
     keys = sortkeys(keys)
 
-    runpp(keys, keyrex, defines, ccomm, incdirs, inputfile, ofile)
+    runpp(keys, keyrex, defines, ccomm, utf, incdirs, inputfile, ofile)
     if ofile != sys.stdout:
         ofile.close()
 

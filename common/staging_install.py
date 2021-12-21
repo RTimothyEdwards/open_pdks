@@ -117,9 +117,9 @@ def filter_recursive(tooldir, stagingdir, finaldir):
         elif os.path.isdir(filepath):
             total += filter_recursive(filepath, stagingdir, finaldir)
         else:
-            with open(filepath, 'r') as ifile:
+            with open(filepath, 'r', encoding='utf-8', errors='replace') as ifile:
                 try:
-                    flines = ifile.read().splitlines()
+                    flines = ifile.readlines()
                 except UnicodeDecodeError:
                     print('Failure to read file ' + filepath + '; non-ASCII content.')
                     continue
@@ -128,11 +128,11 @@ def filter_recursive(tooldir, stagingdir, finaldir):
             makeuserwritable(filepath)
 
             modified = False
-            with open(filepath, 'w') as ofile:
+            with open(filepath, 'wb') as ofile:
                 for line in flines:
                     newline = line.replace(stagingdir, finaldir)
                     newline = newline.replace(stagingparent, localparent)
-                    print(newline, file=ofile)
+                    ofile.write(newline.encode('utf-8'))
                     if newline != line:
                         modified = True
 

@@ -661,9 +661,30 @@ compose
   compose  pfet  poly  pdiff
   compose  var   poly  nsd
 
+  decompose npass   poly ndiff
+  decompose npd     poly ndiff
+  decompose scnfet  poly ndiff
+  decompose nfetlvt poly ndiff
+  decompose nsonos  poly ndiff
+
+  decompose ppu       poly pdiff
+  decompose scpfet    poly pdiff
+  decompose scpfethvt poly pdiff
+  decompose pfethvt   poly pdiff
+  decompose pfetlvt   poly pdiff
+  decompose pfetmvt   poly pdiff
+  decompose corenvar  poly nsd
+  decompose corepvar  poly psd
+  decompose varhvt    poly nsd
+
   compose  mvnfet  poly  mvndiff
   compose  mvpfet  poly  mvpdiff
   compose  mvvar   poly  mvnsd
+
+  decompose nnfet     poly mvndiff
+  decompose mvnfetesd poly mvndiff
+  decompose mvnnfet   poly mvndiff
+  decompose mvpfetesd poly mvpdiff
 
   paint	 obsmcon locali	 via1
   paint	 obsmcon obsm1	 obsli,obsm1
@@ -697,6 +718,10 @@ compose
   paint  coreli  nsc    nsc
   paint  coreli  psc    psc
   paint  coreli  viali  viali
+
+#ifdef RERAM
+  paint  reram  metal2  reram
+#endif (RERAM)
 
 #ifdef METAL5
   paint  m4      obsm4  m4
@@ -1235,6 +1260,18 @@ style gdsii
  	squares-grid 55 150 170
  	calma 	68 44
 
+#ifdef RERAM
+#undef RERAM
+ layer VIA1 	reram
+ 	squares-grid 55 150 170
+ 	calma 	68 44
+
+ layer RERAM	reram
+ 	squares-grid 55 230 230
+	calma	201 20
+#define RERAM
+#endif (RERAM)
+
 #----------------------------------------------------------------
 # MET2
 #----------------------------------------------------------------
@@ -1263,14 +1300,6 @@ style gdsii
  layer VIA2 	via2
  	squares-grid 40 200 200
  	calma 	69 44
-
-#ifdef RERAM
-#undef RERAM
- layer RERAM	reram
- 	squares-grid 55 230 230
-	calma	201 20
-#define RERAM
-#endif (RERAM)
 
 #----------------------------------------------------------------
 # MET3
@@ -4568,7 +4597,7 @@ variants *
 # ReRAM
 #--------------------------------------------------
 
- width reram 340 "ReRAM width < %d (rr1.1)"
+ width reram 260 "ReRAM width < %d (rr1.1)"
  spacing reram reram 55 touching_illegal "ReRAM spacing < %d (rr1.2)"
  surround reram *m1,rm1 30 directional \
 	"Metal1 overlap of ReRAM < %d in one direction (via.5a - via.4a)"
