@@ -213,15 +213,15 @@ Step 1:
 		This 3rd party library is a set of open-source digital
 		standard cells.
 
-	--enable-osu-t12--sky130[=<path>]
+	--enable-osu-t12-sky130[=<path>]
 		This 3rd party library is a set of open-source digital
 		standard cells at 12 track pitch height.
 
-	--enable-osu-t15--sky130[=<path>]
+	--enable-osu-t15-sky130[=<path>]
 		This 3rd party library is a set of open-source digital
 		standard cells at 15 track pitch height.
 
-	--enable-osu-t18--sky130[=<path>]
+	--enable-osu-t18-sky130[=<path>]
 		This 3rd party library is a set of open-source digital
 		standard cells at 18 track pitch height.
 
