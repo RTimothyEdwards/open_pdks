@@ -171,22 +171,6 @@ Step 1:
 		distribution installations, the value must be set to
 		"none".
 
-	--with-sky130-local-path=<path>
-		The path to the target install directory.  This is used
-		in both the local and distribution installations.  For
-		a distribution installation, this is the local name of
-		the path to the PDK after it has been distributed to
-		the host computers (This should have been set by the
-		option --with-local-path= passed to configure).  If not
-		specified, then the default <path> is /usr/share/pdks/,
-		so the PDK will be installed as /usr/share/pdks/sky130A/.
-
-	--with-sky130-dist-path=<path>
-		The path to the location of the installed files prior to
-		distribution.  This will most likely be a git or similar
-		repo.  This path should NOT be specified for a single-
-		machine installation.
-
 	--enable-alpha-sky130[=<path>] 
 		The path to the sky130_ml_xx_hd library, a third-party
 		library containing layouts of alphanumeric characters
@@ -208,10 +192,6 @@ Step 1:
 		It is disabled by default due to the length of time
 		required to install, but it is recommended if you will be
 		using SRAM in a design.
-
-	--enable-osu-sky130[=<path>]
-		This 3rd party library is a set of open-source digital
-		standard cells.
 
 	--enable-osu-t12-sky130[=<path>]
 		This 3rd party library is a set of open-source digital
