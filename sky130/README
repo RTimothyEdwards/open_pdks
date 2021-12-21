@@ -135,15 +135,6 @@ Step 1:
     directory.  The mandatory configure options are as follows:
 
 	--enable-sky130-pdk[=/path/to/sky130/pdk/source]
-
-    See below for details.
-
-    NOTE:  The intention of the configure file is to not have to hand-edit
-    the Makefile.  However, the development of the configure script is
-    currently ongoing and unfinished, so for now the Makefile should be
-    checked and edited after running configure.
-
-	--enable-sky130-pdk[=/path/to/sky130/pdk/source]
 		This is mandatory for specifying that the installation
 		is for the SKY130 PDK.  If the path is specified, then
 		the PDK is assumed to already be downloaded and installed.
@@ -204,6 +195,27 @@ Step 1:
 	--enable-osu-t18-sky130[=<path>]
 		This 3rd party library is a set of open-source digital
 		standard cells at 18 track pitch height.
+
+	--prefix=<path>
+		This redirects the installation destination.  open_pdks
+		installs into ${prefix}/share/pdk/, and by default
+		${prefix} is /usr/local.  Be advised that Makefile
+		automatically adds the "share/" path regardless.  To
+		install in a different location, pass these (optional)
+		environment variables to "make":
+
+		SHARED_PDKS_PATH = <path>
+			Overrides ${prefix}/share/pdk/ and installs
+			directly into the specified <path>
+
+		DESTDIR = <path>
+			When defined, then "make install" installs into
+			the specified <path>.  However, all references
+			to files in the PDK will reference SHARED_PDKS_PATH.
+			Use DESTDIR if you want to install into a temporary
+			location such as a git repository or tarball that
+			will eventually be distributed and placed at
+			SHARED_PDKS_PATH on the target systems.
 
 Step 2:
 	Run:
