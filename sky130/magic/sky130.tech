@@ -3566,19 +3566,23 @@ style  sky130 variants (vendor),()
 #endif (MIM)
 
 #ifdef RERAM
+#undef RERAM
  layer reram RERAM
  and VIA1
  grow 55
+#define RERAM
 #endif (RERAM)
 
  templayer m2cbase VIA1
  and-not COREID
-#ifdef RERAM
- and-not RERAM
-#endif (RERAM)
  grow 5
  or VIA1
  grow 50
+#ifdef RERAM
+#undef RERAM
+ and-not RERAM
+#define RERAM
+#endif (RERAM)
 
  layer m2c m2cbase
  grow 30
@@ -4021,7 +4025,9 @@ style  sky130 variants (vendor),()
  calma MET1 68 20
  calma VIA1 68 44
 #ifdef RERAM
+#undef RERAM
  calma RERAM 201 20
+#define RERAM
 #endif (RERAM)
  calma MET2 69 20
  calma VIA2 69 44
