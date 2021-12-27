@@ -1329,7 +1329,7 @@ sram-a:
 		-lef %l/*/*.lef \
 		-lib %l/*/*.lib \
 		-gds %l/*/*.gds options=custom/scripts/gds_import_sram.tcl \
-		-spice %l/*/*[0-9].sp filter=custom/scripts/sp_to_spice.py \
+		-spice %l/*/*.lvs.sp filter=custom/scripts/sp_to_spice.py \
 		-verilog %l/*/*.v \
 		-library general sky130_sram_macros 2>&1 | tee -a ${SKY130A}_make.log
 
