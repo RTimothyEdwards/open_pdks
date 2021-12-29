@@ -1144,11 +1144,13 @@ digital-hvl-a:
 	# Install custom additions to standard cell libraries
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130A} \
 		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
+		-spice %l/spice/*.spice \
 		-library digital sky130_fd_sc_hvl 2>&1 | tee -a ${SKY130A}_make.log
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
 		-techlef %l/latest/tech/*.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
+			no-copy=custom/sky130_fd_sc_hvl/spice/sky130_fd*.spice \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
