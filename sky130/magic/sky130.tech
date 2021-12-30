@@ -5206,9 +5206,13 @@ extract
 # should be split between the two terminals.  Unsure of the correct model.
 #-------------------------------------------------------------------------
 
+#deep n-well
+defaultareacap     dnwell dwell 120
+
 #n-well
 # NOTE:  This value not found in PEX files
 defaultareacap     nwell well 120
+defaultoverlap     nwell well dnwell dwell 0
 
 #n-active 
 # Rely on device models to capture *ndiff area cap
@@ -5231,12 +5235,14 @@ defaultareacap     nwell well 120
  defaultsidewall    *poly active  23
  defaultareacap     *poly active nwell,obswell,pwell well  106
  defaultperimeter   *poly active nwell,obswell,pwell well  55
+ defaultsideoverlap *poly active nwell,obswell,pwell well  55
 
 #locali
  defaultsidewall    allli locali       33
  defaultareacap     allli locali nwell,obswell,pwell well  37
  defaultperimeter   allli locali nwell,obswell,pwell well  55
- defaultoverlap     allli locali nwell well 37
+ defaultoverlap     allli locali nwell,obswell,pwell well  37
+ defaultsideoverlap allli locali nwell,obswell,pwell well  55
 
 #locali->diff
  defaultoverlap     allli locali allactivenonfet active 37
@@ -5251,7 +5257,8 @@ defaultareacap     nwell well 120
  defaultsidewall    allm1 metal1      45
  defaultareacap     allm1 metal1 nwell,obswell,pwell well  26
  defaultperimeter   allm1 metal1 nwell,obswell,pwell well  41
- defaultoverlap     allm1 metal1 nwell well 26
+ defaultoverlap     allm1 metal1 nwell,obswell,pwell well  26
+ defaultsideoverlap allm1 metal1 nwell,obswell,pwell well  41
 
 #metal1->diff
  defaultoverlap     allm1 metal1 allactivenonfet active 26
@@ -5275,7 +5282,8 @@ defaultareacap     nwell well 120
  defaultsidewall    allm2 metal2      50
  defaultareacap     allm2 metal2 nwell,obswell,pwell well 17
  defaultperimeter   allm2 metal2 nwell,obswell,pwell well 41
- defaultoverlap     allm2 metal2 nwell well 38
+ defaultoverlap     allm2 metal2 nwell,obswell,pwell well 38
+ defaultsideoverlap allm2 metal2 nwell,obswell,pwell well 41
 
 #metal2->diff
  defaultoverlap     allm2 metal2 allactivenonfet active 17
@@ -5298,9 +5306,10 @@ defaultareacap     nwell well 120
 
 #metal3
  defaultsidewall    allm3 metal3     63
- defaultoverlap     allm3 metal3 nwell well 12
  defaultareacap     allm3 metal3 nwell,obswell,pwell well 12
  defaultperimeter   allm3 metal3 nwell,obswell,pwell well 41
+ defaultoverlap     allm3 metal3 nwell,obswell,pwell well 12
+ defaultsideoverlap allm3 metal3 nwell,obswell,pwell well 41
 
 #metal3->diff
  defaultoverlap     allm3 metal3 allactive active 12
@@ -5331,8 +5340,9 @@ defaultareacap     nwell well 120
  defaultsidewall    allm4 metal4       67
 # defaultareacap     alltopm metal4 well  6
  areacap     	    allm4/m4 8
- defaultoverlap     allm4 metal4 nwell well 8
- defaultperimeter   allm4 metal4 well  37
+ defaultperimeter   allm4 metal4 nwell,obswell,pwell well 37
+ defaultoverlap     allm4 metal4 nwell,obswell,pwell well 8
+ defaultsideoverlap allm4 metal4 nwell,obswell,pwell well 37
 
 #metal4->diff
  defaultoverlap     allm4 metal4 allactivenonfet active 8
@@ -5367,8 +5377,9 @@ defaultareacap     nwell well 120
  defaultsidewall    allm5 metal5       127
 # defaultareacap     allm5 metal5 well  6
  areacap     	    allm5/m5 6
- defaultoverlap     allm5 metal5 nwell well 6
- defaultperimeter   allm5 metal5 well  39
+ defaultoverlap     allm5 metal5 nwell,obswell,pwell well  6
+ defaultperimeter   allm5 metal5 nwell,obswell,pwell well  39
+ defaultsideoverlap allm5 metal5 nwell,obswell,pwell well  39
 
 #metal5->diff
  defaultoverlap     allm5 metal5 allactivenonfet active 6
