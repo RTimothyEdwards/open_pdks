@@ -5240,13 +5240,13 @@ defaultoverlap     nwell well dnwell dwell 0
 #locali
  defaultsidewall    allli locali       33
  defaultareacap     allli locali nwell,obswell,pwell well  37
- defaultperimeter   allli locali nwell,obswell,pwell well  55
+ defaultperimeter   allli locali nwell,obswell,pwell well  41
  defaultoverlap     allli locali nwell,obswell,pwell well  37
- defaultsideoverlap allli locali nwell,obswell,pwell well  55
+ defaultsideoverlap allli locali nwell,obswell,pwell well  41
 
 #locali->diff
  defaultoverlap     allli locali allactivenonfet active 37
- defaultsideoverlap allli locali allactivenonfet active 55
+ defaultsideoverlap allli locali allactivenonfet active 41
 
 #locali->poly
  defaultoverlap     allli locali allpolynonres active 94
@@ -5281,13 +5281,13 @@ defaultoverlap     nwell well dnwell dwell 0
 #metal2
  defaultsidewall    allm2 metal2      50
  defaultareacap     allm2 metal2 nwell,obswell,pwell well 17
- defaultperimeter   allm2 metal2 nwell,obswell,pwell well 41
- defaultoverlap     allm2 metal2 nwell,obswell,pwell well 38
- defaultsideoverlap allm2 metal2 nwell,obswell,pwell well 41
+ defaultperimeter   allm2 metal2 nwell,obswell,pwell well 38
+ defaultoverlap     allm2 metal2 nwell,obswell,pwell well 17
+ defaultsideoverlap allm2 metal2 nwell,obswell,pwell well 38
 
 #metal2->diff
  defaultoverlap     allm2 metal2 allactivenonfet active 17
- defaultsideoverlap allm2 metal2 allactivenonfet active 41
+ defaultsideoverlap allm2 metal2 allactivenonfet active 38
 
 #metal2->poly
  defaultoverlap     allm2 metal2 allpolynonres active 24
