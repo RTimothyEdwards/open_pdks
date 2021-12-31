@@ -2394,6 +2394,7 @@ style  sky130 variants (vendor),()
  ignore HVNWELLID
  ignore PADDIFFID
  ignore PADMETALID
+ ignore PADCENTERID
 
  layer pnp NWELL,WELLTXT,WELLPIN
  and PNPID
@@ -4031,6 +4032,7 @@ style  sky130 variants (vendor),()
  calma MET5BLOCK 72 10
  calma PADDIFFID 81 6
  calma PADMETALID 81 8
+ calma PADCENTERID 81 20
  
  # LICON
  calma CONT 66 44
