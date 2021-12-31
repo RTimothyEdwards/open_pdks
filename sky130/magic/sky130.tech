@@ -2377,6 +2377,7 @@ style  sky130 variants (vendor),()
 #ifndef METAL5
  ignore MET4,VIA3
  ignore MET5,VIA4
+ ignore MET5BLOCK
 #endif
  ignore NPC
  ignore SEALID
@@ -2387,6 +2388,12 @@ style  sky130 variants (vendor),()
  ignore LOWTAPDENSITY
  ignore FILLOBSPOLY
  ignore OUTLINE
+ ignore POLYCUT
+ ignore POLYGATE
+ ignore DIFFCUT
+ ignore HVNWELLID
+ ignore PADDIFFID
+ ignore PADMETALID
 
  layer pnp NWELL,WELLTXT,WELLPIN
  and PNPID
@@ -4015,7 +4022,15 @@ style  sky130 variants (vendor),()
  calma LOWTAPDENSITY 81 14
  # ESD area ID
  calma ESDID 81 19
+ # Various unused layers
  calma OUTLINE 236 0
+ calma POLYCUT 66 14
+ calma POLYGATE 66 9
+ calma DIFFCUT 65 14
+ calma HVNWELLID 81 63
+ calma MET5BLOCK 72 10
+ calma PADDIFFID 81 6
+ calma PADMETALID 81 8
  
  # LICON
  calma CONT 66 44
