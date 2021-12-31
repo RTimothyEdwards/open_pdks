@@ -146,6 +146,8 @@ lappend devices sky130_fd_pr__cap_var
 lappend devices sky130_fd_pr__nfet_20v0_nvt
 lappend devices sky130_fd_pr__nfet_20v0
 lappend devices sky130_fd_pr__pfet_20v0
+lappend devices sky130_fd_pr__esd_nfet_g5v0d10v5
+lappend devices sky130_fd_pr__esd_pfet_g5v0d10v5
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
