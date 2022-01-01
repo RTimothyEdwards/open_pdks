@@ -198,9 +198,9 @@ proc sky130::addtechmenu {framename} {
    magic::add_toolkit_command $layoutframe "vpp 11.5x11.7 m1-m2" \
 	    "magic::gencell sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2_noshield" pdk2
    magic::add_toolkit_command $layoutframe "vpp 8.6x7.8 m1-m2 l1 shield" \
-	    "magic::gencell sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_l1shield" pdk2
+	    "magic::gencell sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_shieldl1" pdk2
    magic::add_toolkit_command $layoutframe "vpp 4.4x4.6 m1-m2 l1 shield" \
-	    "magic::gencell sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_l1shield" pdk2
+	    "magic::gencell sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_shieldl1" pdk2
 
    # Additional DRC style for routing only---add this to the DRC menu
    ${layoutframe}.titlebar.mbuttons.drc.toolmenu add command -label "DRC Routing" -command {drc style drc(routing)}
@@ -6589,8 +6589,8 @@ proc sky130::sky130_fd_pr__cap_var_check {parameters} {
 #
 # sky130_fd_pr__cap_vpp_11p5x11p7_m1m2m3m4_shieldlim5
 # sky130_fd_pr__cap_vpp_11p5x11p7_m1m2_noshield
-# sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_lishield
-# sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_lishield
+# sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_shieldl1
+# sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_shieldl1
 #
 # Inductors:
 #
@@ -6613,13 +6613,13 @@ proc sky130::sky130_fd_pr__rf_pnp_05v5_W3p40L3p40_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 6.44 ystep 6.44}
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil1 {} {
+proc sky130::sky130_fd_pr__rf_test_coil1_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 258 ystep 258}
 }
-proc sky130::sky130_fd_pr__rf_test_coil2 {} {
+proc sky130::sky130_fd_pr__rf_test_coil2_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 290 ystep 404}
 }
-proc sky130::sky130_fd_pr__rf_test_coil3 {} {
+proc sky130::sky130_fd_pr__rf_test_coil3_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 290 ystep 404}
 }
 
@@ -6629,10 +6629,10 @@ proc sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2m3m4_shieldl1m5_defaults {} {
 proc sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2_noshield_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 11.08 ystep 11.36}
 }
-proc sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_lishield_defaults {} {
+proc sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_shieldl1_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 11.08 ystep 11.36}
 }
-proc sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_lishield_defaults {} {
+proc sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_shieldl1_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 11.08 ystep 11.36}
 }
 
@@ -6670,15 +6670,15 @@ proc sky130::sky130_fd_pr__rf_pnp_05v5_W3p40L3p40_convert {parameters} {
     return [sky130::fixed_convert $parameters]
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil1 {parameters} {
+proc sky130::sky130_fd_pr__rf_test_coil1_convert {parameters} {
     return [sky130::fixed_convert $parameters]
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil2 {parameters} {
+proc sky130::sky130_fd_pr__rf_test_coil2_convert {parameters} {
     return [sky130::fixed_convert $parameters]
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil3 {parameters} {
+proc sky130::sky130_fd_pr__rf_test_coil3_convert {parameters} {
     return [sky130::fixed_convert $parameters]
 }
 
@@ -6688,10 +6688,10 @@ proc sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2m3m4_shieldl1m5_convert {parame
 proc sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2_noshield_convert {parameters} {
     return [sky130::fixed_convert $parameters]
 }
-proc sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_lishield_convert {parameters} {
+proc sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_shieldl1_convert {parameters} {
     return [sky130::fixed_convert $parameters]
 }
-proc sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_lishield_convert {parameters} {
+proc sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_shieldl1_convert {parameters} {
     return [sky130::fixed_convert $parameters]
 }
 
@@ -6754,15 +6754,15 @@ proc sky130::sky130_fd_pr__rf_pnp_05v5_W3p40L3p40_dialog {parameters} {
     sky130::fixed_dialog $parameters
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil1 {parameters} {
+proc sky130::sky130_fd_pr__rf_test_coil1_dialog {parameters} {
     sky130::fixed_dialog $parameters
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil2 {parameters} {
+proc sky130::sky130_fd_pr__rf_test_coil2_dialog {parameters} {
     sky130::fixed_dialog $parameters
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil3 {parameters} {
+proc sky130::sky130_fd_pr__rf_test_coil3_dialog {parameters} {
     sky130::fixed_dialog $parameters
 }
 
@@ -6772,10 +6772,10 @@ proc sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2m3m4_shieldl1m5_dialog {paramet
 proc sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2_noshield_dialog {parameters} {
     sky130::fixed_dialog $parameters
 }
-proc sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_lishield_dialog {parameters} {
+proc sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_shieldl1_dialog {parameters} {
     sky130::fixed_dialog $parameters
 }
-proc sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_lishield_dialog {parameters} {
+proc sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_shieldl1_dialog {parameters} {
     sky130::fixed_dialog $parameters
 }
 
@@ -6833,15 +6833,15 @@ proc sky130::sky130_fd_pr__rf_pnp_05v5_W3p40L3p40_draw {parameters} {
     return [sky130::fixed_draw sky130_fd_pr__rf_pnp_05v5_W3p40L3p40 $parameters]
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil1 {parameters} {
+proc sky130::sky130_fd_pr__rf_test_coil1_draw {parameters} {
     return [sky130::fixed_draw sky130_fd_pr__rf_test_coil1 $parameters]
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil2 {parameters} {
+proc sky130::sky130_fd_pr__rf_test_coil2_draw {parameters} {
     return [sky130::fixed_draw sky130_fd_pr__rf_test_coil2 $parameters]
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil3 {parameters} {
+proc sky130::sky130_fd_pr__rf_test_coil3_draw {parameters} {
     return [sky130::fixed_draw sky130_fd_pr__rf_test_coil3 $parameters]
 }
 
@@ -6851,11 +6851,11 @@ proc sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2m3m4_shieldl1m5_draw {parameter
 proc sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2_noshield_draw {parameters} {
     return [sky130::fixed_draw sky130_fd_pr__cap_vpp_11p5x11p7_m1m2_noshield $parameters]
 }
-proc sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_lishield_draw {parameters} {
-    return [sky130::fixed_draw sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_lishield $parameters]
+proc sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_shieldl1_draw {parameters} {
+    return [sky130::fixed_draw sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_shieldl1 $parameters]
 }
-proc sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_lishield_draw {parameters} {
-    return [sky130::fixed_draw sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_lishield $parameters]
+proc sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_shieldl1_draw {parameters} {
+    return [sky130::fixed_draw sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_shieldl1 $parameters]
 }
 
 #----------------------------------------------------------------
@@ -6924,15 +6924,15 @@ proc sky130::sky130_fd_pr__rf_pnp_05v5_W3p40L3p40_check {parameters} {
     return [sky130::fixed_check $parameters]
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil1 {parameters} {
+proc sky130::sky130_fd_pr__rf_test_coil1_check {parameters} {
     return [sky130::fixed_check $parameters]
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil2 {parameters} {
+proc sky130::sky130_fd_pr__rf_test_coil2_check {parameters} {
     return [sky130::fixed_check $parameters]
 }
 
-proc sky130::sky130_fd_pr__rf_test_coil3 {parameters} {
+proc sky130::sky130_fd_pr__rf_test_coil3_check {parameters} {
     return [sky130::fixed_check $parameters]
 }
 
@@ -6942,9 +6942,9 @@ proc sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2m3m4_shieldl1m5_check {paramete
 proc sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2_noshield_check {parameters} {
     return [sky130::fixed_check $parameters]
 }
-proc sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_lishield_check {parameters} {
+proc sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_shieldl1_check {parameters} {
     return [sky130::fixed_check $parameters]
 }
-proc sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_lishield_check {parameters} {
+proc sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_shieldl1_check {parameters} {
     return [sky130::fixed_check $parameters]
 }
