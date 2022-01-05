@@ -4627,7 +4627,7 @@ variants *
  surround reram *m2,rm2 30 directional \
 	"Metal2 overlap of ReRAM < %d in one direction (met2.5 - met2.4)"
 
- no_overlap reram,v1 reram,v1
+ no_overlap reram v1
 
 #endif (RERAM)
 
