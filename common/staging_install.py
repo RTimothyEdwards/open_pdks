@@ -649,7 +649,13 @@ if __name__ == '__main__':
                         for libfile in libfiles:
                             filepath = libdir + '/' + libfile
                             if os.path.islink(filepath):
-                                continue
+                                realpath = os.path.realpath(filepath)
+                                if realpath.startswith(stagingdir):
+                                    if libfile == '.magicrc':
+                                        if debug:
+                                            print('Removing unused .magicrc file from' +
+							filepath)
+                                        os.remove(filepath)
                             elif libfile == 'sources.txt':
                                 os.remove(filepath)
                             elif libfile == 'generate_magic.tcl':
@@ -671,7 +677,17 @@ if __name__ == '__main__':
                         for libfile in libfiles:
                             libfilepath = filepath + '/' + libfile
                             if os.path.islink(libfilepath):
-                                continue
+                                # NOTE:  This could be used to move symbolic links
+                                # from staging to destination.  At the moment there
+                                # are none except the .magicrc file, which doesn't
+                                # belong in the destination path.
+                                realpath = os.path.realpath(libfilepath)
+                                if realpath.startswith(stagingdir):
+                                    if libfile == '.magicrc':
+                                        if debug:
+                                            print('Removing unused .magicrc file ' +
+							'from ' + libfilepath)
+                                        os.remove(libfilepath)
                             elif libfile == 'sources.txt':
                                 os.remove(libfilepath)
                             elif libfile == 'generate_magic.tcl':
