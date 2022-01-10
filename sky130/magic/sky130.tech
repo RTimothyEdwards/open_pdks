@@ -1719,6 +1719,11 @@ style drc
  templayer lvnwell nwell
  and-not mvnwell
 
+ # Check for low-voltage diffusion in high-voltage well
+ templayer lvdiff_in_mvnwell *pdiff,*pdiode,pdiffres,*nsd
+ or pfet,ppu,scpfet,scpfethvt,pfetlvt,pfetmvt,pfethvt
+ and mvnwell
+
  templayer nwell_with_tap
  bloat-all nsc,mvnsc nwell,pnp
 
@@ -4224,6 +4229,10 @@ drc
 	"Spacing of HV nwell to LV nwell < 2.0um (nwell.8)"
  cifspacing mvnwell mvnwell 2000 touching_ok \
 	"Spacing of HV nwell to HV nwell < 2.0um (nwell.8)"
+
+ cifmaxwidth lvdiff_in_mvnwell 0 bend_illegal \
+	"All HV nwell can contain only HV diffusion (diff/tap.21)" 
+
  variants (fast),(full)
 
 #-----------------------------
