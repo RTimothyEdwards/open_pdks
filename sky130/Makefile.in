@@ -1060,7 +1060,7 @@ digital-hd-a:
 		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130A}_make.log
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef %l/latest/tech/*.tlef \
+		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef.py \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1109,7 +1109,7 @@ digital-hd-a:
 digital-hdll-a:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef %l/latest/tech/*.tlef \
+		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef.py \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1148,7 +1148,7 @@ digital-hvl-a:
 		-library digital sky130_fd_sc_hvl 2>&1 | tee -a ${SKY130A}_make.log
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef %l/latest/tech/*.tlef \
+		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef.py \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			no-copy=custom/sky130_fd_sc_hvl/spice/sky130_fd*.spice \
 			sort=../common/sort_pdkfiles.py \
@@ -1190,7 +1190,7 @@ digital-hvl-a:
 digital-lp-a:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef %l/latest/tech/*.tlef \
+		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef.py \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1224,7 +1224,7 @@ digital-hs-a:
 		-library digital sky130_fd_sc_hs 2>&1 | tee -a ${SKY130A}_make.log
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef %l/latest/tech/*.tlef \
+		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef.py \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1255,7 +1255,7 @@ digital-hs-a:
 digital-ms-a:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef %l/latest/tech/*.tlef \
+		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef.py \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1285,7 +1285,7 @@ digital-ms-a:
 digital-ls-a:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130A} \
-		-techlef %l/latest/tech/*.tlef \
+		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef.py \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \

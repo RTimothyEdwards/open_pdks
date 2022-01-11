@@ -664,6 +664,8 @@ if __name__ == '__main__':
                                 os.remove(filepath)
                             elif os.path.splitext(libfile)[1] == '.swp':
                                 os.remove(filepath)
+                            elif os.path.splitext(libfile)[1] == '.orig':
+                                os.remove(filepath)
         else:
             libraries = os.listdir(writedir + refdir)
             for library in libraries:
@@ -693,6 +695,8 @@ if __name__ == '__main__':
                             elif libfile == 'generate_magic.tcl':
                                 os.remove(libfilepath)
                             elif os.path.splitext(libfile)[1] == '.ext':
+                                os.remove(libfilepath)
+                            elif os.path.splitext(libfile)[1] == '.orig':
                                 os.remove(libfilepath)
 
     print('Done with PDK migration.')
