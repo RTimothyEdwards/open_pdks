@@ -5,7 +5,7 @@
 #   Distributed under GNU GPLv3: https://www.gnu.org/licenses/
 #
 #  History :
-#   2020-10-04 : v1.0 : initial release
+#   2022-1-13 : 2022.1.13_01.03 release
 #
 ##########################################################################################
 
@@ -222,6 +222,8 @@ log("END: 64/18 (dnwell)")
 log("START: 64/20 (nwell)")
 nwell.width(0.84, euclidian).output("nwell.1", "nwell.1 : min. nwell width : 0.84um")
 nwell.space(1.27, euclidian).output("nwell.2a", "nwell.2a : min. nwell spacing (merged if less) : 1.27um")
+nwell_interact = nwell.merge
+dnwell.enclosing(nwell_interact.holes, 1.03, euclidian).output("nwell.6", "nwell.6 : min enclosure of nwellHole by dnwell : 1.03um")
 log("END: 64/20 (nwell)")
 
 #   hvtp
@@ -299,17 +301,16 @@ log("END: 95/20 (npc)")
 
 #   nsdm
 log("START: 93/44 (nsdm)")
-nsdm.width(0.38, euclidian).output("nsd.1", "nsd.1 : min. nsdm width : 0.38um")
-nsdm.space(0.38, euclidian).output("nsd.2", "nsd.2 : min. nsdm spacing, should be manually merged if less than : 0.38um")
+nsdm.outside(areaid_ce).width(0.38, euclidian).output("nsd.1", "nsd.1 : min. nsdm width : 0.38um")
+nsdm.not(areaid_ce).space(0.38, euclidian).output("nsd.2", "nsd.2 : min. nsdm spacing, should be manually merged if less than : 0.38um")
 log("END: 93/44 (nsdm)")
 
 #   psdm
 log("START: 94/20 (psdm)")
-psdm.width(0.38, euclidian).output("psd.1", "psd.1 : min. psdm width : 0.38um")
-psdm.space(0.38, euclidian).output("psd.2", "psd.2 : min. psdm spacing, should be manually merged if less than : 0.38um")
+psdm.outside(areaid_ce).width(0.38, euclidian).output("psd.1", "psd.1 : min. psdm width : 0.38um")
+psdm.not(areaid_ce).space(0.38, euclidian).output("psd.2", "psd.2 : min. psdm spacing, should be manually merged if less than : 0.38um")
 log("END: 94/20 (psdm)")
 
-#   licon
 #   licon
 log("START: 66/44 (licon)")
 if SEAL
