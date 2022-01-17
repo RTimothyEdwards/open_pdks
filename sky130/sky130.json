@@ -27,12 +27,55 @@
 #endif (METAL5)
 #ifdef MIM
 #undef MIM
-#ifdef REDISTRIBUTION
+#ifdef (REDISTRIBUTION || RERAM)
         "MIM",
 #else
         "MIM"
-#endif (REDISTRIBUTION)
+#endif (REDISTRIBUTION || RERAM)
 #endif (MIM)
+#ifdef RERAM
+#undef RERAM
+#ifdef (REDISTRIBUTION)
+        "RERAM",
+#else
+        "RERAM"
+#endif (REDISTRIBUTION)
+#endif (RERAM)
+#ifdef REDISTRIBUTION
+#undef REDISTRIBUTION
+        "REDISTRIBUTION"
+#endif (REDISTRIBUTION)
+    ],
+    "stdcells": {
+	"sky130_fd_sc_hd": "FD_SC_HD_COMMIT",
+	"sky130_fd_sc_hdll": "FD_SC_HDLL_COMMIT",
+	"sky130_fd_sc_hs": "FD_SC_HS_COMMIT",
+	"sky130_fd_sc_hvl": "FD_SC_HVL_COMMIT",
+	"sky130_fd_sc_lp": "FD_SC_LP_COMMIT",
+	"sky130_fd_sc_ls": "FD_SC_LS_COMMIT",
+	"sky130_fd_sc_ms": "FD_SC_MS_COMMIT",
+	"sky130_osu_sc_t12": "OSU_T12_COMMIT",
+	"sky130_osu_sc_t15": "OSU_T15_COMMIT",
+	"sky130_osu_sc_t18": "OSU_T18_COMMIT"
+    },
+    "iocells": {
+        "sky130_fd_io": "FD_IO_COMMIT"
+    },
+    "primitive": {
+	"sky130_fd_pr": "FD_PR_COMMIT"
+    },
+    "memory": {
+	"sky130_sram_macros": "SRAM_COMMIT"
+    },
+    "other": {
+	"sky130_ml_xx_hd": "ALPHA_COMMIT"
+    },
+    "build": {
+	"magic": "MAGIC_VERSION",
+	"open_pdks": "OPEN_PDKS_VERSION"
+    }
+}
+
 #ifdef REDISTRIBUTION
 #undef REDISTRIBUTION
         "REDISTRIBUTION"
