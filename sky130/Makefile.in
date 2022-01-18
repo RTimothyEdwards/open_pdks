@@ -110,9 +110,9 @@
 #
 # The variables below are substituted from the configuration options:
 #
-#	SKYWATER_PATH: points to vendor sources
+#	SKYWATER_PATH: Points to vendor sources
 #	EF_STYLE: 1 for efabless style, 0 otherwise
-#	LINK_TARGETS: link back to source or link to 1st PDK when possible
+#	LINK_TARGETS_A: If "source", link back to source when possible
 #
 # Run "make" to stage the PDK for tool setup and vendor libraries
 #
@@ -181,9 +181,16 @@ SHARED_PDKS_PATH ?= $(datadir)/pdk
 # PDK (e.g, "sky130A"), then symbolic links are made to the
 # same files in that PDK, where they exist, and are copied
 # from source, where they don't.
+#
+# Behavior is to let the link targets for variant A follow the
+# configuration option.  Link targets for variant B will always
+# be the files of variant A (which may end up being symbolic
+# links to symbolic links if "source" was chosen for link-targets
+# in the configuration).
 
 # LINK_TARGETS = source | none | sky130A
-LINK_TARGETS = @SKY130_LINK_TARGETS@
+LINK_TARGETS_A = @SKY130_LINK_TARGETS@
+LINK_TARGETS_B = sky130A
 
 # Paths:
 
@@ -226,11 +233,8 @@ endif
 SKY130A = sky130A
 SKY130B = sky130B
 
-ifeq (${LINK_TARGETS}, ${SKY130A})
-    DIST_LINK_TARGETS = ${SHARED_PDKS_PATH}/${LINK_TARGETS}
-else
-    DIST_LINK_TARGETS = ${LINK_TARGETS}
-endif
+DIST_LINK_TARGETS_A = ${LINK_TARGETS_A}
+DIST_LINK_TARGETS_B = ${SHARED_PDKS_PATH}/${LINK_TARGETS_B}
 
 # Basic definitions for each EF process node
 SKY130A_DEFS = -DTECHNAME=sky130A -DREVISION=${REVISION}
@@ -425,6 +429,9 @@ SKY130B_DEFS += -DMAGIC_CURRENT=${MAGICCURRENT}
 OPENLANE_COMMON = config.tcl tracks.info no_synth.cells drc_exclude.cells
 OPENLANE_COMMON += tribuff_map.v latch_map.v mux2_map.v mux4_map.v fa_map.v rca_map.v csa_map.v
 
+# Corners defined in IRSIM parameter files (this should be wild-carded!)
+IRSIM_CORNERS = 1v62_27 1v62_n40 1v62_n5 1v80_125 1v80_27 1v80_n40 1v80_n5 1v98_125 1v98_27 1v98_n40 1v98_n5
+
 # Where cpp syntax is followed, this is equivalent to cpp, but it does not
 # mangle non-C source files under the belief that they are actually C code.
 CPP   = ../common/preproc.py
@@ -531,8 +538,7 @@ else
 	SPIEXT = spice
 endif
 
-# all: all-A all-B
-all: all-A
+all: all-A all-B
 
 # Handle prerequisites (fetch and install the PDK and requested libraries)
 prerequisites: pdk-repo alpha-repo xschem-repo sram-repo osu-t12-repo osu-t15-repo osu-t18-repo
@@ -755,7 +761,10 @@ irsim-%: irsim
 	mkdir -p ${IRSIMTOP_STAGING_$*}
 	mkdir -p ${IRSIM_STAGING_$*}
 	rm -f ${IRSIM_STAGING_$*}/${SKY130$*}_*.prm
-	cp irsim/${SKY130$*}_*.prm ${IRSIM_STAGING_$*}/
+	for corner in ${IRSIM_CORNERS} ; do \
+	    cp irsim/sky130A_$$corner.prm \
+		${IRSIM_STAGING_$*}/${SKY130$*}_$$corner.prm ; \
+	done
 
 klayout-%: klayout/${TECH}.lyp klayout/${TECH}.lyt
 	mkdir -p ${KLAYOUTTOP_STAGING_$*}
@@ -1460,7 +1469,7 @@ install-A:
 		-source ${STAGING_PATH}/${SKY130A} \
 		-finalpath ${SHARED_PDKS_PATH}/${SKY130A} \
 		-variable PDKPATH \
-		-link_from ${LINK_TARGETS} 2>&1 | tee -a ${SKY130A}_install.log
+		-link_from ${DIST_LINK_TARGETS_A} 2>&1 | tee -a ${SKY130A}_install.log
 	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_install.log
 
 install-B:
@@ -1469,7 +1478,7 @@ install-B:
 		-source ${STAGING_PATH}/${SKY130B} \
 		-finalpath ${SHARED_PDKS_PATH}/${SKY130B} \
 		-variable PDKPATH \
-		-link_from ${LINK_TARGETS} 2>&1 | tee -a ${SKY130B}_install.log
+		-link_from ${DIST_LINK_TARGETS_B} 2>&1 | tee -a ${SKY130B}_install.log
 	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130B}_install.log
 
 uninstall: uninstall-A uninstall-B
