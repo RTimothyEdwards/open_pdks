@@ -971,13 +971,13 @@ style gdsii
 	calma 80 20
 
 #----------------------------------------------------------------
-# SONOS requires COREID around area (areaid.ce).  Also, the
-# coreli layer indicates a cell needing COREID.  Also, devices
-# npd, npass, and ppu indicate a COREID cell.
+# The coreli layer indicates a cell needing COREID.  Also,
+# devices npd, npass, and ppu indicate a COREID cell.  NOTE:
+# SONOS does not use COREID, counter to SkyWater rules.
 #----------------------------------------------------------------
 
  layer COREID
-	bloat-all nsonos,coreli,ppu,npd,npass,corepvar,corenvar CELLBOUND
+	bloat-all coreli,ppu,npd,npass,corepvar,corenvar CELLBOUND
 	mask-hints COREID
 	calma 81 2
 
