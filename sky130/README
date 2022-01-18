@@ -41,6 +41,12 @@ Quick summary (TL;DR):
     the path
 		/usr/share/pdks/sky130A/
 
+    From open_pdks version 1.0.269, there is a process variant
+
+		/usr/share/pdks/sky130B/
+
+    which reflects support for ReRAM.
+
 -------------------------------------------------------------------------------
 Detailed instructions for the patient reader:
 -------------------------------------------------------------------------------
@@ -252,8 +258,7 @@ Step 3:
 Summary of the installation directories:
 
     The Makefile script takes the source files and generates files for local
-    PDK names "SKY130A", "SKY130B", etc.  (Note there is currently only one
-    PDK variant "A".)
+    PDK names "SKY130A", "SKY130B", etc.
 
     The definition of each PDK is made in the Makefile using defines; e.g.,
 	-DMETAL5, etc.

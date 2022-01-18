@@ -5106,30 +5106,56 @@ extract
  height allm1	     1.3761 0.36
  height m1fill	     1.3761 0.36
 #ifdef RERAM
- # TO-DO:  Rework all heights based on ReRAM!
-#endif (RERAM)
+ height v1	     1.7361 0.565
+ height allm2	     2.3011 0.36
+ height m2fill	     2.3011 0.36
+ height v2	     2.6611 0.42
+ height allm3	     3.0811 0.845
+ height m3fill	     3.0811 0.845
+#ifdef MIM
+ height mimcap	     2.7611 0.2
+ height mimcap2	     4.0261 0.2
+ height mimcc	     2.9611 0.12
+ height mim2cc	     4.2261 0.09
+#endif (MIM)
+#ifdef METAL5
+ height v3	     3.9261 0.39
+ height allm4	     4.3161 0.845
+ height m4fill	     4.3161 0.845
+ height v4	     5.1611 0.505
+ height allm5	     5.6661 1.26
+ height m5fill	     5.6661 1.26
+#ifdef REDISTRIBUTION
+ height mrdlc	     6.9261 0.63
+ height mrdl	     7.5561 3.0
+#endif (!REDISTRIBUTION)
+#endif (!METAL5)
+#else (!RERAM)
  height v1	     1.7361 0.27
  height allm2	     2.0061 0.36
- height m2fill	     1.3761 0.36
+ height m2fill	     2.0061 0.36
  height v2	     2.3661 0.42
  height allm3	     2.7861 0.845
- height m3fill	     1.3761 0.36
-#ifdef METAL5
- height v3	     3.6311 0.39
- height allm4	     4.0211 0.845
- height m4fill	     1.3761 0.36
- height v4	     4.8661 0.505
- height allm5	     5.3711 1.26
- height m5fill	     1.3761 0.36
+ height m3fill	     2.7861 0.845
+#ifdef MIM
  height mimcap	     2.4661 0.2
  height mimcap2	     3.7311 0.2
  height mimcc	     2.6661 0.12
  height mim2cc	     3.9311 0.09
+#endif (MIM)
+#ifdef METAL5
+ height v3	     3.6311 0.39
+ height allm4	     4.0211 0.845
+ height m4fill	     4.0211 0.845
+ height v4	     4.8661 0.505
+ height allm5	     5.3711 1.26
+ height m5fill	     5.3711 1.26
 #ifdef REDISTRIBUTION
  height mrdlc	     6.6311 0.63
  height mrdl	     7.2611 3.0
 #endif (!REDISTRIBUTION)
 #endif (!METAL5)
+#endif (!RERAM)
 
  # Antenna check parameters
  # Note that checks w/diode diffusion are not modeled
@@ -5305,12 +5331,39 @@ defaultoverlap     nwell well isosub dwell  120
  defaultsideoverlap allm1 metal1 allli locali 59
  defaultsideoverlap allli locali allm1 metal1 35
 
-#ifdef RERAM
-# TO-DO:  Modify all metal stack parasitics above metal1 based on ReRAM!
-#endif (RERAM)
-
 #metal2
  defaultsidewall    allm2 metal2      50
+
+#ifdef RERAM
+# For ReRAM, all parasitics account for the additional 0.295um between
+# metal1 and metal2
+
+ defaultoverlap	    allm2 metal2 dnwell,isosub	     dwell 15
+ defaultareacap     allm2 metal2 nwell,obswell,pwell well 15
+ defaultperimeter   allm2 metal2 nwell,obswell,pwell well 33
+ defaultoverlap     allm2 metal2 nwell,obswell,pwell well 15
+ defaultsideoverlap allm2 metal2 nwell,obswell,pwell well 33
+
+#metal2->diff
+ defaultoverlap     allm2 metal2 allactivenonfet active 15
+ defaultsideoverlap allm2 metal2 allactivenonfet active 33
+
+#metal2->poly
+ defaultoverlap     allm2 metal2 allpolynonres active 20
+ defaultsideoverlap allm2 metal2 allpolynonres active 34
+ defaultsideoverlap *poly active allm2 metal2 9
+
+#metal2->locali
+ defaultoverlap     allm2 metal2 allli locali 29
+ defaultsideoverlap allm2 metal2 allli locali 35
+ defaultsideoverlap allli locali allm2 metal2 17
+
+#metal2->metal1
+ defaultoverlap     allm2 metal2 allm1 metal1 64
+ defaultsideoverlap allm2 metal2 allm1 metal1 32
+ defaultsideoverlap allm1 metal1 allm2 metal2 23
+
+#else (!RERAM)
  defaultoverlap	    allm2 metal2 dnwell,isosub	     dwell 17
  defaultareacap     allm2 metal2 nwell,obswell,pwell well 17
  defaultperimeter   allm2 metal2 nwell,obswell,pwell well 38
@@ -5336,8 +5389,38 @@ defaultoverlap     nwell well isosub dwell  120
  defaultsideoverlap allm2 metal2 allm1 metal1 67
  defaultsideoverlap allm1 metal1 allm2 metal2 48
 
+#endif (!RERAM)
+
 #metal3
  defaultsidewall    allm3 metal3     63
+
+#ifdef RERAM
+ defaultoverlap	    allm3 metal3 dnwell,isosub	     dwell 11
+ defaultareacap     allm3 metal3 nwell,obswell,pwell well 11
+ defaultperimeter   allm3 metal3 nwell,obswell,pwell well 37
+ defaultoverlap     allm3 metal3 nwell,obswell,pwell well 11
+ defaultsideoverlap allm3 metal3 nwell,obswell,pwell well 37
+
+#metal3->diff
+ defaultoverlap     allm3 metal3 allactive active 11
+ defaultsideoverlap allm3 metal3 allactive active 37
+
+#metal3->poly
+ defaultoverlap     allm3 metal3 allpolynonres active 14
+ defaultsideoverlap allm3 metal3 allpolynonres active 39
+ defaultsideoverlap *poly active allm3 metal3 8
+
+#metal3->locali
+ defaultoverlap     allm3 metal3 allli locali 18
+ defaultsideoverlap allm3 metal3 allli locali 40
+ defaultsideoverlap allli locali allm3 metal3 13
+
+#metal3->metal1
+ defaultoverlap     allm3 metal3 allm1 metal1 27
+ defaultsideoverlap allm3 metal3 allm1 metal1 43
+ defaultsideoverlap allm1 metal1 allm3 metal3 21
+
+#else (!RERAM)
  defaultoverlap	    allm3 metal3 dnwell,isosub	     dwell 12
  defaultareacap     allm3 metal3 nwell,obswell,pwell well 12
  defaultperimeter   allm3 metal3 nwell,obswell,pwell well 41
@@ -5363,6 +5446,8 @@ defaultoverlap     nwell well isosub dwell  120
  defaultsideoverlap allm3 metal3 allm1 metal1 55
  defaultsideoverlap allm1 metal1 allm3 metal3 27
 
+#endif (!RERAM)
+
 #metal3->metal2
  defaultoverlap     allm3 metal3 allm2 metal2 86
  defaultsideoverlap allm3 metal3 allm2 metal2 70
@@ -5371,6 +5456,34 @@ defaultoverlap     nwell well isosub dwell  120
 #ifdef METAL5
 #metal4
  defaultsidewall    allm4 metal4       67
+#ifdef RERAM
+# defaultareacap     alltopm metal4 well  6
+ defaultoverlap	    allm4 metal4 dnwell,isosub	     dwell 8
+ areacap     	    allm4/m4 8
+ defaultperimeter   allm4 metal4 nwell,obswell,pwell well 34
+ defaultoverlap     allm4 metal4 nwell,obswell,pwell well 8
+ defaultsideoverlap allm4 metal4 nwell,obswell,pwell well 34
+
+#metal4->diff
+ defaultoverlap     allm4 metal4 allactivenonfet active 8
+ defaultsideoverlap allm4 metal4 allactivenonfet active 34
+
+#metal4->poly
+ defaultoverlap     allm4 metal4 allpolynonres active 9
+ defaultsideoverlap allm4 metal4 allpolynonres active 35
+ defaultsideoverlap *poly active allm4 metal4 6
+
+#metal4->locali
+ defaultoverlap     allm4 metal4 allli locali 11
+ defaultsideoverlap allm4 metal4 allli locali 36
+ defaultsideoverlap allli locali allm4 metal4 9
+
+#metal4->metal1
+ defaultoverlap     allm4 metal4 allm1 metal1 13
+ defaultsideoverlap allm4 metal4 allm1 metal1 38
+ defaultsideoverlap allm1 metal1 allm4 metal4 15
+
+#else (!RERAM)
 # defaultareacap     alltopm metal4 well  6
  defaultoverlap	    allm4 metal4 dnwell,isosub	     dwell 8
  areacap     	    allm4/m4 8
@@ -5397,6 +5510,8 @@ defaultoverlap     nwell well isosub dwell  120
  defaultsideoverlap allm4 metal4 allm1 metal1 43
  defaultsideoverlap allm1 metal1 allm4 metal4 16
 
+#endif (!RERAM)
+
 #metal4->metal2
  defaultoverlap     allm4 metal4 allm2 metal2 20
  defaultsideoverlap allm4 metal4 allm2 metal2 46
@@ -5409,6 +5524,34 @@ defaultoverlap     nwell well isosub dwell  120
 
 #metal5
  defaultsidewall    allm5 metal5       127
+#ifdef RERAM
+# defaultareacap     allm5 metal5 well  6
+ defaultoverlap	    allm5 metal5 dnwell,isosub	     dwell 6
+ areacap     	    allm5/m5 6
+ defaultoverlap     allm5 metal5 nwell,obswell,pwell well  6
+ defaultperimeter   allm5 metal5 nwell,obswell,pwell well  36
+ defaultsideoverlap allm5 metal5 nwell,obswell,pwell well  36
+
+#metal5->diff
+ defaultoverlap     allm5 metal5 allactivenonfet active 6
+ defaultsideoverlap allm5 metal5 allactivenonfet active 36
+
+#metal5->poly
+ defaultoverlap     allm5 metal5 allpolynonres active 7
+ defaultsideoverlap allm5 metal5 allpolynonres active 38
+ defaultsideoverlap *poly active allm5 metal5 6
+
+#metal5->locali
+ defaultoverlap     allm5 metal5 allli locali 8
+ defaultsideoverlap allm5 metal5 allli locali 39
+ defaultsideoverlap allli locali allm5 metal5 7
+
+#metal5->metal1
+ defaultoverlap     allm5 metal5 allm1 metal1 9
+ defaultsideoverlap allm5 metal5 allm1 metal1 40
+ defaultsideoverlap allm1 metal1 allm5 metal5 11
+
+#else (!RERAM)
 # defaultareacap     allm5 metal5 well  6
  defaultoverlap	    allm5 metal5 dnwell,isosub	     dwell 6
  areacap     	    allm5/m5 6
@@ -5434,6 +5577,8 @@ defaultoverlap     nwell well isosub dwell  120
  defaultoverlap     allm5 metal5 allm1 metal1 9
  defaultsideoverlap allm5 metal5 allm1 metal1 43
  defaultsideoverlap allm1 metal1 allm5 metal5 12
+
+#endif (!RERAM)
 
 #metal5->metal2
  defaultoverlap     allm5 metal5 allm2 metal2 11
