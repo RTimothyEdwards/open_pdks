@@ -1144,9 +1144,9 @@ digital-hd-%:
 	# Add a maskhint set for the tap cell .mag view to prevent problems writing
 	# when writing NSDM and PSDM to GDS during hierarchical adjustments.
 	${ADDPROP} ${STAGING_PATH}/${SKY130$*} sky130_fd_sc_hd sky130_fd_sc_hd__tapvpwrvgnd_1 \
-		"MASKHINTS_PSDM 0 38 92 196" -mag
+		"MASKHINTS_PSDM 0 38 92 195" -mag
 	${ADDPROP} ${STAGING_PATH}/${SKY130$*} sky130_fd_sc_hd sky130_fd_sc_hd__tapvpwrvgnd_1 \
-		"MASKHINTS_NSDM 0 280 92 506" -mag
+		"MASKHINTS_NSDM 0 279 92 506" -mag
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_VERILOG}/*.*.v
