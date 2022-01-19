@@ -113,6 +113,7 @@
 #	SKYWATER_PATH: Points to vendor sources
 #	EF_STYLE: 1 for efabless style, 0 otherwise
 #	LINK_TARGETS_A: If "source", link back to source when possible
+#	ENABLED_VARIANTS: If not "all", then compile/install only the specified variants
 #
 # Run "make" to stage the PDK for tool setup and vendor libraries
 #
@@ -191,6 +192,18 @@ SHARED_PDKS_PATH ?= $(datadir)/pdk
 # LINK_TARGETS = source | none | sky130A
 LINK_TARGETS_A = @SKY130_LINK_TARGETS@
 LINK_TARGETS_B = sky130A
+
+# ENABLED_VARIANTS = all | A | B
+ENABLED_VARIANTS = @SKY130_ENABLED_VARIANTS@
+ifeq (${ENABLED_VARIANTS},)
+	VARIANTS += A B
+else
+    ifeq (${ENABLED_VARIANTS}, all)
+	VARIANTS += A B
+    else
+	VARIANTS += ${ENABLED_VARIANTS}
+    endif
+endif
 
 # Paths:
 
@@ -538,7 +551,7 @@ else
 	SPIEXT = spice
 endif
 
-all: all-A all-B
+all: $(foreach var, ${VARIANTS}, all-$(var))
 
 # Handle prerequisites (fetch and install the PDK and requested libraries)
 prerequisites: pdk-repo alpha-repo xschem-repo sram-repo osu-t12-repo osu-t15-repo osu-t18-repo
@@ -1461,7 +1474,7 @@ osu-t18-%:
 			options=custom/scripts/gds_import_setup.tcl \
 		-library digital sky130_osu_sc_18t_ls 2>&1 | tee -a ${SKY130$*}_make.log
 
-install: install-A install-B
+install: $(foreach var, ${VARIANTS}, install-$(var))
 
 install-A:
 	echo "Starting SKY130 PDK migration on "`date` > ${SKY130A}_install.log
@@ -1481,7 +1494,7 @@ install-B:
 		-link_from ${DIST_LINK_TARGETS_B} 2>&1 | tee -a ${SKY130B}_install.log
 	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130B}_install.log
 
-uninstall: uninstall-A uninstall-B
+uninstall: $(foreach var, ${VARIANTS}, uninstall-$(var))
 
 uninstall-A:
 	echo "Uninstalling SKY130 PDK from ${SHARED_PDKS_PATH}"
@@ -1497,7 +1510,7 @@ uninstall-B:
 	fi
 	echo "Finished SKY130 PDK uninstall"
 
-clean: clean-A clean-B
+clean: $(foreach var, ${VARIANTS}, clean-$(var))
 
 clean-A:
 	${STAGE} -target ${STAGING_PATH}/${SKY130A} -clean
@@ -1505,7 +1518,7 @@ clean-A:
 clean-B:
 	${STAGE} -target ${STAGING_PATH}/${SKY130B} -clean
 
-veryclean: veryclean-A veryclean-B
+veryclean: $(foreach var, ${VARIANTS}, veryclean-$(var))
 
 veryclean-A: clean-A
 	${RM} ${SKY130A}_make.log

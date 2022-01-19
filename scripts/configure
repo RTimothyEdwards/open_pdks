@@ -607,6 +607,7 @@ MAGIC_DISABLED
 KLAYOUT_DISABLED
 ALL_TECHS
 SKY130_SOURCE_PATH
+SKY130_ENABLED_VARIANTS
 SKY130_LINK_TARGETS
 SED
 pkgpyexecdir
@@ -661,6 +662,7 @@ ac_user_opts='
 enable_option_checking
 enable_sky130_pdk
 with_sky130_link_targets
+with_sky130_variants
 enable_klayout
 enable_magic
 enable_netgen
@@ -1346,6 +1348,9 @@ Optional Packages:
   --with-sky130-link-targets=none|source
                           "make symbolic links to existing files
                           [default=none]"
+  --with-sky130-variants=all|A|B|...
+                          "compile/install specified PDK variants only
+                          [default=all]"
   --with-ef-style         Use efabless style file system structure
                           [default=no]
 
@@ -2186,6 +2191,7 @@ $as_echo "$as_me: Found technology directories: sky130" >&6;}
         echo "Checking technology sky130..."
 
 
+        SKY130_ENABLED_VARIANTS="all"
         SKY130_SOURCE_PATH=""
         SKY130_LINK_TARGETS="none"
         SKY130_AUTO="0"
@@ -2262,7 +2268,20 @@ fi
 
             { $as_echo "$as_me:${as_lineno-$LINENO}: Link targets set to $SKY130_LINK_TARGETS" >&5
 $as_echo "$as_me: Link targets set to $SKY130_LINK_TARGETS" >&6;}
+
+            # --with-pdk-variants=PDK_ENABLED_VARIANTS
+
+# Check whether --with-sky130-variants was given.
+if test "${with_sky130_variants+set}" = set; then :
+  withval=$with_sky130_variants; SKY130_ENABLED_VARIANTS=$with_sky130_variants
+
+fi
+
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Enabled variants set to $SKY130_ENABLED_VARIANTS" >&5
+$as_echo "$as_me: Enabled variants set to $SKY130_ENABLED_VARIANTS" >&6;}
         fi
+
 
 
 
