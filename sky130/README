@@ -160,6 +160,13 @@ Step 1:
 		include version tracking of the Magic setup files
 		and the location of the technology LEF file.
 
+	--with-sky130-variants=all|A|B
+		When set to "all" (which is the default), both variants
+		sky130A and sky130B are generated and installed.   If
+		only one PDK variant needs to be installed, then use
+		this option to restrict the installation to a single
+		PDK variant.
+
 	--with-sky130-link-targets=none|source
 		"none" copies files from the source directories to
 		the target.  "source" makes symbolic links to the source
