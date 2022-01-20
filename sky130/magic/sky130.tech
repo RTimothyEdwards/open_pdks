@@ -3145,7 +3145,7 @@ style  sky130 variants (vendor),()
  templayer ndcbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and NSDM
  and-not NWELL,nwelcheck
@@ -3162,7 +3162,7 @@ style  sky130 variants (vendor),()
  templayer nscbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF,TAP
  and NSDM
  and NWELL,nwelcheck
@@ -3179,7 +3179,7 @@ style  sky130 variants (vendor),()
  templayer pdcbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and PSDM
  and NWELL,nwelcheck
@@ -3196,7 +3196,7 @@ style  sky130 variants (vendor),()
  templayer pdcnowell CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and PSDM
  and pfetexpand
@@ -3213,7 +3213,7 @@ style  sky130 variants (vendor),()
  templayer pscbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF,TAP
  and PSDM
  and-not NWELL,nwelcheck
@@ -3231,7 +3231,7 @@ style  sky130 variants (vendor),()
  templayer pcbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and POLY
  and-not DIFF
  and-not RPM,URPM
@@ -3247,7 +3247,7 @@ style  sky130 variants (vendor),()
  templayer ndicbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and NSDM
  and DIODE
@@ -3267,7 +3267,7 @@ style  sky130 variants (vendor),()
  templayer ndilvtcbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and NSDM
  and DIODE
@@ -3287,7 +3287,7 @@ style  sky130 variants (vendor),()
  templayer pdicbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and PSDM
  and DIODE
@@ -3308,7 +3308,7 @@ style  sky130 variants (vendor),()
  templayer pdilvtcbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and PSDM
  and DIODE
@@ -3329,7 +3329,7 @@ style  sky130 variants (vendor),()
  templayer pdihvtcbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and PSDM
  and DIODE
@@ -3350,7 +3350,7 @@ style  sky130 variants (vendor),()
  templayer mvndcbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and NSDM
  and-not NWELL,nwelcheck
@@ -3367,7 +3367,7 @@ style  sky130 variants (vendor),()
  templayer mvnscbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF,TAP
  and NSDM
  and NWELL,nwelcheck
@@ -3384,7 +3384,7 @@ style  sky130 variants (vendor),()
  templayer mvpdcbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and PSDM
  and NWELL,nwelcheck
@@ -3401,7 +3401,7 @@ style  sky130 variants (vendor),()
  templayer mvpdcnowell CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and PSDM
  and mvpfetexpand
@@ -3419,7 +3419,7 @@ style  sky130 variants (vendor),()
  templayer mvpscbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF,TAP
  and PSDM
  and-not NWELL,nwelcheck
@@ -3437,7 +3437,7 @@ style  sky130 variants (vendor),()
  templayer mvndicbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and NSDM
  and DIODE
@@ -3457,7 +3457,7 @@ style  sky130 variants (vendor),()
  templayer nndicbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and NSDM
  and DIODE
@@ -3477,7 +3477,7 @@ style  sky130 variants (vendor),()
  templayer mvpdicbase CONT
  or barecont
  and LI
- or licont
+ or barelicont
  and DIFF
  and PSDM
  and DIODE
