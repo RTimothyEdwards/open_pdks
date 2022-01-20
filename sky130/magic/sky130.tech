@@ -711,6 +711,10 @@ compose
   paint  nsc 	 coreli nsc
   paint  psc 	 coreli psc
   paint  viali 	 coreli viali
+  paint  mvpdc	 coreli mvpdc
+  paint  mvndc	 coreli mvndc
+  paint  mvnsc 	 coreli mvnsc
+  paint  mvpsc 	 coreli mvpsc
 
   paint  coreli  pdc    pdc
   paint  coreli  ndc    ndc
@@ -718,6 +722,10 @@ compose
   paint  coreli  nsc    nsc
   paint  coreli  psc    psc
   paint  coreli  viali  viali
+  paint  coreli  mvpdc  mvdc
+  paint  coreli  mvndc  mvdc
+  paint  coreli  mvnsc  mvsc
+  paint  coreli  mvpsc  mvsc
 
 #ifdef RERAM
   paint  reram  metal2  reram
@@ -3900,7 +3908,7 @@ style  sky130 variants (vendor),()
  # metal and pull them into the
  # next layer up
  
- templayer gencont CONT
+ templayer barelicont CONT
  and LI
  and-not DIFF,TAP
  and-not POLY
