@@ -265,6 +265,10 @@ SKY130B_DEFS += -DRERAM
 SKY130A_DEFS += -DSTAGING_PATH=${STAGING_PATH}
 SKY130B_DEFS += -DSTAGING_PATH=${STAGING_PATH}
 
+# Get the timestamp of the open_pdks commit to use for stamping layouts.
+OPEN_PDKS_TIMESTAMP = $(shell git log -1 --format="%ad" --date=raw | cut -d' ' -f1)
+TIMESTAMP_OPT = -timestamp ${OPEN_PDKS_TIMESTAMP}
+
 # Record commit numbers for the nodeinfo.json file
 OPEN_PDKS_COMMIT = $(shell git rev-parse HEAD)
 ifeq (${OPEN_PDKS_COMMIT},)
@@ -451,7 +455,7 @@ CPP   = ../common/preproc.py
 
 # The following script in the ../common directory does most of the work of
 # copying or linking the foundry vendor files to the target directory.
-STAGE = set -f ; ../common/foundry_install.py ${EF_FORMAT}
+STAGE = set -f ; ../common/foundry_install.py ${EF_FORMAT} ${TIMESTAMP_OPT}
 ifneq ($(DESTDIR), )
 INSTALL = ../common/staging_install.py -writeto $(DESTDIR) ${EF_FORMAT}
 else

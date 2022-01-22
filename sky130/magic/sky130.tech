@@ -23,7 +23,7 @@ end
 version
  version REVISION
  description "SkyWater SKY130: Open Source rules and DRC"
- requires magic-8.3.111
+ requires magic-8.3.260
 end
 
 #------------------------------------------------------------------------
@@ -722,10 +722,10 @@ compose
   paint  coreli  nsc    nsc
   paint  coreli  psc    psc
   paint  coreli  viali  viali
-  paint  coreli  mvpdc  mvdc
-  paint  coreli  mvndc  mvdc
-  paint  coreli  mvnsc  mvsc
-  paint  coreli  mvpsc  mvsc
+  paint  coreli  mvpdc  mvpdc
+  paint  coreli  mvndc  mvndc
+  paint  coreli  mvnsc  mvnsc
+  paint  coreli  mvpsc  mvpsc
 
 #ifdef RERAM
   paint  reram  metal2  reram

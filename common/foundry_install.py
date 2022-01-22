@@ -9,6 +9,7 @@
 # Options:
 #    -ef_format		Use efabless naming (libs.ref/techLEF),
 #			otherwise use generic naming (libs.tech/lef)
+#    -timestamp <value>	Pass a timestamp to use for stamping GDS and MAG files
 #    -clean		Clear out and remove target directory before starting
 #    -source <path>	Path to source data top level directory
 #    -target <path>	Path to target (staging) top level directory
@@ -188,6 +189,7 @@ def usage():
     print("foundry_install.py [options...]")
     print("   -copy             Copy files from source to target (default)")
     print("   -ef_format        Use efabless naming conventions for local directories")
+    print("   -timestamp <value> Use <value> for timestamping files")
     print("")
     print("   -source <path>    Path to top of source directory tree")
     print("   -target <path>    Path to top of target directory tree")
@@ -441,6 +443,8 @@ if __name__ == '__main__':
     targetdir = None
 
     ef_format = False
+    do_timestamp = False
+    timestamp_value = 0
     do_clean = False
 
     have_lef = False
@@ -484,6 +488,14 @@ if __name__ == '__main__':
         elif option[0] == 'std_naming' or option[0] == 'std_names' or option[0] == 'std_format':
             optionlist.remove(option)
             ef_format = False
+        elif option[0] == 'timestamp':
+            optionlist.remove(option)
+            if len(option) > 1:
+                timestamp_value = option[1]
+                do_timestamp = True
+            else:
+                print('Error: Option "timestamp" used with no value.')
+
         elif option[0] == 'clean':
             do_clean = True
 
@@ -562,6 +574,7 @@ if __name__ == '__main__':
     # Check for magic version and set flag if it does not exist or if
     # it has the wrong version.
     have_mag_8_2 = False
+    have_mag_8_3_261 = False
     try:
         mproc = subprocess.run(
             ['magic', '--version'],
@@ -580,6 +593,14 @@ if __name__ == '__main__':
                     if int(mag_version_info[1]) >= 2:
                         have_mag_8_2 = True
                         print('Magic version 8.2 (or better) available on the system.')
+                if int(mag_version_info[0]) > 8:
+                    have_mag_8_3_261 = True
+                elif int(mag_version_info[0]) == 8:
+                    if int(mag_version_info[1]) > 3:
+                        have_mag_8_3_261 = True
+                    elif int(mag_version_info[1]) == 3:
+                        if int(mag_version_info[2]) >= 261:
+                            have_mag_8_3_261 = True
             except ValueError:
                 print('Error: "magic --version" did not return valid version number.')
                 if mproc.stderr:
@@ -1407,6 +1428,8 @@ if __name__ == '__main__':
                     print('#--------------------------------------------', file=ofile)
                     print('crashbackups stop', file=ofile)
                     print('drc off', file=ofile)
+                    if do_timestamp and have_mag_8_3_261:
+                        print('gds datestamp ' + str(timestamp_value), file=ofile)
                     print('gds readonly true', file=ofile)
                     print('gds drccheck false', file=ofile)
                     print('gds flatten true', file=ofile)
@@ -1798,6 +1821,10 @@ if __name__ == '__main__':
 
                         tcldevlist = '{' + ' '.join(shortdevlist) + '}'
                         print('set devlist ' + tcldevlist, file=ofile)
+
+                    # Force the abstract view timestamps to match the full views
+                    if do_timestamp and have_mag_8_3_261:
+                        print('lef datestamp ' + str(timestamp_value), file=ofile)
 
                     for leffile in leffiles:
                         print('lef read ' + srclibdir + '/' + leffile, file=ofile)
