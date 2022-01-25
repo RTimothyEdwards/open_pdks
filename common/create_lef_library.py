@@ -13,6 +13,7 @@ import sys
 import os
 import glob
 import fnmatch
+from sort_pdkfiles import natural_sort
 
 #----------------------------------------------------------------------------
 
@@ -53,6 +54,7 @@ def create_lef_library(destlibdir, destlib, do_compile_only=False, excludelist=[
                 llist.append(destlibdir + '/' + rfile)
     else:
         llist = glob.glob(destlibdir + '/*.lef')
+        llist = natural_sort(llist)
 
     if alllibname in llist:
         llist.remove(alllibname)
