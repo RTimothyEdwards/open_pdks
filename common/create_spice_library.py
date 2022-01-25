@@ -14,6 +14,7 @@ import os
 import re
 import glob
 import fnmatch
+from sort_pdkfiles import natural_sort
 
 #----------------------------------------------------------------------------
 
@@ -73,6 +74,7 @@ def create_spice_library(destlibdir, destlib, spiext, do_compile_only=False, do_
             slist.extend(glob.glob(destlibdir + '/*.ckt'))
             slist.extend(glob.glob(destlibdir + '/*.cir'))
             slist.extend(glob.glob(destlibdir + '/*' + spiext))
+        slist = natural_sort(slist)
 
     if alllibname in slist:
         slist.remove(alllibname)
