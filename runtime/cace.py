@@ -806,7 +806,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
             total = 0
         else:
             self.bbar.progress.configure(maximum = total)
-        
+
         try:
             completed = int(status['completed'])
         except:
@@ -997,7 +997,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         basemethod = method.split('.')[0]
         if basemethod == 'check':	# used by submit to ensure netlist exists
             return True
-  
+
         if basemethod == 'physical':
             print('Checking ' + method.split('.')[1])
         else:
@@ -1027,7 +1027,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         # (Diagnostic)
         design_path = dspath + '/spi'
 
-        print('Calling cace_gensim.py ' + dspath + 
+        print('Calling cace_gensim.py ' + dspath +
 			' -local -method=' + method)
 
         modetext = ['-local']
@@ -1042,7 +1042,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         print(' -simdir=' + dsdir + ' -datasheetdir=' + dsdir + ' -designdir=' + design_path)
         print(' -layoutdir=' + dspath + '/mag' + ' -testbenchdir=' + dspath + '/testbench')
         print(' -datasheet=datasheet.json')
-        
+
         self.caceproc = subprocess.Popen([config.apps_path + '/cace_gensim.py', dspath,
 			*modetext,
 			'-method=' + method,  # Call local mode w/method
@@ -1075,7 +1075,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
                 output = self.caceproc.communicate(timeout=1)
             except ValueError:
                 print("CACE gensim forced stop, status " + str(cace_status))
-            else: 
+            else:
                 outlines = output[0]
                 errlines = output[1]
                 for line in outlines.splitlines():
@@ -1411,7 +1411,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
 
     def create_datasheet_view(self):
         dframe = self.datasheet_viewer.dframe
- 
+
         # Destroy the existing datasheet frame contents (if any)
         for widget in dframe.winfo_children():
             widget.destroy()

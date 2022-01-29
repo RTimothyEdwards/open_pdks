@@ -69,7 +69,7 @@ def rename_json(project_path, json_file, new_name, orig_name = ''):
     opath = os.path.split(json_file)[0]
     # oname = opath + '/' + dirname + '.json'
     oname = opath + '/project.json'
-    
+
     with open(oname, 'w') as ofile:
         json.dump(datatop, ofile, indent = 4)
 
@@ -198,7 +198,7 @@ def rename_project_all(project_path, new_name, orig_name=''):
     # unless it is specified as a separate argument.
 
     proj_name = os.path.split(project_path)[1]
-    json_path = project_path + '/project.json'  
+    json_path = project_path + '/project.json'
 
     # The JSON file is assumed to have the name "project.json" always.
     # However, if the project directory just got named, or if the project pre-dates

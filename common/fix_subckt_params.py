@@ -208,7 +208,7 @@ def convert_file(in_file, out_path, params, debug):
             if inpinlist:
                 spicelines.append(line)
                 continue
-                
+
             else:
                 ematch = endsubrex.match(line)
                 if ematch:
@@ -262,7 +262,7 @@ if __name__ == '__main__':
     if not os.path.isfile(inpath):
         print('Input path ' + inpath + ' is not a file.')
         sys.exit(1)
- 
+
     convert_file(inpath, outpath, params, debug)
 
     print('Done.')

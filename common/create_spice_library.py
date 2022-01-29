@@ -195,7 +195,7 @@ if __name__ == '__main__':
         else:
             argumentlist.append(option)
 
-    if len(argumentlist) < 3: 
+    if len(argumentlist) < 3:
         print("Not enough arguments given to create_spice_library.py.")
         usage()
         sys.exit(1)

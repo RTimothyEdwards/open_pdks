@@ -79,7 +79,7 @@ class Profile(tkinter.Toplevel):
             p = subprocess.run(['/ef/apps/bin/withnet',
                         config.apps_path + '/og_uid_service.py', userid],
                         stdout = subprocess.PIPE)
-            
+
             if p.stdout:
                 uid_string = p.stdout.splitlines()[0].decode('utf-8')
                 userspec = re.findall(r'[^"\s]\S*|".+?"', uid_string)
@@ -142,7 +142,7 @@ class Profile(tkinter.Toplevel):
         self.sframe.lschemeditor.grid(column = 0, row = 6, sticky = 'news', padx = 5, pady = 5)
         self.sframe.schemeditor.grid(column = 1, row = 6, sticky = 'news', padx = 5, pady = 5)
 
-        
+
         if 'schemeditor' in prefs:
             self.schemeditor.set(prefs['schemeditor'])
         else:
@@ -269,7 +269,7 @@ class Profile(tkinter.Toplevel):
             self.devstdcells.set(True)
         else:
             self.devstdcells.set(False)
-    
+
     def close(self):
         # pop down profile settings window
         self.withdraw()

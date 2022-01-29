@@ -204,7 +204,7 @@ def convert_file(in_file, out_path):
                         while tline < lineno:
                             linedest[tline] = fileno
                             tline += 1;
- 
+
                 devrex = re.compile(subname + '[ \t]*([^ \t]+)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
                 inpinlist = True
                 linedest[lineno] = fileno
@@ -217,7 +217,7 @@ def convert_file(in_file, out_path):
                 # Watch for pin list continuation line.
                 linedest[lineno] = fileno
                 continue
-                
+
             else:
                 ematch = endsubrex.match(line)
                 if ematch:
@@ -353,7 +353,7 @@ def convert_file(in_file, out_path):
         for line in inplines:
             lineno += 1
             print(str(linedest[lineno]) + '\t' + line, file=ofile)
-            
+
     # Reset all linedest[] entries except the bottommost entry for each subcircuit.
     lineno = len(inplines)
     subrefs = [0] * len(subnames)
@@ -421,7 +421,7 @@ if __name__ == '__main__':
     if not os.path.isfile(inpath):
         print('Input path ' + inpath + ' is not a file.')
         sys.exit(1)
- 
+
     convert_file(inpath, outpath)
 
     print('Done.')

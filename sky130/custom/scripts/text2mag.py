@@ -32,7 +32,7 @@ def usage(ofile):
     print('  Options:', file=ofile)
     print('    [-c|--cellname]   - Required. Cell name to use.', file=ofile)
     print('    [-m|--message]    - Text to convert (default: use stdin).', file=ofile)
-    print('    [-k|--keep]       - Keep generator script', file=ofile)     
+    print('    [-k|--keep]       - Keep generator script', file=ofile)
     print('    [-h|--help]       - Display these details', file=ofile)
 
 keep = False

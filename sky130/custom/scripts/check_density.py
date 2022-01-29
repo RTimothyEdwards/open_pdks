@@ -55,7 +55,7 @@ if __name__ == '__main__':
         print("Wrong number of arguments given to check_density.py.")
         usage()
         sys.exit(0)
-        
+
     relative_path=arguments[0]
 
     gdspath = os.getcwd()+'/'+os.path.split(relative_path)[0]+'/'
@@ -63,14 +63,14 @@ if __name__ == '__main__':
         gdspath = os.getcwd()
 
     gds_filepath = os.path.split(relative_path)[1]
-    
+
     if os.path.splitext(gds_filepath)[1] != '.gds':
         if os.path.splitext(gds_filepath)[1] == '':
             gds_filepath += '.gds'
         else:
             print('Error:  Project is not a GDS file!')
             sys.exit(1)
-    
+
     gdsname = os.path.split(gds_filepath)[1]
     gdsroot = os.path.splitext(gdsname)[0]
 
@@ -79,7 +79,7 @@ if __name__ == '__main__':
     if not os.path.isdir(gdspath):
         print('Error:  Project path "' + gds_filepath + '" does not exist or is not readable.')
         sys.exit(1)
-        
+
     if not os.path.isfile(gdspath+gds_filepath):
         print('Error:  Project "' + gdspath+gds_filepath + '" does not exist or is not readable.')
         sys.exit(1)
@@ -91,24 +91,24 @@ if __name__ == '__main__':
 
     # NOTE:  There should be some attempt to find the installed PDK magicrc file
     # if there is no mag/ directory.
-    
-    
+
+
     # Searching for rcfile
-    
+
     rcfile_paths=[gdspath+'/.magicrc','/$PDK_PATH/libs.tech/magic/sky130A.magicrc','/usr/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc']
-    
+
     rcfile=''
-    
+
     for rc_path in rcfile_paths:
         if os.path.isfile(rc_path):
             rcfile=rc_path
             break
-    
+
     if rcfile=='':
         print('Error: .magicrc file not found.')
         sys.exit(1)
 
-    
+
     with open(gdspath + '/check_density.tcl', 'w') as ofile:
         print('#!/bin/env wish', file=ofile)
         print('crashbackups stop', file=ofile)
@@ -237,7 +237,7 @@ if __name__ == '__main__':
     myenv['MAGTYPE'] = 'mag'
 
     print('Running density checks on file ' + gds_filepath, flush=True)
-    
+
     mproc = subprocess.Popen(['magic', '-dnull', '-noconsole',
 		'-rcfile', rcfile, gdspath + '/check_density.tcl'],
 		stdin = subprocess.DEVNULL,
@@ -380,7 +380,7 @@ if __name__ == '__main__':
             for w in range(y, y + 10):
                 base = xtiles * w + x
                 fomaccum += sum(fomfill[base : base + 10])
-                    
+
             fomaccum /= atotal
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(fomaccum))
             if fomaccum < 0.33:
@@ -405,7 +405,7 @@ if __name__ == '__main__':
             for w in range(y, y + 10):
                 base = xtiles * w + x
                 polyaccum += sum(polyfill[base : base + 10])
-                    
+
             polyaccum /= atotal
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(polyaccum))
 
@@ -426,7 +426,7 @@ if __name__ == '__main__':
             for w in range(y, y + 10):
                 base = xtiles * w + x
                 liaccum += sum(lifill[base : base + 10])
-                    
+
             liaccum /= atotal
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(liaccum))
             if liaccum < 0.35:
@@ -451,7 +451,7 @@ if __name__ == '__main__':
             for w in range(y, y + 10):
                 base = xtiles * w + x
                 met1accum += sum(met1fill[base : base + 10])
-                    
+
             met1accum /= atotal
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met1accum))
             if met1accum < 0.35:
@@ -476,7 +476,7 @@ if __name__ == '__main__':
             for w in range(y, y + 10):
                 base = xtiles * w + x
                 met2accum += sum(met2fill[base : base + 10])
-                    
+
             met2accum /= atotal
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met2accum))
             if met2accum < 0.35:
@@ -501,7 +501,7 @@ if __name__ == '__main__':
             for w in range(y, y + 10):
                 base = xtiles * w + x
                 met3accum += sum(met3fill[base : base + 10])
-                    
+
             met3accum /= atotal
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met3accum))
             if met3accum < 0.35:
@@ -526,7 +526,7 @@ if __name__ == '__main__':
             for w in range(y, y + 10):
                 base = xtiles * w + x
                 met4accum += sum(met4fill[base : base + 10])
-                    
+
             met4accum /= atotal
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met4accum))
             if met4accum < 0.35:
@@ -551,7 +551,7 @@ if __name__ == '__main__':
             for w in range(y, y + 10):
                 base = xtiles * w + x
                 met5accum += sum(met5fill[base : base + 10])
-                    
+
             met5accum /= atotal
             print('Tile (' + str(x) + ', ' + str(y) + '):   ' + str(met5accum))
             if met5accum < 0.45:

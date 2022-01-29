@@ -124,7 +124,7 @@ if __name__ == '__main__':
     if not os.path.isdir(pdkpath + '/.ef-config') and not os.path.isdir(pdkpath + '/.config'):
         print('PDK does not contain .config or .ef-config directory, cannot create project.')
         sys.exit(1)
-        
+
     if domagic or donetgen or doxschem or dongspice:
         print('Creating project ' + projectname)
         os.makedirs(projectpath)
@@ -138,8 +138,8 @@ if __name__ == '__main__':
     elif os.path.isdir(pdkpath + '/.config'):
         os.makedirs(projectpath + '/.config')
         os.symlink(pdkpath, projectpath + '/.config/techdir')
-        
-    
+
+
     if domagic:
         magpath = os.path.join(projectpath, 'mag')
         os.makedirs(magpath)
@@ -163,25 +163,25 @@ if __name__ == '__main__':
         os.makedirs(ngspicepath)
         os.symlink(pdkpath + '/libs.tech/ngspice/spinit',
 		ngspicepath + '/.spiceinit')
-    
+
     data = {}
     project={}
     project['description'] = "(Add project description here)"
-    
+
     infofile = pdkpath + '/.config/nodeinfo.json'
     if os.path.exists(infofile):
         with open(infofile, 'r') as ifile:
             nodeinfo = json.load(ifile)
         if 'foundry' in nodeinfo:
             project['foundry'] = nodeinfo['foundry']
-    
+
     project['process']=pdkname
     project['project_name'] = projectname
     data['project']=project
-    
+
     with open(projectpath + '/info.yaml', 'w') as ofile:
         print('---', file=ofile)
         yaml.dump(data, ofile)
-    
+
     print('Done!')
     sys.exit(0)

@@ -12,7 +12,7 @@
 # in place.  Eventually, magic will be upgraded to have a way to indicate
 # just the cell name and parameters in the .mag file so that all parameterized
 # cells can be generated on-the-fly and do not need to be saved in .mag files.
-# 
+#
 # Note that this routine assumes that all files are local to a single project
 # directory and are not being used by layout in some other directory.  So use
 # with caution.
@@ -79,7 +79,7 @@ if __name__ == '__main__':
         userex = re.compile('^use[ \t]+([^ \t]+)')
 
         with open(file, 'r') as ifile:
-            magtext = ifile.read().splitlines() 
+            magtext = ifile.read().splitlines()
             for line in magtext:
                 pmatch = proprex.match(line)
                 if pmatch:
@@ -102,7 +102,7 @@ if __name__ == '__main__':
         print('Used cells found:')
         for cellname in sorted(usedfiles):
             print(cellname)
-    
+
     if testmode:
         # Just report on files that are unused
         print('')

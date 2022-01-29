@@ -119,7 +119,7 @@ def construct_dut_from_path(pname, pathname, pinlist, foundry, node):
                     ## return ""
         lmatch = subrex.match(line)
         if lmatch:
-            rest = lmatch.group(1) 
+            rest = lmatch.group(1)
             tokens = rest.split()
             dutname = tokens[0]
             if dutname == pname:
@@ -141,7 +141,7 @@ def construct_dut_from_path(pname, pathname, pinlist, foundry, node):
         print('File ' + pathname + ' does not contain any subcircuits!')
         raise SyntaxError('File ' + pathname + ' does not contain any subcircuits!')
     elif found == 0:
-        if dutname != pname: 
+        if dutname != pname:
             print('File ' + pathname + ' does not have a subcircuit named ' + pname + '!')
             raise SyntaxError('File ' + pathname + ' does not have a subcircuit named ' + pname + '!')
         else:
@@ -159,7 +159,7 @@ def construct_dut_from_path(pname, pathname, pinlist, foundry, node):
         for pinrec in pinlist:
             print(pinrec['name'] + ' ', end='')
         print('')
-         
+
         print('Length of pinlist is ' + str(len(pinlist)))
         print('Number of pins found in subcircuit call is ' + str(found))
         raise SyntaxError('File ' + pathname + ' does not contain the project DUT!')
@@ -206,7 +206,7 @@ def logseq(condition, unit, start, stop, step):
         else:
             yield (condition, unit, str(a))
         a = a * s
-    
+
 # binary (integer) numeric sequence generators, to be used with condition generator
 
 def bindigits(n, bits):
@@ -249,7 +249,7 @@ def bshift(condition, unit, start, stop, step):
             bstr = bindigits(a, blen)
         yield (condition, unit, bstr)
         a = a * s
-    
+
 # define a generator for conditions.  Given a condition (dictionary),
 # return (as a yield) each specified condition as a
 # 3-tuple (condition_type, value, unit)
@@ -451,7 +451,7 @@ def inline_dut(filename, functional, rootpath, ofile):
             else:
                 ipname = incname
             if ipname.upper() in functional:
-                # Search for functional view (depends on if this is a read-only IP or 
+                # Search for functional view (depends on if this is a read-only IP or
                 # read-write local subcircuit)
                 funcpath = None
                 ippath = ippathrex.match(incpath)
@@ -462,7 +462,7 @@ def inline_dut(filename, functional, rootpath, ofile):
                     spitype = ippath.group(4)
                     ipname3 = ippath.group(5)
                     ipnetlist = ippath.group(6)
-                    funcpath = userpath + '/design/ip/' + ipname2 + '/' + ipversion + '/spi-func/' + ipname + '.spi' 
+                    funcpath = userpath + '/design/ip/' + ipname2 + '/' + ipversion + '/spi-func/' + ipname + '.spi'
                 else:
                     locpath = locpathrex.match(incpath)
                     if locpath:
@@ -470,7 +470,7 @@ def inline_dut(filename, functional, rootpath, ofile):
                         ipname2 = locpath.group(2)
                         spitype = locpath.group(3)
                         ipnetlist = locpath.group(4)
-                        funcpath = userpath + '/design/' + ipname2 + '/spi/func/' + ipname + '.spi' 
+                        funcpath = userpath + '/design/' + ipname2 + '/spi/func/' + ipname + '.spi'
                     else:
                         altpath = altpathrex.match(incpath)
                         if altpath:
@@ -479,8 +479,8 @@ def inline_dut(filename, functional, rootpath, ofile):
                             spitype = altpath.group(3)
                             ipname3 = altpath.group(4)
                             ipnetlist = altpath.group(5)
-                            funcpath = userpath + '/design/' + ipname2 + '/spi/func/' + ipname + '.spi' 
-                        
+                            funcpath = userpath + '/design/' + ipname2 + '/spi/func/' + ipname + '.spi'
+
                 funcpath = os.path.expanduser(funcpath)
                 if funcpath and os.path.exists(funcpath):
                     print('Subsituting functional view for IP block ' + ipname)
@@ -692,7 +692,7 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
                                 if lmatch:
                                     pinidx = int(lmatch.group(2))
                                     vcondition = lmatch.group(1)
-                                
+
                             try:
                                  entry = next((item for item in simval if item[0] == condition))
                             except (StopIteration, KeyError):
@@ -1066,7 +1066,7 @@ def generate_simfiles(datatop, fileinfo, arguments, methods, localmode):
             phints = param['hints']
             if 'method' in phints:
                 testbench_orig = testbench
-                testbench += phints['method']            
+                testbench += phints['method']
 
         if testbench == simtype:
             if arguments:
@@ -1489,7 +1489,7 @@ def layout_netlist_includes(pexnetlist, dspath):
                             smatch = subrex.match(line)
                             if smatch:
                                 found = True
-                                stubname = smatch.group(1) 
+                                stubname = smatch.group(1)
                                 stublist = smatch.group(2).split()
                                 if stubname != subname + '__' + subname:
                                     print('Error:  Looking for subcircuit ' + subname + '__' + subname + ' in file ' + stubpath + ' but found subcircuit ' + stubname + ' instead!')
@@ -1508,7 +1508,7 @@ def layout_netlist_includes(pexnetlist, dspath):
                                         pinsorts[subname] = pinorder
                                 break
                     if not found:
-                        print('Error:  Cannot find subcircuit in IP spi-stub entry.') 
+                        print('Error:  Cannot find subcircuit in IP spi-stub entry.')
                 else:
                     print('Warning: IP has no spi-stub entry, cannot verify pin order.')
 
@@ -1561,7 +1561,7 @@ def layout_netlist_includes(pexnetlist, dspath):
                                 for line in spilines:
                                     smatch = subrex.match(line)
                                     if smatch:
-                                        stubname = smatch.group(1) 
+                                        stubname = smatch.group(1)
                                         stublist = smatch.group(2).split()
                                         if stubname == subname:
                                             found = True

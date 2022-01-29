@@ -246,7 +246,7 @@ if __name__ == '__main__':
         print("No options given to foundry_install.py.")
         usage()
         sys.exit(0)
-    
+
     optionlist = []
     newopt = []
 
@@ -287,7 +287,7 @@ if __name__ == '__main__':
     for option in optionlist[:]:
         if option[0] == 'library':
             optionlist.remove(option)
-            libraries.append(option[1:]) 
+            libraries.append(option[1:])
 
     # Check for option "ef_names" or "std_names"
     for option in optionlist[:]:
@@ -497,7 +497,7 @@ if __name__ == '__main__':
                                     shutil.copy(submodname, subtargname)
                                 else:
                                     shutil.copytree(submodname, subtargname)
-                        
+
                             if filter_script:
                                 # Apply filter script to all files in the target directory
                                 tfilter(targname, filter_script)
@@ -551,7 +551,7 @@ if __name__ == '__main__':
         # in the hierarchy (see below).
 
         if 'up' in option:
-            uparg = option.index('up') 
+            uparg = option.index('up')
             try:
                 hier_up = int(option[uparg + 1])
             except:
@@ -569,7 +569,7 @@ if __name__ == '__main__':
 
         # Option 'compile' is a standalone keyword ('comp' may be used).
         do_compile = 'compile' in option or 'comp' in option
- 
+
         # Option 'nospecify' is a standalone keyword ('nospec' may be used).
         do_remove_spec = 'nospecify' in option or 'nospec' in option
 
@@ -738,7 +738,7 @@ if __name__ == '__main__':
             for item in option:
                 if item.split('=')[0] == 'ignore':
                     ignorelist = item.split('=')[1].split(',')
- 
+
     devlist = []
     pdklibrary = None
 
@@ -800,7 +800,7 @@ if __name__ == '__main__':
                 if os.path.isfile(destlibdir + '/.magicrc'):
                     os.remove(destlibdir + '/.magicrc')
                 os.symlink(startup_script, destlibdir + '/.magicrc')
- 
+
                 # Find GDS file names in the source
                 print('Getting GDS file list from ' + srclibdir + '.')
                 gdsfiles = os.listdir(srclibdir)
@@ -809,7 +809,7 @@ if __name__ == '__main__':
                 # the target directory.  Use it as input to magic to create the
                 # .mag files from the database.
 
-                print('Creating magic generation script.') 
+                print('Creating magic generation script.')
                 with open(destlibdir + '/generate_magic.tcl', 'w') as ofile:
                     print('#!/usr/bin/env wish', file=ofile)
                     print('#--------------------------------------------', file=ofile)
@@ -961,7 +961,7 @@ if __name__ == '__main__':
                 if os.path.isfile(destlibdir + '/.magicrc'):
                     os.remove(destlibdir + '/.magicrc')
                 os.symlink(startup_script, destlibdir + '/.magicrc')
- 
+
                 # Find LEF file names in the source
                 leffiles = os.listdir(srclibdir)
 
@@ -1126,7 +1126,7 @@ if __name__ == '__main__':
                 print("PDK tech files before PDK vendor files?")
 
     # If SPICE or CDL databases were specified, then convert them to
-    # a form that can be used by ngspice, using the cdl2spi.py script 
+    # a form that can be used by ngspice, using the cdl2spi.py script
 
     if have_spice:
         if not os.path.isdir(targetdir + '/libs.ref/spi'):

@@ -126,7 +126,7 @@ def solve_statement(condition):
                 repl = '0'
             condition = orrex.sub(str(repl), condition)
             matchfound = True
- 
+
     # Remove whitespace
     lmatch = leadspacerex.match(condition)
     if lmatch:
@@ -134,7 +134,7 @@ def solve_statement(condition):
     lmatch = endspacerex.match(condition)
     if lmatch:
         condition = lmatch.group(1)
-    
+
     return condition
 
 def solve_condition(condition, keys, defines, keyrex):
@@ -270,7 +270,7 @@ def runpp(keys, keyrex, defines, ccomm, utf, incdirs, inputfile, ofile):
                 continue
             if ifblock != -1:
                 ifstack.append(ifblock)
-                
+
             if ifblock == 1 or ifblock == -1:
                 condition = pmatch.group(1)
                 ifblock = solve_condition(condition, keys, defines, keyrex)
@@ -286,7 +286,7 @@ def runpp(keys, keyrex, defines, ccomm, utf, incdirs, inputfile, ofile):
                 continue
             if ifblock != -1:
                 ifstack.append(ifblock)
-                
+
             if ifblock == 1 or ifblock == -1:
                 condition = pmatch.group(1)
                 ifblock = solve_condition(condition, keys, defines, keyrex)
@@ -357,7 +357,7 @@ def runpp(keys, keyrex, defines, ccomm, utf, incdirs, inputfile, ofile):
             else:
                 ifblock = -1
             continue
-                 
+
         # Check for 'if' or 'else' that were not properly formed
         pmatch = badifrex.match(line)
         if pmatch:
@@ -401,7 +401,7 @@ def runpp(keys, keyrex, defines, ccomm, utf, incdirs, inputfile, ofile):
             condition = pmatch.group(1)
 
             # Additional handling of definition w/parameters: #define X(a,b,c) ..."
-            rmatch = paramrex.match(condition) 
+            rmatch = paramrex.match(condition)
             if rmatch:
                 # 'condition' as a key into keyrex only needs to be unique.
                 # Use the definition word without everything in parentheses
@@ -486,10 +486,10 @@ def runpp(keys, keyrex, defines, ccomm, utf, incdirs, inputfile, ofile):
                 if newline != line:
                     line = newline
                     break
-                    
+
             if line == origline:
                 break
-                
+
         # Output the line
         if not utf:
             print(line, file=ofile, end='')

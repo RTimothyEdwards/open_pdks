@@ -286,7 +286,7 @@ def convert_file(in_file, out_file):
         elif '//' in line:
             line = line.replace('//', ' $ ', 1)
         elif '\t//' in line:
-            line = line.replace('\t//', '\t$ ', 1) 
+            line = line.replace('\t//', '\t$ ', 1)
 
         # Item 2.  Handle SPICE-style comment lines
         if line.strip().startswith('*'):
@@ -503,7 +503,7 @@ def convert_file(in_file, out_file):
                     # Last check:  Do any model types confict with the way they
                     # are called within the subcircuit?  Spectre makes it very
                     # hard to know what type of device is being instantiated. . .
-   
+
                     for modelline in modellines:
                         mmatch = stdmodelrex.match(modelline)
                         if mmatch:

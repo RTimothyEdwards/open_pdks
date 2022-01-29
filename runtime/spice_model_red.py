@@ -28,18 +28,18 @@ def process_file(file_in_name, top_file):
         write_active = False
     else:
         write_active = True
-    
+
     for line in f_in:
         line_trim = (line.lower()).strip()
 
         if top_file == True:
             # we assume that .lib statements are only used in the main file
             if '.lib' in line_trim:
-                if model_section in line_trim: 
+                if model_section in line_trim:
                     write_active = True
                 else:
                     write_active = False
-        
+
             if '.endl' == line_trim:
                 write_active = False
                 f_out.write(line)
@@ -48,14 +48,14 @@ def process_file(file_in_name, top_file):
             if (line_trim[0] != '*'): # write no comments
                 if (write_active == True):
                     if '.include' in line_trim:
-                        # need to save and restore working dir so that nested 
+                        # need to save and restore working dir so that nested
                         # includes work
                         current_wd = os.getcwd()
                         newfile = re.findall(r'"(.*?)(?<!\\)"', line_trim)
                         print('Reading ',newfile[0])
 
                         # enter new working dir
-                        new_wd = os.path.dirname(newfile[0]) 
+                        new_wd = os.path.dirname(newfile[0])
                         if len(new_wd) > 0:
                             try:
                                 os.chdir(new_wd)
@@ -64,9 +64,9 @@ def process_file(file_in_name, top_file):
                                 is_warning = True
 
                         # traverse into new include file
-                        new_file_name = os.path.basename(newfile[0]) 
-                        process_file(new_file_name, False) 
-                        
+                        new_file_name = os.path.basename(newfile[0])
+                        process_file(new_file_name, False)
+
                         # restore old working dir after return
                         os.chdir(current_wd)
                     else:
@@ -91,18 +91,18 @@ if (len(sys.argv) == 2) or (len(sys.argv) == 3):
     except OSError:
         print('Error: Cannot write file ' + outfile_name + '.')
         sys.exit(2)
-    
+
     is_warning = False
     process_file(infile_name, True)
     f_out.close()
-    
+
     print()
     print('Model file ' + outfile_name + ' written.')
     if is_warning == True:
         print('There have been warnings! Please check output log.')
         sys.exit(1)
     else:
-        sys.exit(0) 
+        sys.exit(0)
 else:
     print()
     print('spice_model_red.py    SPICE model file reducer')

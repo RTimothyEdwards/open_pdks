@@ -7,7 +7,7 @@
 # The property is added to the layout in both the mag/ (full) and maglef/
 # (abstract) directories.  Option "-maglef" or "-mag" will restrict the
 # use to only the view indicated by the option.
-# 
+#
 # e.g.:
 #
 # insert_property.py /path/to/sky130A \
@@ -19,7 +19,7 @@ import sys
 
 def addprop(filename, propstring, noupdate):
     with open(filename, 'r') as ifile:
-        magtext = ifile.read().splitlines() 
+        magtext = ifile.read().splitlines()
 
     propname = propstring.split()[0]
     proprex = re.compile('<< properties >>')

@@ -6,7 +6,7 @@
 # replacement.  The checksum is just the sum of the length of all GDS records in
 # the cell.  A checksum can be determined by running this routine once without
 # supplying a checksum;  the checksum will be calculated and printed.
-# 
+#
 # There are no checks to ensure that the replacement cell is in any way compatible
 # with the existing cell.  Validation must be done independently.  This script is
 # only a simple GDS data compositor.
@@ -78,7 +78,7 @@ if __name__ == '__main__':
     # Assume that celldata contains the cell in question.
     # Find the extend of the data from 'beginstr' to 'endstr'
     #----------------------------------------------------------------------
-    
+
     datalen = len(celldata)
     dataptr = 0
     incell = False

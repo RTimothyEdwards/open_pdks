@@ -66,7 +66,7 @@ class SymbolBuilder(tkinter.Toplevel):
             newpvar = tkinter.StringVar(self.pframe.pindisplay)
             self.pinlist.append(pinname)
             self.pvar.append(newpvar)
-            newpvar.set(pintype) 
+            newpvar.set(pintype)
             ttk.Label(self.pframe.pindisplay, text=pinname,
 			style = 'normal.TButton').grid(row = n,
 			column = 0, padx = 5, sticky = 'nsew')

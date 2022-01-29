@@ -217,7 +217,7 @@ class HelpWindow(tkinter.Toplevel):
     def page(self, pagenum):
         # Go to indicated page
         if pagenum >= 0 and pagenum < len(self.pages):
-            self.pageno = pagenum 
+            self.pageno = pagenum
             self.redisplay()
 
     def close(self):

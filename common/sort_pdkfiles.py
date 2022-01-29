@@ -30,7 +30,7 @@ def pdk_sort(destdir):
         vlist = ifile.read().splitlines()
 
     vlist = natural_sort(vlist)
-    
+
     with open(destdir + '/filelist.txt', 'w') as ofile:
         for vfile in vlist:
             print(vfile, file=ofile)

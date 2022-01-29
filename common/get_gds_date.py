@@ -73,7 +73,7 @@ if __name__ == '__main__':
             if debug:
                 print('Record type = ' + str(rectype) + ' data type = ' + str(datatype) + ' length = ' + str(reclen))
 
-            if created: 
+            if created:
                 crec1 = gdsdata[dataptr + 4:dataptr + 6]
                 crec2 = gdsdata[dataptr + 6:dataptr + 8]
                 crec3 = gdsdata[dataptr + 8:dataptr + 10]

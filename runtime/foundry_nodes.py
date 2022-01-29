@@ -52,7 +52,7 @@ if __name__ == '__main__':
             techroot = os.path.realpath(rootpath + '/techdir')
             qflowlist = glob.glob(techroot + '/libs.tech/qflow/' + nodename + '*.sh')
 
-            
+
             if 'status' in process:
                 status = process['status']
             else:
@@ -118,7 +118,7 @@ if __name__ == '__main__':
                             print("Warning:  bad verilogfile path " + vfile, file=sys.stderr)
                     except:
                         pass
-    
+
                     stdcells.append(stdcelldef)
 
             process['stdcells'] = stdcells

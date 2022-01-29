@@ -42,7 +42,7 @@ def makeplot(plotrec, results, variables, parent = None):
         xidx = next(r for r in range(rlen) if results[0][r] == xname)
     except StopIteration:
         return None
-                            
+
     # Find unique values of each variable (except results, traces, and iterations)
     steps = [[0]]
     traces = [0]
@@ -135,7 +135,7 @@ def makeplot(plotrec, results, variables, parent = None):
             binconv.append([base, digits])
         else:
             binconv.append([])
-        
+
     # Support older method of declaring a digital vector
     if xname.split(':')[0] == 'DIGITAL':
         binconv[xidx] = [2, len(results[2][0])]

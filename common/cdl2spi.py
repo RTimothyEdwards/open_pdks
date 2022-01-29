@@ -15,7 +15,7 @@ import os
 import re
 import textwrap
 
-# Convert linear scale to area scale suffix 
+# Convert linear scale to area scale suffix
 # (e.g., if linear scale is 1e-6 ('u') then area scales as 1e-12 ('p'))
 
 def getAreaScale(dscale):
@@ -724,7 +724,7 @@ def cdl2spice(fnmIn, fnmOut, options):
         # terminal diodes.
         # CDL-std does not define $[...] as available for diodes, so we silently ignore
         # it.
-        # Always 2 terminals and a modelName. 
+        # Always 2 terminals and a modelName.
         # We already have peri=... and area=... and have ambiguity with plain numerics.
         # TODO: generate a warning in case of ambiguity, but prefer plain numerics
         # (with nm= added).
@@ -812,7 +812,7 @@ def cdl2spice(fnmIn, fnmOut, options):
 
         # res formats:
         #   rname n1 n2   <numeric> $SUB=t3 $[model] $w=... $l=... m=...
-        # c:rname n1 n2 R=<numeric> $[model] w=... l=... m=... $SUB=t3 
+        # c:rname n1 n2 R=<numeric> $[model] w=... l=... m=... $SUB=t3
         # l:rname n1 n2   {<numeric>} {$SUB=t3} {$[model]} {$w=...} {$l=...} {m=...}
         #  (all after n1,n2 optional)
         #    We require $[model]. And add 3rd term IFF $SUB=.
@@ -839,7 +839,7 @@ def cdl2spice(fnmIn, fnmOut, options):
 
         # bipolar formats:
         #   qname n1 n2 n3 model <numeric> M=... $EA=...
-        #   qname n1 n2 n3 model $EA=... <numeric> M=... 
+        #   qname n1 n2 n3 model $EA=... <numeric> M=...
         #   qname n1 n2 n3 model {$EA=...} {$W=...} {$L=...} {$SUB=...} {M=...}
         # No: l:qname n1 n2 n3 {nsub} model {$EA=...} {$W=...} {$L=...} {$SUB=...} {M=...}
         #   CDL-std adds {nsub} way to add substrate before model: We don't support it.
@@ -869,7 +869,7 @@ def cdl2spice(fnmIn, fnmOut, options):
             tmp += [ " ".join(tok) ]
             continue
 
-        # Anything else. What to do, preserve AS-IS with warning, or 
+        # Anything else. What to do, preserve AS-IS with warning, or
         # flag them as ERRORs?
         tmp += [ "*cdl2spi.py: ERROR: unrecognized line:", i ]
         err+=1

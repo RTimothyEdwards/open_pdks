@@ -285,7 +285,7 @@ class NewProjectDialog(tksimpledialog.Dialog):
             self.pdkstat[key] = status
             if node == node_def and not pdk_def:
                 pdk_def = key
-            
+
         # Quick hack:  sorting puts EFXH035A before EFXH035LEGACY.  However, some
         # ranking is needed.
         pdklist = sorted( self.pdkmap.keys())
@@ -295,7 +295,7 @@ class NewProjectDialog(tksimpledialog.Dialog):
 
         if parent_pdk != '':
             pdk_def = parent_pdk
-            
+
         self.pvar.set(pdk_def)
 
         # Restrict list to single entry if importnode was non-NULL and
@@ -304,7 +304,7 @@ class NewProjectDialog(tksimpledialog.Dialog):
         # entry equal to "active".  This allows some legacy PDKs to be
 	# disabled for creating new projects (but available for projects
         # that already have them).
-        
+
         if importnode or parent_pdk != '':
             self.pdkselect = ttk.Label(master, text = pdk_def, style='blue.TLabel')
         else:
@@ -584,7 +584,7 @@ class ImportDialog(tksimpledialog.Dialog):
     def body(self, master, warning, seed, parent_pdk, parent_path, project_dir):
         self.badrex1 = re.compile("^\.")
         self.badrex2 = re.compile(".*[/ \t\n\\\><\*\?].*")
-        
+
         self.projectpath = ""
         self.project_pdkdir = ""
         self.foundry = ""
@@ -592,48 +592,48 @@ class ImportDialog(tksimpledialog.Dialog):
         self.parentpdk = parent_pdk
         self.parentpath = parent_path
         self.projectdir = project_dir #folder that contains all projects
-        
+
         if warning:
             ttk.Label(master, text=warning, wraplength=250).grid(row = 0, columnspan = 2, sticky = 'wns')
         ttk.Label(master, text="Enter new project name:").grid(row = 1, column = 0)
-        
+
         self.entry_v = tkinter.StringVar()
-        
+
         self.nentry = ttk.Entry(master, textvariable = self.entry_v)
         self.nentry.grid(row = 1, column = 1, sticky = 'ewns')
-        
+
         self.entry_v.trace('w', self.text_validate)
-        
+
 
         ttk.Button(master,
                         text = "Choose Project...",
                         command = self.browseFiles).grid(row = 3, column = 0)
-                        
+
         self.pathlabel = ttk.Label(master, text = ("No project selected" if self.projectpath =="" else self.projectpath), style = 'red.TLabel', wraplength=300)
-        
+
         self.pathlabel.grid(row = 3, column = 1)
-        
+
         ttk.Label(master, text="Foundry/node:").grid(row = 4, column = 0)
-        
+
         self.pdklabel = ttk.Label(master, text="N/A", style = 'red.TLabel')
         self.pdklabel.grid(row = 4, column = 1)
-        
+
         self.importoption = tkinter.StringVar()
-        
+
         self.importoption.set(("copy" if parent_pdk!='' else "link"))
-        
+
         self.linkbutton = ttk.Radiobutton(master, text="Make symbolic link", variable=self.importoption, value="link")
         self.linkbutton.grid(row = 5, column = 0)
         ttk.Radiobutton(master, text="Copy project", variable=self.importoption, value="copy").grid(row = 5, column = 1)
-        
+
         self.error_label = ttk.Label(master, text="", style = 'red.TLabel', wraplength=300)
         self.error_label.grid(row = 6, column = 0, columnspan = 2)
-        
+
         self.entry_error = ttk.Label(master, text="", style = 'red.TLabel', wraplength=300)
         self.entry_error.grid(row = 2, column = 0, columnspan = 2)
-        
+
         return self.nentry
-    
+
     def text_validate(self, *args):
         newname = self.entry_v.get()
         projectpath = ''
@@ -641,7 +641,7 @@ class ImportDialog(tksimpledialog.Dialog):
             projectpath = self.parentpath + '/subcells/' + newname
         else:
             projectpath = self.projectdir + '/' + newname
-             
+
         if ProjectManager.blacklisted( newname):
             self.entry_error.configure(text = newname + ' is not allowed for a project name.')
         elif newname == "":
@@ -656,34 +656,34 @@ class ImportDialog(tksimpledialog.Dialog):
             self.entry_error.configure(text = '')
             return True
         return False
-        
+
     def validate(self, *args):
         return self.text_validate(self) and self.pdk_validate(self)
-        
+
     def browseFiles(self):
         initialdir = "~/"
         if os.path.isdir(self.projectpath):
             initialdir = os.path.split(self.projectpath)[0]
-            
+
         selected_dir = filedialog.askdirectory(initialdir = initialdir, title = "Select a Project to Import",)
-                                          
+
         if os.path.isdir(str(selected_dir)):
             self.error_label.configure(text = '')
             self.linkbutton.configure(state="normal")
-            
+
             self.projectpath = selected_dir
             self.pathlabel.configure(text=self.projectpath, style = 'blue.TLabel')
             # Change label contents
             if (self.nentry.get() == ''):
                 self.nentry.insert(0, os.path.split(self.projectpath)[1])
-                
+
             self.pdk_validate(self)
-    
+
     def pdk_validate(self, *args):
         if not os.path.exists(self.projectpath):
             self.error_label.configure(text = 'Invalid directory')
             return False
-        
+
         if self.parentpath != "" and self.projectpath in self.parentpath:
             self.error_label.configure(text = 'Cannot import a parent directory into itself.')
             return False
@@ -697,9 +697,9 @@ class ImportDialog(tksimpledialog.Dialog):
                 self.project_pdkdir = ""
                 self.foundry = ""
                 self.node = ""
-            else:                    
+            else:
                 self.project_pdkdir, self.foundry, self.node = ProjectManager.get_import_pdk( self.projectpath)
-            
+
         if self.project_pdkdir == "":
             self.pdklabel.configure(text="Not found", style='red.TLabel')
             return False
@@ -708,32 +708,32 @@ class ImportDialog(tksimpledialog.Dialog):
                 self.importoption.set("copy")
                 self.linkbutton.configure(state="disabled")
                 self.error_label.configure(text = 'Warning: Parent project uses '+self.parentpdk+' instead of '+self.foundry + '/' + self.node+'. The imported project will be copied and cleaned.')
-            self.pdklabel.configure(text=self.foundry + '/' + self.node, style='blue.TLabel')     
+            self.pdklabel.configure(text=self.foundry + '/' + self.node, style='blue.TLabel')
             return True
-        
-    
+
+
     def apply(self):
         return self.nentry.get(), self.project_pdkdir, self.projectpath, self.importoption.get()
-    
+
 #------------------------------------------------------
 # Dialog to allow users to select a flow
 #------------------------------------------------------
-    
+
 class SelectFlowDialog(tksimpledialog.Dialog):
     def body(self, master, warning, seed='', is_subproject = False):
         self.wait_visibility()
         if warning:
             ttk.Label(master, text=warning).grid(row = 0, columnspan = 2, sticky = 'wns')
-        
+
         ttk.Label(master, text="Flow:").grid(row = 1, column = 0)
-        
+
         project_flows = {
             'Analog':'Schematic, Simulation, Layout, DRC, LVS',
             'Digital':'Preparation, Synthesis, Placement, Static Timing Analysis, Routing, Post-Route STA, Migration, DRC, LVS, GDS, Cleanup',
             'Mixed-Signal':'',
             'Assembly':'',
         }
-        
+
         subproject_flows = {
             'Analog':'Schematic, Simulation, Layout, DRC, LVS',
             'Digital':'Preparation, Synthesis, Placement, Static Timing Analysis, Routing, Post-Route STA, Migration, DRC, LVS, GDS, Cleanup',
@@ -741,10 +741,10 @@ class SelectFlowDialog(tksimpledialog.Dialog):
         }
         self.flows = subproject_flows if is_subproject else project_flows
         self.flowvar = tkinter.StringVar(master, value = 'Analog')
-        
+
         self.infolabel = ttk.Label(master, text=self.flows[self.flowvar.get()], style = 'brown.TLabel', wraplength=250)
         self.infolabel.grid(row = 2, column = 0, columnspan = 2, sticky = 'news')
-        
+
         self.option_menu = ttk.OptionMenu(
             master,
             self.flowvar,
@@ -752,11 +752,11 @@ class SelectFlowDialog(tksimpledialog.Dialog):
             *self.flows.keys(),
             command=self.show_info
         )
-        
+
         self.option_menu.grid(row = 1, column = 1)
 
         return self.option_menu# initial focus
-    
+
     def show_info(self, args):
         key = self.flowvar.get()
         print(key)
@@ -765,11 +765,11 @@ class SelectFlowDialog(tksimpledialog.Dialog):
             self.infolabel.config(text='(no description available)')
         else:
             self.infolabel.config(text=desc)
-    
+
 
     def apply(self):
         return str(self.flowvar.get())  # Note converts StringVar to string
-        
+
 #------------------------------------------------------
 # Project Manager class
 #------------------------------------------------------
@@ -845,11 +845,11 @@ class ProjectManager(ttk.Frame):
 
         # Create the help window
         self.help = HelpWindow(self, fontsize=fontsize)
-        
+
         with io.StringIO() as buf, contextlib.redirect_stdout(buf):
             self.help.add_pages_from_file(config.apps_path + '/manager_help.txt')
             message = buf.getvalue()
-        
+
 
         # Set the help display to the first page
         self.help.page(0)
@@ -932,7 +932,7 @@ class ProjectManager(ttk.Frame):
         except:
             pdirCur = None
 
-        
+
         # Create listbox of projects
         projectlist = self.get_project_list() if not deferLoad else []
         height = min(10, max(prjPaneMinh, 2 + len(projectlist)))
@@ -976,7 +976,7 @@ class ProjectManager(ttk.Frame):
         watchlist = [self.projectdir, self.projectdir + '/' + importdir]
         if os.path.isdir(self.projectdir + '/upload'):
             watchlist.append(self.projectdir + '/upload')
-        
+
         # Check the creation time of the project manager app itself.  Because the project
         # manager tends to be left running indefinitely, it is important to know when it
         # has been updated.  This is checked once every hour since it is really expected
@@ -1025,9 +1025,9 @@ class ProjectManager(ttk.Frame):
             tooltip.ToolTip(self.toppane.appbar.layout_button, text="Start 'KLayout' layout editor")
         else:
             tooltip.ToolTip(self.toppane.appbar.layout_button, text="Start 'Magic' layout editor")
-        '''  
+        '''
         self.refreshToolTips()
-        
+
         tooltip.ToolTip(self.toppane.appbar.lvs_button, text="Start LVS tool")
         tooltip.ToolTip(self.toppane.appbar.char_button, text="Start Characterization tool")
         tooltip.ToolTip(self.toppane.appbar.synth_button, text="Start Digital Synthesis tool")
@@ -1065,11 +1065,11 @@ class ProjectManager(ttk.Frame):
         self.ipselect.populate2("date", itemlist, datelist)
         if allPaneOpen:
             self.library_open()
-        
+
 
         #---------------------------------------------
         ttk.Separator(self.toppane, orient='horizontal').grid(row = 9, sticky = 'news')
-        
+
         #---------------------------------------------
         # List of imports:
         self.toppane.import_frame = ttk.Frame(self.toppane)
@@ -1213,7 +1213,7 @@ class ProjectManager(ttk.Frame):
     # helper for Profile to do live mods of some of the user-prefs (without restart projectManager):
     def setUsername(self, newname):
         self.toppane.user_frame.user.config(text=newname)
-        
+
     def refreshToolTips(self):
         if self.prefs['schemeditor'] == 'xcircuit':
             tooltip.ToolTip(self.toppane.appbar.schem_button, text="Start 'XCircuit' schematic editor")
@@ -1226,7 +1226,7 @@ class ProjectManager(ttk.Frame):
             tooltip.ToolTip(self.toppane.appbar.layout_button, text="Start 'KLayout' layout editor")
         else:
             tooltip.ToolTip(self.toppane.appbar.layout_button, text="Start 'Magic' layout editor")
-    
+
     @classmethod
     def config_path(cls, path):
         #returns the config directory that 'path' contains between .config and .ef-config
@@ -1239,7 +1239,7 @@ class ProjectManager(ttk.Frame):
     #------------------------------------------------------------------------
     # Check if a name is blacklisted for being a project folder
     #------------------------------------------------------------------------
-    
+
     @classmethod
     def blacklisted(cls, dirname):
         # Blacklist:  Do not show files of these names:
@@ -1272,11 +1272,11 @@ class ProjectManager(ttk.Frame):
         uid = ''
         username = userid
         self.prefs['username'] = username
-        
+
         '''
         if 'username' not in self.prefs:
-            
-            # 
+
+            #
             #EFABLESS PLATFORM
             p = subprocess.run(['/ef/apps/bin/withnet' ,
 			config.apps_path + '/og_uid_service.py', userid],
@@ -1324,7 +1324,7 @@ class ProjectManager(ttk.Frame):
             # No preferences file, so create an initial one.
             if not os.path.exists(prefsfile):
                 self.write_prefs()
-        
+
         # if 'User:' Label exists, this updates it live (Profile calls read_prefs after write)
         try:
             self.setUsername(self.prefs['username'])
@@ -1343,9 +1343,9 @@ class ProjectManager(ttk.Frame):
         badrex2 = re.compile(".*[ \t\n].*")
 
         # Get contents of directory.  Look only at directories
-     
+
         projectlist = []
-        
+
         def add_projects(projectpath):
             # Recursively add subprojects to projectlist
             projectlist.append(projectpath)
@@ -1354,13 +1354,13 @@ class ProjectManager(ttk.Frame):
                 for subproj in os.listdir(projectpath + '/subcells'):
                     if os.path.isdir(projectpath + '/subcells/' + subproj):
                         add_projects(projectpath + '/subcells/' + subproj)
-        
+
         for item in os.listdir(self.projectdir):
             if os.path.isdir(self.projectdir + '/' + item):
                 projectpath = self.projectdir + '/' + item
                 add_projects(projectpath)
-         
-                        
+
+
         # 'import' and others in the blacklist are not projects!
         # Files beginning with '.' and files with whitespace are
         # also not listed.
@@ -1435,7 +1435,7 @@ class ProjectManager(ttk.Frame):
             print('Error in os.makedirs(.../.allwaves): ' + str(e))
         #EFABLESS PLATFORM
         deskel = '/ef/efabless/deskel'
-        
+
         # on the fly:
         # .../elec/.java : reinstall if missing. From PDK-specific if any.
         if not os.path.exists( os.path.join( elec, '.java')):
@@ -1534,7 +1534,7 @@ class ProjectManager(ttk.Frame):
                 if 'status' in nodeinfo:
                     status = nodeinfo['status']
                 return foundry, foundry_name, node, description, status
-            
+
             infofile = pdkdir + '/.ef-config/nodeinfo.json'
             if os.path.exists(infofile):
                 with open(infofile, 'r') as ifile:
@@ -1605,7 +1605,7 @@ class ProjectManager(ttk.Frame):
         if os.path.isdir(project + '/.ef-config'):
             if os.path.exists(project + '/.ef-config/techdir'):
                 pdkdir = os.path.realpath(project + '/.ef-config/techdir')
-                
+
         elif os.path.isdir(project + '/.config'):
             if os.path.exists(project + '/.config/techdir'):
                 pdkdir = os.path.realpath(project + '/.config/techdir')
@@ -1629,8 +1629,8 @@ class ProjectManager(ttk.Frame):
             if not pdkdir:
                 pdkdir = ( None if path else '(no PDK)' )    # shouldn't get here
         '''
-        
-        
+
+
 
         return pdkdir
 #------------------------------------------------------------------------
@@ -1640,15 +1640,15 @@ class ProjectManager(ttk.Frame):
     def get_import_pdk(cls, projectpath):
         print(projectpath)
         yamlname = projectpath + '/info.yaml'
-       
+
         with open(yamlname, 'r') as f:
             datatop = yaml.safe_load(f)
             project_data = datatop['project']
             project_foundry = project_data['foundry']
             project_process = project_data['process']
-                
+
         project_pdkdir = ''
-       
+
         for pdkdir_lr in glob.glob('/usr/share/pdk/*/libs.tech/'):
             pdkdir = os.path.split( os.path.split( pdkdir_lr )[0])[0]
             foundry, foundry_name, node, desc, status = ProjectManager.pdkdir2fnd( pdkdir )
@@ -1657,7 +1657,7 @@ class ProjectManager(ttk.Frame):
             if (foundry == project_foundry or foundry_name == project_foundry) and node == project_process:
                 project_pdkdir = pdkdir
                 break
-          
+
         return project_pdkdir, foundry, node #------------------------------------------------------------------------
     # Get the list of PDKs that are attached to each project
     #------------------------------------------------------------------------
@@ -1666,7 +1666,7 @@ class ProjectManager(ttk.Frame):
         for project in projectlist:
             pdkdir = self.get_pdk_dir(project)
             pdklist.append(pdkdir)
-            
+
         return pdklist
 
     #------------------------------------------------------------------------
@@ -1680,7 +1680,7 @@ class ProjectManager(ttk.Frame):
             if os.path.isfile(root + ext):
                 return root + ext
         return None
-        
+
     def yaml2targz(self, yamlPath):
         root = os.path.splitext(yamlPath)[0]
         for ext in ('.tgz', '.tar.gz'):
@@ -1726,7 +1726,7 @@ class ProjectManager(ttk.Frame):
             iplist = []
         else:
             pass
-      
+
         return iplist
 
     #------------------------------------------------------------------------
@@ -1793,10 +1793,10 @@ class ProjectManager(ttk.Frame):
 
         # Remember the size of the list so we know when it changed
         self.number_of_imports = len(importlist)
-        return importlist 
+        return importlist
 
     #------------------------------------------------------------------------
-    # Import for json documents and related tarballs (.gz or .tgz):  
+    # Import for json documents and related tarballs (.gz or .tgz):
     #------------------------------------------------------------------------
 
     def importyaml(self, projname, importfile):
@@ -2047,10 +2047,10 @@ class ProjectManager(ttk.Frame):
         if result == None:
             print('Error during install')
             return None
-        elif result == 0: 
+        elif result == 0:
             # Canceled, so do not remove the import
             return 0
-        else: 
+        else:
             # Remove original file from imports area
             os.remove(importfile)
             return 1    # Success
@@ -2072,7 +2072,7 @@ class ProjectManager(ttk.Frame):
         if not tar: return None, None, None
 
         return self.tarVglImportable(tar)
-    
+
     def yamlTarVglImportable(self, path):
         ext = os.path.splitext(path)[1]
         if ext != '.yaml': return None, None, None
@@ -2095,7 +2095,7 @@ class ProjectManager(ttk.Frame):
         if not tar: return None
 
         return self.tarMember2tempfile(tar, memPath)
-        
+
     def yamlTarMember2tempfile(self, path, memPath):
         ext = os.path.splitext(path)[1]
         if ext != '.yaml': return None
@@ -2153,7 +2153,7 @@ class ProjectManager(ttk.Frame):
         # Quantities of other types are all don't cares.
         if (nbrExt['/vgl/'] == 1 and nbrExt['.json'] == 1):
             # vfile is the name of the verilog netlist in the tarball, while jname
-            # is the root name of the JSON file found in the tarball (if any) 
+            # is the root name of the JSON file found in the tarball (if any)
             return vfile, jname, node
 
         # failed, not gate-level-verilog importable:
@@ -2236,7 +2236,7 @@ class ProjectManager(ttk.Frame):
         jDS = {}
         '''
         jDS['ip-name'] = ipname
-        
+
         pdkdir = self.get_pdk_dir(pname, path=True)
         try:
             jDS['foundry'], jDS['node'], pdk_desc, pdk_stat = self.pdkdir2fnd( pdkdir )
@@ -2255,7 +2255,7 @@ class ProjectManager(ttk.Frame):
         pmax['target'] = '100000'
         param['max'] = pmax
         pparams.append(param)
-    
+
         param = {}
         param['unit'] = "\u00b5m\u00b2"
         param['condition'] = "area"
@@ -2302,7 +2302,7 @@ class ProjectManager(ttk.Frame):
 #------------------------------------------------------------------------
     # Create info.yaml file (automatically done in create_project.py in case it's executed from the command line)
     #------------------------------------------------------------------------
-   
+
     def create_yaml(self, ipname, pdk_dir, description="(Add project description here)"):
         # ipname: Project Name
         data = {}
@@ -2643,7 +2643,7 @@ class ProjectManager(ttk.Frame):
                 create_symbol(ppath, vfile, ipname, iconfile, False)
             # Add header file
             self.create_electric_header_file(ppath, ipname)
-          
+
         dsheet = datatop['data-sheet']
         if not stdcellname or stdcellname == "":
             dsheet['standard-cell'] = 'default'
@@ -2677,7 +2677,7 @@ class ProjectManager(ttk.Frame):
     # Else PROMPT for new projectName and CREATE it (and use elecLib of same name).
     #------------------------------------------------------------------------
 
-    
+
     def importvgl(self, newfile, importfile, newname=None, seedname=None):
         elecLib = None
         isnew = not newname
@@ -2706,12 +2706,12 @@ class ProjectManager(ttk.Frame):
             if not choices:
                 print( "Aborted: No existing electric libraries found to import into.")
                 return 0
-                
+
             elecLib = ExistingElecLibDialog(self, choices).result
             if not elecLib:
                 # Never a just-created project to delete here: We only PROMPT to pick elecLib in non-new case.
                 return 0		# Canceled in dialog, no action.
-            
+
             # Isolate just electric lib name without extension. ../a/b.delib -> b
             elecLib = os.path.splitext(os.path.split(elecLib)[-1])[0]
             print("Importing to project: %s, elecLib: %s" % (newname, elecLib))
@@ -2731,10 +2731,10 @@ class ProjectManager(ttk.Frame):
         if result == None:
             print('Error during install')
             return None
-        elif result == 0: 
+        elif result == 0:
             # Canceled, so do not remove the import
             return 0
-        else: 
+        else:
             # If jName is non-NULL then there is a JSON file in the tarball.  This is
             # to be used as the project JSON file.  Contents of file coming from
             # CloudV are correct as of 12/8/2017.
@@ -2753,7 +2753,7 @@ class ProjectManager(ttk.Frame):
                     importjson = self.jsonTarMember2tempfile(importfile, tarJfile)
                 except:
                     jData = self.create_ad_hoc_json(newname, pname)
-    
+
                     with open(jname, 'w') as ofile:
                         json.dump(jData, ofile, indent = 4)
 
@@ -2966,7 +2966,7 @@ class ProjectManager(ttk.Frame):
     def update_project_views(self, force=False):
         # More than updating project views, this updates projects, imports, and
         # IP libraries.
-        
+
         projectlist = self.get_project_list()
         self.projectselect.repopulate(projectlist)
         pdklist = self.get_pdk_list(projectlist)
@@ -2980,11 +2980,11 @@ class ProjectManager(ttk.Frame):
         datelist = self.get_date_list(valuelist)
         itemlist = self.importselect.getlist()
         self.importselect.populate2("date", itemlist, datelist)
-        
+
 
         # To do:  Check if itemlist in imports changed, and open if a new import
         # has arrived.
-     
+
         if force or (old_imports != None) and (old_imports < self.number_of_imports):
             self.import_open()
 
@@ -3024,11 +3024,11 @@ class ProjectManager(ttk.Frame):
             return
         if os.path.islink(path):
             os.unlink(path)
-            self.update_project_views()  
+            self.update_project_views()
         else:
             shutil.rmtree(value['values'][0])
         if ('subcells' in path):
-            self.update_project_views()      
+            self.update_project_views()
 
     #----------------------------------------------------------------------
     # Clean out the simulation folder.  Traditionally this was named
@@ -3049,7 +3049,7 @@ class ProjectManager(ttk.Frame):
             return
         else:
             self.clean(ppath)
-            
+
     def clean(self, ppath):
         if os.path.isdir(ppath + '/simulation'):
             simpath = 'simulation'
@@ -3062,14 +3062,14 @@ class ProjectManager(ttk.Frame):
         filelist = os.listdir(ppath + '/' + simpath)
         for sfile in filelist:
             if os.path.splitext(sfile)[1] == '.raw':
-                os.remove(ppath + '/ngspice/' + sfile)                
+                os.remove(ppath + '/ngspice/' + sfile)
         print('Project simulation folder cleaned.')
 
         # Also clean the log file
         filelist = os.listdir(ppath)
         for sfile in filelist:
             if os.path.splitext(sfile)[1] == '.log':
-                os.remove(ppath + '/' + sfile)                
+                os.remove(ppath + '/' + sfile)
 
     #---------------------------------------------------------------------------------------
     # Determine which schematic editors are compatible with the PDK, and return a list of them.
@@ -3113,7 +3113,7 @@ class ProjectManager(ttk.Frame):
         warning = 'Create new project:'
         print(warning)
         development = self.prefs['development']
-        
+
         # Find out whether the user wants to create a subproject or project
         parent_pdk = ''
         try:
@@ -3133,10 +3133,10 @@ class ProjectManager(ttk.Frame):
                     (foundry, foundry_name, node, desc, status) = self.pdkdir2fnd( pdkdir )
                     parent_pdk = foundry + '/' + node
                     warning = 'Create new subproject in '+ parent_path + ':'
-                
+
         except:
             pass
-        
+
         while True:
             try:
                 if seedname:
@@ -3148,12 +3148,12 @@ class ProjectManager(ttk.Frame):
                 return None
             if not newname:
                 return None	# Canceled, no action.
-            
+
             if parent_pdk == '':
                 newproject = self.projectdir + '/' + newname
             else:
                 newproject = parent_path + '/subcells/' + newname
-            
+
             if self.blacklisted(newname):
                 warning = newname + ' is not allowed for a project name.'
             elif badrex1.match(newname):
@@ -3164,25 +3164,25 @@ class ProjectManager(ttk.Frame):
                 warning = newname + ' is already a project name.'
             else:
                 break
-        
+
         if parent_pdk !='' and not os.path.isdir(parent_path + '/subcells'):
             os.makedirs(parent_path + '/subcells')
-        
+
         try:
             subprocess.Popen([config.apps_path + '/create_project.py', newproject, newpdk]).wait()
-            
+
             # Show subproject in project view
             if parent_pdk != '':
                 self.update_project_views()
-            
+
         except IOError as e:
             print('Error copying files: ' + str(e))
             return None
-            
+
         except:
             print('Error making project.')
             return None
-        
+
         return newname
         '''
         # Find what tools are compatible with the given PDK
@@ -3461,13 +3461,13 @@ class ProjectManager(ttk.Frame):
                 # Pull the project_name into local store (may want to do this with the
                 # datasheet as well)
                 with open(yamlname, 'r') as f:
-                    datatop = yaml.safe_load(f)                
+                    datatop = yaml.safe_load(f)
                     if 'project_name' in datatop['project']:
                         found = True
 
             if not found:
                 pdkdir = self.get_pdk_dir(newproject, path=True)
-                yData = self.create_yaml(oldname, pdkdir)                               
+                yData = self.create_yaml(oldname, pdkdir)
                 with open(newproject + '/info.yaml', 'w') as ofile:
                     print('---',file=ofile)
                     yaml.dump(yData, ofile)
@@ -3496,7 +3496,7 @@ class ProjectManager(ttk.Frame):
 #----------------------------------------------------------------------
     # Allow the user to choose the flow of the project
     #----------------------------------------------------------------------
-    
+
     def startflow(self, value):
         projectpath = value['values'][0]
         flow = ''
@@ -3507,7 +3507,7 @@ class ProjectManager(ttk.Frame):
                 pdirCur = f.read().rstrip()
                 if ('subcells' in pdirCur):
                     # subproject is selected
-                    is_subproject = True      
+                    is_subproject = True
         except:
             pass
         if not os.path.exists(projectpath + '/info.yaml'):
@@ -3516,7 +3516,7 @@ class ProjectManager(ttk.Frame):
             with open(projectpath + '/info.yaml', 'w') as ofile:
                 print('---',file=ofile)
                 yaml.dump(data, ofile)
-        
+
         # Read yaml file for the selected flow
         with open(projectpath + '/info.yaml','r') as f:
             data = yaml.safe_load(f)
@@ -3538,11 +3538,11 @@ class ProjectManager(ttk.Frame):
                     yaml.dump(data, ofile)
             else:
                 flow = project['flow']
-        
+
         print("Starting "+flow+" flow...")
         if flow.lower() == 'digital':
             self.synthesize()
-        
+
  #----------------------------------------------------------------------
     # Change a project IP to a different name.
     #----------------------------------------------------------------------
@@ -3570,8 +3570,8 @@ class ProjectManager(ttk.Frame):
             # Pull the ipname into local store (may want to do this with the
             # datasheet as well)
             with open(yamlname, 'r') as f:
-                datatop = yaml.safe_load(f)   
-                project_data = datatop['project']          
+                datatop = yaml.safe_load(f)
+                project_data = datatop['project']
                 if 'project_name' in project_data:
                     oldname = project_data['project_name']
 
@@ -3616,13 +3616,13 @@ class ProjectManager(ttk.Frame):
 #----------------------------------------------------------------------
     # Import a project or subproject to the project manager
     #----------------------------------------------------------------------
-    
+
     def importproject(self, value):
         warning = "Import project:"
         badrex1 = re.compile("^\.")
         badrex2 = re.compile(".*[/ \t\n\\\><\*\?].*")
         print(warning)
-        
+
         # Find out whether the user wants to import a subproject or project based on what they selected in the treeview
         parent_pdk = ''
         parent_path = ''
@@ -3643,10 +3643,10 @@ class ProjectManager(ttk.Frame):
                     (foundry, foundry_name, node, desc, status) = self.pdkdir2fnd( parent_pdkdir )
                     parent_pdk = foundry + '/' + node
                     warning = 'Import a subproject to '+ parent_path + ':'
-                
+
         except:
             pass
-        
+
         while True:
             try:
                 newname, project_pdkdir, projectpath, importoption = ImportDialog(self, warning, seed='', parent_pdk = parent_pdk, parent_path = parent_path, project_dir = self.projectdir).result
@@ -3655,13 +3655,13 @@ class ProjectManager(ttk.Frame):
                 return None
             if not newname:
                 return None	# Canceled, no action.
-            
+
             if parent_pdk == '':
                 newproject = self.projectdir + '/' + newname
             else:
                 newproject = parent_path + '/subcells/' + newname
             break
-        
+
         def make_techdirs(projectpath, project_pdkdir):
             # Recursively create techdirs in project and subproject folders
             if not (os.path.exists(projectpath + '/.config') or os.path.exists(projectpath + '/.ef-config')):
@@ -3672,9 +3672,9 @@ class ProjectManager(ttk.Frame):
                 for subproject in os.listdir(projectpath + '/subcells'):
                     subproject_path = projectpath + '/subcells/' + subproject
                     make_techdirs(subproject_path, project_pdkdir)
-                    
+
         make_techdirs(projectpath, project_pdkdir)
-        
+
         # Make symbolic link/copy projects
         if parent_path=='':
             # Create a regular project
@@ -3683,7 +3683,7 @@ class ProjectManager(ttk.Frame):
             else:
                 shutil.copytree(projectpath, self.projectdir + '/' + newname, symlinks = True)
             if not os.path.exists(projectpath + '/info.yaml'):
-                yData = self.create_yaml(newname, project_pdkdir)                             
+                yData = self.create_yaml(newname, project_pdkdir)
                 with open(projectpath + '/info.yaml', 'w') as ofile:
                     print('---',file=ofile)
                     yaml.dump(yData, ofile)
@@ -3698,11 +3698,11 @@ class ProjectManager(ttk.Frame):
             else:
                 os.symlink(projectpath, parent_path + '/subcells/' + newname)
             if not os.path.exists(parent_path + '/subcells/' + newname + '/info.yaml'):
-                yData = self.create_yaml(newname, project_pdkdir)                             
+                yData = self.create_yaml(newname, project_pdkdir)
                 with open(parent_path + '/subcells/' + newname + '/info.yaml', 'w') as ofile:
                     print('---',file=ofile)
                     yaml.dump(yData, ofile)
-            self.update_project_views() 
+            self.update_project_views()
         #----------------------------------------------------------------------
     # "Import As" a dir in import/ as a project. based on renameproject().
     # addWarn is used to augment confirm-dialogue if redirected here via erroneous ImportInto
@@ -3765,7 +3765,7 @@ class ProjectManager(ttk.Frame):
         # Check for valid datasheet name in the following order:
         # (1) project.json (Legacy)
         # (2) <name of directory>.json (Legacy)
-        # (3) not "datasheet.json" or "datasheet_anno.json" 
+        # (3) not "datasheet.json" or "datasheet_anno.json"
         # (4) "datasheet.json"
         # (5) "datasheet_anno.json"
 
@@ -3986,14 +3986,14 @@ class ProjectManager(ttk.Frame):
         if not choices:
             print( "Aborted: No existing electric libraries found to write symbol into.")
             return 0
-                
+
         elecLib = newname + '/elec/' + elecLib + '.delib'
         elecLib = project2pfd[newname]["libEntry"] or elecLib
         cellname = project2pfd[newname]["cellName"] or "padframe"
         libAndCell = ExistingElecLibCellDialog(self, None, title="PadFrame Settings", plist=choices, descPost="of icon&layout", seedLibNm=elecLib, seedCellNm=cellname).result
         if not libAndCell:
             return 0		# Canceled in dialog, no action.
-            
+
         (elecLib, cellname) = libAndCell
         if not cellname:
             return 0		# empty cellname, no action.
@@ -4020,17 +4020,17 @@ class ProjectManager(ttk.Frame):
         value = self.projectselect.selected()
         if value:
             design = value['values'][0]
-            
+
             pdktechdir = design + self.config_path(design)+'/techdir/libs.tech'
-            
+
             applist = self.list_valid_schematic_editors(pdktechdir)
 
             if len(applist)==0:
                 print("Unable to find a valid schematic editor.")
                 return
-                
+
             # If the preferred app is in the list, then use it.
-            
+
             if self.prefs['schemeditor'] in applist:
                 appused = self.prefs['schemeditor']
             else:
@@ -4133,7 +4133,7 @@ class ProjectManager(ttk.Frame):
                                 libs.append(design + '/elec/' + delibdir)
                                 finalInDesDirLibAdded = True
                                 break
-            
+
             # Above project-local lib-adds are all conditional on finding some lib
             # with an expected name or content: all of which may fail.
             # Force last item ALWAYS to be 'a path' in the project's elec/ dir.
@@ -4213,10 +4213,10 @@ class ProjectManager(ttk.Frame):
             designname = self.project_name
             print('Edit schematic ' + designname + ' (' + design + ' )')
             xschemdirpath = design + '/xschem'
-            
+
             pdkdir = design + self.config_path(design) + '/techdir/libs.tech/xschem'
 
-            
+
             # /xschem directory is a prerequisite for running xschem.  If it doesn't
             # exist, create it and seed it with xschemrc from the tech directory
             if not os.path.exists(xschemdirpath):
@@ -4230,7 +4230,7 @@ class ProjectManager(ttk.Frame):
 
             # Command line argument is the project name.  The "-r" option is recommended if there
             # is no stdin/stdout piping.
-            
+
             arguments = ['-r', design + '/xschem/' + designname]
             subprocess.Popen(['xschem', *arguments])
         else:
@@ -4245,7 +4245,7 @@ class ProjectManager(ttk.Frame):
         if value:
             design = value['values'][0]
             pdktechdir = design + self.config_path(design) + '/techdir/libs.tech'
-            
+
             applist = self.list_valid_layout_editors(pdktechdir)
 
             if len(applist)==0:
@@ -4280,17 +4280,17 @@ class ProjectManager(ttk.Frame):
             design = value['values'][0]
             # designname = value['text']
             designname = self.project_name
-            
+
             pdkdir = ''
             pdkname = ''
-            
+
             if os.path.exists(design + '/.ef-config/techdir/libs.tech'):
                 pdkdir = design + '/.ef-config/techdir/libs.tech/magic/current'
                 pdkname = os.path.split(os.path.realpath(design + '/.ef-config/techdir'))[1]
             elif os.path.exists(design + '/.config/techdir/libs.tech'):
                 pdkdir = design + '/.config/techdir/libs.tech/magic'
                 pdkname = os.path.split(os.path.realpath(design + '/.config/techdir'))[1]
-            
+
 
             # Check if the project has a /mag directory.  Create it and
             # put the correct .magicrc file in it, if it doesn't.
@@ -4465,20 +4465,20 @@ class ProjectManager(ttk.Frame):
         # Pick up the PDK from "values", use it to find the PDK folder, determine
         # if it has a "magic" subfolder, and enable/disable the "Edit Layout"
         # button accordingly
-        
+
         svalues = selection['values']
         #print("svalues :"+str(svalues))
         pdkitems = svalues[1].split()
         pdkdir = ''
-        
+
         ef_style=False
-        
+
         if os.path.exists(svalues[0] + '/.config'):
             pdkdir = svalues[0] + '/.config/techdir'
         elif os.path.exists(svalues[0] + '/.ef-config'):
             pdkdir = svalues[0] + '/.ef-config/techdir'
             ef_style=True
-        
+
         if pdkdir == '':
             print('No pdkname found; layout editing disabled')
             self.toppane.appbar.layout_button.config(state='disabled')
@@ -4490,8 +4490,8 @@ class ProjectManager(ttk.Frame):
                     subf = os.listdir(pdkdir + '/libs.tech/magic')
             except:
                 print('PDK ' + pdkname + ' has no layout setup; layout editing disabled')
-                self.toppane.appbar.layout_button.config(state='disabled') 
-        
+                self.toppane.appbar.layout_button.config(state='disabled')
+
         # If the selected project directory has a JSON file and netlists in the "spi"
         # and "testbench" folders, then enable the "Characterize" button;  else disable
         # it.
@@ -4502,7 +4502,7 @@ class ProjectManager(ttk.Frame):
         found = False
         ppath = selection['values'][0]
         yamlname = ppath + '/info.yaml'
-        
+
         if os.path.isfile(yamlname):
             # Pull the project_name into local store
             with open(yamlname, 'r') as f:

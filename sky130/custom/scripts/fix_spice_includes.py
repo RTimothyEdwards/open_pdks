@@ -5,7 +5,7 @@
 #
 # This script patches the "all.spice" file to add include statements
 # for several devices that got left out (namely the PNP and NPN
-# devices). 
+# devices).
 #--------------------------------------------------------------------
 
 import os

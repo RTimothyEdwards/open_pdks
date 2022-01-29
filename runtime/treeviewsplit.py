@@ -34,10 +34,10 @@ class TreeViewSplit(ttk.Frame):
         self.item1list = item1list[:]
         self.item2list = item2list[:]
         columns = [0, 1]
-        
+
         treeFrame = ttk.Frame(self)
         treeFrame.pack(side='top', padx=5, pady=5, fill='both', expand='true')
-        
+
         scrollBar = ttk.Scrollbar(treeFrame)
         scrollBar.pack(side='right', fill='y')
         self.treeView = ttk.Treeview(treeFrame, selectmode='browse', columns=columns, height=height)
@@ -202,7 +202,7 @@ class TreeViewSplit(ttk.Frame):
                                     item2 = 'Group ' + str(groupnum)
                                     if groupnum > 1:
                                         nested = nested[0:-1]
-                                    groupnum += 1 
+                                    groupnum += 1
                                     nextnest = index
                                     watchgroup = False
                                 else:
@@ -223,7 +223,7 @@ class TreeViewSplit(ttk.Frame):
             lmatch2 = matchrex.match(item2)
             if lmatch1 or lmatch2:
                 tagstyle='error'
-            
+
             # print("Create item ID " + str(index) + " parent = " + str(nested[-1]))
             self.treeView.insert(nested[-1], 'end', text=index, iid=index, value=[item1, item2],
 			tags=[tagstyle])

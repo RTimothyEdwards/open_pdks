@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
     # If next-to-last argument is a valid path, then the last argument should
     # be the path to GDS out.  Otherwise, overwrite the source file.
-    
+
     if os.path.isfile(arguments[-2]):
         dest = arguments[-1]
         source = arguments[-2]
@@ -133,7 +133,7 @@ if __name__ == '__main__':
                             else:
                                 repstring += b'\x00'
                                 newlen += 1
-                            
+
                         bnewlen = newlen.to_bytes(2, byteorder='big')
                         brectype = rectype.to_bytes(1, byteorder='big')
                         bdatatype = datatype.to_bytes(1, byteorder='big')
@@ -146,7 +146,7 @@ if __name__ == '__main__':
                         datalen += (newlen - reclen)
 
                         if debug > 0:
-                            print('Replaced ' + str(bstring) + ' with ' + str(repstring)) 
+                            print('Replaced ' + str(bstring) + ' with ' + str(repstring))
             else:
                 if debug > 1:
                     idx = recordfilter.index(rectype)
