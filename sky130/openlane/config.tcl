@@ -82,9 +82,9 @@ set ::env(MAGIC_TECH_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/TECHNAM
 #endif (!EF_FORMAT)
 
 # Klayout setup
-set ::env(KLAYOUT_TECH) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/$::env(PDK).lyt"
-set ::env(KLAYOUT_PROPERTIES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/$::env(PDK).lyp"
-set ::env(KLAYOUT_DRC_TECH_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/$::env(PDK)_mr.drc"
+set ::env(KLAYOUT_TECH) "$::env(PDK_ROOT)/open_pdks/sky130/klayout/$::env(PDK).lyt"
+set ::env(KLAYOUT_PROPERTIES) "$::env(PDK_ROOT)/open_pdks/sky130/klayout/$::env(PDK).lyp"
+set ::env(KLAYOUT_DRC_TECH_SCRIPT) "$::env(PDK_ROOT)/open_pdks/sky130/klayout/$::env(PDK)_mr.drc"
 #set ::env(KLAYOUT_DRC_TECH) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/$::env(PDK).lydrc"
 
 # netgen setup
