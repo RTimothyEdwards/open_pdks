@@ -92,6 +92,7 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=Fals
             print('# Script to generate .gds library from files   ', file=ofile)
             print('#--------------------------------------------', file=ofile)
             print('drc off', file=ofile)
+            print('locking off', file=ofile)
             print('gds readonly true', file=ofile)
             print('gds flatten true', file=ofile)
             print('gds rescale false', file=ofile)

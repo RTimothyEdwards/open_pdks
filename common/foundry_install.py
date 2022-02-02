@@ -1430,6 +1430,7 @@ if __name__ == '__main__':
                     print('#--------------------------------------------', file=ofile)
                     print('crashbackups stop', file=ofile)
                     print('drc off', file=ofile)
+                    print('locking off', file=ofile)
                     if do_timestamp and have_mag_8_3_261:
                         print('gds datestamp ' + str(timestamp_value), file=ofile)
                     print('gds readonly true', file=ofile)
@@ -2167,6 +2168,7 @@ if __name__ == '__main__':
                 print('# Script to generate SPICE library from GDS   ', file=ofile)
                 print('#---------------------------------------------', file=ofile)
                 print('drc off', file=ofile)
+                print('locking off', file=ofile)
                 print('gds readonly true', file=ofile)
                 print('gds flatten true', file=ofile)
                 print('gds rescale false', file=ofile)
