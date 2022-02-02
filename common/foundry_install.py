@@ -184,6 +184,7 @@ from create_spice_library import create_spice_library
 from create_lef_library import create_lef_library
 from create_lib_library import create_lib_library
 from create_verilog_library import create_verilog_library
+from sort_pdkfiles import natural_sort
 
 def usage():
     print("foundry_install.py [options...]")
@@ -895,6 +896,7 @@ if __name__ == '__main__':
 
             testpath = substitute(sourcedir + '/' + option[1], library[1])
             liblist = glob.glob(testpath)
+            liblist = natural_sort(liblist)
 
             # Create a file "sources.txt" (or append to it if it exists)
             # and add the source directory name so that the staging install
@@ -1924,6 +1926,7 @@ if __name__ == '__main__':
                         # in it.
                         try:
                             cdlfiles = glob.glob(cdllibdir + '/*.cdl')
+                            cdlfiles = natural_sort(cdlfiles)
                         except:
                             pass
                     if len(cdlfiles) > 0:
@@ -2150,10 +2153,12 @@ if __name__ == '__main__':
                 glist = glob.glob(srclibdir + '/*.gds')
                 glist.extend(glob.glob(srclibdir + '/*.gdsii'))
                 glist.extend(glob.glob(srclibdir + '/*.gds2'))
+                glist = natural_sort(glist)
 
             allleflibname = leflibdir + '/' + destlib + '.lef'
             if not os.path.isfile(allleflibname):
                 llist = glob.glob(leflibdir + '/*.lef')
+                llist = natural_sort(llist)
 
             print('Creating magic generation script to generate SPICE library.') 
             with open(destlibdir + '/generate_magic.tcl', 'w') as ofile:
