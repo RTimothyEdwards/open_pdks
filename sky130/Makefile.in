@@ -816,28 +816,33 @@ xcircuit-%: xcircuit/${TECH}.xcircuitrc
 
 
 xschem-%: ${XSCHEM_PATH}
-	rm -rf ${XSCHEM_STAGING_$*}
-	mkdir -p ${XSCHEMTOP_STAGING_$*}
-	mkdir -p ${XSCHEM_STAGING_$*}
+	if test "x${XSCHEM_PATH}" != "x" ; then \
+		rm -rf ${XSCHEM_STAGING_$*} ; \
+		mkdir -p ${XSCHEMTOP_STAGING_$*} ; \
+		mkdir -p ${XSCHEM_STAGING_$*} ; \
+	fi
 	# Copy the entire repository (other than .git, if it exists)
 	if test "x${XSCHEM_PATH}" != "x" ; then \
-	    cp -rp ${XSCHEM_PATH}/* ${XSCHEM_STAGING_$*} ; \
+		cp -rp ${XSCHEM_PATH}/* ${XSCHEM_STAGING_$*} ; \
 	fi
-	
+
 	#add the correct libraries into the test files
-	for file in ${XSCHEM_STAGING_$*}/sky130_tests/* ; do \
-		${SED} -i '/.include $$\:\:SKYWATER_MODELS/d' $$file ; \
-		grep -zl 'sky130.lib.spice' $$file || ${SED} -z 's|format="tcleval( @value )"\nvalue="|format="tcleval( @value )"\nvalue="\n.lib $$\:\:SKYWATER_MODELS/sky130.lib.spice tt |' -i $$file ; \
-	done
-	
+	if test "x${XSCHEM_PATH}" != "x" ; then \
+		for file in ${XSCHEM_STAGING_$*}/sky130_tests/* ; do \
+			${SED} -i '/.include $$\:\:SKYWATER_MODELS/d' $$file ; \
+			grep -zl 'sky130.lib.spice' $$file || ${SED} -z 's|format="tcleval( @value )"\nvalue="|format="tcleval( @value )"\nvalue="\n.lib $$\:\:SKYWATER_MODELS/sky130.lib.spice tt |' -i $$file ; \
+		done ; \
+	fi
 	# Re-copy the xschemrc, with one change to add the PDK install path as
 	# a component of XSCHEM_LIBRARY_PATH
-	cat ${XSCHEM_PATH}/xschemrc | \
-		${SED} -e "/PWD/aappend XSCHEM_LIBRARY_PATH :${XSCHEM_STAGING_$*}" | \
-		${SED} -e '/netlist_dir/aset netlist_dir $$env(PWD)' | \
-		${SED} -e "/SKYWATER_MODELS/s#~/pdks/sky130$*/libs.tech/ngspice#${NGSPICE_STAGING_$*}#" | \
-		${SED} -e "/SKYWATER_STDCELLS/s#~/pdks/sky130$*/libs.ref/sky130_fd_sc_hd/spice#${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_SPICE}#" \
-		> ${XSCHEM_STAGING_$*}/xschemrc
+	if test "x${XSCHEM_PATH}" != "x" ; then \
+		cat ${XSCHEM_PATH}/xschemrc | \
+			${SED} -e "/PWD/aappend XSCHEM_LIBRARY_PATH :${XSCHEM_STAGING_$*}" | \
+			${SED} -e '/netlist_dir/aset netlist_dir $$env(PWD)' | \
+			${SED} -e "/SKYWATER_MODELS/s#~/pdks/sky130$*/libs.tech/ngspice#${NGSPICE_STAGING_$*}#" | \
+			${SED} -e "/SKYWATER_STDCELLS/s#~/pdks/sky130$*/libs.ref/sky130_fd_sc_hd/spice#${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_SPICE}#" \
+			> ${XSCHEM_STAGING_$*}/xschemrc ; \
+	fi
 
 openlane-%: openlane/config.tcl openlane/rcx_rules.info openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_$*}
