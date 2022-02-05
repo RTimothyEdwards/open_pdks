@@ -139,6 +139,7 @@ export SHELL
 SHELLOPTS := pipefail
 export SHELLOPTS
 MV = mv
+PATCH = patch
 SED = @SED@
 
 prefix = @prefix@
@@ -1009,21 +1010,18 @@ primitive-%:
 	cat ./custom/models/resistor.spice >> \
 		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice
 
-	# Custom:  Patch the models to work around ngspice issue with the relative
-	# order of the "nf" and "mult" parameters.
-	patch -p4 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE} \
-		< custom/patches/sky130_fd_pr.patch \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	patch -p1 -f -d ${STAGING_PATH}/${SKY130$*} \
+	# Custom:  Patch the r+c.mrp1monte.spice file to make the generic poly
+	# resistor a type "R" device.
+	${PATCH} -p1 -f -d ${STAGING_PATH}/${SKY130$*} \
 		< custom/patches/sky130_fd_pr_2.patch \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Custom:  Patch the models to remove the substrate pin from the PNP
 	# device, which has no independent substrate pin (collector=substrate)
-	patch -p4 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE} \
+	${PATCH} -p4 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE} \
 		< custom/patches/sky130_fd_pr_3.patch \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Custom:  Patch the ngspice models to add the HV diffusion resistor subcircuits
-	patch -p2 -f -d ${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice \
+	${PATCH} -p2 -f -d ${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice \
 		< custom/patches/sky130_fd_pr_5.patch \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Fix up the PNP model file before running the next modification
@@ -1167,10 +1165,10 @@ digital-hd-%:
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_VERILOG}/*.*.v
 	# Apply extra PDK patches until they get fixed properly in the source
-	patch -p1 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_TECHLEF} \
+	${PATCH} -p1 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_TECHLEF} \
 		< custom/patches/hd_minenclosed.squeaky.patch \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
-	patch -p1 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_VERILOG} \
+	${PATCH} -p1 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_VERILOG} \
 		< custom/patches/hd_wire_syntax.patch \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 
@@ -1204,7 +1202,7 @@ digital-hdll-%:
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HDLL_VERILOG}/*.*.v
 	# Apply extra PDK patches until they get fixed properly in the source
-	patch -p1 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HDLL_TECHLEF} \
+	${PATCH} -p1 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HDLL_TECHLEF} \
 		< custom/patches/hdll_minenclosed.squeaky.patch \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 
@@ -1248,10 +1246,10 @@ digital-hvl-%:
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HVL_VERILOG}/*.*.v
 	# Custom:  Patch the HVL library to correct the resistor device names
-	patch -p3 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HVL_SPICE} \
+	${PATCH} -p3 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HVL_SPICE} \
 		< custom/patches/sky130_fd_pr_${HVL_PATCH4}.patch \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
-	patch -p3 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HVL_CDL} \
+	${PATCH} -p3 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HVL_CDL} \
 		< custom/patches/sky130_fd_pr_6.patch \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 
