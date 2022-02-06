@@ -84,7 +84,9 @@ print('')
 for infile_name in filelist:
 
     filepath = os.path.split(infile_name)[0]
-    outfile_name = os.path.join(filepath, 'temp')
+    filename = os.path.split(infile_name)[1]
+    fileroot = os.path.splitext(filename)[0]
+    outfile_name = os.path.join(filepath, fileroot + '_temp')
 
     infile = open(infile_name, 'r')
     outfile = open(outfile_name, 'w')
