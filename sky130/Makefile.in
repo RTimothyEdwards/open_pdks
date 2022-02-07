@@ -781,7 +781,7 @@ irsim-%: irsim
 	mkdir -p ${IRSIM_STAGING_$*}
 	rm -f ${IRSIM_STAGING_$*}/${SKY130$*}_*.prm
 	for corner in ${IRSIM_CORNERS} ; do \
-	    cp irsim/sky130A_$$corner.prm \
+	    cat irsim/header.txt irsim/sky130_$$corner.prm > \
 		${IRSIM_STAGING_$*}/${SKY130$*}_$$corner.prm ; \
 	done
 
