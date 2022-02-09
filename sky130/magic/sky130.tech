@@ -5042,16 +5042,15 @@ end
 # Device and Parasitic extraction
 #-----------------------------------------------------
 
-
 extract
- style ngspice variants (),(orig),(si)
+ style ngspice variants (),(orig),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  cscale 1
  # NOTE: SkyWater SPICE libraries use .option scale 1E6 so all
  # dimensions must be in units of microns in the extract file.
  # Use extract style "ngspice(si)" to override this and produce
  # a file with SI units for length/area.
 
- variants (),(orig)
+ variants (),(orig),(hrhc),(lrhc),(hrlc),(lrlc)
  lambda  1E6
  variants (si)
  lambda 1.0
@@ -5187,9 +5186,12 @@ extract
 # Resistances are in milliohms per square
 # Optional 3rd argument is the corner adjustment fraction
 # Device values come from trtc.cor (typical corner)
+
+variants (),(orig),(si)
+
  resist (pwell,isosub)/well     4400000
  resist (dnwell)/dwell          2200000
- resist (nwell)/well            1700000
+ resist (nwell)/well             950000
  resist (rpw)/well              3050000 0.5
  resist (*ndiff,nsd)/active 	 120000
  resist (*pdiff,*psd)/active	 197000
@@ -5207,7 +5209,7 @@ extract
  resist (allpolynonres)/active   48200
  resist rmp/active   		 48200
 
- resist (allli)/locali		 12200
+ resist (allli)/locali		 12800
  resist (allm1)/metal1		   125
  resist (allm2)/metal2		   125
  resist (allm3)/metal3	            47
@@ -5219,19 +5221,17 @@ extract
  resist mrdl/metali		     5
 #endif (REDISTRIBUTION)
 
- # These types should not be considered as electrical nodes
- resist blocktypes	 	 None
- resist obstypes	 	 None
- resist idtypes	 	 	 None
- resist comment	 	 	 None
-
- contact ndc,nsc		 15000
- contact pdc,psc		 15000
- contact mvndc,mvnsc		 15000
- contact mvpdc,mvpsc	  	 15000
- contact pc			 15000
- contact mcon			152000
+ contact ndc,nsc		185000
+ contact pdc,psc		585000
+ contact mvndc,mvnsc		185000
+ contact mvpdc,mvpsc	  	585000
+ contact pc			152000
+ contact mcon			  9300
+#ifdef RERAM
+ contact m2c			  9000
+#else
  contact m2c			  4500
+#endif
  contact m3c			  3410
 #ifdef METAL5
 #ifdef MIM
@@ -5244,6 +5244,134 @@ extract
 #ifdef REDISTRIBUTION
  contact mrdlc			     6
 #endif (REDISTRIBUTION)
+
+variants (hrhc),(hrlc)
+
+ # High-end corner resistances
+ # No corner values available for: substrate, xhrpoly, uhrpoly, RDL
+ resist (pwell,isosub)/well     4400000
+ resist (dnwell)/dwell          2575000
+ resist (nwell)/well            1350000
+ resist (rpw)/well              3535000 0.5
+ resist (*ndiff,nsd)/active 	 132000
+ resist (*pdiff,*psd)/active	 228000
+ resist (*mvndiff,mvnsd)/active  126000
+ resist (*mvpdiff,*mvpsd)/active 228000
+
+ resist ndiffres/active 	132000 0.5
+ resist pdiffres/active 	228000 0.5
+ resist mvndiffres/active 	126000 0.5
+ resist mvpdiffres/active 	228000 0.5
+ resist mrp1/active		 55800 0.5
+ resist xhrpoly/active	        319800 0.5
+ resist uhrpoly/active	       2000000 0.5
+
+ resist (allpolynonres)/active   55800
+ resist rmp/active   		 55800
+
+ resist (allli)/locali		 17000
+ resist (allm1)/metal1		   145
+ resist (allm2)/metal2		   145
+ resist (allm3)/metal3	            56
+#ifdef METAL5
+ resist (allm4)/metal4  	    56
+ resist (allm5)/metal5  	    36
+#endif (METAL5)
+#ifdef REDISTRIBUTION
+ resist mrdl/metali		     5
+#endif (REDISTRIBUTION)
+
+ contact ndc,nsc		280000
+ contact pdc,psc		840000
+ contact mvndc,mvnsc		280000
+ contact mvpdc,mvpsc	  	840000
+ contact pc			252000
+ contact mcon			 23000
+#ifdef RERAM
+ contact m2c			 30000
+#else
+ contact m2c			 15000
+#endif
+ contact m3c			  8000
+#ifdef METAL5
+#ifdef MIM
+ contact mimcc			 15000
+ contact mim2cc			  8000
+#endif (MIM)
+ contact via3			  8000
+ contact via4			   891
+#endif (METAL5)
+#ifdef REDISTRIBUTION
+ contact mrdlc			     6
+#endif (REDISTRIBUTION)
+
+variants (lrhc),(lrlc)
+
+ # Low-end corner resistances
+ # No corner values available for: substrate, xhrpoly, uhrpoly, RDL
+ resist (pwell,isosub)/well     4400000
+ resist (dnwell)/dwell          1825000
+ resist (nwell)/well             550000
+ resist (rpw)/well              2565000 0.5
+ resist (*ndiff,nsd)/active 	 108000
+ resist (*pdiff,*psd)/active	 166000
+ resist (*mvndiff,mvnsd)/active  102000
+ resist (*mvpdiff,*mvpsd)/active 160000
+
+ resist ndiffres/active 	108000 0.5
+ resist pdiffres/active 	166000 0.5
+ resist mvndiffres/active 	102000 0.5
+ resist mvpdiffres/active 	160000 0.5
+ resist mrp1/active		 42200 0.5
+ resist xhrpoly/active	        319800 0.5
+ resist uhrpoly/active	       2000000 0.5
+
+ resist (allpolynonres)/active   42200
+ resist rmp/active   		 42200
+
+ resist (allli)/locali		 10500
+ resist (allm1)/metal1		   105
+ resist (allm2)/metal2		   105
+ resist (allm3)/metal3	            38
+#ifdef METAL5
+ resist (allm4)/metal4  	    38
+ resist (allm5)/metal5  	    21
+#endif (METAL5)
+#ifdef REDISTRIBUTION
+ resist mrdl/metali		     5
+#endif (REDISTRIBUTION)
+
+ contact ndc,nsc		 95000
+ contact pdc,psc		345000
+ contact mvndc,mvnsc		 95000
+ contact mvpdc,mvpsc	  	345000
+ contact pc			 52000
+ contact mcon			  1600
+#ifdef RERAM
+ contact m2c			  4000
+#else
+ contact m2c			  2000
+#endif
+ contact m3c			   500
+#ifdef METAL5
+#ifdef MIM
+ contact mimcc			  2000
+ contact mim2cc			   500
+#endif (MIM)
+ contact via3			   500
+ contact via4			    12
+#endif (METAL5)
+#ifdef REDISTRIBUTION
+ contact mrdlc			     6
+#endif (REDISTRIBUTION)
+
+variants *
+
+ # These types should not be considered as electrical nodes
+ resist blocktypes	 	 None
+ resist obstypes	 	 None
+ resist idtypes	 	 	 None
+ resist comment	 	 	 None
 
 #-------------------------------------------------------------------------
 # Parasitic capacitance values:  Use document (...)
@@ -5265,6 +5393,9 @@ extract
 # they just create floating caps.  Technically, the capacitance probably
 # should be split between the two terminals.  Unsure of the correct model.
 #-------------------------------------------------------------------------
+
+variants (),(orig),(si),(hrhc),(lrhc),(hrlc),(lrlc)
+# Nominal capacitances
 
 #deep n-well
 defaultareacap     dnwell dwell 120
@@ -5604,12 +5735,14 @@ defaultoverlap     nwell well isosub dwell  120
  defaultsideoverlap allm4 metal4 allm5 metal5 47
 #endif (METAL5)
 
+variants *
+
 #ifdef REDISTRIBUTION
 #endif (REDISTRIBUTION)
 
 # Devices:  Base models (not subcircuit wrappers)
 
-variants (),(si)
+variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
 
  device msubcircuit sky130_fd_pr__pfet_01v8 pfet,scpfet \
 	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w \
