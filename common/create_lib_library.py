@@ -13,7 +13,7 @@ import sys
 import os
 import glob
 import fnmatch
-from sort_pdkfiles import natural_sort
+import natural_sort
 
 #----------------------------------------------------------------------------
 
@@ -61,7 +61,7 @@ def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[
                 llist.append(destlibdir + '/' + rfile)
     else:
         llist = glob.glob(destlibdir + '/*.lib')
-        llist = natural_sort(llist)
+        llist = natural_sort.natural_sort(llist)
 
     # Create exclude list with glob-style matching using fnmatch
     if len(llist) > 0:

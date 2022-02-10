@@ -914,7 +914,11 @@ openlane-%: openlane/config.tcl openlane/rcx_rules.info openlane/sky130_fd_sc_hd
 	${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_osu_sc_t18/tracks.info \
 		${OPENLANE_STAGING_$*}/sky130_osu_sc_t18/tracks.info
 
-vendor-%:
+vendor-A: primitive-build-A io-build-A sram-build-A digital-hd-build-A digital-hvl-build-A digital-hdll-build-A digital-lp-build-A digital-hs-build-A digital-ms-build-A digital-ls-build-A alpha-build-A osu-t12-build-A osu-t15-build-A osu-t18-build-A
+
+vendor-B: primitive-build-B io-build-B sram-build-B digital-hd-build-B digital-hvl-build-B digital-hdll-build-B digital-lp-build-B digital-hs-build-B digital-ms-build-B digital-ls-build-B alpha-build-B osu-t12-build-B osu-t15-build-B osu-t18-build-B
+
+primitive-build-%:
 	# Build targets conditionally based on what repositories or submodules
 	# were selected or initialized.  To be done:  Allow a library version
 	# to be specified that overrides "latest".
@@ -922,10 +926,14 @@ vendor-%:
 		echo "Building primitives library and simulation models" ;\
 		make primitive-$*;\
 	fi
+
+io-build-%:
 	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells ; then \
 		echo "Building padframe I/O libraries" ;\
 		make io-$* ;\
 	fi
+
+digital-hd-build-%:
 	# This assumes that at least the HD library submodule exists.  Also it
 	# assumes that the same library version is used for all libraries, which
 	# is fine with "latest" but otherwise probably invalid.
@@ -933,46 +941,68 @@ vendor-%:
 		echo "Building digital high-density standard cell library" ;\
 		make digital-hd-$* ;\
 	fi
+
+digital-hvl-build-%:
 	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_hvl/latest/cells ; then \
 		echo "Building digital high-voltage standard cell library" ;\
 		make digital-hvl-$* ;\
 	fi
+
+digital-hdll-build-%:
 	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_hdll/latest/cells ; then \
 		echo "Building digital high-density low-leakage standard cell library" ;\
 		make digital-hdll-$* ;\
 	fi
+
+digital-lp-build-%:
 	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_lp/latest/cells ; then \
 		echo "Building digital low-power standard cell library" ;\
 		make digital-lp-$* ;\
 	fi
+
+digital-hs-build-%:
 	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_hs/latest/cells ; then \
 		echo "Building digital high-speed standard cell library" ;\
 		make digital-hs-$* ;\
 	fi
+
+digital-ms-build-%:
 	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_ms/latest/cells ; then \
 		echo "Building digital medium-speed standard cell library" ;\
 		make digital-ms-$* ;\
 	fi
+
+digital-ls-build-%:
 	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_ls/latest/cells ; then \
 		echo "Building digital low-speed standard cell library" ;\
 		make digital-ls-$* ;\
 	fi
+
+alpha-build-%:
 	if test "x${ALPHA_PATH}" != "x" ; then \
 		echo "Building alphanumeric layout libraries" ;\
 		make alpha-$* ;\
 	fi
+
+sram-build-%:
 	if test "x${SRAM_PATH}" != "x" ; then \
 		echo "Building SRAM macro library" ;\
 		make sram-$* ;\
 	fi
+
+osu-t12-build-%:
 	if test "x${OSU_T12_PATH}" != "x" ; then \
 		echo "Building OSU 12-track-high standard cell library" ;\
 		make osu-t12-$* ;\
 	fi
+
+osu-t15-build-%:
 	if test "x${OSU_T15_PATH}" != "x" ; then \
 		echo "Building OSU 15-track-high standard cell library" ;\
 		make osu-t15-$* ;\
 	fi
+
+osu-t18-build-%:
 	if test "x${OSU_T18_PATH}" != "x" ; then \
 		echo "Building OSU 18-track-high standard cell library" ;\
 		make osu-t18-$* ;\

@@ -85,9 +85,9 @@ datarootdir = @datarootdir@
 datadir = @datadir@
 
 # NOTE:  All scripts used by the project and design flow management
-# system are in the "runtime" directory, except for cdl2spi.py, which
-# is the one file used by scripts in both the common/ and runtime/
-# directories.
+# system are in the "runtime" directory, except for cdl2spi.py and
+# natural_sort.py, which are the two files used by scripts in both the
+# common/ and runtime/ directories.
 
 common_install:
 	@if test -w $(datadir) ; then \
@@ -103,6 +103,7 @@ common_install:
 		done ;\
 		mv $(datadir)/pdk/runtime/* $(datadir)/pdk/scripts ;\
 		${CPP} -DPREFIX=$(datadir) common/cdl2spi.py $(datadir)/pdk/scripts/cdl2spi.py ;\
+		${CPP} -DPREFIX=$(datadir) common/natural_sort.py $(datadir)/pdk/scripts/natural_sort.py ;\
 		rm -r -f $(datadir)/pdk/runtime ;\
 		echo "Common install:  Done." ;\
 	else \

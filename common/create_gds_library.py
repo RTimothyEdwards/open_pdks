@@ -14,7 +14,7 @@ import sys
 import glob
 import fnmatch
 import subprocess
-from sort_pdkfiles import natural_sort
+import natural_sort
 
 #----------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=Fals
         glist = glob.glob(destlibdir + '/*.gds')
         glist.extend(glob.glob(destlibdir + '/*.gdsii'))
         glist.extend(glob.glob(destlibdir + '/*.gds2'))
-        glist = natural_sort(glist)
+        glist = natural_sort.natural_sort(glist)
 
     if alllibname in glist:
         glist.remove(alllibname)

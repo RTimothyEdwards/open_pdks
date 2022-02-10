@@ -14,7 +14,7 @@ import os
 import re
 import glob
 import fnmatch
-from sort_pdkfiles import natural_sort
+import natural_sort
 
 #----------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=F
                 vlist.append(destlibdir + '/' + rfile)
     else:
         vlist = glob.glob(destlibdir + '/*.v')
-        vlist = natural_sort(vlist)
+        vlist = natural_sort.natural_sort(vlist)
 
     if alllibname in vlist:
         vlist.remove(alllibname)
