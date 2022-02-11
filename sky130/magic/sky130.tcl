@@ -10,7 +10,7 @@
 #-----------------------------------------------------
 
 if {[catch {set TECHPATH $env(PDK_ROOT)}]} {
-    set TECHPATH "STAGING_PATH"
+    set TECHPATH STAGING_PATH
 }
 if [catch {set PDKPATH}] {set PDKPATH ${TECHPATH}/TECHNAME}
 set PDKNAME TECHNAME

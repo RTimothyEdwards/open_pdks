@@ -1,6 +1,8 @@
 set XCOps(liboverride) 1
-set PDK_ROOT STAGING_PATH
 global PDK_ROOT
+if {[catch {set PDK_ROOT $env(PDK_ROOT)}]} {
+    set PDK_ROOT STAGING_PATH
+}
 config search libraries .:$PDK_ROOT/TECHNAME/libs.tech/xcircuit:$XCIRCUIT_LIB_DIR
 library make generic
 library 1 load generic

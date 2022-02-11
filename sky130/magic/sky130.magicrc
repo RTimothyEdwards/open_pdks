@@ -24,7 +24,7 @@ ext2spice scale off
 
 # Allow override of PDK path from environment variable PDK_ROOT
 if {[catch {set PDK_ROOT $env(PDK_ROOT)}]} {
-    set PDK_ROOT "STAGING_PATH"
+    set PDK_ROOT STAGING_PATH
 }
 
 # loading technology
