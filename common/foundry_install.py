@@ -228,7 +228,10 @@ def usage():
 #   %l :  substitute the library name
 #   %% :  substitute the percent character verbatim
 
-from distutils.version import LooseVersion
+try:
+    from setuptools.distutils.version import LooseVersion
+except:
+    from distutils.version import LooseVersion
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
