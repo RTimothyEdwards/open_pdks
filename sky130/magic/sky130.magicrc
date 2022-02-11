@@ -22,23 +22,23 @@ catch {random seed}
 # scale in the model files.
 ext2spice scale off
 
-# Allow override of PDK path from environment variable PDKPATH
-if {[catch {set PDKPATH $env(PDKPATH)}]} {
-    set PDKPATH "STAGING_PATH/TECHNAME"
+# Allow override of PDK path from environment variable PDK_ROOT
+if {[catch {set PDK_ROOT $env(PDK_ROOT)}]} {
+    set PDK_ROOT "STAGING_PATH"
 }
 
 # loading technology
 #ifdef FULLTECH
-tech load $PDKPATH/MAGIC_CURRENT/TECHNAME-F.tech
+tech load $PDK_ROOT/TECHNAME/MAGIC_CURRENT/TECHNAME-F.tech
 #else
-tech load $PDKPATH/MAGIC_CURRENT/TECHNAME.tech
+tech load $PDK_ROOT/TECHNAME/MAGIC_CURRENT/TECHNAME.tech
 #endif
 
 # load device generator
-source $PDKPATH/MAGIC_CURRENT/TECHNAME.tcl
+source $PDK_ROOT/TECHNAME/MAGIC_CURRENT/TECHNAME.tcl
 
 # load bind keys (optional)
-# source $PDKPATH/MAGIC_CURRENT/TECHNAME-BindKeys
+# source $PDK_ROOT/TECHNAME/MAGIC_CURRENT/TECHNAME-BindKeys
 
 # set units to lambda grid 
 snap lambda
@@ -56,66 +56,66 @@ if {[catch {set MAGTYPE $env(MAGTYPE)}]} {
 }
 
 # add path to reference cells
-if {[file isdir ${PDKPATH}/libs.ref/${MAGTYPE}]} {
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_pr
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_io
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_hd
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_hdll
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_hs
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_hvl
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_lp
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_ls
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_fd_sc_ms
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_osu_sc
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_osu_sc_t18
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_ml_xx_hd
-    addpath ${PDKPATH}/libs.ref/${MAGTYPE}/sky130_sram_macros
+if {[file isdir ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}]} {
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_pr
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_io
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_hd
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_hdll
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_hs
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_hvl
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_lp
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_ls
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_ms
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_osu_sc
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_osu_sc_t18
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_ml_xx_hd
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_sram_macros
 } else {
-    addpath ${PDKPATH}/libs.ref/sky130_fd_pr/${MAGTYPE}
-    addpath ${PDKPATH}/libs.ref/sky130_fd_io/${MAGTYPE}
-    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_hd/${MAGTYPE}
-    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_hdll/${MAGTYPE}
-    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_hs/${MAGTYPE}
-    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_hvl/${MAGTYPE}
-    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_lp/${MAGTYPE}
-    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_ls/${MAGTYPE}
-    addpath ${PDKPATH}/libs.ref/sky130_fd_sc_ms/${MAGTYPE}
-    addpath ${PDKPATH}/libs.ref/sky130_osu_sc/${MAGTYPE}
-    addpath ${PDKPATH}/libs.ref/sky130_osu_sc_t18/${MAGTYPE}
-    addpath ${PDKPATH}/libs.ref/sky130_ml_xx_hd/${MAGTYPE}
-    addpath ${PDKPATH}/libs.ref/sky130_sram_macros/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_pr/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_io/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hd/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hdll/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hs/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hvl/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_lp/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_ls/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_ms/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_osu_sc/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_osu_sc_t18/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_ml_xx_hd/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_sram_macros/${MAGTYPE}
 }
 
 # add path to GDS cells
 #ifdef FULLTECH
-if {[file isdir ${PDKPATH}/libs.ref/gds]} {
-    path cell ${PDKPATH}/libs.ref/gds/sky130_fd_pr
-    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_io
-    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_hd
-    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_hdll
-    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_hs
-    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_hvl
-    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_lp
-    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_ls
-    path cell +${PDKPATH}/libs.ref/gds/sky130_fd_sc_ms
-    path cell +${PDKPATH}/libs.ref/gds/sky130_osu130
-    path cell +${PDKPATH}/libs.ref/gds/sky130_osu130_t18
-    path cell +${PDKPATH}/libs.ref/gds/sky130_ml_xx_hd
-    path cell +${PDKPATH}/libs.ref/gds/sky130_sram_macros
+if {[file isdir ${PDK_ROOT}/TECHNAME/libs.ref/gds]} {
+    path cell ${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_pr
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_io
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_hd
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_hdll
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_hs
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_hvl
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_lp
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_ls
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_ms
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_osu130
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_osu130_t18
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_ml_xx_hd
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_sram_macros
 } else {
-    path cell ${PDKPATH}/libs.ref/sky130_fd_pr/gds
-    path cell +${PDKPATH}/libs.ref/sky130_fd_io/gds
-    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_hd/gds
-    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_hdll/gds
-    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_hs/gds
-    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_hvl/gds
-    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_lp/gds
-    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_ls/gds
-    path cell +${PDKPATH}/libs.ref/sky130_fd_sc_ms/gds
-    path cell +${PDKPATH}/libs.ref/sky130_osu130/gds
-    path cell +${PDKPATH}/libs.ref/sky130_osu130_t18/gds
-    path cell +${PDKPATH}/libs.ref/sky130_ml_xx_hd/gds
-    path cell +${PDKPATH}/libs.ref/sky130_sram_macros/gds
+    path cell ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_pr/gds
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_io/gds
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hd/gds
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hdll/gds
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hs/gds
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hvl/gds
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_lp/gds
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_ls/gds
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_ms/gds
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_osu130/gds
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_osu130_t18/gds
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_ml_xx_hd/gds
+    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_sram_macros/gds
 }
 #endif (FULLTECH)
 
