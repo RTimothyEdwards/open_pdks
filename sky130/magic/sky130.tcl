@@ -9,7 +9,9 @@
 # Revision 1	ALPHA   9/10/2020
 #-----------------------------------------------------
 
-set TECHPATH STAGING_PATH
+if {[catch {set TECHPATH $env(PDK_ROOT)}]} {
+    set TECHPATH "STAGING_PATH"
+}
 if [catch {set PDKPATH}] {set PDKPATH ${TECHPATH}/TECHNAME}
 set PDKNAME TECHNAME
 # "sky130" is the namespace used for all devices
