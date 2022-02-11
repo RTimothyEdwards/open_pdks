@@ -2449,7 +2449,7 @@ proc sky130::sky130_fd_pr__res_generic_po_defaults {} {
 # "term" is rho * 0.06, the distance between xpc edge and CONT.
 proc sky130::sky130_fd_pr__res_high_po_0p35_defaults {} {
     return {w 0.350 l 0.50 m 1 nx 1 wmin 0.350 lmin 0.50 \
-		rho 319.8 val 456.857 dummy 0 dw 0.0 term 19.188 \
+		rho 319.8 val 456.857 dummy 0 dw 0.0 term 194.82 \
 		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
@@ -2459,7 +2459,7 @@ proc sky130::sky130_fd_pr__res_high_po_0p35_defaults {} {
 }
 proc sky130::sky130_fd_pr__res_high_po_0p69_defaults {} {
     return {w 0.690 l 1.00 m 1 nx 1 wmin 0.690 lmin 0.50 \
-		rho 319.8 val 463.480 dummy 0 dw 0.0 term 19.188 \
+		rho 319.8 val 463.480 dummy 0 dw 0.0 term 194.82 \
 		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
@@ -2469,7 +2469,7 @@ proc sky130::sky130_fd_pr__res_high_po_0p69_defaults {} {
 }
 proc sky130::sky130_fd_pr__res_high_po_1p41_defaults {} {
     return {w 1.410 l 2.00 m 1 nx 1 wmin 1.410 lmin 0.50 \
-		rho 319.8 val 453.620 dummy 0 dw 0.0 term 19.188 \
+		rho 319.8 val 453.620 dummy 0 dw 0.0 term 194.82 \
 		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
@@ -2479,7 +2479,7 @@ proc sky130::sky130_fd_pr__res_high_po_1p41_defaults {} {
 }
 proc sky130::sky130_fd_pr__res_high_po_2p85_defaults {} {
     return {w 2.850 l 3.00 m 1 nx 1 wmin 2.850 lmin 0.50 \
-		rho 319.8 val 336.630 dummy 0 dw 0.0 term 19.188 \
+		rho 319.8 val 336.630 dummy 0 dw 0.0 term 194.82 \
 		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
@@ -2489,7 +2489,7 @@ proc sky130::sky130_fd_pr__res_high_po_2p85_defaults {} {
 }
 proc sky130::sky130_fd_pr__res_high_po_5p73_defaults {} {
     return {w 5.730 l 6.00 m 1 nx 1 wmin 5.730 lmin 0.50 \
-		rho 319.8 val 334.870 dummy 0 dw 0.0 term 19.188 \
+		rho 319.8 val 334.870 dummy 0 dw 0.0 term 194.82 \
 		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
@@ -2501,7 +2501,7 @@ proc sky130::sky130_fd_pr__res_high_po_5p73_defaults {} {
 # "term" is rho * 0.06, the distance between xpc edge and CONT.
 proc sky130::sky130_fd_pr__res_xhigh_po_0p35_defaults {} {
     return {w 0.350 l 0.50 m 1 nx 1 wmin 0.350 lmin 0.50 \
-		rho 2000 val 2875.143 dummy 0 dw 0.0 term 19.188 \
+		rho 2000 val 2875.143 dummy 0 dw 0.0 term 188.2 \
 		sterm 0.0 caplen 0 wmax 0.350 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
@@ -2512,7 +2512,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p35_defaults {} {
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_0p69_defaults {} {
     return {w 0.690 l 1.00 m 1 nx 1 wmin 0.690 lmin 0.50 \
-		rho 2000 val 2898.600 dummy 0 dw 0.0 term 19.188 \
+		rho 2000 val 2898.600 dummy 0 dw 0.0 term 188.2 \
 		sterm 0.0 caplen 0 wmax 0.690 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
@@ -2523,7 +2523,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p69_defaults {} {
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_1p41_defaults {} {
     return {w 1.410 l 2.00 m 1 nx 1 wmin 1.410 lmin 0.50 \
-		rho 2000 val 2836.900 dummy 0 dw 0.0 term 19.188 \
+		rho 2000 val 2836.900 dummy 0 dw 0.0 term 188.2 \
 		sterm 0.0 caplen 0 wmax 1.410 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
@@ -2534,7 +2534,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_1p41_defaults {} {
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_2p85_defaults {} {
     return {w 2.850 l 3.00 m 1 nx 1 wmin 2.850 lmin 0.50 \
-		rho 2000 val 2105.300 dummy 0 dw 0.0 term 19.188 \
+		rho 2000 val 2105.300 dummy 0 dw 0.0 term 188.2 \
 		sterm 0.0 caplen 0 wmax 2.850 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
@@ -2545,7 +2545,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_2p85_defaults {} {
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_5p73_defaults {} {
     return {w 5.730 l 6.00 m 1 nx 1 wmin 5.730 lmin 0.50 \
-		rho 2000 val 2094.200 dummy 0 dw 0.0 term 19.188 \
+		rho 2000 val 2094.200 dummy 0 dw 0.0 term 188.2 \
 		sterm 0.0 caplen 0 wmax 5.730 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
