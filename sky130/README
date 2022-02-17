@@ -41,6 +41,12 @@ Quick summary (TL;DR):
     the path
 		/usr/share/pdks/sky130A/
 
+    From open_pdks version 1.0.269, there is a process variant
+
+		/usr/share/pdks/sky130B/
+
+    which reflects support for ReRAM.
+
 -------------------------------------------------------------------------------
 Detailed instructions for the patient reader:
 -------------------------------------------------------------------------------
@@ -154,6 +160,13 @@ Step 1:
 		include version tracking of the Magic setup files
 		and the location of the technology LEF file.
 
+	--with-sky130-variants=all|A|B
+		When set to "all" (which is the default), both variants
+		sky130A and sky130B are generated and installed.   If
+		only one PDK variant needs to be installed, then use
+		this option to restrict the installation to a single
+		PDK variant.
+
 	--with-sky130-link-targets=none|source
 		"none" copies files from the source directories to
 		the target.  "source" makes symbolic links to the source
@@ -252,8 +265,7 @@ Step 3:
 Summary of the installation directories:
 
     The Makefile script takes the source files and generates files for local
-    PDK names "SKY130A", "SKY130B", etc.  (Note there is currently only one
-    PDK variant "A".)
+    PDK names "SKY130A", "SKY130B", etc.
 
     The definition of each PDK is made in the Makefile using defines; e.g.,
 	-DMETAL5, etc.

@@ -77,7 +77,10 @@ import subprocess
 
 # NOTE:  This version of copy_tree from distutils works like shutil.copytree()
 # in Python 3.8 and up ONLY using "dirs_exist_ok=True".
-from distutils.dir_util import copy_tree
+try:
+    from setuptools.distutils.dir_util import copy_tree
+except:
+    from distutils.dir_util import copy_tree
 
 def makeuserwritable(filepath):
     if os.path.exists(filepath):

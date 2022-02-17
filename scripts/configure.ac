@@ -41,6 +41,7 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
         echo "Checking technology pdk..."
         m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z-" "A-Z_"))])
 
+        pdkvar[]_ENABLED_VARIANTS="all"
         pdkvar[]_SOURCE_PATH=""
         pdkvar[]_LINK_TARGETS="none"
         pdkvar[]_AUTO="0"
@@ -88,10 +89,19 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
             )
             AC_SUBST([]pdkvar[]_LINK_TARGETS)
             AC_MSG_NOTICE([Link targets set to $pdkvar[]_LINK_TARGETS])
+
+            # --with-pdk-variants=PDK_ENABLED_VARIANTS
+            AC_ARG_WITH(pdk-variants,
+                [AS_HELP_STRING([--with-pdk-variants=all|A|B|...], "compile/install specified PDK variants only @<:@default=all@:>@")],
+                [[]pdkvar[]_ENABLED_VARIANTS=$with_[]pdk[]_variants]
+            )
+            AC_SUBST([]pdkvar[]_ENABLED_VARIANTS)
+            AC_MSG_NOTICE([Enabled variants set to $pdkvar[]_ENABLED_VARIANTS])
         fi
 
         AC_SUBST(pdkvar[]_SOURCE_PATH)
         AC_SUBST(pdkvar[]_LINK_TARGETS)
+        AC_SUBST(pdkvar[]_ENABLED_VARIANTS)
     ])
 ])
 

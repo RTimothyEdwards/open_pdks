@@ -1,98 +1,46 @@
 #!/usr/bin/env python3
 #
 #--------------------------------------------------------
-# Open Galaxy Project Manager GUI.
+# Efabless Open Galaxy Project Manager GUI ported to
+# open_pdks.
 #
 # This is a Python tkinter script that handles local
-# project management.  It is meant as a replacement for
-# appsel_zenity.sh
+# project management.
 #
 #--------------------------------------------------------
 # Written by Tim Edwards
 # efabless, inc.
 # September 9, 2016
 # Modifications 2017, 2018
-# Version 1.0
+# Updates 2021 by Max Chen
+# Version 1.1
 #--------------------------------------------------------
 
 import sys
-# Require python 3.5.x (and not python 3.6.x). Without this trap here, in several
-# instances of VMs where /usr/bin/python3 symlinked to 3.6.x by mistake, it manifests
-# as (misleading) errors like: ImportError: No module named 'yaml'
-#
-# '%x' % sys.hexversion  ->  '30502f0'
+import io
+import os
+import re
+import glob
+import json
+import signal
+import shutil
+import tarfile
+import datetime
+import tempfile
+import subprocess
+import contextlib
+import faulthandler
 
 import tkinter
 from tkinter import ttk, StringVar, Listbox, END
 from tkinter import filedialog
 
-# globals
-theProg = sys.argv[0]
-root = tkinter.Tk()      # WARNING: must be exactly one instance of Tk; don't call again elsewhere
-
-# 4 configurations based on booleans: splash,defer
-# n,n:  no splash, show only form when completed: LEGACY MODE, user confused by visual lag.
-# n,y:  no splash but defer projLoad: show an empty form ASAP
-# y,n:  yes splash, and wait for projLoad before showing completed form
-# y,y:  yes splash, but also defer projLoad: show empty form ASAP
-
-# deferLoad = False        # LEGACY: no splash, and wait for completed form
-# doSplash = False
-
-deferLoad = True         # True: display GUI before (slow) loading of projects, so no splash:
-doSplash = not deferLoad # splash IFF GUI-construction includes slow loading of projects
-
-# deferLoad = False        # load projects before showing form, so need splash:
-# doSplash = not deferLoad # splash IFF GUI-construction includes slow loading of projects
-
-# deferLoad = True         # here keep splash also, despite also deferred-loading
-# doSplash = True
-
-#------------------------------------------------------
-# Splash screen: display ASAP: BEFORE bulk of imports.
-#------------------------------------------------------
-
-class SplashScreen(tkinter.Toplevel):
-    """Project Management Splash Screen"""
-
-    def __init__(self, parent, *args, **kwargs):
-        super().__init__(parent, *args, **kwargs)
-        parent.withdraw()
-        #EFABLESS PLATFORM
-        #image = tkinter.PhotoImage(file="/ef/efabless/opengalaxy/og_splashscreen50.gif")
-        label = ttk.Label(self, image=image)
-        label.pack()
-
-        # required to make window show before the program gets to the mainloop
-        self.update_idletasks()
-
-import faulthandler
-import signal
-
-# SplashScreen here. fyi: there's a 2nd/later __main__ section for main app
-splash = None     # a global
-if __name__ == '__main__':
-    faulthandler.register(signal.SIGUSR2)
-    if doSplash:
-        splash = SplashScreen(root)
-
-import io
-import os
-import re
-import json
-import yaml
-import shutil
-import tarfile
-import datetime
-import subprocess
-import contextlib
-import tempfile
-import glob
+# Local imports
 
 import tksimpledialog
 import tooltip
+
 from rename_project import rename_project_all
-#from fix_libdirs import fix_libdirs
 from consoletext import ConsoleText
 from helpwindow import HelpWindow
 from treeviewchoice import TreeViewChoice
@@ -100,21 +48,40 @@ from symbolbuilder import SymbolBuilder
 from make_icon_from_soft import create_symbol
 from profile import Profile
 
-import config
+# Global variables
 
-# Global name for design directory
+theProg = sys.argv[0]
+
+deferLoad = True         # True: display GUI before (slow) loading of projects
+
+# There must be exactly one instance of Tk; don't call again elsewhere.
+root = tkinter.Tk()
+
+# Name for design directory
 designdir = 'design'
-# Global name for import directory
+
+# Name for import directory
 importdir = 'import'
-# Global name for cloudv directory
+
+# Name for cloudv directory
 cloudvdir = 'cloudv'
-# Global name for archived imports project sub-directory
+
+# Name for archived imports project sub-directory
 archiveimportdir = 'imported'
-# Global name for current design file
-#EFABLESS PLATFORM
+
+# Name for current design file
 currdesign = '~/.open_pdks/currdesign'
+
+# Name for personal preferences file
 prefsfile = '~/.open_pdks/prefs.json'
 
+# Application directory.
+try:
+    pdk_root = os.environ('PDK_ROOT')
+except:
+    pdk_root = 'PREFIX/pdk'
+
+apps_path = pdk_root + '/scripts'
 
 #---------------------------------------------------------------
 # Watch a directory for modified time change.  Repeat every two
@@ -195,7 +162,7 @@ class ProjectNameDialog(tksimpledialog.Dialog):
 
 class PadFrameCellNameDialog(tksimpledialog.Dialog):
     def body(self, master, warning, seed=''):
-        description='PadFrame'       # TODO: make this an extra optional parameter of a generic CellNameDialog?
+        description = 'PadFrame'       # TODO: make this an extra optional parameter of a generic CellNameDialog?
         if warning:
             ttk.Label(master, text=warning).grid(row = 0, columnspan = 2, sticky = 'wns')
         if description:
@@ -247,6 +214,7 @@ class CopyProjectDialog(tksimpledialog.Dialog):
 
 class NewProjectDialog(tksimpledialog.Dialog):
     def body(self, master, warning, seed='', importnode=None, development=False, parent_pdk=''):
+        global pdk_root
         if warning:
             ttk.Label(master, text=warning).grid(row = 0, columnspan = 2, sticky = 'wns')
         ttk.Label(master, text="Enter new project name:").grid(row = 1, column = 0)
@@ -274,7 +242,7 @@ class NewProjectDialog(tksimpledialog.Dialog):
         # TODO: stop hardwired default EFXH035B: get from an overall flow /ef/tech/.ef-config/plist.json
         # (or get it from the currently selected project)
         #EFABLESS PLATFORM
-        for pdkdir_lr in glob.glob('PREFIX/*/libs.tech/'):
+        for pdkdir_lr in glob.glob(pdk_root + '/*/libs.tech/'):
             pdkdir = os.path.split( os.path.split( pdkdir_lr )[0])[0]    # discard final .../libs.tech/
             (foundry, foundry_name, node, desc, status) = ProjectManager.pdkdir2fnd( pdkdir )
             if not foundry or not node:
@@ -781,12 +749,9 @@ class ProjectManager(ttk.Frame):
         super().__init__(parent, *args, **kwargs)
         self.root = parent
         parent.withdraw()
-        # self.update()
         self.update_idletasks()     # erase small initial frame asap
         self.init_gui()
         parent.protocol("WM_DELETE_WINDOW", self.on_quit)
-        if splash:
-            splash.destroy()
         parent.deiconify()
 
     def on_quit(self):
@@ -801,15 +766,13 @@ class ProjectManager(ttk.Frame):
         global currdesign
         global theProg
         global deferLoad
+        global apps_path
 
         message = []
         allPaneOpen = False
         prjPaneMinh = 10
         iplPaneMinh = 4
         impPaneMinh = 4
-
-        # if deferLoad:         # temp. for testing... open all panes
-        #     allPaneOpen = True
 
         # Read user preferences
         self.prefs = {}
@@ -847,7 +810,7 @@ class ProjectManager(ttk.Frame):
         self.help = HelpWindow(self, fontsize=fontsize)
         
         with io.StringIO() as buf, contextlib.redirect_stdout(buf):
-            self.help.add_pages_from_file(config.apps_path + '/manager_help.txt')
+            self.help.add_pages_from_file(apps_path + '/manager_help.txt')
             message = buf.getvalue()
         
 
@@ -892,17 +855,6 @@ class ProjectManager(ttk.Frame):
         self.toppane.user_frame = ttk.Frame(self.toppane)
         self.toppane.user_frame.grid(row = 0, sticky = 'news')
 
-        # Put logo image in corner.  Ignore if something goes wrong, as this
-        # is only decorative.  Note: ef_logo must be kept as a record in self,
-        # or else it gets garbage collected.
-        try:
-            #EFABLESS PLATFORM
-            self.ef_logo = tkinter.PhotoImage(file='/ef/efabless/opengalaxy/efabless_logo_small.gif')
-            self.toppane.user_frame.logo = ttk.Label(self.toppane.user_frame, image=self.ef_logo)
-            self.toppane.user_frame.logo.pack(side = 'left', padx = 5)
-        except:
-            pass
-
         self.toppane.user_frame.title = ttk.Label(self.toppane.user_frame, text='User:', style='red.TLabel')
         self.toppane.user_frame.user = ttk.Label(self.toppane.user_frame, text=username, style='blue.TLabel')
 
@@ -936,16 +888,16 @@ class ProjectManager(ttk.Frame):
         # Create listbox of projects
         projectlist = self.get_project_list() if not deferLoad else []
         height = min(10, max(prjPaneMinh, 2 + len(projectlist)))
-        self.projectselect = TreeViewChoice(self.toppane, fontsize=fontsize, deferLoad=deferLoad, selectVal=pdirCur, natSort=True)
+        self.projectselect = TreeViewChoice(self.toppane, fontsize = fontsize,
+		    deferLoad = deferLoad, selectVal = pdirCur, natSort = True)
         self.projectselect.populate("Available Projects:", projectlist,
 			[["New", True, self.createproject],
 			 ["Import", True, self.importproject],
 			 ["Flow", False, self.startflow],
 			 ["Copy", False, self.copyproject],
 			 ["Rename", False, self.renameproject],
-			 ["Delete", False, self.deleteproject],
-			 ],
-			height=height, columns=[0, 1])
+			 ["Delete", False, self.deleteproject]],
+			height = height, columns = [0, 1])
         self.projectselect.grid(row = 3, sticky = 'news')
         self.projectselect.bindselect(self.setcurrent)
 
@@ -1262,6 +1214,7 @@ class ProjectManager(ttk.Frame):
 
     def read_prefs(self):
         global prefsfile
+        global apps_path
 
         # Set all known defaults even if they are not in the JSON file so
         # that it is not necessary to check for the existence of the keyword
@@ -1279,7 +1232,7 @@ class ProjectManager(ttk.Frame):
             # 
             #EFABLESS PLATFORM
             p = subprocess.run(['/ef/apps/bin/withnet' ,
-			config.apps_path + '/og_uid_service.py', userid],
+			apps_path + '/og_uid_service.py', userid],
 			stdout = subprocess.PIPE)
             if p.stdout:
                 uid_string = p.stdout.splitlines()[0].decode('utf-8')
@@ -1349,7 +1302,7 @@ class ProjectManager(ttk.Frame):
         def add_projects(projectpath):
             # Recursively add subprojects to projectlist
             projectlist.append(projectpath)
-            #check for subprojects and add them
+            # Check for subprojects and add them
             if os.path.isdir(projectpath + '/subcells'):
                 for subproj in os.listdir(projectpath + '/subcells'):
                     if os.path.isdir(projectpath + '/subcells/' + subproj):
@@ -3106,6 +3059,7 @@ class ProjectManager(ttk.Frame):
 
     def createproject(self, value, seedname=None, importnode=None):
         global currdesign
+        global apps_path
         # Note:  value is current selection, if any, and is ignored
         # Require new project location and confirmation
         badrex1 = re.compile("^\.")
@@ -3169,7 +3123,7 @@ class ProjectManager(ttk.Frame):
             os.makedirs(parent_path + '/subcells')
         
         try:
-            subprocess.Popen([config.apps_path + '/create_project.py', newproject, newpdk]).wait()
+            subprocess.Popen([apps_path + '/create_project.py', newproject, newpdk]).wait()
             
             # Show subproject in project view
             if parent_pdk != '':
@@ -3829,6 +3783,7 @@ class ProjectManager(ttk.Frame):
     #----------------------------------------------------------------------
 
     def characterize(self):
+        global apps_path
         value = self.projectselect.selected()
         if value:
             design = value['values'][0]
@@ -3839,7 +3794,7 @@ class ProjectManager(ttk.Frame):
             if datasheet:
                 # use Popen, not run, so that application does not wait for it to exit.
                 dsheetroot = os.path.splitext(datasheet)[0]
-                subprocess.Popen([config.apps_path + '/cace.py',
+                subprocess.Popen([apps_path + '/cace.py',
 				datasheet])
         else:
             print("You must first select a project.", file=sys.stderr)
@@ -4428,6 +4383,7 @@ class ProjectManager(ttk.Frame):
 
     def upload(self):
         '''
+        global apps_path
         value = self.projectselect.selected()
         if value:
             design = value['values'][0]
@@ -4435,18 +4391,11 @@ class ProjectManager(ttk.Frame):
             designname = self.project_name
             print('Upload design ' + designname + ' (' + design + ' )')
             subprocess.run(['/ef/apps/bin/withnet',
-			config.apps_path + '/cace_design_upload.py',
+			apps_path + '/cace_design_upload.py',
 			design, '-test'])
 	'''
 
     #--------------------------------------------------------------------------
-    # Upload a datasheet to the marketplace (Administrative use only, for now)
-    #--------------------------------------------------------------------------
-
-    # def make_challenge(self):
-    #      importp = self.cur_import
-    #      print("Make a Challenge from import " + importp + "!")
-    #      # subprocess.run([config.apps_path + '/cace_import_upload.py', importp, '-test'])
 
     # Runs whenever a user selects a project
     def setcurrent(self, value):
@@ -4563,11 +4512,17 @@ class ProjectManager(ttk.Frame):
         else:
             self.toppane.appbar.padframeCalc_button.config(state='disabled')
 
-# main app. fyi: there's a 2nd/earlier __main__ section for splashscreen
+#----------------------------------------------------------------------------
+# Main application
+#----------------------------------------------------------------------------
+
 if __name__ == '__main__':
+    faulthandler.register(signal.SIGUSR2)
+
     ProjectManager(root)
     if deferLoad:
-        # Without this, mainloop may find&run very short clock-delayed events BEFORE main form display.
-        # With it 1st project-load can be scheduled using after-time=0 (needn't tune a delay like 100ms).
+        # Without this, mainloop may find and run very short clock-delayed
+        # events before the main form displays. With it, the first project
+        # load can be scheduled using after-time=0
         root.update_idletasks()
     root.mainloop()

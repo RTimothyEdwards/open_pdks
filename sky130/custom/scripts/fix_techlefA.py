@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 #
-# fix_techlef ---
+# fix_techlefA ---
 #
 # This script adds the missing statement "USEMINSPACING OBS OFF" from
 # the technology LEF files for Sky130.
 #
 # This script is a filter to be run by setting the name of this script as
-# the value to "filter=" for the model install in the sky130 Makefile.
+# the value to "filter=" for the model install in the sky130 Makefile for
+# variant sky130A.
 
 import re
 import os
@@ -20,7 +21,7 @@ def filter(inname, outname):
             ltext = inFile.read()
             llines = ltext.splitlines()
     except:
-        print('fix_techlef.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
+        print('fix_techlefA.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
     # Process input with regexp

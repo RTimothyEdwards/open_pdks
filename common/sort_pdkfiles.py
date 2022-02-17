@@ -14,12 +14,7 @@
 import re
 import os
 import sys
-
-# Natural sort thanks to Mark Byers in StackOverflow
-def natural_sort(l):
-    convert = lambda text: int(text) if text.isdigit() else text.lower()
-    alphanum_key= lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
-    return sorted(l, key = alphanum_key)
+import natural_sort
 
 def pdk_sort(destdir):
     if not os.path.isfile(destdir + '/filelist.txt'):
@@ -29,7 +24,7 @@ def pdk_sort(destdir):
     with open(destdir + '/filelist.txt', 'r') as ifile:
         vlist = ifile.read().splitlines()
 
-    vlist = natural_sort(vlist)
+    vlist = natural_sort.natural_sort(vlist)
     
     with open(destdir + '/filelist.txt', 'w') as ofile:
         for vfile in vlist:
