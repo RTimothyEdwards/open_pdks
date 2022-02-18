@@ -48,6 +48,7 @@ ifeq ($(TECHS),)
 endif
 
 TECHS_ALL = $(addprefix tech-,$(ENABLED_TECHS))
+TECHS_UPDATE = $(addprefix update-,$(ENABLED_TECHS))
 TECHS_INSTALL = $(addprefix install-,$(ENABLED_TECHS))
 TECHS_UNINSTALL = $(addprefix uninstall-,$(TECHS))
 TECHS_CLEAN = $(addprefix clean-,$(TECHS))
@@ -55,7 +56,7 @@ TECHS_VERYCLEAN = $(addprefix veryclean-,$(TECHS))
 
 #---------------------------------------------------
 
-.PHONY: all install uninstall clean veryclean
+.PHONY: all install uninstall clean veryclean update
 
 all: $(TECHS_ALL)
 	@echo $(DONE_MESSAGE)
@@ -64,6 +65,9 @@ install: $(TECHS_INSTALL) common_install
 	@echo $(DONE_MESSAGE)
 
 uninstall: $(TECHS_UNINSTALL)
+	@echo $(DONE_MESSAGE)
+
+update: $(TECHS_UPDATE)
 	@echo $(DONE_MESSAGE)
 
 clean: $(TECHS_CLEAN)
@@ -122,6 +126,9 @@ install-%: %
 
 uninstall-%: %
 	(cd $* && ${MAKE} uninstall)
+
+update-%: %
+	(cd $* && ${MAKE} update)
 
 clean-%:
 	(cd $* && ${MAKE} clean)

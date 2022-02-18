@@ -19,3 +19,6 @@ __pycache__
 
 # local install cache
 /sources
+
+# can use this file to aid in local installations
+reconfigure.sh
