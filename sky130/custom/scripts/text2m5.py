@@ -22,7 +22,7 @@ def filter(inname, outname):
             spitext = inFile.read()
             spilines = spitext.splitlines()
     except:
-        print('text2m5.py: failed to open ' + fnmIn + ' for reading.', file=sys.stderr)
+        print('text2m5.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
     # Process input with regexp

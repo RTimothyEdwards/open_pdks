@@ -21,7 +21,7 @@ def filter(inname, outname):
             stext = inFile.read()
             slines = stext.splitlines()
     except:
-        print('add_wireloads.py: failed to open ' + fnmIn + ' for reading.', file=sys.stderr)
+        print('add_wireloads.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
     # Process input with regexp

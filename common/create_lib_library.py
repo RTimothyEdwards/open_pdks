@@ -13,6 +13,7 @@ import sys
 import os
 import glob
 import fnmatch
+import natural_sort
 
 #----------------------------------------------------------------------------
 
@@ -60,6 +61,7 @@ def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[
                 llist.append(destlibdir + '/' + rfile)
     else:
         llist = glob.glob(destlibdir + '/*.lib')
+        llist = natural_sort.natural_sort(llist)
 
     # Create exclude list with glob-style matching using fnmatch
     if len(llist) > 0:

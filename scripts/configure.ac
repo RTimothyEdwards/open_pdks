@@ -20,8 +20,13 @@ realpath() {
     python3 -c 'import os,sys;print(os.path.realpath(os.path.expanduser(sys.argv@<:@1@:>@)))' $1
 }
 
+ENABLED_TECHS=
+
+# Export the open_pdks top level directory
+OPENPDKS_TOP=`cd .. && pwd`
+
 # detect PDKs based on directories that include Makefile.in files
-m4_define([M4_GET_TECHS], [m4_normalize(m4_esyscmd(cd .. && find * -mindepth 1 -maxdepth 1 -name "Makefile.in" -exec dirname {} \; | tr "\n" " "))])
+m4_define([M4_GET_TECHS], [m4_normalize(m4_esyscmd(cd .. && find -H * -mindepth 1 -maxdepth 1 -name "Makefile.in" -exec dirname {} \; | tr "\n" " "))])
 
 # define tools
 # define tools to install setup files for.  This does not imply that the tools are
@@ -36,6 +41,7 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
         echo "Checking technology pdk..."
         m4_define([pdkvar], [m4_normalize(m4_esyscmd(echo pdk | tr "a-z-" "A-Z_"))])
 
+        pdkvar[]_ENABLED_VARIANTS="all"
         pdkvar[]_SOURCE_PATH=""
         pdkvar[]_LINK_TARGETS="none"
         pdkvar[]_AUTO="0"
@@ -46,10 +52,12 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
                 if test "$enableval" == "yes" -o "$enableval" == "YES"; then
                     export pdkvar[]_SOURCE_PATH=../sources/pdk-[pdk]
             	    pdkvar[]_AUTO="1"
+		    ENABLED_TECHS="$ENABLED_TECHS pdk"
                 elif test "$enableval" == "no" -o "$enableval" == "NO"; then
                     echo "Disabling pdk..."
                 else
                     pdkvar[]_SOURCE_PATH=$enableval
+		    ENABLED_TECHS="$ENABLED_TECHS pdk"
                 fi
             ], [
             ]
@@ -81,16 +89,29 @@ AC_DEFUN([M4_GEN_WITH_PDK_ARGS], [
             )
             AC_SUBST([]pdkvar[]_LINK_TARGETS)
             AC_MSG_NOTICE([Link targets set to $pdkvar[]_LINK_TARGETS])
+
+            # --with-pdk-variants=PDK_ENABLED_VARIANTS
+            AC_ARG_WITH(pdk-variants,
+                [AS_HELP_STRING([--with-pdk-variants=all|A|B|...], "compile/install specified PDK variants only @<:@default=all@:>@")],
+                [[]pdkvar[]_ENABLED_VARIANTS=$with_[]pdk[]_variants]
+            )
+            AC_SUBST([]pdkvar[]_ENABLED_VARIANTS)
+            AC_MSG_NOTICE([Enabled variants set to $pdkvar[]_ENABLED_VARIANTS])
         fi
 
         AC_SUBST(pdkvar[]_SOURCE_PATH)
         AC_SUBST(pdkvar[]_LINK_TARGETS)
+        AC_SUBST(pdkvar[]_ENABLED_VARIANTS)
     ])
 ])
 
 AC_MSG_NOTICE([Found technology directories: M4_GET_TECHS()])
 
 M4_GEN_WITH_PDK_ARGS(M4_GET_TECHS())
+
+# Export the list of known technologies to the Makefile
+ALL_TECHS="M4_GET_TECHS()"
+AC_SUBST(ALL_TECHS)
 
 # Set variables for tool setups
 AC_DEFUN([M4_GEN_WITH_TOOLS], [
@@ -249,8 +270,12 @@ AC_ARG_WITH(
 )
 
 AC_SUBST(EF_STYLE)
+# Export the list of enabled technologies to the Makefile
+AC_SUBST(ENABLED_TECHS)
+# Export the top level directory of open_pdks
+AC_SUBST(OPENPDKS_TOP)
 
-MAKEFILES=$(find .. -name "Makefile.in" | sed 's/\(.*\)\.in/\1/g')
+MAKEFILES=$(find -L .. -name "Makefile.in" | sed 's/\(.*\)\.in/\1/g')
 AC_CONFIG_FILES($MAKEFILES)
 
 AC_OUTPUT

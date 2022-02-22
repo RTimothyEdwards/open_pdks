@@ -587,6 +587,8 @@ PACKAGE_URL=''
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+OPENPDKS_TOP
+ENABLED_TECHS
 EF_STYLE
 SKY130_OSU_T18_PATH
 SKY130_OSU_T15_PATH
@@ -603,7 +605,9 @@ IRSIM_DISABLED
 NETGEN_DISABLED
 MAGIC_DISABLED
 KLAYOUT_DISABLED
+ALL_TECHS
 SKY130_SOURCE_PATH
+SKY130_ENABLED_VARIANTS
 SKY130_LINK_TARGETS
 SED
 pkgpyexecdir
@@ -634,7 +638,6 @@ infodir
 docdir
 oldincludedir
 includedir
-runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -659,6 +662,7 @@ ac_user_opts='
 enable_option_checking
 enable_sky130_pdk
 with_sky130_link_targets
+with_sky130_variants
 enable_klayout
 enable_magic
 enable_netgen
@@ -716,7 +720,6 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
-runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
@@ -969,15 +972,6 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
-  -runstatedir | --runstatedir | --runstatedi | --runstated \
-  | --runstate | --runstat | --runsta | --runst | --runs \
-  | --run | --ru | --r)
-    ac_prev=runstatedir ;;
-  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
-  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
-  | --run=* | --ru=* | --r=*)
-    runstatedir=$ac_optarg ;;
-
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -1115,7 +1109,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir runstatedir
+		libdir localedir mandir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -1268,7 +1262,6 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
-  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -1355,6 +1348,9 @@ Optional Packages:
   --with-sky130-link-targets=none|source
                           "make symbolic links to existing files
                           [default=none]"
+  --with-sky130-variants=all|A|B|...
+                          "compile/install specified PDK variants only
+                          [default=all]"
   --with-ef-style         Use efabless style file system structure
                           [default=no]
 
@@ -1838,7 +1834,7 @@ if ${am_cv_pathless_PYTHON+:} false; then :
   $as_echo_n "(cached) " >&6
 else
 
-	for am_cv_pathless_PYTHON in python python2 python3  python3.9 python3.8 python3.7 python3.6 python3.5 python3.4 python3.3  python3.2 python3.1 python3.0  python2.7 python2.6 python2.5 python2.4 python2.3 python2.2 python2.1  python2.0 none; do
+	for am_cv_pathless_PYTHON in python python2 python3 python3.3 python3.2 python3.1 python3.0 python2.7  python2.6 python2.5 python2.4 python2.3 python2.2 python2.1 python2.0 none; do
 	  test "$am_cv_pathless_PYTHON" = none && break
 	  prog="import sys
 # split strings by '.' and convert to numeric.  Append some zeros
@@ -2169,6 +2165,11 @@ realpath() {
     python3 -c 'import os,sys;print(os.path.realpath(os.path.expanduser(sys.argv[1])))' $1
 }
 
+ENABLED_TECHS=
+
+# Export the open_pdks top level directory
+OPENPDKS_TOP=`cd .. && pwd`
+
 # detect PDKs based on directories that include Makefile.in files
 
 
@@ -2190,6 +2191,7 @@ $as_echo "$as_me: Found technology directories: sky130" >&6;}
         echo "Checking technology sky130..."
 
 
+        SKY130_ENABLED_VARIANTS="all"
         SKY130_SOURCE_PATH=""
         SKY130_LINK_TARGETS="none"
         SKY130_AUTO="0"
@@ -2200,10 +2202,12 @@ if test "${enable_sky130_pdk+set}" = set; then :
                 if test "$enableval" == "yes" -o "$enableval" == "YES"; then
                     export SKY130_SOURCE_PATH=../sources/sky130-pdk
             	    SKY130_AUTO="1"
+		    ENABLED_TECHS="$ENABLED_TECHS sky130"
                 elif test "$enableval" == "no" -o "$enableval" == "NO"; then
                     echo "Disabling sky130..."
                 else
                     SKY130_SOURCE_PATH=$enableval
+		    ENABLED_TECHS="$ENABLED_TECHS sky130"
                 fi
 
 fi
@@ -2264,11 +2268,28 @@ fi
 
             { $as_echo "$as_me:${as_lineno-$LINENO}: Link targets set to $SKY130_LINK_TARGETS" >&5
 $as_echo "$as_me: Link targets set to $SKY130_LINK_TARGETS" >&6;}
+
+            # --with-pdk-variants=PDK_ENABLED_VARIANTS
+
+# Check whether --with-sky130-variants was given.
+if test "${with_sky130_variants+set}" = set; then :
+  withval=$with_sky130_variants; SKY130_ENABLED_VARIANTS=$with_sky130_variants
+
+fi
+
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Enabled variants set to $SKY130_ENABLED_VARIANTS" >&5
+$as_echo "$as_me: Enabled variants set to $SKY130_ENABLED_VARIANTS" >&6;}
         fi
 
 
 
 
+
+
+
+# Export the list of known technologies to the Makefile
+ALL_TECHS="sky130"
 
 
 # Set variables for tool setups
@@ -2750,8 +2771,12 @@ fi
 
 
 
+# Export the list of enabled technologies to the Makefile
 
-MAKEFILES=$(find .. -name "Makefile.in" | sed 's/\(.*\)\.in/\1/g')
+# Export the top level directory of open_pdks
+
+
+MAKEFILES=$(find -L .. -name "Makefile.in" | sed 's/\(.*\)\.in/\1/g')
 ac_config_files="$ac_config_files $MAKEFILES"
 
 

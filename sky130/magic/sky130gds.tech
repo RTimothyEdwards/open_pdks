@@ -1,3 +1,4 @@
+#undef RERAM
 tech
     format 32
     TECHNAME-GDS
@@ -52,6 +53,7 @@ planes
  p40
  p41
  p42
+ p43
 end
 
 types
@@ -125,6 +127,7 @@ types
  p40 CNTMADD,l67
  p41 CP1MADD,l68
  p42 BOUND,l69
+ p43 RERAM,l71
 end
 
 contact
@@ -202,6 +205,7 @@ styles
  l68   implant4
  l69   subcircuit
  l70   polysilicon
+ l71   electrode_stripes
  error_p	error_waffle
  error_s	error_waffle
  error_ps	error_waffle
@@ -213,6 +217,18 @@ compose
    paint  VIA2    MET3  VIA2
    paint  VIA3    MET4  VIA3
    paint  VIA4    MET5  VIA4
+
+   paint  MCON    MET1P  MCON
+   paint  VIA1    MET2P  VIA1
+   paint  VIA2    MET3P  VIA2
+   paint  VIA3    MET4P  VIA3
+   paint  VIA4    MET5P  VIA4
+
+   paint  MCON    MET1T  MCON
+   paint  VIA1    MET2T  VIA1
+   paint  VIA2    MET3T  VIA2
+   paint  VIA3    MET4T  VIA3
+   paint  VIA4    MET5T  VIA4
 end
 
 connect
@@ -331,6 +347,10 @@ style gdsii
  layer  VIA1 VIA1
  labels VIA1 
  calma 68 44
+
+ layer  RERAM RERAM
+ labels RERAM
+ calma 201 20
 
  layer  MET3 MET3,MET3T,MET3P,VIA2
  calma 70 20
@@ -570,6 +590,7 @@ style default
  layer l68 CP1MADD
  layer l69 BOUND
  layer l70 POLYT
+ layer l71 RERAM
  calma NWELL  64 20
  calma DNWELL 64 18
  calma DIFF   65 20
@@ -640,6 +661,7 @@ style default
  calma CP1MADD  33 43
  calma BOUND  235 4
  calma POLYT  66 16
+ calma RERAM 201 20
 end
  
 mzrouter
@@ -737,4 +759,5 @@ style default
  planeorder p40 39
  planeorder p41 40
  planeorder p42 41
+ planeorder p43 42
 end

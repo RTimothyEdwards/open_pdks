@@ -720,7 +720,7 @@ def cdl2spice(fnmIn, fnmOut, options):
         # l:dname t1 t2 model {<numericA>} {<numericP>} {m=...} {$SUB=...}
         # out format:
         #   Xdname t1 t2 model area=<numericA> peri=<numericP> m=... par1=...
-        # We flag $SUB=... : because so far (for XFAB) we CHOOSE not to support three
+        # We flag $SUB=... : because so far (for ngspice) we CHOOSE not to support three
         # terminal diodes.
         # CDL-std does not define $[...] as available for diodes, so we silently ignore
         # it.
@@ -844,8 +844,9 @@ def cdl2spice(fnmIn, fnmOut, options):
         # No: l:qname n1 n2 n3 {nsub} model {$EA=...} {$W=...} {$L=...} {$SUB=...} {M=...}
         #   CDL-std adds {nsub} way to add substrate before model: We don't support it.
         #   Add 3rd term IFF $SUB=. We propagate optional W/L (or derived from $W/$L).
-        #   EA is emitterSize; not supported by XFAB: deleted.
-        #   We require 3-terminals and model. It is an error to specify $[model].
+        #   EA is emitterSize; not supported by ngspice: deleted.
+        #   We require 3-terminals and model. If $[model] is specified, it is ignored
+        #   with a warning.
         #
         # out format:
         #   Xqname n1 n2 n3 model M=... par1=...
@@ -857,11 +858,11 @@ def cdl2spice(fnmIn, fnmOut, options):
                 tmp += [ msg, i ]
                 continue
             if cdlModel != "":
-                err+=1
-                msg = "*cdl2spi.py: ERROR: Bipolar does not support $[<model>] directive:"
+                warn+=1
+                msg = "*cdl2spi.py: WARNING: Bipolar does not support $[<model>] directive, model is " + cdlModel + ":"
                 tmp += [ msg, i ]
                 continue
-            tok = mapBipolar(cdlTerm, cdlModel, tok, options)
+            tok = mapBipolar(cdlTerm, "", tok, options)
             # add X to tok0.
             if options['subckt']:
                 tok[0] = "X" + tok[0]

@@ -59,3 +59,7 @@ so:
 	Cox = Eox / Tox  =  8.854E-12 F/m * 3.9 / 4.15E-9 = 8.32E-3 F/m^2 = pF/um^2
 
 The other cap values need to be looked up and corrected. . . 
+
+NOTE:  2/7/2022:  Added "device" lines to header.txt for compability between the
+subcircuit devices used by the sky130 process, and IRSIM version 9.7.113, which
+adds the parsing for the new "device" syntax in the parameter file.

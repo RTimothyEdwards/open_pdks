@@ -1,0 +1,199 @@
+/**
+ * Copyright 2020 The SkyWater PDK Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+library ("sky130_ef_io__vccd_lvc_clamped3_pad_ss_100C_1v40_1v65_1v65") {
+	
+	define(driver_model,library,string);
+	define(clk_width,library,string);
+	define(def_sim_opt,library,string);
+	define(simulator,library,string);
+	define(signal_voltage_type,pin,string);
+	technology("cmos");
+	delay_model : "table_lookup";
+	revision : "1.0000000";
+	date : "Mon Mar 01 13:33:45 MST 2010";
+	voltage_unit : "1V";
+	current_unit : "1mA";
+	leakage_power_unit : "1nW";
+	pulling_resistance_unit : "1kohm";
+	time_unit : "1ns";
+	resistance_unit : "1ohm";
+	capacitive_load_unit(1.000000, 	  "pf");
+	nom_process : 1.000000;
+	nom_temperature : 100.000000;
+	nom_voltage : 1.800000;
+	default_leakage_power_density : 0.000000;
+	default_cell_leakage_power : 0.000000;
+	bus_naming_style : "%s[%d]";
+	default_fanout_load : 0.000000;
+	default_inout_pin_cap : 0.000000;
+	default_input_pin_cap : 0.000000;
+	default_output_pin_cap : 0.000000;
+	default_max_transition : 1.500000;
+	in_place_swap_mode : "match_footprint";
+	library_features("report_delay_calculation");
+	input_threshold_pct_rise :  50 ;
+	input_threshold_pct_fall :  50 ;
+	output_threshold_pct_rise : 50;
+	output_threshold_pct_fall : 50;
+	slew_lower_threshold_pct_fall : 20;
+	slew_lower_threshold_pct_rise : 20;
+	slew_upper_threshold_pct_fall : 80;
+	slew_upper_threshold_pct_rise : 80;
+	slew_derate_from_library : 1;
+
+	define (always_on, pin, boolean);
+	/*Voltage Map Definitions    */
+
+  voltage_map(VSSD1, 0.00);
+	voltage_map("VDDA", 1.65);
+	voltage_map("VCCD1", 1.65);
+	voltage_map("VSWITCH", 1.65);
+	voltage_map("VDDIO", 1.65);
+	voltage_map("VDDIO_Q", 1.65);
+
+	voltage_map("VCCD", 1.40);
+	voltage_map("VCCHIB", 1.40);
+
+	voltage_map("VSSD", 0.0);
+	voltage_map("VSSIO_Q", 0.0);
+	voltage_map("VSSA", 0.0);
+	voltage_map("VSSIO", 0.0);
+
+	/*Operating Conditions	     */
+
+	 operating_conditions ("ss_1.40_1.65_1.65_100") { 
+		process          : 1.0				;
+		temperature      : 100		;
+		voltage          : 1.40	;
+		tree_type        : "balanced_tree"             ;
+	}
+	 default_operating_conditions : "ss_1.40_1.65_1.65_100";
+
+	cell ("sky130_ef_io__vccd_lvc_clamped3_pad") {
+		dont_use 		: true;
+			is_macro_cell : true;
+		interface_timing 		: true;
+		pad_cell 		: true;
+		dont_touch 		: true;
+		area 		: 15000;
+		cell_leakage_power		: 57.67;
+
+
+		/*	Power Supply Pins	*/
+
+		pg_pin (VDDA) {
+			voltage_name : VDDA ;
+			pg_type : primary_power ;
+		}
+
+		pg_pin(VSSD1) {
+			voltage_name : VSSD1 ;
+			pg_type : primary_ground ;
+		} /* pin  */
+
+		pg_pin (VCCD1) {
+			voltage_name : VCCD1 ;
+			pg_type : primary_power ;
+		}
+
+		pg_pin (VSWITCH) {
+			voltage_name : VSWITCH ;
+			pg_type : primary_power ;
+		}
+
+		pg_pin (VDDIO) {
+			voltage_name : VDDIO ;
+			pg_type : primary_power ;
+		}
+
+
+		pg_pin (VDDIO_Q) {
+			voltage_name : VDDIO_Q ;
+			pg_type : primary_power ;
+		}
+
+
+		pg_pin (VCCD) {
+			voltage_name : VCCD ;
+			pg_type : primary_power ;
+		}
+
+		pg_pin (VCCHIB) {
+			voltage_name : VCCHIB ;
+			pg_type : primary_power ;
+		}
+
+
+		/*	Ground Pins	*/
+
+		pg_pin (VSSD) {
+			voltage_name : VSSD ;
+			pg_type : primary_ground ;
+		}
+
+
+
+		pg_pin (VSSIO_Q) {
+			voltage_name : VSSIO_Q ;
+			pg_type : primary_ground ;
+		}
+
+		pg_pin (VSSA) {
+			voltage_name : VSSA ;
+			pg_type : primary_ground ;
+		}
+
+		pg_pin (VSSIO) {
+			voltage_name : VSSIO ;
+			pg_type : primary_ground ;
+		}
+
+		/*	Digital Input Pins	*/
+
+				/*	Digital Output Pins	*/
+
+				/*	Digital InOut Pins	*/
+
+				/*	Analog Pins	*/
+		pin ("AMUXBUS_A") {
+			direction : inout;
+			related_power_pin : VDDIO;
+			related_ground_pin : VSSD;
+			always_on : true;
+			signal_voltage_type : "analog";
+		}
+
+		pin ("VCCD_PAD") {
+			direction : inout;
+			related_power_pin : VDDIO;
+			related_ground_pin : VSSD;
+			is_pad : true;
+			always_on : true;
+			signal_voltage_type : "analog";
+		}
+
+		pin ("AMUXBUS_B") {
+			direction : inout;
+			related_power_pin : VDDIO;
+			related_ground_pin : VSSD;
+			always_on : true;
+			signal_voltage_type : "analog";
+		}
+
+	}
+}

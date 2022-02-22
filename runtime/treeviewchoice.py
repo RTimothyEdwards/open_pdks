@@ -7,7 +7,8 @@ import json
 
 import tkinter
 from tkinter import ttk
-import natsort
+import natural_sort
+
 #------------------------------------------------------
 # Tree view used as a multi-column list box
 #------------------------------------------------------
@@ -112,10 +113,7 @@ class TreeViewChoice(ttk.Frame):
         self.treeView.delete(*self.treeView.get_children())
 
         if self.natSort:
-            self.itemlist = natsort.natsorted( itemlist,
-                                               alg=natsort.ns.INT |
-                                               natsort.ns.UNSIGNED |
-                                               natsort.ns.IGNORECASE )
+            self.itemlist = natural_sort.natural_sort(itemlist)
         else:
             self.itemlist = itemlist[:]
             self.itemlist.sort()

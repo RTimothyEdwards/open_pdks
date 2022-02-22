@@ -41,6 +41,12 @@ Quick summary (TL;DR):
     the path
 		/usr/share/pdks/sky130A/
 
+    From open_pdks version 1.0.269, there is a process variant
+
+		/usr/share/pdks/sky130B/
+
+    which reflects support for ReRAM.
+
 -------------------------------------------------------------------------------
 Detailed instructions for the patient reader:
 -------------------------------------------------------------------------------
@@ -135,15 +141,6 @@ Step 1:
     directory.  The mandatory configure options are as follows:
 
 	--enable-sky130-pdk[=/path/to/sky130/pdk/source]
-
-    See below for details.
-
-    NOTE:  The intention of the configure file is to not have to hand-edit
-    the Makefile.  However, the development of the configure script is
-    currently ongoing and unfinished, so for now the Makefile should be
-    checked and edited after running configure.
-
-	--enable-sky130-pdk[=/path/to/sky130/pdk/source]
 		This is mandatory for specifying that the installation
 		is for the SKY130 PDK.  If the path is specified, then
 		the PDK is assumed to already be downloaded and installed.
@@ -163,6 +160,13 @@ Step 1:
 		include version tracking of the Magic setup files
 		and the location of the technology LEF file.
 
+	--with-sky130-variants=all|A|B
+		When set to "all" (which is the default), both variants
+		sky130A and sky130B are generated and installed.   If
+		only one PDK variant needs to be installed, then use
+		this option to restrict the installation to a single
+		PDK variant.
+
 	--with-sky130-link-targets=none|source
 		"none" copies files from the source directories to
 		the target.  "source" makes symbolic links to the source
@@ -170,22 +174,6 @@ Step 1:
 		and the source foundry data will not be deleted.  For
 		distribution installations, the value must be set to
 		"none".
-
-	--with-sky130-local-path=<path>
-		The path to the target install directory.  This is used
-		in both the local and distribution installations.  For
-		a distribution installation, this is the local name of
-		the path to the PDK after it has been distributed to
-		the host computers (This should have been set by the
-		option --with-local-path= passed to configure).  If not
-		specified, then the default <path> is /usr/share/pdks/,
-		so the PDK will be installed as /usr/share/pdks/sky130A/.
-
-	--with-sky130-dist-path=<path>
-		The path to the location of the installed files prior to
-		distribution.  This will most likely be a git or similar
-		repo.  This path should NOT be specified for a single-
-		machine installation.
 
 	--enable-alpha-sky130[=<path>] 
 		The path to the sky130_ml_xx_hd library, a third-party
@@ -209,21 +197,38 @@ Step 1:
 		required to install, but it is recommended if you will be
 		using SRAM in a design.
 
-	--enable-osu-sky130[=<path>]
-		This 3rd party library is a set of open-source digital
-		standard cells.
-
-	--enable-osu-t12--sky130[=<path>]
+	--enable-osu-t12-sky130[=<path>]
 		This 3rd party library is a set of open-source digital
 		standard cells at 12 track pitch height.
 
-	--enable-osu-t15--sky130[=<path>]
+	--enable-osu-t15-sky130[=<path>]
 		This 3rd party library is a set of open-source digital
 		standard cells at 15 track pitch height.
 
-	--enable-osu-t18--sky130[=<path>]
+	--enable-osu-t18-sky130[=<path>]
 		This 3rd party library is a set of open-source digital
 		standard cells at 18 track pitch height.
+
+	--prefix=<path>
+		This redirects the installation destination.  open_pdks
+		installs into ${prefix}/share/pdk/, and by default
+		${prefix} is /usr/local.  Be advised that Makefile
+		automatically adds the "share/" path regardless.  To
+		install in a different location, pass these (optional)
+		environment variables to "make":
+
+		SHARED_PDKS_PATH = <path>
+			Overrides ${prefix}/share/pdk/ and installs
+			directly into the specified <path>
+
+		DESTDIR = <path>
+			When defined, then "make install" installs into
+			the specified <path>.  However, all references
+			to files in the PDK will reference SHARED_PDKS_PATH.
+			Use DESTDIR if you want to install into a temporary
+			location such as a git repository or tarball that
+			will eventually be distributed and placed at
+			SHARED_PDKS_PATH on the target systems.
 
 Step 2:
 	Run:
@@ -260,8 +265,7 @@ Step 3:
 Summary of the installation directories:
 
     The Makefile script takes the source files and generates files for local
-    PDK names "SKY130A", "SKY130B", etc.  (Note there is currently only one
-    PDK variant "A".)
+    PDK names "SKY130A", "SKY130B", etc.
 
     The definition of each PDK is made in the Makefile using defines; e.g.,
 	-DMETAL5, etc.

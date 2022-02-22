@@ -1,0 +1,8 @@
+
+# open_pdks specific:
+# Set variables after ${PDK_ROOT} is known
+# This overrides some of the variables set above.
+
+set XSCHEM_START_WINDOW ${PDK_ROOT}/${PDK}/libs.tech/xschem/sky130_tests/top.sch
+append XSCHEM_LIBRARY_PATH :${PDK_ROOT}/${PDK}/libs.tech/xschem
+

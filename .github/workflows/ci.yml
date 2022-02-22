@@ -38,3 +38,15 @@ jobs:
     - name: Test
       run: |
         bash .github/test.sh
+
+    - name: Capture
+      if: ${{ always() }}
+      run: |
+        bash .github/capture.sh
+
+    - name: Upload
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.library }}
+        path: ${{ github.workspace }}/output/**

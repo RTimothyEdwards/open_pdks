@@ -84,8 +84,8 @@ set ::env(MAGIC_TECH_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/TECHNAM
 # Klayout setup
 set ::env(KLAYOUT_TECH) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/$::env(PDK).lyt"
 set ::env(KLAYOUT_PROPERTIES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/$::env(PDK).lyp"
-set ::env(KLAYOUT_DRC_TECH_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/$::env(PDK).drc"
-set ::env(KLAYOUT_DRC_TECH) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/$::env(PDK).lydrc"
+set ::env(KLAYOUT_DRC_TECH_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/$::env(PDK)_mr.drc"
+#set ::env(KLAYOUT_DRC_TECH) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/$::env(PDK).lydrc"
 
 # netgen setup
 set ::env(NETGEN_SETUP_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/netgen/TECHNAME_setup.tcl"
@@ -170,3 +170,13 @@ set ::env(MACRO_BLOCKAGES_LAYER) "li1 met1 met2 met3 met4"
 set ::env(WIRE_RC_LAYER) "met1"
 set ::env(DATA_WIRE_RC_LAYER) "met2"
 set ::env(CLOCK_WIRE_RC_LAYER) "met5"
+
+# I/O Layer info
+set ::env(FP_IO_HLAYER) "met3"
+set ::env(FP_IO_VLAYER) "met2"
+
+# Routing Layer Info
+set ::env(GLB_RT_LAYER_ADJUSTMENTS) "0.99,0,0,0,0,0"
+
+set ::env(RT_MIN_LAYER) "met1"
+set ::env(RT_MAX_LAYER) "met5"

@@ -1,4 +1,5 @@
 # staged PDKs
 sky130A/
+sky130B/
 
 *.log

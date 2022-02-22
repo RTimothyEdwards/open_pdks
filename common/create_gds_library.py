@@ -14,6 +14,7 @@ import sys
 import glob
 import fnmatch
 import subprocess
+import natural_sort
 
 #----------------------------------------------------------------------------
 
@@ -56,6 +57,7 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=Fals
         glist = glob.glob(destlibdir + '/*.gds')
         glist.extend(glob.glob(destlibdir + '/*.gdsii'))
         glist.extend(glob.glob(destlibdir + '/*.gds2'))
+        glist = natural_sort.natural_sort(glist)
 
     if alllibname in glist:
         glist.remove(alllibname)
@@ -90,6 +92,7 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=Fals
             print('# Script to generate .gds library from files   ', file=ofile)
             print('#--------------------------------------------', file=ofile)
             print('drc off', file=ofile)
+            print('locking off', file=ofile)
             print('gds readonly true', file=ofile)
             print('gds flatten true', file=ofile)
             print('gds rescale false', file=ofile)

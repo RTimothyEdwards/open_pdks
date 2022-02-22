@@ -50,7 +50,7 @@ typelist = ['pnp0p68',
 
 for idx, device in enumerate(devlist):
     infile_name = magpath + '/' + device + '.mag'
-    outfile_name = magpath + '/temp.mag'
+    outfile_name = magpath + '/' + device + '_temp.mag'
 
     if not os.path.exists(infile_name):
         print('Error:  Cannot find file ' + infile_name)

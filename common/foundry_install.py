@@ -9,6 +9,7 @@
 # Options:
 #    -ef_format		Use efabless naming (libs.ref/techLEF),
 #			otherwise use generic naming (libs.tech/lef)
+#    -timestamp <value>	Pass a timestamp to use for stamping GDS and MAG files
 #    -clean		Clear out and remove target directory before starting
 #    -source <path>	Path to source data top level directory
 #    -target <path>	Path to target (staging) top level directory
@@ -48,7 +49,7 @@
 # on the files in the target directory.
 #
 # All options "-lef", "-spice", etc., can take the additional arguments
-# 	up  <number>
+# 	up=<number>
 #
 # to indicate that the source hierarchy should be copied from <number>
 # levels above the files.  For example, if liberty files are kept in
@@ -60,7 +61,7 @@
 # (if "-ef_format" option specified, then: libs.ref/<libname>/liberty/*.lib)
 # while
 #
-# 	-liberty x/y/z/PVT_*/*.lib up 1
+# 	-liberty x/y/z/PVT_*/*.lib up=1
 #
 # would install all .lib files into libs.ref/liberty/<libname>/PVT_*/*.lib
 # (if "-ef_format" option specified, then: libs.ref/<libname>/liberty/PVT_*/*.lib)
@@ -151,6 +152,10 @@
 #	noconvert: Install only; do not attempt to convert to other
 #		    formats (applies only to GDS, CDL, and LEF).
 #
+#	dorcx: 	   Used with "-gds" and when no CDL or SPICE files are
+#		    specified for installation:  Do parasitic extraction
+#		    (NOTE:  Only does parasitic capacitance extraction).
+#
 #	options:   Followed by "=" and the name of a script.  Behavior
 #		    is dependent on the mode;  if applied to "-gds",
 #		    then the script is inserted before the GDS read
@@ -174,6 +179,7 @@ import fnmatch
 import subprocess
 
 # Import local routines
+import natural_sort
 from create_gds_library import create_gds_library
 from create_spice_library import create_spice_library
 from create_lef_library import create_lef_library
@@ -184,6 +190,7 @@ def usage():
     print("foundry_install.py [options...]")
     print("   -copy             Copy files from source to target (default)")
     print("   -ef_format        Use efabless naming conventions for local directories")
+    print("   -timestamp <value> Use <value> for timestamping files")
     print("")
     print("   -source <path>    Path to top of source directory tree")
     print("   -target <path>    Path to top of target directory tree")
@@ -203,7 +210,7 @@ def usage():
     print(" All <path> names may be wild-carded with '*' ('glob'-style wild-cards)")
     print("")
     print(" All options with <path> other than source and target may take the additional")
-    print(" arguments 'up <number>', where <number> indicates the number of levels of")
+    print(" arguments 'up=<number>', where <number> indicates the number of levels of")
     print(" hierarchy of the source path to include when copying to the target.")
     print("")
     print(" Library <type> may be one of:")
@@ -221,7 +228,53 @@ def usage():
 #   %l :  substitute the library name
 #   %% :  substitute the percent character verbatim
 
-from distutils.version import LooseVersion
+try:
+    from setuptools.distutils.version import LooseVersion
+except:
+    from distutils.version import LooseVersion
+
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+
+def subprocess_run(name, cmd, stdin=subprocess.DEVNULL, cwd=None):
+    # Make sure the output pipes are flushed before running the command to make
+    # output look neater / more ordered.
+    sys.stdout.flush()
+    sys.stderr.flush()
+
+    fproc = subprocess.Popen(
+        cmd,
+        stdin = stdin,
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE,
+        universal_newlines = True,
+        cwd = cwd or os.curdir,
+    )
+    stdout, stderr = fproc.communicate()
+    if stdout:
+        for line in stdout.splitlines():
+            print(line)
+    if stderr:
+        print('Error message output from {} script:'.format(name))
+        for line in stderr.splitlines():
+            print(line)
+
+    if fproc.returncode != 0:
+        emsg = [
+            "Command {} failed with exit code: {}\n".format(
+                name, fproc.returncode),
+            "  " + " ".join(cmd),
+        ]
+        if stdin != subprocess.DEVNULL:
+            stdin.seek(0)
+            input_script = stdin.read()
+            emsg += [
+                "\nInput script was:\n",
+                '-'*75,'\n',
+                input_script,'\n',
+                '-'*75,'\n',
+            ]
+        raise SystemError("".join(emsg))
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
@@ -355,7 +408,7 @@ def tfilter(targetroot, filterscript, ef_format=False, outfile=[]):
     filterroot = os.path.split(filterscript)[1]
     if os.path.isfile(targetroot):
         print('   Filtering file ' + targetroot + ' with ' + filterroot)
-        sys.stdout.flush()
+
         if not outfile:
             outfile = targetroot
         else:
@@ -367,33 +420,14 @@ def tfilter(targetroot, filterscript, ef_format=False, outfile=[]):
         else:
             arguments = [filterscript, targetroot, outfile]
 
-        fproc = subprocess.run(arguments,
-			stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
-			stderr = subprocess.PIPE, universal_newlines = True)
-        if fproc.stdout:
-            for line in fproc.stdout.splitlines():
-                print(line)
-        if fproc.stderr:
-            print('Error message output from filter script:')
-            for line in fproc.stderr.splitlines():
-                print(line)
+        subprocess_run('filter', arguments)
 
     else:
         tlist = glob.glob(targetroot + '/*')
         for tfile in tlist:
             if os.path.isfile(tfile):
                 print('   Filtering file ' + tfile + ' with ' + filterroot)
-                sys.stdout.flush()
-                fproc = subprocess.run([filterscript, tfile, tfile],
-			stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
-			stderr = subprocess.PIPE, universal_newlines = True)
-                if fproc.stdout:
-                    for line in fproc.stdout.splitlines():
-                        print(line)
-                if fproc.stderr:
-                    print('Error message output from filter script:')
-                    for line in fproc.stderr.splitlines():
-                        print(line)
+                subprocess_run('filter', [filterscript, tfile, tfile])
 
 #----------------------------------------------------------------------------
 # This is the main entry point for the foundry install script.
@@ -413,6 +447,8 @@ if __name__ == '__main__':
     targetdir = None
 
     ef_format = False
+    do_timestamp = False
+    timestamp_value = 0
     do_clean = False
 
     have_lef = False
@@ -456,6 +492,14 @@ if __name__ == '__main__':
         elif option[0] == 'std_naming' or option[0] == 'std_names' or option[0] == 'std_format':
             optionlist.remove(option)
             ef_format = False
+        elif option[0] == 'timestamp':
+            optionlist.remove(option)
+            if len(option) > 1:
+                timestamp_value = option[1]
+                do_timestamp = True
+            else:
+                print('Error: Option "timestamp" used with no value.')
+
         elif option[0] == 'clean':
             do_clean = True
 
@@ -509,7 +553,8 @@ if __name__ == '__main__':
     os.makedirs(targetdir, exist_ok=True)
 
     # Here's where common scripts are found:
-    scriptdir = os.path.split(os.getcwd())[0] + '/common'
+    openpdksdir = os.path.dirname(os.path.realpath(__file__))
+    scriptdir = os.path.split(openpdksdir)[0] + '/common'
 
     #----------------------------------------------------------------
     # Installation part 1:  Install files into the staging directory
@@ -533,11 +578,15 @@ if __name__ == '__main__':
     # Check for magic version and set flag if it does not exist or if
     # it has the wrong version.
     have_mag_8_2 = False
+    have_mag_8_3_261 = False
     try:
-        mproc = subprocess.run(['magic', '--version'],
-		stdout = subprocess.PIPE,
-		stderr = subprocess.PIPE,
-		universal_newlines = True)
+        mproc = subprocess.run(
+            ['magic', '--version'],
+            stdout = subprocess.PIPE,
+            stderr = subprocess.PIPE,
+            universal_newlines = True,
+            check = True,
+        )
         if mproc.stdout:
             mag_version = mproc.stdout.splitlines()[0]
             mag_version_info = mag_version.split('.')
@@ -548,8 +597,18 @@ if __name__ == '__main__':
                     if int(mag_version_info[1]) >= 2:
                         have_mag_8_2 = True
                         print('Magic version 8.2 (or better) available on the system.')
+                if int(mag_version_info[0]) > 8:
+                    have_mag_8_3_261 = True
+                elif int(mag_version_info[0]) == 8:
+                    if int(mag_version_info[1]) > 3:
+                        have_mag_8_3_261 = True
+                    elif int(mag_version_info[1]) == 3:
+                        if int(mag_version_info[2]) >= 261:
+                            have_mag_8_3_261 = True
             except ValueError:
                 print('Error: "magic --version" did not return valid version number.')
+                if mproc.stderr:
+                    print(mproc.stderr)
     except FileNotFoundError:
         print('Error: Failed to find executable for magic in standard search path.')
 
@@ -840,6 +899,7 @@ if __name__ == '__main__':
 
             testpath = substitute(sourcedir + '/' + option[1], library[1])
             liblist = glob.glob(testpath)
+            liblist = natural_sort.natural_sort(liblist)
 
             # Create a file "sources.txt" (or append to it if it exists)
             # and add the source directory name so that the staging install
@@ -1010,9 +1070,12 @@ if __name__ == '__main__':
                         print(destfile, file=ofile)
                 if os.path.isfile(sortscript):
                     print('Diagnostic:  Sorting files with ' + sortscript)
-                    subprocess.run([sortscript, destlibdir],
-				stdout = subprocess.DEVNULL,
-				stderr = subprocess.DEVNULL)
+                    subprocess.run(
+                        [sortscript, destlibdir],
+                        stdout = subprocess.DEVNULL,
+                        stderr = subprocess.DEVNULL,
+                        check = True,
+                    )
 
             if do_compile == True or do_compile_only == True:
                 # NOTE:  The purpose of "rename" is to put a destlib-named
@@ -1152,6 +1215,7 @@ if __name__ == '__main__':
     no_cdl_convert = False
     no_gds_convert = False
     no_lef_convert = False
+    do_parasitics = False
     cdl_compile_only = False
     lef_compile = False
     lef_compile_only = False
@@ -1192,6 +1256,10 @@ if __name__ == '__main__':
                 no_gds_convert = True
             elif option[0] == 'lef':
                 no_lef_convert = True
+
+        if 'dorcx' in option:
+            if option[0] == 'gds':
+                do_parasitics = True
 
         # Option 'privileged' is a standalone keyword.
         if 'priv' in option or 'privileged' in option or 'private' in option:
@@ -1365,7 +1433,11 @@ if __name__ == '__main__':
                     print('#--------------------------------------------', file=ofile)
                     print('crashbackups stop', file=ofile)
                     print('drc off', file=ofile)
+                    print('locking off', file=ofile)
+                    if do_timestamp and have_mag_8_3_261:
+                        print('gds datestamp ' + str(timestamp_value), file=ofile)
                     print('gds readonly true', file=ofile)
+                    print('gds drccheck false', file=ofile)
                     print('gds flatten true', file=ofile)
                     print('gds rescale false', file=ofile)
                     print('tech unlock *', file=ofile)
@@ -1620,19 +1692,12 @@ if __name__ == '__main__':
 
                 # Run magic to read in the GDS file and write out magic databases.
                 with open(destlibdir + '/generate_magic.tcl', 'r') as ifile:
-                    mproc = subprocess.run(['magic', '-dnull', '-noconsole'],
-				stdin = ifile, stdout = subprocess.PIPE,
-				stderr = subprocess.PIPE, cwd = destlibdir,
-				universal_newlines = True)
-                    if mproc.stdout:
-                        for line in mproc.stdout.splitlines():
-                            print(line)
-                    if mproc.stderr:
-                        print('Error message output from magic:')
-                        for line in mproc.stderr.splitlines():
-                            print(line)
-                    if mproc.returncode != 0:
-                        print('ERROR:  Magic exited with status ' + str(mproc.returncode))
+                    subprocess_run(
+                        'magic',
+                        ['magic', '-dnull', '-noconsole'],
+                        stdin = ifile,
+                        cwd = destlibdir,
+                    )
 
                 # Set have_lef now that LEF files were made, so they
                 # can be used to generate the maglef/ databases.
@@ -1763,6 +1828,10 @@ if __name__ == '__main__':
                         tcldevlist = '{' + ' '.join(shortdevlist) + '}'
                         print('set devlist ' + tcldevlist, file=ofile)
 
+                    # Force the abstract view timestamps to match the full views
+                    if do_timestamp and have_mag_8_3_261:
+                        print('lef datestamp ' + str(timestamp_value), file=ofile)
+
                     for leffile in leffiles:
                         print('lef read ' + srclibdir + '/' + leffile, file=ofile)
 
@@ -1817,20 +1886,12 @@ if __name__ == '__main__':
 
                 # Run magic to read in the LEF file and write out magic databases.
                 with open(destlibdir + '/generate_magic.tcl', 'r') as ifile:
-                    mproc = subprocess.run(['magic', '-dnull', '-noconsole'],
-				stdin = ifile, stdout = subprocess.PIPE,
-				stderr = subprocess.PIPE, cwd = destlibdir,
-				universal_newlines = True)
-                    if mproc.stdout:
-                        for line in mproc.stdout.splitlines():
-                            print(line)
-                    if mproc.stderr:
-                        print('Error message output from magic:')
-                        for line in mproc.stderr.splitlines():
-                            print(line)
-                    if mproc.returncode != 0:
-                        print('ERROR:  Magic exited with status ' + str(mproc.returncode))
-
+                    subprocess_run(
+                        'magic',
+                        ['magic', '-dnull', '-noconsole'],
+                        stdin = ifile,
+                        cwd = destlibdir,
+                    )
 
                 # Now list all the .mag files generated, and for each, read the
                 # corresponding file from the mag/ directory, pull the GDS file
@@ -1869,6 +1930,7 @@ if __name__ == '__main__':
                         # in it.
                         try:
                             cdlfiles = glob.glob(cdllibdir + '/*.cdl')
+                            cdlfiles = natural_sort.natural_sort(cdlfiles)
                         except:
                             pass
                     if len(cdlfiles) > 0:
@@ -2039,17 +2101,7 @@ if __name__ == '__main__':
                     procopts.append('-ignore=' + item)
 
                 print('Running (in ' + destlibdir + '): ' + ' '.join(procopts))
-                pproc = subprocess.run(procopts,
-			stdin = subprocess.DEVNULL, stdout = subprocess.PIPE,
-			stderr = subprocess.PIPE, cwd = destlibdir,
-			universal_newlines = True)
-                if pproc.stdout:
-                    for line in pproc.stdout.splitlines():
-                        print(line)
-                if pproc.stderr:
-                    print('Error message output from cdl2spi.py:')
-                    for line in pproc.stderr.splitlines():
-                        print(line)
+                subprocess_run('cdl2spi.py', procopts, cwd = destlibdir)
 
     elif have_gds and not no_gds_convert:
         # If neither SPICE nor CDL formats is available in the source, then
@@ -2105,10 +2157,12 @@ if __name__ == '__main__':
                 glist = glob.glob(srclibdir + '/*.gds')
                 glist.extend(glob.glob(srclibdir + '/*.gdsii'))
                 glist.extend(glob.glob(srclibdir + '/*.gds2'))
+                glist = natural_sort.natural_sort(glist)
 
             allleflibname = leflibdir + '/' + destlib + '.lef'
             if not os.path.isfile(allleflibname):
                 llist = glob.glob(leflibdir + '/*.lef')
+                llist = natural_sort.natural_sort(llist)
 
             print('Creating magic generation script to generate SPICE library.') 
             with open(destlibdir + '/generate_magic.tcl', 'w') as ofile:
@@ -2117,6 +2171,7 @@ if __name__ == '__main__':
                 print('# Script to generate SPICE library from GDS   ', file=ofile)
                 print('#---------------------------------------------', file=ofile)
                 print('drc off', file=ofile)
+                print('locking off', file=ofile)
                 print('gds readonly true', file=ofile)
                 print('gds flatten true', file=ofile)
                 print('gds rescale false', file=ofile)
@@ -2157,7 +2212,10 @@ if __name__ == '__main__':
                 # handle and should be fixed in the source.
                 print('ext2spice subcircuit top on', file=ofile)
 
-                print('ext2spice cthresh 0.1', file=ofile)
+                # Use option "dorcx" if parasitics should be extracted.
+                # NOTE:  Currently only does parasitic capacitance extraction.
+                if do_parasitics:
+                    print('ext2spice cthresh 0.1', file=ofile)
 
                 if os.path.isfile(allgdslibname):
                     print('select top cell', file=ofile)
@@ -2180,21 +2238,12 @@ if __name__ == '__main__':
             print('Running magic to create GDS library.')
             sys.stdout.flush()
 
-            mproc = subprocess.run(['magic', '-dnull', '-noconsole',
-				destlibdir + '/generate_magic.tcl'],
-				stdin = subprocess.DEVNULL,
-				stdout = subprocess.PIPE,
-				stderr = subprocess.PIPE, cwd = destlibdir,
-				universal_newlines = True)
-            if mproc.stdout:
-                for line in mproc.stdout.splitlines():
-                    print(line)
-            if mproc.stderr:
-                print('Error message output from magic:')
-                for line in mproc.stderr.splitlines():
-                    print(line)
-            if mproc.returncode != 0:
-                print('ERROR:  Magic exited with status ' + str(mproc.returncode))
+            subprocess_run(
+                'magic',
+                ['magic', '-dnull', '-noconsole',
+                 destlibdir + '/generate_magic.tcl'],
+                cwd = destlibdir,
+            )
 
             # Remove intermediate extraction files
             extfiles = glob.glob(destlibdir + '/*.ext')
