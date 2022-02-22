@@ -539,7 +539,7 @@ if __name__ == '__main__':
     # file "sources.txt" with the name of the source directories for each
     # install directory.
 
-    if link_from not in ['source', None]:
+    if link_from == 'source':
         print('Replacing files with symbolic links to source where possible.')
         for refdir in refdirs:
             if ef_format:
