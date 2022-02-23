@@ -5426,313 +5426,313 @@ defaultoverlap     nwell well isosub dwell  120
 # defaultareacap     allpolynonfet active  106
 # defaultperimeter   allpolynonfet active   57
 
- defaultsidewall    *poly active  23
- defaultareacap     *poly active nwell,obswell,pwell well  106
- defaultperimeter   *poly active nwell,obswell,pwell well  55
- defaultsideoverlap *poly active nwell,obswell,pwell well  55
+ defaultsidewall    *poly active  22.6
+ defaultareacap     *poly active nwell,obswell,pwell well  106.13
+ defaultperimeter   *poly active nwell,obswell,pwell well  55.27
+ defaultsideoverlap *poly active nwell,obswell,pwell well  55.27
 
 #locali
- defaultsidewall    allli locali       33
- defaultoverlap	    allli locali dnwell,isosub	     dwell 37
- defaultareacap     allli locali nwell,obswell,pwell well  37
- defaultperimeter   allli locali nwell,obswell,pwell well  41
- defaultoverlap     allli locali nwell,obswell,pwell well  37
- defaultsideoverlap allli locali nwell,obswell,pwell well  41
+ defaultsidewall    allli locali       32.51
+ defaultoverlap	    allli locali dnwell,isosub	     dwell 36.99
+ defaultareacap     allli locali nwell,obswell,pwell well  36.99
+ defaultperimeter   allli locali nwell,obswell,pwell well  40.70
+ defaultoverlap     allli locali nwell,obswell,pwell well  36.99
+ defaultsideoverlap allli locali nwell,obswell,pwell well  40.70
 
 #locali->diff
- defaultoverlap     allli locali allactivenonfet active 37
- defaultsideoverlap allli locali allactivenonfet active 41
+ defaultoverlap     allli locali allactivenonfet active 36.99
+ defaultsideoverlap allli locali allactivenonfet active 40.70
 
 #locali->poly
- defaultoverlap     allli locali allpolynonres active 94
- defaultsideoverlap allli locali allpolynonres active 52
- defaultsideoverlap *poly active allli locali 25
+ defaultoverlap     allli locali allpolynonres active 94.16
+ defaultsideoverlap allli locali allpolynonres active 51.85
+ defaultsideoverlap *poly active allli locali 25.14
 
 #metal1
- defaultsidewall    allm1 metal1      45
- defaultoverlap	    allm1 metal1 dnwell,isosub	     dwell 26
- defaultareacap     allm1 metal1 nwell,obswell,pwell well  26
- defaultperimeter   allm1 metal1 nwell,obswell,pwell well  41
- defaultoverlap     allm1 metal1 nwell,obswell,pwell well  26
- defaultsideoverlap allm1 metal1 nwell,obswell,pwell well  41
+ defaultsidewall    allm1 metal1      44.74
+ defaultoverlap	    allm1 metal1 dnwell,isosub	     dwell 25.78
+ defaultareacap     allm1 metal1 nwell,obswell,pwell well  25.78
+ defaultperimeter   allm1 metal1 nwell,obswell,pwell well  40.57
+ defaultoverlap     allm1 metal1 nwell,obswell,pwell well  25.78
+ defaultsideoverlap allm1 metal1 nwell,obswell,pwell well  40.57
 
 #metal1->diff
- defaultoverlap     allm1 metal1 allactivenonfet active 26
- defaultsideoverlap allm1 metal1 allactivenonfet active 41
+ defaultoverlap     allm1 metal1 allactivenonfet active 25.78
+ defaultsideoverlap allm1 metal1 allactivenonfet active 40.57
 
 #metal1->poly
- defaultoverlap     allm1 metal1 allpolynonres active 45
- defaultsideoverlap allm1 metal1 allpolynonres active 47
- defaultsideoverlap *poly active allm1 metal1 17
+ defaultoverlap     allm1 metal1 allpolynonres active 44.81
+ defaultsideoverlap allm1 metal1 allpolynonres active 46.72
+ defaultsideoverlap *poly active allm1 metal1 16.69
 
 #metal1->locali
- defaultoverlap     allm1 metal1 allli locali 114
- defaultsideoverlap allm1 metal1 allli locali 59
- defaultsideoverlap allli locali allm1 metal1 35
+ defaultoverlap     allm1 metal1 allli locali 114.20
+ defaultsideoverlap allm1 metal1 allli locali 59.50
+ defaultsideoverlap allli locali allm1 metal1 34.70
 
 #metal2
- defaultsidewall    allm2 metal2      50
+ defaultsidewall    allm2 metal2      49.68
 
 #ifdef RERAM
 # For ReRAM, all parasitics account for the additional 0.295um between
 # metal1 and metal2
 
- defaultoverlap	    allm2 metal2 dnwell,isosub	     dwell 15
- defaultareacap     allm2 metal2 nwell,obswell,pwell well 15
- defaultperimeter   allm2 metal2 nwell,obswell,pwell well 33
- defaultoverlap     allm2 metal2 nwell,obswell,pwell well 15
- defaultsideoverlap allm2 metal2 nwell,obswell,pwell well 33
+ defaultoverlap	    allm2 metal2 dnwell,isosub	     dwell 14.77
+ defaultareacap     allm2 metal2 nwell,obswell,pwell well 14.77
+ defaultperimeter   allm2 metal2 nwell,obswell,pwell well 32.92
+ defaultoverlap     allm2 metal2 nwell,obswell,pwell well 14.77
+ defaultsideoverlap allm2 metal2 nwell,obswell,pwell well 32.92
 
 #metal2->diff
- defaultoverlap     allm2 metal2 allactivenonfet active 15
- defaultsideoverlap allm2 metal2 allactivenonfet active 33
+ defaultoverlap     allm2 metal2 allactivenonfet active 14.77
+ defaultsideoverlap allm2 metal2 allactivenonfet active 32.92
 
 #metal2->poly
- defaultoverlap     allm2 metal2 allpolynonres active 20
- defaultsideoverlap allm2 metal2 allpolynonres active 34
+ defaultoverlap     allm2 metal2 allpolynonres active 20.47
+ defaultsideoverlap allm2 metal2 allpolynonres active 34.45
  defaultsideoverlap *poly active allm2 metal2 9
 
 #metal2->locali
- defaultoverlap     allm2 metal2 allli locali 29
- defaultsideoverlap allm2 metal2 allli locali 35
- defaultsideoverlap allli locali allm2 metal2 17
+ defaultoverlap     allm2 metal2 allli locali 28.80
+ defaultsideoverlap allm2 metal2 allli locali 35.49
+ defaultsideoverlap allli locali allm2 metal2 16.67
 
 #metal2->metal1
- defaultoverlap     allm2 metal2 allm1 metal1 64
- defaultsideoverlap allm2 metal2 allm1 metal1 32
- defaultsideoverlap allm1 metal1 allm2 metal2 23
+ defaultoverlap     allm2 metal2 allm1 metal1 63.97
+ defaultsideoverlap allm2 metal2 allm1 metal1 32.04
+ defaultsideoverlap allm1 metal1 allm2 metal2 23.03
 
 #else (!RERAM)
- defaultoverlap	    allm2 metal2 dnwell,isosub	     dwell 17
- defaultareacap     allm2 metal2 nwell,obswell,pwell well 17
- defaultperimeter   allm2 metal2 nwell,obswell,pwell well 38
- defaultoverlap     allm2 metal2 nwell,obswell,pwell well 17
- defaultsideoverlap allm2 metal2 nwell,obswell,pwell well 38
+ defaultoverlap	    allm2 metal2 dnwell,isosub	     dwell 16.94
+ defaultareacap     allm2 metal2 nwell,obswell,pwell well 16.94
+ defaultperimeter   allm2 metal2 nwell,obswell,pwell well 37.76
+ defaultoverlap     allm2 metal2 nwell,obswell,pwell well 16.94
+ defaultsideoverlap allm2 metal2 nwell,obswell,pwell well 37.76
 
 #metal2->diff
- defaultoverlap     allm2 metal2 allactivenonfet active 17
- defaultsideoverlap allm2 metal2 allactivenonfet active 38
+ defaultoverlap     allm2 metal2 allactivenonfet active 16.94
+ defaultsideoverlap allm2 metal2 allactivenonfet active 37.76
 
 #metal2->poly
- defaultoverlap     allm2 metal2 allpolynonres active 24
- defaultsideoverlap allm2 metal2 allpolynonres active 41
- defaultsideoverlap *poly active allm2 metal2 11
+ defaultoverlap     allm2 metal2 allpolynonres active 24.50
+ defaultsideoverlap allm2 metal2 allpolynonres active 41.22
+ defaultsideoverlap *poly active allm2 metal2 11.17
 
 #metal2->locali
- defaultoverlap     allm2 metal2 allli locali 38
- defaultsideoverlap allm2 metal2 allli locali 46
- defaultsideoverlap allli locali allm2 metal2 22
+ defaultoverlap     allm2 metal2 allli locali 37.56
+ defaultsideoverlap allm2 metal2 allli locali 46.28
+ defaultsideoverlap allli locali allm2 metal2 21.74
 
 #metal2->metal1
- defaultoverlap     allm2 metal2 allm1 metal1 134
- defaultsideoverlap allm2 metal2 allm1 metal1 67
- defaultsideoverlap allm1 metal1 allm2 metal2 48
+ defaultoverlap     allm2 metal2 allm1 metal1 133.86
+ defaultsideoverlap allm2 metal2 allm1 metal1 67.05
+ defaultsideoverlap allm1 metal1 allm2 metal2 48.19
 
 #endif (!RERAM)
 
 #metal3
- defaultsidewall    allm3 metal3     63
+ defaultsidewall    allm3 metal3     63.15
 
 #ifdef RERAM
- defaultoverlap	    allm3 metal3 dnwell,isosub	     dwell 11
- defaultareacap     allm3 metal3 nwell,obswell,pwell well 11
- defaultperimeter   allm3 metal3 nwell,obswell,pwell well 37
- defaultoverlap     allm3 metal3 nwell,obswell,pwell well 11
- defaultsideoverlap allm3 metal3 nwell,obswell,pwell well 37
+ defaultoverlap	    allm3 metal3 dnwell,isosub	     dwell 11.19
+ defaultareacap     allm3 metal3 nwell,obswell,pwell well 11.19
+ defaultperimeter   allm3 metal3 nwell,obswell,pwell well 37.07
+ defaultoverlap     allm3 metal3 nwell,obswell,pwell well 11.19
+ defaultsideoverlap allm3 metal3 nwell,obswell,pwell well 37.07
 
 #metal3->diff
- defaultoverlap     allm3 metal3 allactive active 11
- defaultsideoverlap allm3 metal3 allactive active 37
+ defaultoverlap     allm3 metal3 allactive active 11.19
+ defaultsideoverlap allm3 metal3 allactive active 37.07
 
 #metal3->poly
- defaultoverlap     allm3 metal3 allpolynonres active 14
- defaultsideoverlap allm3 metal3 allpolynonres active 39
- defaultsideoverlap *poly active allm3 metal3 8
+ defaultoverlap     allm3 metal3 allpolynonres active 14.22
+ defaultsideoverlap allm3 metal3 allpolynonres active 38.54
+ defaultsideoverlap *poly active allm3 metal3 8.13
 
 #metal3->locali
- defaultoverlap     allm3 metal3 allli locali 18
- defaultsideoverlap allm3 metal3 allli locali 40
- defaultsideoverlap allli locali allm3 metal3 13
+ defaultoverlap     allm3 metal3 allli locali 17.79
+ defaultsideoverlap allm3 metal3 allli locali 39.97
+ defaultsideoverlap allli locali allm3 metal3 12.90
 
 #metal3->metal1
- defaultoverlap     allm3 metal3 allm1 metal1 27
- defaultsideoverlap allm3 metal3 allm1 metal1 43
- defaultsideoverlap allm1 metal1 allm3 metal3 21
+ defaultoverlap     allm3 metal3 allm1 metal1 26.96
+ defaultsideoverlap allm3 metal3 allm1 metal1 42.79
+ defaultsideoverlap allm1 metal1 allm3 metal3 20.83
 
 #else (!RERAM)
- defaultoverlap	    allm3 metal3 dnwell,isosub	     dwell 12
- defaultareacap     allm3 metal3 nwell,obswell,pwell well 12
- defaultperimeter   allm3 metal3 nwell,obswell,pwell well 41
- defaultoverlap     allm3 metal3 nwell,obswell,pwell well 12
- defaultsideoverlap allm3 metal3 nwell,obswell,pwell well 41
+ defaultoverlap	    allm3 metal3 dnwell,isosub	     dwell 12.37
+ defaultareacap     allm3 metal3 nwell,obswell,pwell well 12.37
+ defaultperimeter   allm3 metal3 nwell,obswell,pwell well 40.99
+ defaultoverlap     allm3 metal3 nwell,obswell,pwell well 12.37
+ defaultsideoverlap allm3 metal3 nwell,obswell,pwell well 40.99
 
 #metal3->diff
- defaultoverlap     allm3 metal3 allactive active 12
- defaultsideoverlap allm3 metal3 allactive active 41
+ defaultoverlap     allm3 metal3 allactive active 12.37
+ defaultsideoverlap allm3 metal3 allactive active 40.99
 
 #metal3->poly
- defaultoverlap     allm3 metal3 allpolynonres active 16
- defaultsideoverlap allm3 metal3 allpolynonres active 44
- defaultsideoverlap *poly active allm3 metal3 9
+ defaultoverlap     allm3 metal3 allpolynonres active 16.06
+ defaultsideoverlap allm3 metal3 allpolynonres active 43.53
+ defaultsideoverlap *poly active allm3 metal3 9.18
 
 #metal3->locali
- defaultoverlap     allm3 metal3 allli locali 21
- defaultsideoverlap allm3 metal3 allli locali 47
- defaultsideoverlap allli locali allm3 metal3 15
+ defaultoverlap     allm3 metal3 allli locali 20.79
+ defaultsideoverlap allm3 metal3 allli locali 46.71
+ defaultsideoverlap allli locali allm3 metal3 15.08
 
 #metal3->metal1
- defaultoverlap     allm3 metal3 allm1 metal1 35
- defaultsideoverlap allm3 metal3 allm1 metal1 55
- defaultsideoverlap allm1 metal1 allm3 metal3 27
+ defaultoverlap     allm3 metal3 allm1 metal1 34.54
+ defaultsideoverlap allm3 metal3 allm1 metal1 54.81
+ defaultsideoverlap allm1 metal1 allm3 metal3 26.68
 
 #endif (!RERAM)
 
 #metal3->metal2
- defaultoverlap     allm3 metal3 allm2 metal2 86
- defaultsideoverlap allm3 metal3 allm2 metal2 70
- defaultsideoverlap allm2 metal2 allm3 metal3 44
+ defaultoverlap     allm3 metal3 allm2 metal2 86.19
+ defaultsideoverlap allm3 metal3 allm2 metal2 69.85
+ defaultsideoverlap allm2 metal2 allm3 metal3 44.43
 
 #ifdef METAL5
 #metal4
- defaultsidewall    allm4 metal4       67
+ defaultsidewall    allm4 metal4       67.33
 #ifdef RERAM
-# defaultareacap     alltopm metal4 well  6
- defaultoverlap	    allm4 metal4 dnwell,isosub	     dwell 8
- areacap     	    allm4/m4 8
- defaultperimeter   allm4 metal4 nwell,obswell,pwell well 34
- defaultoverlap     allm4 metal4 nwell,obswell,pwell well 8
- defaultsideoverlap allm4 metal4 nwell,obswell,pwell well 34
+# defaultareacap     alltopm metal4 well  7.84
+ defaultoverlap	    allm4 metal4 dnwell,isosub	     dwell 7.84
+ areacap     	    allm4/m4 7.84
+ defaultperimeter   allm4 metal4 nwell,obswell,pwell well 34.17
+ defaultoverlap     allm4 metal4 nwell,obswell,pwell well 7.84
+ defaultsideoverlap allm4 metal4 nwell,obswell,pwell well 34.17
 
 #metal4->diff
- defaultoverlap     allm4 metal4 allactivenonfet active 8
- defaultsideoverlap allm4 metal4 allactivenonfet active 34
+ defaultoverlap     allm4 metal4 allactivenonfet active 7.84
+ defaultsideoverlap allm4 metal4 allactivenonfet active 34.17
 
 #metal4->poly
- defaultoverlap     allm4 metal4 allpolynonres active 9
- defaultsideoverlap allm4 metal4 allpolynonres active 35
- defaultsideoverlap *poly active allm4 metal4 6
+ defaultoverlap     allm4 metal4 allpolynonres active 9.24
+ defaultsideoverlap allm4 metal4 allpolynonres active 35.16
+ defaultsideoverlap *poly active allm4 metal4 5.86
 
 #metal4->locali
- defaultoverlap     allm4 metal4 allli locali 11
- defaultsideoverlap allm4 metal4 allli locali 36
- defaultsideoverlap allli locali allm4 metal4 9
+ defaultoverlap     allm4 metal4 allli locali 10.62
+ defaultsideoverlap allm4 metal4 allli locali 36.14
+ defaultsideoverlap allli locali allm4 metal4 9.23
 
 #metal4->metal1
- defaultoverlap     allm4 metal4 allm1 metal1 13
- defaultsideoverlap allm4 metal4 allm1 metal1 38
- defaultsideoverlap allm1 metal1 allm4 metal4 15
+ defaultoverlap     allm4 metal4 allm1 metal1 13.31
+ defaultsideoverlap allm4 metal4 allm1 metal1 37.70
+ defaultsideoverlap allm1 metal1 allm4 metal4 14.54
 
 #else (!RERAM)
-# defaultareacap     alltopm metal4 well  6
- defaultoverlap	    allm4 metal4 dnwell,isosub	     dwell 8
- areacap     	    allm4/m4 8
- defaultperimeter   allm4 metal4 nwell,obswell,pwell well 37
- defaultoverlap     allm4 metal4 nwell,obswell,pwell well 8
- defaultsideoverlap allm4 metal4 nwell,obswell,pwell well 37
+# defaultareacap     alltopm metal4 well  8.42
+ defaultoverlap	    allm4 metal4 dnwell,isosub	     dwell 8.42
+ areacap     	    allm4/m4 8.42
+ defaultperimeter   allm4 metal4 nwell,obswell,pwell well 36.68
+ defaultoverlap     allm4 metal4 nwell,obswell,pwell well 8.42
+ defaultsideoverlap allm4 metal4 nwell,obswell,pwell well 36.68
 
 #metal4->diff
- defaultoverlap     allm4 metal4 allactivenonfet active 8
- defaultsideoverlap allm4 metal4 allactivenonfet active 37
+ defaultoverlap     allm4 metal4 allactivenonfet active 8.42
+ defaultsideoverlap allm4 metal4 allactivenonfet active 36.68
 
 #metal4->poly
- defaultoverlap     allm4 metal4 allpolynonres active 10
- defaultsideoverlap allm4 metal4 allpolynonres active 38
- defaultsideoverlap *poly active allm4 metal4 6
+ defaultoverlap     allm4 metal4 allpolynonres active 10.01
+ defaultsideoverlap allm4 metal4 allpolynonres active 38.11
+ defaultsideoverlap *poly active allm4 metal4 6.35
 
 #metal4->locali
- defaultoverlap     allm4 metal4 allli locali 12
- defaultsideoverlap allm4 metal4 allli locali 40
- defaultsideoverlap allli locali allm4 metal4 10
+ defaultoverlap     allm4 metal4 allli locali 11.67
+ defaultsideoverlap allm4 metal4 allli locali 39.71
+ defaultsideoverlap allli locali allm4 metal4 10.14
 
 #metal4->metal1
- defaultoverlap     allm4 metal4 allm1 metal1 15
- defaultsideoverlap allm4 metal4 allm1 metal1 43
- defaultsideoverlap allm1 metal1 allm4 metal4 16
+ defaultoverlap     allm4 metal4 allm1 metal1 15.03
+ defaultsideoverlap allm4 metal4 allm1 metal1 42.56
+ defaultsideoverlap allm1 metal1 allm4 metal4 16.42
 
 #endif (!RERAM)
 
 #metal4->metal2
- defaultoverlap     allm4 metal4 allm2 metal2 20
- defaultsideoverlap allm4 metal4 allm2 metal2 46
- defaultsideoverlap allm2 metal2 allm4 metal4 22
+ defaultoverlap     allm4 metal4 allm2 metal2 20.33
+ defaultsideoverlap allm4 metal4 allm2 metal2 46.38
+ defaultsideoverlap allm2 metal2 allm4 metal4 22.33
 
 #metal4->metal3
- defaultoverlap     allm4 metal4 allm3 metal3 84
- defaultsideoverlap allm4 metal4 allm3 metal3 71
- defaultsideoverlap allm3 metal3 allm4 metal4 43
+ defaultoverlap     allm4 metal4 allm3 metal3 84.03
+ defaultsideoverlap allm4 metal4 allm3 metal3 70.52
+ defaultsideoverlap allm3 metal3 allm4 metal4 42.64
 
 #metal5
- defaultsidewall    allm5 metal5       127
+ defaultsidewall    allm5 metal5       127.06
 #ifdef RERAM
-# defaultareacap     allm5 metal5 well  6
- defaultoverlap	    allm5 metal5 dnwell,isosub	     dwell 6
- areacap     	    allm5/m5 6
- defaultoverlap     allm5 metal5 nwell,obswell,pwell well  6
- defaultperimeter   allm5 metal5 nwell,obswell,pwell well  36
- defaultsideoverlap allm5 metal5 nwell,obswell,pwell well  36
+# defaultareacap     allm5 metal5 well  5.99
+ defaultoverlap	    allm5 metal5 dnwell,isosub	     dwell 5.99
+ areacap     	    allm5/m5 5.99
+ defaultoverlap     allm5 metal5 nwell,obswell,pwell well  5.99
+ defaultperimeter   allm5 metal5 nwell,obswell,pwell well  36.83
+ defaultsideoverlap allm5 metal5 nwell,obswell,pwell well  36.83
 
 #metal5->diff
- defaultoverlap     allm5 metal5 allactivenonfet active 6
- defaultsideoverlap allm5 metal5 allactivenonfet active 36
+ defaultoverlap     allm5 metal5 allactivenonfet active 5.99
+ defaultsideoverlap allm5 metal5 allactivenonfet active 36.83
 
 #metal5->poly
- defaultoverlap     allm5 metal5 allpolynonres active 7
- defaultsideoverlap allm5 metal5 allpolynonres active 38
- defaultsideoverlap *poly active allm5 metal5 6
+ defaultoverlap     allm5 metal5 allpolynonres active 6.80
+ defaultsideoverlap allm5 metal5 allpolynonres active 37.63
+ defaultsideoverlap *poly active allm5 metal5 6.12
 
 #metal5->locali
- defaultoverlap     allm5 metal5 allli locali 8
- defaultsideoverlap allm5 metal5 allli locali 39
- defaultsideoverlap allli locali allm5 metal5 7
+ defaultoverlap     allm5 metal5 allli locali 7.52
+ defaultsideoverlap allm5 metal5 allli locali 38.53
+ defaultsideoverlap allli locali allm5 metal5 7.15
 
 #metal5->metal1
- defaultoverlap     allm5 metal5 allm1 metal1 9
- defaultsideoverlap allm5 metal5 allm1 metal1 40
- defaultsideoverlap allm1 metal1 allm5 metal5 11
+ defaultoverlap     allm5 metal5 allm1 metal1 8.77
+ defaultsideoverlap allm5 metal5 allm1 metal1 39.95
+ defaultsideoverlap allm1 metal1 allm5 metal5 11.12
 
 #else (!RERAM)
-# defaultareacap     allm5 metal5 well  6
- defaultoverlap	    allm5 metal5 dnwell,isosub	     dwell 6
- areacap     	    allm5/m5 6
- defaultoverlap     allm5 metal5 nwell,obswell,pwell well  6
- defaultperimeter   allm5 metal5 nwell,obswell,pwell well  39
- defaultsideoverlap allm5 metal5 nwell,obswell,pwell well  39
+# defaultareacap     allm5 metal5 well  6.32
+ defaultoverlap	    allm5 metal5 dnwell,isosub	     dwell 6.32
+ areacap     	    allm5/m5 6.32
+ defaultoverlap     allm5 metal5 nwell,obswell,pwell well  6.32
+ defaultperimeter   allm5 metal5 nwell,obswell,pwell well  38.85
+ defaultsideoverlap allm5 metal5 nwell,obswell,pwell well  38.85
 
 #metal5->diff
- defaultoverlap     allm5 metal5 allactivenonfet active 6
- defaultsideoverlap allm5 metal5 allactivenonfet active 39
+ defaultoverlap     allm5 metal5 allactivenonfet active 6.32
+ defaultsideoverlap allm5 metal5 allactivenonfet active 38.85
 
 #metal5->poly
- defaultoverlap     allm5 metal5 allpolynonres active 7
- defaultsideoverlap allm5 metal5 allpolynonres active 40
- defaultsideoverlap *poly active allm5 metal5 6
+ defaultoverlap     allm5 metal5 allpolynonres active 7.21
+ defaultsideoverlap allm5 metal5 allpolynonres active 39.91
+ defaultsideoverlap *poly active allm5 metal5 6.49
 
 #metal5->locali
- defaultoverlap     allm5 metal5 allli locali 8
- defaultsideoverlap allm5 metal5 allli locali 41
- defaultsideoverlap allli locali allm5 metal5 8
+ defaultoverlap     allm5 metal5 allli locali 8.03
+ defaultsideoverlap allm5 metal5 allli locali 41.15
+ defaultsideoverlap allli locali allm5 metal5 7.64
 
 #metal5->metal1
- defaultoverlap     allm5 metal5 allm1 metal1 9
- defaultsideoverlap allm5 metal5 allm1 metal1 43
- defaultsideoverlap allm1 metal1 allm5 metal5 12
+ defaultoverlap     allm5 metal5 allm1 metal1 9.48
+ defaultsideoverlap allm5 metal5 allm1 metal1 43.19
+ defaultsideoverlap allm1 metal1 allm5 metal5 12.02
 
 #endif (!RERAM)
 
 #metal5->metal2
- defaultoverlap     allm5 metal5 allm2 metal2 11
- defaultsideoverlap allm5 metal5 allm2 metal2 46
- defaultsideoverlap allm2 metal2 allm5 metal5 16
+ defaultoverlap     allm5 metal5 allm2 metal2 11.34
+ defaultsideoverlap allm5 metal5 allm2 metal2 45.59
+ defaultsideoverlap allm2 metal2 allm5 metal5 15.69
 
 #metal5->metal3
- defaultoverlap     allm5 metal5 allm3 metal3 20
- defaultsideoverlap allm5 metal5 allm3 metal3 54
- defaultsideoverlap allm3 metal3 allm5 metal5 28
+ defaultoverlap     allm5 metal5 allm3 metal3 19.63
+ defaultsideoverlap allm5 metal5 allm3 metal3 54.15
+ defaultsideoverlap allm3 metal3 allm5 metal5 27.84
 
 #metal5->metal4
- defaultoverlap     allm5 metal5 allm4 metal4 68
- defaultsideoverlap allm5 metal5 allm4 metal4 83
- defaultsideoverlap allm4 metal4 allm5 metal5 47
+ defaultoverlap     allm5 metal5 allm4 metal4 68.33
+ defaultsideoverlap allm5 metal5 allm4 metal4 82.82
+ defaultsideoverlap allm4 metal4 allm5 metal5 46.98
 #endif (METAL5)
 
 variants *
