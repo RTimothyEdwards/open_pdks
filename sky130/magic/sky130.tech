@@ -5427,6 +5427,7 @@ defaultoverlap     nwell well isosub dwell  120
 # defaultperimeter   allpolynonfet active   57
 
  defaultsidewall    *poly active  22.6
+ defaultoverlap	    *poly active dnwell,isosub	     dwell 55.27
  defaultareacap     *poly active nwell,obswell,pwell well  106.13
  defaultperimeter   *poly active nwell,obswell,pwell well  55.27
  defaultsideoverlap *poly active nwell,obswell,pwell well  55.27
