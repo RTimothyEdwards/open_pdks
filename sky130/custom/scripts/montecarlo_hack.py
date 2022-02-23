@@ -11,6 +11,7 @@
 import os
 import re
 import sys
+import tempfile
 
 searchpath = ['sky130A/libs.tech/ngspice/parameters/critical.spice',
 	'sky130A/libs.tech/ngspice/parameters/montecarlo.spice']
@@ -54,10 +55,10 @@ for infile_name in searchpath:
     filepath = os.path.split(infile_name)[0]
     filename = os.path.split(infile_name)[1]
     fileroot = os.path.splitext(filename)[0]
-    outfile_name = os.path.join(filepath, fileroot + '_temp')
 
     infile = open(infile_name, 'r')
-    outfile = open(outfile_name, 'w')
+    handle, outfile_name = tempfile.mkstemp()
+    outfile = osfdopen(handle, 'w')
 
     line_number = 0
     replaced_something = False

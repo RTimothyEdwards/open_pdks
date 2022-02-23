@@ -54,14 +54,14 @@ def filter(inname):
             tokens = newline.split()
             if tokens[1] == filebits[0]:  # top subckt
                 bus_start = 2
-                last_base = base_rex.match(tokens[2])[1]
+                last_base = base_rex.match(tokens[2]).group(1)
                 i = 3
                 while i < len(tokens):
                     base_match = base_rex.match(tokens[i])  # always matches one base net
-                    if last_base != base_match[1]:
+                    if last_base != base_match.group(1):
                         tokens[bus_start:i] = tokens[i-1:bus_start-1:-1]  # reverse the bus indices
                         bus_start = i
-                        last_base = base_match[1]
+                        last_base = base_match.group(1)
                     i += 1
                 tokens[bus_start:i] = tokens[i-1:bus_start-1:-1]
                 newline = " ".join(tokens)
