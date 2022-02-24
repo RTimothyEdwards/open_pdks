@@ -12,6 +12,7 @@
 import os
 import re
 import sys
+import tempfile
 
 if len(sys.argv) <= 1:
     print('Usage: xyce_hack.py <path_to_file>')
@@ -23,10 +24,10 @@ else:
     filepath = os.path.split(infile_name)[0]
     filename = os.path.split(infile_name)[1]
     fileroot = os.path.splitext(filename)[0]
-    outfile_name = os.path.join(filepath, fileroot + '_temp')
 
     infile = open(infile_name, 'r')
-    outfile = open(outfile_name, 'w')
+    handle, outfile_name = tempfile.mkstemp()
+    outfile = os.fdopen(handle, 'w')
 
     line_number = 0
     replaced_something = False

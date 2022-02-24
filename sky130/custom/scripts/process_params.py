@@ -9,6 +9,7 @@
 import os
 import re
 import sys
+import tempfile
 
 pr_switch_param = 'MC_PR_SWITCH'
 
@@ -86,10 +87,10 @@ for infile_name in filelist:
     filepath = os.path.split(infile_name)[0]
     filename = os.path.split(infile_name)[1]
     fileroot = os.path.splitext(filename)[0]
-    outfile_name = os.path.join(filepath, fileroot + '_temp')
 
     infile = open(infile_name, 'r')
-    outfile = open(outfile_name, 'w')
+    handle, outfile_name = tempfile.mkstemp()
+    outfile = os.fdopen(handle, 'w')
 
     state = 'before_process'
     line_number = 0

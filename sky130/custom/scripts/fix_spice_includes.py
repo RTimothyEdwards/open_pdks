@@ -11,6 +11,7 @@
 import os
 import re
 import sys
+import tempfile
 
 newdevs = []
 newdevs.append('sky130_fd_pr__pnp_05v5_W3p40L3p40')
@@ -38,10 +39,10 @@ else:
     filepath = os.path.split(infile_name)[0]
     filename = os.path.split(infile_name)[1]
     fileroot = os.path.split(filename)[0]
-    outfile_name = os.path.join(filepath, fileroot + '_temp')
 
     infile = open(infile_name, 'r')
-    outfile = open(outfile_name, 'w')
+    handle, outfile_name = tempfile.mkstemp()
+    outfile = os.fdopen(handle, 'w')
 
     line_number = 0
     replaced_something = False

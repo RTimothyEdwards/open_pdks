@@ -632,6 +632,51 @@ osu-t18-repo:
 		fi ; \
 	fi
 
+# Update prerequisites
+update: update-pdk-repo update-alpha-repo update-xschem-repo update-sram-repo update-osu-t12-repo update-osu-t15-repo update-osu-t18-repo
+
+update-pdk-repo:
+	if test "x${SKYWATER_PATH}" != "x" ; then \
+		echo "Updating SkyWater PDK from ${PDK_URL}" ; \
+		custom/scripts/pdk_update.sh ${SKYWATER_PATH} ; \
+	fi
+
+update-alpha-repo:
+	if test "x${ALPHA_PATH}" != "x" ; then \
+		echo "Updating alphanumeric library from ${ALPHA_URL}" ; \
+		../scripts/update.sh ${ALPHA_PATH} ; \
+	fi
+
+update-sram-repo:
+	if test "x${SRAM_PATH}" != "x" ; then \
+		echo "Updating SRAM macro library from ${SRAM_URL}" ; \
+		../scripts/update.sh ${SRAM_PATH} ; \
+	fi
+
+update-xschem-repo:
+	if test "x${XSCHEM_PATH}" != "x" ; then \
+		echo "Updating xschem setup from ${XSCHEM_URL}" ; \
+		../scripts/update.sh ${XSCHEM_PATH} ; \
+	fi
+
+update-osu-t12-repo:
+	if test "x${OSU_T12_PATH}" != "x" ; then \
+		echo "Updating OSU standard T12 cell library from ${OSU_T12_URL}" ; \
+		../scripts/update.sh ${OSU_T12_PATH} ; \
+	fi
+
+update-osu-t15-repo:
+	if test "x${OSU_T15_PATH}" != "x" ; then \
+		echo "Updating OSU standard T15 cell library from ${OSU_T15_URL}" ; \
+		../scripts/update.sh ${OSU_T15_PATH} ; \
+	fi
+
+update-osu-t18-repo:
+	if test "x${OSU_T18_PATH}" != "x" ; then \
+		echo "Updating OSU standard T18 cell library from ${OSU_T18_URL}" ; \
+		../scripts/update.sh ${OSU_T18_PATH} ; \
+	fi
+
 all-%: prerequisites
 	echo "Starting sky130$* PDK staging on "`date` > ${SKY130$*}_make.log
 	${MAKE} general-$*
@@ -813,9 +858,6 @@ xcircuit-%: xcircuit/${TECH}.xcircuitrc
 	${CPP} ${SKY130$*_DEFS} xcircuit/${TECH}.xcircuitrc \
 		${XCIRCUIT_STAGING_$*}/${SKY130$*}.xcircuitrc
 
-
-
-
 xschem-%: ${XSCHEM_PATH}
 	if test "x${XSCHEM_PATH}" != "x" ; then \
 		rm -rf ${XSCHEM_STAGING_$*} ; \
@@ -826,23 +868,32 @@ xschem-%: ${XSCHEM_PATH}
 	if test "x${XSCHEM_PATH}" != "x" ; then \
 		cp -rp ${XSCHEM_PATH}/* ${XSCHEM_STAGING_$*} ; \
 	fi
-
-	#add the correct libraries into the test files
-	if test "x${XSCHEM_PATH}" != "x" ; then \
-		for file in ${XSCHEM_STAGING_$*}/sky130_tests/* ; do \
-			${SED} -i '/.include $$\:\:SKYWATER_MODELS/d' $$file ; \
-			grep -zl 'sky130.lib.spice' $$file || ${SED} -z 's|format="tcleval( @value )"\nvalue="|format="tcleval( @value )"\nvalue="\n.lib $$\:\:SKYWATER_MODELS/sky130.lib.spice tt |' -i $$file ; \
-		done ; \
-	fi
-	# Re-copy the xschemrc, with one change to add the PDK install path as
-	# a component of XSCHEM_LIBRARY_PATH
+	# xschem setup is for sky130A.  Fix for the given target variant.
+	# Add custom additions to the startup file for open_pdk.
 	if test "x${XSCHEM_PATH}" != "x" ; then \
 		cat ${XSCHEM_PATH}/xschemrc | \
-			${SED} -e "/PWD/aappend XSCHEM_LIBRARY_PATH :${XSCHEM_STAGING_$*}" | \
-			${SED} -e '/netlist_dir/aset netlist_dir $$env(PWD)' | \
-			${SED} -e "/SKYWATER_MODELS/s#~/pdks/sky130$*/libs.tech/ngspice#${NGSPICE_STAGING_$*}#" | \
-			${SED} -e "/SKYWATER_STDCELLS/s#~/pdks/sky130$*/libs.ref/sky130_fd_sc_hd/spice#${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_SPICE}#" \
-			> ${XSCHEM_STAGING_$*}/xschemrc ; \
+			${SED} -e "/sky130A/s#sky130A#TECHNAME#" \
+			> ${XSCHEM_STAGING_$*}/xschemrc_source ; \
+		${CPP} ${SKY130$*_DEFS} ${XSCHEM_STAGING_$*}/xschemrc_source \
+			${XSCHEM_STAGING_$*}/xschemrc ; \
+		cat ${XSCHEM_PATH}/xschem_verilog_import/xschemrc | \
+			${SED} -e "/sky130A/s#sky130A#TECHNAME#" \
+			> ${XSCHEM_STAGING_$*}/xschemrc_source ; \
+		${CPP} ${SKY130$*_DEFS} ${XSCHEM_STAGING_$*}/xschemrc_source \
+			${XSCHEM_STAGING_$*}/xschem_verilog_import/xschemrc ; \
+		rm -f ${XSCHEM_STAGING_$*}/xschemrc_source ; \
+		cat ./custom/xschem/xschemrc_append >> ${XSCHEM_STAGING_$*}/xschemrc ; \
+	fi
+	# In the sky130A variant, remove the reram schematic/symbol and references
+	if test "x${XSCHEM_PATH}" != "x" ; then \
+		if test "x$*" == "xA" ; then \
+			rm -f  ${XSCHEM_STAGING_$*}/sky130_tests/tb_reram* ; \
+			rm -f  ${XSCHEM_STAGING_$*}/sky130_fd_pr/reram* ; \
+			cat ${XSCHEM_STAGING_$*}/sky130_tests/top.sch | \
+				${SED} -e "/reram/,+7d" \
+				> ${XSCHEM_STAGING_$*}/temp ; \
+			mv ${XSCHEM_STAGING_$*}/temp ${XSCHEM_STAGING_$*}/sky130_tests/top.sch ; \
+		fi ; \
 	fi
 
 openlane-%: openlane/config.tcl openlane/rcx_rules.info openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
