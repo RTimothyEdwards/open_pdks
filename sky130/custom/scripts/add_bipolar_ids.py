@@ -10,6 +10,7 @@
 import os
 import re
 import sys
+import tempfile
 
 options = []
 arguments = []
@@ -50,7 +51,6 @@ typelist = ['pnp0p68',
 
 for idx, device in enumerate(devlist):
     infile_name = magpath + '/' + device + '.mag'
-    outfile_name = magpath + '/' + device + '_temp.mag'
 
     if not os.path.exists(infile_name):
         print('Error:  Cannot find file ' + infile_name)
@@ -61,7 +61,8 @@ for idx, device in enumerate(devlist):
     type = typelist[idx]
     is_baserect = False
     infile = open(infile_name, 'r')
-    outfile = open(outfile_name, 'w')
+    handle, outfile_name = tempfile.mkstemp()
+    outfile = os.fdopen(handle, 'w')
     line_number = 0
     replaced_something = False
 
