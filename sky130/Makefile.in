@@ -157,8 +157,10 @@ endif
 TECH = sky130
 
 # The run-time environment uses PDKPATH to override the PDK location,
-# so prevent that from happening during PDK install.
+# so prevent that from happening during PDK install.  This will also
+# happen with PDK_ROOT, so avoid that as well.
 unexport PDKPATH 
+unexport PDK_ROOT 
 
 # If EF_STYLE is set to 1, then efabless naming conventions are
 # used, otherwise the generic naming conventions are used.
