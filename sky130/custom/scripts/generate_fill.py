@@ -119,7 +119,7 @@ if __name__ == '__main__':
 
     # Searching for rcfile
     
-    rcfile_paths=[magpath+'/.magicrc','/$PDK_PATH/libs.tech/magic/sky130A.magicrc','/usr/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc']
+    rcfile_paths=[magpath+'/.magicrc','/$PDK_PATH/libs.tech/magic/TECHNAME.magicrc','/usr/share/pdk/TECHNAME/libs.tech/magic/TECHNAME.magicrc']
     
     rcfile=''
     

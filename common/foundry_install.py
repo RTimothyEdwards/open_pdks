@@ -415,10 +415,9 @@ def tfilter(targetroot, filterscript, ef_format=False, outfile=[]):
             # Make sure this file is writable (as the original may not be)
             makeuserwritable(outfile)
 
+        arguments = [filterscript, targetroot, outfile]
         if ef_format:
-            arguments = [filterscript, targetroot, outfile, '-ef_format']
-        else:
-            arguments = [filterscript, targetroot, outfile]
+            arguments.append('-ef_format')
 
         subprocess_run('filter', arguments)
 

@@ -9,14 +9,30 @@
 import os
 import re
 import sys
-import tempfile
 
 pr_switch_param = 'MC_PR_SWITCH'
 
-walkpath = 'sky130A/libs.tech/ngspice'
+options = []
+arguments = []
+for item in sys.argv[1:]:
+    if item.find('-', 0) == 0:
+        options.append(item[1:])
+    else:
+        arguments.append(item)
 
-if len(sys.argv) > 1:
-    walkpath = sys.argv[1]
+variant = 'sky130A'
+walkpath = variant + '/libs.ref/sky130_fd_pr/spice'
+
+if len(options) > 0:
+    for option in options:
+        if option.startswith('variant'):
+            variant = option.split('=')[1]
+    walkpath = variant + '/libs.ref/sky130_fd_pr/spice'
+    for option in options:
+        if option == 'ef_format':
+            walkpath = variant + '/libs.ref/spi/sky130_fd_pr'
+elif len(arguments) > 0:
+    walkpath = arguments[0]
 
 process_params = []
 
@@ -87,10 +103,10 @@ for infile_name in filelist:
     filepath = os.path.split(infile_name)[0]
     filename = os.path.split(infile_name)[1]
     fileroot = os.path.splitext(filename)[0]
+    outfile_name = os.path.join(filepath, fileroot + '_temp')
 
     infile = open(infile_name, 'r')
-    handle, outfile_name = tempfile.mkstemp()
-    outfile = os.fdopen(handle, 'w')
+    outfile = open(outfile_name, 'w')
 
     state = 'before_process'
     line_number = 0

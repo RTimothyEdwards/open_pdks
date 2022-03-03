@@ -711,10 +711,13 @@ magic-%: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${
 	fi
 	cp -rp custom/scripts/seal_ring_generator ${MAGIC_STAGING_$*}/.
 	cp -rp custom/scripts/bump_bond_generator ${MAGIC_STAGING_$*}/.
-	cp custom/scripts/generate_fill.py ${MAGIC_STAGING_$*}/.
-	cp custom/scripts/check_density.py ${MAGIC_STAGING_$*}/.
 	cp custom/scripts/run_standard_drc.py ${MAGIC_STAGING_$*}/.
-	cp custom/scripts/check_antenna.py ${MAGIC_STAGING_$*}/.
+	${CPP} ${SKY130$*_DEFS} custom/scripts/generate_fill.py \
+		${MAGIC_STAGING_$*}/generate_fill.py
+	${CPP} ${SKY130$*_DEFS} custom/scripts/check_density.py \
+		${MAGIC_STAGING_$*}/check_density.py
+	${CPP} ${SKY130$*_DEFS} custom/scripts/check_antenna.py \
+		${MAGIC_STAGING_$*}/check_antenna.py
 	${CPP} ${SKY130$*_DEFS} magic/${TECH}.tech ${MAGIC_STAGING_$*}/${SKY130$*}.tech
 	${CPP} ${SKY130$*_DEFS} magic/${TECH}gds.tech ${MAGIC_STAGING_$*}/${SKY130$*}-GDS.tech
 	${CPP} ${SKY130$*_DEFS} magic/${TECH}.magicrc ${MAGIC_STAGING_$*}/${SKY130$*}.magicrc
@@ -1129,14 +1132,14 @@ primitive-%:
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Custom:  Parse the (commented out) statistics blocks and generate
 	# ngspice-compatible monte carlo parameters for mismatch and process
-	./custom/scripts/mismatch_params.py ${EF_FORMAT} \
+	./custom/scripts/mismatch_params.py ${EF_FORMAT} -variant=${SKY130$*} \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
-	./custom/scripts/mismatch_params.py ${EF_FORMAT} \
+	./custom/scripts/mismatch_params.py \
 		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
-	./custom/scripts/process_params.py \
+	./custom/scripts/process_params.py ${EF_FORMAT} -variant=${SKY130$*} \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
-	./custom/scripts/montecarlo_hack.py \
+	./custom/scripts/montecarlo_hack.py -variant=${SKY130$*} \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Custom:  Change vt to local_vt in one file for Xyce compatibilty
 	./custom/scripts/xyce_hack.py \
@@ -1159,7 +1162,7 @@ primitive-%:
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Custom:  Add special device ID layers to bipolar layouts in magic
 	# to make the extraction models correct.
-	./custom/scripts/add_bipolar_ids.py ${EF_FORMAT} \
+	./custom/scripts/add_bipolar_ids.py ${EF_FORMAT} -variant=${SKY130$*} \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 
 	# Custom:  Add "spinit" file

@@ -11,13 +11,27 @@
 import os
 import re
 import sys
-import tempfile
 
-searchpath = ['sky130A/libs.tech/ngspice/parameters/critical.spice',
-	'sky130A/libs.tech/ngspice/parameters/montecarlo.spice']
+options = []
+arguments = []
+for item in sys.argv[1:]:
+    if item.find('-', 0) == 0:
+        options.append(item[1:])
+    else:
+        arguments.append(item)
 
-if len(sys.argv) > 1:
+variant = 'sky130A'
+
+if len(options) > 0:
+    for option in options:
+        if option.startswith('variant'):
+            variant = option.split('=')[1]
+    searchpath = [variant + '/libs.tech/ngspice/parameters/critical.spice',
+		variant + '/libs.tech/ngspice/parameters/montecarlo.spice']
+
+elif len(arguments) > 0:
     searchpath = sys.argv[1]
+
 
 # Flag all parameters that have the same name as devices.
 # These parameters are unused and must be deleted.
@@ -55,10 +69,10 @@ for infile_name in searchpath:
     filepath = os.path.split(infile_name)[0]
     filename = os.path.split(infile_name)[1]
     fileroot = os.path.splitext(filename)[0]
+    outfile_name = os.path.join(filepath, fileroot + '_temp')
 
     infile = open(infile_name, 'r')
-    handle, outfile_name = tempfile.mkstemp()
-    outfile = osfdopen(handle, 'w')
+    outfile = open(outfile_name, 'w')
 
     line_number = 0
     replaced_something = False

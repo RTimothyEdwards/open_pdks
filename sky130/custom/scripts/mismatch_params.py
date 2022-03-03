@@ -9,7 +9,6 @@
 import os
 import re
 import sys
-import tempfile
 
 mm_switch_param = 'MC_MM_SWITCH'
 
@@ -21,11 +20,17 @@ for item in sys.argv[1:]:
     else:
         arguments.append(item)
 
-walkpath = 'sky130A/libs.ref/sky130_fd_pr/spice'
+variant = 'sky130A'
+walkpath = variant + '/libs.tech/ngspice'
 
 if len(options) > 0:
-    if options[0] == 'ef_format':
-        walkpath = 'sky130A/libs.ref/spi/sky130_fd_pr'
+    for option in options:
+        if option.startswith('variant'):
+            variant = option.split('=')[1]
+    walkpath = variant + '/libs.ref/sky130_fd_pr/spice'
+    for option in options: 
+        if option == 'ef_format':
+            walkpath = variant + '/libs.ref/spi/sky130_fd_pr'
 elif len(arguments) > 0:
     walkpath = arguments[0]
 
@@ -96,10 +101,10 @@ for infile_name in filelist:
     filepath = os.path.split(infile_name)[0]
     filename = os.path.split(infile_name)[1]
     fileroot = os.path.splitext(filename)[0]
+    outfile_name = os.path.join(filepath, fileroot + '_temp')
 
     infile = open(infile_name, 'r')
-    handle, outfile_name = tempfile.mkstemp()
-    outfile = os.fdopen(handle, 'w')
+    outfile = open(outfile_name, 'w')
 
     state = 'before_mismatch'
     line_number = 0
