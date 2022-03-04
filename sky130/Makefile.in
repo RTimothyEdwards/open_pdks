@@ -1219,6 +1219,7 @@ digital-hd-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_hd__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1247,6 +1248,9 @@ digital-hd-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=hd 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Add a maskhint set for the tap cell .mag view to prevent problems writing
 	# when writing NSDM and PSDM to GDS during hierarchical adjustments.
 	${ADDPROP} ${STAGING_PATH}/${SKY130$*} sky130_fd_sc_hd \
@@ -1274,6 +1278,7 @@ digital-hdll-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_hdll__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1296,6 +1301,9 @@ digital-hdll-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hdll 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=hdll 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HDLL_VERILOG}/*.*.v
@@ -1313,6 +1321,7 @@ digital-hvl-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_hvl__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			no-copy=custom/sky130_fd_sc_hvl/spice/sky130_fd*.spice \
 			sort=../common/sort_pdkfiles.py \
@@ -1336,6 +1345,9 @@ digital-hvl-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hvl 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=hvl 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Add a maskhint to the HVL level shifter to represent the HVI layer as
 	# drawn in the GDS, and so eliminate the HVI-to-nwell DRC error.
 	${ADDPROP} ${STAGING_PATH}/${SKY130$*} sky130_fd_sc_hvl sky130_fd_sc_hvl__lsbufhv2lv_1 \
@@ -1355,6 +1367,7 @@ digital-lp-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_lp__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1377,6 +1390,9 @@ digital-lp-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_lp 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=lp 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${LP_VERILOG}/*.*.v
@@ -1389,6 +1405,7 @@ digital-hs-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_hs__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1412,6 +1429,9 @@ digital-hs-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hs 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=hs 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HS_VERILOG}/*.*.v
@@ -1420,6 +1440,7 @@ digital-ms-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_ms__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1442,6 +1463,9 @@ digital-ms-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_ms 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=ms 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${MS_VERILOG}/*.*.v
@@ -1450,6 +1474,7 @@ digital-ls-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_ls__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1472,6 +1497,9 @@ digital-ls-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_ls 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=ls 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${LS_VERILOG}/*.*.v

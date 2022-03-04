@@ -3,7 +3,10 @@
 # fix_techlefA ---
 #
 # This script adds the missing statement "USEMINSPACING OBS OFF" from
-# the technology LEF files for Sky130.
+# the technology LEF files for Sky130, adds missing RESISTANCE
+# values, and corrects the resistance value of local interconnect.
+# Note that resistance values are *nominal* and need to be modified for
+# corners.
 #
 # This script is a filter to be run by setting the name of this script as
 # the value to "filter=" for the model install in the sky130 Makefile for
@@ -24,15 +27,33 @@ def filter(inname, outname):
         print('fix_techlefA.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
+    # These are the resistance values per via type, by name.  Valuse are in
+    # ohms and presented as a string.
+    via_res = {}
+    via_res['mcon'] = '9.30'
+    via_res['via']  = '4.50'
+    via_res['via2'] = '3.41'
+    via_res['via3'] = '3.41'
+    via_res['via4'] = '0.38'
+
     # Process input with regexp
 
     fixedlines = []
     modified = False
 
-    proprex = re.compile('[ \t]*MANUFACTURINGGRID')
+    proprex  = re.compile('[ \t]*MANUFACTURINGGRID')
+    resrex   = re.compile('[ \t]*ENCLOSURE ABOVE')
+    layerrex = re.compile('[ \t]*LAYER ([^ \t\n]+)') 
+    resrex2  = re.compile('[ \t]*RESISTANCE RPERSQ 12.2 ;')
+    curlayer = None
 
     for line in llines:
-        fixedlines.append(line)
+        rmatch = resrex2.match(line)
+        if rmatch:
+            fixedlines.append('  RESISTANCE RPERSQ 12.8 ;')
+            modified = True
+        else:
+            fixedlines.append(line)
 
         # Check for the MANUFACTURINGGRID statement in the file, and
         # add the USEMINSPACING statement after it.
@@ -41,6 +62,15 @@ def filter(inname, outname):
         if pmatch:
             fixedlines.append('USEMINSPACING OBS OFF ;')
             modified = True
+
+        rmatch = resrex.match(line)
+        if rmatch:
+            fixedlines.append('  RESISTANCE ' + via_res[curlayer] + ' ;')
+            modified = True
+
+        lmatch = layerrex.match(line)
+        if lmatch:
+            curlayer = lmatch.group(1)
 
     # Write output
     if outname == None:

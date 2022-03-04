@@ -5654,8 +5654,8 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsidewall    allm5 metal5 127.06
 #ifdef RERAM
  defaultareacap     allm5 metal5 5.99
- defaultperimeter   allm5 metal5 5.99
- defaultoverlap     allm5 metal5 nwell,pwell well  36.83
+ defaultperimeter   allm5 metal5 36.83
+ defaultoverlap     allm5 metal5 nwell,pwell well  5.99
  defaultsideoverlap allm5 metal5 nwell,pwell well  36.83
 
 #metal5->diff
