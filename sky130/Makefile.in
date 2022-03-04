@@ -524,6 +524,7 @@ endif
 # These definitions depend on the setting of EF_STYLE
 ifeq (${EF_STYLE}, 1)
 	IO_VERILOG = verilog/sky130_fd_io
+	IO_GDS = gds/sky130_fd_io
 	HD_VERILOG = verilog/sky130_fd_sc_hd
 	HDLL_VERILOG = verilog/sky130_fd_sc_hdll
 	HVL_VERILOG = verilog/sky130_fd_sc_hvl
@@ -542,6 +543,7 @@ ifeq (${EF_STYLE}, 1)
 	SPIEXT = spi
 else
 	IO_VERILOG = sky130_fd_io/verilog
+	IO_GDS = sky130_fd_io/gds
 	HD_VERILOG = sky130_fd_sc_hd/verilog
 	HDLL_VERILOG = sky130_fd_sc_hdll/verilog
 	HVL_VERILOG = sky130_fd_sc_hvl/verilog
@@ -1181,6 +1183,11 @@ io-%:
 			compile-only rename=sky130_ef_io \
 		-lef %l/lef/sky130_fd_io__top_xres4v2.lef \
 		-library general sky130_fd_io 2>&1 | tee -a ${SKY130$*}_make.log
+	# Copy the GDS file for the GPIOv2 cell, then run the script that fixes it.
+	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/top_gpiov2/sky130_fd_io__top_gpiov2.gds \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
+	./custom/scripts/fix_gpiov2_gds.py \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__top_gpiov2.gds
 	# Install SkyWater I/O pad library
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
@@ -1196,6 +1203,8 @@ io-%:
 		-gds %l/latest/cells/*/*.gds compile-only \
 			sort=../common/sort_pdkfiles.py \
 			options=custom/scripts/sky130_fd_io_import.tcl \
+			no-copy=sky130_fd_io__top_gpiov2.gds \
+			include=sky130_fd_io__top_gpiov2.gds \
 		-verilog %l/latest/cells/*/*.*.v \
 		-verilog %l/latest/cells/*/*.v exclude=*.*.v,sky130_ef_io.v \
 			compile-only filter=custom/scripts/inc_verilog.py \
