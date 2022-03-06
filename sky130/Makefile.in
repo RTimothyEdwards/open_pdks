@@ -1634,7 +1634,12 @@ install-A:
 		-link_from ${DIST_LINK_TARGETS_A} 2>&1 | tee -a ${SKY130A}_install.log
 	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_install.log
 
-install-B:
+# NOTE: if DIST_LINK_TARGETS_B points back to the A variant, then the install
+# of B depends on the install of A.  Can't think of a way to make the dependency
+# itself depend on the value of DIST_LINK_TARGETS_B, so I'm just forcing the
+# install to always be sequential:  install A first, then B.
+
+install-B: install-A
 	echo "Starting SKY130 PDK migration on "`date` > ${SKY130B}_install.log
 	${INSTALL} \
 		-source ${STAGING_PATH}/${SKY130B} \
