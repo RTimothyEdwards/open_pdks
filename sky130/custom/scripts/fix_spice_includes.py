@@ -12,8 +12,11 @@ import os
 import re
 import sys
 
-newdevs = []
-newdevs.append('sky130_fd_pr__pnp_05v5_W3p40L3p40')
+newbjts = []
+newbjts.append('sky130_fd_pr__pnp_05v5_W3p40L3p40')
+
+newvars = []
+newvars.append('sky130_fd_pr__cap_var_hvt')
 
 options = []
 arguments = []
@@ -50,8 +53,14 @@ else:
 
         if 'pnp_05v5' in line:
             # Insert these additional lines
-            for newdev in newdevs:
-                newline = '.include "../../libs.ref/' + libpath + newdev + '.model.spice"\n'
+            for newbjt in newbjts:
+                newline = '.include "../../libs.ref/' + libpath + newbjt + '.model.spice"\n'
+                outfile.write(newline)
+            replaced_something = True
+        elif 'cap_var_lvt' in line:
+            # Insert these additional lines
+            for newvar in newvars:
+                newline = '.include "../../libs.ref/' + libpath + newvar + '.model.spice"\n'
                 outfile.write(newline)
             replaced_something = True
 
