@@ -939,7 +939,6 @@ openlane-%: openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl openlane/sky
 	    rm -f ${OPENLANE_STAGING_$*}/sky130_osu_sc_t18/$$file ; \
 	done
 
-	rm -f ${OPENLANE_STAGING_$*}/rcx_rules.info
 	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.magic
 	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.magic
 	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.magic
