@@ -83,7 +83,7 @@
     "build": {
 	"open_pdks": "OPEN_PDKS_VERSION",
 	"magic": "MAGIC_VERSION"
-    }
+    },
     "commit": {
 	"open_pdks": "OPEN_PDKS_COMMIT",
 	"magic": "MAGIC_COMMIT"
