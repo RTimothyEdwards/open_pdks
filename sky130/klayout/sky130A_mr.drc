@@ -5,7 +5,7 @@
 #   Distributed under GNU GPLv3: https://www.gnu.org/licenses/
 #
 #  History :
-#   2022-1-13 : 2022.1.13_01.03 release
+#   2022-2-17 : 2022.2.17_01.04 release
 #
 ##########################################################################################
 
@@ -98,9 +98,14 @@ via4_wildcard = "71/44"
 
 m5_wildcard = "72/20"
 
+nsdm_wildcard = "93/44"
+
+psdm_wildcard = "94/20"
+nwell_wildcard = "64/20"
+
 diff = input(65, 20)
 tap = polygons(65, 44)
-nwell = polygons(64, 20)
+nwell = polygons(nwell_wildcard)
 dnwell = polygons(64, 18)
 pwbm = polygons(19, 44)
 pwde = polygons(124, 20)
@@ -113,8 +118,8 @@ tunm = polygons(80, 20)
 lvtn = polygons(125, 44)
 poly = polygons(66, 20)
 hvntm = polygons(125, 20)
-nsdm = polygons(93, 44)
-psdm = polygons(94, 20)
+nsdm = polygons(nsdm_wildcard)
+psdm = polygons(psdm_wildcard)
 rpm = polygons(86, 20)
 urpm = polygons(79, 20)
 npc = polygons(95, 20)
@@ -218,11 +223,16 @@ log("START: 64/18 (dnwell)")
 dnwell.width(3.0, euclidian).output("dnwell.2", "dnwell.2 : min. dnwell width : 3.0um")
 log("END: 64/18 (dnwell)")
 
+not_sram = layout(source.cell_obj).select("-*sram*")
+not_sram_nsdm = not_sram.input(nsdm_wildcard)
+not_sram_psdm = not_sram.input(psdm_wildcard)
+not_sram_nwell = not_sram.input(nwell_wildcard)
+
 #   nwell
 log("START: 64/20 (nwell)")
 nwell.width(0.84, euclidian).output("nwell.1", "nwell.1 : min. nwell width : 0.84um")
 nwell.space(1.27, euclidian).output("nwell.2a", "nwell.2a : min. nwell spacing (merged if less) : 1.27um")
-nwell_interact = nwell.merge
+nwell_interact = not_sram_nwell.merge
 dnwell.enclosing(nwell_interact.holes, 1.03, euclidian).output("nwell.6", "nwell.6 : min enclosure of nwellHole by dnwell : 1.03um")
 log("END: 64/20 (nwell)")
 
@@ -301,14 +311,14 @@ log("END: 95/20 (npc)")
 
 #   nsdm
 log("START: 93/44 (nsdm)")
-nsdm.outside(areaid_ce).width(0.38, euclidian).output("nsd.1", "nsd.1 : min. nsdm width : 0.38um")
-nsdm.not(areaid_ce).space(0.38, euclidian).output("nsd.2", "nsd.2 : min. nsdm spacing, should be manually merged if less than : 0.38um")
+not_sram_nsdm.outside(areaid_ce).width(0.38, euclidian).output("nsd.1", "nsd.1 : min. nsdm width : 0.38um")
+not_sram_nsdm.not(areaid_ce).space(0.38, euclidian).output("nsd.2", "nsd.2 : min. nsdm spacing, should be manually merged if less than : 0.38um")
 log("END: 93/44 (nsdm)")
 
 #   psdm
 log("START: 94/20 (psdm)")
-psdm.outside(areaid_ce).width(0.38, euclidian).output("psd.1", "psd.1 : min. psdm width : 0.38um")
-psdm.not(areaid_ce).space(0.38, euclidian).output("psd.2", "psd.2 : min. psdm spacing, should be manually merged if less than : 0.38um")
+not_sram_psdm.outside(areaid_ce).width(0.38, euclidian).output("psd.1", "psd.1 : min. psdm width : 0.38um")
+not_sram_psdm.not(areaid_ce).space(0.38, euclidian).output("psd.2", "psd.2 : min. psdm spacing, should be manually merged if less than : 0.38um")
 log("END: 94/20 (psdm)")
 
 #   licon
