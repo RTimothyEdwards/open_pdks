@@ -157,8 +157,10 @@ endif
 TECH = sky130
 
 # The run-time environment uses PDKPATH to override the PDK location,
-# so prevent that from happening during PDK install.
+# so prevent that from happening during PDK install.  This will also
+# happen with PDK_ROOT, so avoid that as well.
 unexport PDKPATH 
+unexport PDK_ROOT 
 
 # If EF_STYLE is set to 1, then efabless naming conventions are
 # used, otherwise the generic naming conventions are used.
@@ -359,6 +361,7 @@ else
 	COMMIT_DEFS += -DFD_SC_LP_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_lp/latest)
     endif
 endif
+COMMIT_DEFS += -DMAGIC_COMMIT=$(shell magic -dnull -noconsole --commit)
 COMMIT_DEFS += -DMAGIC_VERSION=$(shell magic -dnull -noconsole --version)
 COMMIT_DEFS += -DOPEN_PDKS_VERSION=$(shell cat ../VERSION)
 
@@ -521,6 +524,7 @@ endif
 # These definitions depend on the setting of EF_STYLE
 ifeq (${EF_STYLE}, 1)
 	IO_VERILOG = verilog/sky130_fd_io
+	IO_GDS = gds/sky130_fd_io
 	HD_VERILOG = verilog/sky130_fd_sc_hd
 	HDLL_VERILOG = verilog/sky130_fd_sc_hdll
 	HVL_VERILOG = verilog/sky130_fd_sc_hvl
@@ -539,6 +543,7 @@ ifeq (${EF_STYLE}, 1)
 	SPIEXT = spi
 else
 	IO_VERILOG = sky130_fd_io/verilog
+	IO_GDS = sky130_fd_io/gds
 	HD_VERILOG = sky130_fd_sc_hd/verilog
 	HDLL_VERILOG = sky130_fd_sc_hdll/verilog
 	HVL_VERILOG = sky130_fd_sc_hvl/verilog
@@ -708,10 +713,13 @@ magic-%: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${
 	fi
 	cp -rp custom/scripts/seal_ring_generator ${MAGIC_STAGING_$*}/.
 	cp -rp custom/scripts/bump_bond_generator ${MAGIC_STAGING_$*}/.
-	cp custom/scripts/generate_fill.py ${MAGIC_STAGING_$*}/.
-	cp custom/scripts/check_density.py ${MAGIC_STAGING_$*}/.
 	cp custom/scripts/run_standard_drc.py ${MAGIC_STAGING_$*}/.
-	cp custom/scripts/check_antenna.py ${MAGIC_STAGING_$*}/.
+	${CPP} ${SKY130$*_DEFS} custom/scripts/generate_fill.py \
+		${MAGIC_STAGING_$*}/generate_fill.py
+	${CPP} ${SKY130$*_DEFS} custom/scripts/check_density.py \
+		${MAGIC_STAGING_$*}/check_density.py
+	${CPP} ${SKY130$*_DEFS} custom/scripts/check_antenna.py \
+		${MAGIC_STAGING_$*}/check_antenna.py
 	${CPP} ${SKY130$*_DEFS} magic/${TECH}.tech ${MAGIC_STAGING_$*}/${SKY130$*}.tech
 	${CPP} ${SKY130$*_DEFS} magic/${TECH}gds.tech ${MAGIC_STAGING_$*}/${SKY130$*}-GDS.tech
 	${CPP} ${SKY130$*_DEFS} magic/${TECH}.magicrc ${MAGIC_STAGING_$*}/${SKY130$*}.magicrc
@@ -896,7 +904,7 @@ xschem-%: ${XSCHEM_PATH}
 		fi ; \
 	fi
 
-openlane-%: openlane/config.tcl openlane/rcx_rules.info openlane/sky130_fd_sc_hd/config.tcl  openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
+openlane-%: openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_$*}
 	mkdir -p ${OPENLANE_STAGING_$*}
 	rm -rf ${OPENLANE_STAGING_$*}/custom_cells/*
@@ -931,9 +939,19 @@ openlane-%: openlane/config.tcl openlane/rcx_rules.info openlane/sky130_fd_sc_hd
 	    rm -f ${OPENLANE_STAGING_$*}/sky130_osu_sc_t18/$$file ; \
 	done
 
+	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.magic
+	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.magic
+	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.magic
+
 	cp -r openlane/custom_cells ${OPENLANE_STAGING_$*}
 	${CPP} ${SKY130$*_DEFS} openlane/config.tcl ${OPENLANE_STAGING_$*}/config.tcl
-	${CPP} ${SKY130$*_DEFS} openlane/rcx_rules.info ${OPENLANE_STAGING_$*}/rcx_rules.info
+
+	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.min.magic \
+		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.magic
+	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.nom.magic \
+		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.magic
+	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.max.magic \
+		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.magic
 
 	for file in ${OPENLANE_COMMON} ; do \
 	    ${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_fd_sc_hd/$$file \
@@ -1115,14 +1133,14 @@ primitive-%:
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Custom:  Parse the (commented out) statistics blocks and generate
 	# ngspice-compatible monte carlo parameters for mismatch and process
-	./custom/scripts/mismatch_params.py ${EF_FORMAT} \
+	./custom/scripts/mismatch_params.py ${EF_FORMAT} -variant=${SKY130$*} \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
-	./custom/scripts/mismatch_params.py ${EF_FORMAT} \
+	./custom/scripts/mismatch_params.py \
 		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
-	./custom/scripts/process_params.py \
+	./custom/scripts/process_params.py ${EF_FORMAT} -variant=${SKY130$*} \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
-	./custom/scripts/montecarlo_hack.py \
+	./custom/scripts/montecarlo_hack.py -variant=${SKY130$*} \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Custom:  Change vt to local_vt in one file for Xyce compatibilty
 	./custom/scripts/xyce_hack.py \
@@ -1145,7 +1163,7 @@ primitive-%:
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Custom:  Add special device ID layers to bipolar layouts in magic
 	# to make the extraction models correct.
-	./custom/scripts/add_bipolar_ids.py ${EF_FORMAT} \
+	./custom/scripts/add_bipolar_ids.py ${EF_FORMAT} -variant=${SKY130$*} \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 
 	# Custom:  Add "spinit" file
@@ -1164,6 +1182,11 @@ io-%:
 			compile-only rename=sky130_ef_io \
 		-lef %l/lef/sky130_fd_io__top_xres4v2.lef \
 		-library general sky130_fd_io 2>&1 | tee -a ${SKY130$*}_make.log
+	# Copy the GDS file for the GPIOv2 cell, then run the script that fixes it.
+	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/top_gpiov2/sky130_fd_io__top_gpiov2.gds \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
+	./custom/scripts/fix_gpiov2_gds.py \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__top_gpiov2.gds
 	# Install SkyWater I/O pad library
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
@@ -1179,6 +1202,8 @@ io-%:
 		-gds %l/latest/cells/*/*.gds compile-only \
 			sort=../common/sort_pdkfiles.py \
 			options=custom/scripts/sky130_fd_io_import.tcl \
+			no-copy=sky130_fd_io__top_gpiov2.gds \
+			include=sky130_fd_io__top_gpiov2.gds \
 		-verilog %l/latest/cells/*/*.*.v \
 		-verilog %l/latest/cells/*/*.v exclude=*.*.v,sky130_ef_io.v \
 			compile-only filter=custom/scripts/inc_verilog.py \
@@ -1202,6 +1227,7 @@ digital-hd-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_hd__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1230,6 +1256,9 @@ digital-hd-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=hd 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Add a maskhint set for the tap cell .mag view to prevent problems writing
 	# when writing NSDM and PSDM to GDS during hierarchical adjustments.
 	${ADDPROP} ${STAGING_PATH}/${SKY130$*} sky130_fd_sc_hd \
@@ -1257,6 +1286,7 @@ digital-hdll-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_hdll__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1279,6 +1309,9 @@ digital-hdll-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hdll 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=hdll 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HDLL_VERILOG}/*.*.v
@@ -1296,6 +1329,7 @@ digital-hvl-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_hvl__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			no-copy=custom/sky130_fd_sc_hvl/spice/sky130_fd*.spice \
 			sort=../common/sort_pdkfiles.py \
@@ -1319,6 +1353,9 @@ digital-hvl-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hvl 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=hvl 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Add a maskhint to the HVL level shifter to represent the HVI layer as
 	# drawn in the GDS, and so eliminate the HVI-to-nwell DRC error.
 	${ADDPROP} ${STAGING_PATH}/${SKY130$*} sky130_fd_sc_hvl sky130_fd_sc_hvl__lsbufhv2lv_1 \
@@ -1338,6 +1375,7 @@ digital-lp-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_lp__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1360,6 +1398,9 @@ digital-lp-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_lp 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=lp 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${LP_VERILOG}/*.*.v
@@ -1372,6 +1413,7 @@ digital-hs-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_hs__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1395,6 +1437,9 @@ digital-hs-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hs 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=hs 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HS_VERILOG}/*.*.v
@@ -1403,6 +1448,7 @@ digital-ms-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_ms__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1425,6 +1471,9 @@ digital-ms-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_ms 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=ms 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${MS_VERILOG}/*.*.v
@@ -1433,6 +1482,7 @@ digital-ls-%:
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
+			rename=sky130_fd_sc_ls__nom.tlef \
 		-spice %l/latest/cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
 			filter=custom/scripts/fix_device_models.py \
@@ -1455,6 +1505,9 @@ digital-ls-%:
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_ls 2>&1 | tee -a ${SKY130$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
+		-library=ls 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${LS_VERILOG}/*.*.v
@@ -1580,7 +1633,12 @@ install-A:
 		-link_from ${DIST_LINK_TARGETS_A} 2>&1 | tee -a ${SKY130A}_install.log
 	echo "Ended SKY130 PDK migration on "`date` >> ${SKY130A}_install.log
 
-install-B:
+# NOTE: if DIST_LINK_TARGETS_B points back to the A variant, then the install
+# of B depends on the install of A.  Can't think of a way to make the dependency
+# itself depend on the value of DIST_LINK_TARGETS_B, so I'm just forcing the
+# install to always be sequential:  install A first, then B.
+
+install-B: install-A
 	echo "Starting SKY130 PDK migration on "`date` > ${SKY130B}_install.log
 	${INSTALL} \
 		-source ${STAGING_PATH}/${SKY130B} \

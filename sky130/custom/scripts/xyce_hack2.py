@@ -10,7 +10,6 @@
 import os
 import re
 import sys
-import tempfile
 
 plist = ["ldif", "hdif", "rd", "rs", "rsc", "rdc", "nqsmod"]
 regexps = []
@@ -27,10 +26,10 @@ else:
     filepath = os.path.split(infile_name)[0]
     filename = os.path.split(infile_name)[1]
     fileroot = os.path.splitext(filename)[0]
+    outfile_name = os.path.join(filepath, fileroot + '_temp')
 
     infile = open(infile_name, 'r')
-    handle, outfile_name = tempfile.mkstemp()
-    outfile = os.fdopen(handle, 'w')
+    outfile = open(outfile_name, 'w')
 
     line_number = 0
     replaced_something = False

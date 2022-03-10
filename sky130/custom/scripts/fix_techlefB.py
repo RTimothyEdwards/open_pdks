@@ -3,7 +3,9 @@
 # fix_techlefB ---
 #
 # This script adds the missing statement "USEMINSPACING OBS OFF" from
-# the technology LEF files for Sky130.
+# the technology LEF files for Sky130, adds missing RESISTANCE values,
+# and corrects the resistance value of local interconnect.  Note that
+# resistance values are *nominal* and need to be modified for corners.
 #
 # This script also replaces the plate and fringing capacitance values for
 # route layers from metal2 to metal5 based on the ReRAM stackup (sky130B).
@@ -27,6 +29,16 @@ def filter(inname, outname):
         print('fix_techlefB.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
+    # These are the resistance values per via type, by name.  Values are in
+    # ohms and presented as a string.
+
+    via_res = {}
+    via_res['mcon'] = '9.30'
+    via_res['via']  = '9.00'
+    via_res['via2'] = '3.41'
+    via_res['via3'] = '3.41'
+    via_res['via4'] = '0.38'
+
     # These edge capacitance values get modified
     edgevalues =   [['37.759E-6', '32.918E-6'],
 		    ['40.989E-6', '37.065E-6'],
@@ -47,6 +59,10 @@ def filter(inname, outname):
     proprex  = re.compile('[ \t]*MANUFACTURINGGRID')
     edgerex  = re.compile('[ \t]*EDGECAPACITANCE')
     platerex = re.compile('[ \t]*CAPACITANCE[ \t]+CPERSQDIST')
+    resrex   = re.compile('[ \t]*ENCLOSURE ABOVE')
+    layerrex = re.compile('[ \t]*LAYER ([^ \t\n]+)')
+    resrex2  = re.compile('[ \t]*RESISTANCE RPERSQ 12.2 ;')
+    curlayer = None
 
     for line in llines:
 
@@ -54,13 +70,23 @@ def filter(inname, outname):
         # add the USEMINSPACING statement after it.
 
         pmatch = proprex.match(line)
+        rmatch = resrex.match(line)
+        lmatch = layerrex.match(line)
         if pmatch:
             fixedlines.append(line)
             fixedlines.append('USEMINSPACING OBS OFF ;')
             modified = True
+        elif rmatch:
+            fixedlines.append(line)
+            fixedlines.append('  RESISTANCE ' + via_res[curlayer] + ' ;')
+            modified = True
+        elif lmatch:
+            fixedlines.append(line)
+            curlayer = lmatch.group(1)
         else:
             ematch = edgerex.match(line)
             pmatch = platerex.match(line)
+            rmatch = resrex2.match(line)
             if ematch:
                 found = False
                 for ecap in edgevalues:
@@ -81,6 +107,9 @@ def filter(inname, outname):
                         break
                 if not found:
                     fixedlines.append(line)
+            elif rmatch:
+                fixedlines.append('  RESISTANCE RPERSQ 12.8 ;')
+                modified = True
             else:
                 fixedlines.append(line)
 

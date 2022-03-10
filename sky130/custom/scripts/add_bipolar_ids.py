@@ -10,7 +10,6 @@
 import os
 import re
 import sys
-import tempfile
 
 options = []
 arguments = []
@@ -20,10 +19,17 @@ for item in sys.argv[1:]:
     else:
         arguments.append(item)
 
-magpath = 'sky130A/libs.ref/sky130_fd_pr/mag'
+variant = 'sky130A'
+magpath = variant + '/libs.ref/sky130_fd_pr/mag'
+
 if len(options) > 0:
-    if options[0] == 'ef_format':
-        magpath = 'sky130A/libs.ref/mag/sky130_fd_pr'
+    for option in options:
+        if option.startswith('variant'):
+            variant = option.split('=')[1]
+    magpath = variant + '/libs.ref/sky130_fd_pr/mag'
+    for option in options:
+        if option == 'ef_format':
+            magpath = variant + '/libs.ref/mag/sky130_fd_pr'
 elif len(arguments) > 0:
     magpath = arguments[0]
 
@@ -51,6 +57,7 @@ typelist = ['pnp0p68',
 
 for idx, device in enumerate(devlist):
     infile_name = magpath + '/' + device + '.mag'
+    outfile_name = magpath + '/' + device + '_temp.mag'
 
     if not os.path.exists(infile_name):
         print('Error:  Cannot find file ' + infile_name)
@@ -61,8 +68,7 @@ for idx, device in enumerate(devlist):
     type = typelist[idx]
     is_baserect = False
     infile = open(infile_name, 'r')
-    handle, outfile_name = tempfile.mkstemp()
-    outfile = os.fdopen(handle, 'w')
+    outfile = open(outfile_name, 'w')
     line_number = 0
     replaced_something = False
 
