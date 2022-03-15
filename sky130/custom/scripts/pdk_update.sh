@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 #  pdk_update.sh --
 #
@@ -8,8 +8,8 @@
 #  Usage:	pdk_update.sh <directory>
 #
 
-if [ ! test -d $1 ] ; then
-    echo "Project does not exist in $pdir ;  Cannot update."
+if [ ! -d $1 ] ; then
+    echo "Project does not exist in $1 ;  Cannot update."
     exit 0
 fi
 

@@ -62,9 +62,18 @@ def filter(inname, outname):
     resrex   = re.compile('[ \t]*ENCLOSURE ABOVE')
     layerrex = re.compile('[ \t]*LAYER ([^ \t\n]+)')
     resrex2  = re.compile('[ \t]*RESISTANCE RPERSQ 12.2 ;')
+    thickrex = re.compile('[ \t]*THICKNESS')
+    emptyrex = re.compile('^[ \t]*$')
     curlayer = None
+    thickness_seen = False
 
     for line in llines:
+        if thickness_seen:
+            thickness_seen = False
+            if curlayer and (curlayer == 'met1' or curlayer == 'met2'):
+                ematch = emptyrex.match(line)
+                if ematch:
+                    fixedlines.append('  MINENCLOSEDAREA 0.14 ;')
 
         # Check for the MANUFACTURINGGRID statement in the file, and
         # add the USEMINSPACING statement after it.

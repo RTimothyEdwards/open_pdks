@@ -36,7 +36,7 @@ elif len(arguments) > 0:
 
 mismatch_params = []
 
-mmrex = re.compile('^\*[ \t]*mismatch[ \t]+\{')
+mmrex = re.compile('^\*[ \t]*mismatch[ \t]*\{')
 endrex = re.compile('^\*[ \t]*\}')
 
 filelist = []
@@ -72,10 +72,32 @@ for dirpath, dirnames, filenames in os.walk(walkpath):
                         tokens = line.split()
                         if 'vary' in tokens:
                             if ('dist=gauss' in tokens) or ('gauss' in tokens):
+                                gtype = 'A'
                                 mismatch_param = tokens[2]
-                                std_dev = float(tokens[-1].split('=')[-1])
-                                replacement = '{}*AGAUSS(0,{!s},1)'.format(mm_switch_param, std_dev)
+                                for token in tokens[3:]:
+                                    gparam = token.split('=')
+                                    if len(gparam) == 2:
+                                        if gparam[0] == 'std':
+                                            std_dev = float(gparam[1])
+                                        elif gparam[0] == 'percent' and gparam[1] == 'yes':
+                                            gtype = ''
+
+                                if gtype == '':
+                                    # Convert percentage to a fraction
+                                    std_dev = std_dev / 100
+                                repltext = '{}*' + gtype + 'GAUSS(0,{!s},1)'
+                                replacement = repltext.format(mm_switch_param, std_dev)
                                 mismatch_params.append((mismatch_param, replacement))
+                            elif ('dist=lnorm' in tokens) or ('lnorm' in tokens):
+                                mismatch_param = tokens[2]
+                                for token in tokens[3:]:
+                                    gparam = token.split('=')
+                                    if len(gparam) == 2:
+                                        if gparam[0] == 'std':
+                                            std_dev = float(gparam[1])
+                                replacement = '{}*EXP(AGAUSS(0,{!s},1))'.format(mm_switch_param, std_dev)
+                                mismatch_params.append((mismatch_param, replacement))
+
 
             infile.close()
 

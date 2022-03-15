@@ -37,7 +37,7 @@ elif len(arguments) > 0:
 process_params = []
 
 parmrex = re.compile('^\.param[ \t]+')
-prrex = re.compile('^\*[ \t]*process[ \t]+\{')
+prrex = re.compile('^\*[ \t]*process[ \t]*\{')
 endrex = re.compile('^\*[ \t]*\}')
 
 filelist = []
@@ -73,10 +73,31 @@ for dirpath, dirnames, filenames in os.walk(walkpath):
                         tokens = line.split()
                         if 'vary' in tokens:
                             if ('dist=gauss' in tokens) or ('gauss' in tokens):
+                                gtype = 'A'
                                 process_param = tokens[2]
-                                std_dev = float(tokens[-1].split('=')[-1])
-                                replacement = ' + {}*AGAUSS(0,{!s},1)'.format(pr_switch_param, std_dev)
+                                for token in tokens[3:]:
+                                    gparam = token.split('=')
+                                    if len(gparam) == 2:
+                                        if gparam[0] == 'std':
+                                            std_dev = float(gparam[1])
+                                        elif gparam[0] == 'percent' and gparam[1] == 'yes':
+                                            gtype = ''
+                                if gtype == '':
+                                    # Convert percentage to a fraction
+                                    std_dev = std_dev / 100
+                                repltext = ' + {}*' + gtype + 'GAUSS(0,{!s},1)'
+                                replacement = repltext.format(pr_switch_param, std_dev)
                                 process_params.append((process_param, replacement))
+                            elif ('dist=lnorm' in tokens) or ('lnorm' in tokens):
+                                process_param = tokens[2]
+                                for token in tokens[3:]:
+                                    gparam = token.split('=')
+                                    if len(gparam) == 2:
+                                        if gparam[0] == 'std':
+                                            std_dev = float(gparam[1])
+                                replacement = ' + {}*EXP(AGAUSS(0,{!s},1))'.format(pr_switch_param, std_dev)
+                                process_params.append((process_param, replacement))
+
 
             infile.close()
 

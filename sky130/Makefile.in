@@ -1275,9 +1275,6 @@ digital-hd-%:
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_VERILOG}/*.*.v
 	# Apply extra PDK patches until they get fixed properly in the source
-	${PATCH} -p1 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_TECHLEF} \
-		< custom/patches/hd_minenclosed.squeaky.patch \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
 	${PATCH} -p1 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_VERILOG} \
 		< custom/patches/hd_wire_syntax.patch \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
@@ -1315,10 +1312,6 @@ digital-hdll-%:
 	# Remove the base verilog files which have already been included into
 	# the libraries
 	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HDLL_VERILOG}/*.*.v
-	# Apply extra PDK patches until they get fixed properly in the source
-	${PATCH} -p1 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HDLL_TECHLEF} \
-		< custom/patches/hdll_minenclosed.squeaky.patch \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
 
 digital-hvl-%:
 	# Install custom additions to standard cell libraries
