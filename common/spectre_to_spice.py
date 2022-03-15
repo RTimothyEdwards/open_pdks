@@ -438,6 +438,8 @@ def convert_file(in_file, out_file):
                 fmtline, ispassed = parse_param_line(mmatch.group(3), True, False, True, ispassed, linenum)
                 if isspectre and (modtype == 'resistor' or modtype == 'r2'):
                     modtype = 'r'
+                if isspectre and (modtype == 'diode'):
+                    modtype = 'd'
                 if isspectre and (modtype == 'bsim4'):
                     # "bsim4"---cast to special string so that it can be later
                     # converted to "nmos" or "pmos" based on the "type" parameter
@@ -764,6 +766,16 @@ def convert_file(in_file, out_file):
         spicelines.extend(addmodel(modellines, linenum))
         modellines = []
         inmodel = False
+
+    # Any 'D'-type diode with "perim =" needs to have it changed to "pj ="
+    # (NOTE:  Need more generic handling here, as perimeter parameter
+    # could be in a continuation line)
+
+    perimrex = re.compile('perim([ \t]*=[ \t]*)', re.IGNORECASE)
+    for j in range(len(spicelines)):
+        line = spicelines[j]
+        if len(line) > 1 and line[0].lower() == 'd':
+            spicelines[j] = perimrex.sub('pj\g<1>', line)
 
     # Catching the spectre use of "m" is difficult, so do a 2nd pass
     # on "spicelines" to catch which subcircuits use "*m" expressions,
