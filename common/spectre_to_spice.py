@@ -27,7 +27,7 @@ def is_number(s):
 # If inside a subcircuit, remove the keyword "parameters".  If outside,
 # change it to ".param"
 
-def parse_param_line(line, inparam, insub, iscall, ispassed, linenum):
+def parse_param_line(line, inparam, insub, iscall, ispassed, inmod, linenum):
 
     # Regexp patterns
     parm1rex = re.compile('[ \t]*parameters[ \t]*(.*)')
@@ -77,7 +77,7 @@ def parse_param_line(line, inparam, insub, iscall, ispassed, linenum):
 
         pmatch = parm4rex.match(rest)
         if pmatch:
-            if ispassed and not iscall:
+            if ispassed and not iscall and not inmod:
                 # End of passed parameters.  Break line and generate ".param"
                 ispassed = False
                 fmtline.append('\n.param ')
@@ -153,7 +153,7 @@ def parse_param_line(line, inparam, insub, iscall, ispassed, linenum):
 
             pmatch = parm5rex.match(rest)
             if pmatch:
-                # NOTE: Something that is not a parameters name should be
+                # NOTE: Something that is not a parameter name should be
                 # extended from the previous line.  Note that this parsing
                 # is not rigorous and is possible to break. . .
                 if any((c in '+-*/(){}^~!') for c in pmatch.group(1).strip()):
@@ -271,8 +271,8 @@ def convert_file(in_file, out_file):
     caprex = re.compile('c([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*capacitor[ \t]*(.*)', re.IGNORECASE)
     resrex = re.compile('r([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*resistor[ \t]*(.*)', re.IGNORECASE)
     cdlrex = re.compile('[ \t]*([npcrdlmqx])([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
-    stddevrex = re.compile('[ \t]*([cr])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
-    stddev2rex = re.compile('[ \t]*([cr])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t\'{]+[\'{][^\'}]+[\'}])[ \t]*(.*)', re.IGNORECASE)
+    stddevrex = re.compile('[ \t]*([crd])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
+    stddev2rex = re.compile('[ \t]*([crd])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t\'{]+[\'{][^\'}]+[\'}])[ \t]*(.*)', re.IGNORECASE)
     stddev3rex = re.compile('[ \t]*([npcrdlmqx])([^ \t]+)[ \t]+(.*)', re.IGNORECASE)
 
     with open(in_file, 'r') as ifile:
@@ -281,6 +281,26 @@ def convert_file(in_file, out_file):
         except:
             print('Failure to read ' + in_file + '; not an ASCII file?')
             return
+
+    #---------------------------------------------------------------
+    # Do one pass through the file and pick up all subcircuit names,
+    # because any subcircuit call could be a forward reference.
+    #---------------------------------------------------------------
+
+    allsubrex = re.compile('.*subckt[ \t]+([^ \t\(]+)')
+    subnames = []
+    for line in speclines:
+        testline = line.strip()
+        if testline.startswith('//') or testline.startswith('*'):
+            continue
+        smatch = allsubrex.match(testline)
+        if smatch:
+            subnames.append(smatch.group(1))
+
+    #---------------------------------------------------------------
+    # Now do the main pass (this is probably a bad idea and it would
+    # have been more efficient to do this in multiple passes).
+    #---------------------------------------------------------------
 
     insub = False
     inparam = False
@@ -295,7 +315,6 @@ def convert_file(in_file, out_file):
     savematch = None
     blockskip = 0
     subname = ''
-    subnames = []
     modname = ''
     modtype = ''
     othermodnames = []
@@ -338,8 +357,8 @@ def convert_file(in_file, out_file):
         if line.strip().startswith('+'):
             contline = True
         else:
-            contline = False
             if line.strip() != '':
+                contline = False
                 if inparam:
                     inparam = False
                 if inpinlist:
@@ -374,7 +393,7 @@ def convert_file(in_file, out_file):
         if contline:
             if inparam:
                 # Continue handling parameters
-                fmtline, ispassed = parse_param_line(line, inparam, insub, False, ispassed, linenum)
+                fmtline, ispassed = parse_param_line(line, inparam, insub, False, ispassed, inmodel, linenum)
                 if fmtline != '':
                     if modellines != []:
                         modellines.append(fmtline)
@@ -398,7 +417,7 @@ def convert_file(in_file, out_file):
 
         # If inside a subcircuit, remove "parameters".  If outside,
         # change it to ".param"
-        fmtline, ispassed = parse_param_line(line, inparam, insub, False, ispassed, linenum)
+        fmtline, ispassed = parse_param_line(line, inparam, insub, False, ispassed, inmodel, linenum)
         if fmtline != '':
             inparam = True
             spicelines.append(fmtline)
@@ -435,7 +454,7 @@ def convert_file(in_file, out_file):
                 inmodel = 1
                 # Continue to "if inmodel == 1" block below
             else:
-                fmtline, ispassed = parse_param_line(mmatch.group(3), True, False, True, ispassed, linenum)
+                fmtline, ispassed = parse_param_line(mmatch.group(3), True, False, True, ispassed, inmodel, linenum)
                 if isspectre and (modtype == 'resistor' or modtype == 'r2'):
                     modtype = 'r'
                 if isspectre and (modtype == 'diode'):
@@ -445,9 +464,7 @@ def convert_file(in_file, out_file):
                     # converted to "nmos" or "pmos" based on the "type" parameter
                     modtype = 'ZYXW'
                 modellines.append('.model ' + modname + ' ' + modtype + ' ' + fmtline)
-                if fmtline != '':
-                    inparam = True
-
+                inparam = True
                 inmodel = 2
                 continue
 
@@ -474,7 +491,6 @@ def convert_file(in_file, out_file):
                 insub = True
                 ispassed = True
                 subname = imatch.group(1)
-                subnames.append(subname)
                 if isspectre:
                     devrex = re.compile('[ \t]*' + subname + '[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
                 else:
@@ -569,6 +585,10 @@ def convert_file(in_file, out_file):
                             elif 'capacitor' in pnames[1:]:
                                 pnames.remove('capacitor')
                                 line = 'C' + ' '.join(pnames)
+                            elif len(line) > 1 and line[0].lower() != 'x' and line[0] != '*' and line[0] != '+':
+                                # NOTE: Assumes that anything else being called
+                                # is a known subcircuit (probably better to check)
+                                line = 'X' + ' '.join(pnames)
                         spicelines.append(line)
                     calllines = []
 
@@ -625,7 +645,7 @@ def convert_file(in_file, out_file):
             # Check for devices R and C.
             dmatch = caprex.match(line)
             if dmatch:
-                fmtline, ispassed = parse_param_line(dmatch.group(3), True, insub, True, ispassed, linenum)
+                fmtline, ispassed = parse_param_line(dmatch.group(3), True, insub, True, ispassed, inmodel, linenum)
                 if fmtline != '':
                     inparam = True
                     spicelines.append('c' + dmatch.group(1) + ' ' + dmatch.group(2) + ' ' + fmtline)
@@ -636,7 +656,7 @@ def convert_file(in_file, out_file):
 
             dmatch = resrex.match(line)
             if dmatch:
-                fmtline, ispassed = parse_param_line(dmatch.group(3), True, insub, True, ispassed, linenum)
+                fmtline, ispassed = parse_param_line(dmatch.group(3), True, insub, True, ispassed, inmodel, linenum)
                 if fmtline != '':
                     inparam = True
                     spicelines.append('r' + dmatch.group(1) + ' ' + dmatch.group(2) + ' ' + fmtline)
@@ -662,6 +682,10 @@ def convert_file(in_file, out_file):
                 elif devmodel == 'resistor':
                     devtype = 'r'
                     devmodel = ''
+                # The "device model" might be a known (inline) subcircuit in
+                # which case this is really a subcircuit.
+                elif devmodel in subnames:
+                    devtype = 'x' + devtype
                 elif devtype.lower() == 'n' or devtype.lower() == 'p':
                     # May be specific to SkyWater models, or is it a spectreism?
                     # NOTE:  There is a check, below, to revisit this assignment
@@ -696,7 +720,7 @@ def convert_file(in_file, out_file):
                                 if devmodel.strip("'") == devmodel:
                                     devmodel = "'" + devmodel + "'"
 
-                fmtline, ispassed = parse_param_line(cmatch.group(5), True, insub, True, ispassed, linenum)
+                fmtline, ispassed = parse_param_line(cmatch.group(5), True, insub, True, ispassed, inmodel, linenum)
                 if fmtline != '':
                     inparam = True
                     spicelines.append(devtype + cmatch.group(2) + ' ' + cmatch.group(3) + ' ' + devmodel + ' ' + fmtline)
@@ -714,7 +738,7 @@ def convert_file(in_file, out_file):
 
             dmatch = devrex.match(line)
             if dmatch:
-                fmtline, ispassed = parse_param_line(dmatch.group(3), True, insub, True, ispassed, linenum)
+                fmtline, ispassed = parse_param_line(dmatch.group(3), True, insub, True, ispassed, inmodel, linenum)
                 if fmtline != '':
                     inparam = True
                     calllines.append(subname + ' ' + dmatch.group(1) + ' ' + dmatch.group(2) + ' ' + fmtline)
@@ -753,7 +777,7 @@ def convert_file(in_file, out_file):
                 else:
                     continue
 
-            fmtline, ispassed = parse_param_line(line, True, True, False, ispassed, linenum)
+            fmtline, ispassed = parse_param_line(line, True, True, False, ispassed, inmodel, linenum)
             if fmtline != '':
                 modellines.append(fmtline)
                 continue
@@ -777,14 +801,14 @@ def convert_file(in_file, out_file):
         if len(line) > 1 and line[0].lower() == 'd':
             spicelines[j] = perimrex.sub('pj\g<1>', line)
 
-    # Catching the spectre use of "m" is difficult, so do a 2nd pass
+    # Catching the spectre use of "m" is difficult, so do another pass
     # on "spicelines" to catch which subcircuits use "*m" expressions,
     # then for those subcircuits, add "mult=1" to the subcircuit
     # parameters.  (NOTE:  Need a more generic regular expression here)
 
     sqrtrex = re.compile('.*(sqrt\([ \t]*[^ \t]+[ \t]*\*[ \t]*)m[ \t]*\)', re.IGNORECASE)
     sqsubrex = re.compile('(sqrt\([ \t]*[^ \t]+[ \t]*\*[ \t]*)m[ \t]*\)', re.IGNORECASE)
-    subrex = re.compile('\.subckt[ \t]+([^ \t\(]+)[ \t]*')
+    subrex = re.compile('\.subckt[ \t]+([^ \t\(]+)[ \t]*', re.IGNORECASE)
     needmult = []
     for j in range(len(spicelines)):
         line = spicelines[j]
@@ -803,10 +827,21 @@ def convert_file(in_file, out_file):
         if smatch:
             spicelines[j] = line + ' mult=1'
 
+    # Check for resistor models using "tc1r" and "tc2r"
+    rmodrex = re.compile('.*[ \t]+tc[12]r[ \t]+=', re.IGNORECASE)
+    for j in range(len(spicelines)):
+        line = spicelines[j]
+        rmatch = rmodrex.match(line)
+        if rmatch:
+            spicelines[j] = re.sub('([ \t]+tc[12])r([ \t])', '\g<1>\g<2>', line)
+
     # Output the result to out_file.
     with open(out_file, 'w') as ofile:
         for line in spicelines:
             print(line, file=ofile)
+
+    # Debug info
+    # print('Defined subcircuits: ' + ' '.join(subnames))
 
 if __name__ == '__main__':
     debug = False

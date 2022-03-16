@@ -28,4 +28,4 @@ git submodule update --remote
 # Regenerate liberty files
 
 echo "Regenerating liberty timing files"
-make timing
+make -j$(nproc) timing
