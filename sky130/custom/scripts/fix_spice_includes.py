@@ -14,6 +14,8 @@ import sys
 
 newbjts = []
 newbjts.append('sky130_fd_pr__pnp_05v5_W3p40L3p40')
+newbjts.append('sky130_fd_pr__npn_05v5_W1p00L1p00')
+newbjts.append('sky130_fd_pr__npn_05v5_W1p00L2p00')
 
 newvars = []
 newvars.append('sky130_fd_pr__cap_var_hvt')
