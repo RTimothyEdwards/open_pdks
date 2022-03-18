@@ -23,7 +23,7 @@ end
 version
  version REVISION
  description "SkyWater SKY130: Open Source rules and DRC"
- requires magic-8.3.260
+ requires magic-8.3.277
 end
 
 #------------------------------------------------------------------------
@@ -32,6 +32,8 @@ end
 # Status 8/14/20: Rev 2 (alpha):
 # Started updating with new device/model naming convention
 # Status 1/3/21: Taking out of beta and declaring an official release.
+# Status 3/17/22: Added fringeshieldhalo to improve parasitic capacitance
+#		  calculations.
 #------------------------------------------------------------------------
 
 #------------------------------------------------------------------------
@@ -5058,7 +5060,8 @@ extract
 
  units	microns
  step   7
- sidehalo 2
+ sidehalo 8
+ fringeshieldhalo 8
 
  # NOTE:  MiM cap layers have been purposely put out of order,
  # may want to reconsider.
