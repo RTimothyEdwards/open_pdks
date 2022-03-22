@@ -17,8 +17,6 @@ import tkinter
 import subprocess
 from tkinter import ttk
 
-import config
-
 class Profile(tkinter.Toplevel):
     """Project manager profile settings management."""
 
@@ -74,27 +72,7 @@ class Profile(tkinter.Toplevel):
         if 'username' in prefs:
             self.username.set(prefs['username'])
         else:
-            userid = os.environ['USER']
-            '''
-            p = subprocess.run(['/ef/apps/bin/withnet',
-                        config.apps_path + '/og_uid_service.py', userid],
-                        stdout = subprocess.PIPE)
-            
-            if p.stdout:
-                uid_string = p.stdout.splitlines()[0].decode('utf-8')
-                userspec = re.findall(r'[^"\s]\S*|".+?"', uid_string)
-                if len(userspec) > 0:
-                    username = userspec[0].strip('"')
-                    # Note userspec[1] = UID and userspec[2] = role, useful
-                    # for future applications.
-                else:
-                    username = userid
-            else:
-                username = userid
-            '''
-            username=userid
-
-            self.username.set(username)
+            self.username.set(os.environ['USER'])
 
         # Graphics format for magic
         magicgraphics = ['X11', 'CAIRO', 'OPENGL']

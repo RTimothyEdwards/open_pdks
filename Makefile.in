@@ -48,6 +48,7 @@ ifeq ($(TECHS),)
 endif
 
 TECHS_ALL = $(addprefix tech-,$(ENABLED_TECHS))
+TECHS_UPDATE = $(addprefix update-,$(ENABLED_TECHS))
 TECHS_INSTALL = $(addprefix install-,$(ENABLED_TECHS))
 TECHS_UNINSTALL = $(addprefix uninstall-,$(TECHS))
 TECHS_CLEAN = $(addprefix clean-,$(TECHS))
@@ -55,7 +56,7 @@ TECHS_VERYCLEAN = $(addprefix veryclean-,$(TECHS))
 
 #---------------------------------------------------
 
-.PHONY: all install uninstall clean veryclean
+.PHONY: all install uninstall clean veryclean update
 
 all: $(TECHS_ALL)
 	@echo $(DONE_MESSAGE)
@@ -64,6 +65,9 @@ install: $(TECHS_INSTALL) common_install
 	@echo $(DONE_MESSAGE)
 
 uninstall: $(TECHS_UNINSTALL)
+	@echo $(DONE_MESSAGE)
+
+update: $(TECHS_UPDATE)
 	@echo $(DONE_MESSAGE)
 
 clean: $(TECHS_CLEAN)
@@ -85,9 +89,9 @@ datarootdir = @datarootdir@
 datadir = @datadir@
 
 # NOTE:  All scripts used by the project and design flow management
-# system are in the "runtime" directory, except for cdl2spi.py, which
-# is the one file used by scripts in both the common/ and runtime/
-# directories.
+# system are in the "runtime" directory, except for cdl2spi.py and
+# natural_sort.py, which are the two files used by scripts in both the
+# common/ and runtime/ directories.
 
 common_install:
 	@if test -w $(datadir) ; then \
@@ -103,6 +107,7 @@ common_install:
 		done ;\
 		mv $(datadir)/pdk/runtime/* $(datadir)/pdk/scripts ;\
 		${CPP} -DPREFIX=$(datadir) common/cdl2spi.py $(datadir)/pdk/scripts/cdl2spi.py ;\
+		${CPP} -DPREFIX=$(datadir) common/natural_sort.py $(datadir)/pdk/scripts/natural_sort.py ;\
 		rm -r -f $(datadir)/pdk/runtime ;\
 		echo "Common install:  Done." ;\
 	else \
@@ -112,7 +117,7 @@ common_install:
 #---------------------------------------------------
 
 tech-%: %
-	(cd $* && ${MAKE} all)
+	(cd $* && ${MAKE} -j$(nproc) all)
 
 #---------------------------------------------------
 
@@ -121,6 +126,9 @@ install-%: %
 
 uninstall-%: %
 	(cd $* && ${MAKE} uninstall)
+
+update-%: %
+	(cd $* && ${MAKE} update)
 
 clean-%:
 	(cd $* && ${MAKE} clean)

@@ -53,8 +53,8 @@ def run_antenna(layout_name, output_file):
     myenv = os.environ.copy()
     myenv['MAGTYPE'] = 'mag'
     
-    if os.path.isfile('/usr/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc'):
-       rcfile = '/usr/share/pdk/sky130A/libs.tech/magic/sky130A.magicrc'
+    if os.path.isfile('/usr/share/pdk/TECHNAME/libs.tech/magic/TECHNAME.magicrc'):
+       rcfile = '/usr/share/pdk/TECHNAME/libs.tech/magic/TECHNAME.magicrc'
     elif os.path.isfile(magpath + '/.magicrc'):
        rcfile = magpath + '/.magicrc'
     elif os.path.isfile(os.getcwd() + '/.magicrc'):

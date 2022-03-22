@@ -1,21 +1,31 @@
 #define DESCRIPTION Skywater 0.13um CMOS, local interconntect + high-resistance poly
 #ifdef METAL5
 #define OPTION1 + 5 metal layer backend stack
+#else
+#define OPTION1
 #endif (METAL5)
 #ifdef MIM
 #define OPTION2 + MiM caps
+#else
+#define OPTION2
 #endif (MIM)
 #ifdef REDISTRIBUTION
 #define OPTION3 + redistribution layer
+#else
+#define OPTION3
 #endif (REDISTRIBUTION)
+#ifdef RERAM
+#define OPTION4 + ReRAM
+#else
+#define OPTION4
+#endif (RERAM)
 {
     "foundry": "SW",
     "foundry-name": "SkyWater",
     "node": "TECHNAME",
     "feature-size": "130nm",
     "status": "active",
-    "commit": "OPEN_PDKS_COMMIT",
-    "description": "DESCRIPTION OPTION1 OPTION2 OPTION3",
+    "description": "DESCRIPTION OPTION1 OPTION2 OPTION3 OPTION4",
     "options": [
 #ifdef METAL5
 #undef METAL5
@@ -27,12 +37,20 @@
 #endif (METAL5)
 #ifdef MIM
 #undef MIM
-#ifdef REDISTRIBUTION
+#ifdef (REDISTRIBUTION || RERAM)
         "MIM",
 #else
         "MIM"
-#endif (REDISTRIBUTION)
+#endif (REDISTRIBUTION || RERAM)
 #endif (MIM)
+#ifdef RERAM
+#undef RERAM
+#ifdef (REDISTRIBUTION)
+        "RERAM",
+#else
+        "RERAM"
+#endif (REDISTRIBUTION)
+#endif (RERAM)
 #ifdef REDISTRIBUTION
 #undef REDISTRIBUTION
         "REDISTRIBUTION"
@@ -63,7 +81,11 @@
 	"sky130_ml_xx_hd": "ALPHA_COMMIT"
     },
     "build": {
-	"magic": "MAGIC_VERSION",
-	"open_pdks": "OPEN_PDKS_VERSION"
+	"open_pdks": "OPEN_PDKS_VERSION",
+	"magic": "MAGIC_VERSION"
+    },
+    "commit": {
+	"open_pdks": "OPEN_PDKS_COMMIT",
+	"magic": "MAGIC_COMMIT"
     }
 }

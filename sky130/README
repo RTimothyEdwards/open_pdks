@@ -41,6 +41,12 @@ Quick summary (TL;DR):
     the path
 		/usr/share/pdks/sky130A/
 
+    From open_pdks version 1.0.269, there is a process variant
+
+		/usr/share/pdks/sky130B/
+
+    which reflects support for ReRAM.
+
 -------------------------------------------------------------------------------
 Detailed instructions for the patient reader:
 -------------------------------------------------------------------------------
@@ -96,6 +102,7 @@ Prerequisites:
 	git submodule init libraries/sky130_fd_pr/latest
 	git submodule init libraries/sky130_fd_sc_hd/latest
 	git submodule init libraries/sky130_fd_sc_hvl/latest
+	[git submodule init libraries/sky130_fd_pr_reram/latest]
 	[git submodule init libraries/sky130_fd_sc_hdll/latest]
 	[git submodule init libraries/sky130_fd_sc_hs/latest]
 	[git submodule init libraries/sky130_fd_sc_ms/latest]
@@ -153,6 +160,13 @@ Step 1:
 		<library_name>/<file_format>. Other differences
 		include version tracking of the Magic setup files
 		and the location of the technology LEF file.
+
+	--with-sky130-variants=all|A|B
+		When set to "all" (which is the default), both variants
+		sky130A and sky130B are generated and installed.   If
+		only one PDK variant needs to be installed, then use
+		this option to restrict the installation to a single
+		PDK variant.
 
 	--with-sky130-link-targets=none|source
 		"none" copies files from the source directories to
@@ -229,7 +243,7 @@ Step 2:
 Step 3:
 	Run:
 
-	    make install
+	    [sudo] make install
 
 	The behavior of installation depends on whether or not
 	--with-<pdk>-dist-path=<path> has been set (e.g.,
@@ -248,12 +262,44 @@ Step 3:
 	multiple hosts, and the destination on the hosts where it is
 	distributed is the local path.
 
+Step 4:
+	Any time you want to check if there are updates to repositories
+	that have been automatically pulled for open_pdks, Run:
+
+		make update
+
+	to pull any recent changes from the git repositories, and then
+	rebuild the PDK.
+
+Step 5:
+	After installation, the staging area is no longer needed and can
+	be removed with
+
+		make clean
+	or
+		make veryclean  (also removes the log files)
+
+	If you have not specified the installation to make symbolic links
+	back to the repository sources, then the sources are no longer
+	needed, either, and may be removed using
+
+		make distclean
+
+	However, doing so means that if the PDK needs to be updated and/or
+	rebuilt, the sources will have to be re-cloned from their public
+	repositories. 
+
+	If at any time you want to remove the PDK, make sure you have run
+	the "configure" script to enable the PDK you want to remove, and
+	then do:
+
+		make uninstall
+
 -------------------------------------------------------------------------------
 Summary of the installation directories:
 
     The Makefile script takes the source files and generates files for local
-    PDK names "SKY130A", "SKY130B", etc.  (Note there is currently only one
-    PDK variant "A".)
+    PDK names "SKY130A", "SKY130B", etc.
 
     The definition of each PDK is made in the Makefile using defines; e.g.,
 	-DMETAL5, etc.

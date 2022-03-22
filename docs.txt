@@ -3,7 +3,7 @@ open_pdks : A system for installing silicon foundry PDKs for open-source EDA too
 
 ----------------------------------------------------------------------------------
 
-Written by Tim Edwards 2019 - 2021 for efabless (efabless.com)
+Written by Tim Edwards 2019 - 2022 for efabless (efabless.com)
 and Open Circuit Design (opencircuitdesign.com)
 
 URL: http://opencircuitdesign.com/open_pdks

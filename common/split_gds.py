@@ -47,6 +47,8 @@ if __name__ == '__main__':
     with open(destdir + '/split_gds.tcl', 'w') as ofile:
         print('#!/usr/bin/env wish', file=ofile)
         print('drc off', file=ofile)
+        print('crashbackups stop', file=ofile)
+        print('locking off', file=ofile)
         print('gds readonly true', file=ofile)
         print('gds rescale false', file=ofile)
         print('tech unlock *', file=ofile)

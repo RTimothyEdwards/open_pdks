@@ -20,17 +20,23 @@ for item in sys.argv[1:]:
     else:
         arguments.append(item)
 
-walkpath = 'sky130A/libs.ref/sky130_fd_pr/spice'
+variant = 'sky130A'
+walkpath = variant + '/libs.tech/ngspice'
 
 if len(options) > 0:
-    if options[0] == 'ef_format':
-        walkpath = 'sky130A/libs.ref/spi/sky130_fd_pr'
+    for option in options:
+        if option.startswith('variant'):
+            variant = option.split('=')[1]
+    walkpath = variant + '/libs.ref/sky130_fd_pr/spice'
+    for option in options: 
+        if option == 'ef_format':
+            walkpath = variant + '/libs.ref/spi/sky130_fd_pr'
 elif len(arguments) > 0:
     walkpath = arguments[0]
 
 mismatch_params = []
 
-mmrex = re.compile('^\*[ \t]*mismatch[ \t]+\{')
+mmrex = re.compile('^\*[ \t]*mismatch[ \t]*\{')
 endrex = re.compile('^\*[ \t]*\}')
 
 filelist = []
@@ -66,10 +72,32 @@ for dirpath, dirnames, filenames in os.walk(walkpath):
                         tokens = line.split()
                         if 'vary' in tokens:
                             if ('dist=gauss' in tokens) or ('gauss' in tokens):
+                                gtype = 'A'
                                 mismatch_param = tokens[2]
-                                std_dev = float(tokens[-1].split('=')[-1])
-                                replacement = '{}*AGAUSS(0,{!s},1)'.format(mm_switch_param, std_dev)
+                                for token in tokens[3:]:
+                                    gparam = token.split('=')
+                                    if len(gparam) == 2:
+                                        if gparam[0] == 'std':
+                                            std_dev = float(gparam[1])
+                                        elif gparam[0] == 'percent' and gparam[1] == 'yes':
+                                            gtype = ''
+
+                                if gtype == '':
+                                    # Convert percentage to a fraction
+                                    std_dev = std_dev / 100
+                                repltext = '{}*' + gtype + 'GAUSS(0,{!s},1)'
+                                replacement = repltext.format(mm_switch_param, std_dev)
                                 mismatch_params.append((mismatch_param, replacement))
+                            elif ('dist=lnorm' in tokens) or ('lnorm' in tokens):
+                                mismatch_param = tokens[2]
+                                for token in tokens[3:]:
+                                    gparam = token.split('=')
+                                    if len(gparam) == 2:
+                                        if gparam[0] == 'std':
+                                            std_dev = float(gparam[1])
+                                replacement = '{}*EXP(AGAUSS(0,{!s},1))'.format(mm_switch_param, std_dev)
+                                mismatch_params.append((mismatch_param, replacement))
+
 
             infile.close()
 
@@ -93,7 +121,9 @@ gaussrex = re.compile('\'[ \t]+dev\/gauss=\'', re.IGNORECASE)
 for infile_name in filelist:
 
     filepath = os.path.split(infile_name)[0]
-    outfile_name = os.path.join(filepath, 'temp')
+    filename = os.path.split(infile_name)[1]
+    fileroot = os.path.splitext(filename)[0]
+    outfile_name = os.path.join(filepath, fileroot + '_temp')
 
     infile = open(infile_name, 'r')
     outfile = open(outfile_name, 'w')

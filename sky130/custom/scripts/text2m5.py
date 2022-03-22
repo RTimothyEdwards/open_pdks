@@ -25,6 +25,10 @@ def filter(inname, outname):
         print('text2m5.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
+    # The library is based on sky130A only.  Pick up the name of the PDK variant
+    # from the input name (which is four directory levels up from inname)
+    variant = inname.split('/')[-5]
+
     # Process input with regexp
 
     fixedlines = []
@@ -34,7 +38,7 @@ def filter(inname, outname):
 
         # These substitutions are for files originating from cells/*/*.spice
         fixedline = re.sub('<< metal1 >>', '<< metal5 >>', line)
-        fixedline = re.sub('tech sky130A', 'tech sky130A\nmagscale 12 1', fixedline)
+        fixedline = re.sub('tech sky130A', 'tech ' + variant + '\nmagscale 12 1', fixedline)
 
         fixedlines.append(fixedline)
         if fixedline != line:

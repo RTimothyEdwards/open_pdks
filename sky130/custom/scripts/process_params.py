@@ -12,15 +12,32 @@ import sys
 
 pr_switch_param = 'MC_PR_SWITCH'
 
-walkpath = 'sky130A/libs.tech/ngspice'
+options = []
+arguments = []
+for item in sys.argv[1:]:
+    if item.find('-', 0) == 0:
+        options.append(item[1:])
+    else:
+        arguments.append(item)
 
-if len(sys.argv) > 1:
-    walkpath = sys.argv[1]
+variant = 'sky130A'
+walkpath = variant + '/libs.ref/sky130_fd_pr/spice'
+
+if len(options) > 0:
+    for option in options:
+        if option.startswith('variant'):
+            variant = option.split('=')[1]
+    walkpath = variant + '/libs.ref/sky130_fd_pr/spice'
+    for option in options:
+        if option == 'ef_format':
+            walkpath = variant + '/libs.ref/spi/sky130_fd_pr'
+elif len(arguments) > 0:
+    walkpath = arguments[0]
 
 process_params = []
 
 parmrex = re.compile('^\.param[ \t]+')
-prrex = re.compile('^\*[ \t]*process[ \t]+\{')
+prrex = re.compile('^\*[ \t]*process[ \t]*\{')
 endrex = re.compile('^\*[ \t]*\}')
 
 filelist = []
@@ -56,10 +73,31 @@ for dirpath, dirnames, filenames in os.walk(walkpath):
                         tokens = line.split()
                         if 'vary' in tokens:
                             if ('dist=gauss' in tokens) or ('gauss' in tokens):
+                                gtype = 'A'
                                 process_param = tokens[2]
-                                std_dev = float(tokens[-1].split('=')[-1])
-                                replacement = ' + {}*AGAUSS(0,{!s},1)'.format(pr_switch_param, std_dev)
+                                for token in tokens[3:]:
+                                    gparam = token.split('=')
+                                    if len(gparam) == 2:
+                                        if gparam[0] == 'std':
+                                            std_dev = float(gparam[1])
+                                        elif gparam[0] == 'percent' and gparam[1] == 'yes':
+                                            gtype = ''
+                                if gtype == '':
+                                    # Convert percentage to a fraction
+                                    std_dev = std_dev / 100
+                                repltext = ' + {}*' + gtype + 'GAUSS(0,{!s},1)'
+                                replacement = repltext.format(pr_switch_param, std_dev)
                                 process_params.append((process_param, replacement))
+                            elif ('dist=lnorm' in tokens) or ('lnorm' in tokens):
+                                process_param = tokens[2]
+                                for token in tokens[3:]:
+                                    gparam = token.split('=')
+                                    if len(gparam) == 2:
+                                        if gparam[0] == 'std':
+                                            std_dev = float(gparam[1])
+                                replacement = ' + {}*EXP(AGAUSS(0,{!s},1))'.format(pr_switch_param, std_dev)
+                                process_params.append((process_param, replacement))
+
 
             infile.close()
 
@@ -84,7 +122,9 @@ print('')
 for infile_name in filelist:
 
     filepath = os.path.split(infile_name)[0]
-    outfile_name = os.path.join(filepath, 'temp')
+    filename = os.path.split(infile_name)[1]
+    fileroot = os.path.splitext(filename)[0]
+    outfile_name = os.path.join(filepath, fileroot + '_temp')
 
     infile = open(infile_name, 'r')
     outfile = open(outfile_name, 'w')

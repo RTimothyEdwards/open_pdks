@@ -16,5 +16,7 @@ sky130_ef_io does the following:
     either high- or low-voltage clamps, connecting to one of the six
     power domains vddio, vdda, vccd, vssio, vssa, or vssd.
 
+(4) Fix a DRC error in the SkyWater GPIO pad layout
+
 "sky130_ef_io" is open source copyright 2020 efabless, Inc.
 Released under Apache 2.0 license

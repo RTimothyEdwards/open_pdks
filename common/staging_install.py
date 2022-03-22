@@ -77,7 +77,10 @@ import subprocess
 
 # NOTE:  This version of copy_tree from distutils works like shutil.copytree()
 # in Python 3.8 and up ONLY using "dirs_exist_ok=True".
-from distutils.dir_util import copy_tree
+try:
+    from setuptools.distutils.dir_util import copy_tree
+except:
+    from distutils.dir_util import copy_tree
 
 def makeuserwritable(filepath):
     if os.path.exists(filepath):
@@ -536,7 +539,7 @@ if __name__ == '__main__':
     # file "sources.txt" with the name of the source directories for each
     # install directory.
 
-    if link_from not in ['source', None]:
+    if link_from == 'source':
         print('Replacing files with symbolic links to source where possible.')
         for refdir in refdirs:
             if ef_format:
@@ -649,7 +652,13 @@ if __name__ == '__main__':
                         for libfile in libfiles:
                             filepath = libdir + '/' + libfile
                             if os.path.islink(filepath):
-                                continue
+                                realpath = os.path.realpath(filepath)
+                                if realpath.startswith(stagingdir):
+                                    if libfile == '.magicrc':
+                                        if debug:
+                                            print('Removing unused .magicrc file from' +
+							filepath)
+                                        os.remove(filepath)
                             elif libfile == 'sources.txt':
                                 os.remove(filepath)
                             elif libfile == 'generate_magic.tcl':
@@ -657,6 +666,8 @@ if __name__ == '__main__':
                             elif os.path.splitext(libfile)[1] == '.ext':
                                 os.remove(filepath)
                             elif os.path.splitext(libfile)[1] == '.swp':
+                                os.remove(filepath)
+                            elif os.path.splitext(libfile)[1] == '.orig':
                                 os.remove(filepath)
         else:
             libraries = os.listdir(writedir + refdir)
@@ -671,12 +682,24 @@ if __name__ == '__main__':
                         for libfile in libfiles:
                             libfilepath = filepath + '/' + libfile
                             if os.path.islink(libfilepath):
-                                continue
+                                # NOTE:  This could be used to move symbolic links
+                                # from staging to destination.  At the moment there
+                                # are none except the .magicrc file, which doesn't
+                                # belong in the destination path.
+                                realpath = os.path.realpath(libfilepath)
+                                if realpath.startswith(stagingdir):
+                                    if libfile == '.magicrc':
+                                        if debug:
+                                            print('Removing unused .magicrc file ' +
+							'from ' + libfilepath)
+                                        os.remove(libfilepath)
                             elif libfile == 'sources.txt':
                                 os.remove(libfilepath)
                             elif libfile == 'generate_magic.tcl':
                                 os.remove(libfilepath)
                             elif os.path.splitext(libfile)[1] == '.ext':
+                                os.remove(libfilepath)
+                            elif os.path.splitext(libfile)[1] == '.orig':
                                 os.remove(libfilepath)
 
     print('Done with PDK migration.')

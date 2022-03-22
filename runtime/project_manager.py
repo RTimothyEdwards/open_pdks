@@ -1,98 +1,46 @@
 #!/usr/bin/env python3
 #
 #--------------------------------------------------------
-# Open Galaxy Project Manager GUI.
+# Efabless Open Galaxy Project Manager GUI ported to
+# open_pdks.
 #
 # This is a Python tkinter script that handles local
-# project management.  It is meant as a replacement for
-# appsel_zenity.sh
+# project management.
 #
 #--------------------------------------------------------
 # Written by Tim Edwards
 # efabless, inc.
 # September 9, 2016
 # Modifications 2017, 2018
-# Version 1.0
+# Updates 2021 by Max Chen
+# Version 1.1
 #--------------------------------------------------------
 
 import sys
-# Require python 3.5.x (and not python 3.6.x). Without this trap here, in several
-# instances of VMs where /usr/bin/python3 symlinked to 3.6.x by mistake, it manifests
-# as (misleading) errors like: ImportError: No module named 'yaml'
-#
-# '%x' % sys.hexversion  ->  '30502f0'
+import io
+import os
+import re
+import glob
+import json
+import signal
+import shutil
+import tarfile
+import datetime
+import tempfile
+import subprocess
+import contextlib
+import faulthandler
 
 import tkinter
 from tkinter import ttk, StringVar, Listbox, END
 from tkinter import filedialog
 
-# globals
-theProg = sys.argv[0]
-root = tkinter.Tk()      # WARNING: must be exactly one instance of Tk; don't call again elsewhere
-
-# 4 configurations based on booleans: splash,defer
-# n,n:  no splash, show only form when completed: LEGACY MODE, user confused by visual lag.
-# n,y:  no splash but defer projLoad: show an empty form ASAP
-# y,n:  yes splash, and wait for projLoad before showing completed form
-# y,y:  yes splash, but also defer projLoad: show empty form ASAP
-
-# deferLoad = False        # LEGACY: no splash, and wait for completed form
-# doSplash = False
-
-deferLoad = True         # True: display GUI before (slow) loading of projects, so no splash:
-doSplash = not deferLoad # splash IFF GUI-construction includes slow loading of projects
-
-# deferLoad = False        # load projects before showing form, so need splash:
-# doSplash = not deferLoad # splash IFF GUI-construction includes slow loading of projects
-
-# deferLoad = True         # here keep splash also, despite also deferred-loading
-# doSplash = True
-
-#------------------------------------------------------
-# Splash screen: display ASAP: BEFORE bulk of imports.
-#------------------------------------------------------
-
-class SplashScreen(tkinter.Toplevel):
-    """Project Management Splash Screen"""
-
-    def __init__(self, parent, *args, **kwargs):
-        super().__init__(parent, *args, **kwargs)
-        parent.withdraw()
-        #EFABLESS PLATFORM
-        #image = tkinter.PhotoImage(file="/ef/efabless/opengalaxy/og_splashscreen50.gif")
-        label = ttk.Label(self, image=image)
-        label.pack()
-
-        # required to make window show before the program gets to the mainloop
-        self.update_idletasks()
-
-import faulthandler
-import signal
-
-# SplashScreen here. fyi: there's a 2nd/later __main__ section for main app
-splash = None     # a global
-if __name__ == '__main__':
-    faulthandler.register(signal.SIGUSR2)
-    if doSplash:
-        splash = SplashScreen(root)
-
-import io
-import os
-import re
-import json
-import yaml
-import shutil
-import tarfile
-import datetime
-import subprocess
-import contextlib
-import tempfile
-import glob
+# Local imports
 
 import tksimpledialog
 import tooltip
+
 from rename_project import rename_project_all
-#from fix_libdirs import fix_libdirs
 from consoletext import ConsoleText
 from helpwindow import HelpWindow
 from treeviewchoice import TreeViewChoice
@@ -100,21 +48,40 @@ from symbolbuilder import SymbolBuilder
 from make_icon_from_soft import create_symbol
 from profile import Profile
 
-import config
+# Global variables
 
-# Global name for design directory
+theProg = sys.argv[0]
+
+deferLoad = True         # True: display GUI before (slow) loading of projects
+
+# There must be exactly one instance of Tk; don't call again elsewhere.
+root = tkinter.Tk()
+
+# Name for design directory
 designdir = 'design'
-# Global name for import directory
+
+# Name for import directory
 importdir = 'import'
-# Global name for cloudv directory
+
+# Name for cloudv directory
 cloudvdir = 'cloudv'
-# Global name for archived imports project sub-directory
+
+# Name for archived imports project sub-directory
 archiveimportdir = 'imported'
-# Global name for current design file
-#EFABLESS PLATFORM
+
+# Name for current design file
 currdesign = '~/.open_pdks/currdesign'
+
+# Name for personal preferences file
 prefsfile = '~/.open_pdks/prefs.json'
 
+# Application directory.
+try:
+    pdk_root = os.environ('PDK_ROOT')
+except:
+    pdk_root = 'PREFIX/pdk'
+
+apps_path = pdk_root + '/scripts'
 
 #---------------------------------------------------------------
 # Watch a directory for modified time change.  Repeat every two
@@ -195,7 +162,7 @@ class ProjectNameDialog(tksimpledialog.Dialog):
 
 class PadFrameCellNameDialog(tksimpledialog.Dialog):
     def body(self, master, warning, seed=''):
-        description='PadFrame'       # TODO: make this an extra optional parameter of a generic CellNameDialog?
+        description = 'PadFrame'       # TODO: make this an extra optional parameter of a generic CellNameDialog?
         if warning:
             ttk.Label(master, text=warning).grid(row = 0, columnspan = 2, sticky = 'wns')
         if description:
@@ -247,6 +214,7 @@ class CopyProjectDialog(tksimpledialog.Dialog):
 
 class NewProjectDialog(tksimpledialog.Dialog):
     def body(self, master, warning, seed='', importnode=None, development=False, parent_pdk=''):
+        global pdk_root
         if warning:
             ttk.Label(master, text=warning).grid(row = 0, columnspan = 2, sticky = 'wns')
         ttk.Label(master, text="Enter new project name:").grid(row = 1, column = 0)
@@ -274,7 +242,7 @@ class NewProjectDialog(tksimpledialog.Dialog):
         # TODO: stop hardwired default EFXH035B: get from an overall flow /ef/tech/.ef-config/plist.json
         # (or get it from the currently selected project)
         #EFABLESS PLATFORM
-        for pdkdir_lr in glob.glob('PREFIX/*/libs.tech/'):
+        for pdkdir_lr in glob.glob(pdk_root + '/*/libs.tech/'):
             pdkdir = os.path.split( os.path.split( pdkdir_lr )[0])[0]    # discard final .../libs.tech/
             (foundry, foundry_name, node, desc, status) = ProjectManager.pdkdir2fnd( pdkdir )
             if not foundry or not node:
@@ -692,8 +660,8 @@ class ImportDialog(tksimpledialog.Dialog):
             self.project_pdkdir = os.path.realpath(self.projectpath + ProjectManager.config_path( self.projectpath) + '/techdir')
             self.foundry, foundry_name, self.node, desc, status = ProjectManager.pdkdir2fnd( self.project_pdkdir )
         else:
-            if not os.path.exists(self.projectpath + '/info.yaml'):
-                self.error_label.configure(text = self.projectpath + ' does not contain an info.yaml file.')
+            if not os.path.exists(self.projectpath + '/project.json'):
+                self.error_label.configure(text = self.projectpath + ' does not contain an project.json file.')
                 self.project_pdkdir = ""
                 self.foundry = ""
                 self.node = ""
@@ -781,12 +749,9 @@ class ProjectManager(ttk.Frame):
         super().__init__(parent, *args, **kwargs)
         self.root = parent
         parent.withdraw()
-        # self.update()
         self.update_idletasks()     # erase small initial frame asap
         self.init_gui()
         parent.protocol("WM_DELETE_WINDOW", self.on_quit)
-        if splash:
-            splash.destroy()
         parent.deiconify()
 
     def on_quit(self):
@@ -801,15 +766,13 @@ class ProjectManager(ttk.Frame):
         global currdesign
         global theProg
         global deferLoad
+        global apps_path
 
         message = []
         allPaneOpen = False
         prjPaneMinh = 10
         iplPaneMinh = 4
         impPaneMinh = 4
-
-        # if deferLoad:         # temp. for testing... open all panes
-        #     allPaneOpen = True
 
         # Read user preferences
         self.prefs = {}
@@ -847,7 +810,7 @@ class ProjectManager(ttk.Frame):
         self.help = HelpWindow(self, fontsize=fontsize)
         
         with io.StringIO() as buf, contextlib.redirect_stdout(buf):
-            self.help.add_pages_from_file(config.apps_path + '/manager_help.txt')
+            self.help.add_pages_from_file(apps_path + '/manager_help.txt')
             message = buf.getvalue()
         
 
@@ -892,17 +855,6 @@ class ProjectManager(ttk.Frame):
         self.toppane.user_frame = ttk.Frame(self.toppane)
         self.toppane.user_frame.grid(row = 0, sticky = 'news')
 
-        # Put logo image in corner.  Ignore if something goes wrong, as this
-        # is only decorative.  Note: ef_logo must be kept as a record in self,
-        # or else it gets garbage collected.
-        try:
-            #EFABLESS PLATFORM
-            self.ef_logo = tkinter.PhotoImage(file='/ef/efabless/opengalaxy/efabless_logo_small.gif')
-            self.toppane.user_frame.logo = ttk.Label(self.toppane.user_frame, image=self.ef_logo)
-            self.toppane.user_frame.logo.pack(side = 'left', padx = 5)
-        except:
-            pass
-
         self.toppane.user_frame.title = ttk.Label(self.toppane.user_frame, text='User:', style='red.TLabel')
         self.toppane.user_frame.user = ttk.Label(self.toppane.user_frame, text=username, style='blue.TLabel')
 
@@ -936,16 +888,16 @@ class ProjectManager(ttk.Frame):
         # Create listbox of projects
         projectlist = self.get_project_list() if not deferLoad else []
         height = min(10, max(prjPaneMinh, 2 + len(projectlist)))
-        self.projectselect = TreeViewChoice(self.toppane, fontsize=fontsize, deferLoad=deferLoad, selectVal=pdirCur, natSort=True)
+        self.projectselect = TreeViewChoice(self.toppane, fontsize = fontsize,
+		    deferLoad = deferLoad, selectVal = pdirCur, natSort = True)
         self.projectselect.populate("Available Projects:", projectlist,
 			[["New", True, self.createproject],
 			 ["Import", True, self.importproject],
 			 ["Flow", False, self.startflow],
 			 ["Copy", False, self.copyproject],
 			 ["Rename", False, self.renameproject],
-			 ["Delete", False, self.deleteproject],
-			 ],
-			height=height, columns=[0, 1])
+			 ["Delete", False, self.deleteproject]],
+			height = height, columns = [0, 1])
         self.projectselect.grid(row = 3, sticky = 'news')
         self.projectselect.bindselect(self.setcurrent)
 
@@ -1262,6 +1214,7 @@ class ProjectManager(ttk.Frame):
 
     def read_prefs(self):
         global prefsfile
+        global apps_path
 
         # Set all known defaults even if they are not in the JSON file so
         # that it is not necessary to check for the existence of the keyword
@@ -1279,7 +1232,7 @@ class ProjectManager(ttk.Frame):
             # 
             #EFABLESS PLATFORM
             p = subprocess.run(['/ef/apps/bin/withnet' ,
-			config.apps_path + '/og_uid_service.py', userid],
+			apps_path + '/og_uid_service.py', userid],
 			stdout = subprocess.PIPE)
             if p.stdout:
                 uid_string = p.stdout.splitlines()[0].decode('utf-8')
@@ -1349,7 +1302,7 @@ class ProjectManager(ttk.Frame):
         def add_projects(projectpath):
             # Recursively add subprojects to projectlist
             projectlist.append(projectpath)
-            #check for subprojects and add them
+            # Check for subprojects and add them
             if os.path.isdir(projectpath + '/subcells'):
                 for subproj in os.listdir(projectpath + '/subcells'):
                     if os.path.isdir(projectpath + '/subcells/' + subproj):
@@ -1639,10 +1592,10 @@ class ProjectManager(ttk.Frame):
     @classmethod
     def get_import_pdk(cls, projectpath):
         print(projectpath)
-        yamlname = projectpath + '/info.yaml'
+        jsonname = projectpath + '/project.json'
        
-        with open(yamlname, 'r') as f:
-            datatop = yaml.safe_load(f)
+        with open(jsonname, 'r') as f:
+            datatop = json.load(f)
             project_data = datatop['project']
             project_foundry = project_data['foundry']
             project_process = project_data['process']
@@ -1681,13 +1634,6 @@ class ProjectManager(ttk.Frame):
                 return root + ext
         return None
         
-    def yaml2targz(self, yamlPath):
-        root = os.path.splitext(yamlPath)[0]
-        for ext in ('.tgz', '.tar.gz'):
-            if os.path.isfile(root + ext):
-                return root + ext
-        return None
-
     #------------------------------------------------------------------------
     # Remove a .json and associated tar.gz (or .tgz) if any.
     # If not a .json, remove just that file (no test for a tar).
@@ -1753,7 +1699,7 @@ class ProjectManager(ttk.Frame):
             if os.path.isdir(ipath):
                 if os.path.islink(ipath) or not self.validProjectName(item) \
                    or self.importProjNameBadrex1.match(item) \
-                   or not os.path.isfile(ipath + '/info.yaml'):
+                   or not os.path.isfile(ipath + '/project.json'):
                     importlist.remove(item)
                     continue
             else:
@@ -1799,7 +1745,7 @@ class ProjectManager(ttk.Frame):
     # Import for json documents and related tarballs (.gz or .tgz):  
     #------------------------------------------------------------------------
 
-    def importyaml(self, projname, importfile):
+    def importjson(self, projname, importfile):
         # (1) Check if there is a tarball with the same root name as the JSON
         importroot = os.path.splitext(importfile)[0]
         badrex1 = re.compile("^\.")
@@ -1840,10 +1786,10 @@ class ProjectManager(ttk.Frame):
         # document, then change the name to match that of the project
         # folder.
 
-        yamlfile = newproject + '/info.yaml'
+        jaonfile = newproject + '/project.json'
 
         try:
-            shutil.copy(importfile, yamlfile)
+            shutil.copy(importfile, jsonfile)
         except IOError as e:
             print('Error copying files: ' + str(e))
             return None
@@ -2073,14 +2019,6 @@ class ProjectManager(ttk.Frame):
 
         return self.tarVglImportable(tar)
     
-    def yamlTarVglImportable(self, path):
-        ext = os.path.splitext(path)[1]
-        if ext != '.yaml': return None, None, None
-
-        tar = self.yaml2targz(path)
-        if not tar: return None, None, None
-
-        return self.tarVglImportable(tar)
     #------------------------------------------------------------------------
     # Get a single named member (memPath) out of a JSON's tar file.
     # This is thin wrapper around tarMember2tempfile. Find the JSON's associated
@@ -2096,15 +2034,6 @@ class ProjectManager(ttk.Frame):
 
         return self.tarMember2tempfile(tar, memPath)
         
-    def yamlTarMember2tempfile(self, path, memPath):
-        ext = os.path.splitext(path)[1]
-        if ext != '.yaml': return None
-
-        tar = self.yaml2targz(path)
-        if not tar: return None
-
-        return self.tarMember2tempfile(tar, memPath)
-
     #------------------------------------------------------------------------
     # Determine if tar-file can be imported as-if it were just a *.v.
     # Require exactly one yosys-output .netlist.v, and exactly one .json.
@@ -2299,11 +2228,12 @@ class ProjectManager(ttk.Frame):
 
         return jData
 
-#------------------------------------------------------------------------
-    # Create info.yaml file (automatically done in create_project.py in case it's executed from the command line)
+    #------------------------------------------------------------------------
+    # Create project.json file (automatically done in create_project.py in
+    # case it's executed from the command line)
     #------------------------------------------------------------------------
    
-    def create_yaml(self, ipname, pdk_dir, description="(Add project description here)"):
+    def create_json(self, ipname, pdk_dir, description="(Add project description here)"):
         # ipname: Project Name
         data = {}
         project= {}
@@ -2317,6 +2247,7 @@ class ProjectManager(ttk.Frame):
         project['flow'] = 'none'
         data['project']=project
         return data
+
     #------------------------------------------------------------------------
     # For a single named member (memPath) out of an open tarfile (tarf),
     # determine if it is a JSON file, and attempt to extract value of entry
@@ -2424,10 +2355,10 @@ class ProjectManager(ttk.Frame):
             os.chdir(curdir)
 
             # Create a simple qflow_vars.sh file so that the project manager
-            # qflow launcher will see it as a qflow sub-project.  If the meta.yaml
-            # file has a "stdcell" entry for the subproject, then add the line
-            # "techname=" with the name of the standard cell library as pulled
-            # from meta.yaml.
+            # qflow launcher will see it as a qflow sub-project.  If the
+            # project.json file has a "stdcell" entry for the subproject, then
+            # add the line "techname=" with the name of the standard cell
+            # library as pulled from project.json.
 
             stdcell = None
             buildname = 'build/' + vname + '.netlist.v'
@@ -3106,6 +3037,7 @@ class ProjectManager(ttk.Frame):
 
     def createproject(self, value, seedname=None, importnode=None):
         global currdesign
+        global apps_path
         # Note:  value is current selection, if any, and is ignored
         # Require new project location and confirmation
         badrex1 = re.compile("^\.")
@@ -3169,7 +3101,7 @@ class ProjectManager(ttk.Frame):
             os.makedirs(parent_path + '/subcells')
         
         try:
-            subprocess.Popen([config.apps_path + '/create_project.py', newproject, newpdk]).wait()
+            subprocess.Popen([apps_path + '/create_project.py', newproject, newpdk]).wait()
             
             # Show subproject in project view
             if parent_pdk != '':
@@ -3287,8 +3219,8 @@ class ProjectManager(ttk.Frame):
         netlistfile = None
 
         # Pull process and standard cell library from the YAML file created by
-        # CloudV.  NOTE:  YAML file has multiple documents, so must use
-        # yaml.load_all(), not yaml.load().  If there are refinements of this
+        # CloudV.  NOTE:  json file has multiple documents, so must use
+        # json.load_all(), not json.load().  If there are refinements of this
         # process for individual build files, they will override (see further down).
 
         # To do:  Check entries for SoC builds.  If there are multiple SoC builds,
@@ -3298,23 +3230,24 @@ class ProjectManager(ttk.Frame):
         # that there can be multiple SoC builds in the project, so for now retaining
         # the existing parsing assuming default names.)
 
-        if os.path.exists(ppath + '/.ef-config/meta.yaml'):
-            print("Reading YAML file:")
-            ydicts = []
-            with open(ppath + '/.ef-config/meta.yaml', 'r') as ifile:
-                yalldata = yaml.load_all(ifile, Loader=yaml.Loader)
-                for ydict in yalldata:
-                    ydicts.append(ydict)
+        if os.path.exists(ppath + '/.config/nodeinfo.json'):
+            print("Reading nodeinfo.json file:")
+            jdicts = []
 
-            for ydict in ydicts:
-                for yentry in ydict.values():
-                    if 'process' in yentry:
-                        importnode = yentry['process']
+            with open(ppath + '/.config/nodeinfo.json', 'r') as ifile:
+                jsondata = json.load_all(ifile, Loader=json.Loader)
+                for jdict in jsondata:
+                    jdicts.append(jdict)
+
+            for jdict in jdicts:
+                for jentry in jdict.values():
+                    if 'process' in jentry:
+                        importnode = jentry['process']
 
         # If there is a file ().soc and a directory ().model, then pull the file
         # ().model/().model.v, which is a chip top-level netlist.
 
-        ydicts = []
+        jdicts = []
         has_soc = False
         save_vdir = None
         vdirs = glob.glob(ppath + '/*')
@@ -3349,22 +3282,22 @@ class ProjectManager(ttk.Frame):
 
                     # Pull process and standard cell library from the YAML file
                     # created by CloudV
-                    # Use yaml.load_all(), not yaml.load() (see above)
+                    # Use json.load_all(), not json.load() (see above)
 
-                    if os.path.exists(ppath + '/.ef-config/meta.yaml'):
+                    if os.path.exists(ppath + '/.config/nodeinfo.json'):
                         print("Reading YAML file:")
-                        ydicts = []
-                        with open(ppath + '/.ef-config/meta.yaml', 'r') as ifile:
-                            yalldata = yaml.load_all(ifile, Loader=yaml.Loader)
-                            for ydict in yalldata:
-                                ydicts.append(ydict)
+                        jdicts = []
+                        with open(ppath + '/.config/nodeinfo.json', 'r') as ifile:
+                            jsondata = json.load_all(ifile, Loader=json.Loader)
+                            for jdict in jsondata:
+                                jdicts.append(jdict)
 
-                        for ydict in ydicts:
-                            for yentry in ydict.values():
-                                if 'process' in yentry:
-                                    importnode = yentry['process']
-                                if 'stdcell' in yentry:
-                                    stdcell = yentry['stdcell']
+                        for jdict in jdicts:
+                            for jentry in jdict.values():
+                                if 'process' in jentry:
+                                    importnode = jentry['process']
+                                if 'stdcell' in jentry:
+                                    stdcell = jentry['stdcell']
                     break
 
         if importnode:
@@ -3446,31 +3379,30 @@ class ProjectManager(ttk.Frame):
 
         # NOTE:  Behavior is for project files to depend on "project_name".  Using
         # the project filename as a project name is a fallback behavior.  If
-        # there is a info.yaml file, and it defines a project_name entry, then
+        # there is a project.json file, and it defines a project_name entry, then
         # there is no need to make changes within the project.  If there is
-        # no info.yaml file, then create one and set the project_name entry to
+        # no project.json file, then create one and set the project_name entry to
         # the old project name, which avoids the need to make changes within
         # the project.
 
         else:
-            # Check info.yaml
-            yamlname = newproject + '/info.yaml'
+            # Check project.json
+            jsonname = newproject + '/project.json'
 
             found = False
-            if os.path.isfile(yamlname):
+            if os.path.isfile(jsonname):
                 # Pull the project_name into local store (may want to do this with the
                 # datasheet as well)
-                with open(yamlname, 'r') as f:
-                    datatop = yaml.safe_load(f)                
+                with open(jsonname, 'r') as f:
+                    datatop = json.safe_load(f)                
                     if 'project_name' in datatop['project']:
                         found = True
 
             if not found:
                 pdkdir = self.get_pdk_dir(newproject, path=True)
-                yData = self.create_yaml(oldname, pdkdir)                               
-                with open(newproject + '/info.yaml', 'w') as ofile:
-                    print('---',file=ofile)
-                    yaml.dump(yData, ofile)
+                yData = self.create_json(oldname, pdkdir)                               
+                with open(newproject + '/project.json', 'w') as ofile:
+                    json.dump(yData, ofile)
 
         # If ngspice and electric prefs were not copied from the source
         # to the target, as recommended, then copy these from the
@@ -3510,16 +3442,15 @@ class ProjectManager(ttk.Frame):
                     is_subproject = True      
         except:
             pass
-        if not os.path.exists(projectpath + '/info.yaml'):
+        if not os.path.exists(projectpath + '/project.json'):
             project_pdkdir = self.get_pdk_dir(projectpath, path=True)
-            data = self.create_yaml(os.path.split(projectpath)[1], project_pdkdir)
-            with open(projectpath + '/info.yaml', 'w') as ofile:
-                print('---',file=ofile)
-                yaml.dump(data, ofile)
+            data = self.create_json(os.path.split(projectpath)[1], project_pdkdir)
+            with open(projectpath + '/project.json', 'w') as ofile:
+                json.dump(data, ofile)
         
-        # Read yaml file for the selected flow
-        with open(projectpath + '/info.yaml','r') as f:
-            data = yaml.safe_load(f)
+        # Read json file for the selected flow
+        with open(projectpath + '/project.json','r') as f:
+            data = json.safe_load(f)
             project = data['project']
             if 'flow' in project.keys() and project['flow']=='none' or 'flow' not in project.keys():
                 while True:
@@ -3533,9 +3464,8 @@ class ProjectManager(ttk.Frame):
                     break
                 project['flow']=flow
                 data['project']=project
-                with open(projectpath + '/info.yaml', 'w') as ofile:
-                    print('---',file=ofile)
-                    yaml.dump(data, ofile)
+                with open(projectpath + '/project.json', 'w') as ofile:
+                    json.dump(data, ofile)
             else:
                 flow = project['flow']
         
@@ -3561,16 +3491,16 @@ class ProjectManager(ttk.Frame):
         # read it and pull the ip-name record.  If not, the fallback position
         # is to assume that the project filename is the project name.
 
-        # Check info.yaml
+        # Check project.json
         projectpath = self.projectdir + '/' + projname
-        yamlname = projectpath + '/info.yaml'
+        jsonname = projectpath + '/project.json'
 
         oldname = projname
-        if os.path.isfile(yamlname):
+        if os.path.isfile(jsonname):
             # Pull the ipname into local store (may want to do this with the
             # datasheet as well)
-            with open(yamlname, 'r') as f:
-                datatop = yaml.safe_load(f)   
+            with open(jsonname, 'r') as f:
+                datatop = json.safe_load(f)   
                 project_data = datatop['project']          
                 if 'project_name' in project_data:
                     oldname = project_data['project_name']
@@ -3682,11 +3612,10 @@ class ProjectManager(ttk.Frame):
                 os.symlink(projectpath, self.projectdir + '/' + newname)
             else:
                 shutil.copytree(projectpath, self.projectdir + '/' + newname, symlinks = True)
-            if not os.path.exists(projectpath + '/info.yaml'):
-                yData = self.create_yaml(newname, project_pdkdir)                             
-                with open(projectpath + '/info.yaml', 'w') as ofile:
-                    print('---',file=ofile)
-                    yaml.dump(yData, ofile)
+            if not os.path.exists(projectpath + '/project.json'):
+                jData = self.create_json(newname, project_pdkdir)                             
+                with open(projectpath + '/project.json', 'w') as ofile:
+                    json.dump(jData, ofile)
         else:
             #Create a subproject
             if not os.path.exists(parent_path + '/subcells'):
@@ -3697,11 +3626,10 @@ class ProjectManager(ttk.Frame):
                     self.clean(parent_path + '/subcells/' + newname)
             else:
                 os.symlink(projectpath, parent_path + '/subcells/' + newname)
-            if not os.path.exists(parent_path + '/subcells/' + newname + '/info.yaml'):
-                yData = self.create_yaml(newname, project_pdkdir)                             
-                with open(parent_path + '/subcells/' + newname + '/info.yaml', 'w') as ofile:
-                    print('---',file=ofile)
-                    yaml.dump(yData, ofile)
+            if not os.path.exists(parent_path + '/subcells/' + newname + '/project.json'):
+                yData = self.create_json(newname, project_pdkdir)                             
+                with open(parent_path + '/subcells/' + newname + '/project.json', 'w') as ofile:
+                    json.dump(yData, ofile)
             self.update_project_views() 
         #----------------------------------------------------------------------
     # "Import As" a dir in import/ as a project. based on renameproject().
@@ -3829,6 +3757,7 @@ class ProjectManager(ttk.Frame):
     #----------------------------------------------------------------------
 
     def characterize(self):
+        global apps_path
         value = self.projectselect.selected()
         if value:
             design = value['values'][0]
@@ -3839,7 +3768,7 @@ class ProjectManager(ttk.Frame):
             if datasheet:
                 # use Popen, not run, so that application does not wait for it to exit.
                 dsheetroot = os.path.splitext(datasheet)[0]
-                subprocess.Popen([config.apps_path + '/cace.py',
+                subprocess.Popen([apps_path + '/cace.py',
 				datasheet])
         else:
             print("You must first select a project.", file=sys.stderr)
@@ -4428,6 +4357,7 @@ class ProjectManager(ttk.Frame):
 
     def upload(self):
         '''
+        global apps_path
         value = self.projectselect.selected()
         if value:
             design = value['values'][0]
@@ -4435,18 +4365,11 @@ class ProjectManager(ttk.Frame):
             designname = self.project_name
             print('Upload design ' + designname + ' (' + design + ' )')
             subprocess.run(['/ef/apps/bin/withnet',
-			config.apps_path + '/cace_design_upload.py',
+			apps_path + '/cace_design_upload.py',
 			design, '-test'])
 	'''
 
     #--------------------------------------------------------------------------
-    # Upload a datasheet to the marketplace (Administrative use only, for now)
-    #--------------------------------------------------------------------------
-
-    # def make_challenge(self):
-    #      importp = self.cur_import
-    #      print("Make a Challenge from import " + importp + "!")
-    #      # subprocess.run([config.apps_path + '/cace_import_upload.py', importp, '-test'])
 
     # Runs whenever a user selects a project
     def setcurrent(self, value):
@@ -4497,16 +4420,17 @@ class ProjectManager(ttk.Frame):
         # it.
         # NOTE:  project.json is the preferred name for the datasheet
         # file.  However, the .spi file, .delib file, etc., all have the name of the
-        # project from "project_name" in the info.yaml file, which is separate from the datasheet.
+        # project from "project_name" in the project.json file, which is separate from
+        # the datasheet.
 
         found = False
         ppath = selection['values'][0]
-        yamlname = ppath + '/info.yaml'
+        jsonname = ppath + '/project.json'
         
-        if os.path.isfile(yamlname):
+        if os.path.isfile(jsonname):
             # Pull the project_name into local store
-            with open(yamlname, 'r') as f:
-                datatop = yaml.safe_load(f)
+            with open(jsonname, 'r') as f:
+                datatop = json.safe_load(f)
                 project_data = datatop['project']
                 ipname = project_data['project_name']
                 self.project_name = ipname
@@ -4519,18 +4443,6 @@ class ProjectManager(ttk.Frame):
                 datatop = json.load(f)
                 dsheet = datatop['data-sheet']
                 found = True
-            # Do not specifically prohibit opening the characterization app if
-            # there is no schematic or netlist.  Otherwise the user is prevented
-            # even from seeing the electrical parameters.  Let the characterization
-            # tool allow or prohibit simulation based on this.
-            # if os.path.exists(ppath + '/spi'):
-            #     if os.path.isfile(ppath + '/spi/' + ipname + '.spi'):
-            #         found = True
-            #
-            # if found == False and os.path.exists(ppath + '/elec'):
-            #     if os.path.isdir(ppath + '/elec/' + ipname + '.delib'):
-            #         if os.path.isfile(ppath + '/elec/' + ipname + '.delib/' + ipname + '.sch'):
-            #             found = True
         else:
             # Use 'pname' as the default project name.
             print('No characterization file ' + jsonname)
@@ -4563,11 +4475,17 @@ class ProjectManager(ttk.Frame):
         else:
             self.toppane.appbar.padframeCalc_button.config(state='disabled')
 
-# main app. fyi: there's a 2nd/earlier __main__ section for splashscreen
+#----------------------------------------------------------------------------
+# Main application
+#----------------------------------------------------------------------------
+
 if __name__ == '__main__':
+    faulthandler.register(signal.SIGUSR2)
+
     ProjectManager(root)
     if deferLoad:
-        # Without this, mainloop may find&run very short clock-delayed events BEFORE main form display.
-        # With it 1st project-load can be scheduled using after-time=0 (needn't tune a delay like 100ms).
+        # Without this, mainloop may find and run very short clock-delayed
+        # events before the main form displays. With it, the first project
+        # load can be scheduled using after-time=0
         root.update_idletasks()
     root.mainloop()

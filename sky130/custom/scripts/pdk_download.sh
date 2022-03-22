@@ -29,4 +29,4 @@ git submodule update
 # Generate liberty files
 
 echo "Building liberty timing files"
-make timing
+make -j$(nproc) timing
