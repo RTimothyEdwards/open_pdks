@@ -337,13 +337,13 @@ if { [info exist ::env(MAGIC_EXT_USE_GDS)] && $::env(MAGIC_EXT_USE_GDS) } {
 #        if {[regexp {sky130_fd_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
 #            ignore class "-circuit1 $cell"
 #        }
-        if {[regexp {sky130_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+        if {[regexp {([A-Z][A-Z0-9]_)*sky130_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
             ignore class "-circuit1 $cell"
         }
-        if {[regexp {sky130_fd_sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
+        if {[regexp {([A-Z][A-Z0-9]_)*sky130_fd_sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
             ignore class "-circuit1 $cell"
         }
-        if {[regexp {sky130_ef_sc_[^_]+__fakediode_[[:digit:]]+} $cell match]} {
+        if {[regexp {([A-Z][A-Z0-9]_)*sky130_ef_sc_[^_]+__fakediode_[[:digit:]]+} $cell match]} {
             ignore class "-circuit1 $cell"
         }
     }
@@ -368,22 +368,22 @@ if { [info exist ::env(MAGIC_EXT_USE_GDS)] && $::env(MAGIC_EXT_USE_GDS) } {
 #---------------------------------------------------------------
 
 foreach cell $cells1 {
-    if {[regexp {sky130_fd_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
+    if {[regexp {([A-Z][A-Z0-9]_)*sky130_fd_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
 	property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+    if {[regexp {([A-Z][A-Z0-9]_)*sky130_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
 	property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
+    if {[regexp {([A-Z][A-Z0-9]_)*sky130_fd_sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
 	property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__diode_[[:digit:]]+} $cell match]} {
+    if {[regexp {([A-Z][A-Z0-9]_)*sky130_fd_sc_[^_]+__diode_[[:digit:]]+} $cell match]} {
 	property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__fill_diode_[[:digit:]]+} $cell match]} {
+    if {[regexp {([A-Z][A-Z0-9]_)*sky130_fd_sc_[^_]+__fill_diode_[[:digit:]]+} $cell match]} {
 	property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {sky130_ef_sc_[^_]+__fakediode_[[:digit:]]+} $cell match]} {
+    if {[regexp {([A-Z][A-Z0-9]_)*sky130_ef_sc_[^_]+__fakediode_[[:digit:]]+} $cell match]} {
 	property "-circuit1 $cell" parallel enable
     }
 }
@@ -457,3 +457,32 @@ if {[model blackbox]} {
 }
 
 #---------------------------------------------------------------
+# Equate sram layout cells with corresponding source
+# Example: matches K0_XE_sky130_sram_2kbyte_1rw1r_32x512_8_pinv to pinv
+foreach cell $cells1 {
+    if {[regexp {([A-Z][A-Z0-9]_)*sky130_sram_([^_]+)_([^_]+)_([^_]+)_([^_]+)_(.+)} $cell match prefix memory_size memory_type matrix io cellname]} {
+	if {([lsearch $cells2 $cell] < 0) && \
+		([lsearch $cells2 $cellname] >= 0) && \
+		([lsearch $cells1 $cellname] < 0)} {
+	    # netlist with the N names should always be the second netlist
+	    equate classes "-circuit2 $cellname" "-circuit1 $cell"
+	    puts stdout "Equating $cell in circuit 1 and $cellname in circuit 2"
+	    #equate pins "-circuit1 $cell" "-circuit2 $cellname"
+	}
+    }
+}
+
+# Equate prefixed layout cells with corresponding source
+# Example: matches K0_XE_pinv to pinv
+foreach cell $cells1 {
+    if {[regexp {([A-Z][A-Z0-9]_)*(.*)} $cell match prefix cellname]} {
+	if {([lsearch $cells2 $cell] < 0) && \
+		([lsearch $cells2 $cellname] >= 0) && \
+		([lsearch $cells1 $cellname] < 0)} {
+	    # netlist with the N names should always be the second netlist
+	    equate classes "-circuit2 $cellname" "-circuit1 $cell"
+	    puts stdout "Equating $cell in circuit 1 and $cellname in circuit 2"
+	    #equate pins "-circuit1 $cell" "-circuit2 $cellname"
+	}
+    }
+}
