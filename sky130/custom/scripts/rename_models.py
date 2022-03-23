@@ -30,6 +30,12 @@ def filter(inname, outname, ef_format = True):
         print('rename_models.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
+    # Check specifically for the file "all.spice"
+    allspice = False
+    if os.path.split(inname)[1] == 'all.spice':
+        allspice = True
+        optionrex = re.compile('option scale=', re.IGNORECASE)
+
     # Process input with regexp
 
     fixedlines = []
@@ -43,6 +49,14 @@ def filter(inname, outname, ef_format = True):
         # This subsitution makes SPICE files compatible with Xyce without
         # breaking ngspice compatibility ('$' comments changed to ';')
         fixedline = re.sub('(.*[ \t]+)\$([ \t+].*)', '\g<1>;\g<2>', fixedline)
+
+        # Add an additional option line for Xyce compatibility.  Note that having
+        # both option lines means that both ngspice and Xyce will complain about
+        # one of them, but both will run without issues otherwise.
+        if allspice:
+            omatch = optionrex.match(fixedline)
+            if omatch:
+                fixedlines.append('.options parser scale=1.0u  ; for Xyce')
 
         fixedlines.append(fixedline)
         if fixedline != line:

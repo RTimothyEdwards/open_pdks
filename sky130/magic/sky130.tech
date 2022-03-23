@@ -1273,7 +1273,7 @@ style gdsii
 #ifdef RERAM
 #undef RERAM
  layer VIA1 	reram
- 	squares-grid 55 150 170
+ 	squares-grid 55 230 230
  	calma 	68 44
 
  layer RERAM	reram
