@@ -32,7 +32,7 @@ def filter(inname, outname):
 
     dioderex = re.compile('.*[ \t]+sky130_fd_pr__diode_pw2nd[ \t]+')
     ndioderex = re.compile('.*[ \t]+ndiode_h[ \t]+')
-    shortrex = re.compile('.*[ \t]+short[ \t]+')
+    shortrex = re.compile('(.*[ \t]+)(\S+)([ \t]+short[ \t]+.*)')
 
     for line in slines:
 
