@@ -598,6 +598,7 @@ XSCHEM_SKY130_PATH
 SKY130_ML_XX_HD_PATH
 PATCH
 MAGIC
+HSPICE_DISABLED
 XSCHEM_DISABLED
 QFLOW_DISABLED
 OPENLANE_DISABLED
@@ -670,6 +671,7 @@ enable_irsim
 enable_openlane
 enable_qflow
 enable_xschem
+enable_hspice
 enable_alpha_sky130
 enable_xschem_sky130
 enable_sram_sky130
@@ -1323,6 +1325,10 @@ Optional Features:
                 Enable or disable xschem setup [default=enabled]
 
 
+  --enable-hspice
+                Enable or disable hspice setup [default=enabled]
+
+
   --enable-alpha-sky130[=path]
                           Install sky130_ml_xx_hd. If path is omitted, the repository
                           will be downloaded. [default=enabled]
@@ -1834,7 +1840,7 @@ if ${am_cv_pathless_PYTHON+:} false; then :
   $as_echo_n "(cached) " >&6
 else
 
-	for am_cv_pathless_PYTHON in python python2 python3 python3.3 python3.2 python3.1 python3.0 python2.7  python2.6 python2.5 python2.4 python2.3 python2.2 python2.1 python2.0 none; do
+	for am_cv_pathless_PYTHON in python python2 python3  python3.9 python3.8 python3.7 python3.6 python3.5 python3.4 python3.3  python3.2 python3.1 python3.0  python2.7 python2.6 python2.5 python2.4 python2.3 python2.2 python2.1  python2.0 none; do
 	  test "$am_cv_pathless_PYTHON" = none && break
 	  prog="import sys
 # split strings by '.' and convert to numeric.  Append some zeros
@@ -2295,8 +2301,8 @@ ALL_TECHS="sky130"
 # Set variables for tool setups
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: Found tools: klayout magic netgen irsim openlane qflow xschem" >&5
-$as_echo "$as_me: Found tools: klayout magic netgen irsim openlane qflow xschem" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Found tools: klayout magic netgen irsim openlane qflow xschem hspice" >&5
+$as_echo "$as_me: Found tools: klayout magic netgen irsim openlane qflow xschem hspice" >&6;}
 
 
 
@@ -2398,6 +2404,21 @@ if test "${enable_xschem+set}" = set; then :
   enableval=$enable_xschem;
                 if test "$enableval" == "no" -o "$enableval" == "NO"; then
                     XSCHEM_DISABLED=1
+                fi
+
+
+fi
+
+
+
+
+
+        HSPICE_DISABLED=0
+        # Check whether --enable-hspice was given.
+if test "${enable_hspice+set}" = set; then :
+  enableval=$enable_hspice;
+                if test "$enableval" == "no" -o "$enableval" == "NO"; then
+                    HSPICE_DISABLED=1
                 fi
 
 
@@ -2753,8 +2774,8 @@ fi
 
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow xschem" >&5
-$as_echo "$as_me: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow xschem" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow xschem hspice" >&5
+$as_echo "$as_me: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow xschem hspice" >&6;}
 
 # Check for "--with-ef-style"
 EF_STYLE=0

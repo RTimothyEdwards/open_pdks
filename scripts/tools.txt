@@ -5,3 +5,4 @@ irsim
 openlane
 qflow
 xschem
+hspice
