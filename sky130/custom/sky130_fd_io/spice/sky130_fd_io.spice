@@ -19,6 +19,10 @@
 .SUBCKT sky130_fd_io__condiode NEG POS
 .ENDS
 
+.SUBCKT sky130_fd_io__gnd2gnd_120x2_lv_isosub BDY2_B2B SRC_BDY_LVC1 VSSD
+D0 SRC_BDY_LVC1 BDY2_B2B sky130_fd_pr__diode_pd2nw_05v5 area=90 pj=33
+D1 BDY2_B2B SRC_BDY_LVC1 sky130_fd_pr__diode_pd2nw_05v5 area=90 pj=33
+.ENDS
 
 .SUBCKT sky130_fd_io__amuxsplitv2_delay ENABLE_VDDA_H HLD_VDDA_H_N HOLD RESET
 + VCC_IO VGND
@@ -3061,8 +3065,8 @@ XI30 nsw_enb PGHS_H PUG_H VPB_DRVR sky130_fd_pr__pfet_g5v0d10v5 m=2 w=3.0 l=0.5
 XI70 net531 en VCC_IO VCC_IO sky130_fd_pr__pfet_g5v0d10v5 m=4 w=5.0 l=0.5 mult=1
 + sa=0.265 sb=0.265 sd=0.28 topography=normal area=0.063 perim=1.14
 RI221 net420 vr sky130_fd_pr__res_generic_po W=0.75 L=513.445 m=1
-RI186 SLEW_CTL_H_N[0] mode4b sky130_fd_pr__res_generic_m1
-RI157 net247 mode2b sky130_fd_pr__res_generic_m1
+RI186 SLEW_CTL_H_N[0] mode4b sky130_fd_pr__res_generic_m1 L=1 W=1
+RI157 net247 mode2b sky130_fd_pr__res_generic_m1 L=1 W=1
 .ENDS sky130_fd_io__gpio_ovtv2_pdpredrvr_strong_leak_fix
 
 * Copyright 2020 The SkyWater PDK Authors
@@ -4847,9 +4851,9 @@ Xhld_i_h_inv8<0>_q0 enable_vdda_h_n hld_i_h_n_net<0> VGND VCC_IO
 * Rshort<1> hld_i_h_n_net<1> HLD_I_H_N short
 * Rshort<0> hld_i_h_n_net<0> HLD_I_H_N short
 * Rshort_hld_i_h enable_vdda_h_n HLD_I_H short
-Rshort<1> hld_i_h_n_net<1> HLD_I_H_N sky130_fd_pr__res_generic_m1
-Rshort<0> hld_i_h_n_net<0> HLD_I_H_N sky130_fd_pr__res_generic_m1
-Rshort_hld_i_h enable_vdda_h_n HLD_I_H sky130_fd_pr__res_generic_m1
+Rshort<1> hld_i_h_n_net<1> HLD_I_H_N sky130_fd_pr__res_generic_m1 L=1 W=1
+Rshort<0> hld_i_h_n_net<0> HLD_I_H_N sky130_fd_pr__res_generic_m1 L=1 W=1
+Rshort_hld_i_h enable_vdda_h_n HLD_I_H sky130_fd_pr__res_generic_m1 L=1 W=1
 .ENDS sky130_fd_io__gpiov2_ctl_hld
 
 * Copyright 2020 The SkyWater PDK Authors
@@ -6362,8 +6366,8 @@ XI1 IN GATE VGND NBODY sky130_fd_pr__esd_nfet_g5v0d10v5 m=1 w=5.4 l=0.6 mult=1
 + sa=0.0 sb=0.0 sd=0.0 topography=normal area=0.048 perim=0.94
 * RI9 net18 NBODY short
 * RI8 net16 NWELLRING short
-RI9 net18 NBODY sky130_fd_pr__res_generic_m1 W=0.02 L=0.005
-RI8 net16 NWELLRING sky130_fd_pr__res_generic_m1 W=0.02 L=0.005
+*RI9 net18 NBODY sky130_fd_pr__res_generic_m1 W=0.02 L=0.005
+*RI8 net16 NWELLRING sky130_fd_pr__res_generic_m1 W=0.02 L=0.005
 .ENDS sky130_fd_io__signal_5_sym_hv_local_5term
 
 * Copyright 2020 The SkyWater PDK Authors
@@ -7151,7 +7155,7 @@ RI37 net94 net90 sky130_fd_pr__res_generic_po W=0.33 L=1550 m=1
 Xpre_p1_q0 g_nclamp g_pdpre DRN_HVC DRN_HVC sky130_fd_pr__pfet_g5v0d10v5 m=50
 + w=7.0 l=0.5 mult=1 sa=0.265 sb=0.265 sd=0.28 topography=normal area=0.063
 + perim=1.14
-RI13 G_PAD G_CORE sky130_fd_pr__res_generic_m5 W=1 L=1
+RI13 G_PAD G_CORE sky130_fd_pr__res_generic_m5 w=2.5385e+08u l=100000u
 .ENDS sky130_fd_io__top_ground_hvc_wpad
 
 * Copyright 2020 The SkyWater PDK Authors
@@ -7240,7 +7244,7 @@ Xnc2_q0 SRC_BDY_HVC g_pdpre SRC_BDY_HVC SRC_BDY_HVC sky130_fd_pr__nfet_g5v0d10v5
 Xcxtor2_q0 DRN_HVC g_nclamp SRC_BDY_HVC SRC_BDY_HVC sky130_fd_pr__nfet_g5v0d10v5
 + m=22 w=10.0 l=0.5 mult=1 sa=0.265 sb=0.265 sd=0.28 topography=normal area=0.063
 + perim=1.14
-RI13 P_PAD P_CORE sky130_fd_pr__res_generic_m5 W=1 L=1
+RI13 P_PAD P_CORE sky130_fd_pr__res_generic_m5 w=2.5385e+08u l=100000u
 .ENDS sky130_fd_io__top_power_hvc_wpadv2
 
 * Copyright 2020 The SkyWater PDK Authors
@@ -7727,7 +7731,7 @@ X5kres_q0 VDDIO net15 VSSD sky130_fd_io__com_res_weak
 Xesd_q0 BDY2_B2B SRC_BDY_LVC1 VSSD sky130_fd_io__gnd2gnd_120x2_lv_isosub
 xI54 SRC_BDY_LVC2 VDDIO sky130_fd_io__condiode
 xI50 SRC_BDY_LVC1 VDDIO sky130_fd_io__condiode
-RI21 G_PAD G_CORE sky130_fd_pr__res_generic_m5 W=1 L=1
+RI21 G_PAD G_CORE sky130_fd_pr__res_generic_m5 w=2.5385e+08u l=100000u
 Xpre_p1_q0 g_nclamp_lvc1 g_pdpre_lvc1 DRN_LVC1 DRN_LVC1 sky130_fd_pr__pfet_01v8
 + m=20 w=7.0 l=0.18 mult=1 sa=0.265 sb=0.265 sd=0.28 topography=normal area=0.063
 + perim=1.14
@@ -7797,7 +7801,7 @@ RI45 net157 net155 sky130_fd_pr__res_generic_po W=0.33 L=720 m=1
 Xesd_q0 BDY2_B2B SRC_BDY_LVC1 VSSD sky130_fd_io__gnd2gnd_120x2_lv_isosub
 xI54 SRC_BDY_LVC2 VDDIO sky130_fd_io__condiode
 xI50 SRC_BDY_LVC1 VDDIO sky130_fd_io__condiode
-RI21 P_PAD P_CORE sky130_fd_pr__res_generic_m5 W=1 L=1
+RI21 P_PAD P_CORE sky130_fd_pr__res_generic_m5 w=2.5385e+08u l=100000u
 Xpre_p1_q0 g_nclamp_lvc1 g_pdpre_lvc1 DRN_LVC1 DRN_LVC1 sky130_fd_pr__pfet_01v8
 + m=20 w=7.0 l=0.18 mult=1 sa=0.265 sb=0.265 sd=0.28 topography=normal area=0.063
 + perim=1.14
