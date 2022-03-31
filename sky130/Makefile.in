@@ -1131,6 +1131,10 @@ primitive-%:
 	./custom/scripts/fix_spice_includes.py ${EF_FORMAT} \
 		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice/all.spice \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
+	# Custom:  Add the PNP 3.4x3.4um device model to the includes in "montecarlo.spice"
+	./custom/scripts/fix_spice_includes2.py ${EF_FORMAT} \
+		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice/parameters/montecarlo.spice \
+		2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Custom:  Parse the (commented out) statistics blocks and generate
 	# ngspice-compatible monte carlo parameters for mismatch and process
 	./custom/scripts/mismatch_params.py ${EF_FORMAT} -variant=${SKY130$*} \
