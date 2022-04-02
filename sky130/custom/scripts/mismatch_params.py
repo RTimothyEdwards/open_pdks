@@ -114,6 +114,10 @@ print('')
 
 gaussrex = re.compile('\'[ \t]+dev\/gauss=\'', re.IGNORECASE)
 
+# Same as above, for parameters that are not already expressions.
+
+gauss2rex = re.compile('=[ \t]*([^ \t]+)[ \t]+dev\/gauss=\'', re.IGNORECASE)
+
 #--------------------------------------------------------------------
 # Step 2.  Make replacements
 #--------------------------------------------------------------------
@@ -139,6 +143,12 @@ for infile_name in filelist:
         gmatch = gaussrex.search(newline)
         if gmatch:
             newline = gaussrex.sub('+' + mm_switch_param + '*AGAUSS(0,1.0,1)*', newline)
+            replaced_something = True
+            print("  Line {}: Found PSPICE dev/gauss and replaced.".format(line_number))
+
+        gmatch = gauss2rex.search(newline)
+        if gmatch:
+            newline = gauss2rex.sub("='\g<1>+" + mm_switch_param + '*AGAUSS(0,1.0,1)*', newline)
             replaced_something = True
             print("  Line {}: Found PSPICE dev/gauss and replaced.".format(line_number))
 
