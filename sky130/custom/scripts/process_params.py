@@ -10,6 +10,12 @@ import os
 import re
 import sys
 
+# Sort the process parameters so that names that are subsets of other
+# names appear later in the list.
+
+def getKey(item):
+    return item[0]
+
 pr_switch_param = 'MC_PR_SWITCH'
 
 options = []
@@ -100,12 +106,6 @@ for dirpath, dirnames, filenames in os.walk(walkpath):
 
 
             infile.close()
-
-# Sort the process parameters so that names that are subsets of other
-# names appear later in the list.
-
-def getKey(item):
-    return item[0]
 
 process_params.sort(reverse=True, key=getKey)
 
