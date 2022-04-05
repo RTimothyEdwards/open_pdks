@@ -648,7 +648,6 @@ if __name__ == '__main__':
                 for item in option:
                     if item.split('=')[0] == 'filter':
                         filter_scripts.append(item.split('=')[1])
-                        break
 
                 if ef_format:
                     techlefdir = targetdir + '/libs.ref/' + 'techLEF'
@@ -685,7 +684,6 @@ if __name__ == '__main__':
                 for item in option:
                     if item.split('=')[0] == 'filter':
                         filter_scripts.append(item.split('=')[1])
-                        break
 
                 print('Diagnostic:  installing to ' + option[0] + '.')
                 tooldir = targetdir + '/libs.tech/' + option[0]
@@ -813,7 +811,6 @@ if __name__ == '__main__':
         for item in option:
             if item.split('=')[0] == 'filter':
                 filter_scripts.append(item.split('=')[1])
-                break
 
         # Option 'stub' applies to netlists ('cdl' or 'spice') and generates
         # a file with only stub entries.
