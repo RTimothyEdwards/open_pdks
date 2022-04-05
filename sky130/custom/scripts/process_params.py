@@ -76,7 +76,9 @@ for dirpath, dirnames, filenames in os.walk(walkpath):
                     if ematch:
                         state = 'after_process'
                     else:
-                        tokens = line.split()
+                        # Make sure all "A = B" syntax closes up around the equal sign.
+                        newline = re.sub('[ \t]*=[ \t]*', '=', line)
+                        tokens = newline.split()
                         if 'vary' in tokens:
                             if ('dist=gauss' in tokens) or ('gauss' in tokens):
                                 gtype = 'A'

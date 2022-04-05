@@ -69,10 +69,13 @@ for dirpath, dirnames, filenames in os.walk(walkpath):
                     if ematch:
                         state = 'after_mismatch'
                     else:
-                        tokens = line.split()
+                        # Make sure all "A = B" syntax closes up around the equal sign.
+                        newline = re.sub('[ \t]*=[ \t]*', '=', line)
+                        tokens = newline.split()
                         if 'vary' in tokens:
                             if ('dist=gauss' in tokens) or ('gauss' in tokens):
                                 gtype = 'A'
+                                std_dev = 1
                                 mismatch_param = tokens[2]
                                 for token in tokens[3:]:
                                     gparam = token.split('=')
@@ -90,6 +93,7 @@ for dirpath, dirnames, filenames in os.walk(walkpath):
                                 mismatch_params.append((mismatch_param, replacement))
                             elif ('dist=lnorm' in tokens) or ('lnorm' in tokens):
                                 mismatch_param = tokens[2]
+                                std_dev = 1
                                 for token in tokens[3:]:
                                     gparam = token.split('=')
                                     if len(gparam) == 2:
