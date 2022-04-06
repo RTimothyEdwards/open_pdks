@@ -29,15 +29,15 @@ cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
 # Try to create a deterministic tar file
 # https://reproducible-builds.org/docs/archives/
 (
-	SKY130_DIR="$(pwd)/pdks/pdk/sky130A"
-	if ! [[ -d $SKY130_DIR ]]; then
-	    echo "Missing $SKY130_DIR"
+	HSPICE_DIR="$(pwd)/pdks/pdk/sky130A/libs.tech/hspice"
+	if ! [[ -d $HSPICE_DIR ]]; then
+	    echo "Missing $HSPICE_DIR"
 	    exit -1
 	fi
 
 	echo ::group::PDK tarball
 
-	cd ${SKY130_DIR}
+	cd ${HSPICE_DIR}
 	tar \
 		--create \
 		--bzip2 \
@@ -50,7 +50,7 @@ cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
 		--numeric-owner \
 		--pax-option=exthdr.name=%d/PaxHeaders/%f,delete=atime,delete=ctime \
 		\
-		--file ${GITHUB_WORKSPACE}/output/pdk-SKY130A-${STD_CELL_LIBRARY}.tar.bz2 .
+		--file ${GITHUB_WORKSPACE}/output/pdk-hspice-${STD_CELL_LIBRARY}.tar.bz2 .
 
 	echo ::endgroup::
 )

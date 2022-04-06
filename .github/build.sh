@@ -29,28 +29,6 @@ echo ::group::make skywater-pdk
 make skywater-pdk
 echo ::endgroup::
 
-if [ x"$STD_CELL_LIBRARY" = xall ]; then
-    cnt=0
-    until make all-skywater-libraries; do
-        cnt=$((cnt+1))
-        if [ $cnt -eq 5 ]; then
-            exit 2
-        fi
-        rm -rf $PDK_ROOT/skywater-pdk
-        make skywater-pdk
-    done
-else
-    cnt=0
-    until make skywater-library; do
-        cnt=$((cnt+1))
-        if [ $cnt -eq 5 ]; then
-            exit 2
-        fi
-        rm -rf $PDK_ROOT/skywater-pdk
-        make skywater-pdk
-    done
-fi
-
 cd ..
 
 docker run \

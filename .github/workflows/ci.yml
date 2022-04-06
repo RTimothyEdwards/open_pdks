@@ -2,7 +2,11 @@ name: CI
 
 on:
   push:
+    branches:
+      - hspice
   pull_request:
+    branches:
+      - hspice
   workflow_dispatch:
 
 
@@ -13,12 +17,6 @@ jobs:
       fail-fast: false
       matrix:
         library:
-          - sky130_fd_sc_hd
-          - sky130_fd_sc_hdll
-          - sky130_fd_sc_hs
-          - sky130_fd_sc_ms
-          - sky130_fd_sc_ls
-          - sky130_fd_sc_hvl
           - all
     env:
       STD_CELL_LIBRARY: ${{ matrix.library }}
@@ -34,10 +32,6 @@ jobs:
     - name: Build
       run: |
         bash .github/build.sh
-
-    - name: Test
-      run: |
-        bash .github/test.sh
 
     - name: Capture
       if: ${{ always() }}
