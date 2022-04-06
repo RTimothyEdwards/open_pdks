@@ -23,6 +23,8 @@ MULTILINE_PARAMS = re.compile(rf'(\S+)\s+=\s+\{{"?([\s{REGEX_EXPRESSION}]+)"?\}}
 SEMICOLON_PATTERN = re.compile(r"(.+);(.+)")
 SEMICOLON_REPLACE = r"*\2\n\1"
 
+AGAUSS_PATTERN = re.compile(f"(agauss\s*\(([{NUMERIC_REGEX},]+)\))", re.IGNORECASE)
+
 
 def quote_params_with_braces(content, *args, **kwargs):
     """Add quotes to param definitions which are enclosed between curly braces"""
@@ -72,6 +74,31 @@ def replace_spi_path(content, *args, **kwargs):
     content = content.replace(source_path, dest_path)
     return content
 
+def replace_agauss(content, *args, **kwargs):
+    file_name = os.path.basename(kwargs["input_file_name"])
+    
+    param_prefix = re.sub(r"[^a-zA-Z0-9_]", "", file_name)
+    all_agauss = set()
+    
+    suffix_pattern = re.compile(r"[\.,a-zA-Z]")
+
+    res = []
+    for line in content.split("\n"):
+        gauss_patterns = AGAUSS_PATTERN.findall(line)
+        if gauss_patterns:
+            for full_text, gauss_pattern in gauss_patterns:
+                param_suffix = suffix_pattern.sub("", gauss_pattern)
+                param_name = f"{param_prefix}_{param_suffix}"
+                all_agauss.add((full_text, param_name))
+                line = line.replace(full_text, param_name)
+        res.append(line)
+
+    for agauss in all_agauss:
+        res.append(f".param {agauss[1]}={agauss[0]}")
+        print(f"Replaced {agauss[0]} with {agauss[1]} in {file_name}")
+
+    return "\n".join(res)
+
 
 def generic_filter(input_file_name, output_file_name, filters=None):
     filters = filters or []
@@ -87,7 +114,7 @@ def generic_filter(input_file_name, output_file_name, filters=None):
 
 def hspice_filter(input_file_name, out_file_name, _):
     filters = [quote_params_with_braces, quote_non_numeric_params,
-               quote_multiline_params, remove_semicolons]
+               quote_multiline_params, remove_semicolons, replace_agauss]
     if "hspice/spi" in input_file_name:
         filters.append(replace_libs_tech)
     else:
