@@ -6365,6 +6365,8 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsideoverlap allm5 metal5 allm1 metal1 49.44
  defaultsideoverlap allm1 metal1 allm5 metal5 13.76
 
+#endif (!RERAM)
+
 #metal5->metal2
  defaultoverlap     allm5 metal5 allm2 metal2 13.3
  defaultsideoverlap allm5 metal5 allm2 metal2 51.69
