@@ -23,15 +23,15 @@ set ::env(STD_CELL_LIBRARY_CDL)	"$::env(PDK_ROOT)/$::env(PDK)/libs.ref/cdl/$::en
 set ::env(GPIO_PADS_LEF) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lef/sky130_fd_io/sky130_fd_io.lef\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lef/sky130_fd_io/sky130_ef_io.lef\
-	"
+"
 # sky130_fd_io.v is not parsable by yosys, so it cannot be included it here yet...
 set ::env(GPIO_PADS_VERILOG) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/verilog/sky130_fd_io/sky130_ef_io.v"
 set ::env(GPIO_PADS_VERILOG) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/verilog/sky130_fd_io/sky130_ef_io.v\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/verilog/sky130_fd_io/sky130_ef_io__gpiov2_pad_wrapped.v\
-	"
+"
 
-# Optimization library 
+# Optimization library
 set ::env(TECH_LEF_OPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/techLEF/$::env(STD_CELL_LIBRARY_OPT)/$::env(STD_CELL_LIBRARY_OPT)__nom.tlef"
 set ::env(CELLS_LEF_OPT) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lef/$::env(STD_CELL_LIBRARY_OPT)/*.lef"]
 set ::env(GDS_FILES_OPT) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/gds/$::env(STD_CELL_LIBRARY_OPT)/*.gds"]
@@ -48,14 +48,14 @@ set ::env(STD_CELL_LIBRARY_CDL)	"$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(ST
 set ::env(GPIO_PADS_LEF) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lef/sky130_fd_io.lef\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lef/sky130_ef_io.lef\
-	"
+"
 
 set ::env(GPIO_PADS_VERILOG) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/verilog/sky130_ef_io.v\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/verilog/sky130_ef_io__gpiov2_pad_wrapped.v\
-	"
+"
 
-# Optimization library 
+# Optimization library
 set ::env(TECH_LEF_OPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/techlef/$::env(STD_CELL_LIBRARY_OPT)__nom.tlef"
 set ::env(CELLS_LEF_OPT) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/lef/*.lef"]
 set ::env(GDS_FILES_OPT) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/gds/*.gds"]
@@ -63,18 +63,18 @@ set ::env(STD_CELL_LIBRARY_OPT_CDL)	"$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::en
 
 #endif (!EF_FORMAT)
 
-# Optimization library slowest corner 
+# Optimization library slowest corner
 set tmp $::env(STD_CELL_LIBRARY)
 set ::env(STD_CELL_LIBRARY) $::env(STD_CELL_LIBRARY_OPT)
 source "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY_OPT)/config.tcl"
 set ::env(LIB_SLOWEST_OPT) $::env(LIB_SLOWEST)
-set ::env(STD_CELL_LIBRARY) $tmp 
+set ::env(STD_CELL_LIBRARY) $tmp
 source "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/config.tcl"
 
 set ::env(GPIO_PADS_LEF_CORE_SIDE) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/custom_cells/lef/sky130_fd_io_core.lef\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/custom_cells/lef/sky130_ef_io_core.lef\
-	"
+"
 
 # magic setup
 #ifdef EF_FORMAT
@@ -124,32 +124,13 @@ set ::env(NO_SYNTH_CELL_LIST) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$
 # Default DRC Exclude List
 set ::env(DRC_EXCLUDE_CELL_LIST) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/drc_exclude.cells"
 
-# DRC Exclude List for Optimization library 
+# DRC Exclude List for Optimization library
 set ::env(DRC_EXCLUDE_CELL_LIST_OPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY_OPT)/drc_exclude.cells"
 
-# Open-RCX Rules File 
+# Open-RCX Rules File
 set ::env(RCX_RULES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.openrcx.$::env(PDK).nom.magic"
 set ::env(RCX_RULES_MIN) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.openrcx.$::env(PDK).min.magic"
 set ::env(RCX_RULES_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.openrcx.$::env(PDK).max.magic"
-
-# VIAS RC Values
-set ::env(VIAS_RC) "\
-    mcon 9.249146E-3,\
-    via 4.5E-3,\
-    via2 3.368786E-3,\
-    via3 0.376635E-3,\
-    via4 0.00580E-3"
-
-# Layer RC Values
-set ::env(LAYERS_RC) "\
-	li1 1.499e-04 7.176e-02,\
-	met1 1.449e-04 8.929e-04,\
-	met2 1.331e-04 8.929e-04,\
-	met3 1.464e-04 1.567e-04,\
-	met4 1.297e-04 1.567e-04,\
-	met5 1.501e-04 1.781e-05"
-
-set ::env(GLB_RT_L1_ADJUSTMENT) 0.99
 
 # Extra PDN configs
 set ::env(FP_PDN_RAILS_LAYER) met1
