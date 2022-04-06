@@ -15,9 +15,6 @@
 
 mkdir -p ${GITHUB_WORKSPACE}/output/
 
-# Copy build log.
-cp ./sky130/sky130A_install.log ${GITHUB_WORKSPACE}/output/
-
 # Copy any core dupmps into the output directory.
 find . -name core -not \( -path '*/skywater-pdk/*' -prune \) | \
 	awk -v ln=1 '{print "cp " $0 " ${GITHUB_WORKSPACE}/output/core." ln++ }' | \
@@ -29,7 +26,7 @@ cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
 # Try to create a deterministic tar file
 # https://reproducible-builds.org/docs/archives/
 (
-	HSPICE_DIR="$(pwd)/pdks/pdk/sky130A/libs.tech/hspice"
+	HSPICE_DIR="$(pwd)/sky130/sky130A/libs.tech/hspice"
 	if ! [[ -d $HSPICE_DIR ]]; then
 	    echo "Missing $HSPICE_DIR"
 	    exit -1
@@ -50,29 +47,10 @@ cp .github/magic.tar.gz ${GITHUB_WORKSPACE}/output/
 		--numeric-owner \
 		--pax-option=exthdr.name=%d/PaxHeaders/%f,delete=atime,delete=ctime \
 		\
-		--file ${GITHUB_WORKSPACE}/output/pdk-hspice-${STD_CELL_LIBRARY}.tar.bz2 .
+		--file ${GITHUB_WORKSPACE}/output/hspice-model.tar.bz2 .
 
 	echo ::endgroup::
 )
-
-# Free up disk space so the GitHub Action runner doesn't die when collecting
-# the artifacts.
-echo ::group::Freeup space
-
-df -h
-
-for DIR in ${GITHUB_WORKSPACE}/*; do
-	if [ x$DIR = x"${GITHUB_WORKSPACE}/output" ]; then
-		continue
-	fi
-	echo
-	echo "Removing $DIR"
-	rm -rvf $DIR
-done
-
-df -h
-
-echo ::endgroup::
 
 # Output which files are being saved.
 echo ::group::Output files
