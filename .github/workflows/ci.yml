@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - hspice
+    tags:
+      - 1.*
   pull_request:
     branches:
       - hspice
