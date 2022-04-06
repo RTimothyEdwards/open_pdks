@@ -24,7 +24,7 @@ SKYWATER_COMMIT ?= b5ff6174d9aa921f670f12a2893969fe4a516f6c
 all: pdk
 
 .PHONY: pdk
-pdk: skywater-pdk build-pdk
+pdk: skywater-pdk skywater-library build-pdk
 
 $(PDK_ROOT)/skywater-pdk:
 	git clone https://github.com/google/skywater-pdk.git $(PDK_ROOT)/skywater-pdk
@@ -33,6 +33,11 @@ $(PDK_ROOT)/skywater-pdk:
 skywater-pdk: $(PDK_ROOT)/skywater-pdk
 	cd $(PDK_ROOT)/skywater-pdk && \
 		git checkout -qf $(SKYWATER_COMMIT)
+
+.PHONY: skywater-library
+skywater-library: $(PDK_ROOT)/skywater-pdk
+	cd $(PDK_ROOT)/skywater-pdk && \
+		git submodule update --init libraries/sky130_fd_pr/latest
 
 .PHONY: build-pdk
 build-pdk: $(PDK_ROOT)/skywater-pdk
