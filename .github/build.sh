@@ -27,6 +27,7 @@ echo ::endgroup::
 
 echo ::group::make skywater-pdk
 make skywater-pdk
+make skywater-library
 echo ::endgroup::
 
 cd ..
