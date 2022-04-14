@@ -943,6 +943,10 @@ openlane-%: openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl openlane/sky
 	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.magic
 	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.magic
 
+	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.spef_extractor
+	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.spef_extractor
+	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.spef_extractor
+
 	cp -r openlane/custom_cells ${OPENLANE_STAGING_$*}
 	${CPP} ${SKY130$*_DEFS} openlane/config.tcl ${OPENLANE_STAGING_$*}/config.tcl
 
@@ -952,6 +956,13 @@ openlane-%: openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl openlane/sky
 		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.magic
 	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.max.magic \
 		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.magic
+
+	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.min.spef_extractor \
+		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.spef_extractor
+	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.nom.spef_extractor \
+		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.spef_extractor
+	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.max.spef_extractor \
+		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.spef_extractor
 
 	for file in ${OPENLANE_COMMON} ; do \
 	    ${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_fd_sc_hd/$$file \
