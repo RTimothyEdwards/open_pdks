@@ -6429,11 +6429,11 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
 	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w \
 	a1=as p1=ps a2=ad p2=pd
  device subcircuit sky130_fd_pr__cap_var_lvt varactor \
-	*nndiff nwell error l=l w=w a1=as a2=ad p1=ps p2=pd
+	*nndiff pwell,space/w error l=l w=w
  device subcircuit sky130_fd_pr__cap_var_hvt varhvt \
-	*nndiff nwell error l=l w=w a1=as a2=ad p1=ps p2=pd
+	*nndiff pwell,space/w error l=l w=w
  device subcircuit sky130_fd_pr__cap_var mvvaractor \
-	*mvnndiff nwell error l=l w=w a1=as a2=ad p1=ps p2=pd
+	*mvnndiff pwell,space/w error l=l w=w
 
  # Bipolars
  device msubcircuit sky130_fd_pr__npn_05v5_W1p00L1p00 npn *ndiff dnwell space/w \
