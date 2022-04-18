@@ -1273,11 +1273,10 @@ style gdsii
 #ifdef RERAM
 #undef RERAM
  layer VIA1 	reram
- 	squares-grid 55 230 230
+ 	squares-grid 55 150 170
  	calma 	68 44
 
  layer RERAM	reram
- 	squares-grid 55 230 230
 	calma	201 20
 #define RERAM
 #endif (RERAM)
@@ -3590,22 +3589,26 @@ style  sky130 variants (vendor),()
 
 #ifdef RERAM
 #undef RERAM
+ # RERAM is drawn as-is
  layer reram RERAM
- and VIA1
- grow 55
 #define RERAM
 #endif (RERAM)
 
  templayer m2cbase VIA1
- and-not COREID
- grow 5
- or VIA1
- grow 50
 #ifdef RERAM
 #undef RERAM
  and-not RERAM
 #define RERAM
 #endif (RERAM)
+ and-not COREID
+ grow 5
+ or VIA1
+#ifdef RERAM
+#undef RERAM
+ and-not RERAM
+#define RERAM
+#endif (RERAM)
+ grow 50
 
  layer m2c m2cbase
  grow 30
