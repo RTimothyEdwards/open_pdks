@@ -1668,9 +1668,6 @@ if __name__ == '__main__':
                         # original source LEF file.
                         lefdest = lefsrclibdir + '/' if have_lefanno else ''
 
-                        for leffile in leffiles:
-                            if have_lefanno:
-                                print('lef read ' + lefsrclibdir + '/' + leffile, file=ofile)
                         for lefmacro in lefmacros:
                             print('if {[cellname list exists ' + lefmacro + '] != 0} {', file=ofile)
                             print('   load ' + lefmacro, file=ofile)
