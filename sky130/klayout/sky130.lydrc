@@ -582,7 +582,7 @@ non_huge_m3.space(0.3, euclidian).output("m3.2", "m3.2 : min. m3 spacing : 0.3um
 (huge_m3.separation(non_huge_m3, 0.4, euclidian) + huge_m3.space(0.4, euclidian)).output("m3.3ab", "m3.3ab : min. 3um.m3 spacing m3 : 0.4um")
 
 # rule m3.3c not coded
-m3.with_area(0..0.24).output("m3.6", "m3.6 : min. m2 area : 0.24um²")
+m3.with_area(0..0.24).output("m3.6", "m3.6 : min. m3 area : 0.24um²")
 via2.not(m3).output("m3.via2", "m3.via2 : m3 must enclose via2")
 if backend_flow = AL
   m3.enclosing(via2, 0.065, euclidian).output("m3.4", "m3.4 : min. m3 enclosure of via2 : 0.065um")
@@ -593,7 +593,7 @@ if backend_flow = AL
   # rule m3.pd.1, rule m3.pd.2a, rule m3.pd.2b not coded
 end
 if bakend_flow = CU
-  m3.holes.with_area(0..0.2).output("m3.7", "m3.7 : min. m2 holes area : 0.2um²")
+  m3.holes.with_area(0..0.2).output("m3.7", "m3.7 : min. m3 holes area : 0.2um²")
   m3.sized(-2.0).sized(2.0).output("m3.11", "m3.11 : max. m3 width after slotting : 4.0um")
   # rule m3.12 not coded because inconsistent with m3.11
   # rule m3.13, m3.14, m3.14a not coded : see : https://www.klayout.de/forum/discussion/comment/6759
@@ -629,7 +629,7 @@ non_huge_m4.space(0.3, euclidian).output("m4.2", "m4.2 : min. m4 spacing : 0.3um
 
 (huge_m4.separation(non_huge_m4, 0.4, euclidian) + huge_m4.space(0.4, euclidian)).output("m4.5ab", "m4.5ab : min. 3um.m4 spacing m4 : 0.4um")
 
-m4.with_area(0..0.24).output("m4.4", "m4.4 : min. m2 area : 0.24um²")
+m4.with_area(0..0.24).output("m4.4", "m4.4 : min. m4 area : 0.24um²")
 via3.not(m4).output("m4.via3", "m4.via3 : m4 must enclose via3")
 if backend_flow = AL
   m4.enclosing(via3, 0.065, euclidian).output("m4.3", "m4.3 : min. m4 enclosure of via3 : 0.065um")
@@ -640,7 +640,7 @@ if backend_flow = AL
   # rule m4.pd.1, rule m4.pd.2a, rule m4.pd.2b not coded
 end
 if bakend_flow = CU
-  m4.holes.with_area(0..0.2).output("m4.7", "m4.7 : min. m2 holes area : 0.2um²")
+  m4.holes.with_area(0..0.2).output("m4.7", "m4.7 : min. m4 holes area : 0.2um²")
   m4.sized(-5.0).sized(5.0).output("m4.11", "m4.11 : max. m4 width after slotting : 10.0um")
   # rule m4.12 not coded because inconsistent with m4.11
   # rule m4.13, m4.14, m4.14a not coded : see : https://www.klayout.de/forum/discussion/comment/6759
