@@ -1,0 +1,3 @@
+[submodule "sky130/klayout/device_generators"]
+	path = sky130/klayout/device_generators
+	url = https://github.com/mabrains/sky130_klayout_pdk.git
