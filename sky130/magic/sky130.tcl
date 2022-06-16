@@ -73,7 +73,7 @@ namespace eval sky130 {
     dict set ruleset metal_spacing    0.23      ;# Local interconnect spacing rule
     dict set ruleset mmetal_spacing   0.14      ;# Metal spacing rule (above local interconnect)
     dict set ruleset res_to_cont      0.20      ;# resistor to contact center
-    dict set ruleset res_diff_space   0.20      ;# resistor to guard ring
+    dict set ruleset res_diff_spacing 0.20      ;# resistor to guard ring
 }
 
 #-----------------------------------------------------
@@ -2454,7 +2454,7 @@ proc sky130::sky130_fd_pr__res_high_po_0p35_defaults {} {
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
-		full_metal 1 wmax 0.350 vias 1 n_guard 0 hv_guard 0 \
+		snake 0 full_metal 1 wmax 0.350 vias 1 n_guard 0 hv_guard 0 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_high_po_0p69_defaults {} {
@@ -2464,7 +2464,7 @@ proc sky130::sky130_fd_pr__res_high_po_0p69_defaults {} {
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
-		full_metal 1 wmax 0.690 n_guard 0 hv_guard 0 vias 1 \
+		snake 0 full_metal 1 wmax 0.690 n_guard 0 hv_guard 0 vias 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_high_po_1p41_defaults {} {
@@ -2474,7 +2474,7 @@ proc sky130::sky130_fd_pr__res_high_po_1p41_defaults {} {
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
-		full_metal 1 wmax 1.410 n_guard 0 hv_guard 0 vias 1 \
+		snake 0 full_metal 1 wmax 1.410 n_guard 0 hv_guard 0 vias 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_high_po_2p85_defaults {} {
@@ -2484,7 +2484,7 @@ proc sky130::sky130_fd_pr__res_high_po_2p85_defaults {} {
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
-		full_metal 1 wmax 2.850 n_guard 0 hv_guard 0 vias 1 \
+		snake 0 full_metal 1 wmax 2.850 n_guard 0 hv_guard 0 vias 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_high_po_5p73_defaults {} {
@@ -2494,7 +2494,7 @@ proc sky130::sky130_fd_pr__res_high_po_5p73_defaults {} {
 		compatible {sky130_fd_pr__res_high_po_0p35 \
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
-		full_metal 1 wmax 5.730 n_guard 0 hv_guard 0 vias 1 \
+		snake 0 full_metal 1 wmax 5.730 n_guard 0 hv_guard 0 vias 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
@@ -2507,7 +2507,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p35_defaults {} {
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
-		full_metal 1 n_guard 0 hv_guard 0 vias 1 \
+		snake 0 full_metal 1 n_guard 0 hv_guard 0 vias 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_0p69_defaults {} {
@@ -2518,7 +2518,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p69_defaults {} {
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
-		full_metal 1 n_guard 0 hv_guard 0 vias 1 \
+		snake 0 full_metal 1 n_guard 0 hv_guard 0 vias 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_1p41_defaults {} {
@@ -2529,7 +2529,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_1p41_defaults {} {
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
-		full_metal 1 n_guard 0 hv_guard 0 vias 1 \
+		snake 0 full_metal 1 n_guard 0 hv_guard 0 vias 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_2p85_defaults {} {
@@ -2540,7 +2540,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_2p85_defaults {} {
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
-		full_metal 1 n_guard 0 hv_guard 0 vias 1 \
+		snake 0 full_metal 1 n_guard 0 hv_guard 0 vias 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_5p73_defaults {} {
@@ -2551,7 +2551,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_5p73_defaults {} {
 		compatible {sky130_fd_pr__res_xhigh_po_0p35 \
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
-		full_metal 1 n_guard 0 hv_guard 0 vias 1 \
+		snake 0 full_metal 1 n_guard 0 hv_guard 0 vias 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
@@ -3183,7 +3183,9 @@ proc sky130::res_snake_device {nf parameters} {
     box grow w ${hw}um
     pushbox
     box grow s ${mask_clearance}um
-    paint ${res_type}
+    if {${mask_clearance} > 0} {
+        paint ${res_type}
+    }
     popbox
     box move s ${mask_clearance}um
     box grow s ${res_to_endcont}um
@@ -3211,7 +3213,15 @@ proc sky130::res_snake_device {nf parameters} {
     set deltax [+ ${res_spacing} ${w}]
     set deltay [- ${l} ${w}]
     for {set i 0} {$i < [- $nf 1]} {incr i} {
-	paint ${res_type}
+	# Really should be drawing endcaps last instead of working around 1st one
+	if {($i == 0) && (${mask_clearance} < 0)} {
+	    pushbox
+	    box grow s ${mask_clearance}um
+	    paint ${res_type}
+	    popbox
+	} else {
+	    paint ${res_type}
+	}
  	pushbox
 	if {[% $i 2] == 0} {
 	    box move n ${deltay}um
@@ -3265,7 +3275,9 @@ proc sky130::res_snake_device {nf parameters} {
     box grow w ${hw}um
     pushbox
     box grow $dir ${mask_clearance}um
-    paint ${res_type}
+    if {${mask_clearance} > 0} {
+        paint ${res_type}
+    }
     popbox
     box move $dir ${mask_clearance}um
     box grow $dir ${res_to_endcont}um
@@ -3463,7 +3475,8 @@ proc sky130::sky130_fd_pr__res_generic_po_draw {parameters} {
 	    end_surround	$poly_surround \
 	    end_spacing		0.48 \
 	    end_to_end_space	0.52 \
-	    res_to_endcont	$res_to_cont \
+	    res_to_cont		0.575 \
+	    res_to_endcont	1.985 \
 	    res_spacing		$poly_spacing \
 	    res_diff_spacing	0.48 \
 	    mask_clearance	0.52 \
@@ -3538,10 +3551,11 @@ proc sky130::sky130_fd_pr__res_high_po_0p35_draw {parameters} {
 	    end_spacing		$gresdiff_end \
 	    end_to_end_space	0.52 \
 	    end_contact_size	0.19 \
+	    res_to_cont		0.575 \
 	    res_to_endcont	1.985 \
-	    res_spacing		1.24 \
+	    res_spacing		0.48 \
 	    res_diff_spacing	$gresdiff_spacing \
-	    mask_clearance	0.52 \
+	    mask_clearance	-2.16 \
 	    overlap_compress	0.36 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
@@ -3610,8 +3624,9 @@ proc sky130::sky130_fd_pr__res_high_po_0p69_draw {parameters} {
 	    end_spacing		$gresdiff_end \
 	    end_to_end_space	0.52 \
 	    end_contact_size	0.19 \
+	    res_to_cont		0.575 \
 	    res_to_endcont	1.985 \
-	    res_spacing		1.24 \
+	    res_spacing		0.48 \
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
@@ -3682,8 +3697,9 @@ proc sky130::sky130_fd_pr__res_high_po_1p41_draw {parameters} {
 	    end_spacing		$gresdiff_end \
 	    end_to_end_space	0.52 \
 	    end_contact_size	0.19 \
+	    res_to_cont		0.575 \
 	    res_to_endcont	1.985 \
-	    res_spacing		1.24 \
+	    res_spacing		0.48 \
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
@@ -3754,8 +3770,9 @@ proc sky130::sky130_fd_pr__res_high_po_2p85_draw {parameters} {
 	    end_spacing		$gresdiff_end \
 	    end_to_end_space	0.52 \
 	    end_contact_size	0.19 \
+	    res_to_cont		0.575 \
 	    res_to_endcont	1.985 \
-	    res_spacing		1.24 \
+	    res_spacing		0.48 \
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
@@ -3826,8 +3843,9 @@ proc sky130::sky130_fd_pr__res_high_po_5p73_draw {parameters} {
 	    end_spacing		$gresdiff_end \
 	    end_to_end_space	0.52 \
 	    end_contact_size	0.19 \
+	    res_to_cont		0.575 \
 	    res_to_endcont	1.985 \
-	    res_spacing		1.24 \
+	    res_spacing		0.48 \
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
@@ -3900,8 +3918,84 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p35_draw {parameters} {
 	    end_spacing		$gresdiff_end \
 	    end_to_end_space	0.52 \
 	    end_contact_size	0.19 \
+	    res_to_cont		0.575 \
 	    res_to_endcont	1.985 \
-	    res_spacing		1.24 \
+	    res_spacing		0.48 \
+	    res_diff_spacing	$gresdiff_spacing \
+	    mask_clearance	0.52 \
+	    overlap_compress	0.36 \
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::res_draw $drawdict]
+}
+
+#----------------------------------------------------------------
+
+proc sky130::sky130_fd_pr__res_xhigh_po_0p35_draw {parameters} {
+
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $sky130::ruleset] {
+        set $key [dict get $sky130::ruleset $key]
+    }
+
+    # Handle options related to guard ring type (high/low voltage, nwell/psub)
+    if {[dict exists $parameters hv_guard]} {
+	set use_hv_guard [dict get $parameters hv_guard]
+    } else {
+	set use_hv_guard 0
+    }
+    if {[dict exists $parameters n_guard]} {
+	set use_n_guard [dict get $parameters n_guard]
+    } else {
+	set use_n_guard 0
+    }
+
+    if {$use_hv_guard == 1} {
+	if {$use_n_guard == 1} {
+	    set gdifftype mvnsd
+	    set gdiffcont mvnsc
+	} else {
+	    set gdifftype mvpsd
+	    set gdiffcont mvpsc
+	}
+	set gsurround 0.33
+    } else {
+	if {$use_n_guard == 1} {
+	    set gdifftype nsd
+	    set gdiffcont nsc
+	} else {
+	    set gdifftype psd
+	    set gdiffcont psc
+	}
+	set gsurround $sub_surround
+    }
+    if {$use_n_guard == 1} {
+	set gsubtype nwell
+	set gresdiff_spacing 0.785
+	set gresdiff_end 0.525
+    } else {
+	set gsubtype psub
+	set gresdiff_spacing 0.48
+	set gresdiff_end 0.48
+    }
+
+    set newdict [dict create \
+	    res_type		xpres \
+	    res_idtype		res0p35 \
+	    end_type 		xpc \
+	    end_contact_type	xpc \
+	    end_contact_size	0 \
+	    plus_diff_type	$gdifftype \
+	    plus_contact_type	$gdiffcont \
+	    sub_type		$gsubtype \
+	    guard_sub_surround	$gsurround \
+	    end_surround	$poly_surround \
+	    end_spacing		$gresdiff_end \
+	    end_to_end_space	0.52 \
+	    end_contact_size	0.19 \
+	    res_to_cont		0.575 \
+	    res_to_endcont	1.985 \
+	    res_spacing		0.48 \
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
@@ -3972,8 +4066,9 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p69_draw {parameters} {
 	    end_spacing		$gresdiff_end \
 	    end_to_end_space	0.52 \
 	    end_contact_size	0.19 \
+	    res_to_cont		0.575 \
 	    res_to_endcont	1.985 \
-	    res_spacing		1.24 \
+	    res_spacing		0.48 \
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
@@ -4044,8 +4139,9 @@ proc sky130::sky130_fd_pr__res_xhigh_po_1p41_draw {parameters} {
 	    end_spacing		$gresdiff_end \
 	    end_to_end_space	0.52 \
 	    end_contact_size	0.19 \
+	    res_to_cont		0.575 \
 	    res_to_endcont	1.985 \
-	    res_spacing		1.24 \
+	    res_spacing		0.48 \
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
@@ -4116,8 +4212,9 @@ proc sky130::sky130_fd_pr__res_xhigh_po_2p85_draw {parameters} {
 	    end_spacing		$gresdiff_end \
 	    end_to_end_space	0.52 \
 	    end_contact_size	0.19 \
+	    res_to_cont		0.575 \
 	    res_to_endcont	1.985 \
-	    res_spacing		1.24 \
+	    res_spacing		0.48 \
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
@@ -4188,8 +4285,9 @@ proc sky130::sky130_fd_pr__res_xhigh_po_5p73_draw {parameters} {
 	    end_spacing		$gresdiff_end \
 	    end_to_end_space	0.52 \
 	    end_contact_size	0.19 \
+	    res_to_cont		0.575 \
 	    res_to_endcont	1.985 \
-	    res_spacing		1.24 \
+	    res_spacing		0.48 \
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \

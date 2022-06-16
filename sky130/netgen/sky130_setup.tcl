@@ -131,6 +131,7 @@ lappend devices sky130_fd_pr__nfet_01v8
 lappend devices sky130_fd_pr__nfet_01v8_lvt
 lappend devices sky130_fd_bs_flash__special_sonosfet_star
 lappend devices sky130_fd_pr__nfet_g5v0d10v5
+lappend devices sky130_fd_pr__nfet_03v3_nvt
 lappend devices sky130_fd_pr__nfet_05v0_nvt
 lappend devices sky130_fd_pr__pfet_01v8
 lappend devices sky130_fd_pr__pfet_01v8_lvt

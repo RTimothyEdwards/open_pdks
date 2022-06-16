@@ -34,6 +34,12 @@
 #
 #	remove the installed PDKs.
 #
+# make reference
+#
+#	annotate the technology JSON file with the current
+#	commit state of all repositories used by the PDK to
+#	create a reference set of PDKs.
+#
 #---------------------------------------------------
 #
 # The following definitions are tied to the contents
@@ -53,6 +59,7 @@ TECHS_INSTALL = $(addprefix install-,$(ENABLED_TECHS))
 TECHS_UNINSTALL = $(addprefix uninstall-,$(TECHS))
 TECHS_CLEAN = $(addprefix clean-,$(TECHS))
 TECHS_VERYCLEAN = $(addprefix veryclean-,$(TECHS))
+TECHS_REFERENCE = $(addprefix reference-,$(TECHS))
 
 #---------------------------------------------------
 
@@ -68,6 +75,9 @@ uninstall: $(TECHS_UNINSTALL)
 	@echo $(DONE_MESSAGE)
 
 update: $(TECHS_UPDATE)
+	@echo $(DONE_MESSAGE)
+
+reference: $(TECHS_REFERENCE)
 	@echo $(DONE_MESSAGE)
 
 clean: $(TECHS_CLEAN)
@@ -129,6 +139,9 @@ uninstall-%: %
 
 update-%: %
 	(cd $* && ${MAKE} update)
+
+reference-%: %
+	(cd $* && ${MAKE} reference)
 
 clean-%:
 	(cd $* && ${MAKE} clean)

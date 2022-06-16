@@ -443,7 +443,9 @@ if __name__ == '__main__':
     print('Changing local path references from ' + stagingdir + ' to ' + finaldir)
     print('Part 1:  Tools')
 
-    needcheck = ['ngspice']
+    # If there are any tool directories that should *not* be checked, then add
+    # them to the list below.
+    noneedcheck = []
     techdirs = ['/libs.tech/']
     if has_priv:
         techdirs.append('/libs.priv/')
@@ -479,7 +481,10 @@ if __name__ == '__main__':
         if thispdk != link_from:
             print('Replacing files with symbolic links to ' + link_from + ' where possible.')
             for techdir in techdirs:
-                for tool in needcheck:
+                tools = os.listdir(writedir + techdir)
+                for tool in tools:
+                    if tool in noneedcheck:
+                        continue
                     tooldir = writedir + techdir + tool
                     srctooldir = link_from + techdir + tool
                     if checkdir != '':

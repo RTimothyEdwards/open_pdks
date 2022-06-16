@@ -23,7 +23,7 @@ end
 version
  version REVISION
  description "SkyWater SKY130: Open Source rules and DRC"
- requires magic-8.3.277
+ requires magic-8.3.306
 end
 
 #------------------------------------------------------------------------
@@ -34,6 +34,7 @@ end
 # Status 1/3/21: Taking out of beta and declaring an official release.
 # Status 3/17/22: Added fringeshieldhalo to improve parasitic capacitance
 #		  calculations.
+# Status 5/21/22: Added sidewall edge (spacing) enlargement.
 #------------------------------------------------------------------------
 
 #------------------------------------------------------------------------
@@ -4371,11 +4372,12 @@ variants (fast),(full)
  overhang *poly allfetsstd,allfetsspecial 130 "poly overhang of transistor < %d (poly.8)"
  overhang *poly allfetscore 110 "poly overhang of SRAM core transistor < %d (poly.8)"
  rect_only allfets "No bends in transistors (poly.11)"
- rect_only xhrpoly,uhrpoly "No bends in poly resistors (poly.11)"
  extend  xpc/a xhrpoly,uhrpoly 2160 \
  	"poly contact extends poly resistor by < %d (licon.1c + li.5)"
- spacing xhrpoly,uhrpoly,xpc xhrpoly,uhrpoly,xpc 1240 touching_illegal \
-	"Distance between precision resistors < %d (rpm.2 + 2 * rpm.3)"
+ spacing xhrpoly,uhrpoly,xpc xhrpoly,uhrpoly,xpc 210 touching_illegal \
+	"Distance between precision resistors < %d (poly.2)"
+ spacing xhrpoly,uhrpoly,xpc *poly,allfets,mrp1,rmp 400 touching_illegal \
+	"Distance from precision resistor to poly < %d (rpm.7 + rpm.3)"
 
  variants (fast)
 
@@ -5431,13 +5433,13 @@ defaultareacap     nwell well dnwell dwell 120
 # defaultareacap     allpolynonfet active  106
 # defaultperimeter   allpolynonfet active   57
 
- defaultsidewall    *poly active 17.0
+ defaultsidewall    *poly active 16.0
  defaultareacap     *poly active 106.13
  defaultperimeter   *poly active 55.27
  defaultsideoverlap *poly active nwell,pwell well  55.27
 
 #locali
- defaultsidewall    allli locali 28.0
+ defaultsidewall    allli locali 25.5	0.14
  defaultareacap     allli locali 36.99
  defaultperimeter   allli locali 40.70
  defaultoverlap     allli locali nwell,pwell well  36.99
@@ -5453,7 +5455,7 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsideoverlap *poly active allli locali 25.14
 
 #metal1
- defaultsidewall    allm1 metal1 36.9
+ defaultsidewall    allm1 metal1 44	0.25
  defaultareacap     allm1 metal1 25.78
  defaultperimeter   allm1 metal1 40.57
  defaultoverlap     allm1 metal1 nwell,pwell well  25.78
@@ -5474,7 +5476,7 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsideoverlap allli locali allm1 metal1 34.70
 
 #metal2
- defaultsidewall    allm2 metal2      39.1
+ defaultsidewall    allm2 metal2      50	0.3
 
 #ifdef RERAM
 # For ReRAM, all parasitics account for the additional 0.295um between
@@ -5505,9 +5507,9 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsideoverlap allm1 metal1 allm2 metal2 23.03
 
 #else (!RERAM)
- defaultareacap     allm2 metal2 16.9
+ defaultareacap     allm2 metal2 17.5
  defaultperimeter   allm2 metal2 37.76
- defaultoverlap     allm2 metal2 nwell,pwell well 16.9
+ defaultoverlap     allm2 metal2 nwell,pwell well 17.5
  defaultsideoverlap allm2 metal2 nwell,pwell well 37.76
 
 #metal2->diff
@@ -5532,7 +5534,7 @@ defaultareacap     nwell well dnwell dwell 120
 #endif (!RERAM)
 
 #metal3
- defaultsidewall    allm3 metal3     56.2
+ defaultsidewall    allm3 metal3     74.0	0.40
 
 #ifdef RERAM
  defaultareacap     allm3 metal3 11.19
@@ -5593,7 +5595,7 @@ defaultareacap     nwell well dnwell dwell 120
 
 #ifdef METAL5
 #metal4
- defaultsidewall    allm4 metal4 59.0
+ defaultsidewall    allm4 metal4 94.0	0.57
 #ifdef RERAM
  defaultareacap     allm4 metal4 7.84
  defaultperimeter   allm4 metal4 34.17
@@ -5657,7 +5659,7 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsideoverlap allm3 metal3 allm4 metal4 42.64
 
 #metal5
- defaultsidewall    allm5 metal5 95.1
+ defaultsidewall    allm5 metal5 155	0.5
 #ifdef RERAM
  defaultareacap     allm5 metal5 5.99
  defaultperimeter   allm5 metal5 36.83
@@ -5761,13 +5763,13 @@ defaultareacap     nwell well dnwell dwell 120
 # defaultareacap     allpolynonfet active  80.4
 # defaultperimeter   allpolynonfet active   57
 
- defaultsidewall    *poly active 17.0
+ defaultsidewall    *poly active 17.0	0.21
  defaultareacap     *poly active 80.4
  defaultperimeter   *poly active 48.83
  defaultsideoverlap *poly active nwell,pwell well  48.83
 
 #locali
- defaultsidewall    allli locali 26.7
+ defaultsidewall    allli locali 26.7	0.17
  defaultareacap     allli locali 29.3
  defaultperimeter   allli locali 35.69
  defaultoverlap     allli locali nwell,pwell well  29.3
@@ -5783,7 +5785,7 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsideoverlap *poly active allli locali 21.21
 
 #metal1
- defaultsidewall    allm1 metal1 35.6
+ defaultsidewall    allm1 metal1 35.6	0.14
  defaultareacap     allm1 metal1 20.2
  defaultperimeter   allm1 metal1 34.41
  defaultoverlap     allm1 metal1 nwell,pwell well  20.2
@@ -5804,7 +5806,7 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsideoverlap allli locali allm1 metal1 28.84
 
 #metal2
- defaultsidewall    allm2 metal2      37.6
+ defaultsidewall    allm2 metal2      37.61	0.14
 
 #ifdef RERAM
 # For ReRAM, all parasitics account for the additional 0.295um between
@@ -5862,7 +5864,7 @@ defaultareacap     nwell well dnwell dwell 120
 #endif (!RERAM)
 
 #metal3
- defaultsidewall    allm3 metal3     52.0
+ defaultsidewall    allm3 metal3     52.0	0.30
 
 #ifdef RERAM
  defaultareacap     allm3 metal3 9.84
@@ -5923,7 +5925,7 @@ defaultareacap     nwell well dnwell dwell 120
 
 #ifdef METAL5
 #metal4
- defaultsidewall    allm4 metal4 53.7
+ defaultsidewall    allm4 metal4 53.7	0.30
 #ifdef RERAM
  defaultareacap     allm4 metal4 6.92
  defaultperimeter   allm4 metal4 30.18
@@ -5987,7 +5989,7 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsideoverlap allm3 metal3 allm4 metal4 35.93
 
 #metal5
- defaultsidewall    allm5 metal5 81.5
+ defaultsidewall    allm5 metal5 81.5	1.6
 #ifdef RERAM
  defaultareacap     allm5 metal5 5.34
  defaultperimeter   allm5 metal5 32.85
@@ -6091,13 +6093,13 @@ defaultareacap     nwell well dnwell dwell 120
 # defaultareacap     allpolynonfet active  106
 # defaultperimeter   allpolynonfet active   57
 
- defaultsidewall    *poly active 17.0
+ defaultsidewall    *poly active 17.0	0.21
  defaultareacap     *poly active 155.0
  defaultperimeter   *poly active 64.82
  defaultsideoverlap *poly active nwell,pwell well  64.82
 
 #locali
- defaultsidewall    allli locali 28.7
+ defaultsidewall    allli locali 28.7	0.17
  defaultareacap     allli locali 49.7
  defaultperimeter   allli locali 47.02
  defaultoverlap     allli locali nwell,pwell well  49.7
@@ -6113,7 +6115,7 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsideoverlap *poly active allli locali 32.29
 
 #metal1
- defaultsidewall    allm1 metal1 37.6
+ defaultsidewall    allm1 metal1 37.6	0.14
  defaultareacap     allm1 metal1 35.7
  defaultperimeter   allm1 metal1 49.59
  defaultoverlap     allm1 metal1 nwell,pwell well  35.7
@@ -6134,7 +6136,7 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsideoverlap allli locali allm1 metal1 46.73
 
 #metal2
- defaultsidewall    allm2 metal2      40.2
+ defaultsidewall    allm2 metal2      40.2	0.14
 
 #ifdef RERAM
 # For ReRAM, all parasitics account for the additional 0.295um between
@@ -6192,7 +6194,7 @@ defaultareacap     nwell well dnwell dwell 120
 #endif (!RERAM)
 
 #metal3
- defaultsidewall    allm3 metal3     60.6
+ defaultsidewall    allm3 metal3     60.6	0.30
 
 #ifdef RERAM
  defaultareacap     allm3 metal3 14.74
@@ -6253,7 +6255,7 @@ defaultareacap     nwell well dnwell dwell 120
 
 #ifdef METAL5
 #metal4
- defaultsidewall    allm4 metal4 65.4
+ defaultsidewall    allm4 metal4 65.4	0.30
 #ifdef RERAM
  defaultareacap     allm4 metal4 9.97
  defaultperimeter   allm4 metal4 39.49
@@ -6317,7 +6319,7 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsideoverlap allm3 metal3 allm4 metal4 55.70
 
 #metal5
- defaultsidewall    allm5 metal5 118.7
+ defaultsidewall    allm5 metal5 118.7	1.6
 #ifdef RERAM
  defaultareacap     allm5 metal5 7.36
  defaultperimeter   allm5 metal5 42.58
