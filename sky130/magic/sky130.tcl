@@ -137,6 +137,8 @@ proc sky130::addtechmenu {framename} {
 	    "sky130::mvsubconn_draw" pdk1
    magic::add_toolkit_command $layoutframe "deep n-well region" \
 	    "sky130::deep_nwell_draw" pdk1
+   magic::add_toolkit_command $layoutframe "n-well region" \
+	    "sky130::nwell_draw" pdk1
    magic::add_toolkit_command $layoutframe "mcon" \
 	    "sky130::mcon_draw" pdk1
    magic::add_toolkit_command $layoutframe "via1" \
@@ -445,6 +447,84 @@ proc sky130::mvsubconn_draw {} {
 }
 
 #----------------------------------------------------------------
+
+proc sky130::nwell_draw {} {
+   set w [magic::i2u [box width]]
+   set h [magic::i2u [box height]]
+   if {$w < 3.0} {
+      puts stderr "Deep-nwell region width must be at least 3.0um"
+      return
+   }
+   if {$h < 3.0} {
+      puts stderr "Deep-nwell region height must be at least 3.0um"
+      return
+   }
+   suspendall
+   tech unlock *
+   pushbox
+   pushbox
+   box grow c 0.4um
+   paint nwell
+   popbox
+   box grow c 0.03um
+
+   pushbox
+   box width 0
+   box grow c 0.085um
+   paint li
+   pushbox
+   box grow n -0.3um
+   box grow s -0.3um
+   paint nsc
+   popbox
+   box grow c 0.1um
+   paint nsd
+   popbox
+
+   pushbox
+   box height 0
+   box grow c 0.085um
+   paint li
+   pushbox
+   box grow e -0.3um
+   box grow w -0.3um
+   paint nsc
+   popbox
+   box grow c 0.1um
+   paint nsd
+   popbox
+
+   pushbox
+   box move n [box height]i
+   box height 0
+   box grow c 0.085um
+   paint li
+   pushbox
+   box grow e -0.3um
+   box grow w -0.3um
+   paint nsc
+   popbox
+   box grow c 0.1um
+   paint nsd
+   popbox
+
+   pushbox
+   box move e [box width]i
+   box width 0
+   box grow c 0.085um
+   paint li
+   pushbox
+   box grow n -0.3um
+   box grow s -0.3um
+   paint nsc
+   box grow c 0.1um
+   paint nsd
+   popbox
+
+   popbox
+   tech revert
+   resumeall
+}
 
 proc sky130::deep_nwell_draw {} {
    set w [magic::i2u [box width]]
