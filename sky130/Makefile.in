@@ -957,10 +957,12 @@ xschem-%: ${XSCHEM_PATH}
 	# In the sky130A variant, remove the reram schematic/symbol and references
 	if test "x${XSCHEM_PATH}" != "x" ; then \
 		if test "x$*" == "xA" ; then \
+			rm -f  ${XSCHEM_STAGING_$*}/sky130_tests/test_reram* ; \
 			rm -f  ${XSCHEM_STAGING_$*}/sky130_tests/tb_reram* ; \
 			rm -f  ${XSCHEM_STAGING_$*}/sky130_fd_pr/reram* ; \
 			cat ${XSCHEM_STAGING_$*}/sky130_tests/top.sch | \
-				${SED} -e "/reram/,+7d" \
+				${SED} -e "/^C.*{.*reram.*}.*{.*[^}] *$$/,/.*} *$$/d" \
+					-e "/^C.*{.*reram.*}.*{.*} *$$/d" \
 				> ${XSCHEM_STAGING_$*}/temp ; \
 			mv ${XSCHEM_STAGING_$*}/temp ${XSCHEM_STAGING_$*}/sky130_tests/top.sch ; \
 		fi ; \
