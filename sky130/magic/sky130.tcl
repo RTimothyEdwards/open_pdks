@@ -137,7 +137,7 @@ proc sky130::addtechmenu {framename} {
 	    "sky130::mvsubconn_draw" pdk1
    magic::add_toolkit_command $layoutframe "deep n-well region" \
 	    "sky130::deep_nwell_draw" pdk1
-   magic::add_toolkit_command $layoutframe "n-well region" \
+   magic::add_toolkit_command $layoutframe "n-well region with guard ring" \
 	    "sky130::nwell_draw" pdk1
    magic::add_toolkit_command $layoutframe "mcon" \
 	    "sky130::mcon_draw" pdk1
@@ -451,22 +451,24 @@ proc sky130::mvsubconn_draw {} {
 proc sky130::nwell_draw {} {
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
-   if {$w < 3.0} {
-      puts stderr "Deep-nwell region width must be at least 3.0um"
+   # NOTE:  Width and height are determined by the requirement for
+   # a contact on each side.  There is not much that can be done
+   # with an guarded nwell smaller than that, anyway.
+   if {$w < 0.6} {
+      puts stderr "N-well region width must be at least 0.6um"
       return
    }
-   if {$h < 3.0} {
-      puts stderr "Deep-nwell region height must be at least 3.0um"
+   if {$h < 0.6} {
+      puts stderr "N-well region height must be at least 0.6um"
       return
    }
    suspendall
    tech unlock *
    pushbox
    pushbox
-   box grow c 0.4um
+   box grow c 0.265um
    paint nwell
    popbox
-   box grow c 0.03um
 
    pushbox
    box width 0
@@ -477,7 +479,6 @@ proc sky130::nwell_draw {} {
    box grow s -0.3um
    paint nsc
    popbox
-   box grow c 0.1um
    paint nsd
    popbox
 
@@ -490,7 +491,6 @@ proc sky130::nwell_draw {} {
    box grow w -0.3um
    paint nsc
    popbox
-   box grow c 0.1um
    paint nsd
    popbox
 
@@ -504,7 +504,6 @@ proc sky130::nwell_draw {} {
    box grow w -0.3um
    paint nsc
    popbox
-   box grow c 0.1um
    paint nsd
    popbox
 
@@ -517,7 +516,6 @@ proc sky130::nwell_draw {} {
    box grow n -0.3um
    box grow s -0.3um
    paint nsc
-   box grow c 0.1um
    paint nsd
    popbox
 
