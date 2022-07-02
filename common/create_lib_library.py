@@ -44,7 +44,7 @@ def usage():
 def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[]):
 
     # destlib should not have a file extension
-    destlibrooot = os.path.splitext(destlib)[0]
+    destlibroot = os.path.splitext(destlib)[0]
 
     alllibname = destlibdir + '/' + destlibroot + '.lib'
     if os.path.isfile(alllibname):
