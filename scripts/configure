@@ -611,19 +611,7 @@ ALL_TECHS
 SKY130_SOURCE_PATH
 SKY130_ENABLED_VARIANTS
 SKY130_LINK_TARGETS
-GF180MCU_SOURCE_PATH
-GF180MCU_ENABLED_VARIANTS
-GF180MCU_LINK_TARGETS
 SED
-pkgpyexecdir
-pyexecdir
-pkgpythondir
-pythondir
-PYTHON_PLATFORM
-PYTHON_EXEC_PREFIX
-PYTHON_PREFIX
-PYTHON_VERSION
-PYTHON
 target_alias
 host_alias
 build_alias
@@ -666,9 +654,6 @@ SHELL'
 ac_subst_files=''
 ac_user_opts='
 enable_option_checking
-enable_gf180mcu_pdk
-with_gf180mcu_link_targets
-with_gf180mcu_variants
 enable_sky130_pdk
 with_sky130_link_targets
 with_sky130_variants
@@ -691,8 +676,7 @@ with_ef_style
 '
       ac_precious_vars='build_alias
 host_alias
-target_alias
-PYTHON'
+target_alias'
 
 
 # Initialize some variables set by options.
@@ -1313,8 +1297,8 @@ Optional Features:
   --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
-  --enable-gf180mcu-pdk=[/path/to/gf180mcu/] --disable-gf180mcu-pdk
-                          "location of the source files for the gf180mcu (pdks
+  --enable-sky130-pdk=[/path/to/sky130/] --disable-sky130-pdk
+                          "location of the source files for the sky130 (pdks
                           with a pdk_url file can automatically download them
                           if the path is omitted)"
   --enable-klayout
@@ -1373,20 +1357,14 @@ Optional Features:
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-gf180mcu-link-targets=none|source
+  --with-sky130-link-targets=none|source
                           "make symbolic links to existing files
                           [default=none]"
-  --with-gf180mcu-variants=all|A|B|...
+  --with-sky130-variants=all|A|B|...
                           "compile/install specified PDK variants only
                           [default=all]"
   --with-ef-style         Use efabless style file system structure
                           [default=no]
-
-Some influential environment variables:
-  PYTHON      the Python interpreter
-
-Use these variables to override the choices made by `configure' or to help
-it to find libraries and programs with nonstandard names/locations.
 
 Report bugs to <github.com/RTimothyEdwards/open_pdks>.
 _ACEOF
@@ -1821,298 +1799,8 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 ## REQUIRES: https://www.gnu.org/software/autoconf-archive/ax_python_module.html#ax_python_module
-
-
-
-
-
-
-        if test -n "$PYTHON"; then
-      # If the user set $PYTHON, use it and don't search something else.
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether $PYTHON version is >= 3.4" >&5
-$as_echo_n "checking whether $PYTHON version is >= 3.4... " >&6; }
-      prog="import sys
-# split strings by '.' and convert to numeric.  Append some zeros
-# because we need at least 4 digits for the hex conversion.
-# map returns an iterator in Python 3.0 and a list in 2.x
-minver = list(map(int, '3.4'.split('.'))) + [0, 0, 0]
-minverhex = 0
-# xrange is not present in Python 3.0 and range returns an iterator
-for i in list(range(0, 4)): minverhex = (minverhex << 8) + minver[i]
-sys.exit(sys.hexversion < minverhex)"
-  if { echo "$as_me:$LINENO: $PYTHON -c "$prog"" >&5
-   ($PYTHON -c "$prog") >&5 2>&5
-   ac_status=$?
-   echo "$as_me:$LINENO: \$? = $ac_status" >&5
-   (exit $ac_status); }; then :
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-			       as_fn_error $? "Python interpreter is too old" "$LINENO" 5
-fi
-      am_display_PYTHON=$PYTHON
-    else
-      # Otherwise, try each interpreter until we find one that satisfies
-      # VERSION.
-      { $as_echo "$as_me:${as_lineno-$LINENO}: checking for a Python interpreter with version >= 3.4" >&5
-$as_echo_n "checking for a Python interpreter with version >= 3.4... " >&6; }
-if ${am_cv_pathless_PYTHON+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-
-	for am_cv_pathless_PYTHON in python python2 python3  python3.9 python3.8 python3.7 python3.6 python3.5 python3.4 python3.3  python3.2 python3.1 python3.0  python2.7 python2.6 python2.5 python2.4 python2.3 python2.2 python2.1  python2.0 none; do
-	  test "$am_cv_pathless_PYTHON" = none && break
-	  prog="import sys
-# split strings by '.' and convert to numeric.  Append some zeros
-# because we need at least 4 digits for the hex conversion.
-# map returns an iterator in Python 3.0 and a list in 2.x
-minver = list(map(int, '3.4'.split('.'))) + [0, 0, 0]
-minverhex = 0
-# xrange is not present in Python 3.0 and range returns an iterator
-for i in list(range(0, 4)): minverhex = (minverhex << 8) + minver[i]
-sys.exit(sys.hexversion < minverhex)"
-  if { echo "$as_me:$LINENO: $am_cv_pathless_PYTHON -c "$prog"" >&5
-   ($am_cv_pathless_PYTHON -c "$prog") >&5 2>&5
-   ac_status=$?
-   echo "$as_me:$LINENO: \$? = $ac_status" >&5
-   (exit $ac_status); }; then :
-  break
-fi
-	done
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_pathless_PYTHON" >&5
-$as_echo "$am_cv_pathless_PYTHON" >&6; }
-      # Set $PYTHON to the absolute path of $am_cv_pathless_PYTHON.
-      if test "$am_cv_pathless_PYTHON" = none; then
-	PYTHON=:
-      else
-        # Extract the first word of "$am_cv_pathless_PYTHON", so it can be a program name with args.
-set dummy $am_cv_pathless_PYTHON; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_path_PYTHON+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  case $PYTHON in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_PYTHON="$PYTHON" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_PYTHON="$as_dir/$ac_word$ac_exec_ext"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-  ;;
-esac
-fi
-PYTHON=$ac_cv_path_PYTHON
-if test -n "$PYTHON"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $PYTHON" >&5
-$as_echo "$PYTHON" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
-      fi
-      am_display_PYTHON=$am_cv_pathless_PYTHON
-    fi
-
-
-  if test "$PYTHON" = :; then
-      as_fn_error $? "no suitable Python interpreter found" "$LINENO" 5
-  else
-
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $am_display_PYTHON version" >&5
-$as_echo_n "checking for $am_display_PYTHON version... " >&6; }
-if ${am_cv_python_version+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  am_cv_python_version=`$PYTHON -c "import sys; print('%u.%u' % sys.version_info[:2])"`
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
-$as_echo "$am_cv_python_version" >&6; }
-  PYTHON_VERSION=$am_cv_python_version
-
-
-
-  PYTHON_PREFIX='${prefix}'
-
-  PYTHON_EXEC_PREFIX='${exec_prefix}'
-
-
-
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $am_display_PYTHON platform" >&5
-$as_echo_n "checking for $am_display_PYTHON platform... " >&6; }
-if ${am_cv_python_platform+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  am_cv_python_platform=`$PYTHON -c "import sys; sys.stdout.write(sys.platform)"`
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_platform" >&5
-$as_echo "$am_cv_python_platform" >&6; }
-  PYTHON_PLATFORM=$am_cv_python_platform
-
-
-  # Just factor out some code duplication.
-  am_python_setup_sysconfig="\
-import sys
-# Prefer sysconfig over distutils.sysconfig, for better compatibility
-# with python 3.x.  See automake bug#10227.
-try:
-    import sysconfig
-except ImportError:
-    can_use_sysconfig = 0
-else:
-    can_use_sysconfig = 1
-# Can't use sysconfig in CPython 2.7, since it's broken in virtualenvs:
-# <https://github.com/pypa/virtualenv/issues/118>
-try:
-    from platform import python_implementation
-    if python_implementation() == 'CPython' and sys.version[:3] == '2.7':
-        can_use_sysconfig = 0
-except ImportError:
-    pass"
-
-
-            { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $am_display_PYTHON script directory" >&5
-$as_echo_n "checking for $am_display_PYTHON script directory... " >&6; }
-if ${am_cv_python_pythondir+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test "x$prefix" = xNONE
-     then
-       am_py_prefix=$ac_default_prefix
-     else
-       am_py_prefix=$prefix
-     fi
-     am_cv_python_pythondir=`$PYTHON -c "
-$am_python_setup_sysconfig
-if can_use_sysconfig:
-    sitedir = sysconfig.get_path('purelib', vars={'base':'$am_py_prefix'})
-else:
-    from distutils import sysconfig
-    sitedir = sysconfig.get_python_lib(0, 0, prefix='$am_py_prefix')
-sys.stdout.write(sitedir)"`
-     case $am_cv_python_pythondir in
-     $am_py_prefix*)
-       am__strip_prefix=`echo "$am_py_prefix" | sed 's|.|.|g'`
-       am_cv_python_pythondir=`echo "$am_cv_python_pythondir" | sed "s,^$am__strip_prefix,$PYTHON_PREFIX,"`
-       ;;
-     *)
-       case $am_py_prefix in
-         /usr|/System*) ;;
-         *)
-	  am_cv_python_pythondir=$PYTHON_PREFIX/lib/python$PYTHON_VERSION/site-packages
-	  ;;
-       esac
-       ;;
-     esac
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_pythondir" >&5
-$as_echo "$am_cv_python_pythondir" >&6; }
-  pythondir=$am_cv_python_pythondir
-
-
-
-  pkgpythondir=\${pythondir}/$PACKAGE
-
-
-        { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $am_display_PYTHON extension module directory" >&5
-$as_echo_n "checking for $am_display_PYTHON extension module directory... " >&6; }
-if ${am_cv_python_pyexecdir+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  if test "x$exec_prefix" = xNONE
-     then
-       am_py_exec_prefix=$am_py_prefix
-     else
-       am_py_exec_prefix=$exec_prefix
-     fi
-     am_cv_python_pyexecdir=`$PYTHON -c "
-$am_python_setup_sysconfig
-if can_use_sysconfig:
-    sitedir = sysconfig.get_path('platlib', vars={'platbase':'$am_py_prefix'})
-else:
-    from distutils import sysconfig
-    sitedir = sysconfig.get_python_lib(1, 0, prefix='$am_py_prefix')
-sys.stdout.write(sitedir)"`
-     case $am_cv_python_pyexecdir in
-     $am_py_exec_prefix*)
-       am__strip_prefix=`echo "$am_py_exec_prefix" | sed 's|.|.|g'`
-       am_cv_python_pyexecdir=`echo "$am_cv_python_pyexecdir" | sed "s,^$am__strip_prefix,$PYTHON_EXEC_PREFIX,"`
-       ;;
-     *)
-       case $am_py_exec_prefix in
-         /usr|/System*) ;;
-         *)
-	   am_cv_python_pyexecdir=$PYTHON_EXEC_PREFIX/lib/python$PYTHON_VERSION/site-packages
-	   ;;
-       esac
-       ;;
-     esac
-
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_pyexecdir" >&5
-$as_echo "$am_cv_python_pyexecdir" >&6; }
-  pyexecdir=$am_cv_python_pyexecdir
-
-
-
-  pkgpyexecdir=\${pyexecdir}/$PACKAGE
-
-
-
-  fi
-
-
-
-    if test -z $PYTHON;
-    then
-        if test -z "";
-        then
-            PYTHON="python3"
-        else
-            PYTHON=""
-        fi
-    fi
-    PYTHON_NAME=`basename $PYTHON`
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking $PYTHON_NAME module: distutils" >&5
-$as_echo_n "checking $PYTHON_NAME module: distutils... " >&6; }
-    $PYTHON -c "import distutils" 2>/dev/null
-    if test $? -eq 0;
-    then
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-        eval HAVE_PYMOD_DISTUTILS=yes
-    else
-        { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-        eval HAVE_PYMOD_DISTUTILS=no
-        #
-        if test -n ""
-        then
-            as_fn_error $? "failed to find required module distutils" "$LINENO" 5
-            exit 1
-        fi
-    fi
-
+AM_PATH_PYTHON(3.4)
+AX_PYTHON_MODULE(distutils,)
 
 # Check for Mac OS X gsed vs. sed
 
@@ -2209,110 +1897,12 @@ OPENPDKS_TOP=`cd .. && pwd`
 # check for the source and install paths for each PDK.
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: Found technology directories: gf180mcu sky130" >&5
-$as_echo "$as_me: Found technology directories: gf180mcu sky130" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Found technology directories: sky130" >&5
+$as_echo "$as_me: Found technology directories: sky130" >&6;}
 
 
 
     # --enable-pdk-[pdk]=/path/to/pdk
-
-        echo "Checking technology gf180mcu..."
-
-
-        GF180MCU_ENABLED_VARIANTS="all"
-        GF180MCU_SOURCE_PATH=""
-        GF180MCU_LINK_TARGETS="none"
-        GF180MCU_AUTO="0"
-
-        # Check whether --enable-gf180mcu-gf180mcu was given.
-if test "${enable_gf180mcu_pdk+set}" = set; then :
-  enableval=$enable_gf180mcu_pdk;
-                if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-                    export GF180MCU_SOURCE_PATH=../sources/gf180mcu-pdk
-            	    GF180MCU_AUTO="1"
-		    ENABLED_TECHS="$ENABLED_TECHS gf180mcu"
-                elif test "$enableval" == "no" -o "$enableval" == "NO"; then
-                    echo "Disabling gf180mcu..."
-                else
-                    GF180MCU_SOURCE_PATH=$enableval
-		    ENABLED_TECHS="$ENABLED_TECHS gf180mcu"
-                fi
-
-fi
-
-
-        if [ "$GF180MCU_SOURCE_PATH" != "" ]; then
-            GF180MCU_SOURCE_PATH=`realpath $GF180MCU_SOURCE_PATH`
-            GF180MCU_BASENAME=`basename $GF180MCU_SOURCE_PATH`
-	    if [ "$GF180MCU_BASENAME" = "libraries" ]; then
-		GF180MCU_SOURCE_PATH=`dirname $GF180MCU_SOURCE_PATH`
-	    fi
-            # Basic check that the PDK path exists, unless depending on Makefile
-	    # to download it automatically.
-            if [ "$GF180MCU_AUTO" = "0" ]; then
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Checking specified path for 'gf180mcu' at $GF180MCU_SOURCE_PATH" >&5
-$as_echo "$as_me: Checking specified path for 'gf180mcu' at $GF180MCU_SOURCE_PATH" >&6;}
-                as_ac_File=`$as_echo "ac_cv_file_$GF180MCU_SOURCE_PATH" | $as_tr_sh`
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $GF180MCU_SOURCE_PATH" >&5
-$as_echo_n "checking for $GF180MCU_SOURCE_PATH... " >&6; }
-if eval \${$as_ac_File+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  test "$cross_compiling" = yes &&
-  as_fn_error $? "cannot check for file existence when cross compiling" "$LINENO" 5
-if test -r "$GF180MCU_SOURCE_PATH"; then
-  eval "$as_ac_File=yes"
-else
-  eval "$as_ac_File=no"
-fi
-fi
-eval ac_res=\$$as_ac_File
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-if eval test \"x\$"$as_ac_File"\" = x"yes"; then :
-
-                    { $as_echo "$as_me:${as_lineno-$LINENO}: 'gf180mcu' source path found at $GF180MCU_SOURCE_PATH" >&5
-$as_echo "$as_me: 'gf180mcu' source path found at $GF180MCU_SOURCE_PATH" >&6;}
-
-else
-
-                    as_fn_error $? "Specified path for 'gf180mcu' at $GF180MCU_SOURCE_PATH not found" "$LINENO" 5
-
-fi
-
-	    else
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: PDK 'gf180mcu' will be downloaded automatically during make." >&5
-$as_echo "$as_me: PDK 'gf180mcu' will be downloaded automatically during make." >&6;}
-	    fi
-
-            # --with-pdk-link-targets=PDK_LINK_TARGETS
-
-# Check whether --with-gf180mcu-link-targets was given.
-if test "${with_gf180mcu_link_targets+set}" = set; then :
-  withval=$with_gf180mcu_link_targets; GF180MCU_LINK_TARGETS=$with_gf180mcu_link_targets
-
-fi
-
-
-            { $as_echo "$as_me:${as_lineno-$LINENO}: Link targets set to $GF180MCU_LINK_TARGETS" >&5
-$as_echo "$as_me: Link targets set to $GF180MCU_LINK_TARGETS" >&6;}
-
-            # --with-pdk-variants=PDK_ENABLED_VARIANTS
-
-# Check whether --with-gf180mcu-variants was given.
-if test "${with_gf180mcu_variants+set}" = set; then :
-  withval=$with_gf180mcu_variants; GF180MCU_ENABLED_VARIANTS=$with_gf180mcu_variants
-
-fi
-
-
-            { $as_echo "$as_me:${as_lineno-$LINENO}: Enabled variants set to $GF180MCU_ENABLED_VARIANTS" >&5
-$as_echo "$as_me: Enabled variants set to $GF180MCU_ENABLED_VARIANTS" >&6;}
-        fi
-
-
-
-
 
         echo "Checking technology sky130..."
 
@@ -2415,7 +2005,7 @@ $as_echo "$as_me: Enabled variants set to $SKY130_ENABLED_VARIANTS" >&6;}
 
 
 # Export the list of known technologies to the Makefile
-ALL_TECHS="gf180mcu sky130"
+ALL_TECHS="sky130"
 
 
 # Set variables for tool setups
