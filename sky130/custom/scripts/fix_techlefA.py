@@ -57,6 +57,7 @@ def filter(inname, outname):
                 ematch = emptyrex.match(line)
                 if ematch:
                     fixedlines.append('  MINENCLOSEDAREA 0.14 ;')
+                    modified = True
 
         rmatch = resrex2.match(line)
         if rmatch:

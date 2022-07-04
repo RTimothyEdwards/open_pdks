@@ -74,6 +74,7 @@ def filter(inname, outname):
                 ematch = emptyrex.match(line)
                 if ematch:
                     fixedlines.append('  MINENCLOSEDAREA 0.14 ;')
+                    modified = True
 
         # Check for the MANUFACTURINGGRID statement in the file, and
         # add the USEMINSPACING statement after it.
