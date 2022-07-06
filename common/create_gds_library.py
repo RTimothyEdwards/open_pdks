@@ -94,23 +94,37 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=Fals
             print('drc off', file=ofile)
             print('locking off', file=ofile)
             print('gds readonly true', file=ofile)
-            print('gds flatten true', file=ofile)
+            # print('gds flatten true', file=ofile)
+            print('gds polygon subcell true', file=ofile)
             print('gds rescale false', file=ofile)
             print('tech unlock *', file=ofile)
 
             for gdsfile in glist:
                 print('gds read ' + gdsfile, file=ofile)
 
+            # Remove any cell named "(UNNAMED)"
+            print('cellname delete \(UNNAMED\)', file=ofile)
+
+            # Get list of cell names, which may be different than the
+            # file names.
+            print('set glist [cellname list top]', file=ofile)
+
             print('puts stdout "Creating cell ' + destlibroot + '"', file=ofile)
             print('load ' + destlibroot, file=ofile)
             print('puts stdout "Adding cells to library"', file=ofile)
             print('box values 0 0 0 0', file=ofile)
-            for gdsfile in glist:
-                gdsroot = os.path.split(gdsfile)[1]
-                gdsname = os.path.splitext(gdsroot)[0]
-                print('getcell ' + gdsname, file=ofile)
-                # Could properly make space for the cell here. . . 
-                print('box move e 200', file=ofile)
+
+            # for gdsfile in glist:
+            #     gdsroot = os.path.split(gdsfile)[1]
+            #     gdsname = os.path.splitext(gdsroot)[0]
+            #     print('getcell ' + gdsname, file=ofile)
+            #     # Could properly make space for the cell here. . . 
+            #     print('box move e 200', file=ofile)
+
+            print('foreach gcell $glist {', file=ofile)
+            print('    getcell $gcell', file=ofile)
+            print('    box move e 200', file=ofile)
+            print('}', file=ofile)
                                 
             print('puts stdout "Writing GDS library ' + destlibroot + '"', file=ofile)
             print('gds library true', file=ofile)
