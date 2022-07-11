@@ -81,6 +81,7 @@ def filter(inname, outname):
         pmatch = proprex.match(line)
         rmatch = resrex.match(line)
         lmatch = layerrex.match(line)
+        tmatch = thickrex.match(line)
         if pmatch:
             fixedlines.append(line)
             fixedlines.append('USEMINSPACING OBS OFF ;')
@@ -92,6 +93,8 @@ def filter(inname, outname):
         elif lmatch:
             fixedlines.append(line)
             curlayer = lmatch.group(1)
+        elif tmatch:
+            thickness_seen = True
         else:
             ematch = edgerex.match(line)
             pmatch = platerex.match(line)
