@@ -92,7 +92,8 @@ def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[
                     for lline in llines:
                         if headerdone:
                             if not headerseen:
-                                if not lline.split()[0] == 'cell':
+                                ltok = lline.split()
+                                if len(ltok) == 0 or not ltok[0] == 'cell':
                                     continue
                                 else:
                                     headerseen = True
