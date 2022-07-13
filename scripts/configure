@@ -611,9 +611,6 @@ ALL_TECHS
 SKY130_SOURCE_PATH
 SKY130_ENABLED_VARIANTS
 SKY130_LINK_TARGETS
-GF180MCU_SOURCE_PATH
-GF180MCU_ENABLED_VARIANTS
-GF180MCU_LINK_TARGETS
 SED
 pkgpyexecdir
 pyexecdir
@@ -666,9 +663,6 @@ SHELL'
 ac_subst_files=''
 ac_user_opts='
 enable_option_checking
-enable_gf180mcu_pdk
-with_gf180mcu_link_targets
-with_gf180mcu_variants
 enable_sky130_pdk
 with_sky130_link_targets
 with_sky130_variants
@@ -1313,8 +1307,8 @@ Optional Features:
   --disable-option-checking  ignore unrecognized --enable/--with options
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
-  --enable-gf180mcu-pdk=[/path/to/gf180mcu/] --disable-gf180mcu-pdk
-                          "location of the source files for the gf180mcu (pdks
+  --enable-sky130-pdk=[/path/to/sky130/] --disable-sky130-pdk
+                          "location of the source files for the sky130 (pdks
                           with a pdk_url file can automatically download them
                           if the path is omitted)"
   --enable-klayout
@@ -1373,10 +1367,10 @@ Optional Features:
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
-  --with-gf180mcu-link-targets=none|source
+  --with-sky130-link-targets=none|source
                           "make symbolic links to existing files
                           [default=none]"
-  --with-gf180mcu-variants=all|A|B|...
+  --with-sky130-variants=all|A|B|...
                           "compile/install specified PDK variants only
                           [default=all]"
   --with-ef-style         Use efabless style file system structure
@@ -1943,7 +1937,7 @@ $as_echo_n "checking for $am_display_PYTHON version... " >&6; }
 if ${am_cv_python_version+:} false; then :
   $as_echo_n "(cached) " >&6
 else
-  am_cv_python_version=`$PYTHON -c "import sys; print('%u.%u' % sys.version_info[:2])"`
+  am_cv_python_version=`$PYTHON -c "import sys; sys.stdout.write(sys.version[:3])"`
 fi
 { $as_echo "$as_me:${as_lineno-$LINENO}: result: $am_cv_python_version" >&5
 $as_echo "$am_cv_python_version" >&6; }
@@ -2209,110 +2203,12 @@ OPENPDKS_TOP=`cd .. && pwd`
 # check for the source and install paths for each PDK.
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: Found technology directories: gf180mcu sky130" >&5
-$as_echo "$as_me: Found technology directories: gf180mcu sky130" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Found technology directories: sky130" >&5
+$as_echo "$as_me: Found technology directories: sky130" >&6;}
 
 
 
     # --enable-pdk-[pdk]=/path/to/pdk
-
-        echo "Checking technology gf180mcu..."
-
-
-        GF180MCU_ENABLED_VARIANTS="all"
-        GF180MCU_SOURCE_PATH=""
-        GF180MCU_LINK_TARGETS="none"
-        GF180MCU_AUTO="0"
-
-        # Check whether --enable-gf180mcu-gf180mcu was given.
-if test "${enable_gf180mcu_pdk+set}" = set; then :
-  enableval=$enable_gf180mcu_pdk;
-                if test "$enableval" == "yes" -o "$enableval" == "YES"; then
-                    export GF180MCU_SOURCE_PATH=../sources/gf180mcu-pdk
-            	    GF180MCU_AUTO="1"
-		    ENABLED_TECHS="$ENABLED_TECHS gf180mcu"
-                elif test "$enableval" == "no" -o "$enableval" == "NO"; then
-                    echo "Disabling gf180mcu..."
-                else
-                    GF180MCU_SOURCE_PATH=$enableval
-		    ENABLED_TECHS="$ENABLED_TECHS gf180mcu"
-                fi
-
-fi
-
-
-        if [ "$GF180MCU_SOURCE_PATH" != "" ]; then
-            GF180MCU_SOURCE_PATH=`realpath $GF180MCU_SOURCE_PATH`
-            GF180MCU_BASENAME=`basename $GF180MCU_SOURCE_PATH`
-	    if [ "$GF180MCU_BASENAME" = "libraries" ]; then
-		GF180MCU_SOURCE_PATH=`dirname $GF180MCU_SOURCE_PATH`
-	    fi
-            # Basic check that the PDK path exists, unless depending on Makefile
-	    # to download it automatically.
-            if [ "$GF180MCU_AUTO" = "0" ]; then
-                { $as_echo "$as_me:${as_lineno-$LINENO}: Checking specified path for 'gf180mcu' at $GF180MCU_SOURCE_PATH" >&5
-$as_echo "$as_me: Checking specified path for 'gf180mcu' at $GF180MCU_SOURCE_PATH" >&6;}
-                as_ac_File=`$as_echo "ac_cv_file_$GF180MCU_SOURCE_PATH" | $as_tr_sh`
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $GF180MCU_SOURCE_PATH" >&5
-$as_echo_n "checking for $GF180MCU_SOURCE_PATH... " >&6; }
-if eval \${$as_ac_File+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  test "$cross_compiling" = yes &&
-  as_fn_error $? "cannot check for file existence when cross compiling" "$LINENO" 5
-if test -r "$GF180MCU_SOURCE_PATH"; then
-  eval "$as_ac_File=yes"
-else
-  eval "$as_ac_File=no"
-fi
-fi
-eval ac_res=\$$as_ac_File
-	       { $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_res" >&5
-$as_echo "$ac_res" >&6; }
-if eval test \"x\$"$as_ac_File"\" = x"yes"; then :
-
-                    { $as_echo "$as_me:${as_lineno-$LINENO}: 'gf180mcu' source path found at $GF180MCU_SOURCE_PATH" >&5
-$as_echo "$as_me: 'gf180mcu' source path found at $GF180MCU_SOURCE_PATH" >&6;}
-
-else
-
-                    as_fn_error $? "Specified path for 'gf180mcu' at $GF180MCU_SOURCE_PATH not found" "$LINENO" 5
-
-fi
-
-	    else
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: PDK 'gf180mcu' will be downloaded automatically during make." >&5
-$as_echo "$as_me: PDK 'gf180mcu' will be downloaded automatically during make." >&6;}
-	    fi
-
-            # --with-pdk-link-targets=PDK_LINK_TARGETS
-
-# Check whether --with-gf180mcu-link-targets was given.
-if test "${with_gf180mcu_link_targets+set}" = set; then :
-  withval=$with_gf180mcu_link_targets; GF180MCU_LINK_TARGETS=$with_gf180mcu_link_targets
-
-fi
-
-
-            { $as_echo "$as_me:${as_lineno-$LINENO}: Link targets set to $GF180MCU_LINK_TARGETS" >&5
-$as_echo "$as_me: Link targets set to $GF180MCU_LINK_TARGETS" >&6;}
-
-            # --with-pdk-variants=PDK_ENABLED_VARIANTS
-
-# Check whether --with-gf180mcu-variants was given.
-if test "${with_gf180mcu_variants+set}" = set; then :
-  withval=$with_gf180mcu_variants; GF180MCU_ENABLED_VARIANTS=$with_gf180mcu_variants
-
-fi
-
-
-            { $as_echo "$as_me:${as_lineno-$LINENO}: Enabled variants set to $GF180MCU_ENABLED_VARIANTS" >&5
-$as_echo "$as_me: Enabled variants set to $GF180MCU_ENABLED_VARIANTS" >&6;}
-        fi
-
-
-
-
 
         echo "Checking technology sky130..."
 
@@ -2415,7 +2311,7 @@ $as_echo "$as_me: Enabled variants set to $SKY130_ENABLED_VARIANTS" >&6;}
 
 
 # Export the list of known technologies to the Makefile
-ALL_TECHS="gf180mcu sky130"
+ALL_TECHS="sky130"
 
 
 # Set variables for tool setups
