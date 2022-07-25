@@ -21,10 +21,6 @@ catch {format $env(NETGEN_COLUMNS)}
 set cells1 [cells list -all -circuit1]
 set cells2 [cells list -all -circuit2]
 
-# NOTE:  In accordance with the LVS manager GUI, the schematic is
-# always circuit2, so some items like property "par1" only need to
-# be specified for circuit2.
-
 #-------------------------------------------
 # Resistors (except metal)
 #-------------------------------------------
@@ -175,6 +171,7 @@ foreach dev $devices {
 # devices, so the tolerance is increased to 7% to cover the difference
 #---------------------------------------------------------------------
 
+set devices {}
 lappend devices sky130_fd_pr__esd_nfet_g5v0d10v5
 lappend devices sky130_fd_pr__esd_pfet_g5v0d10v5
 
