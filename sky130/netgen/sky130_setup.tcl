@@ -140,9 +140,6 @@ lappend devices sky130_fd_pr__special_nfet_latch
 lappend devices sky130_fd_pr__cap_var_lvt
 lappend devices sky130_fd_pr__cap_var_hvt
 lappend devices sky130_fd_pr__cap_var
-lappend devices sky130_fd_pr__nfet_20v0_nvt
-lappend devices sky130_fd_pr__nfet_20v0
-lappend devices sky130_fd_pr__pfet_20v0
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -160,6 +157,39 @@ foreach dev $devices {
 	property "-circuit2 $dev" parallel {l critical}
 	property "-circuit2 $dev" parallel {w add}
 	property "-circuit2 $dev" tolerance {w 0.01} {l 0.01}
+	# Ignore these properties
+	property "-circuit2 $dev" delete as ad ps pd mult sa sb sd nf nrd nrs area perim topography
+    }
+}
+
+#---------------------------------------------------------------------
+# Extended drain MOSFET devices.  These have asymmetric source and
+# drain, and so the source and drain are not permutable.
+#---------------------------------------------------------------------
+
+set devices {}
+lappend devices sky130_fd_pr__nfet_20v0_zvt
+lappend devices sky130_fd_pr__nfet_20v0_nvt
+lappend devices sky130_fd_pr__nfet_20v0_iso
+lappend devices sky130_fd_pr__nfet_20v0
+lappend devices sky130_fd_pr__pfet_20v0
+lappend devices sky130_fd_pr__nfet_g5v0d16v0
+lappend devices sky130_fd_pr__pfet_g5v0d16v0
+
+foreach dev $devices {
+    if {[lsearch $cells1 $dev] >= 0} {
+	property "-circuit1 $dev" parallel enable
+	property "-circuit1 $dev" parallel {l critical}
+	property "-circuit1 $dev" parallel {w add}
+	property "-circuit1 $dev" tolerance {w 0.07} {l 0.01}
+	# Ignore these properties
+	property "-circuit1 $dev" delete as ad ps pd mult sa sb sd nf nrd nrs area perim topography
+    }
+    if {[lsearch $cells2 $dev] >= 0} {
+	property "-circuit2 $dev" parallel enable
+	property "-circuit2 $dev" parallel {l critical}
+	property "-circuit2 $dev" parallel {w add}
+	property "-circuit2 $dev" tolerance {w 0.07} {l 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete as ad ps pd mult sa sb sd nf nrd nrs area perim topography
     }
