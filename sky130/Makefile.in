@@ -1306,7 +1306,7 @@ digital-hd-%:
 	# Install custom additions to standard cell libraries
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130$*} \
 		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
-		-lef %l/lef/*.lef \
+		-lef %l/lef/*.lef compile-only rename=sky130_ef_sc_hd.lef \
 		-verilog %l/verilog/*.v \
 		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install all SkyWater digital standard cells.
@@ -1319,8 +1319,7 @@ digital-hd-%:
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
 		-lef %l/latest/cells/*/*.lef \
-			exclude=*.magic.lef lefopts=-toplayer \
-			include=custom/sky130_fd_sc_hd/lef/sky130_ef*.lef \
+			exclude=*.magic.lef,sky130_ef_sc_hd.lef lefopts=-toplayer \
 			filter=custom/scripts/fix_digital_lef.py \
 			annotate compile-only \
 			sort=../common/sort_pdkfiles.py \
