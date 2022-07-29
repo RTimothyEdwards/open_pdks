@@ -1012,6 +1012,7 @@ openlane-%: openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl openlane/sky
 	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.spef_extractor
 
 	cp -r openlane/custom_cells ${OPENLANE_STAGING_$*}
+	cp -r openlane/cvc ${OPENLANE_STAGING_$*}
 	${CPP} ${SKY130$*_DEFS} openlane/config.tcl ${OPENLANE_STAGING_$*}/config.tcl
 
 	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.min.magic \

@@ -33,7 +33,7 @@ set ::env(FP_ENDCAP_CELL) "sky130_fd_sc_hd__decap_3"
 set ::env(SYNTH_DRIVING_CELL) "sky130_fd_sc_hd__inv_2"
 #capacitance : 0.017653;
 set ::env(SYNTH_DRIVING_CELL_PIN) "Y"
-# update these 
+# update these
 set ::env(SYNTH_CAP_LOAD) "33.442" ; # femtofarad __inv_16 pin A cap (https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hd/blob/main/cells/inv/sky130_fd_sc_hd__inv_16__tt_025C_1v80.lib.json)
 set ::env(SYNTH_MIN_BUF_PORT) "sky130_fd_sc_hd__buf_2 A X"
 set ::env(SYNTH_TIEHI_PORT) "sky130_fd_sc_hd__conb_1 HI"
@@ -56,7 +56,8 @@ set ::env(DIODE_CELL) "sky130_fd_sc_hd__diode_2"
 set ::env(FAKEDIODE_CELL) "sky130_ef_sc_hd__fakediode_2"
 set ::env(DIODE_CELL_PIN) "DIODE"
 
-set ::env(CELL_PAD) 4
+set ::env(GPL_CELL_PADDING) {0}
+set ::env(DPL_CELL_PADDING) {4}
 set ::env(CELL_PAD_EXCLUDE) "sky130_fd_sc_hd__tap* sky130_fd_sc_hd__decap* sky130_ef_sc_hd__decap* sky130_fd_sc_hd__fill*"
 
 # Clk Buffers info CTS data
