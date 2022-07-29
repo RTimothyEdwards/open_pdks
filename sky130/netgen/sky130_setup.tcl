@@ -181,7 +181,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel enable
 	property "-circuit1 $dev" parallel {l critical}
 	property "-circuit1 $dev" parallel {w add}
-	property "-circuit1 $dev" tolerance {w 0.07} {l 0.01}
+	property "-circuit1 $dev" tolerance {w 0.01} {l 0.01}
 	# Ignore these properties
 	property "-circuit1 $dev" delete as ad ps pd mult sa sb sd nf nrd nrs area perim topography
     }
@@ -189,7 +189,7 @@ foreach dev $devices {
 	property "-circuit2 $dev" parallel enable
 	property "-circuit2 $dev" parallel {l critical}
 	property "-circuit2 $dev" parallel {w add}
-	property "-circuit2 $dev" tolerance {w 0.07} {l 0.01}
+	property "-circuit2 $dev" tolerance {w 0.01} {l 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete as ad ps pd mult sa sb sd nf nrd nrs area perim topography
     }
