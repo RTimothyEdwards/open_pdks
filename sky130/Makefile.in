@@ -290,6 +290,22 @@ ifeq (${OPEN_PDKS_COMMIT},)
 else
     COMMIT_DEFS = -DOPEN_PDKS_COMMIT=${OPEN_PDKS_COMMIT}
 endif
+
+ifeq (${XSCHEM_PATH},)
+    COMMIT_DEFS += -DXSCHEM_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DXSCHEM_COMMIT=$(shell cd ${XSCHEM_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${KLAYOUT_PATH},)
+    COMMIT_DEFS += -DKLAYOUT_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DKLAYOUT_COMMIT=$(shell cd ${KLAYOUT_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${PRECHECK_PATH},)
+    COMMIT_DEFS += -DPRECHECK_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DPRECHECK_COMMIT=$(shell cd ${PRECHECK_PATH} ; git rev-parse HEAD)
+endif
 ifeq (${ALPHA_PATH},)
     COMMIT_DEFS += -DALPHA_COMMIT="unknown"
 else

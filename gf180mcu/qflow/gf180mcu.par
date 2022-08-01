@@ -1,0 +1,218 @@
+# TECHNAME.par --- Parameter file for GrayWolf
+# NOTE:  all distance units are in centimicrons unless otherwise stated
+# WARNING: this is NOT tcl syntax! No Comments on end of actual data line.
+
+RULES
+    # values are resistance in ohms/sq and capacitance in fF/um^2
+    # TODO: properly pick directions
+    layer metal1 0.105 0.0001 horizontal
+    layer metal2 0.105 0.0001 vertical
+#ifdef METALS4 || METALS5 || METALS6
+    layer metal3 0.105 0.0001 horizontal
+#endif
+#ifdef METALS5 || METALS6
+    layer metal4 0.105 0.0001 vertical
+#endif
+#ifdef METALS6
+    layer metal5 0.105 0.0001 horizontal
+#endif
+#ifndef THICKMET
+    layer metaltp 0.043 0.0001 horizontal
+#endif
+    via via12 metal1 metal2
+#ifdef METALS4 || METALS5 || METALS6
+    via via23 metal2 metal3
+#endif
+#ifdef METALS5 || METALS6
+    via via34 metal3 metal4
+#endif
+#ifdef METALS6
+    via via45 metal4 metal5
+#endif
+#ifdef THICKMET
+#ifdef METALS4
+    via viatk metal3 metaltk
+#endif
+#ifdef METALS5
+    via viatk metal4 metaltk
+#endif
+#ifdef METALS6
+    via viatk metal5 metaltk
+#endif
+#else (!THICKMET)
+#ifdef METALS4
+    via viatp metal3 metaltp
+#endif
+#ifdef METALS5
+    via viatp metal4 metaltp
+#endif
+#ifdef METALS6
+    via viatp metal5 metaltp
+#endif
+#endif (!THICKMET)
+
+              # 0.5 um
+    width metal1 50
+    width metal2 60
+              # 0.6 um
+#ifdef METALS4 || METALS5 || METALS6
+    width metal3 60
+#endif
+#ifdef METALS5 || METALS6
+    width metal4 60
+#endif
+#ifdef METALS6
+    width metal5 60
+#endif
+#ifdef THICKMET
+    width metaltk 120
+#else
+    width metaltp 120
+#endif
+
+    # TODO verify these two numbers
+    width via12 50
+#ifdef METALS4 || METALS5 || METALS6
+    width via23 50
+#endif
+#ifdef METALS5 || METALS6
+    width via34 50
+#endif
+#ifdef METALS6
+    width via45 50
+#endif
+#ifdef THICKMET
+    width viatk 500
+#else
+    width viatp 120
+#endif
+
+    # Set spacing = track pitch - width, so that GrayWolf places pins
+    # on the right pitch.
+    # Pitches are (in um):
+    # metal1 = 200,  metal2 = 160,  metal3 = 200,  metal4 = 320
+## pitch m1: 1.3um  m2: 1.4um  m3: 1.3um
+## width m1: 0.5um  m2: 0.6um  m3: 0.6um
+## space     0.8        0.8        0.7     (pitch calc)
+## fab-space 0.45       0.5        0.6
+
+    spacing metal1 metal1 80
+    spacing metal2 metal2 80
+#ifdef METALS4 || METALS5 || METALS6
+    spacing metal3 metal3 80
+#endif
+#ifdef METALS5 || METALS6
+    spacing metal4 metal4 80
+#endif
+#ifdef METALS6
+    spacing metal5 metal5 80
+#endif
+#ifdef THICKMET
+    spacing metaltk metaltk 250
+#else
+    spacing metaltp metaltp 160
+#endif
+
+    # (WAS:) Stacked vias allowed
+    # spacing via12 via23 0
+
+    # To disable Stacked?: give non-zero spacing (centimicrons = 10 nanometer = 1/100 of micron)
+    # TODO need real value here:
+#ifdef METALS4 || METALS5 || METALS6
+    spacing via12 via23 0
+#endif
+#ifdef METALS5 || METALS6
+    spacing via23 via34 0
+#endif
+#ifdef METALS6
+    spacing via34 via45 0
+#endif
+#ifdef THICKMET
+#ifdef METALS4
+    spacing via23 viatk 60
+#endif
+#ifdef METALS5
+    spacing via34 viatk 60
+#endif
+#ifdef METALS6
+    spacing via45 viatk 60
+#endif
+#else (!THICKMET)
+#ifdef METALS4
+    spacing via23 viatp 60
+#endif
+#ifdef METALS5
+    spacing via34 viatp 60
+#endif
+#ifdef METALS6
+    spacing via45 viatp 60
+#endif
+#endif (!THICKMET)
+
+                       # .2um .15um
+    overhang via12 metal1 20
+    overhang via12 metal2 15
+
+#ifdef METALS4 || METALS5 || METALS6
+    overhang via23 metal2 20
+    overhang via23 metal3 15
+#endif
+#ifdef METALS5 || METALS6
+    overhang via34 metal3 14
+    overhang via34 metal4 16
+#endif
+#ifdef METALS6
+    overhang via45 metal4 14
+    overhang via45 metal5 16
+#endif
+#ifdef THICKMET
+#ifdef METALS4
+    overhang viatk metal3 14
+#endif
+#ifdef METALS5
+    overhang viatk metal4 14
+#endif
+#ifdef METALS6
+    overhang viatk metal5 14
+#endif
+#else (!THICKMET)
+#ifdef METALS4
+    overhang viatp metal3 14
+#endif
+#ifdef METALS5
+    overhang viatp metal4 14
+#endif
+#ifdef METALS6
+    overhang viatp metal5 14
+#endif
+#endif
+
+#ifndef THICKMET
+    overhang viatp metaltp 16
+#endif
+ENDRULES
+
+*vertical_wire_weight : 1.0
+*vertical_path_weight : 1.0
+*padspacing           : variable
+*rowSep		      : 0.0   0
+# Value 130:  Change to X track pitch for lower metal layers
+*track.pitch	      : 46
+*graphics.wait        : off
+*last_chance.wait     : off
+*random.seed	      : 12345
+# TODO: proper track.pitch number above, plus feedThruWidth below
+
+TWMC*chip.aspect.ratio : 1.0
+
+# Value 46:  Minimum size fill cell (FILL1) width in centimicrons.
+TWSC*feedThruWidth    : 46 layer 1
+TWSC*do.global.route  : on
+TWSC*ignore_feeds     : true
+TWSC*call_row_evener  : true
+TWSC*even_rows_maximally : true
+# TWSC*no.graphics    : on
+
+GENR*row_to_tile_spacing: 1
+# GENR*numrows		: 6
+GENR*flip_alternate_rows : 1

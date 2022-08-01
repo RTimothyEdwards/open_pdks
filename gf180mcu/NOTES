@@ -1,0 +1,5 @@
+March 9, 2022:  First draft of the open_pdks installer for the Global Foundries
+gf180mcu (180nm) open PDK.
+
+July 27, 2022:  Open source repositories now available on github, so integrating
+directly into open_pdks.

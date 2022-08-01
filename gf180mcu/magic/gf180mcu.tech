@@ -1,0 +1,4618 @@
+###
+###	Source file TECHNAME.tech
+###	Process this file with the preproc.py macro processor
+###
+#----------------------------------------------------------
+# Copyright (c) 2022 Efabless, Inc.
+# Techfile created by R. Timothy Edwards for the Google/
+# Global Foundries Open PDK project.
+#
+#----------------------------------------------------------
+# This file is designed to be used with magic
+# versions 8.3 or newer.
+#
+# Rules reflect lambda = 0.05um.  Minimum grid is 0.005um
+#----------------------------------------------------------
+tech
+  format 34
+  TECHNAME
+end
+
+version
+ version REVISION
+ description "Global Foundries 180mcu: open PDK rules and DRC"
+ requires magic-8.3.304
+end
+
+#-----------------------------------------------------
+# Tile planes
+#-----------------------------------------------------
+
+planes
+  dwell,dw
+  well,w
+  active,a
+  metal1,m1
+  metal2,m2
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+  metal3,m3
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+  metal4,m4
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+  metal5,m5
+#endif (METALS5 || METALS6)
+#ifdef METALS6
+  metaltp,mtp
+#endif (METALS6)
+  block,b
+  comment,c
+end
+
+#-----------------------------------------------------
+# Tile types
+#-----------------------------------------------------
+
+types
+# Deep nwell
+  dwell deepnwell,dnwell,dnw
+  dwell isosubstrate,isosub
+
+# Wells outside deep nwell
+  well nwell,nw
+  well pwell,pw
+# Well obstruction layer
+ -well obswell
+# Well resistors
+  well rnw,rnwell
+
+# Transistors
+  active nmos,ntransistor,nfet
+  active pmos,ptransistor,pfet
+  active nnmos,nntransistor,nnfet
+  active mvnmos,mvntransistor,mvnfet
+  active mvpmos,mvptransistor,mvpfet
+  active mvnnmos,mvnntransistor,mvnnfet
+# Diffusions
+  active ndiff,ndiffusion,ndif
+  active pdiff,pdiffusion,pdif
+  active mvndiff,mvndiffusion,mvndif
+  active mvpdiff,mvpdiffusion,mvpdif
+  active ndiffc,ndcontact,ndc
+  active pdiffc,pdcontact,pdc
+  active mvndiffc,mvndcontact,mvndc
+  active mvpdiffc,mvpdcontact,mvpdc
+  active psubdiff,psubstratepdiff,ppdiff,ppd,psd
+  active nsubdiff,nsubstratendiff,nndiff,nnd,nsd
+  active mvpsubdiff,mvpsubstratepdiff,mvppdiff,mvppd,mvpsd
+  active mvnsubdiff,mvnsubstratendiff,mvnndiff,mvnnd,mvnsd
+  active psubdiffcont,psubstratepcontact,psc
+  active nsubdiffcont,nsubstratencontact,nsc
+  active mvpsubdiffcont,mvpsubstratepcontact,mvpsc
+  active mvnsubdiffcont,mvnsubstratencontact,mvnsc
+ -active obsactive
+ -active mvobsactive
+  active varactor,varact,var
+  active mvvaractor,mvvaract,mvvar
+# Poly
+  active polysilicon,poly,p
+  active polycontact,pcontact,polycut,pc,polyc
+# Resistors
+  active npolyres,npres,rnp
+  active ppolyres,ppres,rpp
+  active npolysilicide,nsresistor,nspres,rnps
+  active ppolysilicide,psresistor,pspres,rpps
+#ifdef HRPOLY1K
+  active nhighres,nhires,hires
+  active mvnhighres,mvnhires,mvhires
+#endif (HRPOLY1K)
+  active ndiffres,rnd,rdn,rndiff
+  active pdiffres,rpd,rdp,rpdiff
+  active ndiffsilicide,rnds,rdns,rndiffs
+  active pdiffsilicide,rpds,rdps,rpdiffs
+  active mvndiffres,mvrnd,mvrdn,mvrndiff
+  active mvpdiffres,mvrpd,mvrdp,mvrpdiff
+  active mvndiffsilicide,mvrnds,mvrdns,mvrndiffs
+  active mvpdiffsilicide,mvrpds,mvrdps,mvrpdiffs
+# Diodes
+  active pdiode,pdi
+  active ndiode,ndi
+  active nndiode,nndi
+  active pdiodec,pdic
+  active ndiodec,ndic
+  active nndiodec,nndic
+  active mvpdiode,mvpdi
+  active mvndiode,mvndi
+  active mvnndiode,mvnndi
+  active mvpdiodec,mvpdic
+  active mvndiodec,mvndic
+  active mvnndiodec,mvnndic
+
+ -active filldiff
+ -active fillpoly
+
+  metal1 metal1,m1,met1
+  metal1 rmetal1,rm1,rmet1
+ -metal1 m1hole
+  metal1 via1,m2contact,m2cut,m2c,via,v,v1
+ -metal1 obsm1
+ -metal1 fillm1
+ -metal1 obsv1
+  metal1 padl
+
+  metal2 metal2,m2,met2
+  metal2 rmetal2,rm2,rmet2
+ -metal2 m2hole
+  metal2 via2,m3contact,m3cut,m3c,v2
+ -metal2 obsm2
+ -metal2 fillm2
+ -metal2 obsv2
+#ifdef MIM
+#ifdef METALS3
+  metal2 mimcap,mim,capm
+  metal2 mimcapcontact,mimcapc,mimcc,capmc
+#elseif defined(METALS4)
+  metal3 mimcap,mim,capm
+  metal3 mimcapcontact,mimcapc,mimcc,capmc
+#elseif defined(METALS5)
+  metal4 mimcap,mim,capm
+  metal4 mimcapcontact,mimcapc,mimcc,capmc
+#elseif defined(METALS6)
+  metal5 mimcap,mim,capm
+  metal5 mimcapcontact,mimcapc,mimcc,capmc
+#endif
+#endif (MIM)
+
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+  metal3 metal3,m3,met3
+  metal3 rmetal3,rm3,rmet3
+ -metal3 m3hole
+ -metal3 obsm3
+ -metal3 fillm3
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+  metal3 via3,v3
+
+  metal4 metal4,m4,met4
+  metal4 rmetal4,rm4,rmet4
+ -metal4 m4hole
+ -metal4 obsm4
+ -metal4 fillm4
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef (METALS5 || METALS6)
+  metal4 via4,v4
+
+  metal5 metal5,m5,met5
+  metal5 rm5,rmetal5,rmet5
+ -metal5 m5hole
+ -metal5 obsm5
+ -metal5 fillm5
+#endif (METALS5 || METALS6)
+#ifdef METALS6
+  metal5 viatp,vtp
+
+  metaltp metaltp,mtp,mettp
+  metaltp rmtp,rmetaltp,rmettp
+ -metaltp mtphole
+ -metaltp obsmtp
+ -metaltp fillmtp
+#endif (METALS6)
+
+  block  glass
+  block  fillblock
+
+ -comment lvstext
+  comment comment
+ -comment obscomment
+
+end
+
+#-----------------------------------------------------
+# Magic contact types
+#-----------------------------------------------------
+
+contact
+  pc poly metal1
+  ndc ndiff metal1
+  pdc pdiff metal1
+  nsc nsd metal1
+  psc psd metal1
+  ndic ndiode metal1
+  nndic nndiode metal1
+  pdic pdiode metal1
+
+  mvndc mvndiff metal1
+  mvpdc mvpdiff metal1
+  mvnsc mvnsd metal1
+  mvpsc mvpsd metal1
+  mvndic mvndiode metal1
+  mvpdic mvpdiode metal1
+  mvnndic mvnndiode metal1
+
+  via1 metal1 metal2
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+  via2 metal2 metal3
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+  via3 metal3 metal4
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+  via4  metal4 metal5
+#endif (METALS5 || METALS6)
+#ifdef METALS6
+  viatp metal5 metaltp
+#endif (METALS6)
+
+#ifdef MIM
+#ifdef METALS3
+  mimcc mimcap metal3
+#elseif defined(METALS4)
+  mimcc mimcap metal4
+#elseif defined(METALS5)
+  mimcc mimcap metal5
+#elseif defined(METALS6)
+  mimcc mimcap metaltp
+#endif
+#endif (MIM)
+  stackable
+
+#ifdef METALS3
+  padl m1 m2 m3 glass
+#elseif defined(METALS4)
+  padl m1 m2 m3 m4 glass
+#elseif defined(METALS5)
+  padl m1 m2 m3 m4 m5 glass
+#elseif defined(METALS6)
+  padl m1 m2 m3 m4 m5 mtp glass
+#else
+  padl m1 m2 glass
+#endif
+end
+
+#-----------------------------------------------------
+# Layer aliases
+#-----------------------------------------------------
+
+aliases
+
+  allnwell	   nwell,rnwell
+
+  allpsub	   space/w,pwell
+
+  # Similar to allpsub* but does not include space-on-well-plane
+  allpwell	   pwell
+
+  # Allsubwell contains space-on-well-plane but not obstruction-on-well-plane
+  # Used for defining anything under a device that does not touch active/substrate 
+  allsubwell	   allnwell,allpsub
+  # Allwells contains obstruction-on-well-plane but not space-on-well-plane
+  allwells         allnwell,allpwell,obswell
+
+  allnfets	   nfet,mvnfet,nnfet,mvnnfet
+  allnfetsnonnat   nfet,mvnfet
+  allpfets	   pfet,mvpfet
+  allfets	   allnfets,allpfets,varactor,mvvaractor
+  allfetsnonnat	   allnfetsnonnat,allpfets,varactor,mvvaractor
+  allfetsmv	   mvnfet,mvpfet,mvnnfet,mvvaractor
+
+  allnactivenonfet *ndiff,*nsd,*ndiode,*nndiode,*mvndiff,*mvnsd,*mvndiode,*mvnndiode
+  allnactive	   allnactivenonfet,allnfets
+
+  allpactivenonfet *pdiff,*psd,*pdiode,*mvpdiff,*mvpsd,*mvpdiode
+  allpactive	   allpactivenonfet,allpfets
+
+  allactivenonfet  allnactivenonfet,allpactivenonfet
+  allactive	   allactivenonfet,allfets
+
+  allactiveres	   ndiffres,pdiffres,mvndiffres,mvpdiffres
+
+  allndifflv       *ndif,*nsd,*ndiode,*nndiode,ndiffres,nfet,nnfet
+  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet
+  alldifflv        allndifflv,allpdifflv
+  allndifflvnonfet *ndif,*nsd,*ndiode,*nndiode,ndiffres
+  allpdifflvnonfet *pdif,*psd,*pdiode,pdiffres
+  alldifflvnonfet  allndifflvnonfet,allpdifflvnonfet
+
+  allndiffmv       *mvndif,*mvnsd,*mvndiode,mvndiffres,mvnfet,mvnnfet,mvvaractor,*mvnndiode
+  allpdiffmv       *mvpdif,*mvpsd,*mvpdiode,mvpdiffres,mvpfet
+  alldiffmv        allndiffmv,allpdiffmv
+  allndiffmvnonfet *mvndif,*mvnsd,*mvndiode,mvndiffres,*mvnndiode
+  allpdiffmvnonfet *mvpdif,*mvpsd,*mvpdiode,mvpdiffres
+  alldiffmvnonfet  allndiffmvnonfet,allpdiffmvnonfet
+
+  alldiffnonfet	   alldifflvnonfet,alldiffmvnonfet
+  alldiff	   alldifflv,alldiffmv
+
+  allnactivenonhv  nfet,mvnfet,nnfet,mvnnfet,varactor,mvvaractor,*ndiff,*mvndiff,*nsd,*mvnsd,*ndiode,*nndiode,*mvndiode,*mvnndiode
+  allpactivenonhv  pfet,mvpfet,*pdiff,*mvpdiff,*psd,*mvpsd,*pdiode,*mvpdiode
+  allactivenonhv   allnactivenonhv,allpactivenonhv
+
+#ifdef HRPOLY1K
+  allpolyres	   rpp,rnp,rpps,rnps,hires,mvhires
+  allpolysblkres   rpp,rnp,hires,mvhires
+  allsblkdev	   rnp,rpp,rnd,rpd,hires,mvhires,mvrnd,mvrpd
+#else (!HRPOLY1K)
+  allpolyres	   rpp,rnp,rpps,rnps
+  allpolysblkres   rpp,rnp
+  allsblkdev	   rnp,rpp,rnd,rpd,mvrnd,mvrpd
+#endif (!HRPOLY1K)
+
+  allpolynonfet	   *poly,allpolyres
+  allpolynonres	   *poly,allfets
+
+  allpoly	   allpolynonfet,allfets
+  allpolynoncap	   *poly,allfets,allpolyres
+
+  allndiffcontlv   ndc,nsc,ndic,nndic
+  allpdiffcontlv   pdc,psc,pdic
+  allndiffcontmv   mvndc,mvnsc,mvndic,mvnndic
+  allpdiffcontmv   mvpdc,mvpsc,mvpdic
+  allndiffcont	   allndiffcontlv,allndiffcontmv
+  allpdiffcont	   allpdiffcontlv,allpdiffcontmv
+  alldiffcontlv	   allndiffcontlv,allpdiffcontlv
+  alldiffcontmv	   allndiffcontmv,allpdiffcontmv
+  alldiffcont	   alldiffcontlv,alldiffcontmv
+
+  allcont	   alldiffcont,pc
+
+  allres	   allpolyres,allactiveres
+  alldiode	   *pdiode,*ndiode,*nndiode,*mvpdiode,*mvndiode,*mvnndiode
+
+  allm1		   *m1,rm1
+  allm2		   *m2,rm2
+
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+#ifdef MIM && METALS4
+  allm3		   *m3,rm3,*mimcap
+#else (!(MIM && METALS4))
+  allm3		   *m3,rm3
+#endif (!(MIM && METALS4))
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4 || METALS5 || METALS6
+#ifdef MIM && METALS5
+  allm4	   	*m4,rm4,*mimcap
+#else (!(MIM && METALS5))
+  allm4	   	*m4,rm4
+#endif (!(MIM && METALS5))
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS5 || METALS6
+#ifdef MIM && METALS6
+  allm5	   	*m5,rm5,*mimcap
+#else (!(MIM && METALS6))
+  allm5	   	*m5,rm5
+#endif (!(MIM && METALS6))
+#endif (METALS5 || METALS6)
+
+#ifdef METALS6
+  allmtp	*mtp,rmtp
+#endif (METALS6)
+
+  allpad	   padl
+end
+
+#-----------------------------------------------------
+# Layer drawing styles
+#-----------------------------------------------------
+
+styles
+ styletype mos
+  dnwell    cwell
+  isosub    subcircuit
+
+  nwell     nwell
+  rnwell    nwell 	ntransistor_stripes
+  pwell	    pwell
+
+  ndiff     ndiffusion
+  pdiff     pdiffusion
+  nsd       ndiff_in_nwell
+  psd       pdiff_in_pwell
+  nfet      ntransistor    ntransistor_stripes
+  nnfet     ntransistor    ndiff_in_nwell
+  pfet      ptransistor    ptransistor_stripes
+  var       polysilicon    ndiff_in_nwell
+  ndc       ndiffusion     metal1  contact_X'es
+  pdc       pdiffusion     metal1  contact_X'es
+  nsc       ndiff_in_nwell metal1  contact_X'es
+  psc       pdiff_in_pwell metal1  contact_X'es
+
+  mvndiff     ndiffusion     hvndiff_mask
+  mvpdiff     pdiffusion     hvpdiff_mask
+  mvnsd       ndiff_in_nwell hvndiff_mask
+  mvpsd       pdiff_in_pwell hvpdiff_mask
+  mvnfet      ntransistor    ntransistor_stripes hvndiff_mask
+  mvnnfet     ntransistor    ndiff_in_nwell hvndiff_mask
+  mvpfet      ptransistor    ptransistor_stripes
+  mvvar       polysilicon    ndiff_in_nwell hvndiff_mask
+  mvndc       ndiffusion     metal1  contact_X'es hvndiff_mask
+  mvpdc       pdiffusion     metal1  contact_X'es hvpdiff_mask
+  mvnsc       ndiff_in_nwell metal1  contact_X'es hvndiff_mask
+  mvpsc       pdiff_in_pwell metal1  contact_X'es hvpdiff_mask
+
+  poly      polysilicon 
+  pc        polysilicon    metal1  contact_X'es
+  npolyres  polysilicon    silicide_block nselect2
+  ppolyres  polysilicon    silicide_block pselect2
+
+  pdiode    pdiffusion     pselect2
+  ndiode    ndiffusion     nselect2
+  nndiode   ndiff_in_nwell nselect2
+  pdiodec   pdiffusion     pselect2 metal1 contact_X'es
+  ndiodec   ndiffusion     nselect2 metal1 contact_X'es
+  nndiodec  ndiff_in_nwell nselect2 metal1 contact_X'es
+
+  mvpdiode    pdiffusion     pselect2 hvpdiff_mask
+  mvndiode    ndiffusion     nselect2 hvndiff_mask
+  mvnndiode   ndiff_in_nwell nselect2 hvndiff_mask
+  mvpdiodec   pdiffusion     pselect2 metal1 contact_X'es hvpdiff_mask
+  mvndiodec   ndiffusion     nselect2 metal1 contact_X'es hvndiff_mask
+  mvnndiodec  ndiff_in_nwell nselect2 metal1 contact_X'es hvndiff_mask
+
+  metal1    metal1
+  rm1       metal1         poly_resist_stripes
+  obsm1     metal1
+  fillm1    metal1
+  obsv1     metal1	   metal2  via1arrow
+  m1hole    obsmetal1
+  m2c       metal1         metal2  via1arrow
+  metal2    metal2
+  rm2       metal2         poly_resist_stripes
+  obsm2     metal2
+  fillm2    metal2
+  obsv2     metal2	   metal3  via2arrow
+  m2hole    obsmetal2
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+  m3c       metal2         metal3  via2arrow
+  metal3    metal3
+  rm3       metal3         poly_resist_stripes
+  obsm3     metal3
+  fillm3    metal3
+  m3hole    obsmetal3
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+  via3      metal3         metal4  via3alt
+  metal4    metal4
+  rm4       metal4         poly_resist_stripes
+  obsm4     metal4
+  fillm4    metal4
+  m4hole    obsmetal4
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+  via4      metal4         metal5  via4
+  metal5    metal5
+  rm5       metal5         poly_resist_stripes
+  obsm5     metal5
+  fillm5    metal5
+  m5hole    obsmetal5
+#endif (METALS5 || METALS6)
+#ifdef METALS6
+  viatp     metal5         metal6  via5
+  metaltp   metal6
+  rmtp      metal6         poly_resist_stripes
+  obsmtp    metal6
+  fillmtp   metal6
+  mtphole   obsmetal6
+#endif (METALS6)
+
+#ifdef MIM
+#ifdef METALS3
+  mimcap    metal2         mems
+  mimcc     metal2         contact_X'es mems
+#elseif defined(METALS4)
+  mimcap    metal3         mems
+  mimcc     metal3         contact_X'es mems
+#elseif defined(METALS5)
+  mimcap    metal4         mems
+  mimcc     metal4         contact_X'es mems
+#elseif defined(METALS6)
+  mimcap    metal5         mems 
+  mimcc     metal5         contact_X'es mems
+#endif
+#endif (MIM)
+  glass	    overglass
+  rnp       poly_resist    poly_resist_stripes	ndop_stripes
+  rpp       poly_resist    poly_resist_stripes	pdop_stripes
+  rnps      poly_resist    ndop_stripes
+  rpps      poly_resist    pdop_stripes
+#ifdef HRPOLY1K
+  nhighres  poly_resist    silicide_block
+  mvnhighres  poly_resist  silicide_block  hvndiff_mask
+#endif (HRPOLY1K)
+  ndiffres  ndiffusion	   ndop_stripes
+  pdiffres  pdiffusion	   pdop_stripes
+  mvndiffres  ndiffusion hvndiff_mask   ndop_stripes
+  mvpdiffres  pdiffusion hvpdiff_mask   pdop_stripes
+  comment   comment
+  lvstext   comment
+  error_p   error_waffle
+  error_s   error_waffle
+  error_ps  error_waffle
+  fillblock cwell
+
+  obswell   cwell
+  obsactive implant4
+  filldiff  ndiffusion
+  fillpoly  polysilicon
+
+#ifdef METALS3
+  padl      metal3 via3 overglass
+#elseif defined(METALS4)
+  padl      metal4 via4 overglass
+#elseif defined(METALS5)
+  padl      metal5 via5 overglass
+#elseif defined(METALS6)
+  padl      metal6 via6 overglass
+#else
+  padl      metal2 via2 overglass
+#endif
+
+  magnet    substrate_field_implant
+  rotate    via3alt
+  fence     via5
+end
+
+#-----------------------------------------------------
+# Special paint/erase rules
+#-----------------------------------------------------
+
+compose
+  compose  nfet  poly  ndiff
+  compose  pfet  poly  pdiff
+  compose  var   poly  nsd
+
+  compose  mvnfet  poly  mvndiff
+  compose  mvpfet  poly  mvpdiff
+  compose  var     poly  mvnsd
+  
+#ifdef MIM
+#ifdef METALS3
+  paint  mimcap  m2     mimcap
+  paint  mimcapc m2     mimcapc
+#elseif defined(METALS4)
+  paint  mimcap  m3     mimcap
+  paint  mimcapc m3     mimcapc
+#elseif defined(METALS5)
+  paint  mimcap  m4     mimcap
+  paint  mimcapc m4     mimcapc
+#elseif defined(METALS6)
+  paint  mimcap  m5     mimcap
+  paint  mimcapc m5     mimcapc
+#endif
+#endif (MIM)
+  paint  ndc     nwell  pdc
+  paint  nfet    nwell  pfet
+  paint  ndiff   nwell  pdiff
+  paint  psd     nwell  nsd
+  paint  psc     nwell  nsc
+  paint  pdc     pwell  ndc
+  paint  pfet    pwell  nfet
+  paint  pdiff   pwell  ndiff
+  paint  nsd     pwell  psd
+  paint  nsc     pwell  psc
+
+  paint  m1      obsm1  m1
+  paint  m2      obsm2  m2
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+  paint  m3      obsm3  m3
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+  paint  m4      obsm4  m4
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+  paint  m5      obsm5  m5
+#endif (METALS5 || METALS6)
+#ifdef METALS6
+  paint  mtp     obsmtp mtp
+#endif (METALS6)
+end
+
+#-----------------------------------------------------
+# Electrical connectivity
+#-----------------------------------------------------
+
+connect
+  nwell,*nsd,*mvnsd nwell,*nsd,*mvnsd
+  pwell,*psd,*mvpsd,isosub  pwell,*psd,*mvpsd,isosub
+  *psd,*mvpsd  *psd,*mvpsd
+  *m1	*m1
+  *m2	*m2
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+  *m3	*m3
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+  *m4	*m4
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+  *m5	*m5
+#endif (METALS5 || METALS6)
+#ifdef METAL6
+  *mtp	*mtp
+#endif (METALS6)
+#ifdef MIM
+  *mimcap     *mimcap
+#endif (MIM)
+   allnactivenonfet	allnactivenonfet
+   allpactivenonfet	allpactivenonfet
+  *poly,allfets		*poly,allfets
+end
+
+#-----------------------------------------------------
+# CIF/GDS output layer definitions
+#-----------------------------------------------------
+# NOTE:  All values in this section MUST be multiples of 25 
+# or else magic will scale below the allowed layout grid size
+
+cifoutput
+
+#-----------------------------------------------------
+style gdsii
+#-----------------------------------------------------
+ scalefactor 50 nanometers
+ options calma-permissive-labels
+ gridlimit 5
+
+# This section used for actual GDSII output 
+
+#-----------------------------------------------------
+# DNWELL
+#-----------------------------------------------------
+ layer DNWELL	dnwell
+	calma	12 0
+
+#-----------------------------------------------------
+# NWELL
+#-----------------------------------------------------
+ layer NWELL 	allnwell
+	close	1000000
+ 	calma 	21 0
+
+#-----------------------------------------------------
+# PWELL (LVPWELL)
+#-----------------------------------------------------
+ layer PWELL 	pwell
+ 	calma 	204 0
+
+#-----------------------------------------------------
+# DIFF (COMP)
+#-----------------------------------------------------
+ layer DIFF 	alldiff
+ 	labels 	alldiff
+ 	calma 	22 0
+
+ layer DIFFFILL	filldiff
+	labels	filldiff
+	calma	22 4
+
+#-----------------------------------------------------
+# PPLUS, NPLUS
+#-----------------------------------------------------
+
+#ifdef HRPOLY1K
+ layer RESDEF
+	bloat-or hires,mvhires * 280 poly 0
+	grow 200
+	shrink 200
+ 	calma 110 5
+
+ # hires requires PPLUS around terminals
+ templayer HRTERM
+	bloat-all hires,mvhires *poly
+	and-not hires,mvhires
+
+ layer SBLK
+	bloat-or hires,mvhires * 280 poly 100
+ 	calma 	49 0
+#endif (HRPOLY1K)
+
+ # rnps requires NPLUS
+ # rnp  requires NPLUS
+ # rnd  requires NPLUS
+
+ layer NPLUS
+ 	bloat-all rnps *poly
+ 	bloat-all rnp  *poly
+ 	bloat-all rnd  *ndiff
+	grow 200
+	grow 200
+	shrink 200
+	calma   32 0
+
+ # standard generation of NPLUS
+
+ templayer nwell_shrink nwell
+	shrink 430
+
+ templayer shortntap *nsd,*mvnsd
+	and-not dnwell
+	and-not nwell_shrink
+	grow 160
+
+ templayer shortdntap dnwell
+	and pwell
+	grow 430
+        and *nsd,*mvnsd
+	grow 160
+
+ layer NPLUS
+        bloat-or *ndif,*ndiode,*nndiode,ndiffres,*mvndif,*mvndiode,*mvnndiode,mvndiffres * 20 allpactivenonfet 0
+        bloat-or *nsd,*mvnsd * 20 allpactivenonfet 0
+	bloat-or allnfets,var,mvvar * 230
+	or shortntap,shortdntap
+	grow 	200 
+	shrink 200
+	calma   32 0
+
+ # rpps requires PPLUS
+ # rpp  requires PPLUS
+ # rpd  requires PPLUS
+
+ layer PPLUS
+ 	bloat-all rpps *poly
+ 	bloat-all rpp  *poly
+ 	bloat-all rpd  *pdiff
+	grow 200
+	grow 200
+	shrink 200
+	calma   31 0
+
+ # standard generation of PPLUS, including hires resistors
+
+ templayer shortptap nwell
+	and-not dnwell
+	grow 430
+	and *psd,*mvpsd
+	grow 160
+
+ templayer pwell_shrink pwell
+	and dnwell
+	shrink 430
+
+ templayer shortdptap *psd,*mvpsd
+	and dnwell
+	and-not pwell_shrink
+	grow 160
+
+ layer PPLUS
+#ifdef HRPOLY1K
+	or HRTERM
+	grow 200
+	and-not RESDEF
+#endif (HRPOLY1K)
+        bloat-or  *pdif,*pdiode,pdiffres,pfet,*mvpdif,*mvpdiode,mvpdiffres,mvpfet * 160 allnactivenonfet 0
+        bloat-or *psd,*mvpsd * 20 allnactivenonfet 0
+	bloat-or allpfets * 230
+	or shortptap,shortdptap
+	grow	200
+	shrink	200
+	calma	31 0
+ 
+ templayer varactive
+ bloat-all var *nsd
+
+#-----------------------------------------------------
+# DUALGATE (thickox)
+#-----------------------------------------------------
+
+ layer DUALGATE allfetsmv
+	bloat-all mvhires *poly
+	# Rule DV.8 (DUALGATE around poly)
+	grow 400
+	# Rule DV.6 (DUALGATE around diff, LV substrate tap excepted)
+	bloat-or allndiffmv * 240 *psd 0
+	bloat-or allpdiffmv * 240
+	grow 219
+	shrink 219
+	calma 55 0
+
+ # DUALGATE completely covers deep nwell
+ layer DUALGATE
+	bloat-all alldiffmv dnwell
+	grow 500
+	grow 219
+	shrink 219
+	calma 55 0
+
+#-----------------------------------------------------
+# NAT
+#-----------------------------------------------------
+
+ layer  NAT	
+	bloat-all *nndiode,nnfet *ndiff
+	bloat-all *mvnndiode,mvnnfet *mvndiff
+	grow 260
+	grow 309
+	shrink 309
+	calma 5 0
+
+#-----------------------------------------------------
+# POLY
+#-----------------------------------------------------
+ layer POLY 	allpoly
+	close	224000
+ 	labels 	allpoly noport
+ 	calma 	30 0
+
+ layer POLYTXT
+	labels  allpoly port
+	calma	30 10
+
+ layer POLYFILL	fillpoly
+	labels	fillpoly
+	calma	30 4
+
+#-----------------------------------------------------
+# CONT
+#-----------------------------------------------------
+# NOTE:  Contact arrays defined at 200 spacing for large array rule (4x4),
+# otherwise spacing is 180
+
+ layer contlarge allcont
+	shrink 615
+	grow 615
+
+ layer CONT allcont
+	and-not contlarge
+ 	squares-grid 5 220 250
+ 	calma 	33 0
+
+ layer CONT allcont
+	and contlarge
+ 	squares-grid 5 220 280
+ 	calma 	33 0
+
+#-----------------------------------------------------
+# MET1
+#-----------------------------------------------------
+ layer MET1 	allm1
+ 	labels 	allm1 noport
+ 	calma 	34 0
+
+ layer MET1TXT
+	labels	allm1 port
+	calma 	34 10
+
+ layer M1BLOCK  obsm1
+	labels	obsm1
+	calma	34 5
+
+ layer M1FILL   fillm1
+	labels	fillm1
+	calma	34 4
+
+#-----------------------------------------------------
+# VIA1
+#-----------------------------------------------------
+ templayer via1large via1
+	shrink 915
+	grow 915
+
+ layer VIA1 	via1
+	and-not via1large
+ 	squares-grid 0 260 260
+ 	calma 	35 0
+
+ layer VIA1 	via1
+	and via1large
+ 	squares-grid 0 260 360
+ 	calma 	35 0
+
+#-----------------------------------------------------
+# MET2
+#-----------------------------------------------------
+ layer MET2 	allm2
+ 	labels 	allm2 noport
+ 	calma 	36 0
+
+ layer MET2TXT
+	labels	allm2 port
+	calma	36 10
+
+ layer M2BLOCK  obsm2
+	labels	obsm2
+	calma	36 5
+
+ layer M2FILL   fillm2
+	labels	fillm2
+	calma	36 4
+
+#ifdef METALS3 || METALA4 || METALS5 || METALS6
+#-----------------------------------------------------
+# VIA2
+#-----------------------------------------------------
+ templayer via2large via2
+	shrink 915
+	grow 915
+
+ layer VIA2 	via2
+	and-not via2large
+ 	squares-grid 10 260 260
+ 	calma 	38 0
+
+ layer VIA2 	via2
+	and via2large
+ 	squares-grid 10 260 360
+ 	calma 	38 0
+
+#ifdef MIM && METALS3
+ layer VIA2 	mimcapc
+ 	squares-grid 10 260 500
+ 	calma 	38 0
+
+#endif (MIM && METALS3)
+
+#-----------------------------------------------------
+# MET3
+#-----------------------------------------------------
+ layer MET3 	allm3
+ 	labels 	allm3 noport
+ 	calma 	42 0
+
+ layer MET3TXT
+	labels	allm3 port
+	calma	42 10
+
+ layer M3BLOCK  obsm3
+	labels	obsm3
+	calma	42 5
+
+ layer M3FILL   fillm3
+	labels	fillm3
+	calma	42 4
+#endif (METALS3 || METALA4 || METALS5 || METALS6)
+
+#ifdef METALS4 || METALS5 || METALS6
+#-----------------------------------------------------
+# VIA3
+#-----------------------------------------------------
+ templayer via3large via3
+	shrink 915
+	grow 915
+
+ layer VIA3	via3
+	and-not via3large
+ 	squares-grid 10 260 260
+ 	calma 	40 0
+
+ layer VIA3	via3
+	and via3large
+ 	squares-grid 10 260 360
+ 	calma 	40 0
+
+#ifdef MIM && METALS4
+ layer VIA3 	mimcapc
+ 	squares-grid 10 260 500
+ 	calma 	40 0
+
+#endif (MIM && METALS4)
+
+#-----------------------------------------------------
+# MET4
+#-----------------------------------------------------
+ layer MET4 	allm4
+ 	labels 	allm4 noport
+ 	calma 	46 0
+
+ layer MET4TXT
+	labels	allm4 port
+	calma	46 10
+
+ layer M4BLOCK  obsm4
+	labels	obsm4
+	calma	46 5
+
+ layer M4FILL   fillm4
+	labels	fillm4
+	calma	46 4
+
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS5 || METALS6
+#-----------------------------------------------------
+# VIA4
+#-----------------------------------------------------
+ templayer via4large via4
+	shrink 915
+	grow 915
+
+ layer VIA4	via4
+	and-not via4large
+ 	squares-grid 10 260 260
+ 	calma 	41 0
+
+ layer VIA4	via4
+	and via4large
+ 	squares-grid 10 260 360
+ 	calma 	41 0
+
+#ifdef (MIM && METALS5)
+ layer VIA4 	mimcapc
+ 	squares-grid 10 260 500
+ 	calma 	41 0
+
+#endif (MIM && METALS5)
+
+#-----------------------------------------------------
+# MET5
+#-----------------------------------------------------
+ layer MET5 	allm5
+ 	labels 	allm5 noport
+ 	calma 	81 0
+
+ layer MET5TXT
+	labels	allm5 port
+	calma	81 10
+
+ layer M5BLOCK  obsm5
+	labels	obsm5
+	calma	81 5
+
+ layer M5FILL   fillm5
+	labels	fillm5
+	calma	81 4
+
+#endif (METALS5 || METALS6)
+
+#ifdef METALS6
+#-----------------------------------------------------
+# VIATP
+#-----------------------------------------------------
+ templayer viatplarge viatp
+	shrink 975
+	grow 975
+
+ layer VIATP	viatp
+	and-not viatplarge
+ 	squares-grid 10 260 260
+ 	calma 	129 0
+
+ layer VIATP	viatp
+	and viatplarge
+ 	squares-grid 10 160 360
+ 	calma 	129 0
+ 
+#ifdef MIM
+ layer VIATP 	mimcapc
+ 	squares-grid 10 260 500
+ 	calma 	129 0
+
+#endif (MIM)
+
+#-----------------------------------------------------
+# METTP
+#-----------------------------------------------------
+
+ layer METTP 	allmtp
+ 	labels 	allmtp noport
+ 	calma 	53 0
+
+ layer	METTPTXT
+	labels	allmtp port
+	calma	53 10
+
+ layer MTPBLOCK  obsmtp
+	labels	obsmtp
+	calma	53 5
+
+ layer MTPFILL  fillmtp
+	labels	fillmtp
+	calma	53 4
+
+#endif (METALS6)
+
+#-----------------------------------------------------
+# GLASS
+#-----------------------------------------------------
+ layer GLASS 	glass
+ 	calma 	37 0
+
+#-----------------------------------------------------
+# PRBNDRY
+#-----------------------------------------------------
+ layer PRBNDRY
+	boundary
+	calma 0 0 
+
+#ifdef MIM
+#-----------------------------------------------------
+# CAPM
+#-----------------------------------------------------
+# NOTE:  MiM bottom plate handled by alias "allm*" when MIM defined
+
+ layer CAPM 	*mimcap
+ 	labels 	mimcap
+ 	calma 	75 0
+
+ layer CAPDEF	*mimcap
+	grow 200
+	calma 	117 5
+#endif (MIM)
+
+#-----------------------------------------------------
+# SBLK
+#-----------------------------------------------------
+
+ layer SBLK
+ 	bloat-or allsblkdev * 0 space/a 220
+ 	grow 	215
+ 	shrink 	215
+ 	calma 	49 0
+
+ # sblk from rdn/rdp of esd fet 
+ # assume that the diff in only 0.05um
+ layer SBLK rdp
+	grow 100
+	and pfet
+	grow 400
+ 	calma 	49 0
+
+ layer SBLK rdn
+	grow 250
+	and nfet
+	grow 400
+ 	calma 	49 0
+	
+#-----------------------------------------------------
+# RESDEF MARK
+#-----------------------------------------------------
+ layer RESDEF allres
+ calma 110 5
+
+#-----------------------------------------------------
+# METAL RESISTOR IDs
+#-----------------------------------------------------
+ layer MET1RES rm1
+ calma 110 11
+
+ layer MET2RES rm2
+ calma 110 12
+
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ layer MET3RES rm3
+ calma 110 13
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4 || METALS5 || METALS6
+ layer MET4RES rm4
+ calma 110 14
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS5 || METALS6
+ layer MET5RES rm5
+ calma 110 15
+#endif (METALS5 || METALS6)
+
+#ifdef METALS6
+ layer METTPRES rmtp
+ calma 110 16
+#endif (METALS6)
+
+#-----------------------------------------------------
+# DIODE MARK
+#-----------------------------------------------------
+ layer DIODE  alldiode
+ calma 115 5
+
+#-----------------------------------------------------
+# MOSCAP MARK
+#-----------------------------------------------------
+ layer MOSCAP var,mvvar
+ calma 166 5
+
+#ifdef HRPOLY1K
+#-----------------------------------------------------
+# HRES
+#-----------------------------------------------------
+ layer HRES
+ bloat-all hires,mvhires *poly
+ grow 400
+ calma 	62 0
+#endif (HRPOLY1K)
+
+#------------------------------------------------------------------------
+# FILLBLOCK (NOTE: two layers define this on active, then poly & metal)
+#------------------------------------------------------------------------
+ layer FILLOBS fillblock
+ 	calma 	111 5
+
+ layer FILLOBS2 fillblock
+ 	calma 	152 5
+
+#----------------------------------------------------------
+style metfill
+#----------------------------------------------------------
+# This section used for metal filling output by a sequence
+# of cif paint commands
+
+ scalefactor 50 nanometers
+ options calma-permissive-labels
+ gridlimit 5
+
+#-----------------------------------------------------
+# Fill layer geometry
+#-----------------------------------------------------
+
+ templayer fill_geometry_off0
+	bbox top
+	slots	0 2000 1000 0 2000 1000 1000 0
+
+ templayer fill_geometry_off1
+	bbox top
+	slots	0 2000 1000 0 2000 1000 1000 660
+
+ templayer fill_geometry_off2
+	bbox top
+	slots	0 2000 1000 0 2000 1000 1000 1320
+
+#ifdef THICKMET3P0
+ templayer  fill_geometry_thick
+	bbox    top
+	slots	0 6000 2000 0 6000 2000 3000 2000
+#endif (THICKMET3P0)
+
+#-----------------------------------------------------
+# Obstruction geometry
+#-----------------------------------------------------
+
+ templayer 	obstruct_diff alldiff,filldiff,obsactive
+	grow 	2010
+	shrink 	500
+	grow 	500
+
+ templayer 	obstruct_poly allpoly,fillpoly
+	grow 	2010
+	shrink 	500
+	grow 	500
+
+ templayer 	obstruct_m1 allm1,allpad,fillm1,obsm1
+	grow 	2010
+	shrink 	500
+	grow 	500
+
+ templayer 	obstruct_m2 allm2,allpad,fillm2,obsm2
+	grow 	2010
+	shrink 	500
+	grow 	500
+
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ templayer 	obstruct_m3 allm3,allpad,fillm3,obsm3
+	grow 	2010
+	shrink 	500
+	grow 	500
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4 || METALS5 || METALS6
+ templayer 	obstruct_m4 allm4,allpad,fillm4,obsm4
+	grow 	2010
+	shrink 	500
+	grow 	500
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS5 || METALS6
+ templayer 	obstruct_m5 allm5,allpad,fillm5,obsm5
+	grow 	2010
+	shrink 	500
+	grow 	500
+#endif (METALS5 || METALS6)
+
+#ifdef METALS6
+#ifdef THICKMET3P0
+ templayer 	obstruct_mtp allmtp,allpad,fillmtp,obsmtp
+	grow 	2010
+	shrink 	500
+	grow 	500
+
+#elseif defined(THICKMET0P9 || THICKMET1P1)
+ templayer 	obstruct_mtp allmtp,allpad,fillmtp,obsmtp
+	grow 	2010
+	shrink 	500
+	grow 	500
+
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9 )
+ templayer 	obstruct_mtp allmtp,allpad,fillmtp,obsmtp
+	grow 	2010
+	shrink 	500
+	grow 	500
+#endif
+#endif (METALS6)
+
+#-----------------------------------------------------
+# DIFF FILL
+#-----------------------------------------------------
+ layer difffill fill_geometry_off0
+	shrink 995
+	grow 995
+
+#-----------------------------------------------------
+# POLY FILL
+#-----------------------------------------------------
+ layer polyfill fill_geometry_off1
+	and-not obstruct_m1
+	shrink 995
+	grow 995
+
+#-----------------------------------------------------
+# MET1 FILL
+#-----------------------------------------------------
+ layer met1fill fill_geometry_off2
+	and-not obstruct_poly
+	and-not obstruct_m1
+	and-not obstruct_m2
+	shrink 995
+	grow 995
+
+#-----------------------------------------------------
+# MET2 FILL
+#-----------------------------------------------------
+ layer met2fill fill_geometry_off0
+	and-not obstruct_m1
+	and-not obstruct_m2
+	shrink 995
+	grow 995
+
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+#-----------------------------------------------------
+# MET3 FILL
+#-----------------------------------------------------
+ layer met3fill fill_geometry_off1
+	and-not obstruct_m2
+	and-not obstruct_m3
+	shrink 995
+	grow 995
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4 || METALS5 || METALS6
+#-----------------------------------------------------
+# MET4 FILL
+#-----------------------------------------------------
+ layer met4fill fill_geometry_off2
+	and-not obstruct_m3
+	and-not obstruct_m4
+	shrink 995
+	grow 995
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS5 || METALS6
+#-----------------------------------------------------
+# MET5 FILL
+#-----------------------------------------------------
+ layer met5fill fill_geometry_off0
+	and-not obstruct_m4
+	and-not obstruct_m5
+	shrink 995
+	grow 995
+#endif (METALS5 || METALS6)
+
+#ifdef METALS6
+#-----------------------------------------------------
+# METTP FILL
+#-----------------------------------------------------
+ layer mettpfill fill_geometry_off1
+	and-not obstruct_m5
+	and-not obstruct_mtp
+	shrink 995
+	grow 995
+#endif (METALS6)
+
+#-----------------------------------------------------------------------
+style drc
+#-----------------------------------------------------------------------
+# NOTE:  this style is used for DRC only, not for GDS output
+#-----------------------------------------------------------------------
+
+ scalefactor 50 nanometers
+ options calma-permissive-labels
+ gridlimit 5
+
+ # Check for MV and LV devices in the same dnwell
+ templayer mv_dnwell
+ bloat-all alldiffmv dnwell
+
+ templayer bad_dnwell
+ bloat-all alldifflv dnwell
+ and mv_dnwell
+
+ # Check pwell in dnwell
+ templayer pwell_in_dnwell pwell
+ and dnwell
+ and-not mv_dnwell
+
+ templayer mvpwell_in_dnwell pwell
+ and mv_dnwell
+
+ # Check for MV and LV devices in the same nwell
+ templayer mv_nwell
+ bloat-all alldiffmv nwell
+
+ templayer bad_nwell
+ bloat-all alldifflv nwell
+ and mv_nwell
+
+ # Check for nwell resistor in deep nwell
+ templayer bad_rnw rnw
+ and dnwell
+
+ # Define HRES layer for DRC checks
+ templayer res_hres
+ bloat-all mvhires,hires *poly
+
+ # Check for contact at correct position for HIRES, LRES, PRES resistors
+ templayer res_cont res_hres
+ bloat-all rnp,rpp *poly
+ and pc
+ squares-grid 5 220 250
+
+ templayer res_cont_space_min mvhires,hires
+ # SBLK larger than defined resistor by 0.1um
+ grow 100
+ # SBLK = resistor for rnp and rpp
+ or rnp,rpp
+ # SBLK spacing to contact
+ grow 220
+ and res_cont
+ # If anything remains, contact is too close.
+
+ templayer res_cont_space_max mvhires,hires
+ # SBLK larger than defined resistor by 0.1um
+ grow 100
+ # SBLK = resistor for rnp and rpp
+ or rnp,rpp
+ # SBLK spacing to contact
+ grow 220
+ # size of poly contact
+ grow 220
+ and res_cont
+
+ templayer res_no_cont res_cont
+ and-not res_cont_space_max
+ # If anything remains, contact is too far away
+
+ # Check for HRES to poly and diffusion spacing
+ templayer res_hres_grow res_hres
+ grow 700
+
+ templayer res_diff_space res_hres_grow
+ and alldiff
+ # If anything remains, HRES is too close to diffusion
+
+ templayer res_poly_space res_hres_grow
+ and-not res_hres
+ and allpoly
+ # If anything remains, HRES is too close to poly
+
+ # Check for MiM cap bottom plate to other metal spacing rule (< 1.2um)
+ templayer mim_bottom_plate
+#ifdef METALS3
+ bloat-all *mim *m2
+#endif
+#ifdef METALS4
+ bloat-all *mim *m3
+#endif
+#ifdef METALS5
+ bloat-all *mim *m4
+#endif
+#ifdef METALS6
+ bloat-all *mim *m5
+#endif
+
+ templayer mim_bottom_plate_space mim_bottom_plate
+ grow 1200
+#ifdef METALS3
+ and m2
+#endif
+#ifdef METALS4
+ and m3
+#endif
+#ifdef METALS5
+ and m4
+#endif
+#ifdef METALS6
+ and m5
+#endif
+ and-not mim_bottom_plate
+ # If anything remains, bottom plate is too close
+
+ # Check for MiM cap bottom plate surrounds contact (by 0.4um)
+#ifdef METALS3
+ templayer mim_bot_cont_surround via2
+#endif
+#ifdef METALS4
+ templayer mim_bot_cont_surround via3
+#endif
+#ifdef METALS5
+ templayer mim_bot_cont_surround via4
+#endif
+#ifdef METALS6
+ templayer mim_bot_cont_surround viamt
+#endif
+ and mim_bottom_plate
+ squares-grid 10 260 500
+ grow 400
+ and-not mim_bottom_plate
+ # If anything remains, not enough surround
+
+end
+
+#-----------------------------------------------------------------------
+cifinput
+#-----------------------------------------------------------------------
+
+# NOTE:  All values in this section MUST be multiples of 25 
+# or else magic will scale below the allowed layout grid size
+
+style  import
+ scalefactor 50 nanometers
+ gridlimit 5
+
+ options ignore-unknown-layer-labels options no-reconnect-labels 
+
+ ignore BJTDEF
+ ignore MOSCAP
+ ignore SRAMDEF
+ ignore FET5VDEF
+ ignore CAPDEF
+
+ layer pwell PWELL
+ labels PWELL
+
+ layer nwell NWELL
+ labels NWELL
+
+ layer dnwell DNWELL
+ labels DNWELL
+
+ templayer ndiffarea DIFF
+ and-not POLY
+ and-not NWELL
+ and-not PPLUS
+ and-not SBLK
+ and-not DUALGATE
+ and NPLUS
+ copyup ndifcheck
+
+ layer ndiff ndiffarea
+ labels DIFF
+
+ layer filldiff DIFFFILL
+ labels DIFFFILL
+
+ # Copy ndiff areas up for contact checks
+ templayer xndifcheck ndifcheck
+ copyup ndifcheck
+
+ templayer mvndiffarea DIFF
+ and-not POLY
+ and-not NWELL
+ and-not PPLUS
+ and-not SBLK
+ and DUALGATE
+ and NPLUS
+ copyup mvndifcheck
+
+ layer mvndiff mvndiffarea
+ labels DIFF
+
+ # Copy mvndiff areas up for contact checks
+ templayer mvxndifcheck mvndifcheck
+ copyup mvndifcheck
+
+ layer ndiode DIFF
+ and NPLUS
+ and DIODE
+ and-not NWELL
+ and-not POLY
+ and-not PPLUS
+ and-not DUALGATE
+ and-not NAT
+ labels DIFF
+
+ layer nndiode DIFF
+ and NPLUS
+ and DIODE
+ and-not NWELL
+ and-not POLY
+ and-not PPLUS
+ and-not DUALGATE
+ and NAT
+ labels DIFF
+
+ templayer ndiodearea DIODE
+ and NPLUS
+ and-not NWELL
+ and-not DUALGATE
+ copyup DIODE,NPLUS
+
+ layer ndiffres DIFF
+ and-not POLY
+ and SBLK
+ and NPLUS
+ and-not DUALGATE
+ labels DIFF
+
+ templayer pdiffarea DIFF
+ and-not POLY
+ and NWELL
+ and-not NPLUS
+ and-not SBLK
+ and-not DIODE
+ and PPLUS
+ and-not DUALGATE
+ copyup pdifcheck
+
+ layer pdiff pdiffarea
+ labels DIFF
+
+ layer mvndiode DIFF
+ and NPLUS
+ and DIODE
+ and-not POLY
+ and-not PPLUS
+ and DUALGATE
+ and-not NAT
+ labels DIFF
+
+ layer mvnndiode DIFF
+ and NPLUS
+ and DIODE
+ and-not POLY
+ and-not PPLUS
+ and DUALGATE
+ and NAT
+ labels DIFF
+
+ templayer mvndiodearea DIODE
+ and NPLUS
+ and-not NWELL
+ and DUALGATE
+ copyup DIODE,NPLUS
+
+ layer mvndiffres DIFF
+ and-not POLY
+ and SBLK
+ and NPLUS
+ and DUALGATE
+ labels DIFF
+
+ templayer mvpdiffarea DIFF
+ and-not POLY
+ and NWELL
+ and-not NPLUS
+ and-not SBLK
+ and-not DIODE
+ and DUALGATE
+ and PPLUS
+ copyup mvpdifcheck
+
+ layer mvpdiff mvpdiffarea
+ labels DIFF
+
+ # Copy pdiff areas up for contact checks
+ templayer xpdifcheck pdifcheck
+ copyup pdifcheck
+
+ layer pdiode DIFF
+ and PPLUS
+ and-not POLY
+ and-not NPLUS
+ and-not DUALGATE
+ and DIODE
+ labels DIFF
+
+ templayer pdiodearea DIODE
+ and PPLUS
+ copyup DIODE,PPLUS
+
+ # Define pfet areas as known pdiff,
+ # regardless of the presence of a
+ # well.
+
+ templayer pfetarea DIFF
+ and-not NPLUS
+ and-not DUALGATE
+ and POLY
+
+ layer pfet pfetarea
+ labels DIFF
+
+ templayer pfetexpand pfetarea
+ grow 530
+
+ # Always force nwell under pfet
+ layer nwell pfetarea
+ grow 310
+
+ # Copy mvpdiff areas up for contact checks
+ templayer mvxpdifcheck mvpdifcheck
+ copyup mvpdifcheck
+
+ layer mvpdiode DIFF
+ and PPLUS
+ and-not POLY
+ and-not NPLUS
+ and-not RESDEF
+ and DUALGATE
+ and DIODE
+ labels DIFF
+
+ templayer mvpdiodearea DIODE
+ and PPLUS
+ copyup DIODE,PPLUS
+
+ # Define pfet areas as known pdiff,
+ # regardless of the presence of a
+ # well.
+
+ templayer mvpfetarea DIFF
+ and DUALGATE
+ and-not NPLUS
+ and POLY
+
+ layer mvpfet mvpfetarea
+ labels DIFF
+
+ templayer mvpfetexpand mvpfetarea
+ grow 530
+
+ layer pdiff DIFF
+ and-not DUALGATE
+ and-not NPLUS
+ and-not POLY
+ and NWELL
+ and pfetexpand
+ labels DIFF
+
+ layer pdiffres DIFF
+ and-not POLY
+ and PPLUS
+ and NWELL
+ and SBLK
+ labels DIFF
+
+ layer nfet DIFF
+ and POLY
+ and-not PPLUS
+ and-not DUALGATE
+ and-not NWELL
+ and NPLUS
+ and-not NAT
+ labels DIFF
+
+ layer nnfet DIFF
+ and POLY
+ and-not PPLUS
+ and-not DUALGATE
+ and-not NWELL
+ and NPLUS
+ and NAT
+ labels DIFF
+
+
+ templayer nsdarea DIFF
+ and NPLUS
+ and NWELL
+ and-not POLY
+ and-not PPLUS
+ and-not DUALGATE
+
+ layer nsd nsdarea
+ labels DIFF
+
+ templayer nsdexpand nsdarea
+ grow 500
+
+ # Copy nsub areas up for contact checks
+ templayer xnsubcheck nsubcheck
+ copyup nsubcheck
+
+ templayer psdarea DIFF
+ and PPLUS
+ and-not DUALGATE
+ and-not NWELL
+ and-not POLY
+ and-not NPLUS
+ and-not pfetexpand
+ copyup psubcheck
+
+ layer psd psdarea
+ labels DIFF
+
+ templayer psdexpand psdarea
+ grow 500
+
+ layer mvpdiff DIFF
+ and-not NPLUS
+ and-not POLY
+ and NWELL
+ and DUALGATE
+ and mvpfetexpand
+ labels DIFF
+
+ layer mvpdiffres DIFF
+ and-not POLY
+ and PPLUS
+ and SBLK
+ and DUALGATE
+ labels DIFF
+
+ layer mvnfet DIFF
+ and POLY
+ and-not PPLUS
+ and NPLUS
+ and-not NAT
+ and-not NWELL
+ and DUALGATE
+ labels DIFF
+
+ layer mvnnfet DIFF
+ and POLY
+ and-not PPLUS
+ and NPLUS
+ and NAT
+ and-not NWELL
+ and DUALGATE
+ labels DIFF
+
+ templayer mvnsdarea DIFF
+ and NPLUS
+ and-not POLY
+ and-not PPLUS
+ and NWELL
+ and DUALGATE
+ copyup mvnsubcheck
+
+ layer mvnsd mvnsdarea
+ labels DIFF
+
+ templayer mvnsdexpand mvnsdarea
+ grow 500
+
+ # Copy nsub areas up for contact checks
+ templayer mvxnsubcheck mvnsubcheck
+ copyup mvnsubcheck
+
+ templayer mvpsdarea DIFF
+ and PPLUS
+ and-not NWELL
+ and-not POLY
+ and-not NPLUS
+ and DUALGATE
+ and-not mvpfetexpand
+ copyup mvpsubcheck
+
+ layer mvpsd mvpsdarea
+ labels DIFF
+
+ templayer mvpsdexpand mvpsdarea
+ grow 500
+
+ # Copy psub areas up for contact checks
+ templayer xpsubcheck psubcheck
+ copyup psubcheck
+
+ templayer mvxpsubcheck mvpsubcheck
+ copyup mvpsubcheck
+
+ layer psd DIFF
+ and-not PPLUS
+ and-not NPLUS
+ and-not POLY
+ and-not DUALGATE
+ and-not pfetexpand
+ and psdexpand
+
+ layer nsd DIFF
+ and-not PPLUS
+ and-not NPLUS
+ and-not POLY
+ and NWELL
+ and-not DUALGATE
+ and nsdexpand
+
+ layer mvpsd DIFF
+ and-not PPLUS
+ and-not NPLUS
+ and-not POLY
+ and-not NWELL
+ and DUALGATE
+ and-not mvpfetexpand
+ and mvpsdexpand
+
+ layer mvnsd DIFF
+ and-not PPLUS
+ and-not NPLUS
+ and-not POLY
+ and NWELL
+ and DUALGATE
+ and mvnsdexpand
+
+ templayer polyarea POLY
+ and-not DIFF
+ and-not SBLK
+#ifdef HRPOLY1K
+ and-not HRES
+#endif (HRPOLY1K)
+ copyup polycheck
+
+ layer poly polyarea,POLYTXT
+ and-not RESDEF
+ labels POLY
+ labels POLYTXT text
+
+ layer fillpoly POLYFILL
+ labels POLYFILL
+
+ # Copy poly areas up for contact checks
+ templayer xpolycheck polycheck
+ copyup polycheck
+
+ layer rpps POLY
+ and-not SBLK
+ and PPLUS
+ and RESDEF
+ labels POLY
+
+ layer rnps POLY
+ and-not SBLK
+ and NPLUS
+ and RESDEF
+ labels POLY
+
+ layer rpp POLY
+ and SBLK
+ and PPLUS
+#ifdef HRPOLY1K
+ and-not HRES
+#endif (HRPOLY1K)
+ and RESDEF
+ labels POLY
+
+ # POLY + SBLK without RESDEF may be a salicide-blocked transistor.
+ # The SBLK will be regenerated on GDS output and the poly should be
+ # treated as regular poly.
+ layer poly POLY
+ and-not DIFF
+ and SBLK
+ and-not RESDEF
+ labels POLY
+
+ layer rnp POLY
+ and SBLK
+ and NPLUS
+ and RESDEF
+#ifdef HRPOLY1K
+ and-not HRES
+#endif (HRPOLY1K)
+ labels POLY
+
+#ifdef HRPOLY1K
+ layer hires POLY
+ and SBLK
+ and HRES
+ and RESDEF
+ and-not DUALGATE
+ labels POLY
+
+ layer mvhires POLY
+ and SBLK
+ and HRES
+ and RESDEF
+ and DUALGATE
+ labels POLY
+
+ # We define poly under HRES but not under SBLK to be plain poly
+ layer poly POLY
+ and HRES
+ and-not SBLK
+ and-not RESDEF
+#endif (HRPOLY1K)
+
+ layer ndc CONT
+ and DIFF
+ and NPLUS
+ and-not NWELL
+ and MET1
+ and-not DUALGATE
+ and-not DIODE
+ grow 145
+ shrink 140
+
+ layer nsc CONT
+ and DIFF
+ and NPLUS
+ and NWELL
+ and MET1
+ and-not DUALGATE
+ and-not DIODE
+ grow 145
+ shrink 140
+
+ layer pdc CONT
+ and DIFF
+ and PPLUS
+ and NWELL
+ and MET1
+ and-not DUALGATE
+ and-not DIODE
+ grow 145
+ shrink 140
+
+ layer pdc CONT
+ and DIFF
+ and PPLUS
+ and MET1
+ and-not DUALGATE
+ and-not DIODE
+ and pfetexpand
+ grow 145
+ shrink 140
+
+ layer psc CONT
+ and DIFF
+ and PPLUS
+ and-not NWELL
+ and MET1
+ and-not DUALGATE
+ and-not DIODE
+ and-not pfetexpand
+ grow 145
+ shrink 140
+
+ layer pc CONT
+ and POLY
+ and-not DIFF
+ and MET1
+ grow 145
+ shrink 140
+
+ layer ndic CONT
+ and DIFF
+ and NPLUS
+ and DIODE
+ and-not POLY
+ and-not PPLUS
+ and-not DUALGATE
+ and-not NAT
+ grow 145
+ shrink 140
+
+ layer nndic CONT
+ and DIFF
+ and NPLUS
+ and DIODE
+ and-not POLY
+ and-not PPLUS
+ and-not DUALGATE
+ and NAT
+ grow 145
+ shrink 140
+
+ layer pdic CONT
+ and DIFF
+ and PPLUS
+ and DIODE
+ and-not POLY
+ and-not NPLUS
+ and-not DUALGATE
+ grow 145
+ shrink 140
+
+ layer mvndc CONT
+ and DIFF
+ and NPLUS
+ and-not NWELL
+ and MET1
+ and DUALGATE
+ and-not DIODE
+ grow 145
+ shrink 140
+
+ layer mvnsc CONT
+ and DIFF
+ and NPLUS
+ and MET1
+ and DUALGATE
+ and NWELL
+ and-not DIODE
+ grow 145
+ shrink 140
+
+ layer mvpdc CONT
+ and DIFF
+ and PPLUS
+ and MET1
+ and DUALGATE
+ and NWELL
+ and-not DIODE
+ grow 145
+ shrink 140
+
+ layer mvpdc CONT
+ and DIFF
+ and PPLUS
+ and MET1
+ and DUALGATE
+ and-not DIODE
+ and mvpfetexpand
+ grow 145
+ shrink 140
+
+ layer mvpsc CONT
+ and DIFF
+ and PPLUS
+ and-not NWELL
+ and MET1
+ and DUALGATE
+ and-not DIODE
+ and-not mvpfetexpand
+ grow 145
+ shrink 140
+
+ layer mvndic CONT
+ and DIFF
+ and NPLUS
+ and DIODE
+ and-not POLY
+ and-not PPLUS
+ and DUALGATE
+ and-not NAT
+ grow 145
+ shrink 140
+
+ layer mvnndic CONT
+ and DIFF
+ and NPLUS
+ and DIODE
+ and-not POLY
+ and-not PPLUS
+ and DUALGATE
+ and NAT
+ grow 145
+ shrink 140
+
+ layer mvpdic CONT
+ and DIFF
+ and PPLUS
+ and DIODE
+ and-not POLY
+ and-not NPLUS
+ and DUALGATE
+ grow 145
+ shrink 140
+
+ layer rm1 MET1
+ and RESDEF
+ and MET1RES
+
+ layer m1 MET1,MET1TXT
+ and-not MET1RES
+ labels MET1
+ labels MET1TXT port
+
+ layer obsm1 M1BLOCK
+ labels M1BLOCK
+
+ layer fillm1 M1FILL
+ labels M1FILL
+
+ layer m2c VIA1
+ grow 130
+ shrink 130
+
+ layer rm2 MET2
+ and RESDEF
+ and MET2RES
+
+ layer m2 MET2,MET2TXT
+ and-not MET2RES
+ labels MET2
+ labels MET2TXT port
+
+ layer obsm2 M2BLOCK
+ labels M2BLOCK
+
+ layer fillm2 M2FILL
+ labels M2FILL
+
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ layer rm3 MET3
+ and RESDEF
+ and MET3RES
+
+#ifdef MIM
+ templayer mimarea CAPDEF
+ and MET2
+#endif
+
+ layer m3 MET3,MET3TXT
+ and-not MET3RES
+ labels MET3
+ labels MET3TXT port
+
+ layer obsm3 M3BLOCK
+ labels M3BLOCK
+
+ layer fillm3 M3FILL
+ labels M3FILL
+
+ layer m3c VIA2
+#ifdef METALS4 && MIM
+ and-not CAPM
+ and-not mimarea
+#endif (METALS4 && MIM)
+ grow 140
+ shrink 130
+
+#ifdef MIM
+ layer mimcc VIA2
+ and MET3
+ and CAPM
+ and CAPDEF
+ grow 90
+ grow 250
+ shrink 250
+#endif (MIM)
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4 || METALS5 || METALS6
+ layer rm4 MET4
+ and RESDEF
+ and MET4RES
+
+#ifdef MIM
+ templayer mimarea CAPDEF
+ and MET3
+#endif
+
+ layer m4 MET4,MET4TXT
+ and-not MET4RES
+ labels MET4
+ labels MET4TXT port
+
+ layer obsm4 M4BLOCK
+ labels M4BLOCK
+
+ layer fillm4 M4FILL
+ labels M4FILL
+
+ layer via3 VIA3
+#ifdef METALS5 && MIM
+ and-not CAPM
+ and-not mimarea
+#endif (METALS5 && MIM)
+ grow 140
+ shrink 130
+
+#ifdef MIM
+ layer mimcc VIA3
+ and MET4
+ and CAPM
+ and CAPDEF
+ grow 90
+ grow 250
+ shrink 250
+#endif (MIM)
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS5 || METALS6
+ layer rm5 MET5
+ and RESDEF
+ and MET5RES
+
+#ifdef MIM
+ templayer mimarea CAPDEF
+ and MET4
+#endif
+
+ layer m5 MET5,MET5TXT
+#ifdef MIM && METALS6
+ and-not CAPM
+ and-not mimarea
+#endif (MIM && METALS6)
+ and-not MET5RES
+ labels MET5
+ labels MET5TXT port
+
+ layer obsm5 M5BLOCK
+ labels M5BLOCK
+
+ layer fillm5 M5FILL
+ labels M5FILL
+
+ layer via4 VIA4
+#ifdef MIM && METALS6
+ and-not CAPM
+ and-not mimarea
+#endif (MIM && METALS6)
+ grow 140
+ shrink 130
+
+#ifdef MIM
+ layer mimcc VIA4
+ and MET5
+ and CAPM
+ and CAPDEF
+ grow 90
+ grow 250
+ shrink 250
+#endif (MIM)
+#endif (METALS5 || METALS6)
+
+#ifdef METALS6
+ layer rmtp METTP
+ and RESDEF
+ and METTPRES
+
+ layer mtp METTP,METTPTXT
+ and-not METTPRES
+ labels METTP
+ labels METTPTXT port
+
+ layer obsmtp MTPBLOCK
+ labels MTPBLOCK
+
+ layer fillmtp MTPFILL
+ labels MTPFILL
+
+#ifdef MIM
+ templayer mimarea CAPDEF
+ and MET5
+#endif
+
+ layer viatp VIATP
+ and METTP
+#ifdef MIM
+ and-not CAPM
+ and-not mimarea
+#endif (MIM)
+ grow 5
+ grow 265
+ shrink 265
+
+#ifdef MIM
+ layer mimcc VIATP
+ and METTP
+ and CAPM
+ and CAPDEF
+ grow 260
+ shrink 250
+#endif (MIM)
+#endif (METALS6)
+
+#ifdef MIM
+ layer mimcap CAPM
+ and CAPDEF
+ labels CAPM
+#endif (MIM)
+
+ # Find diffusion not covered in
+ # NPLUS or PPLUS and pull it into
+ # the next layer up
+
+ templayer gentrans DIFF
+ and-not PPLUS
+ and-not NPLUS
+ and POLY
+ copyup DIFF,POLY
+
+ templayer gendiff DIFF
+ and-not PPLUS
+ and-not NPLUS
+ and-not POLY
+ copyup DIFF
+
+ # Handle contacts found by copyup
+
+ layer ndic CONT
+ and MET1
+ and DIODE
+ and NPLUS
+ and-not DUALGATE
+ and-not NAT
+ grow 100
+ shrink 100
+
+ layer mvndic CONT
+ and MET1
+ and DIODE
+ and NPLUS
+ and DUALGATE
+ and-not NAT
+ grow 100
+ shrink 100
+
+ layer mvnndic CONT
+ and MET1
+ and DIODE
+ and NPLUS
+ and DUALGATE
+ and NAT
+ grow 100
+ shrink 100
+
+ layer pdic CONT
+ and MET1
+ and DIODE
+ and PPLUS
+ and-not DUALGATE
+ grow 100
+ shrink 100
+
+ layer mvpdic CONT
+ and MET1
+ and DIODE
+ and PPLUS
+ and DUALGATE
+ grow 100
+ shrink 100
+
+ layer ndc CONT
+ and ndifcheck
+ grow 100
+ shrink 100
+
+ layer mvndc CONT
+ and mvndifcheck
+ grow 100
+ shrink 100
+
+ layer pdc CONT
+ and pdifcheck
+ grow 100
+ shrink 100
+
+ layer mvpdc CONT
+ and mvpdifcheck
+ grow 100
+ shrink 100
+
+ layer pc CONT
+ and polycheck
+ grow 100
+ shrink 100
+
+ layer nsc CONT
+ and nsubcheck
+ grow 100
+ shrink 100
+
+ layer mvnsc CONT
+ and mvnsubcheck
+ grow 100
+ shrink 100
+
+ layer psc CONT
+ and psubcheck
+ grow 100
+ shrink 100
+
+ layer mvpsc CONT
+ and mvpsubcheck
+ grow 100
+ shrink 100
+
+ # Find contacts not covered in
+ # metal and pull them into the
+ # next layer up
+ 
+ templayer gencont CONT
+ and MET1
+ and-not DIFF
+ and-not POLY
+ and-not DIODE
+ and-not nsubcheck
+ and-not psubcheck
+ and-not mvnsubcheck
+ and-not mvpsubcheck
+ copyup CONT,MET1
+
+ templayer barecont CONT
+ and-not MET1
+ and-not nsubcheck
+ and-not psubcheck
+ and-not mvnsubcheck
+ and-not mvpsubcheck
+ copyup CONT
+
+ layer glass GLASS
+ labels GLASS
+
+ templayer cellbound BOUND
+ boundary
+
+ layer lvstext TTEXT
+ labels TTEXT text
+
+ layer fillblock  FILLOBS,FILLOBS2
+ labels FILLOBS
+
+# MOS Varactors
+
+ layer var POLY
+ and DIFF
+ and NPLUS
+ and NWELL
+ and-not DUALGATE
+ labels POLY
+
+ layer mvvar POLY
+ and DIFF
+ and NPLUS
+ and NWELL
+ and DUALGATE
+ labels POLY
+
+ calma DNWELL 12 0
+ calma NWELL 21 0
+ calma PWELL 204 0
+ calma DIFF 22 0
+ calma DIFFFILL 22 4
+ calma POLY 30 0
+ calma POLYFILL 30 4
+ calma POLYTXT 30 10
+ calma NPLUS 32 0
+ calma PPLUS 31 0
+ calma SBLK 49 0
+ calma GLASS 37 0
+ calma CONT 33 0
+ calma MET1 34 0
+ calma MET1TXT 34 10
+ calma M1BLOCK 34 5
+ calma M1FILL 34 4
+ calma MET2RES 110 11
+ calma VIA1 35 0
+ calma MET2 36 0
+ calma MET2TXT 36 10
+ calma M2BLOCK 36 5
+ calma M2FILL 36 4
+ calma MET2RES 110 12
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ calma VIA2 38 0
+ calma MET3 42 0
+ calma MET3TXT 42 10
+ calma M3BLOCK 42 5
+ calma M3FILL 42 4
+ calma MET3RES 110 13
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+ calma VIA3 40 0
+ calma MET4 46 0
+ calma MET4TXT 46 10
+ calma M4BLOCK 46 5
+ calma M4FILL 46 4
+ calma MET4RES 110 14
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+ calma VIA4 41 0
+ calma MET5 81 0
+ calma MET5TXT 81 10
+ calma M5BLOCK 81 5
+ calma M5FILL 81 4
+ calma MET5RES 110 15
+#endif (METALS5 || METALS6)
+#ifdef METALS6
+ calma VIATP 129 0
+ calma METTP 53 0
+ calma METTPTXT 53 10
+ calma MTPBLOCK 53 5
+ calma METTPRES 110 16
+#endif (METALS6)
+#ifdef HRPOLY1K
+ calma HRES 62 0
+#endif (HRPOLY1K)
+ calma NAT 5 0
+ calma CAPM 75 0
+ calma DIODE  115 5
+ calma CAPDEF 117 5
+ calma BJTDEF 118 5
+ calma MOSCAP 166 5
+ calma BOUND 0 0
+ calma FILLOBS  111 5
+ calma FILLOBS2 152 5
+ calma TTEXT    230 *
+ calma RESDEF   110 *
+ calma DUALGATE 55 0
+ calma SRAMDEF  108 5
+ calma FET5VDEF 112 1
+
+end
+
+#-----------------------------------------------------
+# Digital flow maze router cost parameters
+#-----------------------------------------------------
+
+mzrouter
+end
+
+#-----------------------------------------------------
+# Vendor DRC rules
+#-----------------------------------------------------
+
+drc
+
+ style drc variants (fast),(full),(routing)
+
+ scalefactor 50 
+
+ cifstyle drc
+
+ variants (fast),(full)
+
+#-----------------------------
+# NWELL
+#-----------------------------
+
+ width allnwell 860 "N-well width < %d (NW.1a)"
+ spacing allnwell allnwell 600 touching_ok "N-well spacing < %d (NW.2a)"
+ # rnw spacing is to unrelated nwell only.
+ spacing rnw allnwell 1400 touching_ok "N-well resistor spacing < %d (NW.4)"
+ width rnw 2000 "N-well resistor width < %d (NW.1b)"
+
+ variants (full)
+ cifspacing mv_nwell mv_nwell 740 touching_ok "MV N-well spacing < %d (NW.2a)"
+ variants *
+
+#-----------------------------
+# DNWELL (deep nwell)
+#-----------------------------
+
+ width dnwell 1700 "Deep N-well width < %d (DN.1)"
+ spacing dnwell dnwell 2500 touching_ok "Deep N-well spacing < %d (DN.2a)"
+
+ surround pwell dnwell 2500 absence_ok \
+	"Deep N-well surround P-well < %d (LPW.3)"
+
+ surround nwell dnwell 500 absence_ok \
+	"Deep N-well surround N-well < %d (NW.5)"
+
+ variants (full)
+
+ cifwidth pwell_in_dnwell 600 "P-well in deep N-well size < %d (LPW.1)"
+ cifwidth mvpwell_in_dnwell 740 "HV P-well in deep N-well size < %d (LPW.1)"
+
+ cifspacing pwell_in_dnwell pwell_in_dnwell 860 touching_ok \
+	"P-well in deep N-well spacing < %d (LPW.2b)"
+ cifspacing mvpwell_in_dnwell mvpwell_in_dnwell 860 touching_ok \
+	"MV P-well in deep N-well spacing < %d (LPW.2b)"
+
+ cifmaxwidth bad_dnwell 0 bend_illegal \
+	"Both LV and MV devices cannot be in the same deep N-well (DN.11)
+
+ cifmaxwidth bad_nwell 0 bend_illegal \
+	"Both LV and MV devices cannot be in the same N-well (DV.9)
+
+ cifmaxwidth bad_rnw 0 bend_illegal \
+	"N-well resistor cannot be in deep N-well (DN.12)
+ variants *
+
+ spacing dnwell allnwell 3100 surround_ok \
+	"Deep N-well spacing to N-well < %d (NW.3)"
+
+ spacing pwell dnwell 1500 surround_ok \
+	"Deep N-well spacing to P-well < %d (LPW.11)"
+
+#-----------------------------
+# DIFF (diffusion)
+#-----------------------------
+
+ width alldifflv 220 "Diffusion width < %d (DF.1a)"
+ width alldiffmv 300 "Diffusion width < %d (DF.1a)"
+ area alldifflv 202500 220 "Diffusion minimum area < %a (DF.9)"
+ area alldiffmv 202500 300 "Diffusion minimum area < %a (DF.9)"
+ spacing alldifflv,var alldifflv,var 280 touching_ok \
+	"Diffusion spacing < %d (DF.3a)"
+ spacing alldiffmv,mvvar alldiffmv,mvvar 360 touching_ok \
+	"Diffusion spacing < %d (DF.3a)"
+
+ spacing *ndiff,*ndiode,nfet,nnfet allnwell 430 touching_illegal \
+	"N-Diffusion spacing to N-well < %d (DF.8)"
+ spacing *mvndiff,*mvndiode,mvnfet,mvnnfet allnwell 600 touching_illegal \
+	"N-Diffusion spacing to N-well < %d (DF.8)"
+ spacing *psd allnwell 120 touching_illegal \
+	"P-Ohmic spacing to N-well < %d (DF.5)"
+ spacing *mvpsd allnwell 160 touching_illegal \
+	"P-Ohmic spacing to N-well < %d (DF.5)"
+ surround *nsd allnwell 120 absence_illegal \
+	"N-well overlap of N-Ohmic < %d (DF.4a)"
+ surround *mvnsd allnwell 160 absence_illegal \
+	"N-well overlap of N-Ohmic < %d (DF.4a)"
+ surround *pdiff,*pdiode,pfet allnwell 430 absence_illegal \
+	"N-well overlap of P-Diffusion < %d (DF.7)"
+ surround *mvpdiff,*mvpdiode,mvpfet allnwell 600 absence_illegal \
+	"N-well overlap of P-Diffusion < %d (DF.7)"
+ surround *psd pwell 120 absence_ok \
+	"P-field overlap of P-Ohmic < %d (DF.5)"
+ surround *mvpsd pwell  160 absence_ok \
+	"MV P-field overlap of MV P-Ohmic < %d (DF.5)"
+
+ # NAT requires additional spacing rules
+ spacing *nndiode,*mvnndiode *psd,*mvpsd 610 touching_illegal \
+	"NAT Diffusion spacing to TAP diffusion < %d (NAT.5 + NAT.6)"
+
+#-----------------------------
+# POLY
+#-----------------------------
+
+ width allpoly 180 "Poly width < %d (PL.1)"
+ spacing allpoly allpoly 240 touching_ok "Poly spacing < %d (PL.3a)"
+ spacing allpolynonfet alldifflvnonfet 100 corner_ok allfets \
+	"Poly spacing to diffusion < %d (PL.5a)"
+ spacing allpolynonfet alldiffmvnonfet 300 corner_ok allfets \
+	"Poly spacing to MV diffusion < %d (PL.5a)
+ overhang *ndiff,rndiff nfet,nnfet 230 "N-Diffusion overhang of nmos < %d (DF.6)"
+ overhang *mvndiff,mvrndiff mvnfet,mvnnfet 230 \
+	"N-Diffusion overhang of nmos < %d (DF.6)"
+ overhang *pdiff,rpdiff pfet 230 "P-Diffusion overhang of pmos < %d (DF.6)"
+ overhang *mvpdiff,mvrpdiff mvpfet 230 "P-Diffusion overhang of pmos < %d (DF.6)"
+ overhang *poly allfetsnonnat 220 "Poly overhang of transistor < %d (PL.4)"
+ overhang *poly nnfet,mvnnfet 350 "Poly overhang of NAT transistor < %d (NAT.6)"
+
+ angles allfets 45-only "Only 45 degrees allowed on transistors (PL.6)"
+
+#-----------------------------------------------------------------------------
+# SBLK - more rules to do here (note PRES refers only to unsalicided resistor)
+#-----------------------------------------------------------------------------
+
+ spacing allpolysblkres allpolysblkres 250 touching_ok \
+	"Poly resistor spacing < %d (PRES.2)
+
+ spacing allpolysblkres allpolynonres 450 touching_ok \
+	"Poly resistor spacing to unrelated poly < %d (PRES.4)"
+ spacing allpolysblkres allactive,allactiveres 440 touching_illegal \
+	"Poly resistor spacing to diffusion < %d (PRES.3)"
+
+ spacing allactiveres allactiveres 400 touching_ok \
+	"Diffusion resistor spacing < %d (NDRES.2)
+
+ spacing allactiveres allactive 450 touching_ok \
+	"Diffusion resistor spacing to unrelated diffusion < %d (NDRES.3)"
+ spacing allactiveres allpoly 450 touching_ok \
+	"Diffusion resistor spacing to unrelated poly < %d (NDRES.4)"
+
+#-----------------------------
+# CONT
+#-----------------------------
+# Drawn contact includes 5nm metal1 surround
+ width (ndc,nsc,pdc,psc,ndic,pdic,pc)/m1 230 \
+	"Diffusion contact width < %d (CO.1 + 2 * CO.6)"
+ spacing (ndc,nsc,pdc,psc,ndic,pdic,pc)/m1 \
+	(ndc,nsc,pdc,psc,ndic,pdic,pc)/m1 240 \
+	touching_ok "Diffusion contact spacing < %d (CO.2a - CO.6)"
+ surround (ndc,nsc,pdc,psc,ndic,pdic,pc)/m1 *m1 55 \
+	directional "Metal1 overlap of contact < %d in one direction (CO.6)"
+ surround ndc/a *ndiff 65 absence_illegal \
+	"N-Diffusion overlap of contact < %d (CO.4)"
+ surround nsc/a *nsd 65 absence_illegal \
+	"N-Diffusion overlap of contact < %d (CO.4)"
+ surround pdc/a *pdiff 65 absence_illegal \
+	"P-Diffusion overlap of contact < %d (CO.4)"
+ surround psc/a *psd 65 absence_illegal \
+	"P-Diffusion overlap of contact < %d (CO.4)"
+ surround ndic/a *ndiode 65 absence_illegal \
+	"N-Diffusion overlap of contact < %d (CO.4)"
+ surround pdic/a *pdiode 65 absence_illegal \
+	"P-Diffusion overlap of contact < %d (CO.4)"
+ surround pc/a *poly 65 absence_illegal "Poly overlap of contact < %d (CO.3)"
+
+ width (mvndc,mvnsc,mvpdc,mvpsc,mvndic,mvnndic,mvpdic)/m1 230 \
+	"MV Diffusion contact width < %d (CO.1 + 2 * CO.6)"
+ spacing (mvndc,mvnsc,mvpdc,mvpsc,mvndic,mvnndic,mvpdic)/m1 \
+	(mvndc,mvnsc,mvpdc,mvpsc,mvndic,mvnndic,mvpdic)/m1 240 touching_ok \
+	"Diffusion contact spacing < %d (CO.2a - CO.6)"
+ surround (mvndc,mvnsc,mvpdc,mvpsc,mvndic,mvnndic,mvpdic)/m1 *m1 55 directional \
+	"Metal1 overlap of contact < %d in one direction (CO.6)"
+ surround mvndc/a *mvndiff 65 absence_illegal \
+	"MV N-Diffusion overlap of contact < %d (CO.4)"
+ surround mvnsc/a *mvnsd 65 absence_illegal \
+	"MV N-Diffusion overlap of contact < %d (CO.4)"
+ surround mvpdc/a *mvpdiff 65 absence_illegal \
+	"MV P-Diffusion overlap of contact < %d (CO.4)"
+ surround mvpsc/a *mvpsd 65 absence_illegal \
+	"MV P-Diffusion overlap of contact < %d (CO.4)"
+ surround mvndic/a *mvndiode 65 absence_illegal \
+	"MV N-Diffusion overlap of contact < %d (CO.4)"
+ surround mvnndic/a *mvnndiode 65 absence_illegal \
+	"MV NAT N-Diffusion overlap of contact < %d (CO.4)"
+ surround mvpdic/a *mvpdiode 65 absence_illegal \
+	"MV P-Diffusion overlap of contact < %d (CO.4)"
+
+ spacing allpdiffcont allndiffcont 240 touching_illegal \
+	"Diffusion contact spacing < %d (CO.2a - CO.6)"
+ spacing allndiffcont allndiffcont 240 touching_ok \
+	"Diffusion contact spacing < %d (CO.2a - CO.6)"
+ spacing allpdiffcont allpdiffcont 240 touching_ok \
+	"Diffusion contact spacing < %d (CO.2a - CO.6)"
+ spacing pc pc 240 touching_ok "Poly contact spacing < %d (CO.2a - CO.6)"
+ spacing pc alldiff 165 touching_illegal \
+	"Poly contact spacing to diffusion < %d (CO.8 - CO.6)"
+ spacing allpdiffcont,allndiffcont allpoly 145 touching_illegal \
+	"Diffusion contact spacing to poly < %d (CO.7 - CO.6)"
+
+ exact_overlap (ndc,pdc,psc,nsc,pc,ndic,pdic)/a
+ exact_overlap (mvndc,mvpdc,mvpsc,mvnsc,mvndic,mvnndic,mvpdic)/a
+
+variants *
+
+#-----------------------------
+# METAL 1
+#-----------------------------
+
+ width *m1,rm1 230 "Metal1 width < %d (M1.1)"
+ spacing allm1,obsm1  allm1,obsm1 230 touching_ok "Metal1 spacing < %d (M1.2a)"
+ area allm1,obsm1 144400 230 "Metal1 minimum area < %a (M1.3)"
+
+variants (fast),(full)
+ widespacing allm1,obsm1 10000 allm1,obsm1  300 touching_ok \
+	"Metal1 > 10um spacing to unrelated m1 < %d (M1.2b)"
+
+variants *
+
+#--------------------------------------------------
+# VIA 1
+#--------------------------------------------------
+
+ width v1/m1 260 "Via1 width < %d (V1.1)"
+ spacing v1 v1 260 touching_ok "Via1 spacing < %d (V1.2a)"
+ surround v1/m1 *m1 60 directional \
+	"Metal1 overlap of Via1 < %d in one direction (V1.3)"
+ surround v1/m2 *m2 10 absence_illegal \
+	"Metal2 overlap of Via1 < %d (V1.4)"
+ surround v1/m2 *m2 60 directional \
+	"Metal2 overlap of Via1 < %d in one direction (V1.4i)"
+ exact_overlap v1/m2
+
+#-----------------------------
+# METAL 2
+#-----------------------------
+
+ width *m2,rm2 280 "Metal2 width < %d (M2.1)"
+ spacing allm2,obsm2  allm2,obsm2 280 touching_ok "Metal2 spacing < %d (M2.2a)"
+ area allm2,obsm2 144400 280 "Metal2 minimum area < %a (M2.3)"
+
+variants (fast),(full)
+ widespacing allm2,obsm2 10000 allm2,obsm2  300 touching_ok \
+	"Metal2 > 10um spacing to unrelated m2 < %d (M2.2b)"
+
+variants *
+
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+#--------------------------------------------------
+# VIA 2
+#--------------------------------------------------
+
+ width v2/m2 280 "Via2 width < %d (V2.1 + 2 * V2.3)"
+ spacing v2 v2 240 touching_ok "Via2 spacing < %d (V2.2a - 2 * V2.3)"
+ surround v2/m2 *m2 50 directional \
+	"Metal2 overlap of Via2 < %d in one direction (V2.3i - V2.3)"
+
+ exact_overlap v2/m3
+
+#-----------------------------
+# METAL 3
+#-----------------------------
+
+#ifdef METALS3
+ # Metal 3 is the top metal
+#ifdef THICKMET3P0
+ width *m3,rm3 1800 "Thick Metal3 width < %d (MT30.1)"
+ spacing allm3,obsm3  allm3,obsm3 1800 touching_ok \
+	"Thick Metal3 spacing < %d (MT30.2)"
+
+ surround v2/m3 *m3 110 absence_illegal \
+	"Thick Metal3 overlap of Via2 < %d (MT30.5 - V2.4)"
+ surround v2/m3 *m3 240 directional \
+	"Thick Metal3 overlap of Via2 < %d in one direction (MT30.6 - V2.4)"
+
+#elseif defined(THICKMET0P9 || THICKMET1P1)
+ surround v2/m3 *m3 50 directional \
+	"Metal3 overlap of Via2 < %d in one direction (V2.4i - V2.4)"
+
+ width *m3,rm3 440 "Metal3 width < %d (MT.1)"
+ spacing allm3,obsm3  allm3,obsm3 460 touching_ok "Metal3 spacing < %d (MT.2a)"
+ area allm3,obsm3 562500 440 "Metal3 minimum area < %a (MT.4)"
+
+variants (fast),(full)
+ widespacing allm3,obsm3 10000 allm3,obsm3  600 touching_ok \
+	"Metal3 > %c spacing to unrelated m3 < %d (MT.2b)"
+
+#else (!(THICKMET3P0 || THICKMET0P9 || THICKMET1P1))
+ surround v2/m3 *m3 50 directional \
+	"Metal3 overlap of Via2 < %d in one direction (V2.4i - V2.4)"
+
+ width *m3,rm3 360 "Metal3 width < %d (MT.1)"
+ spacing allm3,obsm3  allm3,obsm3 380 touching_ok "Metal3 spacing < %d (MT.2a)"
+ area allm3,obsm3 562500 360 "Metal3 minimum area < %a (MT.4)"
+
+variants (fast),(full)
+ widespacing allm3,obsm3 10000 allm3,obsm3  500 touching_ok \
+	"Metal3 > %c spacing to unrelated m3 < %d (MT.2b)"
+#endif (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
+#else (!METALS3)
+ surround v2/m3 *m3 50 directional \
+	"Metal3 overlap of Via2 < %d in one direction (V2.4i - V2.4)"
+
+ width *m3,rm3 280 "Metal3 width < %d (M3.1)"
+ spacing allm3,obsm3  allm3,obsm3 280 touching_ok "Metal3 spacing < %d (M3.2a)"
+ area allm3,obsm3 144400 280 "Metal3 minimum area < %a (M3.3)"
+
+variants (fast),(full)
+ widespacing allm3,obsm3 10000 allm3,obsm3  300 touching_ok \
+	"Metal3 > %c spacing to unrelated m3 < %d (M3.2b)"
+#endif (!METALS3)
+
+variants *
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4 || METALS5 || METALS6
+#--------------------------------------------------------------
+# VIA 3 - Requires METALS4, METALS5, or METALS6 Module
+#--------------------------------------------------------------
+
+ width v3/m3 280 "Via3 width < %d (V3.1 + 2 * V3.4)"
+ spacing v3 v3 240 touching_ok "Via3 spacing < %d (V3.2a - 2 * V3.4)"
+ surround v3/m3 *m3 50 directional \
+	"Metal3 overlap of Via3 < %d in one direction (V3.3i - V3.3)"
+
+ exact_overlap v3/m4
+
+#-----------------------------
+# METAL 4 - METALS4 Module
+#-----------------------------
+
+#ifdef METALS4
+ # Metal 4 is the top metal
+#ifdef THICKMET3P0
+ width *m4,rm4 1800 "Thick Metal4 width < %d (MT30.1)"
+ spacing allm4,obsm4  allm4,obsm4 1800 touching_ok "Metal4 spacing < %d (MT30.2)"
+
+ surround v3/m4 *m4 110 absence_illegal \
+	"Thick Metal4 overlap of Via3 < %d (MT30.5 - V3.4)"
+ surround v3/m4 *m4 240 directional \
+	"Thick Metal4 overlap of Via3 < %d in one direction (MT30.6 - V3.4)"
+
+#elseif defined(THICKMET0P9 || THICKMET1P1)
+ surround v3/m4 *m4 50 directional \
+	"Metal4 overlap of Via3 < %d in one direction (V3.4i - V3.4)"
+
+ width *m4,rm4 440 "Metal4 width < %d (MT.1)"
+ spacing allm4,obsm4  allm4,obsm4 460 touching_ok "Metal4 spacing < %d (MT.2a)"
+ area allm4,obsm4 562500 440 "Metal4 minimum area < %a (MT.4)"
+
+variants (fast),(full)
+ widespacing allm4,obsm4 10000 allm4,obsm4  600 touching_ok \
+	"Metal4 > %c spacing to unrelated m4 < %d (MT.2b)"
+#else (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
+ surround v3/m4 *m4 50 directional \
+	"Metal4 overlap of Via3 < %d in one direction (V3.4i - V3.4)"
+
+ width *m4,rm4 360 "Metal4 width < %d (MT.1)"
+ spacing allm4,obsm4  allm4,obsm4 380 touching_ok "Metal4 spacing < %d (MT.2a)"
+ area allm4,obsm4 562500 360 "Metal4 minimum area < %a (MT.4)"
+
+variants (fast),(full)
+ widespacing allm4,obsm4 10000 allm4,obsm4  500 touching_ok \
+	"Metal4 > %c spacing to unrelated m4 < %d (MT.2b)"
+#endif (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
+#else (!METALS4)
+ surround v3/m4 *m4 50 directional \
+	"Metal4 overlap of Via3 < %d in one direction (V3.4i - V3.4)"
+
+ width *m4,rm4 200 "Metal4 width < %d (M4.1)"
+ spacing allm4,obsm4  allm4,obsm4 210 touching_ok "Metal4 spacing < %d (M4.2a)"
+ area allm4,obsm4 144000 200 "Metal4 minimum area < %a (M4.3)"
+
+variants (fast),(full)
+ widespacing allm4,obsm4 10000 allm4,obsm4  300 touching_ok \
+	"Metal4 > %c spacing to unrelated m4 < %d (M4.2b)"
+#endif (!METALS4)
+
+variants *
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS5 || METALS6
+#------------------------------------------------------
+# VIA 4 - Requires METALS5 Module
+#------------------------------------------------------
+
+ width v4/m4 280 "Via4 width < %d (V4.1 + 2 * V4.4)"
+ spacing v4 v4 240 touching_ok "Via4 spacing < %d (V4.2a - 2 * V4.4)"
+ exact_overlap v4/m5
+
+#-----------------------------
+# METALS 5 - METALS5 Module
+#-----------------------------
+
+#ifdef METALS5
+ # Metal 5 is the top metal
+#ifdef THICKMET3P0
+ width *m5,rm5 1800 "Metal5 width < %d (MT30.1)"
+ spacing allm5,obsm5  allm5,obsm5 1800 touching_ok "Metal5 spacing < %d (MT30.2)"
+
+ surround v4/m5 *m5 110 absence_illegal \
+	"Metal5 overlap of Via4 < %d (MT30.5 - V4.4)"
+ surround v4/m5 *m5 240 directional \
+	"Metal5 overlap of Via4 < %d in one direction (MT30.6 - V4.4)"
+
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ surround v4/m4 *m4 50 directional \
+	"Metal4 overlap of Via4 < %d in one direction (V4.3i - V4.3)"
+ surround v4/m5 *m5 50 directional \
+	"Metal5 overlap of Via4 < %d in one direction (V4.4i - V4.4)"
+
+ width *m5,rm5 440 "Metal5 width < %d (MT.1)"
+ spacing allm5,obsm5  allm5,obsm5 460 touching_ok "Metal5 spacing < %d (MT.2a)"
+ area allm5,obsm5 526500 440 "Metal5 minimum area < %a (MT.4)"
+
+variants (fast),(full)
+ widespacing allm5,obsm5 10000 allm5,obsm5  600 touching_ok \
+	"Metal5 > %c spacing to unrelated m5 < %d (MT.2b)"
+#else (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
+ surround v4/m4 *m4 50 directional \
+	"Metal4 overlap of Via4 < %d in one direction (V4.3i - V4.3)"
+ surround v4/m5 *m5 50 directional \
+	"Metal5 overlap of Via4 < %d in one direction (V4.4i - V4.4)"
+
+ width *m5,rm5 360 "Metal5 width < %d (MT.1)"
+ spacing allm5,obsm5  allm5,obsm5 380 touching_ok "Metal5 spacing < %d (MT.2a)"
+ area allm5,obsm5 562500 360 "Metal5 minimum area < %a (MT.4)"
+
+variants (fast),(full)
+ widespacing allm5,obsm5 10000 allm5,obsm5  500 touching_ok \
+	"Metal5 > %c spacing to unrelated m5 < %d (MT.2b)"
+#endif (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
+#else (!METALS5)
+ surround v4/m4 *m4 50 directional \
+	"Metal4 overlap of Via4 < %d in one direction (V4.3i - V4.3)"
+ surround v4/m5 *m5 50 directional \
+	"Metal5 overlap of Via4 < %d in one direction (V4.4i - V4.4)"
+
+ width *m5,rm5 200 "Metal5 width < %d (M5.1)"
+ spacing allm5,obsm5  allm5,obsm5 210 touching_ok "Metal5 spacing < %d (M5.2a)"
+ area allm5,obsm5 144000 200 "Metal5 minimum area < %a (M5.3)"
+
+variants (fast),(full)
+ widespacing allm5,obsm5 10000 allm5,obsm5  300 touching_ok \
+	"Metal5 > %c spacing to unrelated m5 < %d (M5.2b)"
+
+#endif (!METALS5)
+
+variants *
+#endif (METALS5 || METALS6)
+
+#ifdef METALS6
+#-----------------------------------------------------------------------------------
+# VIA TP - Requires METALS6 Module
+#-----------------------------------------------------------------------------------
+
+ spacing vtp vtp 340 touching_ok "ViaTP spacing < %d (VT.2a - VT.3)"
+
+ width vtp/m5 370 "ViaTP width < %d (VT.1+VT.3)"
+ surround vtp/m5 *m5 45 directional \
+	"Metal 5 overlap of ViaTP in one direction < %d (VT.3)"
+ exact_overlap vtp/m5
+
+#----------------------------------------------------------------------
+# METAL TP - Top metal for METALS6 module
+#----------------------------------------------------------------------
+
+variants *
+ # Metal TP is the top metal
+#ifdef THICKMET3P0
+ width allmtp 1800 "Thick Top Metal width < %d (MT30.1)"
+ spacing allmtp,obsmtp  allmtk,obsmtk 1800 touching_ok\
+	"Thick Top Metal spacing < %d (MT30.2a)"
+
+ surround vtp/mtp *mtp 110 absence_illegal \
+	"Thick Top Metal overlap of ViaTP < %d (MT30.5 - VTP.4)"
+ surround vtp/mtp *mtp 240 directional \
+	"Thick Top Metal overlap of ViaTP < %d in one direction (MT30.6 - VTP.4)"
+
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ surround vtp/mtp *mtp 80 absence_illegal \
+	"Top Metal overlap of ViaTP < %d (VT.4 - VT.3)"
+ width allmtp 440 "Top Metal width < %d (MT.1)"
+ spacing allmtp,obsmtp  allmtp,obsmtp 460 touching_ok\
+	"Top Metal spacing < %d (MT.2a)"
+ area allmtp 562500 440 "Top Metal minimum area < %a (MT.4)"
+
+variants (fast),(full)
+ widespacing allmtp,obsmtp 10000 allmtp,obsmtp  600 touching_ok \
+	"Top Metal > %c spacing to unrelated Top Metal < %d (MT.2b)"
+
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ surround vtp/mtp *mtp 80 absence_illegal \
+	"Top Metal overlap of ViaTP < %d (VT.4 - VT.3)"
+
+ width allmtp 360 "Top Metal width < %d (MT.1)"
+ spacing allmtp,obsmtp  allmtp,obsmtp 380 touching_ok\
+	"Top Metal spacing < %d (MT.2a)"
+ area allmtp 562500 360 "Top Metal minimum area < %a (MT.4)"
+
+variants (fast),(full)
+ widespacing allmtp,obsmtp 10000 allmtp,obsmtp  500 touching_ok \
+	"Top Metal > %c spacing to unrelated Top Metal < %d (MT.2b)"
+
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+variants *
+
+#endif (METALS6)
+
+#--------------------------------------------------
+# NMOS, PMOS
+#--------------------------------------------------
+
+ # NOTE:  The layer width can be used for the smaller of
+ # (minimum length, minimum width).  However, for many
+ # devices, minimum width is less than minimum length.
+
+ extend nnfet *ndiff 400 exclusive "nn Transistor length < %d (DF.2c)"
+
+ extend mvnnfet *mvndiff 1200 exclusive "MV nn Transistor length < %d (NAT.4)"
+ width mvnnfet 400 "MV nn Transistor width < %d (DF.2c)"
+
+ extend pfet *pdiff 280 exclusive "Transistor length < %d (PL.1a)"
+ extend nfet *ndiff 280 exclusive "Transistor length < %d (PL.1a)"
+ width pfet 300 angles "Bent Transistor length < %d (PL.7)"
+ width nfet 300 angles "Bent Transistor length < %d (PL.7)"
+
+ extend mvpfet *mvpdiff 500 exclusive "MV Transistor length < %d (PL.1a)"
+ extend mvnfet *mvndiff 600 exclusive "MV Transistor length < %d (PL.1a)"
+ width mvpfet 700 angles "Bent MV Transistor length < %d (PL.7)"
+ width mvnfet 700 angles "Bent MV Transistor length < %d (PL.7)"
+
+ # NOTE:  Use edge4way to deal with butted junctions
+ # spacing *nsd,*mvnsd pfet,mvnnfet,mvpfet 330 touching_illegal \
+ #	"n-ohmic spacing to PMOS gate < %d (NP.4b)"
+ # spacing *psd,*mvpsd nfet,nnfet,mvnfet 330 touching_illegal \
+ #	"p-ohmic spacing to NMOS gate < %d (NP.4c)"
+
+ edge4way pfet,mvnnfet,mvpfet *poly/a 330 ~(*nsd,*mvnsd)/a (*pdiff,*mvpdiff)/a 300 \
+	"n-ohmic spacing to PMOS gate < %d (NP.4b + PP.4c)"
+ edge4way nfet,nnfet,mvnfet *poly/a 330 ~(*psd,*mvpsd)/a (*ndiff,*mvndiff)/a 300 \
+	"p-ohmic spacing to NMOS gate < %d (PP.4b + NP.4c)"
+
+ # Butting junction rules (flag p/nsd distance to butting junction < 0.03um)
+ edge4way (*psd)/a ~(*ndiff,*psd)/a 330 ~(*ndiff)/a (*ndiff)/a 30 \
+        "N-Diffusion to P-tap spacing < %d across butted junction (PP.4b + NP.4c)"
+ edge4way (*ndiff)/a ~(*ndiff,*psd)/a 330 ~(*psd)/a (*psd)/a 30 \
+        "N-Diffusion to P-tap spacing < %d across butted junction (PP.4b + NP.4c)"
+ edge4way (*nsd)/a ~(*pdiff,*nsd)/a 330 ~(*pdiff)/a (*pdiff)/a 30 \
+        "P-Diffusion to N-tap spacing < %d across butted junction (NP.4b + PP.4c)"
+ edge4way (*pdiff)/a ~(*pdiff,*nsd)/a 330 ~(*nsd)/a (*nsd)/a 30 \
+        "P-Diffusion to N-tap spacing < %d across butted junction (NP.4b + PP.4c)"
+
+ edge4way (*mvpsd)/a ~(*mvndiff,*mvpsd)/a 330 ~(*mvndiff)/a (*mvndiff)/a 30 \
+        "MV N-Diffusion to MV P-tap spacing < %d across butted junction (PP.4b + NP.4c)"
+ edge4way (*mvndiff)/a ~(*mvndiff,*mvpsd)/a 330 ~(*mvpsd)/a (*mvpsd)/a 30 \
+        "MV N-Diffusion to MV P-tap spacing < %d across butted junction (PP.4b + NP.4c)"
+ edge4way (*mvnsd)/a ~(*mvpdiff,*mvnsd)/a 330 ~(*mvpdiff)/a (*mvpdiff)/a 30 \
+        "MV P-Diffusion to MV N-tap spacing < %d across butted junction (NP.4b + PP.4c)"
+ edge4way (*mvpdiff)/a ~(*mvpdiff,*mvnsd)/a 330 ~(*mvnsd)/a (*mvnsd)/a 30 \
+        "MV P-Diffusion to MV N-tap spacing < %d across butted junction (NP.4b + PP.4c)"
+
+#--------------------------------------------------
+# RPP,RNP
+#--------------------------------------------------
+ width rpp 800 "ppolyres minimum width < %d (PRES.1)"
+ width rnp 800 "npolyres minimum width < %d (NRES.1)"
+ spacing rpp rpp 400 touching_ok "ppolyres minimum spacing < %d (PRES.2)"
+ spacing rnp rnp 400 touching_ok "npolyres minimum spacing < %d (NRES.2)"
+
+ spacing rpp pc 215 touching_illegal "rpp spacing to Cont < %d (PRES.8 - CO.6)"
+ spacing rnp pc 215 touching_illegal "rnp spacing to Cont < %d (NRES.8 - CO.6)"
+
+#ifdef HRPOLY1K
+#--------------------------------------------------
+# HIRES
+#--------------------------------------------------
+  width hires,mvhires 1000 "hires poly minimum width < %d (HRES.3)"
+  spacing hires,mvhires hires,mvhires 400 touching_ok \
+	"hires poly minimum spacing < %d (HRES.2)"
+
+ variants (full)
+ cifmaxwidth res_diff_space 0 bend_illegal \
+	"High value resistor spacing to diffusion < 0.7um (HRES.5 + HRES.4)"
+ cifmaxwidth res_poly_space 0 bend_illegal \
+	"High value resistor spacing to poly < 0.7um (HRES.6 + HRES.4)"
+
+ cifmaxwidth res_cont_space_min 0 bend_illegal \
+	"Unsalicided resistor spacing to poly contact must be 0.22um (PRES/LRES/HRES.7)"
+ cifmaxwidth res_no_cont 0 bend_illegal \
+	"Unsalicided resistor spacing to poly contact must be 0.22um (PRES/LRES/HRES.7)"
+ variants *
+#endif (HRPOLY1K)
+
+#--------------------------------------------------
+# RDN,RDP (Diffusion resistors)
+#--------------------------------------------------
+  width rdn 300 "N-diffusion resistor width < %d (DF.1b)"
+  width rdp 300 "P-diffusion resistor width < %d (DF.1b)"
+
+#------------------------------------
+# MOS Varactor device rules
+#------------------------------------
+
+ overhang *nsd var 320 \
+	"N-Ohmic overhang of Varactor < %d (FIXME)"
+
+ overhang *mvnsd mvvar 320 \
+	"N-Ohmic overhang of Varactor < %d (FIXME)"
+
+ width var,mvvar 1000 \
+	"Varactor length and width < %d (DF.1c)"
+
+#ifdef MIM
+#-------------------------------------------------
+# CAPM (FuseTop)
+#-------------------------------------------------
+
+ width *mimcap 5000 "MiM cap top plate width < %d (MIMTM.8a)"
+ spacing *mimcap *mimcap 600 touching_ok \
+	"MiM cap top plate spacing < %d (MIMTM.6)"
+ surround mimcc mimcap 390 absence_illegal \
+	"MiM cap must surround MiM cap contact by %d (MIMTM.4-VT.4)"
+ spacing pad *mimcap 50 touching_illegal "MiM cap cannot overlap pad (MIM1M.X)"
+ spacing mimcc mimcc 480 touching_ok "MiM cap contact spacing < %d (MIMTM.9 - VT.3)"
+
+#ifdef METALS3
+ spacing via1 *mimcap 50 touching_illegal \
+	"MiM cap cannot overlap via1 (MIMTM.10)"
+ spacing *mimcap  *m2,rm2 1200 touching_ok \
+	"MiM cap to Metal2 spacing < %d (MIMTM.1)"
+ spacing *mimcap via2/m3  390 touching_illegal \
+	"MiM cap spacing to via2 < %d (MIMTM.5-VT.X)"
+ surround *mimcap m2 600 absence_illegal \
+	"Bottom plate overlap of MiM cap < %d (MIMTM.3)"
+ width mimcapc/m3 280 "MiM Contact width < %d (VT.1+VT.3)"
+#elseif defined(METALS4)
+ spacing via2 *mimcap 50 touching_illegal \
+	"MiM cap cannot overlap via2 (MIMTM.10)"
+ spacing *mimcap  *m3,rm3 1200 touching_ok \
+	"MiM cap to Metal3 spacing < %d (MIMTM.1)"
+ spacing *mimcap via3/m4  390 touching_illegal \
+	"MiM cap spacing to via3 < %d (MIMTM.5)"
+ surround *mimcap m3 600 absence_illegal \
+	"Bottom plate overlap of MiM cap < %d (MIMTM.3)"
+ width mimcapc/m4 280 "MiM Contact width < %d (VT.1+VT.3)"
+#elseif defined(METALS5)
+ spacing via3 *mimcap 50 touching_illegal \
+	"MiM cap cannot overlap via3 (MIMTM.10)"
+ spacing *mimcap  *m4,rm4 1200 touching_ok \
+	"MiM cap to Metal4 spacing < %d (MIMTM.1)"
+ spacing *mimcap via4/m5  390 touching_illegal \
+	"MiM cap spacing to via4 < %d (MIMTM.5)"
+ surround *mimcap m4 600 absence_illegal \
+	"Bottom plate overlap of MiM cap < %d (MIMTM.3)"
+ width mimcapc/m5 280 "MiM Contact width < %d (VT.1+VT.3)"
+#elseif defined(METALS6)
+ spacing via4 *mimcap 50 touching_illegal \
+	"MiM cap cannot overlap via4 (MIMTM.10)"
+ spacing *mimcap  *m5,rm5 1200 touching_ok \
+	"MiM cap to Metal5 spacing < %d (MIMTM.1)"
+ spacing *mimcap viatp/mtp  390 touching_illegal \
+	"MiM cap spacing to viaTP < %d (MIMTM.5)"
+ surround *mimcap m5 600 absence_illegal \
+	"Bottom plate overlap of MiM cap < %d (MIMTM.3)"
+ width mimcapc/mtp 280 "MiM Contact width < %d (VT.1+VT.3)"
+#endif
+
+ variants (full)
+ cifmaxwidth mim_bottom_plate_space 0 bend_illegal \
+	"MiM bottom plate to unrelated metal < 1.2um (MIMTM.1)"
+ cifmaxwidth mim_bot_cont_surround 0 bend_illegal \
+	"MiM bottom plate surrounds contact < 0.4um (MIMTM.2)"
+#endif (MIM)
+
+#----------------------------
+# End DRC style
+#----------------------------
+
+ style empty
+ scalefactor 50
+ stepsize 2000
+
+end
+
+#----------------------------
+# LEF format definitions
+#----------------------------
+
+lef
+
+ routing m1	Metal1 METAL1 MET1 m1 met1 metal1
+ routing m2	Metal2 METAL2 MET2 m2 met2 metal2
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ routing m3	Metal3 METAL3 MET3 m3 met3 metal3
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+ routing m4	Metal4 METAL4 MET4 m4 met4 metal4
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+ routing m5	Metal5 METAL5 MET5 m5 met5 metal5
+#endif (METALS5 || METALS6)
+#ifdef METALS6
+ routing mtp	MetalTop Metal6 METAL6 METTP mtp mettp MET6 m6 met6 metal6
+#endif (METALS6)
+
+ cut m2c  Via1 VIA1 via1 cont2 via12
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ cut m3c  Via2 VIA2 via2 cont3 via23
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+ cut via3 Via3 VIA3 via3 cont4 via34
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+ cut via4 Via4 VIA4 via4 cont5 via45
+#endif (METALS5 || METALS6)
+#ifdef METALS6
+ cut viatp Via5 viatp VIATP VIA5 vtp via5 cont6 via56
+#endif (METALS6)
+
+ obs obsm1   Metal1
+ obs obsm2   Metal2
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ obs obsm3   Metal3
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+ obs obsm4   Metal4
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+ obs obsm5   Metal5
+#endif (METALS5 || METALS6)
+#ifdef METALS6
+ obs obsmtp  Metal6
+#endif (METALS6)
+
+ obs obsv1 Via1
+ obs obsv2 Via2
+
+end
+
+#-----------------------------------------------------
+# Device and Parasitic extraction
+#-----------------------------------------------------
+
+extract
+ style ngspice variants (),(hrhc),(lrhc),(hrlc),(lrlc)
+ cscale 1
+ lambda  5.0
+ units	microns
+ step   7
+ sidehalo 8
+ fringeshieldhalo 8
+
+ planeorder dwell	0
+ planeorder well 	1
+ planeorder active 	2
+ planeorder metal1 	3
+ planeorder metal2 	4
+#ifdef METALS3
+ planeorder metal3 	5
+ planeorder block       6
+ planeorder comment     7
+#elseif defined(METALS4)
+ planeorder metal3 	5
+ planeorder metal4 	6
+ planeorder block       7
+ planeorder comment     8
+#elseif defined(METALS5)
+ planeorder metal3 	5
+ planeorder metal4 	6
+ planeorder metal5 	7
+ planeorder block       8
+ planeorder comment     9
+#elseif defined(METALS6)
+ planeorder metal3 	5
+ planeorder metal4 	6
+ planeorder metal5 	7
+ planeorder metaltp 	8
+ planeorder block       9
+ planeorder comment     10
+#endif
+
+ height dnwell	       -0.1	0.0	
+ height nwell,pwell	0.0	0.0145
+ height alldiff		0.0145	0.30
+ height allpoly		0.32	0.2
+ height alldiffcont	0.3145	0.9155
+ height pc		0.52	0.71
+ height allm1		1.23	0.55
+ height via		1.78	0.60
+ height allm2		2.38	0.55
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ height via2		2.93	0.60
+ height allm3		3.53	0.55
+#endif
+#ifdef METALS4 || METALS5 || METALS6
+ height via3		4.08	0.60
+ height allm4		4.68	0.55
+#endif
+#ifdef METALS5 || METALS6
+ height via4		5.23	0.60
+#endif
+#ifdef METALS5
+ height allm5		5.83	1.0025
+#endif
+#ifdef METALS6
+ height allm5		5.83	0.55
+#endif
+#ifdef METALS6
+ height viatp		6.38	0.9	
+ height allmtp		7.28	1.0025
+#endif
+ 
+ # Antenna check parameters
+ # (to be completed)
+ model partial
+ antenna poly sidewall 200 none
+ antenna allcont surface 10 none
+ antenna via1 surface 20 none
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ antenna via2 surface 20 none
+#endif
+#ifdef METALS4 || METALS5 || METALS6
+ antenna via3 surface 20 none
+#endif
+#ifdef METALS5 || METALS6
+ antenna via4 surface 20 none
+#endif
+#ifdef METALS6
+ antenna viatp surface 20 none
+#endif
+#ifdef MIM
+ antenna mimcc surface 20 none
+#endif
+ antenna m1,m2 sidewall 400 none
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ antenna m3 sidewall 400 none
+#endif
+#ifdef METALS4 || METALS5 || METALS6
+ antenna m4 sidewall 400 none
+#endif
+#ifdef METALS5 || METALS6
+ antenna m5 sidewall 400 none
+#endif
+#ifdef METALS6
+ antenna mtp sidewall 400 none
+#endif
+
+ tiedown alldiffnonfet
+
+ substrate *ppdiff,*mvppdiff,space/w,pwell well $SUB -dnwell,isosub
+
+# Layer resistance
+
+variants ()
+
+# Resistances are in milliohms per square
+# Optional 3rd argument is the corner adjustment fraction
+# See document 180MCU_YI-141-EP059-01_10.pdf
+
+ resist (nwell,dnwell)/well      1000000
+ resist (pwell)/well	 	 3250000
+
+ resist (*ndiff,nsd)/active 	  6300
+ resist (*pdiff,*psd)/active	  7000
+ resist (*mvndiff,mvnsd)/active   6300
+ resist (*mvpdiff,*mvpsd)/active  7000
+
+ resist (allpolynonres)/active    7300
+
+ resist (rnw)/well             1000000 0.5
+ resist (rnd)/active 	 	 60000 0.5
+ resist (rpd)/active 		185000 0.5
+ resist (mvrnd)/active 		 60000 0.5
+ resist (mvrpd)/active 		185000 0.5
+ resist (rnds)/active 	 	  6300 0.5
+ resist (rpds)/active 		  7000 0.5
+ resist (mvrnds)/active		  6300 0.5
+ resist (mvrpds)/active		  7000 0.5
+ resist (rnps)/active	  	  6800 0.5
+ resist (rpps)/active	  	  7300 0.5
+ resist (rpp)/active		350000 0.5
+ resist (rnp)/active		310000 0.5
+#ifdef HRPOLY1K
+ resist (hires,mvhires)/active 1000000 0.5
+#endif (HRPOLY1K)
+
+ resist (allm1)/metal1		    90
+ resist (allm2)/metal2		    90
+#ifdef METALS3
+#ifdef THICKMET3P0
+ resist (allm3)/metal3  	    10
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ resist (allm3)/metal3  	    40
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ resist (allm3)/metal3  	    60
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS3)
+#ifdef METALS4 || METALS5 || METALS6
+ resist (allm3)/metal3	            90
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4
+#ifdef THICKMET3P0
+ resist (allm4)/metal4  	    10
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ resist (allm4)/metal4  	    40
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ resist (allm4)/metal4  	    60
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS4)
+#ifdef METALS5 || METALS6
+ resist (allm4)/metal4  	    90
+#endif (METALS5 || METALS6)
+
+#ifdef METALS5
+#ifdef THICKMET3P0
+ resist (allm5)/metal5  	    10
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ resist (allm5)/metal5  	    40
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ resist (allm5)/metal5  	    60
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS5)
+#ifdef METALS6
+ resist (allm5)/metal5  	    90
+#endif (METALS6)
+
+#ifdef METALS6
+#ifdef THICKMET3P0
+ resist (allmtp)/metaltp  	   10
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ resist (allmtp)/metaltp  	    40
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ resist (allmtp)/metaltp  	    60
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS6)
+
+ contact ndc,nsc		  6300
+ contact pdc,psc		  5200
+ contact mvndc,mvnsc		  6300
+ contact mvpdc,mvpsc		  5200
+ contact pc			  8000
+ contact m2c			  4500
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ contact m3c			  4500
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+ contact via3			  4500
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+ contact via4			  4500
+#endif (METALS5 || METALS6)
+#ifdef MIM
+ contact mimcc			  4500
+#endif (MIM)
+#ifdef METALS6
+ contact viatp			  4500
+#endif (METALS6)
+
+variants (hrhc),(hrlc)
+
+ # High-end corner resistances (milliohms per square)
+
+ resist (nwell,dnwell)/well      1200000
+ resist (pwell)/well	 	 3250000
+
+ resist (*ndiff,nsd)/active 	 15000
+ resist (*pdiff,*psd)/active	 15000
+ resist (*mvndiff,mvnsd)/active  15000
+ resist (*mvpdiff,*mvpsd)/active 15000
+
+ resist (allpolynonres)/active   15000
+
+ resist (rnw)/well             1200000 0.5
+ resist (rnd)/active 	 	 75000 0.5
+ resist (rpd)/active 		225000 0.5
+ resist (mvrnd)/active 		 75000 0.5
+ resist (mvrpd)/active 		225000 0.5
+ resist (rnds)/active 	 	 15000 0.5
+ resist (rpds)/active 		 15000 0.5
+ resist (mvrnds)/active		 15000 0.5
+ resist (mvrpds)/active		 15000 0.5
+ resist (rnps)/active	  	 15000 0.5
+ resist (rpps)/active	  	 15000 0.5
+ resist (rpp)/active		420000 0.5
+ resist (rnp)/active		370000 0.5
+#ifdef HRPOLY1K
+ resist (hires,mvhires)/active	1200000 0.5
+#endif (HRPOLY1K)
+
+ resist (allm1)/metal1		   104
+ resist (allm2)/metal2		   104
+#ifdef METALS3
+#ifdef THICKMET3P0
+ resist (allm3)/metal3  	    15
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ resist (allm3)/metal3  	    49
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ resist (allm3)/metal3  	    70
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS3)
+#ifdef METALS4 || METALS5 || METALS6
+ resist (allm3)/metal3	           104
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4
+#ifdef THICKMET3P0
+ resist (allm4)/metal4  	    14
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ resist (allm4)/metal4  	    49
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ resist (allm4)/metal4  	    70
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS4)
+#ifdef METALS5 || METALS6
+ resist (allm4)/metal4  	   104
+#endif (METALS5 || METALS6)
+
+#ifdef METALS5
+#ifdef THICKMET3P0
+ resist (allm5)/metal5  	    14
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ resist (allm5)/metal5  	    49
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ resist (allm5)/metal5  	    70
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS5)
+#ifdef METALS6
+ resist (allm5)/metal5  	   104
+#endif (METALS6)
+
+#ifdef METALS6
+#ifdef THICKMET3P0
+ resist (allmtp)/metaltp  	    14
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ resist (allmtp)/metaltp  	    49
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ resist (allmtp)/metaltp  	    70
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS6)
+
+ contact ndc,nsc		 15000
+ contact pdc,psc		 15000
+ contact mvndc,mvnsc		 15000
+ contact mvpdc,mvpsc		 15000
+ contact pc			 15000
+ contact m2c			 15000
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ contact m3c			 15000
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+ contact via3			 15000
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+ contact via4			 15000
+#endif (METALS5 || METALS6)
+#ifdef MIM
+ contact mimcc			 15000
+#endif (MIM)
+#ifdef METALS6
+ contact viatp			 15000
+#endif (METALS6)
+
+variants (lrhc),(lrlc)
+
+ # Low-end corner resistances (milliohms per square)
+
+ resist (nwell,dnwell)/well       800000
+ resist (pwell)/well	 	 3250000
+
+ resist (*ndiff,nsd)/active 	  1000
+ resist (*pdiff,*psd)/active	  1000
+ resist (*mvndiff,mvnsd)/active   1000
+ resist (*mvpdiff,*mvpsd)/active  1000
+
+ resist (allpolynonres)/active    1000
+
+ resist (rnw)/well             8000000 0.5
+ resist (rnd)/active 	 	 45000 0.5
+ resist (rpd)/active 		145000 0.5
+ resist (mvrnd)/active 		 45000 0.5
+ resist (mvrpd)/active 		145000 0.5
+ resist (rnds)/active 	 	  1000 0.5
+ resist (rpds)/active 		  1000 0.5
+ resist (mvrnds)/active		  1000 0.5
+ resist (mvrpds)/active		  1000 0.5
+ resist (rnps)/active	  	  1000 0.5
+ resist (rpps)/active	  	  1000 0.5
+ resist (rpp)/active		280000 0.5
+ resist (rnp)/active		250000 0.5
+#ifdef HRPOLY1K
+ resist (hires,mvhires)/active  800000 0.5
+#endif (HRPOLY1K)
+
+ resist (allm1)/metal1		    76
+ resist (allm2)/metal2		    76
+#ifdef METALS3
+#ifdef THICKMET3P0
+ resist (allm3)/metal3  	     6
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ resist (allm3)/metal3  	    31
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ resist (allm3)/metal3  	    50
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS3)
+#ifdef METALS4 || METALS5 || METALS6
+ resist (allm3)/metal3	            76
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4
+#ifdef THICKMET3P0
+ resist (allm4)/metal4  	     6
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ resist (allm4)/metal4  	    31
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ resist (allm4)/metal4  	    50
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS4)
+#ifdef METALS5 || METALS6
+ resist (allm4)/metal4  	    76
+#endif (METALS5 || METALS6)
+
+#ifdef METALS5
+#ifdef THICKMET3P0
+ resist (allm5)/metal5  	     6
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ resist (allm5)/metal5  	    31
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ resist (allm5)/metal5  	    50
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS5)
+#ifdef METALS6
+ resist (allm5)/metal5  	    76
+#endif (METALS6)
+
+#ifdef METALS6
+#ifdef THICKMET3P0
+ resist (allmtp)/metaltp  	     6
+#elseif defined(THICKMET1P1 || THICKMET0P9)
+ resist (allmtp)/metaltp  	    31
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+ resist (allmtp)/metaltp  	    50
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS6)
+
+ contact ndc,nsc		     0
+ contact pdc,psc		     0
+ contact mvndc,mvnsc		     0
+ contact mvpdc,mvpsc		     0
+ contact pc			     0
+ contact m2c			     0
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ contact m3c			     0
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+ contact via3			     0
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+ contact via4			     0
+#endif (METALS5 || METALS6)
+#ifdef MIM
+ contact mimcc			     0
+#endif (MIM)
+#ifdef METALS6
+ contact viatp			     0
+#endif (METALS6)
+
+variants *
+
+ # These types should not be considered as electrical nodes
+ resist comment			None
+
+#-------------------------------------------------------------------------
+# Parasitic capacitance values:
+#-------------------------------------------------------------------------
+# This uses the new "default" definitions that determine the intervening
+# planes from the planeorder stack, take care of the reflexive sideoverlap
+# definitions, and generally clean up the section and make it more readable.
+#
+# Also uses "units microns" statement, so all parasitic capacitance values
+# are taken directly from the source document PDS_035_03, in units of
+# aF/um^2 for area caps and aF/um for perimeter and sidewall caps.
+#-------------------------------------------------------------------------
+# Remember that device capacitances to substrate are taken care of by the
+# models.  Thus, active and poly definitions ignore all "fet" types.
+# fet types are excluded when computing parasitic capacitance to
+# active from layers above them because poly is a shield; fet types are
+# included for parasitics from layers above to poly.  Resistor types
+# should be removed from all parasitic capacitance calculations, or else
+# they just create floating caps.  Technically, the capacitance probably
+# should be split between the two terminals.  Unsure of the correct model.
+# Because rnw is on the well plane, "defaultareacap" does not work for
+# planes above diffusion because rnw cannot be removed from types on the
+# well plane.  Because of this, use the normal "areacap" to specify cap
+# to substrate, and "defaultoverlap" to specify cap to nwell (but not rnw). 
+#-------------------------------------------------------------------------
+
+variants ()
+# Nominal capacitances
+
+#n-well
+defaultareacap     nwell well 120
+
+#n-active 
+# Rely on device models to capture *ndiff area cap
+# Do not extract parasitics from resistors
+# defaultareacap     allnactivenonfet active 790
+# defaultperimeter   allnactivenonfet active 280
+
+#p-active
+# Rely on device models to capture *pdiff area cap
+# Do not extract parasitics from resistors
+# defaultareacap     allpactivenonfet active 810
+# defaultperimeter   allpactivenonfet active 300
+
+#poly
+# Do not extract parasitics from resistors
+# defaultsidewall    allpolynonfet active  22
+# defaultareacap     allpolynonfet active  105
+# defaultperimeter   allpolynonfet active   57
+
+ defaultsidewall    *poly active  16.46
+ defaultareacap     *poly active nwell,obswell,pwell well  110.677
+ defaultperimeter   *poly active nwell,obswell,pwell well  51.29
+
+#metal1
+ defaultsidewall    allm1 metal1       28.01
+ defaultareacap     allm1 metal1 nwell,obswell,pwell well  29.3046
+ defaultperimeter   allm1 metal1 nwell,obswell,pwell well  25.783
+ defaultoverlap     allm1 metal1 nwell well 29.3046
+
+#metal1->diff
+ defaultoverlap     allm1 metal1 allactivenonfet active 39.2181
+ defaultsideoverlap allm1 metal1 allactivenonfet active 30.683
+
+#metal1->poly
+ defaultoverlap     allm1 metal1 allpolynonres active 51.4351
+ defaultsideoverlap allm1 metal1 allpolynonres active 35.602
+
+#metal2
+ defaultsidewall    allm2 metal2      30.381
+ defaultareacap     allm2 metal2 nwell,obswell,pwell well 15.0162
+ defaultperimeter   allm2 metal2 nwell,obswell,pwell well 18.263
+ defaultoverlap     allm2 metal2 nwell well 15.0162
+#metal2->active
+ defaultoverlap     allm2 metal2 allactivenonfet active 17.2506
+ defaultsideoverlap allm2 metal2 allactivenonfet active 20.018
+
+#metal2->poly
+ defaultoverlap     allm2 metal2 allpolynonres active 19.2632
+ defaultsideoverlap allm2 metal2 allpolynonres active 21.531
+
+#metal2->metal1
+ defaultoverlap     allm2 metal2 allm1 metal1 59.0279
+ defaultsideoverlap allm2 metal2 allm1 metal1 40.880
+
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+#metal3
+ defaultsidewall    allm3 metal3     30.774
+ defaultareacap     allm3 metal3 nwell,obswell,pwell well 10.0944
+ defaultoverlap     allm3 metal3 nwell well 10.0944
+ defaultperimeter   allm3 metal3 nwell,obswell,pwell well 13.52
+
+#metal3->active
+ defaultoverlap     allm3 metal3 allactive active 11.0571
+ defaultsideoverlap allm3 metal3 allactive active 14.36
+
+#metal3->poly
+ defaultoverlap     allm3 metal3 allpolynonres active 11.8507
+ defaultsideoverlap allm3 metal3 allpolynonres active 15.054
+
+#metal3->metal1
+ defaultoverlap     allm3 metal3 allm1 metal1 20.2381
+ defaultsideoverlap allm3 metal3 allm1 metal1 21.705
+
+#metal3->metal2
+ defaultoverlap     allm3 metal3 allm2 metal2 59.0279
+ defaultsideoverlap allm3 metal3 allm2 metal2 40.482
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4 || METALS5 || METALS6
+#metal4
+ defaultsidewall    allm4 metal4       30.994
+ defaultareacap     allm4 metal4 nwell,obswell,pwell well 7.6025
+ defaultoverlap     allm4 metal4 nwell well 7.6025
+ defaultperimeter   allm4 metal4 well  10.649
+
+#metal4->active
+ defaultoverlap     allm4 metal4 allactivenonfet active 8.1360
+ defaultsideoverlap allm4 metal4 allactivenonfet active 11.129
+
+#metal4->poly
+ defaultoverlap     allm4 metal4 allpolynonres active 8.5577
+ defaultsideoverlap allm4 metal4 allpolynonres active 11.505
+
+#metal4->metal1
+ defaultoverlap     allm4 metal4 allm1 metal1 12.2127
+ defaultsideoverlap allm4 metal4 allm1 metal1 14.829
+
+#metal4->metal2
+ defaultoverlap     allm4 metal4 allm2 metal2 20.2381
+ defaultsideoverlap allm4 metal4 allm2 metal2 21.025
+
+#metal4->metal3
+ defaultoverlap     allm4 metal4 allm3 metal3 59.0279
+ defaultsideoverlap allm4 metal4 allm3 metal3 39.786
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS5
+#metal5
+ defaultsidewall    allm5 metal5       54.148
+#endif
+#ifdef METALS6
+ defaultsidewall    allm5 metal5       31.121
+#endif
+
+#ifdef METALS5 || METALS6
+ defaultareacap     allm5 metal5 nwell,obswell,pwell well 5.7979
+ defaultoverlap     allm5 metal5 nwell well 5.7979
+ defaultperimeter   allm5 metal5 well  10.850
+
+#metal5->active
+ defaultoverlap     allm5 metal5 allactivenonfet active 6.1031
+ defaultsideoverlap allm5 metal5 allactivenonfet active 11.258
+
+#metal5->poly
+ defaultoverlap     allm5 metal5 allpolynonres active 6.3374
+ defaultsideoverlap allm5 metal5 allpolynonres active 11.570
+
+#metal5->metal1
+ defaultoverlap     allm5 metal5 allm1 metal1 8.1418
+ defaultsideoverlap allm5 metal5 allm1 metal1 13.958
+
+#metal5->metal2
+ defaultoverlap     allm5 metal5 allm2 metal2 11.0677
+ defaultsideoverlap allm5 metal5 allm2 metal2 17.640
+
+#metal5->metal3
+ defaultoverlap     allm5 metal5 allm3 metal3 17.2765
+ defaultsideoverlap allm5 metal5 allm3 metal3 24.286
+
+#metal5->metal4
+ defaultoverlap     allm5 metal5 allm4 metal4 39.3519
+ defaultsideoverlap allm5 metal5 allm4 metal4 39.586
+#endif (METALS5 || METALS6)
+
+#ifdef METALS6
+#metaltp
+ defaultsidewall    allmtp metaltp      54.335
+ defaultareacap     allmtp metaltp nwell,obswell,pwell well 4.8793
+ defaultoverlap     allmtp metaltp nwell well 4.8793
+ defaultperimeter   allmtp metaltp well  9.5950
+
+#metaltp->active
+ defaultoverlap     allmtp metaltp allactivenonfet active 5.0937
+ defaultsideoverlap allmtp metaltp allactivenonfet active 9.8790
+
+#metaltp->poly
+ defaultoverlap     allmtp metaltp allpolynonres active 5.2558
+ defaultsideoverlap allmtp metaltp allpolynonres active 10.128
+
+#metaltp->metal1
+ defaultoverlap     allmtp metaltp allm1 metal1 6.4394
+ defaultsideoverlap allmtp metaltp allm1 metal1 11.765
+
+#metaltp->metal2
+ defaultoverlap     allmtp metaltp allm2 metal2 8.1418
+ defaultsideoverlap allmtp metaltp allm2 metal2 13.958
+
+#metaltp->metal3
+ defaultoverlap     allmtp metaltp allm3 metal3 11.0677
+ defaultsideoverlap allmtp metaltp allm3 metal3 17.640
+
+#metaltp->metal4
+ defaultoverlap     allmtp metaltp allm3 metal3 17.2765
+ defaultsideoverlap allmtp metaltp allm3 metal3 24.286
+
+#metaltp->metal5
+ defaultoverlap     allmtp metaltp allm3 metal3 39.3519
+ defaultsideoverlap allmtp metaltp allm3 metal3 39.586
+#endif (METALS6)
+
+#-------------------------------------------------------------------------
+# Parasitic capacitance values for maximum corner
+#-------------------------------------------------------------------------
+
+variants (hrhc),(lrhc)
+# Maximum corner capacitances
+
+#n-well
+defaultareacap     nwell well 120
+
+#n-active 
+# Rely on device models to capture *ndiff area cap
+# Do not extract parasitics from resistors
+# defaultareacap     allnactivenonfet active 790
+# defaultperimeter   allnactivenonfet active 280
+
+#p-active
+# Rely on device models to capture *pdiff area cap
+# Do not extract parasitics from resistors
+# defaultareacap     allpactivenonfet active 810
+# defaultperimeter   allpactivenonfet active 300
+
+#poly
+# Do not extract parasitics from resistors
+# defaultsidewall    allpolynonfet active  22
+# defaultareacap     allpolynonfet active  105
+# defaultperimeter   allpolynonfet active   57
+
+ defaultsidewall    *poly active  16.56
+ defaultareacap     *poly active nwell,obswell,pwell well  130.2
+ defaultperimeter   *poly active nwell,obswell,pwell well  54.018
+
+#metal1
+ defaultsidewall    allm1 metal1       29.294
+ defaultareacap     allm1 metal1 nwell,obswell,pwell well  33.126
+ defaultperimeter   allm1 metal1 nwell,obswell,pwell well  25.790
+ defaultoverlap     allm1 metal1 nwell well 33.126
+
+#metal1->diff
+ defaultoverlap     allm1 metal1 allactivenonfet active 43.636
+ defaultsideoverlap allm1 metal1 allactivenonfet active 30.445
+
+#metal1->poly
+ defaultoverlap     allm1 metal1 allpolynonres active 60.321
+ defaultsideoverlap allm1 metal1 allpolynonres active 36.440
+
+#metal2
+ defaultsidewall    allm2 metal2      31.727
+ defaultareacap     allm2 metal2 nwell,obswell,pwell well 16.472
+ defaultperimeter   allm2 metal2 nwell,obswell,pwell well 18.124
+ defaultoverlap     allm2 metal2 nwell well 16.472
+#metal2->active
+ defaultoverlap     allm2 metal2 allactivenonfet active 18.713
+ defaultsideoverlap allm2 metal2 allactivenonfet active 19.744
+
+#metal2->poly
+ defaultoverlap     allm2 metal2 allpolynonres active 21.231
+ defaultsideoverlap allm2 metal2 allpolynonres active 21.467
+
+#metal2->metal1
+ defaultoverlap     allm2 metal2 allm1 metal1 73.632
+ defaultsideoverlap allm2 metal2 allm1 metal1 43.788
+
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+#metal3
+ defaultsidewall    allm3 metal3     32.049
+ defaultoverlap     allm3 metal3 nwell well 11.910
+ defaultareacap     allm3 metal3 nwell,obswell,pwell well 10.961
+ defaultperimeter   allm3 metal3 nwell,obswell,pwell well 13.270
+
+#metal3->active
+ defaultoverlap     allm3 metal3 allactive active 11.910
+ defaultsideoverlap allm3 metal3 allactive active 14.034
+
+#metal3->poly
+ defaultoverlap     allm3 metal3 allpolynonres active 12.883
+ defaultsideoverlap allm3 metal3 allpolynonres active 14.812
+
+#metal3->metal1
+ defaultoverlap     allm3 metal3 allm1 metal1 22.675
+ defaultsideoverlap allm3 metal3 allm1 metal1 21.903
+
+#metal3->metal2
+ defaultoverlap     allm3 metal3 allm2 metal2 73.632
+ defaultsideoverlap allm3 metal3 allm2 metal2 43.400
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4 || METALS5 || METALS6
+#metal4
+ defaultsidewall    allm4 metal4       32.265
+ defaultareacap     allm4 metal4 nwell,obswell,pwell well 8.213
+ defaultoverlap     allm4 metal4 nwell well 8.213
+ defaultperimeter   allm4 metal4 well  10.397
+
+#metal4->active
+ defaultoverlap     allm4 metal4 allactivenonfet active 8.735
+ defaultsideoverlap allm4 metal4 allactivenonfet active 10.831
+
+#metal4->poly
+ defaultoverlap     allm4 metal4 allpolynonres active 9.247
+ defaultsideoverlap allm4 metal4 allpolynonres active 11.247
+
+#metal4->metal1
+ defaultoverlap     allm4 metal4 allm1 metal1 13.400
+ defaultsideoverlap allm4 metal4 allm1 metal1 14.625
+
+#metal4->metal2
+ defaultoverlap     allm4 metal4 allm2 metal2 22.674
+ defaultsideoverlap allm4 metal4 allm2 metal2 21.263
+
+#metal4->metal3
+ defaultoverlap     allm4 metal4 allm3 metal3 73.63
+ defaultsideoverlap allm4 metal4 allm3 metal3 42.64
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS5 || METALS6
+#metal5
+ defaultsidewall    allm5 metal5       57.012
+ defaultareacap     allm5 metal5 nwell,obswell,pwell well 6.241
+ defaultoverlap     allm5 metal5 nwell well 6.241
+ defaultperimeter   allm5 metal5 well  10.676
+
+#metal5->active
+ defaultoverlap     allm5 metal5 allactivenonfet active 6.537
+ defaultsideoverlap allm5 metal5 allactivenonfet active 11.074
+
+#metal5->poly
+ defaultoverlap     allm5 metal5 allpolynonres active 6.820
+ defaultsideoverlap allm5 metal5 allpolynonres active 11.431
+
+#metal5->metal1
+ defaultoverlap     allm5 metal5 allm1 metal1 8.841
+ defaultsideoverlap allm5 metal5 allm1 metal1 13.909
+
+#metal5->metal2
+ defaultoverlap     allm5 metal5 allm2 metal2 12.108
+ defaultsideoverlap allm5 metal5 allm2 metal2 17.722
+
+#metal5->metal3
+ defaultoverlap     allm5 metal5 allm3 metal3 19.207
+ defaultsideoverlap allm5 metal5 allm3 metal3 24.724
+
+#metal5->metal4
+ defaultoverlap     allm5 metal5 allm4 metal4 46.18
+ defaultsideoverlap allm5 metal5 allm4 metal4 41.628
+#endif (METALS5 || METALS6)
+
+#ifdef METALS6
+#metaltp
+ defaultsidewall    allmtp metaltp       57.187
+ defaultareacap     allmtp metaltp nwell,obswell,pwell well 5.242
+ defaultoverlap     allmtp metaltp nwell well 5.242
+ defaultperimeter   allmtp metaltp well  9.407
+
+#metaltp->active
+ defaultoverlap     allmtp metaltp allactivenonfet active 5.450
+ defaultsideoverlap allmtp metaltp allactivenonfet active 9.679
+
+#metaltp->poly
+ defaultoverlap     allmtp metaltp allpolynonres active 5.645
+ defaultsideoverlap allmtp metaltp allpolynonres active 9.925
+
+#metaltp->metal1
+ defaultoverlap     allmtp metaltp allm1 metal1 6.962
+ defaultsideoverlap allmtp metaltp allm1 metal1 11.549
+
+#metaltp->metal2
+ defaultoverlap     allmtp metaltp allm2 metal2 8.841
+ defaultsideoverlap allmtp metaltp allm2 metal2 13.909
+
+#metaltp->metal3
+ defaultoverlap     allmtp metaltp allm3 metal3 12.211
+ defaultsideoverlap allmtp metaltp allm3 metal3 17.215
+
+#metaltp->metal4
+ defaultoverlap     allmtp metaltp allm3 metal3 19.207
+ defaultsideoverlap allmtp metaltp allm3 metal3 24.725
+
+#metaltp->metal5
+ defaultoverlap     allmtp metaltp allm3 metal3 46.418
+ defaultsideoverlap allmtp metaltp allm3 metal3 41.628
+#endif (METALS6)
+
+#-------------------------------------------------------------------------
+# Parasitic capacitance values for minimum corner
+#-------------------------------------------------------------------------
+
+variants (hrlc),(lrlc)
+# Minimum corner capacitances
+
+#n-well
+defaultareacap     nwell well 120
+
+#n-active 
+# Rely on device models to capture *ndiff area cap
+# Do not extract parasitics from resistors
+# defaultareacap     allnactivenonfet active 790
+# defaultperimeter   allnactivenonfet active 280
+
+#p-active
+# Rely on device models to capture *pdiff area cap
+# Do not extract parasitics from resistors
+# defaultareacap     allpactivenonfet active 810
+# defaultperimeter   allpactivenonfet active 300
+
+#poly
+# Do not extract parasitics from resistors
+# defaultsidewall    allpolynonfet active  22
+# defaultareacap     allpolynonfet active  105
+# defaultperimeter   allpolynonfet active   57
+
+ defaultsidewall    *poly active  16.388
+ defaultareacap     *poly active nwell,obswell,pwell well  96.241
+ defaultperimeter   *poly active nwell,obswell,pwell well  48.943
+
+#metal1
+ defaultsidewall    allm1 metal1     26.630   
+ defaultareacap     allm1 metal1 nwell,obswell,pwell well  26.274
+ defaultperimeter   allm1 metal1 nwell,obswell,pwell well  25.666
+ defaultoverlap     allm1 metal1 nwell well 26.274
+
+#metal1->diff
+ defaultoverlap     allm1 metal1 allactivenonfet active 35.612
+ defaultsideoverlap allm1 metal1 allactivenonfet active 30.684
+
+#metal1->poly
+ defaultoverlap     allm1 metal1 allpolynonres active 44.831
+ defaultsideoverlap allm1 metal1 allpolynonres active 34.738
+
+#metal2
+ defaultsidewall    allm2 metal2     29.023 
+ defaultareacap     allm2 metal2 nwell,obswell,pwell well 13.797
+ defaultperimeter   allm2 metal2 nwell,obswell,pwell well 18.332
+ defaultoverlap     allm2 metal2 nwell well 13.797
+#metal2->active
+ defaultoverlap     allm2 metal2 allactivenonfet active 16.000
+ defaultsideoverlap allm2 metal2 allactivenonfet active 20.206
+
+#metal2->poly
+ defaultoverlap     allm2 metal2 allpolynonres active 17.629
+ defaultsideoverlap allm2 metal2 allpolynonres active 21.511
+
+#metal2->metal1
+ defaultoverlap     allm2 metal2 allm1 metal1 49.258
+ defaultsideoverlap allm2 metal2 allm1 metal1 38.718
+
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+#metal3
+ defaultsidewall    allm3 metal3     28.809
+ defaultoverlap     allm3 metal3 nwell well 9.355
+ defaultareacap     allm3 metal3 nwell,obswell,pwell well 9.355
+ defaultperimeter   allm3 metal3 nwell,obswell,pwell well 13.710
+
+#metal3->active
+ defaultoverlap     allm3 metal3 allactive active 10.318
+ defaultsideoverlap allm3 metal3 allactive active 14.637
+
+#metal3->poly
+ defaultoverlap     allm3 metal3 allpolynonres active 10.972
+ defaultsideoverlap allm3 metal3 allpolynonres active 15.232
+
+#metal3->metal1
+ defaultoverlap     allm3 metal3 allm1 metal1 18.275
+ defaultsideoverlap allm3 metal3 allm1 metal1 21.483
+
+#metal3->metal2
+ defaultoverlap     allm3 metal3 allm2 metal2 49.258
+ defaultsideoverlap allm3 metal3 allm2 metal2 38.221
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4 || METALS5 || METALS6
+#metal4
+ defaultsidewall    allm4 metal4       29.629
+ defaultareacap     allm4 metal4 nwell,obswell,pwell well 7.076
+ defaultoverlap     allm4 metal4 nwell well 7.076
+ defaultperimeter   allm4 metal4 well  10.870
+
+#metal4->active
+ defaultoverlap     allm4 metal4 allactivenonfet active 7.614
+ defaultsideoverlap allm4 metal4 allactivenonfet active 11.375
+
+#metal4->poly
+ defaultoverlap     allm4 metal4 allpolynonres active 7.964
+ defaultsideoverlap allm4 metal4 allpolynonres active 11.720
+
+#metal4->metal1
+ defaultoverlap     allm4 metal4 allm1 metal1 11.219
+ defaultsideoverlap allm4 metal4 allm1 metal1 14.805
+
+#metal4->metal2
+ defaultoverlap     allm4 metal4 allm2 metal2 18.275
+ defaultsideoverlap allm4 metal4 allm2 metal2 20.801
+
+#metal4->metal3
+ defaultoverlap     allm4 metal4 allm3 metal3 49.258
+ defaultsideoverlap allm4 metal4 allm3 metal3 37.616
+#endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS5 || METALS6
+#metal5
+ defaultsidewall    allm5 metal5       51.169
+ defaultareacap     allm5 metal5 nwell,obswell,pwell well 5.414
+ defaultoverlap     allm5 metal5 nwell well 5.414
+ defaultperimeter   allm5 metal5 well  10.992
+
+#metal5->active
+ defaultoverlap     allm5 metal5 allactivenonfet active 5.723
+ defaultsideoverlap allm5 metal5 allactivenonfet active 11.430
+
+#metal5->poly
+ defaultoverlap     allm5 metal5 allpolynonres active 5.919
+ defaultsideoverlap allm5 metal5 allpolynonres active 11.703
+
+#metal5->metal1
+ defaultoverlap     allm5 metal5 allm1 metal1 7.545
+ defaultsideoverlap allm5 metal5 allm1 metal1 13.985
+
+#metal5->metal2
+ defaultoverlap     allm5 metal5 allm2 metal2 10.192
+ defaultsideoverlap allm5 metal5 allm2 metal2 17.610
+
+#metal5->metal3
+ defaultoverlap     allm5 metal5 allm3 metal3 15.699
+ defaultsideoverlap allm5 metal5 allm3 metal3 23.834
+
+#metal5->metal4
+ defaultoverlap     allm5 metal5 allm4 metal4 34.153
+ defaultsideoverlap allm5 metal5 allm4 metal4 37.782
+#endif (METALS5 || METALS6)
+
+#ifdef METALS6
+#metaltp
+ defaultsidewall    allmtp metaltp       51.353
+ defaultareacap     allmtp metaltp nwell,obswell,pwell well 4.563
+ defaultoverlap     allmtp metaltp nwell well 4.563
+ defaultperimeter   allmtp metaltp well  9.764
+
+#metaltp->active
+ defaultoverlap     allmtp metaltp allactivenonfet active 4.781
+ defaultsideoverlap allmtp metaltp allactivenonfet active 10.070
+
+#metaltp->poly
+ defaultoverlap     allmtp metaltp allpolynonres active 4.917
+ defaultsideoverlap allmtp metaltp allpolynonres active 10.263
+
+#metaltp->metal1
+ defaultoverlap     allmtp metaltp allm1 metal1 5.990
+ defaultsideoverlap allmtp metaltp allm1 metal1 11.858
+
+#metaltp->metal2
+ defaultoverlap     allmtp metaltp allm2 metal2 7.545
+ defaultsideoverlap allmtp metaltp allm2 metal2 13.985
+
+#metaltp->metal3
+ defaultoverlap     allmtp metaltp allm3 metal3 10.192
+ defaultsideoverlap allmtp metaltp allm3 metal3 17.610
+
+#metaltp->metal4
+ defaultoverlap     allmtp metaltp allm3 metal3 15.699
+ defaultsideoverlap allmtp metaltp allm3 metal3 23.834
+
+#metaltp->metal5
+ defaultoverlap     allmtp metaltp allm3 metal3 34.153
+ defaultsideoverlap allmtp metaltp allm3 metal3 37.782
+#endif (METALS6)
+
+#-------------------------------------------------------------------------
+
+variants *
+
+# Devices:
+# All devices except diodes are modeled as subcircuits
+
+# device list:
+#  nmos_3p3		mosfet
+#  pmos_3p3		mosfet
+#  nmos_6p0		mosfet (thick oxide)
+#  pmos_6p0		mosfet (thick oxide)
+#  nmos_6p0_nat		mosfet (native Vt)
+#  nmos_3p3_sab		mosfet (unsalicided drain)
+#  pmos_3p3_sab		mosfet (unsalicided drain)
+#  nmos_6p0_sab		mosfet (unsalicided drain, thick oxide)
+#  pmos_6p0_sab		mosfet (unsalicided drain, thick oxide)
+#  nmos_10p0_asym	LDNMOS (extended drain)
+#  pmos_10p0_asym	LDPMOS (extended drain)
+#
+#  np_3p3		diode  (N+/pwell)
+#  pn_3p3		diode  (P+/nwell)
+#  np_6p0		diode  (N+/pwell, high voltage)
+#  pn_6p0		diode  (P+/nwell, high voltage)
+#  nwp_3p3		diode  (nwell/pwell)
+#  nwp_6p0		diode  (nwell/pwell, high voltage)
+#  dnwpw		diode  (pwell/dnwell)
+#  dnwps		diode  (dnwll/substrate)
+#  sc_diode		diode  (Schottky)
+#
+#  vpnp_WxL		BJT    (10x10, 5x5, 0.42x10, 0.42x5 emitter sizes)
+#  vnpn_WxL		BJT    (10x10, 5x5, 0.54x16, 0.54x8, 0.54x4, 0.54x2)
+#
+#  npolyf_u		resistor (N+ poly, unsalicided)
+#  ppolyf_u		resistor (P+ poly, unsalicided)
+#  ppolyf_u_1k		resistor (high res resistor)*
+#  ppolyf_u_1k_6p0	resistor (high res resistor, high voltage)*
+#  nplus_u		resistor (N+ diffusion, unsalicided)
+#  pplus_u		resistor (P+ diffusion, unsalicided)
+#  npolyf_s		resistor (N+ poly, salicided)
+#  ppolyf_s		resistor (P+ poly, salicided)
+#  nplus_s		resistor (N+ diffusion, salicided)
+#  pplus_s		resistor (N+ diffusion, salicided)
+#  nwell		resistor (N-well resistor)
+#  rm1			resistor (metal1)
+#  rm2			resistor (metal2)
+#  rm3			resistor (metal3)
+#  rm4			resistor (metal4)
+#  rm5			resistor (metal5)
+#  tm6k			resistor (top metal, 0.6um thick (standard))**
+#  tm9k			resistor (top metal, 0.9um thick)
+#  tm11k		resistor (top metal, 1.1um thick)
+#  tm30k		resistor (top metal, 3.0um thick)
+#
+#  nmoscap_3p3		mosfet	 (source-drain tied)
+#  pmoscap_3p3		mosfet	 (source-drain tied)
+#  nmoscap_6p0		mosfet	 (source-drain tied, high voltage)
+#  pmoscap_6p0		mosfet	 (source-drain tied, high voltage)
+#  nmoscap_3p3_b	mosfet   (n-varactor)
+#  pmoscap_3p3_b	mosfet   (p-varactor)
+#  nmoscap_6p0_b	mosfet   (n-varactor, high voltage)
+#  pmoscap_6p0_b	mosfet   (p-varactor, high voltage)
+#
+#  mim_2p0fF		capacitor (MiM)*
+
+#
+# *Note that there are multiple mutually exclusive process options for the
+#  high sheet rho resistor and MiM capacitor.  This tech file assumes the
+#  options 1kOhm/sq for the resistor and 2fF/um for the MiM capacitor.
+#
+# **The top metal may be any of metal3 to metaltp, depending on the stackup
+
+ device msubcircuit pmos_3p3 pfet pdiff,pdc pdiff,pdc allnwell error l=l w=w
+ device msubcircuit nmos_3p3 nfet ndiff,ndc ndiff,ndc allpsub error l=l w=w
+ device msubcircuit pmos_6p0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error l=l w=w
+ device msubcircuit nmos_6p0 mvnfet mvndiff,mvndc mvndiff,mvndc allpsub error l=l w=w
+ device msubcircuit pmos_3p3_sab pfet pdiffres pdiffres allnwell error l=l w=w
+ device msubcircuit nmos_3p3_sab nfet ndiffres ndiffres allpsub error l=l w=w
+ device msubcircuit pmos_6p0_sab mvpfet mvpdiffres mvpdiffres allnwell error l=l w=w
+ device msubcircuit nmos_6p0_sab mvnfet mvndiffres mvndiffres allpsub error l=l w=w
+ device msubcircuit nmos_6p0_nat mvnnfet mvndiff,mvndiffres,mvndc \
+	mvndiff,mvndiffres,mvndc allpsub error l=l w=w
+ device subcircuit nmoscap_3p3 varactor *nndiff allnwell error l=l w=w
+ device subcircuit nmoscap_6p0 mvvaractor *mvnndiff allnwell error l=l w=w
+
+ device rsubcircuit rm1 rm1 *m1 l=r_length w=r_width
+ device rsubcircuit rm2 rm2 *m2 l=r_length w=r_width
+#ifdef METALS4 || METALS5 || METALS6
+ device rsubcircuit rm3 rm3 *m3 l=r_length w=r_width
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+ device rsubcircuit rm4 rm4 *m4 l=r_length w=r_width
+#endif (METALS5 || METALS6)
+#ifdef METALS6
+ device rsubcircuit rm5 rm5 *m5 l=r_length w=r_width
+#endif (METALS6)
+
+#ifdef THICKMET3P0
+#ifdef METALS3
+ device rsubcircuit tm30k rm3 *m3 l=r_length w=r_width
+#elseif defined (METALS4)
+ device rsubcircuit tm30k rm4 *m4 l=r_length w=r_width
+#elseif defined (METALS5)
+ device rsubcircuit tm30k rm5 *m5 l=r_length w=r_width
+#elseif defined (METALS6)
+ device rsubcircuit tm30k rmtp *mtp l=r_length w=r_width
+#endif
+#elseif defined (THICKMET1P1)
+#ifdef METALS3
+ device rsubcircuit tm11k rm3 *m3 l=r_length w=r_width
+#elseif defined (METALS4)
+ device rsubcircuit tm11k rm4 *m4 l=r_length w=r_width
+#elseif defined (METALS5)
+ device rsubcircuit tm11k rm5 *m5 l=r_length w=r_width
+#elseif defined (METALS6)
+ device rsubcircuit tm11k rmtp *mtp l=r_length w=r_width
+#endif
+#elseif defined (THICKMET0P9)
+#ifdef METALS3
+ device rsubcircuit tm9k  rm3 *m3 l=r_length w=r_width
+#elseif defined (METALS4)
+ device rsubcircuit tm9k  rm4 *m4 l=r_length w=r_width
+#elseif defined (METALS5)
+ device rsubcircuit tm9k  rm5 *m5 l=r_length w=r_width
+#elseif defined (METALS6)
+ device rsubcircuit tm9k  rmtp *mtp l=r_length w=r_width
+#endif
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#ifdef METALS3
+ device rsubcircuit tm6k  rm3 *m3 l=r_length w=r_width
+#elseif defined (METALS4)
+ device rsubcircuit tm6k  rm4 *m4 l=r_length w=r_width
+#elseif defined (METALS5)
+ device rsubcircuit tm6k  rm5 *m5 l=r_length w=r_width
+#elseif defined (METALS6)
+ device rsubcircuit tm6k  rmtp *mtp l=r_length w=r_width
+#endif
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+
+ device rsubcircuit ppolyf_s  rpps   *poly allpsub error l=r_length w=r_width
+ device rsubcircuit npolyf_s  rnps   *poly allpsub error l=r_length w=r_width
+ device rsubcircuit ppolyf_u  rpp    *poly allpsub error l=r_length w=r_width
+ device rsubcircuit npolyf_u  rnp    *poly allpsub error l=r_length w=r_width
+#ifdef HRPOLY1K
+ device rsubcircuit ppolyf_u_1k hires *poly allpsub error l=r_length w=r_width
+ device rsubcircuit ppolyf_u_1k_6p0 mvhires *poly allpsub error l=r_length w=r_width
+#endif (HRPOLY1K)
+ device rsubcircuit pplus_u  rpd  *pdiff allnwell error l=r_length w=r_width
+ device rsubcircuit nplus_u  rnd  *ndiff allpsub error l=r_length w=r_width
+ device rsubcircuit pplus_s  rpds *pdiff allnwell error l=r_length w=r_width
+ device rsubcircuit nplus_s  rnds *ndiff allpsub error l=r_length w=r_width
+ device rsubcircuit pplus_u  mvpdiffres *mvpdiff allnwell error l=r_length w=r_width
+ device rsubcircuit nplus_u  mvndiffres *mvndiff allpsub error l=r_length w=r_width
+ device rsubcircuit nwell rnw   nwell allpsub error l=r_length w=r_width
+
+ device pdiode pn_3p3     *pdiode allnwell a=area p=pj
+ device ndiode np_3p3     *ndiode allpsub a=area p=pj
+ device pdiode pn_6p0     *mvpdiode allnwell a=area p=pj
+ device ndiode np_6p0     *mvndiode allpsub a=area p=pj
+ device ndiode np_6p0_nat *mvnndiode allpsub a=area p=pj
+
+#ifdef MIM
+#ifdef METALS6
+ device csubcircuit mim_2p0fF *mimcap  *m5   l=c_length w=c_width
+#endif
+#ifdef METALS5
+ device csubcircuit mim_2p0fF *mimcap  *m4   l=c_length w=c_width
+#endif
+#ifdef METALS4
+ device csubcircuit mim_2p0fF *mimcap  *m3   l=c_length w=c_width
+#endif
+#ifdef METALS3
+ device csubcircuit mim_2p0fF *mimcap  *m2   l=c_length w=c_width
+#endif
+#endif (MIM)
+
+end
+
+#-----------------------------------------------------
+# Wiring tool definitions
+#-----------------------------------------------------
+
+wiring
+ scalefactor 50
+
+ contact v1 200 m1 5 45 m2 0 45
+#ifdef METALS3 || METALS4 || METALS5 || METALS6
+ contact v2 200 m2 0 45 m3 0 45
+#endif (METALS3 || METALS4 || METALS5 || METALS6)
+#ifdef METALS4 || METALS5 || METALS6
+ contact v3 200 m3 0 45 m4 0 45
+#endif (METALS4 || METALS5 || METALS6)
+#ifdef METALS5 || METALS6
+ contact v4 200 m4 0 45 m5 0 45
+#endif (METALS5 || METALS6)
+#ifdef METALS6
+ contact vtp 370 m3 0 45 mtp 80 80
+#endif (METALS6)
+
+ contact pdc 160 pdiff  70 70 m1 45 0
+ contact ndc 160 ndiff  70 70 m1 45 0
+ contact psc 160 ppdiff 70 70 m1 45 0
+ contact nsc 160 nndiff 70 70 m1 45 0
+ contact pc 160 poly  70 70 m1 45 0
+ contact mvpdc 160 mvpdiff  70 70 m1 45 0
+ contact mvndc 160 mvndiff  70 70 m1 45 0
+ contact mvpsc 160 mvppdiff 70 70 m1 45 0
+ contact mvnsc 160 mvnndiff 70 70 m1 45 0
+
+end
+
+#-----------------------------------------------------
+# Plain old router. . . 
+#-----------------------------------------------------
+
+router
+end
+
+#------------------------------------------------------------
+# Plowing (restored in magic 8.2, need to fill this section)
+#------------------------------------------------------------
+
+plowing
+end
+
+#-----------------------------------------------------------------
+# No special plot layers defined (use default PNM color choices)
+#-----------------------------------------------------------------
+
+plot
+  style pnm
+     default
+     draw fillblock no_color_at_all
+     draw nwell cwell
+     draw pwell cwell
+     draw dnwell cwell
+end
+

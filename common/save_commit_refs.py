@@ -12,7 +12,7 @@
 # section is fixed and is not modified by replacement like the
 # rest of the JSON file.  It is the duty of the PDK developer to
 # update the references section periodically by running "make
-# distribution".
+# reference".
 #
 #--------------------------------------------------------------------
 # Usage:
@@ -41,7 +41,7 @@
 # contents.
 #
 # Example:
-#	sky130.json has an entry in "distribution":
+#	sky130.json has an entry in "reference":
 #		"magic": "fe2eb6d3906ed15ade0e7a51daea80dd4e3846e2"
 #	reflecting the git commit number of the program "magic" at
 #	the time the developer last ran save_commit_refs.py.
@@ -49,7 +49,7 @@
 #		"magic": "MAGIC_COMMIT"
 #	If save_commit_refs.py is called as:
 #		save_commit_refs.py sky130.json -DMAGIC_COMMIT=abcdef
-#	then the line in "distribution" will be changed to:
+#	then the line in "reference" will be changed to:
 #		"magic": "abcdef"
 #
 #--------------------------------------------------------------------
@@ -92,7 +92,7 @@ def runsubs(keys, defines, inputfile, outputfile):
         newline = line
 
         if indist == False:
-            if '"distribution":' in line:
+            if '"reference":' in line:
                 indist = True
             else:
                 # Find values matching keywords

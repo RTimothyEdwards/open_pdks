@@ -1,0 +1,95 @@
+#define DESCRIPTION Global Foundries 0.18um MCU CMOS, 2fF MiM + 1k high sheet rho poly
+#ifdef METALS3
+#define OPTION1 + 3 metal layer backend stack
+#elseif defined (METALS4)
+#define OPTION1 + 4 metal layer backend stack
+#elseif defined (METALS5)
+#define OPTION1 + 5 metal layer backend stack
+#elseif defined (METALS6)
+#define OPTION1 + 6 metal layer backend stack
+#else
+#define OPTION1 + 2 metal layer backend stack
+#endif
+#ifdef THICKMET3P0
+#define OPTION2 + 3um thick top metal
+#elseif defined (THICKMET1P1)
+#define OPTION2 + 1.1um thick top metal
+#elseif defined (THICKMET0P9)
+#define OPTION2 + 0.9um thick top metal
+#else
+#define OPTION2 + 0.6um thick top metal
+#endif
+#ifdef MIM
+#define OPTION3 + 2fF/um^2 MiM caps
+#else
+#define OPTION3
+#endif (MIM)
+#ifdef HRES1K
+#define OPTION4 + 1k high sheet rho poly
+#else
+#define OPTION4
+#endif (HRES1K)
+#ifdef REDISTRIBUTION
+#define OPTION5 + redistribution layer
+#else
+#define OPTION5
+#endif (REDISTRIBUTION)
+{
+    "foundry": "GF",
+    "foundry-name": "Global Foundries",
+    "node": "TECHNAME",
+    "feature-size": "180nm",
+    "status": "active",
+    "description": "DESCRIPTION OPTION1 OPTION2 OPTION3 OPTION4 OPTION5",
+    "options": [
+#ifdef THICKMET3P0
+	"THICKMET",
+#endif
+#ifdef MIM
+#undef MIM
+	"MIM_2P0",
+#endif
+#ifdef HRES1K
+	"HIRES_POLY_1K",
+#endif
+#ifdef METALS3
+	"METAL3"
+#elseif defined (METALS4)
+	"METAL4"
+#elseif defined (METALS5)
+	"METAL5"
+#elseif defined (METALS6)
+	"METAL6"
+#endif
+    ],
+    "stdcells": {
+	"gf180mcu_fd_sc_mcu9t5v0": "FD_SC_MCU9T5V0_COMMIT",
+	"gf180mcu_fd_sc_mcu7t5v0": "FD_SC_MCU9T5V0_COMMIT"
+    },
+    "iocells": {
+        "gf180mcu_fd_io": "FD_IO_COMMIT"
+    },
+    "primitive": {
+	"gf180mcu_fd_pr": "FD_PR_COMMIT"
+    },
+    "memory": {
+	"gf180mcu_fd_ip_sram": "FD_IP_SRAM_COMMIT"
+    },
+    "build": {
+	"open_pdks": "OPEN_PDKS_VERSION",
+	"magic": "MAGIC_VERSION"
+    },
+    "commit": {
+	"open_pdks": "OPEN_PDKS_COMMIT",
+	"magic": "MAGIC_COMMIT"
+    }
+    "reference": {
+        "open_pdks": "fb6f374beff316f9a8e0b5585facfc18008c0f2d",
+        "magic": "43d5cc280413b0fd947b555bf1e8d79ea8681450",
+        "gf180mcu_fd_pr": "92ec4b2e5eb193a0c5c2754413d44981c8e17e16",
+        "gf180mcu_fd_io": "5cc533968c9d03972f92a461af0edc80118b1e9c",
+        "gf180mcu_fd_sc_mcu7t5v0": "1f37f62c329b62710f4331d68272beeae20140e5",
+        "gf180mcu_fd_sc_mcu9t5v0": "1f37f62c329b62710f4331d68272beeae20140e5",
+        "gf180mcu_fd_ip_sram": "343ab45497682f3f3f808ee4c79a8f92c5010636"
+    }
+}

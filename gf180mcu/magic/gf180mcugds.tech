@@ -1,0 +1,497 @@
+tech
+    format 33
+    GF013_GDS
+end
+
+version
+    version REVISION
+    description "Global Foundries GF013 (013BCDlite): Vendor GDS layers"
+end
+
+planes
+ l01
+ l02
+ l03
+ l04
+ l05
+ l06
+ l07
+ l08
+ l09
+ l10
+ l11
+ l12
+ l13
+ l14
+ l15
+ l16
+ l17
+ l18
+ l19
+ l20
+ l21
+ l22
+ l23
+ l24
+ l25
+ l26
+ l27
+ l28
+ l29
+ l30
+ l31
+ l32
+ l33
+ l34
+ l35
+ l36
+end
+
+types
+ l01 NWELL,l01
+ l02 COMP,l02
+ l03 DUALGATE,l03
+ l04 POLY2,l04
+ l05 NPLUS,l05
+ l06 ESD,l06
+ l07 SAB,l07
+ l08 PPLUS,l08
+ l09 CONTACT,l09
+ l10 METAL1,l10
+ l11 VIA1,l11
+ l12 METAL2,l12
+ l13 VIA2,l13
+ l14 METAL3,l14
+ l15 VIA3,l15
+ l16 METAL4,l16
+ l17 VIA4,l17
+ l18 METAL5,l18
+ l19 VIA5,l19
+ l20 METAL6,l20
+ l21 VIA6,l21
+ l22 METAL7,l22
+ l23 VIATV,l23
+ l24 METALMT,l24
+ l25 PAD,l25
+ l26 HVT,l26
+ l27 DNWELL,l27
+ l28 RES,l28
+ l29 FUSEBOT,l29
+ l30 FUSETOP,l30
+ l31 LVT,l31
+ l32 NAT,l32
+ l33 BJT,l33
+ l34 DIODE,l34
+ l35 RESDEF,l35
+ l36 CAPDEF,l36
+end
+
+contact
+end
+
+styles
+    styletype	mos
+ l01   nwell
+ l02   ndiffusion
+ l03   implant1
+ l04   polysilicon
+ l05   ndop_stripes
+ l06   implant2
+ l07   implant3
+ l08   pdop_stripes
+ l09   contact_X'es
+ l10   metal1
+ l11   via1arrow
+ l12   metal2
+ l13   via2arrow
+ l14   metal3
+ l15   via3
+ l16   metal4
+ l17   via4
+ l18   metal5
+ l19   via5
+ l20   metal6
+ l21   via6
+ l22   metal7
+ l23   via7
+ l24   metal8
+ l25   overglass
+ l26   nselect
+ l27   cwell
+ l28   poly_resist_stripes
+ l29   mim_top
+ l30   mim_bottom
+ l31   pselect
+ l32   substrate_field_implant
+ l33   implant4
+ l34   pdop_stripes
+ l35   pselect2
+ l36   implant3
+end
+
+compose
+end
+
+connect
+end
+
+cifoutput
+style gdsii
+ scalefactor 50 nanometers
+ options calma-permissive-labels
+
+ layer  NWELL NWELL
+ labels NWELL 
+ calma 21 0
+
+ layer  COMP COMP
+ labels COMP 
+ calma 22 0
+
+ layer  DUALGATE DUALGATE
+ labels DUALGATE 
+ calma 55 0
+
+ layer  POLY2 POLY2
+ labels POLY2 
+ calma 30 0
+
+ layer  NPLUS NPLUS
+ labels NPLUS 
+ calma 32 0
+
+ layer  ESD ESD
+ labels ESD 
+ calma 24 0
+
+ layer  SAB SAB
+ labels SAB 
+ calma 49 0
+
+ layer  PPLUS PPLUS
+ labels PPLUS 
+ calma 31 0
+
+ layer  CONTACT CONTACT
+ labels CONTACT 
+ calma 33 0
+
+ layer  METAL1 METAL1
+ labels METAL1 
+ calma 34 0
+
+ layer  VIA1 VIA1
+ labels VIA1 
+ calma 35 0
+
+ layer  METAL2 METAL2
+ labels METAL2 
+ calma 36 0
+
+ layer  VIA2 VIA2
+ labels VIA2 
+ calma 38 0
+
+ layer  METAL3 METAL3
+ labels METAL3 
+ calma 42 0
+
+ layer  VIA3 VIA3
+ labels VIA3 
+ calma 40 0
+
+ layer  METAL4 METAL4
+ labels METAL4 
+ calma 46 0
+
+ layer  VIA4 VIA4
+ labels VIA4 
+ calma 41 0
+
+ layer  METAL5 METAL5
+ labels METAL5 
+ calma 81 0
+
+ layer  VIA5 VIA5
+ labels VIA5 
+ calma 82 0
+
+ layer  METAL6 METAL6
+ labels METAL6 
+ calma 126 0
+
+ layer  VIA6 VIA6
+ labels VIA6 
+ calma 127 0
+
+ layer  METAL7 METAL7
+ labels METAL7 
+ calma 128 0
+
+ layer  VIATV VIATV
+ labels VIATV
+ calma 129 0
+
+ layer  METALMT METALMT
+ labels METALMT 
+ calma 53 0
+
+ layer  PAD PAD
+ labels PAD 
+ calma 37 0
+
+ layer HVT HVT
+ labels HVT
+ calma 187 0
+
+ layer DNWELL DNWELL
+ labels DNWELL
+ calma 12 0
+
+ layer RES RES
+ labels RES
+ calma 62 0
+
+ layer FUSEBOT FUSEBOT
+ labels FUSEBOT
+ calma 138 0
+
+ layer FUSETOP FUSETOP
+ labels FUSETOP
+ calma 75 0
+
+ layer CAPDEF CAPDEF
+ labels CAPDEF
+ calma 117 5
+
+ layer LVT LVT
+ labels LVT
+ calma 87 0
+
+ layer NAT NAT
+ labels NAT
+ calma 05 0
+
+ layer BJT BJT
+ labels BJT
+ calma 118 5
+
+ layer DIODE DIODE
+ labels DIODE
+ calma 115 5
+
+ layer RESDEF RESDEF
+ labels RESDEF
+ calma 110 5
+
+ layer PRBND
+ boundary
+ calma 0 0
+
+end
+
+cifinput
+style ProgName
+ scalefactor 50 nanometers
+
+ layer  NWELL NWELL
+ labels NWELL 
+ calma NWELL 21 0
+
+ layer  COMP COMP
+ labels COMP 
+ calma COMP 22 0
+
+ layer  DUALGATE DUALGATE
+ labels DUALGATE 
+ calma DUALGATE 55 0
+
+ layer  POLY2 POLY2
+ labels POLY2 
+ calma POLY2 30 0
+
+ layer  NPLUS NPLUS
+ labels NPLUS 
+ calma NPLUS 32 0
+
+ layer  ESD ESD
+ labels ESD 
+ calma ESD 24 0
+
+ layer  SAB SAB
+ labels SAB 
+ calma SAB 49 0
+
+ layer  PPLUS PPLUS
+ labels PPLUS 
+ calma PPLUS 31 0
+
+ layer  CONTACT CONTACT
+ labels CONTACT 
+ calma CONTACT 33 0
+
+ layer  METAL1 METAL1
+ labels METAL1 
+ calma METAL1 34 0
+
+ layer  VIA1 VIA1
+ labels VIA1 
+ calma VIA1 35 0
+
+ layer  METAL2 METAL2
+ labels METAL2 
+ calma METAL2 36 0
+
+ layer  VIA2 VIA2
+ labels VIA2 
+ calma VIA2 38 0
+
+ layer  METAL3 METAL3
+ labels METAL3 
+ calma METAL3 42 0
+
+ layer  VIA3 VIA3
+ labels VIA3 
+ calma VIA3 40 0
+
+ layer  METAL4 METAL4
+ labels METAL4 
+ calma METAL4 46 0
+
+ layer  VIA4 VIA4
+ labels VIA4 
+ calma VIA4 41 0
+
+ layer  METAL5 METAL5
+ labels METAL5 
+ calma METAL5 81 0
+
+ layer  VIA5 VIA5
+ labels VIA5 
+ calma VIA5 82 0
+
+ layer  METAL6 METAL6
+ labels METAL6 
+ calma METAL6 126 0
+
+ layer  VIA6 VIA6
+ labels VIA6 
+ calma VIA6 127 0
+
+ layer  METAL7 METAL7
+ labels METAL7 
+ calma METAL7 128 0
+
+ layer  VIATV VIATV
+ labels VIATV
+ calma VIATV 129 0
+
+ layer  METALMT METALMT
+ labels METALMT 
+ calma METALMT 53 0
+
+ layer  PAD PAD
+ labels PAD 
+ calma PAD 37 0
+
+ layer HVT HVT
+ labels HVT
+ calma HVT 187 0
+
+ layer DNWELL DNWELL
+ labels DNWELL
+ calma DNWELL 12 0
+
+ layer RES RES
+ labels RES
+ calma RES 62 0
+
+ layer FUSEBOT FUSEBOT
+ labels FUSEBOT
+ calma FUSEBOT 138 0
+
+ layer FUSETOP FUSETOP
+ labels FUSETOP
+ calma FUSETOP 75 0
+
+ layer CAPDEF CAPDEF
+ labels CAPDEF
+ calma CAPDEF 117 5
+
+ layer LVT LVT
+ labels LVT
+ calma LVT 87 0
+
+ layer NAT NAT
+ labels NAT
+ calma NAT 05 0
+
+ layer BJT BJT
+ labels BJT
+ calma BJT 118 5
+
+ layer DIODE DIODE
+ labels DIODE
+ calma DIODE 115 5
+
+ layer RESDEF RESDEF
+ labels RESDEF
+ calma RESDEF 110 5
+
+ templayer PRBND
+ boundary
+ calma PRBND 0 0
+
+end
+ 
+mzrouter
+end
+
+drc
+end
+ 
+mzrouter
+end
+
+drc
+end
+
+extract
+style default
+ planeorder l01  0
+ planeorder l02  1
+ planeorder l03  2
+ planeorder l04  3
+ planeorder l05  4
+ planeorder l06  5
+ planeorder l07  6
+ planeorder l08  7
+ planeorder l09  8
+ planeorder l10  9
+ planeorder l11 10
+ planeorder l12 11
+ planeorder l13 12
+ planeorder l14 13
+ planeorder l15 14
+ planeorder l16 15
+ planeorder l17 16
+ planeorder l18 17
+ planeorder l19 18
+ planeorder l20 19
+ planeorder l21 20
+ planeorder l22 21
+ planeorder l23 22
+ planeorder l24 23
+ planeorder l25 24
+ planeorder l26 25
+ planeorder l27 26
+ planeorder l28 27
+ planeorder l29 28
+ planeorder l30 29
+ planeorder l31 30
+ planeorder l32 31
+ planeorder l33 32
+ planeorder l34 33
+ planeorder l35 34
+ planeorder l36 35
+end

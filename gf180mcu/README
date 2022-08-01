@@ -1,0 +1,76 @@
+Master PDK generator for gf180mcu
+---------------------------------
+
+Run "make" to generate all files for each PDK.
+
+This make script takes the source files and generates files for local (efabless)
+PDK names "gf180mcuA", "gf180mcuB", etc.
+
+The definition of each PDK is made in the Makefile using defines; e.g.,
+	-DMETAL4, etc.
+
+These are based on a subset of the 15 supported process variants shown in the
+Global Foundries documentation.  See the Makefile for a complete description.
+
+The make script makes use of the python script "preproc.py" (in the ../common
+directory) to parse each source file for "#ifdef ..."-type macros.  The syntax
+is similar to that used by the C preprocessor (cpp) but does not assume C
+language syntax in the input file, so is generally better to use than cpp
+(has less unexpected/unintentional behavior).  See comments in the preproc.py
+script for a full list of macros that it accepts (short list: #ifdef, #ifndef,
+#define, #include, and boolean operators ||, &&, and !). 
+
+Files generated:
+	.tech		techfile for magic, general user use (limited DRC, no GDS)
+	-GDS.tech	techfile for magic, vendor mask layers
+	.tcl		PDK script for magic
+	-BindKeys	key binding script for magic partly matching Cadence defaults
+	.magicrc	magic startup script (copy to local directory as .magicrc)
+	_setup.tcl	netgen setup script for LVS
+	.sh		qflow master setup script, standard 1.8V digital
+	.par		graywolf setup file, standard 1.8V digital
+
+The installation directory below PDK_ROOT is the name of the PDK;  e.g.,
+
+	    gf180mcuA/	3-metal backend stack
+	    gf180mcuB/	4-metal backend stack
+	    gf180mcuC/	5-metal backend stack
+
+(Again, see the Makefile for the complete description.)
+
+The installation directory hierarchy below the PDK name looks like the following:
+
+		libs.tech/		technology and setup files
+
+		    magic/		magic techfiles, startup file, PDK script,
+					and key binding script.
+		    netgen/		netgen setup file
+		    qflow/		qflow scripts and graywolf setup files.
+		    ngspice/		SPICE models (ngspice compatible)
+
+		libs.ref/		foundry data
+
+		    gf180mcu_fd_pr/	primitive devices w/fixed layout
+		    gf180mcu_fd_sc_7t/	Digital standard cells (7 track height)
+		    gf180mcu_fd_sc_9t/	Digital standard cells (9 track height)
+		    gf180mcu_fd_io/	I/O pad cells
+		    gf180mcu_fd_sram/	SRAM macros
+		    gf180mcu_fd_nvram/	NVRAM macros
+
+Each subdirectory of libs.ref is further divided into sections based on the
+file type.  These sections include one or more of:
+
+		    cdl/		CDL netlists
+		    doc/		Foundry documentation
+		    gds/		GDS files
+		    lef/		LEF macro files
+		    lib/		Liberty timing files
+		    mag/		Magic files derived from GDS
+		    maglef/		Magic files derived from LEF macros
+		    spice/		SPICE netlists (ngspice compatible)
+		    techlef/		LEF technology files
+		    verilog/		verilog modules
+
+The target installation destinations assume the directory structure above.  Changing
+this requires editing the source files.
+

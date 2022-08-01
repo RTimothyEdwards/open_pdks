@@ -224,15 +224,31 @@ AC_DEFUN([M4_OPT_INSTALLATION], [
     AC_SUBST(targetvar[]_PATH)
 ])
 
+# NOTE:  This part of the configuration should be based off of the
+# contents of a file with a predetermined name existing in each of
+# the open PDK directories.
+
+# SkyWater sky130 essential
 M4_GEN_INSTALLATION(sky130_ml_xx_hd, alpha-sky130, ../sources)
 M4_GEN_INSTALLATION(xschem_sky130, xschem-sky130, ../sources)
 M4_GEN_INSTALLATION(klayout_sky130, klayout-sky130, ../sources)
 M4_GEN_INSTALLATION(precheck_sky130, precheck-sky130, ../sources)
 
+# SkyWater sky130 optional
 M4_OPT_INSTALLATION(sky130_sram_macros, sram-sky130, ../sources)
 M4_OPT_INSTALLATION(sky130_osu_t12, osu-t12-sky130, ../sources)
 M4_OPT_INSTALLATION(sky130_osu_t15, osu-t15-sky130, ../sources)
 M4_OPT_INSTALLATION(sky130_osu_t18, osu-t18-sky130, ../sources)
+
+# GlobalFoundries gf180mcu essential
+M4_GEN_INSTALLATION(gf180mcu_fd_pr, primitive-gf180mcu, ../sources)
+M4_GEN_INSTALLATION(gf180mcu_fd_io, io-gf180mcu, ../sources)
+M4_GEN_INSTALLATION(gf180mcu_fd_sc_mcu7t5v0, sc-7t5v0-gf180mcu, ../sources)
+M4_GEN_INSTALLATION(gf180mcu_fd_sc_mcu9t5v0, sc-9t5v0-gf180mcu, ../sources)
+M4_GEN_INSTALLATION(gf180mcu_fd_ip_sram, sram-gf180mcu, ../sources)
+
+# GlobalFoundries gf180mcu optional
+# (None yet)
 
 AC_DEFUN([M4_GEN_WITH_TOOLS], [
     m4_foreach_w(tool, $1, [

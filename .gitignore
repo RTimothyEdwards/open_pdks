@@ -9,6 +9,7 @@ __pycache__
 # script artifacts
 *_install.log
 *_migrate.log
+make.log
 
 # autotools artifacts
 **/Makefile

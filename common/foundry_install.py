@@ -2225,17 +2225,25 @@ if __name__ == '__main__':
                     print('ext2spice cthresh 0.1', file=ofile)
 
                 if os.path.isfile(allgdslibname):
-                    print('select top cell', file=ofile)
-                    print('set glist [cellname list children]', file=ofile)
-                    print('foreach cell $glist {', file=ofile)
+                    # Do not depend absolutely on the library having a top
+                    # level cell, but query for it from inside magic
+                    print('if {[cellname list exists ' + allgdslibname + ']} {',
+				file=ofile)
+                    print('   select top cell', file=ofile)
+                    print('   set glist [cellname list children]', file=ofile)
+                    print('} else {', file=ofile)
+                    print('   set glist [cellname list top]', file=ofile)
+                    print('}', file=ofile)
                 else:
-                    print('foreach cell [cellname list top] {', file=ofile)
+                    print('set glist [cellname list top]', file=ofile)
 
+                print('foreach cell $glist {', file=ofile)
                 print('    load $cell', file=ofile)
                 print('    puts stdout "Extracting cell $cell"', file=ofile)
                 print('    extract all', file=ofile)
                 print('    ext2spice', file=ofile)
                 print('}', file=ofile)
+
                 print('puts stdout "Done."', file=ofile)
                 print('quit -noprompt', file=ofile)
 
