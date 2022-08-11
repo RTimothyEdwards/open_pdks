@@ -7,6 +7,10 @@
 # magic do not have VNB and VPB pins.  This script adds the annotation
 # for port use and port direction.
 #
+# (Added 8/11/2022) The script also reclassifies the antenna diode cell
+# as core sub-type ANTENNACELL, which the original standard cell LEF
+# views fail to do.
+#
 # This script is a filter to be run by setting the name of this script as
 # the value to "filter=" for the model install in the sky130 Makefile.
 
@@ -31,8 +35,24 @@ def filter(inname, outname):
     modified = False
 
     endrex = re.compile('[ \t]*END[ \t]+VGND')
+    macrorex = re.compile('^MACRO[ \t]+([^ \t\n]+)')
+    classrex = re.compile('^[ \t]*CLASS')
+    macroname = None
 
     for line in llines:
+
+        # Check for MACRO line and record the macro name
+        mmatch = macrorex.match(line)
+        if mmatch:
+            macroname = mmatch.group(1)
+
+        # Check for "CLASS" related to "DIODE"
+        cmatch = classrex.match(line)
+        if cmatch and macroname:
+            if '__diode_' in macroname:
+                line = '  CLASS CORE ANTENNACELL ;'
+                modified = True
+
         fixedlines.append(line)
 
         # Check for end of VGND pin in file
@@ -51,6 +71,7 @@ def filter(inname, outname):
             fixedlines.append('    END')
             fixedlines.append('  END VPB')
             modified = True
+            macroname = None
 
     # Write output
     if outname == None:
