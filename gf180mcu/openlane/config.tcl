@@ -7,9 +7,23 @@ set ::env(GND_PIN) "VSS"
 set ::env(STD_CELL_POWER_PINS) "VDD"
 set ::env(STD_CELL_GROUND_PINS) "VSS"
 
+if { ![info exist ::env(STD_CELL_LIBRARY)] } {
+    set ::env(STD_CELL_LIBRARY) gf180mcu_fd_sc_mcu7t5v0
+}
+if { ![info exist ::env(STD_CELL_LIBRARY_OPT)] } {
+    set ::env(STD_CELL_LIBRARY_OPT) gf180mcu_fd_sc_mcu7t5v0
+}
+
+# Lib Files
+set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/liberty/$::env(STD_CELL_LIBRARY)__tt_025C_3v30.lib"
+set ::env(LIB_FASTEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/liberty/$::env(STD_CELL_LIBRARY)__ff_n40C_5v50.lib"
+set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/liberty/$::env(STD_CELL_LIBRARY)__ss_125C_1v62.lib"
+
+set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
+
 # Technology LEF
-set ::env(TECH_LEF)  [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*_tech.lef"]
-set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lef/*_mw.lef"]
+set ::env(TECH_LEF)  [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*.tlef"]
+set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lef/*.lef"]
 set ::env(GDS_FILES) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/gds/*.gds"]
 set ::env(STD_CELL_LIBRARY_CDL)	"$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/cdl/$::env(STD_CELL_LIBRARY).cdl"
 set ::env(GPIO_PADS_LEF) "\
@@ -90,7 +104,7 @@ set ::env(RCX_RULES_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.
 set ::env(METAL_LAYER_NAMES) "Metal1 Metal2 Metal3 Metal4 Metal5"
 set ::env(RT_MIN_LAYER) "Metal1"
 set ::env(RT_MAX_LAYER) "Metal5"
-set ::env(GLB_RT_LAYER_ADJUSTMENTS) "0,0,0,0,0"
+set ::env(GRT_LAYER_ADJUSTMENTS) "0,0,0,0,0"
 
 ## Tracks info
 set ::env(TRACKS_INFO_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/tracks.info"
