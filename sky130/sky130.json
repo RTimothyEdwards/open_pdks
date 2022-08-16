@@ -92,7 +92,7 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "fb6f374beff316f9a8e0b5585facfc18008c0f2d",
+        "open_pdks": "cc0029b45c68137aa21323912f50d2fc17eeea13",
         "magic": "43d5cc280413b0fd947b555bf1e8d79ea8681450",
         "skywater_pdk": "f70d8ca46961ff92719d8870a18a076370b85f6c",
         "sky130_osu_sc_t12": "ac90ef0c622a9377a16b5218d9da3ac4169eeaaf",
