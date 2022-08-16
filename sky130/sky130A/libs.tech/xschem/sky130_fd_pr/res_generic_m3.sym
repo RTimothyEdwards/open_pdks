@@ -21,7 +21,7 @@ format="@name @pinlist sky130_fd_pr__@model W=@W L=@L m=@mult"
 template="name=R1
 W=1
 L=1
-model=res_generic_m1
+model=res_generic_m3
 mult=1"
 }
 V {}
