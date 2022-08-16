@@ -1,3 +1,4 @@
+{
 #define DESCRIPTION Global Foundries 0.18um MCU CMOS, 2fF MiM + 1k high sheet rho poly
 #ifdef METALS3
 #define OPTION1 + 3 metal layer backend stack
@@ -34,7 +35,6 @@
 #else
 #define OPTION5
 #endif (REDISTRIBUTION)
-{
     "foundry": "GF",
     "foundry-name": "Global Foundries",
     "node": "TECHNAME",
@@ -63,33 +63,34 @@
 #endif
     ],
     "stdcells": {
-	"gf180mcu_fd_sc_mcu9t5v0": "FD_SC_MCU9T5V0_COMMIT",
-	"gf180mcu_fd_sc_mcu7t5v0": "FD_SC_MCU9T5V0_COMMIT"
+        "gf180mcu_fd_sc_mcu9t5v0": "FD_SC_MCU9T5V0_COMMIT",
+        "gf180mcu_fd_sc_mcu7t5v0": "FD_SC_MCU9T5V0_COMMIT"
     },
     "iocells": {
         "gf180mcu_fd_io": "FD_IO_COMMIT"
     },
     "primitive": {
-	"gf180mcu_fd_pr": "FD_PR_COMMIT"
+        "gf180mcu_fd_pr": "FD_PR_COMMIT"
     },
     "memory": {
-	"gf180mcu_fd_ip_sram": "FD_IP_SRAM_COMMIT"
+        "gf180mcu_fd_ip_sram": "FD_IP_SRAM_COMMIT"
     },
     "build": {
-	"open_pdks": "OPEN_PDKS_VERSION",
-	"magic": "MAGIC_VERSION"
+        "open_pdks": "OPEN_PDKS_VERSION",
+        "magic": "MAGIC_VERSION"
     },
     "commit": {
-	"open_pdks": "OPEN_PDKS_COMMIT",
-	"magic": "MAGIC_COMMIT"
-    }
+        "open_pdks": "OPEN_PDKS_COMMIT",
+        "magic": "MAGIC_COMMIT"
+    },
     "reference": {
-        "open_pdks": "a1cf1b7c41dfccf1d38815278c543dd2f1e402dc",
-        "magic": "1c20abad5b9cd57da167297e27ccfc92f3321cf5",
-        "gf180mcu_fd_pr": "e1b4e187900370103bf9b8a22bb8625f883368ef",
-        "gf180mcu_fd_io": "bcaa40aaf6cf04d6e9cb143d0e5b0de9429e53ab",
-        "gf180mcu_fd_sc_mcu7t5v0": "493461195536004d46c8cbaac9605095c8280983",
-        "gf180mcu_fd_sc_mcu9t5v0": "493461195536004d46c8cbaac9605095c8280983",
-        "gf180mcu_fd_ip_sram": "9c411928870ce15226228fa52ddb6ecc0ea4ffbe"
+        "open_pdks": "cc0029b45c68137aa21323912f50d2fc17eeea13",
+        "magic": "f7df5e7c86fb47c5fd445c846afddc6fbabad6ae",
+        "gf180mcu_pdk": "08c628b77c4683cad8441d7d0c2df1c8ab58cbc2",
+        "gf180mcu_fd_pr": "92ec4b2e5eb193a0c5c2754413d44981c8e17e16",
+        "gf180mcu_fd_io": "5cc533968c9d03972f92a461af0edc80118b1e9c",
+        "gf180mcu_fd_sc_mcu7t5v0": "1f37f62c329b62710f4331d68272beeae20140e5",
+        "gf180mcu_fd_sc_mcu9t5v0": "1f37f62c329b62710f4331d68272beeae20140e5",
+        "gf180mcu_fd_ip_sram": "343ab45497682f3f3f808ee4c79a8f92c5010636"
     }
 }

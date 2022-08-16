@@ -2,9 +2,15 @@
 set ::env(PROCESS) 130
 set ::env(DEF_UNITS_PER_MICRON) 1000
 
+if { ![info exist ::env(STD_CELL_LIBRARY)] } {
+	set ::env(STD_CELL_LIBRARY) sky130_fd_sc_hd
+}
+if { ![info exist ::env(STD_CELL_LIBRARY_OPT)] } {
+	set ::env(STD_CELL_LIBRARY_OPT) sky130_fd_sc_hd
+}
+
 # Placement site for core cells
 # This can be found in the technology lef
-
 set ::env(VDD_PIN) "VPWR"
 set ::env(GND_PIN) "VGND"
 
@@ -163,7 +169,7 @@ set ::env(FP_IO_HLAYER) "met3"
 set ::env(FP_IO_VLAYER) "met2"
 
 # Routing Layer Info
-set ::env(GLB_RT_LAYER_ADJUSTMENTS) "0.99,0,0,0,0,0"
+set ::env(GRT_LAYER_ADJUSTMENTS) "0.99,0,0,0,0,0"
 
 set ::env(RT_MIN_LAYER) "met1"
 set ::env(RT_MAX_LAYER) "met5"
