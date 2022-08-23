@@ -204,7 +204,7 @@ def replace_with_symlinks(libfiles, sourcelist):
                     newlibfiles = glob.glob(libfile + '/*')
                     newsourcelist = glob.glob(sourcefile + '/*')
                     total += replace_with_symlinks(newlibfiles, newsourcelist)
-                elif filecmp.cmp(libfile, sourcefile):
+                elif filecmp.cmp(libfile, sourcefile, shallow=False):
                     if not os.path.split(libfile)[1] in exclude:
                         os.remove(libfile)
                         # Use absolute path for the source file
@@ -251,7 +251,7 @@ def replace_all_with_symlinks(libdir, srclibdir, checklibdir):
                     total += replace_all_with_symlinks(libpath, srcpath, checkpath)
             else:
                 try:
-                    if filecmp.cmp(libpath, checkpath):
+                    if filecmp.cmp(libpath, checkpath, shallow=False):
                         os.remove(libpath)
                         os.symlink(srcpath, libpath)
                         total += 1
