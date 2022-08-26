@@ -118,6 +118,14 @@
 #		    contains a directory path, then patterns are added from
 #		    files in the specified directory instead of the source.
 #
+#	header :   Followed by "=" and an alternative name.  When compiling
+#		    a library file, use this file as a header.  Required for
+#		    liberty format;  optional for others.  Behavior is format-
+#		    dependent;  e.g., for liberty headers, the cell entries
+#		    will be inserted before the final closing brace.  The name
+#		    may be wildcarded, but if so, there must only be a single
+#		    matching file.
+#
 #	rename :   Followed by "=" and an alternative name.  For any
 #		    file that is a single entry, change the name of
 #		    the file in the target directory to this (To-do:
@@ -854,6 +862,15 @@ if __name__ == '__main__':
         if len(includelist) > 0:
             print('Including files: ' + (',').join(includelist))
 
+        # Option 'header' has an argument
+        headerfile = None
+        try:
+            headerfile = list(item.split('=')[1] for item in option if item.startswith('header'))[0]
+        except IndexError:
+            headerfile = None
+        else:
+            print('Header file is: ' + headerfile)
+
         # Option 'rename' has an argument
         try:
             newname = list(item.split('=')[1] for item in option if item.startswith('rename'))[0]
@@ -1048,10 +1065,23 @@ if __name__ == '__main__':
 
                 destfilelist.append(os.path.split(targname)[1])
 
+            # If headerfile is non-null, then copy this file, too.  Do not add
+            # it to "destfilelist", as it is handled separately.  Recast
+            # headerfile as the name of the file without the path.
+
+            if headerfile:
+                headerpath = substitute(sourcedir + '/' + headerfile, library[1])
+                headerlist = glob.glob(headerpath)
+                if len(headerlist) == 1:
+                    libname = headerlist[0]
+                    destfile = os.path.split(libname)[1]
+                    targname = destlibdir + destpath + '/' + destfile
+                    shutil.copy(libname, targname)
+                    headerfile = destfile
+
             # Add names from "include" list to destfilelist before writing
             # filelist.txt for library file compiling.
 
-            includenames = []
             for incname in includelist:
                 if '/' in incname:
                     # Names come from files in a path that is not the source
@@ -1105,7 +1135,7 @@ if __name__ == '__main__':
                     # then compile one, because one does not want to have to have
                     # an include line for every single cell used in a design.
 
-                    create_lib_library(destlibdir, compname, do_compile_only, excludelist)
+                    create_lib_library(destlibdir, compname, do_compile_only, excludelist, headerfile)
 
                 elif option[0] == 'spice' or option[0] == 'spi':
                     # If there is not a single file with all SPICE subcircuits in it,

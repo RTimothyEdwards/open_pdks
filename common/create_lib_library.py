@@ -30,6 +30,7 @@ def usage():
     print('    <destlib>         is the root name of the library file')
     print('    -compile-only     remove the indidual files if specified')
     print('    -excludelist=     is a comma-separated list of files to ignore')
+    print('    -header=		 is the name of a file containing header information')
     print('')
 
 #----------------------------------------------------------------------------
@@ -41,10 +42,27 @@ def usage():
 # voltage.
 #----------------------------------------------------------------------------
 
-def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[]):
+def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[],
+	headerfile=None):
 
     # destlib should not have a file extension
     destlibroot = os.path.splitext(destlib)[0]
+
+    # If a header file is specified, read it first.  If the header file
+    # name is the same as the library name (typical), the file will be
+    # destroyed before being rebuilt, so save the header file contents.
+
+    hlines = []
+    if headerfile:
+        try:
+            with open(destlibdir + '/' + headerfile, 'r') as ifile:
+                htext = ifile.read()
+                hlines = htext.splitlines()
+        except:
+            print('Error reading liberty header file ' + headerfile)
+            headerfile = None
+        else:
+            headerseen = True
 
     alllibname = destlibdir + '/' + destlibroot + '.lib'
     if os.path.isfile(alllibname):
@@ -79,6 +97,14 @@ def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[
     if len(llist) > 1:
         print('New file is:  ' + alllibname)
         with open(alllibname, 'w') as ofile:
+
+            # If a header file is specified, write that to the output first
+            if headerfile:
+                for hline in hlines:
+                    if not hline.startswith('}'):
+                        print(hline, file=ofile)
+                print('\n', file=ofile)
+
             headerdone = False
             for lfile in llist:
                 if not os.path.exists(lfile):
@@ -101,6 +127,10 @@ def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[
                     headerdone = True
                 print('/*--------EOF---------*/\n', file=ofile)
 
+            if headerfile:
+                # Finish the header file
+                print('}', file=ofile)
+
         if do_compile_only == True:
             print('Compile-only:  Removing individual LEF files')
             for lfile in llist:
@@ -122,6 +152,7 @@ if __name__ == '__main__':
     # Defaults
     do_compile_only = False
     excludelist = []
+    headerfile = None
 
     # Break arguments into groups where the first word begins with "-".
     # All following words not beginning with "-" are appended to the
@@ -142,6 +173,11 @@ if __name__ == '__main__':
                     excludelist = keyval[1].trim('"').split(',')
                 else:
                     print("No items in exclude list (ignoring).")
+            elif keyval[0] == 'header':
+                if len(keyval) > 0:
+                    headerfile = keyval[1].trim('"')
+                else:
+                    print("No value for header file (ignoring).")
             else:
                 print("Unknown option '" + keyval[0] + "' (ignoring).")
         else:
@@ -168,7 +204,7 @@ if __name__ == '__main__':
             print(file)
     print('')
 
-    create_lib_library(destlibdir, destlib, do_compile_only, excludelist)
+    create_lib_library(destlibdir, destlib, do_compile_only, excludelist, headerfile)
     print('Done.')
     sys.exit(0)
 
