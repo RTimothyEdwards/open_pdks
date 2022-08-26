@@ -45,6 +45,8 @@ def usage():
 def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[],
 	headerfile=None):
 
+    headerdone = False
+
     # destlib should not have a file extension
     destlibroot = os.path.splitext(destlib)[0]
 
@@ -62,7 +64,7 @@ def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[
             print('Error reading liberty header file ' + headerfile)
             headerfile = None
         else:
-            headerseen = True
+            headerdone = True
 
     alllibname = destlibdir + '/' + destlibroot + '.lib'
     if os.path.isfile(alllibname):
@@ -105,7 +107,6 @@ def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[
                         print(hline, file=ofile)
                 print('\n', file=ofile)
 
-            headerdone = False
             for lfile in llist:
                 if not os.path.exists(lfile):
                     print('Error: File ' + lfile + ' not found (skipping).')
