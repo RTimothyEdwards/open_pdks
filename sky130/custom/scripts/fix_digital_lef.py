@@ -46,12 +46,17 @@ def filter(inname, outname):
         if mmatch:
             macroname = mmatch.group(1)
 
-        # Check for "CLASS" related to "DIODE"
+        # Check for "CLASS" related to "DIODE" and also fill/decap cells
         cmatch = classrex.match(line)
         if cmatch and macroname:
             if '__diode_' in macroname:
-                line = '  CLASS CORE ANTENNACELL ;'
-                modified = True
+                if 'ANTENNACELL' not in line:
+                    line = '  CLASS CORE ANTENNACELL ;'
+                    modified = True
+            elif '__fill_' in macroname or '__decap_' in macroname:
+                if 'SPACER' not in line:
+                    line = '  CLASS CORE SPACER ;'
+                    modified = True
 
         fixedlines.append(line)
 

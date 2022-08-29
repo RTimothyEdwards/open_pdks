@@ -84,13 +84,13 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "cc0029b45c68137aa21323912f50d2fc17eeea13",
-        "magic": "f7df5e7c86fb47c5fd445c846afddc6fbabad6ae",
-        "gf180mcu_pdk": "08c628b77c4683cad8441d7d0c2df1c8ab58cbc2",
-        "gf180mcu_fd_pr": "92ec4b2e5eb193a0c5c2754413d44981c8e17e16",
-        "gf180mcu_fd_io": "5cc533968c9d03972f92a461af0edc80118b1e9c",
-        "gf180mcu_fd_sc_mcu7t5v0": "1f37f62c329b62710f4331d68272beeae20140e5",
-        "gf180mcu_fd_sc_mcu9t5v0": "1f37f62c329b62710f4331d68272beeae20140e5",
-        "gf180mcu_fd_ip_sram": "343ab45497682f3f3f808ee4c79a8f92c5010636"
+        "open_pdks": "2e4b5ef0b56746e2a89b23bf173585faef2416a2",
+        "magic": "2561afd402cae5614002dd6f0a1b06ed7166ea09",
+        "gf180mcu_pdk": "9b917f15df8a08db4232fee9eb83dca5b98ad263",
+        "gf180mcu_fd_pr": "e1b4e187900370103bf9b8a22bb8625f883368ef",
+        "gf180mcu_fd_io": "bcaa40aaf6cf04d6e9cb143d0e5b0de9429e53ab",
+        "gf180mcu_fd_sc_mcu7t5v0": "e37165b051d9f479242bf8e013d4e879d4652d36",
+        "gf180mcu_fd_sc_mcu9t5v0": "2a3e8df31ed8bf50a5bbc697a8939dc02e1cf6a8",
+        "gf180mcu_fd_ip_sram": "9c411928870ce15226228fa52ddb6ecc0ea4ffbe"
     }
 }

@@ -721,34 +721,49 @@ digital-9t5v0-%:
 			rename=gf180mcu_fd_sc_mcu9t5v0.tlef \
 		-cdl cells/*/*.cdl compile-only noconvert \
 		-liberty cells/*/*_ff_125C_1v98.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__ff_125C_1v98.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ff_125C_1v98 \
 		-liberty cells/*/*_ff_n40C_1v98.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__ff_n40C_1v98.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ff_n40C_1v98 \
-		-liberty cells/*/*_ff_125C_3p6v.lib compile-only \
-			rename=gf180mcu_fd_sc_mcu9t5v0__ff_125C_3p6v \
-		-liberty cells/*/*_ff_n40C_3p6v.lib compile-only \
-			rename=gf180mcu_fd_sc_mcu9t5v0__ff_n40C_3p6v \
+		-liberty cells/*/*_ff_125C_3v60.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__ff_125C_3v60.lib \
+			rename=gf180mcu_fd_sc_mcu9t5v0__ff_125C_3v60 \
+		-liberty cells/*/*_ff_n40C_3v60.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__ff_n40C_3v60.lib \
+			rename=gf180mcu_fd_sc_mcu9t5v0__ff_n40C_3v60 \
 		-liberty cells/*/*_ff_125C_5v50.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__ff_125C_5v50.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ff_125C_5v50 \
 		-liberty cells/*/*_ff_n40C_5v50.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__ff_n40C_5v50.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ff_n40C_5v50 \
 		-liberty cells/*/*_ss_125C_1v62.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__ss_125C_1v62.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ss_125C_1v62 \
 		-liberty cells/*/*_ss_n40C_1v62.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__ss_n40C_1v62.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ss_n40C_1v62 \
 		-liberty cells/*/*_ss_125C_3v00.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__ss_125C_3v00.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ss_125C_3v00 \
 		-liberty cells/*/*_ss_n40C_3v00.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__ss_n40C_3v00.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ss_n40C_3v00 \
 		-liberty cells/*/*_ss_125C_4v50.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__ss_125C_4v50.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ss_125C_4v50 \
 		-liberty cells/*/*_ss_n40C_4v50.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__ss_n40C_4v50.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ss_n40C_4v50 \
 		-liberty cells/*/*_tt_025C_1v80.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__tt_025C_1v80.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__tt_025C_1v80 \
 		-liberty cells/*/*_tt_025C_3v30.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__tt_025C_3v30.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__tt_025C_3v30 \
 		-liberty cells/*/*_tt_025C_5v00.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu9t5v0__tt_025C_5v00.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__tt_025C_5v00 \
 		-gds cells/*/*.gds compile-only \
 		-lef cells/*/*.lef compile-only \
@@ -764,34 +779,49 @@ digital-7t5v0-%:
 			rename=gf180mcu_fd_sc_mcu7t5v0.tlef \
 		-cdl cells/*/*.cdl compile-only noconvert \
 		-liberty cells/*/*_ff_125C_1v98.lib compile-only \
+                        header=liberty/gf180mcu_fd_sc_mcu7t5v0__ff_125C_1v98.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ff_125C_1v98 \
 		-liberty cells/*/*_ff_n40C_1v98.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ff_n40C_1v98.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ff_n40C_1v98 \
-		-liberty cells/*/*_ff_125C_3p6v.lib compile-only \
-			rename=gf180mcu_fd_sc_mcu7t5v0__ff_125C_3p6v \
-		-liberty cells/*/*_ff_n40C_3p6v.lib compile-only \
-			rename=gf180mcu_fd_sc_mcu7t5v0__ff_n40C_3p6v \
+		-liberty cells/*/*_ff_125C_3v60.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ff_125C_3v60.lib \
+			rename=gf180mcu_fd_sc_mcu7t5v0__ff_125C_3v60 \
+		-liberty cells/*/*_ff_n40C_3v60.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ff_n40C_3v60.lib \
+			rename=gf180mcu_fd_sc_mcu7t5v0__ff_n40C_3v60 \
 		-liberty cells/*/*_ff_125C_5v50.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ff_125C_5v50.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ff_125C_5v50 \
 		-liberty cells/*/*_ff_n40C_5v50.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ff_n40C_5v50.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ff_n40C_5v50 \
 		-liberty cells/*/*_ss_125C_1v62.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ss_125C_1v62.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ss_125C_1v62 \
 		-liberty cells/*/*_ss_n40C_1v62.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ss_n40C_1v62.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ss_n40C_1v62 \
 		-liberty cells/*/*_ss_125C_3v00.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ss_125C_3v00.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ss_125C_3v00 \
 		-liberty cells/*/*_ss_n40C_3v00.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ss_n40C_3v00.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ss_n40C_3v00 \
 		-liberty cells/*/*_ss_125C_4v50.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ss_125C_4v50.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ss_125C_4v50 \
 		-liberty cells/*/*_ss_n40C_4v50.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ss_n40C_4v50.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ss_n40C_4v50 \
 		-liberty cells/*/*_tt_025C_1v80.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__tt_025C_1v80.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__tt_025C_1v80 \
 		-liberty cells/*/*_tt_025C_3v30.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__tt_025C_3v30.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__tt_025C_3v30 \
 		-liberty cells/*/*_tt_025C_5v00.lib compile-only \
+			header=liberty/gf180mcu_fd_sc_mcu7t5v0__tt_025C_5v00.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__tt_025C_5v00 \
 		-gds cells/*/*.gds compile-only \
 		-lef cells/*/*.lef compile-only \
@@ -809,28 +839,40 @@ io-%:
 		-target ${STAGING_PATH}/${GF180MCU$*} \
 		-cdl cells/*/*.cdl compile-only noconvert \
 		-liberty cells/*/*_ff_125C_2v75.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__ff_125C_2v75.lib \
 			rename=gf180mcu_fd_io__ff_125C_2v75 \
 		-liberty cells/*/*_ff_n40C_2v75.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__ff_n40C_2v75.lib \
 			rename=gf180mcu_fd_io__ff_n40C_2v75 \
 		-liberty cells/*/*_ff_125C_3v63.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__ff_125C_3v63.lib \
 			rename=gf180mcu_fd_io__ff_125C_3v63 \
 		-liberty cells/*/*_ff_n40C_3v63.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__ff_n40C_3v63.lib \
 			rename=gf180mcu_fd_io__ff_n40C_3v63 \
 		-liberty cells/*/*_ff_125C_5v50.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__ff_125C_5v50.lib \
 			rename=gf180mcu_fd_io__ff_125C_5v50 \
 		-liberty cells/*/*_ff_n40C_5v50.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__ff_n40C_5v50.lib \
 			rename=gf180mcu_fd_io__ff_n40C_5v50 \
 		-liberty cells/*/*_ss_125C_2v50.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__ss_125C_2v50.lib \
 			rename=gf180mcu_fd_io__ss_125C_2v50 \
 		-liberty cells/*/*_ss_125C_2v97.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__ss_125C_2v97.lib \
 			rename=gf180mcu_fd_io__ss_125C_2v97 \
 		-liberty cells/*/*_ss_125C_4v50.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__ss_125C_4v50.lib \
 			rename=gf180mcu_fd_io__ss_125C_4v50 \
 		-liberty cells/*/*_tt_025C_2v50.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__tt_025C_2v50.lib \
 			rename=gf180mcu_fd_io__tt_025C_2v50 \
 		-liberty cells/*/*_tt_025C_3v30.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__tt_025C_3v30.lib \
 			rename=gf180mcu_fd_io__tt_025C_3v30 \
 		-liberty cells/*/*_tt_025C_5v00.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__tt_025C_5v00.lib \
 			rename=gf180mcu_fd_io__tt_025C_5v00 \
 		-gds cells/*/*_${$*_STACK}.gds compile-only \
 			options=custom/scripts/gds_import_io.tcl \

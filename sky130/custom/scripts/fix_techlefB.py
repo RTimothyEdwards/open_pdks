@@ -95,6 +95,7 @@ def filter(inname, outname):
             fixedlines.append(line)
             curlayer = lmatch.group(1)
         elif tmatch:
+            fixedlines.append(line)
             thickness_seen = True
         else:
             ematch = edgerex.match(line)
