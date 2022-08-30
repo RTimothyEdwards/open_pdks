@@ -6,6 +6,8 @@
 # not get the proper name conversion;  specifically, the "conb" cell has
 # resistor type "short" which should be "sky130_fd_pr__res_generic_po",
 # and the pw2nd device model name is missing the suffix "_05v5".
+# (Added 8/30/2022:  Correct for bad diode perimeter value, fixed in
+# magic in 8.3.319)
 #
 # This script is a filter to be run by setting the name of this script as
 # the value to "filter=" for the model install in the sky130 Makefile.
@@ -47,6 +49,7 @@ def filter(inname, outname):
             fline = re.sub('^X', 'D', fline)
             fline = re.sub('a=', 'area=', fline)
             fline = re.sub('p=', 'pj=', fline)
+            fline = re.sub('pj=5.36', 'pj=2.64', fline)
             fixedlines.append(fline)
             modified = True
         elif nmatch:
