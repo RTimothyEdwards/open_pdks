@@ -93,7 +93,7 @@
     },
     "reference": {
         "open_pdks": "cc0029b45c68137aa21323912f50d2fc17eeea13",
-        "magic": "f7df5e7c86fb47c5fd445c846afddc6fbabad6ae",
+        "magic": "5d51e10fb969b31e6e95b5fb78d21efeccc73c14",
         "skywater_pdk": "f70d8ca46961ff92719d8870a18a076370b85f6c",
         "sky130_osu_sc_t12": "ac90ef0c622a9377a16b5218d9da3ac4169eeaaf",
         "sky130_osu_sc_t15": "95d1c19abb47e1b2945847acb4e817b1b8417c43",
