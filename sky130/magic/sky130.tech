@@ -2460,10 +2460,17 @@ style  sky130 variants (vendor),()
  variants *
  labels SUBPIN port
 
- layer dnwell DNWELL
+ templayer alldnwell DNWELL,lowerdnwell
+ copyup lowerdnwell
+
+ layer dnwell DNWELL,lowerdnwell
  labels DNWELL
 
- layer isosub SUBCUT
+ templayer alliso SUBCUT,loweriso
+ copyup loweriso
+
+ layer isosub SUBCUT,loweriso
+ and-not DNWELL,lowerdnwell
  labels SUBCUT
 
  layer npn DNWELL
