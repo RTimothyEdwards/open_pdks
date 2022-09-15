@@ -2,7 +2,7 @@ set current_folder [file dirname [file normalize [info script]]]
 
 # Placement site for core cells
 # This can be found in the technology lef
-set ::env(PLACE_SITE) "$::env(STD_CELL_LIBRARY)"
+set ::env(PLACE_SITE) "GF018hv5v_mcu_sc7"
 set ::env(PLACE_SITE_WIDTH) 0.56
 set ::env(PLACE_SITE_HEIGHT) 3.92
 
