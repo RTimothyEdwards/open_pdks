@@ -78,8 +78,9 @@ set ::env(FP_TAPCELL_DIST) 20
 
 ## Extra PDN configs
 
-### OpenROAD Bug
-set ::env(FP_PDN_IRDROP) 0
+### OpenROAD/tlef Bug
+## via resistance are missing from the tlef causing irdrop to fai
+set ::env(RUN_IRDROP_REPORT) 0
 
 set ::env(FP_PDN_RAIL_OFFSET) 0
 set ::env(FP_PDN_VWIDTH) 1.6
@@ -102,8 +103,9 @@ set ::env(RCX_RULES_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.
 
 # Routing
 set ::env(METAL_LAYER_NAMES) "Metal1 Metal2 Metal3 Metal4 Metal5"
-set ::env(RT_MIN_LAYER) "Metal1"
+set ::env(RT_MIN_LAYER) "Metal2"
 set ::env(RT_MAX_LAYER) "Metal5"
+set ::env(DRT_MIN_LAYER) "Metal1"
 set ::env(GRT_LAYER_ADJUSTMENTS) "0,0,0,0,0"
 
 ## Tracks info
