@@ -86,11 +86,11 @@
     "reference": {
         "open_pdks": "a517779da3d3f3e57a24d9b4ef0a4559cd9abccc",
         "magic": "7905e15ae3b66ed26349fb701b475ef93b566de5",
-        "gf180mcu_pdk": "9b917f15df8a08db4232fee9eb83dca5b98ad263",
+        "gf180mcu_pdk": "a897aa30369d3bcec87d9d50ce9b01f320f854ef",
         "gf180mcu_fd_pr": "e1b4e187900370103bf9b8a22bb8625f883368ef",
         "gf180mcu_fd_io": "bcaa40aaf6cf04d6e9cb143d0e5b0de9429e53ab",
-        "gf180mcu_fd_sc_mcu7t5v0": "1ebee70d934f91f6b289419a2c724d91e0d04895",
-        "gf180mcu_fd_sc_mcu9t5v0": "493461195536004d46c8cbaac9605095c8280983",
+        "gf180mcu_fd_sc_mcu7t5v0": "0b28b8d0f0a027a83b97a232e5ab667d7c37792b",
+        "gf180mcu_fd_sc_mcu9t5v0": "16154d5495bd351e390343115ae6f8d1275e8003",
         "gf180mcu_fd_ip_sram": "9c411928870ce15226228fa52ddb6ecc0ea4ffbe"
     }
 }
