@@ -45,6 +45,10 @@ planes
  l34
  l35
  l36
+ l37
+ l38
+ l39
+ l40
 end
 
 types
@@ -84,6 +88,10 @@ types
  l34 DIODE,l34
  l35 RESDEF,l35
  l36 CAPDEF,l36
+ l37 V5DEF,l37
+ l38 SRAMDEF,l38
+ l39 BOUND,l39
+ l40 PWELL,l40
 end
 
 contact
@@ -127,6 +135,10 @@ styles
  l34   pdop_stripes
  l35   pselect2
  l36   implant3
+ l37   implant1
+ l38   implant2
+ l39   subcircuit
+ l40   pwell
 end
 
 compose
@@ -144,6 +156,10 @@ style gdsii
  labels NWELL 
  calma 21 0
 
+ layer  PWELL PWELL
+ labels PWELL 
+ calma 204 0
+
  layer  COMP COMP
  labels COMP 
  calma 22 0
@@ -151,6 +167,14 @@ style gdsii
  layer  DUALGATE DUALGATE
  labels DUALGATE 
  calma 55 0
+
+ layer  V5DEF V5DEF
+ labels V5DEF 
+ calma 112 1
+
+ layer  SRAMDEF SRAMDEF
+ labels SRAMDEF 
+ calma 108 5
 
  layer  POLY2 POLY2
  labels POLY2 
@@ -171,6 +195,10 @@ style gdsii
  layer  PPLUS PPLUS
  labels PPLUS 
  calma 31 0
+
+ layer  BOUND BOUND
+ labels BOUND 
+ calma 63 63
 
  layer  CONTACT CONTACT
  labels CONTACT 
@@ -298,6 +326,10 @@ style ProgName
  labels NWELL 
  calma NWELL 21 0
 
+ layer  PWELL PWELL
+ labels PWELL 
+ calma PWELL 204 0
+
  layer  COMP COMP
  labels COMP 
  calma COMP 22 0
@@ -305,6 +337,14 @@ style ProgName
  layer  DUALGATE DUALGATE
  labels DUALGATE 
  calma DUALGATE 55 0
+
+ layer  V5DEF V5DEF
+ labels V5DEF 
+ calma V5DEF 112 1
+
+ layer  SRAMDEF SRAMDEF
+ labels SRAMDEF 
+ calma SRAMDEF 108 5
 
  layer  POLY2 POLY2
  labels POLY2 
@@ -317,6 +357,10 @@ style ProgName
  layer  ESD ESD
  labels ESD 
  calma ESD 24 0
+
+ layer  BOUND BOUND
+ labels BOUND 
+ calma BOUND 63 *
 
  layer  SAB SAB
  labels SAB 
@@ -494,4 +538,8 @@ style default
  planeorder l34 33
  planeorder l35 34
  planeorder l36 35
+ planeorder l37 36
+ planeorder l38 37
+ planeorder l39 38
+ planeorder l40 39
 end

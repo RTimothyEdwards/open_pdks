@@ -92,8 +92,8 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "cc0029b45c68137aa21323912f50d2fc17eeea13",
-        "magic": "5d51e10fb969b31e6e95b5fb78d21efeccc73c14",
+        "open_pdks": "82d61e2c9c265c0f0e994233cd2d024c90adb45f",
+        "magic": "7905e15ae3b66ed26349fb701b475ef93b566de5",
         "skywater_pdk": "f70d8ca46961ff92719d8870a18a076370b85f6c",
         "sky130_osu_sc_t12": "ac90ef0c622a9377a16b5218d9da3ac4169eeaaf",
         "sky130_osu_sc_t15": "95d1c19abb47e1b2945847acb4e817b1b8417c43",

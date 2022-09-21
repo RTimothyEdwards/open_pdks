@@ -2518,7 +2518,7 @@ style  import
  layer glass GLASS
  labels GLASS
 
- templayer cellbound BOUND
+ templayer cellbound BOUND,PRBOUND
  boundary
 
  layer lvstext TTEXT
@@ -2608,6 +2608,7 @@ style  import
  calma BJTDEF 118 5
  calma MOSCAP 166 5
  calma BOUND 0 0
+ calma PRBOUND 63 *
  calma FILLOBS  111 5
  calma FILLOBS2 152 5
  calma TTEXT    230 *
