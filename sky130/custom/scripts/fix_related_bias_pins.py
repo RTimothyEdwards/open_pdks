@@ -34,6 +34,7 @@ def filter(inname, outname):
 
     related_re = re.compile('\s*related_bias_pin\s*:\s*"(.+)"\s*;')
     pg_re = re.compile('\s*pg_pin\s*\(\s*"(.+)"\s*\)\s*{')
+    well_re = re.compile('\s*pg_type\s*:\s*"(.+)"\s*;')
 
     for line in slines:
         pmatch = pg_re.match(line)
@@ -51,6 +52,19 @@ def filter(inname, outname):
                 line = line.replace(pin_str, 'VPB')
             else:
                 print('Warning: Unknown related bias pin ' + pin_str)
+            current_pin = ''
+
+        wmatch = well_re.match(line)
+        if wmatch:
+            well_str = wmatch.group(1)
+            if well_str == 'nwell' and current_pin == 'VNB':
+                modified = True
+                line = line.replace(well_str, 'pwell')
+            elif well_str == 'pwell' and current_pin == 'VPB':
+                modified = True
+                line = line.replace(well_str, 'nwell')
+            else:
+                print('Warning: Unknown well type ' + well_str)
             current_pin = ''
 
         fixedlines.append(line)
