@@ -32,6 +32,10 @@ def filter(inname, outname):
     modified = False
     current_pin = ''
 
+    # Values for "pg_type" other than "pwell" or "nwell"
+    power_types = ['primary_power', 'primary_ground', 'backup_power',
+		   'internal_power', 'internal_ground']
+
     related_re = re.compile('\s*related_bias_pin\s*:\s*"(.+)"\s*;')
     pg_re = re.compile('\s*pg_pin\s*\(\s*"(.+)"\s*\)\s*{')
     well_re = re.compile('\s*pg_type\s*:\s*"(.+)"\s*;')
@@ -47,12 +51,13 @@ def filter(inname, outname):
             if pin_str == 'VPB' and current_pin == 'VGND':
                 modified = True
                 line = line.replace(pin_str, 'VNB')
+                current_pin = ''
             elif pin_str == 'VNB' and current_pin == 'VPWR':
                 modified = True
                 line = line.replace(pin_str, 'VPB')
+                current_pin = ''
             else:
                 print('Warning: Unknown related bias pin ' + pin_str)
-            current_pin = ''
 
         wmatch = well_re.match(line)
         if wmatch:
@@ -60,12 +65,13 @@ def filter(inname, outname):
             if well_str == 'nwell' and current_pin == 'VNB':
                 modified = True
                 line = line.replace(well_str, 'pwell')
+                current_pin = ''
             elif well_str == 'pwell' and current_pin == 'VPB':
                 modified = True
                 line = line.replace(well_str, 'nwell')
-            else:
+                current_pin = ''
+            elif well_str not in power_types:
                 print('Warning: Unknown well type ' + well_str)
-            current_pin = ''
 
         fixedlines.append(line)
 
