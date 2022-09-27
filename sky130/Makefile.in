@@ -1441,6 +1441,7 @@ digital-hvl-%:
 		-lib %l/latest/timing/*.lib filter=custom/scripts/add_wireloads.py \
 			filter=custom/scripts/fix_default_fanout_load.py \
 			filter=custom/scripts/fix_related_bias_pins.py \
+			filter=custom/scripts/fix_mismatched_opcond.py \
 		-gds %l/latest/cells/*/*.gds compile-only \
 			include=custom/sky130_fd_sc_hvl/gds/sky130_ef*.gds \
 			options=custom/scripts/gds_import_setup.tcl \
