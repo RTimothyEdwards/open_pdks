@@ -6623,15 +6623,15 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device resistor mrdp_hv   mvpdiffres *mvpdiff 
  device resistor sky130_fd_pr__res_iso_pw   rpw    pwell
 
- device ndiode sky130_fd_pr__diode_pw2nd_05v5 *ndiode pwell,space/w a=area
- device ndiode sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area
- device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area
- device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area
+ device ndiode sky130_fd_pr__diode_pw2nd_05v5 *ndiode pwell,space/w a=area p=pj
+ device ndiode sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area p=pj
+ device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area p=pj
+ device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area p=pj
 
- device pdiode sky130_fd_pr__diode_pd2nw_05v5 *pdiode nwell a=area
- device pdiode sky130_fd_pr__diode_pd2nw_05v5_lvt *pdiodelvt nwell a=area
- device pdiode sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area
- device pdiode sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area
+ device pdiode sky130_fd_pr__diode_pd2nw_05v5 *pdiode nwell a=area p=pj
+ device pdiode sky130_fd_pr__diode_pd2nw_05v5_lvt *pdiodelvt nwell a=area p=pj
+ device pdiode sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area p=pj
+ device pdiode sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area p=pj
 
  device bjt sky130_fd_pr__npn_05v5_W1p00L1p00 npn *ndiff dnwell space/w error +npn1p00
  device bjt sky130_fd_pr__npn_05v5_W1p00L2p00 npn *ndiff dnwell space/w error +npn2p00

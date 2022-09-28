@@ -244,6 +244,7 @@ foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
 	property "-circuit1 $dev" parallel enable
 	property "-circuit1 $dev" parallel {area add}
+	property "-circuit1 $dev" parallel {pj add}
 	property "-circuit1 $dev" parallel {value add}
 	property "-circuit1 $dev" tolerance {area 0.02}
 	# Ignore these properties
@@ -252,6 +253,7 @@ foreach dev $devices {
     if {[lsearch $cells2 $dev] >= 0} {
 	property "-circuit2 $dev" parallel enable
 	property "-circuit2 $dev" parallel {area add}
+	property "-circuit2 $dev" parallel {pj add}
 	property "-circuit2 $dev" parallel {value add}
 	property "-circuit2 $dev" tolerance {area 0.02}
 	# Ignore these properties
