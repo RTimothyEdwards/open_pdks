@@ -213,35 +213,49 @@ foreach dev $devices {
 # Digital cells (ignore decap, fill, and tap cells)
 # Make a separate list for each supported library
 #---------------------------------------------------------------
-# e.g., ignore class "-circuit2 gf180mcu_fd_sc_mcu7t5v0__endcap"
+# e.g., ignore class "-circuit2 gf180mcu_fd_sc_7t5v0__endcap"
 #---------------------------------------------------------------
 
 foreach cell $cells1 {
-#   if {[regexp {gf180mcu_fd_sc_mcu[^_]__fillcap_[[:digit:]]+} $cell match]} {
+#   if {[regexp {gf180mcu_fd_sc_[^_]+__fillcap_[[:digit:]]+} $cell match]} {
 #       ignore class "-circuit1 $cell"
 #   }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__endcap} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__endcap} $cell match]} {
         ignore class "-circuit1 $cell"
     }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__fill_[[:digit:]]+} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
         ignore class "-circuit1 $cell"
     }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__filltie} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__filltie} $cell match]} {
         ignore class "-circuit1 $cell"
     }
 }
 
 foreach cell $cells2 {
-#   if {[regexp {gf180mcu_fd_sc_mcu[^_]__fillcap_[[:digit:]]+} $cell match]} {
+#   if {[regexp {gf180mcu_fd_sc_[^_]+__fillcap_[[:digit:]]+} $cell match]} {
 #       ignore class "-circuit2 $cell"
 #   }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__endcap} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__endcap} $cell match]} {
         ignore class "-circuit2 $cell"
     }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__fill_[[:digit:]]+} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
         ignore class "-circuit2 $cell"
     }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__filltie} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__filltie} $cell match]} {
+        ignore class "-circuit2 $cell"
+    }
+}
+
+# Do the same for the OSU standard cell libraries
+
+foreach cell $cells1 {
+    if {[regexp {gf180mcu_osu_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+        ignore class "-circuit1 $cell"
+    }
+}
+
+foreach cell $cells2 {
+    if {[regexp {gf180mcu_osu_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
         ignore class "-circuit2 $cell"
     }
 }
@@ -251,37 +265,51 @@ foreach cell $cells2 {
 #---------------------------------------------------------------
 
 foreach cell $cells1 {
-    if {[regexp {gr180mcu_fd_sc_mcu[^_]+__fillcap_[[:digit:]]+} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__fillcap_[[:digit:]]+} $cell match]} {
         property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__endcap} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__endcap} $cell match]} {
         property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__fill_[[:digit:]]+} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
         property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__filltie} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__filltie} $cell match]} {
         property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__antenna} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__antenna} $cell match]} {
         property "-circuit1 $cell" parallel enable
     }
 }
 
 foreach cell $cells2 {
-    if {[regexp {gr180mcu_fd_sc_mcu[^_]+__fillcap_[[:digit:]]+} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__fillcap_[[:digit:]]+} $cell match]} {
         property "-circuit2 $cell" parallel enable
     }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__endcap} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__endcap} $cell match]} {
         property "-circuit2 $cell" parallel enable
     }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__fill_[[:digit:]]+} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
         property "-circuit2 $cell" parallel enable
     }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__filltie} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__filltie} $cell match]} {
         property "-circuit2 $cell" parallel enable
     }
-    if {[regexp {gf180mcu_fd_sc_mcu[^_]__antenna} $cell match]} {
+    if {[regexp {gf180mcu_fd_sc_[^_]+__antenna} $cell match]} {
+        property "-circuit2 $cell" parallel enable
+    }
+}
+
+# Do the same for the OSU 3.3V standard cell library
+
+foreach cell $cells1 {
+    if {[regexp {gf180mcu_osu_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+        property "-circuit1 $cell" parallel enable
+    }
+}
+
+foreach cell $cells2 {
+    if {[regexp {gf180mcu_osu_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
         property "-circuit2 $cell" parallel enable
     }
 }
