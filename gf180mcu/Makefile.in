@@ -155,9 +155,11 @@ GF180MCU_IO_PATH = @GF180MCU_FD_IO_PATH@
 GF180MCU_SC_7T5V0_PATH = @GF180MCU_FD_SC_MCU7T5V0_PATH@
 GF180MCU_SC_9T5V0_PATH = @GF180MCU_FD_SC_MCU9T5V0_PATH@
 GF180MCU_SRAM_PATH = @GF180MCU_FD_IP_SRAM_PATH@
+GF180MCU_OSU_SC_PATH = @GF180MCU_OSU_SC_PATH@
 
 # Path to GF180MCU library sources
 PDK_URL = https://github.com/google
+OSU_URL = https://github.com/stineje
 
 # Names of library repositories
 PDK_LIB_PR =       ${PDK_URL}/globalfoundries-pdk-libs-gf180mcu_fd_pr
@@ -165,6 +167,7 @@ PDK_LIB_IO =       ${PDK_URL}/globalfoundries-pdk-libs-gf180mcu_fd_io
 PDK_LIB_SC_7T5V0 = ${PDK_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu7t5v0
 PDK_LIB_SC_9T5V0 = ${PDK_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu9t5v0
 PDK_LIB_SRAM =     ${PDK_URL}/globalfoundries-pdk-ip-gf180mcu_fd_ip_sram
+PDK_LIB_OSU_SC =   ${OSU_URL}/globalfoundries-pdk-libs-gf180mcu_osu_sc
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
@@ -433,7 +436,7 @@ reference: ${TECH}.json
 all: $(foreach var, ${VARIANTS}, all-$(var))
 
 # Handle prerequisites
-prerequisites: pr-repo io-repo sc-7t-repo sc-9t-repo sram-repo
+prerequisites: pr-repo io-repo sc-7t-repo sc-9t-repo sram-repo osu-sc-repo
 
 pr-repo:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
@@ -485,37 +488,53 @@ sram-repo:
 		fi ; \
 	fi
 
+osu-sc-repo:
+	if test "x${GF180MCU_OSU_SC_PATH}" != "x" ; then \
+		if test -d "${GF180MCU_OSU_SC_PATH}" ; then \
+			echo "Using existing installation of OSU 3.3V standard cell library from ${GF180MCU_OSU_SC_PATH}" ; \
+		else \
+			echo "Downloading OSU 3.3V standard cell library from ${GF180MCU_OSU_SC_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_OSU_SC} ${GF180MCU_OSU_SC_PATH} ; \
+		fi ; \
+	fi
+
 # Update prerequisites
-update: update-pr-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-ream-repo
+update: update-pr-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-osu-sc-repo
 
 update-pr-repo:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
 		echo "Updating GF180MCU primitive library from ${PDK_LIB_PR}" ; \
-		custom/scripts/pdk_update.sh ${GF180MCU_PR_PATH} ; \
+		../scripts/update.sh ${GF180MCU_PR_PATH} ; \
 	fi
 
 update-io-repo:
 	if test "x${GF180MCU_IO_PATH}" != "x" ; then \
 		echo "Updating GF180MCU I/O library from ${PDK_LIB_IO}" ; \
-		custom/scripts/pdk_update.sh ${GF180MCU_IO_PATH} ; \
+		../scripts/update.sh ${GF180MCU_IO_PATH} ; \
 	fi
 
 update-sc-7t-repo:
 	if test "x${GF180MCU_SC_7T5V0_PATH}" != "x" ; then \
 		echo "Updating GF180MCU 7-track standard cell library from ${PDK_LIB_SC_7T5V0}" ; \
-		custom/scripts/pdk_update.sh ${GF180MCU_SC_7T5V0_PATH} ; \
+		../scripts/update.sh ${GF180MCU_SC_7T5V0_PATH} ; \
 	fi
 
 update-sc-9t-repo:
 	if test "x${GF180MCU_SC_9T5V0_PATH}" != "x" ; then \
 		echo "Updating GF180MCU 9-track standard cell library from ${PDK_LIB_SC_9T5V0}" ; \
-		custom/scripts/pdk_update.sh ${GF180MCU_SC_9T5V0_PATH} ; \
+		../scripts/update.sh ${GF180MCU_SC_9T5V0_PATH} ; \
 	fi
 
 update-sram-repo:
 	if test "x${GF180MCU_SRAM_PATH}" != "x" ; then \
 		echo "Updating GF180MCU SRAM macro library from ${PDK_LIB_SRAM}" ; \
-		custom/scripts/pdk_update.sh ${GF180MCU_SRAM_PATH} ; \
+		../scripts/update.sh ${GF180MCU_SRAM_PATH} ; \
+	fi
+
+update-osu-sc-repo:
+	if test "x${GF180MCU_OSU_SC_PATH}" != "x" ; then \
+		echo "Updating GF180MCU OSU 3.3V standard cell library from ${PDK_LIB_OSU_SC}" ; \
+		../scripts/update.sh ${GF180MCU_OSU_SC_PATH} ; \
 	fi
 
 all-%: prerequisites
@@ -669,11 +688,11 @@ openlane-%: openlane/config.tcl openlane/gf180mcu_fd_sc_mcu7t5v0/config.tcl open
 		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max.magic ;\
 	fi
 
-vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A sram-build-A
+vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A sram-build-A digital-osu-build-A
 
-vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B sram-build-B
+vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B sram-build-B digital-osu-build-B
 
-vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C sram-build-C
+vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C sram-build-C digital-osu-build-C
 
 primitive-build-%:
 	if test -d ${GF180MCU_PR_PATH} ; then \
@@ -703,6 +722,12 @@ sram-build-%:
 	if test -d ${GF180MCU_SRAM_PATH} ; then \
 		echo "Building SRAM libraries" ;\
 		make sram-$* ;\
+	fi
+
+digital-osu-build-%:
+	if test -d ${GF180MCU_OSU_SC_PATH} ; then \
+		echo "Building OSU 3.3V digital standard cell libraries" ;\
+		make digital-osu-$* ;\
 	fi
 
 primitive-%:
@@ -827,6 +852,39 @@ digital-7t5v0-%:
 		-lef cells/*/*.lef compile-only \
 		-verilog cells/*/*.v compile-only \
 		-library digital gf180mcu_fd_sc_mcu7t5v0 2>&1 | \
+		tee -a ${GF180MCU$*}_make.log
+
+digital-osu-%:
+        # Install OSU 3.3V digital standard cells from vendor files
+	# NOTE: Work in progress (to be completed)
+	${STAGE} -source ${GF180MCU_OSU_SC_PATH} \
+		-target ${STAGING_PATH}/${GF180MCU$*} \
+		-techlef lib/9T/tlef/gf180mcu_*_tech.lef \
+			rename=gf180mcu_osu_sc_9T.tlef \
+		-liberty char/techfiles/gf180mcu_9T_TT_3P3_25C*.lib \
+			rename=gf180mcu_osu_sc_9T__tt_025C_3v30 \
+		-verilog lib/9T/verilog/*.v \
+			rename=gf180mcu_osu_sc_9T \
+		-lef lib/9T/lef/*.lef \
+		-gds lib/9T/gds/*.gds compile-only \
+		-spice lib/9T/ngspice/*.spice compile-only \
+		-xschem lib/9T/schematics/*.sch \
+		-library digital gf180mcu_osu_sc_9T 2>&1 | \
+		tee -a ${GF180MCU$*}_make.log
+
+	${STAGE} -source ${GF180MCU_OSU_SC_PATH} \
+		-target ${STAGING_PATH}/${GF180MCU$*} \
+		-techlef lib/12T/tlef/gf180mcu_*_tech.lef \
+			rename=gf180mcu_osu_sc_12T.tlef \
+		-liberty char/techfiles/gf180mcu_12T_TT_3P3_25C*.lib \
+			rename=gf180mcu_osu_sc_12T__tt_025C_3v30 \
+		-verilog lib/12T/verilog/*.v \
+			rename=gf180mcu_osu_sc_12T \
+		-lef lib/12T/lef/*.lef \
+		-gds lib/12T/gds/*.gds compile-only \
+		-spice lib/12T/ngspice/*.spice compile-only \
+		-xschem lib/12T/schematics/*.sch \
+		-library digital gf180mcu_osu_sc_12T 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
 
 io-%:

@@ -248,6 +248,9 @@ M4_GEN_INSTALLATION(gf180mcu_fd_sc_mcu9t5v0, sc-9t5v0-gf180mcu, ../sources)
 M4_GEN_INSTALLATION(gf180mcu_fd_ip_sram, sram-gf180mcu, ../sources)
 
 # GlobalFoundries gf180mcu optional
+M4_GEN_INSTALLATION(gf180mcu_osu_sc, osu-sc-gf180mcu, ../sources)
+
+# GlobalFoundries gf180mcu optional
 # (None yet)
 
 AC_DEFUN([M4_GEN_WITH_TOOLS], [

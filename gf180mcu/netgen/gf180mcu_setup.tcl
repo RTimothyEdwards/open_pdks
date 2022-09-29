@@ -10,6 +10,9 @@ permute default
 property default
 property parallel none
 
+# Allow override of default #columns in the output format.
+catch {format $env(NETGEN_COLUMNS)}
+
 #---------------------------------------------------------------
 # For the following, get the cell lists from
 # circuit1 and circuit2.
@@ -26,13 +29,25 @@ set cells2 [cells list -all -circuit2]
 # Resistors (except metal)
 #-------------------------------------------
 
-set devices {nwell_1p5 ppolyf_u npolyf_u ppolyf_s nplus_u pplus_u nw1a_6p0}
-lappend devices npolyf_s pfield_1p5 pf1va_6p0
+set devices {}
+lappend devices nwell_1p5
+lappend devices ppolyf_u
+lappend devices npolyf_u
+lappend devices ppolyf_s
+lappend devices nplus_u
+lappend devices pplus_u
+lappend devices nw1a_6p0
+
+lappend devices npolyf_s
+lappend devices pfield_1p5
+lappend devices pf1va_6p0
 #ifdef HRPOLY1K
-lappend devices ppolyf_u_1k ppolyf_u_1k_6p0
+lappend devices ppolyf_u_1k
+lappend devices ppolyf_u_1k_6p0
 #endif
 #ifdef HRPOLY2K
-lappend devices ppolyf_u_2k ppolyf_u_2k_6p0
+lappend devices ppolyf_u_2k
+lappend devices ppolyf_u_2k_6p0
 #endif
 
 foreach dev $devices {
@@ -60,7 +75,9 @@ foreach dev $devices {
 # RM (metal) resistors
 #-------------------------------------------
 
-set devices {rm1 rm2}
+set devices {}
+lappend devices rm1
+lappend devices rm2
 #ifdef METALS4 || METALS5 || METALS6 || METALS7
 lappend devices rm3
 #endif (METALS4 || METALS5 || METALS6 || METALS7)
@@ -101,7 +118,13 @@ foreach dev $devices {
 # (MOS) transistors
 #-------------------------------------------
 
-set devices {nmos_1p5 pmos_1p5 nmos_6p0 pmos_6p0 nmoscap_1p5 nmoscap_6p0}
+set devices {}
+lappend devices nmos_1p5
+lappend devices pmos_1p5
+lappend devices nmos_6p0
+lappend devices pmos_6p0
+lappend devices nmoscap_1p5
+lappend devices nmoscap_6p0
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -126,7 +149,13 @@ foreach dev $devices {
 # diodes
 #-------------------------------------------
 
-set devices {np_1p5 pn_1p5 np_6p0 pn_6p0 nwp_1p5 nwp_6p0}
+set devices {}
+lappend devices np_1p5
+lappend devices pn_1p5
+lappend devices np_6p0
+lappend devices pn_6p0
+lappend devices nwp_1p5
+lappend devices nwp_6p0
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -151,8 +180,14 @@ foreach dev $devices {
 # sandwich (MoM) capacitors, and MiM capacitors
 #-----------------------------------------------
 
-set devices {vnpn_lv_2p5x2p5 vnpn_lv_5x5 vnpn_lv_10x10}
-lappend devices vnpn_mv_2p5x2p5 vnpn_mv_5x5 vnpn_mv_10x10
+set devices {}
+lappend devices vnpn_lv_2p5x2p5
+lappend devices vnpn_lv_5x5
+lappend devices vnpn_lv_10x10
+
+lappend devices vnpn_mv_2p5x2p5
+lappend devices vnpn_mv_5x5
+lappend devices vnpn_mv_10x10
 lappend devices apmom_bb
 #ifdef MIM
 lappend devices mim_sm_bb
@@ -175,70 +210,79 @@ foreach dev $devices {
 }
 
 #---------------------------------------------------------------
-# D_CELLS_SC9 (ignore FILL cells)
+# Digital cells (ignore decap, fill, and tap cells)
+# Make a separate list for each supported library
 #---------------------------------------------------------------
-# e.g., ignore class "-circuit2 FILL5"
+# e.g., ignore class "-circuit2 gf180mcu_fd_sc_mcu7t5v0__endcap"
 #---------------------------------------------------------------
 
 foreach cell $cells1 {
-    if {[regexp "FILL\[0-9\]+" $cell match]} {
+#   if {[regexp {gf180mcu_fd_sc_mcu[^_]__fillcap_[[:digit:]]+} $cell match]} {
+#       ignore class "-circuit1 $cell"
+#   }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__endcap} $cell match]} {
+        ignore class "-circuit1 $cell"
+    }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__fill_[[:digit:]]+} $cell match]} {
+        ignore class "-circuit1 $cell"
+    }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__filltie} $cell match]} {
         ignore class "-circuit1 $cell"
     }
 }
+
 foreach cell $cells2 {
-    if {[regexp "FILL\[0-9\]+" $cell match]} {
+#   if {[regexp {gf180mcu_fd_sc_mcu[^_]__fillcap_[[:digit:]]+} $cell match]} {
+#       ignore class "-circuit2 $cell"
+#   }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__endcap} $cell match]} {
+        ignore class "-circuit2 $cell"
+    }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__fill_[[:digit:]]+} $cell match]} {
+        ignore class "-circuit2 $cell"
+    }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__filltie} $cell match]} {
         ignore class "-circuit2 $cell"
     }
 }
 
 #---------------------------------------------------------------
-# ICPIO_5P0 (ignore FILL cells)
+# Allow the fill, decap, etc., cells to be parallelized
 #---------------------------------------------------------------
-# e.g., ignore class "-circuit1 GF_CI_FILL5"
-#---------------------------------------------------------------
-foreach cell $cells1 {
-    if {[regexp "GF_CI_FILL.*" $cell match]} {
-        ignore class "-circuit1 $cell"
-    }
-}
-foreach cell $cells2 {
-    if {[regexp "GF_CI_FILL.*" $cell match]} {
-        ignore class "-circuit2 $cell"
-    }
-}
 
-#---------------------------------------------------------------
-# Handle cells captured from Electric
-#
-# Find cells of the form "<library>__<cellname>" in the netlist
-# from Electric where the extracted layout netlist has only
-# "<cellname>".  Cross-check by ensuring that the full name
-# "<library>__<cellname>" does not exist in both cells, and that
-# the truncated name "<cellname>" does not exist in both cells.
-#---------------------------------------------------------------
-# e.g., hydra_spi_controller__hydra_spi_controller
-#---------------------------------------------------------------
 foreach cell $cells1 {
-    if {[regexp "(.+)__(.+)" $cell match library cellname]} {
-        if {([lsearch $cells2 $cell] < 0) && \
-                ([lsearch $cells2 $cellname] >= 0) && \
-                ([lsearch $cells1 $cellname] < 0)} {
-            equate classes "-circuit1 $cell" "-circuit2 $cellname"
-	    puts stdout "Matching pins of $cell in circuit 1 and $cellname in circuit 2"
-	    equate pins "-circuit1 $cell" "-circuit2 $cellname"
-        }
+    if {[regexp {gr180mcu_fd_sc_mcu[^_]+__fillcap_[[:digit:]]+} $cell match]} {
+        property "-circuit1 $cell" parallel enable
+    }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__endcap} $cell match]} {
+        property "-circuit1 $cell" parallel enable
+    }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__fill_[[:digit:]]+} $cell match]} {
+        property "-circuit1 $cell" parallel enable
+    }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__filltie} $cell match]} {
+        property "-circuit1 $cell" parallel enable
+    }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__antenna} $cell match]} {
+        property "-circuit1 $cell" parallel enable
     }
 }
 
 foreach cell $cells2 {
-    if {[regexp "(.+)__(.+)" $cell match library cellname]} {
-        if {([lsearch $cells1 $cell] < 0) && \
-                ([lsearch $cells1 $cellname] >= 0) && \
-                ([lsearch $cells2 $cellname] < 0)} {
-            equate classes "-circuit1 $cellname" "-circuit2 $cell"
-	    puts stdout "Matching pins of $cellname in circuit 1 and $cell in circuit 2"
-	    equate pins "-circuit1 $cellname" "-circuit2 $cell"
-        }
+    if {[regexp {gr180mcu_fd_sc_mcu[^_]+__fillcap_[[:digit:]]+} $cell match]} {
+        property "-circuit2 $cell" parallel enable
+    }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__endcap} $cell match]} {
+        property "-circuit2 $cell" parallel enable
+    }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__fill_[[:digit:]]+} $cell match]} {
+        property "-circuit2 $cell" parallel enable
+    }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__filltie} $cell match]} {
+        property "-circuit2 $cell" parallel enable
+    }
+    if {[regexp {gf180mcu_fd_sc_mcu[^_]__antenna} $cell match]} {
+        property "-circuit2 $cell" parallel enable
     }
 }
 

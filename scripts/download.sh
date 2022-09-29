@@ -2,7 +2,8 @@
 #
 # download.sh --
 #	Download a tarball from the specified URL to the specified target
-#	directory, untar it, and remove the tarball file.
+#	directory, untar it, and remove the tarball file.  If the URL is
+#	a repository and not a file, then clone it.
 #
 #	Usage:  download.sh <url> <target_dir> [<strip>]
 #
