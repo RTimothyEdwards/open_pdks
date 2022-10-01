@@ -1027,6 +1027,10 @@ openlane-%: openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl openlane/sky
 	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.spef_extractor
 	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.spef_extractor
 
+	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.calibre
+	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.calibre
+	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.calibre
+
 	cp -r openlane/custom_cells ${OPENLANE_STAGING_$*}
 	cp -r openlane/cvc ${OPENLANE_STAGING_$*}
 	${CPP} ${SKY130$*_DEFS} openlane/config.tcl ${OPENLANE_STAGING_$*}/config.tcl
@@ -1044,6 +1048,13 @@ openlane-%: openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl openlane/sky
 		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.spef_extractor
 	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.max.spef_extractor \
 		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.spef_extractor
+
+	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.min.calibre \
+		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.calibre
+	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.nom.calibre \
+		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.calibre
+	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.max.calibre \
+		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.calibre
 
 	for file in ${OPENLANE_COMMON} ; do \
 	    ${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_fd_sc_hd/$$file \
