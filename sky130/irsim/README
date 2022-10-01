@@ -1,65 +1,96 @@
-Attempting to get a valid IRSIM .prm file for the sky130 process
-Specifically for the sky130_fd_sc_hd library, but should work with all of
-them except for sky130_fd_sc_hvl.
+Script to generate valid IRSIM .prm files for the sky130 process
+
+2/7/2022:  Added "device" lines to header.txt for compability between the
+subcircuit devices used by the sky130 process, and IRSIM version 9.7.115,
+which adds the parsing for the new "device" syntax in the parameter file.
+
+1/1/2022:  Taking advantage of the new code added by Jason Liang for
+the GSoC internship.  IRSIM now supports multiple transistor models at
+multiple power supply voltages, so all sky130 devices can be represented
+. . .  but also need to be characterized.
+
 ------------------------------------------------------------------------
-Following directions from the irsim web page. . . 
+Prerequisites:
 
-Get the "getres" script from ~/gitsrc/irsim/lib/calibrate_spice3/
-Change "spice" (with path) to "ngspice" (with path)
-Added string.h, stdlib.h, and malloc.h to findr.c to make it compile,
-and compiled it.  
+    Requires ngspice and an installation of the SkyWater sky130 open
+    PDK from open_pdks.
 
-Get characteristics from SPICE, cell sky130_fd_sc_hd__nand2_1
+Instructions:
 
-    P device (sky130_fd_pr__pfet_01v8_lvt): 1.00um wide, 0.15um long
-    N device (sky130_fd_pr__nfet_01v8):	    0.65um wide, 0.15um long
+    This script has already been run and the parameter files generated,
+    so that they can simply be installed into libs.tech/irsim/.  If
+    you want to regenerate all of the parameter files, then do:
 
-    Using 50fF for loading cap (essentially irrelevant)
+	run_all.py
 
-Writing these values into "config.txt" (but not using).
+    and everything should be automatically handled.  File
+    "circuit_template.spi" assumes that the PDK is already installed
+    in ${PDK_ROOT)=/usr/share/pdk, so modify this file if open_pdks
+    has been configured to install into a different location.
 
-Copy "ckt.spi" to local directory
-Substitute values by hand (obvious)
-Use ".lib" to get models  (sky130.lib.spice) with corner "tt"
-Convert "M" to "X" on devices.
 
-Changed voltage source on ground to 0.01 ohm resistor because ngspice
-doesn't like shorted voltage sources.
+------------------------------------------------------------------------
+NOTES:
+------------------------------------------------------------------------
 
-Added ".save all".
+The script generally follows the instructions for generating a parameter
+file found on the IRSIM web page at opencircuitdesign.com.  The exception
+is for the "dynamic-high" resistance for nFET devices and the
+"dynamic-low" resistance for pFET devices.  These values are very rarely
+used, since nFETs pulling a net high or pFETs pulling a net low are not
+often used in CMOS circuits (typically found in hysteretic buffers or
+certain kinds of low-transistor-count XOR gates).  Since the devices are
+not in saturation in these situations, a resistance is a poor model for
+the device.  As such, probably any value is as good as any other.  The
+(arbitrary) method used is to find the time that it takes for the signal
+to reach 80% of the final value in the simulation (where the transistor
+is in deep subthreshold), and extrapolate the time to reach half of Vdd.
+This results (when divided by the load capacitance) in a resistance value
+that is in a sane intermediate range and suffices for simulation purposes.
 
-Spice models are in 
+The template netlist does all measurements internally to ngspice, so there
+is no need for a post-processing tool such as the one included in the
+IRSIM repository to generate the resistance outputs, and raw SPICE output
+files are not generated.  The python script collects ngspice output and
+uses it to generate the IRSIM parameter files.
 
-    ~/projects/efabless/tech/SW/sky130A/libs.tech/ngspice/sky130.lib.spice
+Parameter files are generated for nominal voltage and nominal voltage
++/- 10%, temperatures at -40, 27, and 125 degrees C, and at slow, fast,
+and typical corners.  Voltages in the parameter filename are shown as
+"high", "low", and "nom", since the parameter file contains both 1.8V
+and 3.3V transistors.
 
-Note that the raw file reader expects an ASCII raw file, which in ngspice
-requires in ".spiceinit":
+Spice models are included into a testbench netlist from: 
 
-    set filetype=ascii
+    ${PDK_ROOT}/sky130A/libs.tech/ngspice/sky130.lib.spice
 
-Running:
+Basic parameters in the header:
 
-    ngspice -b -r spi.out ckt.spi
-
-Do *not* use "-n" because that suppresses the reading of the .spiceinit file.
-
-Run:
-
-    ./findr -c 100 -n 0.8,0.18 -p 1.0,0.18 spi.out |& tee resists
-
-Had to change "findr.c" to replace "vdd" with "v(vdd)" and the same for all
-the vouts.
-
-Success!
-
-Now:  Redo this at all nine corners for low-typ-high voltage and low-typ-high temp.
-
-Add header.  sky130 gate thickness, from sky130_fd_pr__nfet_01v8 model is 4.15E-9 m,
-so:
+sky130 gate thickness, from sky130_fd_pr__nfet_01v8 model is 4.15E-9 m, so:
 	Cox = Eox / Tox  =  8.854E-12 F/m * 3.9 / 4.15E-9 = 8.32E-3 F/m^2 = pF/um^2
 
-The other cap values need to be looked up and corrected. . . 
+Transistor devices characterized for IRSIM:
 
-NOTE:  2/7/2022:  Added "device" lines to header.txt for compability between the
-subcircuit devices used by the sky130 process, and IRSIM version 9.7.113, which
-adds the parsing for the new "device" syntax in the parameter file.
+        sky130_fd_pr__nfet_01v8
+        sky130_fd_pr__nfet_01v8_lvt
+        sky130_fd_pr__pfet_01v8
+        sky130_fd_pr__pfet_01v8_lvt
+        sky130_fd_pr__pfet_01v8_hvt
+        sky130_fd_pr__special_nfet_latch
+        sky130_fd_pr__special_nfet_pass
+        sky130_fd_pr__special_pfet_pass
+        sky130_fd_pr__pfet_g5v0d10v5
+        sky130_fd_pr__nfet_g5v0d10v5
+        sky130_fd_pr__nfet_05v0_nvt
+
+Transistor devices *not* characterized for IRSIM:
+
+        sky130_fd_pr__pfet_01v8_mvt
+        sky130_fd_pr__nfet_03v3_nvt
+        sky130_fd_pr__nfet_01v8_nvt
+        sky130_fd_pr__nfet_20v0_nvt
+        sky130_fd_pr__nfet_20v0
+        sky130_fd_pr__pfet_20v0
+        sky130_fd_pr__esd_nfet_g5v0d10v5
+        sky130_fd_pr__esd_pfet_g5v0d10v5
+

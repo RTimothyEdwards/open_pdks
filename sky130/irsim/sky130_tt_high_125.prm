@@ -1,0 +1,113 @@
+;
+; configuration file for sky130 (0.13um process)
+;
+
+lambda  0.005 ; length scaling, microns (1 lambda = 1 centimicron)
+
+capga   .00832 ; gate capacitance, pF/micron^2
+
+capda 0.0012
+capdp 0.0013
+cappda 0.00260
+cappdp 0.00090
+
+lowthresh  0.5  ; logic low threshold as a normalized voltage
+highthresh 0.5  ; logic high threshold as a normalized voltage
+
+cntpullup 0     ; irrelevant, cmos technology; no depletion transistors
+diffperim 0     ; don't include diffusion perimeters for sidewall cap.
+subparea 0      ; poly over transistor won't count as part pf bulk-poly cap.
+diffext  0      ; diffusion extension for each transistor
+
+device nfet sky130_fd_pr__nfet_01v8
+device nfet sky130_fd_pr__nfet_01v8_lvt
+device pfet sky130_fd_pr__pfet_01v8
+device pfet sky130_fd_pr__pfet_01v8_lvt
+device pfet sky130_fd_pr__pfet_01v8_hvt
+device nfet sky130_fd_pr__special_nfet_latch
+device nfet sky130_fd_pr__special_nfet_pass
+device pfet sky130_fd_pr__special_pfet_pass
+device pfet sky130_fd_pr__pfet_g5v0d10v5
+device nfet sky130_fd_pr__nfet_g5v0d10v5
+device nfet sky130_fd_pr__nfet_05v0_nvt
+
+; Capacitor values are in pF/centimicron^2
+device capacitor sky130_fd_pr__cap_mim_m3_1 2.0E-7
+device capacitor sky130_fd_pr__cap_mim_m3_2 2.0E-7
+
+; Resistor values are in ohms/square
+device resistor sky130_res_high_po_0p35   320
+device resistor sky130_res_high_po_0p69   320
+device resistor sky130_res_high_po_1p41   320
+device resistor sky130_res_high_po_2p85   320
+device resistor sky130_res_high_po_5p73   320
+device resistor sky130_res_high_po	  320
+device resistor sky130_res_xhigh_po_0p35 2000
+device resistor sky130_res_xhigh_po_0p69 2000
+device resistor sky130_res_xhigh_po_1p41 2000
+device resistor sky130_res_xhigh_po_2p85 2000
+device resistor sky130_res_xhigh_po_5p73 2000
+device resistor sky130_res_xhigh_po	 2000
+device resistor sky130_res_generic_nd     120
+device resistor sky130_res_generic_pd     197
+
+; Diode
+device diode sky130_fd_pr__diode_pw2nd_05v5
+
+; Transistor device parameters
+
+; C=250, N(w=1.0, l=0.15)
+resistance sky130_fd_pr__nfet_01v8 dynamic-high   1.0    0.15  8.506946e+03
+resistance sky130_fd_pr__nfet_01v8 dynamic-low    1.0    0.15  2.102336e+03
+resistance sky130_fd_pr__nfet_01v8 static         1.0    0.15  3.129041e+03
+
+; C=250, N(w=1.0, l=0.15)
+resistance sky130_fd_pr__nfet_01v8_lvt dynamic-high   1.0    0.15  6.236967e+03
+resistance sky130_fd_pr__nfet_01v8_lvt dynamic-low    1.0    0.15  1.914918e+03
+resistance sky130_fd_pr__nfet_01v8_lvt static         1.0    0.15  1.904558e+03
+
+; C=100, N(w=0.21, l=0.15)
+resistance sky130_fd_pr__special_nfet_latch dynamic-high   0.21    0.15  3.932510e+04
+resistance sky130_fd_pr__special_nfet_latch dynamic-low    0.21    0.15  1.110007e+04
+resistance sky130_fd_pr__special_nfet_latch static         0.21    0.15  1.389355e+04
+
+; C=100, N(w=0.14, l=0.15)
+resistance sky130_fd_pr__special_nfet_pass dynamic-high   0.14    0.15  5.170447e+04
+resistance sky130_fd_pr__special_nfet_pass dynamic-low    0.14    0.15  1.430549e+04
+resistance sky130_fd_pr__special_nfet_pass static         0.14    0.15  2.072893e+04
+
+; C=250, N(w=1.0, l=0.5)
+resistance sky130_fd_pr__nfet_g5v0d10v5 dynamic-high   1.0    0.5  1.479649e+04
+resistance sky130_fd_pr__nfet_g5v0d10v5 dynamic-low    1.0    0.5  5.598244e+03
+resistance sky130_fd_pr__nfet_g5v0d10v5 static         1.0    0.5  5.222054e+03
+
+; C=250, N(w=1.0, l=0.9)
+resistance sky130_fd_pr__nfet_05v0_nvt dynamic-high   1.0    0.9  1.587094e+04
+resistance sky130_fd_pr__nfet_05v0_nvt dynamic-low    1.0    0.9  5.932544e+03
+resistance sky130_fd_pr__nfet_05v0_nvt static         1.0    0.9  2.958307e+03
+
+; C=250, P(w=1.0, l=0.15)
+resistance sky130_fd_pr__pfet_01v8 dynamic-high   1.0    0.15  4.273960e+03
+resistance sky130_fd_pr__pfet_01v8 dynamic-low    1.0    0.15  1.850425e+04
+resistance sky130_fd_pr__pfet_01v8 static         1.0    0.15  4.295087e+03
+
+; C=250, P(w=1.0, l=0.35)
+resistance sky130_fd_pr__pfet_01v8_lvt dynamic-high   1.0    0.35  5.681720e+03
+resistance sky130_fd_pr__pfet_01v8_lvt dynamic-low    1.0    0.35  2.085890e+04
+resistance sky130_fd_pr__pfet_01v8_lvt static         1.0    0.35  4.403767e+03
+
+; C=250, P(w=1.0, l=0.45)
+resistance sky130_fd_pr__pfet_01v8_hvt dynamic-high   1.0    0.45  1.532024e+04
+resistance sky130_fd_pr__pfet_01v8_hvt dynamic-low    1.0    0.45  6.645878e+04
+resistance sky130_fd_pr__pfet_01v8_hvt static         1.0    0.45  1.914742e+04
+
+; C=100, P(w=0.14, l=0.15)
+resistance sky130_fd_pr__special_pfet_pass dynamic-high   0.14    0.15  3.973390e+04
+resistance sky130_fd_pr__special_pfet_pass dynamic-low    0.14    0.15  1.430089e+05
+resistance sky130_fd_pr__special_pfet_pass static         0.14    0.15  6.098272e+04
+
+; C=250, P(w=1.0, l=0.5)
+resistance sky130_fd_pr__pfet_g5v0d10v5 dynamic-high   1.0    0.5  1.133060e+04
+resistance sky130_fd_pr__pfet_g5v0d10v5 dynamic-low    1.0    0.5  3.667798e+04
+resistance sky130_fd_pr__pfet_g5v0d10v5 static         1.0    0.5  1.304853e+04
+

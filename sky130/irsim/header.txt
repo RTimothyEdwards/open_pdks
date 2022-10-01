@@ -21,26 +21,37 @@ diffext  0      ; diffusion extension for each transistor
 
 device nfet sky130_fd_pr__nfet_01v8
 device nfet sky130_fd_pr__nfet_01v8_lvt
-device nfet sky130_fd_pr__nfet_g5v0d10v5
 device pfet sky130_fd_pr__pfet_01v8
 device pfet sky130_fd_pr__pfet_01v8_lvt
-device pfet sky130_fd_pr__pfet_01v8_mvt
 device pfet sky130_fd_pr__pfet_01v8_hvt
+device nfet sky130_fd_pr__special_nfet_latch
+device nfet sky130_fd_pr__special_nfet_pass
+device pfet sky130_fd_pr__special_pfet_pass
 device pfet sky130_fd_pr__pfet_g5v0d10v5
+device nfet sky130_fd_pr__nfet_g5v0d10v5
+device nfet sky130_fd_pr__nfet_05v0_nvt
+
 ; Capacitor values are in pF/centimicron^2
 device capacitor sky130_fd_pr__cap_mim_m3_1 2.0E-7
 device capacitor sky130_fd_pr__cap_mim_m3_2 2.0E-7
+
 ; Resistor values are in ohms/square
 device resistor sky130_res_high_po_0p35   320
 device resistor sky130_res_high_po_0p69   320
 device resistor sky130_res_high_po_1p41   320
 device resistor sky130_res_high_po_2p85   320
 device resistor sky130_res_high_po_5p73   320
+device resistor sky130_res_high_po	  320
 device resistor sky130_res_xhigh_po_0p35 2000
 device resistor sky130_res_xhigh_po_0p69 2000
 device resistor sky130_res_xhigh_po_1p41 2000
 device resistor sky130_res_xhigh_po_2p85 2000
 device resistor sky130_res_xhigh_po_5p73 2000
+device resistor sky130_res_xhigh_po	 2000
 device resistor sky130_res_generic_nd     120
 device resistor sky130_res_generic_pd     197
 
+; Diode
+device diode sky130_fd_pr__diode_pw2nd_05v5
+
+; Transistor device parameters

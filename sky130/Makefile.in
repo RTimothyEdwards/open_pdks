@@ -477,8 +477,8 @@ SKY130B_DEFS += -DMAGIC_CURRENT=${MAGICCURRENT}
 OPENLANE_COMMON = config.tcl tracks.info no_synth.cells drc_exclude.cells
 OPENLANE_COMMON += tribuff_map.v latch_map.v mux2_map.v mux4_map.v fa_map.v rca_map.v csa_map.v
 
-# Corners defined in IRSIM parameter files (this should be wild-carded!)
-IRSIM_CORNERS = 1v62_27 1v62_n40 1v62_n5 1v80_125 1v80_27 1v80_n40 1v80_n5 1v98_125 1v98_27 1v98_n40 1v98_n5
+# Corners defined in IRSIM parameter files (wild-carded)
+IRSIM_CORNERS = `ls irsim/*.prm | cut -c14-`
 
 # Where cpp syntax is followed, this is equivalent to cpp, but it does not
 # mangle non-C source files under the belief that they are actually C code.
@@ -901,8 +901,8 @@ irsim-%: irsim
 	mkdir -p ${IRSIM_STAGING_$*}
 	rm -f ${IRSIM_STAGING_$*}/${SKY130$*}_*.prm
 	for corner in ${IRSIM_CORNERS} ; do \
-	    cat irsim/header.txt irsim/sky130_$$corner.prm > \
-		${IRSIM_STAGING_$*}/${SKY130$*}_$$corner.prm ; \
+	    cat irsim/header.txt irsim/sky130_$$corner > \
+		${IRSIM_STAGING_$*}/${SKY130$*}_$$corner ; \
 	done
 
 xcircuit-%: xcircuit/${TECH}.xcircuitrc

@@ -1,0 +1,116 @@
+*
+* spice test file template for generating .prm files.
+*
+* Make appropriate variable name substitutions:
+*
+* Process corner = CORNER
+* Power supply voltage = FULL_VOLTAGE
+* Half power supply voltage = HALF_VOLTAGE
+* N-type FET device name = DEVICENAME_N
+* P-type FET device name = DEVICENAME_P
+* Width of N-type FET = WIDTH_N
+* Width of P-type FET = WIDTH_P
+* Length of N-type FET = LENGTH_N
+* Length of P-type FET = LENGTH_P
+* Load capacitance (in fF) = LOADCAP
+*
+.lib /usr/share/pdk/sky130A/libs.tech/ngspice/sky130.lib.spice CORNER
+*
+.option TEMP=TEMPERATURE
+*
+* out1 - Output of Inverter to measure step response.
+*
+X0 out1 in1 GND GND DEVICENAME_N L=LENGTH_N W=WIDTH_N
+X1 out1 in1 VDD VDD DEVICENAME_P L=LENGTH_P W=WIDTH_P
+*
+* out2 - Output of Inverter driven by out1 to determine slow-input effect.
+*
+X6 out2 out1 GND GND DEVICENAME_N L=LENGTH_N W=WIDTH_N
+X7 out2 out1 VDD VDD DEVICENAME_P L=LENGTH_P W=WIDTH_P
+*
+* out3 - Output of a DEVICENAME_N pulling up to determine dynamic-high resistance.
+*
+X2 out3 in2 VDD GND DEVICENAME_N L=LENGTH_N W=WIDTH_N
+*
+* out4 - Output of a DEVICENAME_P pulling down to determine dynamic-low resistance.
+*
+X3 out4 in3 GND VDD DEVICENAME_P L=LENGTH_P W=WIDTH_P
+*
+* loading capacitors
+*
+C0 out1 GND LOADCAPf
+C1 out2 GND LOADCAPf
+C2 out3 GND LOADCAPf
+C3 out4 GND LOADCAPf
+
+VDD VDD 0 DC FULL_VOLTAGE
+* VGnd GND 0 DC 0
+RGnd GND 0 0.01
+Vmid mid 0 DC HALF_VOLTAGE
+
+Vin1 in1 0 0 pwl (0ns 0 0.1ns FULL_VOLTAGE 40ns FULL_VOLTAGE 40.1ns 0)
+Vin2 in2 0 0 pwl (0ns 0 0.1ns FULL_VOLTAGE)
+Vin3 in3 0 5 pwl (0ns FULL_VOLTAGE 0.1ns 0)
+
+.ic V(out4)=FULL_VOLTAGE
+
+.control
+tran 0.01ns 80ns
+* Measure when input signal crosses half Vdd (rising)
+meas tran tr when V(in1)=HALF_VOLTAGE rise=1
+* Measure when input signal crosses half Vdd (falling)
+meas tran tf when V(in1)=HALF_VOLTAGE fall=1
+* Measure when first output falls to half Vdd
+meas tran t1hl when V(out1)=HALF_VOLTAGE fall=1
+* Measure when first output rises to half Vdd
+meas tran t1lh when V(out1)=HALF_VOLTAGE rise=1
+* Measure when second output rises to half Vdd
+meas tran t2lh when V(out2)=HALF_VOLTAGE rise=1
+* Measure when second output falls to half Vdd
+meas tran t2hl when V(out2)=HALF_VOLTAGE fall=1
+
+* NOTE:  An nFET driving a node high and a pFET driving a node
+* low are not in saturation and there is no value of R that is
+* appropriate.  However, this configuration is rarely used in
+* CMOS circuits.  Find the value at the end of the simulation,
+* compute 80% that value, and extrapolate the rise time.
+meas tran tr2 when V(in2)=HALF_VOLTAGE rise=1
+meas tran tor2 max V(out3)
+let tr2h=tor2*0.8
+meas tran tnr1 when V(out3)=tr2h rise=1
+let tnr=tnr1*(HALF_VOLTAGE/tr2h)
+
+meas tran tf2 when V(in3)=HALF_VOLTAGE fall=1
+meas tran tof2 min V(out4)
+let tf2h=FULL_VOLTAGE-(FULL_VOLTAGE-tof2)*0.8
+meas tran tpf1 when V(out4)=tf2h fall=1
+let tpf=tpf1*(tf2h/HALF_VOLTAGE)
+
+* Compute rise and fall times
+let out1_tphl=t1hl-tr
+let out1_tplh=t1lh-tf
+let out2_tphl=t2hl-t1lh
+let out2_tplh=t2lh-t1hl
+let out3_tplh=tnr-tr2
+let out4_tphl=tpf-tf2
+
+* Compute dynamic and static resistances
+let ndynl=out1_tphl/LOADCAPf
+let pdynh=out1_tplh/LOADCAPf
+let nstat=(out2_tphl*out2_tphl-out1_tphl*out1_tphl)/(out1_tplh*LOADCAPf)
+let pstat=(out2_tplh*out2_tplh-out1_tplh*out1_tplh)/(out1_tphl*LOADCAPf)
+let ndynh=out3_tplh/LOADCAPf
+let pdynl=out4_tphl/LOADCAPf
+
+* Output values
+print ndynl
+print ndynh
+print nstat
+print pdynl
+print pdynh
+print pstat
+
+quit
+
+.endc
+.end

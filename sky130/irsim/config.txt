@@ -1,8 +1,0 @@
-#
-set pwith = 1.0		# width of p-device in um
-set plen = 0.15		# length of p-device in um
-set nwith = 0.65	# width of n-device in um
-set nlen = 0.15		# length of n-device in um
-set cap = 50		# loading capacitance in fF
-
-
