@@ -2,7 +2,13 @@ name: CI
 
 on:
   push:
+    branches:
+      - hspice
+    tags:
+      - 1.*
   pull_request:
+    branches:
+      - hspice
   workflow_dispatch:
 
 
@@ -13,12 +19,6 @@ jobs:
       fail-fast: false
       matrix:
         library:
-          - sky130_fd_sc_hd
-          - sky130_fd_sc_hdll
-          - sky130_fd_sc_hs
-          - sky130_fd_sc_ms
-          - sky130_fd_sc_ls
-          - sky130_fd_sc_hvl
           - all
     env:
       STD_CELL_LIBRARY: ${{ matrix.library }}
@@ -35,10 +35,6 @@ jobs:
       run: |
         bash .github/build.sh
 
-    - name: Test
-      run: |
-        bash .github/test.sh
-
     - name: Capture
       if: ${{ always() }}
       run: |
@@ -50,3 +46,11 @@ jobs:
       with:
         name: ${{ matrix.library }}
         path: ${{ github.workspace }}/output/**
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      id: create_release
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: ${{ github.workspace }}/output/hspice-model.tar.bz2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

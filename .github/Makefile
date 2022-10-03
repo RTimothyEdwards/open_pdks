@@ -16,7 +16,6 @@
 
 OPEN_PDKS_ROOT ?= $(shell pwd)/..
 THREADS ?= $(shell nproc)
-STD_CELL_LIBRARY ?= sky130_fd_sc_hd
 SKYWATER_COMMIT ?= b5ff6174d9aa921f670f12a2893969fe4a516f6c
 
 .DEFAULT_GOAL := all
@@ -38,19 +37,7 @@ skywater-pdk: $(PDK_ROOT)/skywater-pdk
 .PHONY: skywater-library
 skywater-library: $(PDK_ROOT)/skywater-pdk
 	cd $(PDK_ROOT)/skywater-pdk && \
-		git submodule update --init libraries/$(STD_CELL_LIBRARY)/latest && \
-		$(MAKE) -j$(THREADS) $(STD_CELL_LIBRARY)
-
-.PHONY: all-skywater-libraries
-all-skywater-libraries: skywater-pdk
-	cd $(PDK_ROOT)/skywater-pdk && \
-		git submodule update --init libraries/sky130_fd_sc_hd/latest && \
-		git submodule update --init libraries/sky130_fd_sc_hs/latest && \
-		git submodule update --init libraries/sky130_fd_sc_hdll/latest && \
-		git submodule update --init libraries/sky130_fd_sc_ms/latest && \
-		git submodule update --init libraries/sky130_fd_sc_ls/latest && \
-		git submodule update --init libraries/sky130_fd_sc_hvl/latest && \
-		$(MAKE) -j$(THREADS) timing
+		git submodule update --init libraries/sky130_fd_pr/latest
 
 .PHONY: build-pdk
 build-pdk: $(PDK_ROOT)/skywater-pdk
@@ -67,5 +54,4 @@ build-pdk: $(PDK_ROOT)/skywater-pdk
 			&& \
 		cd sky130 && \
 		$(MAKE) veryclean && \
-		$(MAKE) && \
-		$(MAKE) install-local
+		$(MAKE) primitive-A

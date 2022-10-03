@@ -548,6 +548,9 @@ ifneq (${XCIRCUIT_DISABLED}, 1)
         TOOLS += xcircuit
 endif
 
+
+HSPICE_DISABLED=@HSPICE_DISABLED@
+
 # These definitions depend on the setting of EF_STYLE
 ifeq (${EF_STYLE}, 1)
 	IO_VERILOG = verilog/sky130_fd_io
@@ -1278,6 +1281,22 @@ primitive-%:
 	# Custom:  Add "spinit" file
 	cat ./custom/models/spinit >> \
 		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice/spinit
+	
+ifneq (${HSPICE_DISABLED}, 1)
+	make hspice-build-$*;
+endif
+
+hspice-build-%:
+	# Convert sky130$* ngspice models files to hspice format
+	${STAGE} -source ${STAGING_PATH}/${SKY130$*} -target ${STAGING_PATH}/${SKY130$*} \
+		-hspice libs.tech/ngspice/* \
+		filter=custom/scripts/convert_hspice.py \
+		2>&1 | tee -a ${SKY130$*}_make.log
+	# Copy libs.ref spice to hspice
+	${STAGE} -source ${STAGING_PATH}/${SKY130$*}/libs.ref -target ${STAGING_PATH}/${SKY130$*} \
+		-hspice/spi ${PR_SPICE}/* \
+		filter=custom/scripts/convert_hspice.py \
+		2>&1 | tee -a ${SKY130$*}_make.log
 
 io-%:
 	# Install custom additions to I/O pad library
