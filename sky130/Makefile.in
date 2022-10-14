@@ -938,6 +938,8 @@ klayout-%: ${KLAYOUT_PATH}
 		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.lyt ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyt ; \
 		cp -rp ${KLAYOUT_PATH}/scripts/* ${KLAYOUT_STAGING_$*}/scripts/ ; \
 	fi
+	# Copy original DRC deck from open_pdks (is this useful?)
+	cp klayout/sky130.lydrc ${KLAYOUT_STAGING_$*}/drc/${SKY130$*}.lydrc
 	# Copy drc directory contents from the Efabless Open MPW precheck repository
 	if test "x${PRECHECK_PATH}" != "x" ; then \
 		cp ${PRECHECK_PATH}/checks/tech-files/sky130A_mr.drc ${KLAYOUT_STAGING_$*}/drc/${SKY130$*}_mr.drc ; \

@@ -606,6 +606,7 @@ XSCHEM_SKY130_PATH
 SKY130_ML_XX_HD_PATH
 PATCH
 MAGIC
+XCIRCUIT_DISABLED
 XSCHEM_DISABLED
 QFLOW_DISABLED
 OPENLANE_DISABLED
@@ -685,6 +686,7 @@ enable_irsim
 enable_openlane
 enable_qflow
 enable_xschem
+enable_xcircuit
 enable_alpha_sky130
 enable_xschem_sky130
 enable_klayout_sky130
@@ -1355,6 +1357,10 @@ Optional Features:
 
   --enable-xschem
                 Enable or disable xschem setup [default=enabled]
+
+
+  --enable-xcircuit
+                Enable or disable xcircuit setup [default=enabled]
 
 
   --enable-alpha-sky130[=path]
@@ -2451,8 +2457,8 @@ ALL_TECHS="gf180mcu sky130"
 # Set variables for tool setups
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: Found tools: klayout magic netgen irsim openlane qflow xschem" >&5
-$as_echo "$as_me: Found tools: klayout magic netgen irsim openlane qflow xschem" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Found tools: klayout magic netgen irsim openlane qflow xschem xcircuit" >&5
+$as_echo "$as_me: Found tools: klayout magic netgen irsim openlane qflow xschem xcircuit" >&6;}
 
 
 
@@ -2554,6 +2560,21 @@ if test "${enable_xschem+set}" = set; then :
   enableval=$enable_xschem;
                 if test "$enableval" == "no" -o "$enableval" == "NO"; then
                     XSCHEM_DISABLED=1
+                fi
+
+
+fi
+
+
+
+
+
+        XCIRCUIT_DISABLED=0
+        # Check whether --enable-xcircuit was given.
+if test "${enable_xcircuit+set}" = set; then :
+  enableval=$enable_xcircuit;
+                if test "$enableval" == "no" -o "$enableval" == "NO"; then
+                    XCIRCUIT_DISABLED=1
                 fi
 
 
@@ -3258,8 +3279,8 @@ fi
 
 
 
-{ $as_echo "$as_me:${as_lineno-$LINENO}: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow xschem" >&5
-$as_echo "$as_me: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow xschem" >&6;}
+{ $as_echo "$as_me:${as_lineno-$LINENO}: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow xschem xcircuit" >&5
+$as_echo "$as_me: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow xschem xcircuit" >&6;}
 
 # Check for "--with-ef-style"
 EF_STYLE=0
