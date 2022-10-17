@@ -1051,12 +1051,19 @@ openlane-%: openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl openlane/sky
 	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.max.spef_extractor \
 		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.spef_extractor
 
-	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.min.calibre \
-		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.calibre
-	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.nom.calibre \
-		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.calibre
-	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.max.calibre \
-		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.calibre
+	# Only install the calibre-derived rule files if they exist in the source
+	if test -f openlane/rules.openrcx.sky130$*.min.calibre ; then \
+		${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.min.calibre \
+			${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.calibre ;\
+	fi
+	if test -f openlane/rules.openrcx.sky130$*.nom.calibre ; then \
+		${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.nom.calibre \
+			${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.calibre ;\
+	fi
+	if test -f openlane/rules.openrcx.sky130$*.max.calibre ; then \
+		${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.max.calibre \
+			${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.calibre ;\
+	fi
 
 	for file in ${OPENLANE_COMMON} ; do \
 	    ${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_fd_sc_hd/$$file \
