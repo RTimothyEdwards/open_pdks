@@ -2343,11 +2343,11 @@ proc sky130::sky130_fd_pr__cap_mim_m3_1_draw {parameters} {
 	    cap_type 		mimcap \
 	    cap_contact_type	mimcc \
 	    bot_type 		m3 \
-	    bot_surround	0.5 \
+	    bot_surround	0.2 \
 	    cap_spacing		0.5 \
 	    cap_surround	0.2 \
 	    top_surround	0.005 \
-	    end_surround	0.1 \
+	    end_surround	0.3 \
 	    end_spacing		0.1 \
 	    contact_size	0.32 \
 	    metal_surround	0.08 \
@@ -2363,16 +2363,16 @@ proc sky130::sky130_fd_pr__cap_mim_m3_2_draw {parameters} {
 	    cap_type 		mimcap2 \
 	    cap_contact_type	mim2cc \
 	    bot_type 		m4 \
-	    bot_surround	0.5 \
-	    cap_spacing		0.5 \
+	    bot_surround	0.4 \
+	    cap_spacing		0.8 \
 	    cap_surround	0.2 \
 	    top_surround	0.12 \
 	    end_surround	0.1 \
-	    end_spacing		0.1 \
+	    end_spacing		2.0 \
 	    contact_size	1.18 \
 	    metal_surround	0.21 \
 	    top_metal_width	1.6 \
-	    top_metal_space	1.7 \
+	    top_metal_space	0.7 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::cap_draw $drawdict]
