@@ -120,6 +120,10 @@ Xsky130_fd_io__top_power_hvc_base
 + SRC_BDY_HVC VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_hvc_wpadv2
+Rtest0 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
+Rtest1 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
+Rtest2 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
+Rtest3 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
 
 .ENDS
 
@@ -202,6 +206,10 @@ Xsky130_fd_io__top_ground_hvc_base
 + VDDIO SRC_BDY_HVC VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_ground_hvc_wpad
+Rtest0 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
+Rtest1 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
+Rtest2 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
+Rtest3 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
 
 .ENDS
 
@@ -422,6 +430,10 @@ Xsky130_fd_io__top_power_hvc_base
 + VSSIO VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_hvc_wpadv2
+Rtest0 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
+Rtest1 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
+Rtest2 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
+Rtest3 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
 
 .ENDS
 
@@ -442,6 +454,10 @@ Xsky130_fd_io__top_ground_hvc_base
 + VDDIO VSSIO VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_ground_hvc_wpad
+Rtest0 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
+Rtest1 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
+Rtest2 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
+Rtest3 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
 
 .ENDS
 
@@ -541,9 +557,9 @@ Xsky130_fd_io__top_ground_lvc_base
 
 * Instantiate the underlying power pad (connects P_PAD to VCCD)
 Xsky130_fd_io__top_power_lvc_base
-+ AMUXBUS_A AMUXBUS_B VSSD1 VCCD1 VCCD1 VDDIO
++ AMUXBUS_A AMUXBUS_B VSSIO VCCD1 VCCD1 VDDIO
 + VCCD1 VCCD_PAD
-+ VSSIO VSSD1 VCCD VCCHIB VDDA VDDIO VDDIO_Q
++ VSSD1 VSSD1 VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_lvc_wpad
 
@@ -565,7 +581,7 @@ Xsky130_fd_io__top_power_lvc_base
 Xsky130_fd_io__top_ground_lvc_base
 + AMUXBUS_A AMUXBUS_B VSSIO VCCD1 VCCD1
 + VSSD1 VSSD_PAD
-+ VDDIO VSSIO VSSD VCCD VCCHIB VDDA VDDIO VDDIO_Q
++ VDDIO VSSD1 VSSD1 VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_ground_lvc_wpad
 
@@ -584,9 +600,9 @@ Xsky130_fd_io__top_ground_lvc_base
 
 * Instantiate the underlying power pad (connects P_PAD to VCCD)
 Xsky130_fd_io__top_power_lvc_base
-+ AMUXBUS_A AMUXBUS_B VSSIO VCCD VCCD VDDIO
++ AMUXBUS_A AMUXBUS_B VSSA VCCD VCCD VDDIO
 + VCCD VCCD_PAD
-+ VSSD VSSD VCCD VCCHIB VDDA VDDIO VDDIO_Q
++ VSSIO VSSD VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_lvc_wpad
 
@@ -605,9 +621,9 @@ Xsky130_fd_io__top_power_lvc_base
 
 * Instantiate the underlying ground pad (connects G_PAD to VSSD)
 Xsky130_fd_io__top_ground_lvc_base
-+ AMUXBUS_A AMUXBUS_B VSSIO VCCD VCCD
++ AMUXBUS_A AMUXBUS_B VSSA VCCD VCCD
 + VSSD VSSD_PAD
-+ VDDIO VSSD VSSD VCCD VCCHIB VDDA VDDIO VDDIO_Q
++ VDDIO VSSIO VSSD VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_ground_lvc_wpad
 
