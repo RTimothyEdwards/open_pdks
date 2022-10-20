@@ -2347,8 +2347,8 @@ proc sky130::sky130_fd_pr__cap_mim_m3_1_draw {parameters} {
 	    cap_spacing		0.5 \
 	    cap_surround	0.2 \
 	    top_surround	0.005 \
-	    end_surround	0.3 \
-	    end_spacing		0.1 \
+	    end_surround	0.1 \
+	    end_spacing		0.3 \
 	    contact_size	0.32 \
 	    metal_surround	0.08 \
     ]
