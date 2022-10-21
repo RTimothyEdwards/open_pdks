@@ -71,7 +71,13 @@ def filter(inname, outname):
                 extor = True
                 fixedline = line.replace(' m=2', '')
                 fixedlines.append(fixedline)
-                saveline = fixedline.replace('sndA1', 'snd2A1')
+                saveline = fixedline.replace('sndA1', 'snd2A1').replace('MMPA', 'MMPA2').replace('MMNA', 'MMNA2')
+                modified = True
+            elif inmacro == True and 'pndB' in line:
+                extor = True
+                fixedline = line.replace(' m=2', '')
+                fixedlines.append(fixedline)
+                saveline = fixedline.replace('pndB', 'pnd2B').replace('MMPB', 'MMPB2').replace('MMPC', 'MMPC2')
                 modified = True
             elif extor == True:
                 fixedlines.append(line)
