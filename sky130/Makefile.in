@@ -1356,6 +1356,7 @@ digital-hd-%:
 			filter=custom/scripts/fix_device_models.py \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
 			filter=custom/scripts/fix_sparecell_cdl.py \
+			filter=custom/scripts/fix_serxtors_cdl.py \
 			sort=../common/sort_pdkfiles.py \
 		-lef %l/latest/cells/*/*.lef \
 			exclude=*.magic.lef,sky130_ef_sc_hd.lef lefopts=-toplayer \
