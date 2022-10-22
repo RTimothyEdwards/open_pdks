@@ -85,7 +85,7 @@
     },
     "reference": {
         "open_pdks": "a517779da3d3f3e57a24d9b4ef0a4559cd9abccc",
-        "magic": "7905e15ae3b66ed26349fb701b475ef93b566de5",
+        "magic": "94daf986ab9aa94a9ae2ac3539fa5def9bd2a1ac",
         "gf180mcu_pdk": "a897aa30369d3bcec87d9d50ce9b01f320f854ef",
         "gf180mcu_fd_pr": "e1b4e187900370103bf9b8a22bb8625f883368ef",
         "gf180mcu_fd_io": "bcaa40aaf6cf04d6e9cb143d0e5b0de9429e53ab",
