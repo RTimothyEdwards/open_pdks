@@ -1295,7 +1295,7 @@ io-%:
 		-cdl %l/cdl/*.cdl \
 		-spice %l/spice/*.spice \
 		-lib %l/lib/*.lib \
-		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
+		-gds %l/gds/*.gds options=custom/scripts/gds_import_io.tcl \
 		-lef %l/lef/*.lef exclude=sky130_fd_io__top_xres4v2.lef \
 			compile-only rename=sky130_ef_io \
 		-lef %l/lef/sky130_fd_io__top_xres4v2.lef \
@@ -1305,6 +1305,18 @@ io-%:
 		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
 	./custom/scripts/fix_gpiov2_gds.py \
 		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__top_gpiov2.gds
+	# Copy the GDS file for the HVC power pad, then run the script that fixes it.
+	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/top_power_hvc_wpadv2/sky130_fd_io__top_power_hvc_wpadv2.gds \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
+	./custom/scripts/fix_vddio_pad_gds.py \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__top_power_hvc_wpadv2.gds
+
+	# Copy the GDS file for the HVC ground pad, then run the script that fixes it.
+	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/top_ground_hvc_wpad/sky130_fd_io__top_ground_hvc_wpad.gds \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
+	./custom/scripts/fix_vssio_pad_gds.py \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__top_ground_hvc_wpad.gds
+
 	# Install SkyWater I/O pad library
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
@@ -1320,8 +1332,8 @@ io-%:
 		-gds %l/latest/cells/*/*.gds compile-only \
 			sort=../common/sort_pdkfiles.py \
 			options=custom/scripts/sky130_fd_io_import.tcl \
-			no-copy=sky130_fd_io__top_gpiov2.gds \
-			include=sky130_fd_io__top_gpiov2.gds \
+			no-copy=sky130_fd_io__top_gpiov2.gds,sky130_fd_io__top_ground_hvc_wpad.gds,sky130_fd_io__top_power_hvc_wpadv2.gds \
+			include=sky130_fd_io__top_gpiov2.gds,sky130_fd_io__top_ground_hvc_wpad.gds,sky130_fd_io__top_power_hvc_wpadv2.gds \
 		-verilog %l/latest/cells/*/*.*.v \
 		-verilog %l/latest/cells/*/*.v exclude=*.*.v,sky130_ef_io.v \
 			compile-only filter=custom/scripts/inc_verilog.py \

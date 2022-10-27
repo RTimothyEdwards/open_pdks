@@ -75,19 +75,11 @@ foreach dev $devices {
 }
 
 #-------------------------------------------
-# MRM (metal) resistors and poly resistor
+# poly resistor
 #-------------------------------------------
 
 set devices {}
 lappend devices sky130_fd_pr__res_generic_po
-lappend devices sky130_fd_pr__res_generic_l1
-lappend devices sky130_fd_pr__res_generic_m1
-lappend devices sky130_fd_pr__res_generic_m2
-lappend devices sky130_fd_pr__res_generic_m3
-#ifdef METAL5
-lappend devices sky130_fd_pr__res_generic_m4
-lappend devices sky130_fd_pr__res_generic_m5
-#endif (METAL5)
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -113,6 +105,49 @@ foreach dev $devices {
 	property "-circuit2 $dev" parallel {w add}
 	property "-circuit2 $dev" parallel {value par}
 	property "-circuit2 $dev" tolerance {l 0.01} {w 0.01}
+	# Ignore these properties
+	property "-circuit2 $dev" delete mult
+    }
+}
+
+#-------------------------------------------
+# MRM (metal) resistors
+#-------------------------------------------
+
+set devices {}
+lappend devices sky130_fd_pr__res_generic_l1
+lappend devices sky130_fd_pr__res_generic_m1
+lappend devices sky130_fd_pr__res_generic_m2
+lappend devices sky130_fd_pr__res_generic_m3
+#ifdef METAL5
+lappend devices sky130_fd_pr__res_generic_m4
+lappend devices sky130_fd_pr__res_generic_m5
+#endif (METAL5)
+
+foreach dev $devices {
+    if {[lsearch $cells1 $dev] >= 0} {
+	permute "-circuit1 $dev" end_a end_b
+	property "-circuit1 $dev" series enable
+	property "-circuit1 $dev" series {w critical}
+	property "-circuit1 $dev" series {l add}
+	property "-circuit1 $dev" parallel enable
+	property "-circuit1 $dev" parallel {l critical}
+	property "-circuit1 $dev" parallel {w add}
+	property "-circuit1 $dev" parallel {value par}
+	property "-circuit1 $dev" tolerance {l 10.0} {w 10.0}
+	# Ignore these properties
+	property "-circuit1 $dev" delete mult
+    }
+    if {[lsearch $cells2 $dev] >= 0} {
+	permute "-circuit2 $dev" end_a end_b
+	property "-circuit2 $dev" series enable
+	property "-circuit2 $dev" series {w critical}
+	property "-circuit2 $dev" series {l add}
+	property "-circuit2 $dev" parallel enable
+	property "-circuit2 $dev" parallel {l critical}
+	property "-circuit2 $dev" parallel {w add}
+	property "-circuit2 $dev" parallel {value par}
+	property "-circuit2 $dev" tolerance {l 10.0} {w 10.0}
 	# Ignore these properties
 	property "-circuit2 $dev" delete mult
     }

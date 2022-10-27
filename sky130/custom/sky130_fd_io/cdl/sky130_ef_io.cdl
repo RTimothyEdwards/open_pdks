@@ -120,10 +120,6 @@ Xsky130_fd_io__top_power_hvc_base
 + SRC_BDY_HVC VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_hvc_wpadv2
-Rtest0 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
-Rtest1 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
-Rtest2 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
-Rtest3 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
 
 .ENDS
 
@@ -206,10 +202,6 @@ Xsky130_fd_io__top_ground_hvc_base
 + VDDIO SRC_BDY_HVC VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_ground_hvc_wpad
-Rtest0 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
-Rtest1 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
-Rtest2 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
-Rtest3 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
 
 .ENDS
 
@@ -430,10 +422,6 @@ Xsky130_fd_io__top_power_hvc_base
 + VSSIO VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_hvc_wpadv2
-Rtest0 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
-Rtest1 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
-Rtest2 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
-Rtest3 VDDIO_Q VDDIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
 
 .ENDS
 
@@ -454,10 +442,6 @@ Xsky130_fd_io__top_ground_hvc_base
 + VDDIO VSSIO VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_ground_hvc_wpad
-Rtest0 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
-Rtest1 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
-Rtest2 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
-Rtest3 VSSIO_Q VSSIO sky130_fd_pr__res_generic_m3 w=23.9 l=0.2
 
 .ENDS
 

@@ -3056,43 +3056,43 @@ style  sky130 variants (vendor),()
  and HVI,hvcheck
  and mvnsdexpand
 
- templayer hresarea POLY
- and RPM
- grow 3000
-
- templayer uresarea POLY
- and URPM
- grow 3000
+# The following recipes deal with DIFFRES layers expanded over large areas
+# outside the resistor.  Find areas which may have been accidentally
+# captured as a resistor which were supposed to be transistors.
 
  templayer diffresarea DIFFRES
  and-not HVI,hvcheck
  grow 3000
 
- templayer mvdiffresarea DIFFRES
- and HVI,hvcheck
- grow 3000
-
- templayer resarea diffresarea,mvdiffresarea,hresarea,uresarea
-
  layer pfet POLY
- and DIFF
  and diffresarea
+ and DIFF
  and-not NSDM
  and-not STDCELL
+ and-not HVI
+
+ layer mvpfet POLY
+ and diffresarea
+ and DIFF
+ and-not NSDM
+ and-not STDCELL
+ and HVI
 
  layer scpfet POLY
- and DIFF
  and diffresarea
- and-not HVTP
+ and DIFF
  and-not NSDM
+ and-not HVTP
  and STDCELL
 
  layer scpfethvt POLY
- and DIFF
  and diffresarea
- and HVTP
+ and DIFF
  and-not NSDM
+ and HVTP
  and STDCELL
+
+# End of resistor area hack
 
  templayer xpolyterm RPM,URPM
  and POLY
@@ -3261,6 +3261,7 @@ style  sky130 variants (vendor),()
  and DIFF
  and NSDM
  and DIODE
+ and-not NWELL,nwelcheck
  and-not POLY
  and-not PSDM
  and-not HVI,hvcheck
@@ -3281,6 +3282,7 @@ style  sky130 variants (vendor),()
  and DIFF
  and NSDM
  and DIODE
+ and-not NWELL,nwelcheck
  and-not POLY
  and-not PSDM
  and-not HVI,hvcheck
@@ -3758,6 +3760,7 @@ style  sky130 variants (vendor),()
  templayer ndiccopy CONT
  and LI
  and DIODE
+ and-not NWELL,nwelcheck
  and NSDM
  and-not HVI,hvcheck
 
@@ -6537,15 +6540,16 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device resistor sky130_fd_pr__res_generic_po rmp *poly
  device resistor sky130_fd_pr__res_generic_po mrp1 *poly
 
- device pdiode sky130_fd_pr__diode_pd2nw_05v5 *pdiode nwell a=area p=pj
- device pdiode sky130_fd_pr__diode_pd2nw_05v5_lvt *pdiodelvt nwell a=area p=pj
- device pdiode sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area p=pj
- device pdiode sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area p=pj
+ # NOTE: SkyWater diode models have bizarre units requiring bizarre scaling
+ device pdiode sky130_fd_pr__diode_pd2nw_05v5 *pdiode nwell a=area*1E12 p=pj*1E6
+ device pdiode sky130_fd_pr__diode_pd2nw_05v5_lvt *pdiodelvt nwell a=area*1E12 p=pj*1E6
+ device pdiode sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area*1E12 p=pj*1E6
+ device pdiode sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area*1E12 p=pj*1E6
 
- device ndiode sky130_fd_pr__diode_pw2nd_05v5 *ndiode pwell,space/w a=area p=pj
- device ndiode sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area p=pj
- device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area p=pj
- device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area p=pj
+ device ndiode sky130_fd_pr__diode_pw2nd_05v5 *ndiode pwell,space/w a=area*1E12 p=pj*1E6
+ device ndiode sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area*1E12 p=pj*1E6
+ device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area*1E12 p=pj*1E6
+ device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area*1E12 p=pj*1E6
 
 #ifdef RERAM
  device csubcircuit sky130_fd_pr__reram_reram_cell reram m1 a=area_ox
@@ -6623,15 +6627,16 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device resistor mrdp_hv   mvpdiffres *mvpdiff 
  device resistor sky130_fd_pr__res_iso_pw   rpw    pwell
 
- device ndiode sky130_fd_pr__diode_pw2nd_05v5 *ndiode pwell,space/w a=area p=pj
- device ndiode sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area p=pj
- device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area p=pj
- device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area p=pj
+ # NOTE: SkyWater diode models have bizarre units requiring bizarre scaling
+ device ndiode sky130_fd_pr__diode_pw2nd_05v5 *ndiode pwell,space/w a=area*1E12 p=pj*1E6
+ device ndiode sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area*1E12 p=pj*1E6
+ device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area*1E12 p=pj*1E6
+ device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area*1E12 p=pj*1E6
 
- device pdiode sky130_fd_pr__diode_pd2nw_05v5 *pdiode nwell a=area p=pj
- device pdiode sky130_fd_pr__diode_pd2nw_05v5_lvt *pdiodelvt nwell a=area p=pj
- device pdiode sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area p=pj
- device pdiode sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area p=pj
+ device pdiode sky130_fd_pr__diode_pd2nw_05v5 *pdiode nwell a=area*1E12 p=pj*1E6
+ device pdiode sky130_fd_pr__diode_pd2nw_05v5_lvt *pdiodelvt nwell a=area*1E12 p=pj*1E6
+ device pdiode sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area*1E12 p=pj*1E6
+ device pdiode sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area*1E12 p=pj*1E6
 
  device bjt sky130_fd_pr__npn_05v5_W1p00L1p00 npn *ndiff dnwell space/w error +npn1p00
  device bjt sky130_fd_pr__npn_05v5_W1p00L2p00 npn *ndiff dnwell space/w error +npn2p00
