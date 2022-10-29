@@ -7127,11 +7127,11 @@ RS0<0> PAD PAD_A_NOESD_H sky130_fd_pr__res_generic_m3 W=12.37 L=0.035
 * SPDX-License-Identifier: Apache-2.0
 
 .SUBCKT sky130_fd_io__top_ground_hvc_wpad AMUXBUS_A AMUXBUS_B DRN_HVC G_CORE
-+ G_PAD OGC_HVC SRC_BDY_HVC VCCD VCCHIB VDDA VDDIO VDDIO_Q VSSA VSSD VSSIO VSSIO_Q
-+ VSWITCH
++ G_PAD OGC_HVC PADISOL PADISOR SRC_BDY_HVC VCCD VCCHIB VDDA VDDIO VDDIO_Q VSSA
++ VSSD VSSIO VSSIO_Q VSWITCH
 *.PININFO AMUXBUS_A:B AMUXBUS_B:B DRN_HVC:B G_CORE:B G_PAD:B OGC_HVC:B
-*.PININFO SRC_BDY_HVC:B VCCD:B VCCHIB:B VDDA:B VDDIO:B VDDIO_Q:B
-*.PININFO VSSA:B VSSD:B VSSIO:B VSSIO_Q:B VSWITCH:B
+*.PININFO PADISOL:B PADISOR:B SRC_BDY_HVC:B VCCD:B VCCHIB:B VDDA:B VDDIO:B
+*.PININFO VDDIO_L:B VSSA:B VSSD:B VSSIO:B VSSIO_Q:B VSWITCH:B
 xI39 SRC_BDY_HVC VDDIO sky130_fd_io__condiode
 Xcxtor2_q0 DRN_HVC g_nclamp SRC_BDY_HVC SRC_BDY_HVC sky130_fd_pr__nfet_g5v0d10v5
 + m=22 w=10.0 l=0.5 mult=1 sa=0.265 sb=0.265 sd=0.28 topography=normal area=0.063
@@ -7155,7 +7155,8 @@ Xpre_p1_q0 g_nclamp g_pdpre DRN_HVC DRN_HVC sky130_fd_pr__pfet_g5v0d10v5 m=50
 + w=7.0 l=0.5 mult=1 sa=0.265 sb=0.265 sd=0.28 topography=normal area=0.063
 + perim=1.14
 RI13 G_PAD G_CORE sky130_fd_pr__res_generic_m5 w=2.5385e+08u l=100000u
-RIQ VSSIO VSSIO_Q sky130_fd_pr__res_generic_m3 w=23.9 l=0.44 M=4
+RIL G_CORE PADISOL sky130_fd_pr__res_generic_m3 w=11.825 l=0.01
+RIR G_CORE PADISOR sky130_fd_pr__res_generic_m3 w=11.825 l=0.01
 .ENDS sky130_fd_io__top_ground_hvc_wpad
 
 * Copyright 2020 The SkyWater PDK Authors
@@ -7217,11 +7218,11 @@ Xcxtor2_q0 DRN_HVC g_nclamp SRC_BDY_HVC SRC_BDY_HVC sky130_fd_pr__nfet_g5v0d10v5
 * SPDX-License-Identifier: Apache-2.0
 
 .SUBCKT sky130_fd_io__top_power_hvc_wpadv2 AMUXBUS_A AMUXBUS_B DRN_HVC OGC_HVC
-+ P_CORE P_PAD SRC_BDY_HVC VCCD VCCHIB VDDA VDDIO VDDIO_Q VSSA VSSD VSSIO VSSIO_Q
-+ VSWITCH
-*.PININFO AMUXBUS_A:B AMUXBUS_B:B DRN_HVC:B OGC_HVC:B P_CORE:B P_PAD:B
-*.PININFO SRC_BDY_HVC:B VCCD:B VCCHIB:B VDDA:B VDDIO:B VDDIO_Q:B
-*.PININFO VSSA:B VSSD:B VSSIO:B VSSIO_Q:B VSWITCH:B
++ PADISOL PADISOR P_CORE P_PAD SRC_BDY_HVC VCCD VCCHIB VDDA VDDIO VDDIO_Q VSSA
++ VSSD VSSIO VSSIO_Q VSWITCH
+*.PININFO AMUXBUS_A:B AMUXBUS_B:B DRN_HVC:B OGC_HVC:B PADISOL:B PADISOR:B
+*.PININFO P_CORE:B P_PAD:B SRC_BDY_HVC:B VCCD:B VCCHIB:B VDDA:B VDDIO:B
+*.PINFNFO VDDIO_Q:B VSSA:B VSSD:B VSSIO:B VSSIO_Q:B VSWITCH:B
 xI39 SRC_BDY_HVC VDDIO sky130_fd_io__condiode
 Xpre_p1_q0 g_nclamp g_pdpre DRN_HVC DRN_HVC sky130_fd_pr__pfet_g5v0d10v5 m=50
 + w=7.0 l=0.5 mult=1 sa=0.265 sb=0.265 sd=0.28 topography=normal area=0.063
@@ -7245,7 +7246,8 @@ Xcxtor2_q0 DRN_HVC g_nclamp SRC_BDY_HVC SRC_BDY_HVC sky130_fd_pr__nfet_g5v0d10v5
 + m=22 w=10.0 l=0.5 mult=1 sa=0.265 sb=0.265 sd=0.28 topography=normal area=0.063
 + perim=1.14
 RI13 P_PAD P_CORE sky130_fd_pr__res_generic_m5 w=2.5385e+08u l=100000u
-RIQ VDDIO VDDIO_Q sky130_fd_pr__res_generic_m3 w=23.9 l=0.44 M=4
+RIL P_CORE PADISOL sky130_fd_pr__res_generic_m3 w=11.825 l=0.01
+RIR P_CORE PADISOR sky130_fd_pr__res_generic_m3 w=11.825 l=0.01
 .ENDS sky130_fd_io__top_power_hvc_wpadv2
 
 * Copyright 2020 The SkyWater PDK Authors

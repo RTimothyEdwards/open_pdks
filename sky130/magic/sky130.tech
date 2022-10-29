@@ -3762,6 +3762,7 @@ style  sky130 variants (vendor),()
  and DIODE
  and-not NWELL,nwelcheck
  and NSDM
+ and-not LVTN
  and-not HVI,hvcheck
 
  layer ndic ndiccopy
@@ -3775,7 +3776,9 @@ style  sky130 variants (vendor),()
  templayer mvndiccopy CONT
  and LI
  and DIODE
+ and-not NWELL,nwelcheck
  and NSDM
+ and-not LVTN
  and HVI,hvcheck
 
  layer mvndic mvndiccopy
