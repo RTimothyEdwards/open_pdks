@@ -1344,7 +1344,7 @@ io-%:
 		-lib %l/latest/timing/*.lib \
 		-gds %l/latest/cells/*/*.gds compile-only \
 			sort=../common/sort_pdkfiles.py \
-			options=custom/scripts/sky130_fd_io_import.tcl \
+			options=custom/scripts/gds_import_io.tcl \
 			no-copy=sky130_fd_io__top_gpiov2.gds,sky130_fd_io__top_ground_hvc_wpad.gds,sky130_fd_io__top_power_hvc_wpadv2.gds,sky130_fd_io__overlay_vssio_hvc.gds,sky130_fd_io__overlay_vddio_hvc.gds \
 			include=sky130_fd_io__top_gpiov2.gds,sky130_fd_io__top_ground_hvc_wpad.gds,sky130_fd_io__top_power_hvc_wpadv2.gds,sky130_fd_io__overlay_vssio_hvc.gds,sky130_fd_io__overlay_vddio_hvc.gds \
 		-verilog %l/latest/cells/*/*.*.v \

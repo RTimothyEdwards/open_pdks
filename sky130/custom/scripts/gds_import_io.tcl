@@ -8,7 +8,9 @@ gds flatglob *_cdns_*
 gds flatglob *sky130_fd_pr__*_example_*
 
 # ! flatten within the 120x2 ESD device
-gds flatglob *sky130_fd_io__gnd2gnd_*
+gds flatglob *sky130_fd_io__gnd2gnd_s*
+gds flatglob *sky130_fd_io__gnd2gnd_d*
+gds flatglob *sky130_fd_io__gnd2gnd_t*
 
 # The following cells have to be flattened for the gpiov2 pad to read in
 # correctly, and produce a layout that can be extracted and generate an
