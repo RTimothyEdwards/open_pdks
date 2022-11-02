@@ -930,9 +930,11 @@ klayout-%: ${KLAYOUT_PATH}
 		mkdir -p ${KLAYOUT_STAGING_$*}/pymacros ; \
 	fi
 	# Copy lvs and pymacro directories from the repository.  Other files
-	# are rearranged to the preferred structure.
+	# are rearranged to the preferred structure.  Do not recursively copy
+	# the lvs/ directory, as the subdirectory testing/ is huge and
+	# nonessential.
 	if test "x${KLAYOUT_PATH}" != "x" ; then \
-		cp -rp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/lvs/* ${KLAYOUT_STAGING_$*}/lvs/ ; \
+		cp -p ${KLAYOUT_PATH}/sky130_tech/tech/sky130/lvs/* ${KLAYOUT_STAGING_$*}/lvs/ ; \
 		cp -rp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/pymacros/* ${KLAYOUT_STAGING_$*}/pymacros/ ; \
 		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.lyp ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyp ; \
 		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.lyt ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyt ; \
