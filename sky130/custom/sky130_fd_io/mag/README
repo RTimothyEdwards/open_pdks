@@ -1,0 +1,80 @@
+This directory contains standard format files for "sky130_ef_io",
+which is an efabless addendum to the SkyWater I/O library "sky130_fd_io".
+
+sky130_ef_io does the following:
+
+(1) Changes the orientation of the corner pad from upper-right to
+    lower-left with a wrapper cell called "sky130_fd_io__corner_pad".  Also
+    extends the power buses to make the dimensions of the corner pad
+    multiples of 1um.
+
+(2) Adds a 1um-wide spacer cell to complement the existing 5um-wide
+    spacer cell.
+
+(3) Adds wrappers for all the combinations of power pad base cell +
+    power pad overlay, to create all 12 combinations, for pads with
+    either high- or low-voltage clamps, connecting to one of the six
+    power domains vddio, vdda, vccd, vssio, vssa, or vssd.
+
+(4) Adds overlay cells that connect the clamps to the different domains,
+    in four commonly-used configurations.
+
+(5) Adds wrappers for specfic combinations of power pad base cells +
+    power pad overlay + clamp connection overlay, to create 8 common
+    combinations.
+
+(6) (5/28/2021) Added a separate wrapper cell for the top_power_hvc_wpadv2
+    cell for the "caravan" project to triple up metal to the pad for
+    high current supply applications.  The clamp and the pad remain
+    unconnected.
+
+"sky130_ef_io" is open source copyright 2020 efabless, Inc.
+Released under Apache 2.0 license
+
+NOTES:
+-------------------
+Copy these .mag sources to open_pdks/sky130/custom/sky130_fd_io/mag/
+Generate GDS:
+	load sky130_ef_io
+	cif *hier write disable		;# there are no interactions
+	gds library true		;# don't write top-level cell
+	gds addendum true		;# don't write readonly cells
+	gds write sky130_ef_io
+
+and copy sky130_fd_io.gds to open_pdks/sky130/custom/sky130_fd_io/gds/.
+
+For LEF views, use
+	lef write -hide
+and copy the resulting file to open_pdks/sky130/custom/sky130_fd_io/lef/.
+***BUT*** Some of the views need editing:
+(1) Move m4 obstruction in com_slice_Xum from 93.365 to 173.75 so that
+    the area is empty for placing subcells in this area.
+(2) Fix non-manhattan geometry in the corner of the corner cell.
+(3) Erase labels on non-Manhattan shapes in sky130_fd_io__top_xres4v2
+    before running "lef write -hide".
+
+These two actions have been codified into the following scripts:
+	generate_gds_lib.sh
+	generate_lef_views.sh
+
+
+MODIFICATIONS:
+-------------------
+3/30/2021:  Corrected the power pad layouts to differentiate between
+	    the pad and the core (which are different nets).  Text
+	    "_PAD" added to the net on the pad, and port numbers
+	    modified to match the corrected CDL netlists in open_pdks.
+	    Rewriting GDS with the most recent magic techfile also
+	    corrects the port/text layer:purpose pairs.
+
+5/28/2021:  Added power cell with extra-wide metal3 for the "caravan"
+	    project.
+
+6/16/2021:  Fixed the mix-up between the "clamped" and "clamped2" pads.
+	    To be consistent with the verilog and SPICE, the .mag, .lef,
+	    and .gds views all need to have the names "clamped" and
+	    "clamped2" swapped.
+
+6/24/2021:  Fixed cell top_power_hvc, which had a Y offset of -47um.
+
+10/28/2021: Corrected an offset overlay on sky130_ef_io__vdda_hvc_pad.

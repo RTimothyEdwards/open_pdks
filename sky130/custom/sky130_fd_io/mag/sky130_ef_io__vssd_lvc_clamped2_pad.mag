@@ -77,14 +77,6 @@ rect 0 1390 254 2280
 rect 14746 1390 15000 2280
 rect 0 20 254 1070
 rect 14746 20 15000 1070
-use sky130_ef_io__lvc_vccd_overlay  sky130_ef_io__lvc_vccd_overlay_0
-timestamp 1609281021
-transform 1 0 0 0 1 0
-box -2195 -2184 17228 39586
-use sky130_fd_io__overlay_vssd_lvc  sky130_fd_io__overlay_vssd_lvc_0 $PDKPATH/libs.ref/sky130_fd_io/mag
-timestamp 1617033437
-transform 1 0 0 0 1 -7
-box 0 7 15000 39600
 use sky130_fd_io__top_ground_lvc_wpad  sky130_fd_io__top_ground_lvc_wpad_1 $PDKPATH/libs.ref/sky130_fd_io/mag
 timestamp 1617033437
 transform 1 0 0 0 1 -7

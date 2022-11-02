@@ -1,16 +1,11 @@
-# Set the GDS input style to sky130(vendor).  This treats labels on the
-# TXT purpose (5) as pins, which is unfortunately done in a lot of the
-# vendor GDS files.
-cif istyle sky130(vendor)
+cif istyle sky130()
 #
 gds flatten true
 gds flatglob *_cdns_*
 gds flatglob *sky130_fd_pr__*_example_*
 
-# ! flatten within the 120x2 ESD device
-gds flatglob *sky130_fd_io__gnd2gnd_s*
-gds flatglob *sky130_fd_io__gnd2gnd_d*
-gds flatglob *sky130_fd_io__gnd2gnd_t*
+# ! flatten the 120x2 ESD device
+gds flatglob *sky130_fd_io__gnd2gnd_*
 
 # The following cells have to be flattened for the gpiov2 pad to read in
 # correctly, and produce a layout that can be extracted and generate an
