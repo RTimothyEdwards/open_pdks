@@ -561,7 +561,7 @@ if backend_flow = AL
   via2_edges_with_less_enclosure = m2.enclosing(via2, 0.085, projection).second_edges
   error_corners = via2_edges_with_less_enclosure.width(angle_limit(100.0), 1.dbu)
   via2_interact = via2.interacting(error_corners.polygons(1.dbu))
-  via2_interact.output("via2.5", "via2.5 : min. m3 enclosure of via2 of 2 adjacent edges : 0.085um")
+  via2_interact.output("via2.5", "via2.5 : min. m2 enclosure of via2 of 2 adjacent edges : 0.085um")
 end
 log("END: 69/44 (via2)")
 
