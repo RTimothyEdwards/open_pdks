@@ -2379,7 +2379,7 @@ cifinput
 # or else magic will scale below the allowed layout grid size
 #-----------------------------------------------------------------------
 
-style  sky130 variants (vendor),()
+style  sky130 variants (),(vendor),(legacy)
  scalefactor 10 nanometers
  gridlimit 5
 
@@ -2414,14 +2414,22 @@ style  sky130 variants (vendor),()
  layer pnp NWELL,WELLTXT,WELLPIN
  and PNPID
  labels NWELL
- labels WELLTXT text
  labels WELLPIN port
+ variants (),(vendor)
+ labels WELLTXT text
+ variants (legacy)
+ labels WELLTXT port
+ variants *
 
  layer nwell NWELL,WELLTXT,WELLPIN
  and-not PNPID
  labels NWELL
- labels WELLTXT text
  labels WELLPIN port
+ variants (),(vendor)
+ labels WELLTXT text
+ variants (legacy)
+ labels WELLTXT port
+ variants *
 
  templayer nwellarea NWELL
  copyup nwelcheck
@@ -2445,8 +2453,12 @@ style  sky130 variants (vendor),()
  or SUBTXT,SUBPIN
  grow 420
  shrink 420
- labels SUBTXT text
  labels SUBPIN port
+ variants (),(vendor)
+ labels SUBTXT text
+ variants (legacy)
+ labels SUBTXT port
+ variants *
 
  layer dnwell DNWELL
  labels DNWELL
@@ -2476,8 +2488,12 @@ style  sky130 variants (vendor),()
  and-not CORELI
  copyup ndifcheck
  labels DIFF
- labels DIFFTXT text
  labels DIFFPIN port
+ variants (),(vendor)
+ labels DIFFTXT text
+ variants (legacy)
+ labels DIFFTXT port
+ variants *
 
  layer ndiff ndiffarea
 
@@ -2495,8 +2511,12 @@ style  sky130 variants (vendor),()
  and NSDM
  copyup ndifcheck
  labels DIFF
- labels DIFFTXT text
  labels DIFFPIN port
+ variants (),(vendor)
+ labels DIFFTXT text
+ variants (legacy)
+ labels DIFFTXT port
+ variants *
 
  layer mvndiff mvndiffarea
 
@@ -2544,8 +2564,12 @@ style  sky130 variants (vendor),()
  and PSDM
  copyup pdifcheck
  labels DIFF 
- labels DIFFTXT text
  labels DIFFPIN port
+ variants (),(vendor)
+ labels DIFFTXT text
+ variants (legacy)
+ labels DIFFTXT port
+ variants *
 
  layer pdiff pdiffarea
 
@@ -2588,8 +2612,12 @@ style  sky130 variants (vendor),()
  and PSDM
  copyup mvpdifcheck
  labels DIFF
- labels DIFFTXT text
  labels DIFFPIN port
+ variants (),(vendor)
+ labels DIFFTXT text
+ variants (legacy)
+ labels DIFFTXT port
+ variants *
 
  layer mvpdiff mvpdiffarea
 
@@ -2730,8 +2758,12 @@ style  sky130 variants (vendor),()
  and-not DIODE
  and-not DIFFRES
  labels DIFF
- labels DIFFTXT text
  labels DIFFPIN port
+ variants (),(vendor)
+ labels DIFFTXT text
+ variants (legacy)
+ labels DIFFTXT port
+ variants *
 
  layer pdiffres DIFFRES
  and PSDM
@@ -2881,8 +2913,12 @@ style  sky130 variants (vendor),()
  and HVI,hvcheck
  and mvpfetexpand
  labels DIFF
- labels DIFFTXT text
  labels DIFFPIN port
+ variants (),(vendor)
+ labels DIFFTXT text
+ variants (legacy)
+ labels DIFFTXT port
+ variants *
 
  layer mvpdiffres DIFFRES
  and PSDM
@@ -3077,8 +3113,12 @@ style  sky130 variants (vendor),()
 
  layer poly polyarea
  labels POLY
- labels POLYTXT text
  labels POLYPIN port
+ variants (),(vendor)
+ labels POLYTXT text
+ variants (legacy)
+ labels POLYTXT port
+ variants *
 
  # Copy (non-resistor) poly areas up for contact checks
  templayer xpolycheck polycheck
@@ -3474,15 +3514,23 @@ style  sky130 variants (vendor),()
  and-not LIRES,LISHORT
  and COREID
  labels LI
- labels LITXT text
  labels LIPIN port
+ variants (),(vendor)
+ labels LITXT text
+ variants (legacy)
+ labels LITXT port
+ variants *
 
  layer locali LI,LITXT,LIPIN
  and-not LIRES,LISHORT
  and-not COREID
  labels LI
- labels LITXT text
  labels LIPIN port
+ variants (),(vendor)
+ labels LITXT text
+ variants (legacy)
+ labels LITXT port
+ variants *
 
  layer rli LI
  and LIRES,LISHORT
@@ -3502,8 +3550,12 @@ style  sky130 variants (vendor),()
  layer m1 MET1,MET1TXT,MET1PIN
  and-not MET1RES,MET1SHORT
  labels MET1
- labels MET1TXT text
  labels MET1PIN port
+ variants (),(vendor)
+ labels MET1TXT text
+ variants (legacy)
+ labels MET1TXT port
+ variants *
 
  layer rm1 MET1
  and MET1RES,MET1SHORT
@@ -3570,8 +3622,12 @@ style  sky130 variants (vendor),()
  layer m2 MET2,MET2TXT,MET2PIN
  and-not MET2RES,MET2SHORT
  labels MET2
- labels MET2TXT text
  labels MET2PIN port
+ variants (),(vendor)
+ labels MET2TXT text
+ variants (legacy)
+ labels MET2TXT port
+ variants *
 
  layer rm2 MET2
  and MET2RES,MET2SHORT
@@ -3593,8 +3649,12 @@ style  sky130 variants (vendor),()
  layer m3 MET3,MET3TXT,MET3PIN
  and-not MET3RES,MET3SHORT
  labels MET3
- labels MET3TXT text
  labels MET3PIN port
+ variants (),(vendor)
+ labels MET3TXT text
+ variants (legacy)
+ labels MET3TXT port
+ variants *
 
  layer rm3 MET3
  and MET3RES,MET3SHORT
@@ -3621,8 +3681,12 @@ style  sky130 variants (vendor),()
  layer m4 MET4,MET4TXT,MET4PIN
  and-not MET4RES,MET4SHORT
  labels MET4
- labels MET4TXT text
  labels MET4PIN port
+ variants (),(vendor)
+ labels MET4TXT text
+ variants (legacy)
+ labels MET4TXT port
+ variants *
 
  layer rm4 MET4
  and MET4RES,MET4SHORT
@@ -3634,8 +3698,12 @@ style  sky130 variants (vendor),()
  layer m5 MET5,MET5TXT,MET5PIN
  and-not MET5RES,MET5SHORT
  labels MET5
- labels MET5TXT text
  labels MET5PIN port
+ variants (),(vendor)
+ labels MET5TXT text
+ variants (legacy)
+ labels MET5TXT port
+ variants *
 
  layer rm5 MET5
  and MET5RES,MET5SHORT
@@ -3661,8 +3729,12 @@ style  sky130 variants (vendor),()
 #ifdef REDISTRIBUTION
  layer metrdl RDL,RDLTXT,RDLPIN
  labels RDL
- labels RDLTXT text
  labels RDLPIN port
+ variants (),(vendor)
+ labels RDLTXT text
+ variants (legacy)
+ labels RDLTXT port
+ variants *
 #endif
 
  # Find diffusion not covered in
@@ -3870,8 +3942,12 @@ style  sky130 variants (vendor),()
 
  layer glass GLASS,PADTXT,PADPIN
  labels GLASS
- labels PADTXT text
  labels PADPIN port
+ variants (),(vendor)
+ labels PADTXT text
+ variants (legacy)
+ labels PADTXT port
+ variants *
 
  templayer boundary BOUND,STDCELL,PADCELL
  boundary
