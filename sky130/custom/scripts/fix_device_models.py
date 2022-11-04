@@ -49,7 +49,10 @@ def filter(inname, outname):
             fline = re.sub('^X', 'D', fline)
             fline = re.sub('a=', 'area=', fline)
             fline = re.sub('p=', 'pj=', fline)
+            # HD library perimeter is 2.64um; also fix the units
             fline = re.sub('pj=5.36', 'pj=2.64', fline)
+            fline = re.sub('06u', '06', fline)
+            fline = re.sub('11p', '11', fline)
             fixedlines.append(fline)
             modified = True
         elif nmatch:
@@ -57,6 +60,10 @@ def filter(inname, outname):
             fline = re.sub('^X', 'D', fline)
             fline = re.sub('a=', 'area=', fline)
             fline = re.sub('p=', 'pj=', fline)
+            # HVL library diode perimeter is 3.16um; also fix the units
+            fline = re.sub('pj=5.88', 'pj=3.16', fline)
+            fline = re.sub('06u', '06', fline)
+            fline = re.sub('11p', '11', fline)
             fixedlines.append(fline)
             modified = True
         elif smatch:

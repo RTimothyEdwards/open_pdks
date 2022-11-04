@@ -281,7 +281,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel {area add}
 	property "-circuit1 $dev" parallel {pj add}
 	property "-circuit1 $dev" parallel {value add}
-	property "-circuit1 $dev" tolerance {area 0.02}
+	property "-circuit1 $dev" tolerance {area 0.02} {pj 0.02}
 	# Ignore these properties
 	property "-circuit1 $dev" delete mult perim
     }
@@ -290,7 +290,7 @@ foreach dev $devices {
 	property "-circuit2 $dev" parallel {area add}
 	property "-circuit2 $dev" parallel {pj add}
 	property "-circuit2 $dev" parallel {value add}
-	property "-circuit2 $dev" tolerance {area 0.02}
+	property "-circuit2 $dev" tolerance {area 0.02} {pj 0.02}
 	# Ignore these properties
 	property "-circuit2 $dev" delete mult perim
     }
