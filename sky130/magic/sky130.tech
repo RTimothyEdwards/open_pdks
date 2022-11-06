@@ -5184,11 +5184,11 @@ extract
  antenna allcont surface 3 none
  antenna li sidewall 75 0 450
  antenna mcon surface 3 0 18
- antenna m1,m2,m3 sidewall 400 2600 400
+ antenna m1,m2,m3 sidewall 400 2200 400
  antenna v1 surface 3 0 18
  antenna v2 surface 6 0 36
 #ifdef METAL5
- antenna m4,m5 sidewall 400 2600 400
+ antenna m4,m5 sidewall 400 2200 400
  antenna v3,v4 surface 6 0 36
 #endif (METAL5)
 
