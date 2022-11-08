@@ -861,14 +861,14 @@ digital-osu-%:
 		-target ${STAGING_PATH}/${GF180MCU$*} \
 		-techlef lib/9T/tlef/gf180mcu_*_tech.lef \
 			rename=gf180mcu_osu_sc_9T.tlef \
-		-liberty char/techfiles/gf180mcu_9T_TT_3P3_25C*.lib \
+		-liberty lib/9T/lib/gf180mcu_9T_TT_3P3_25C*.lib \
 			rename=gf180mcu_osu_sc_9T__tt_025C_3v30 \
 		-verilog lib/9T/verilog/*.v \
 			rename=gf180mcu_osu_sc_9T \
 		-lef lib/9T/lef/*.lef \
-		-gds lib/9T/gds/*.gds compile-only \
-		-spice lib/9T/ngspice/*.spice compile-only \
-		-xschem lib/9T/schematics/*.sch \
+		-gds lib/9T/*/*.gds compile-only \
+		-spice lib/9T/*/*.spice compile-only \
+		-xschem lib/9T/*/*.sch \
 		-library digital gf180mcu_osu_sc_9T 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
 
@@ -876,14 +876,14 @@ digital-osu-%:
 		-target ${STAGING_PATH}/${GF180MCU$*} \
 		-techlef lib/12T/tlef/gf180mcu_*_tech.lef \
 			rename=gf180mcu_osu_sc_12T.tlef \
-		-liberty char/techfiles/gf180mcu_12T_TT_3P3_25C*.lib \
+		-liberty lib/12T/lib/gf180mcu_12T_TT_3P3_25C*.lib \
 			rename=gf180mcu_osu_sc_12T__tt_025C_3v30 \
 		-verilog lib/12T/verilog/*.v \
 			rename=gf180mcu_osu_sc_12T \
 		-lef lib/12T/lef/*.lef \
-		-gds lib/12T/gds/*.gds compile-only \
-		-spice lib/12T/ngspice/*.spice compile-only \
-		-xschem lib/12T/schematics/*.sch \
+		-gds lib/12T/*/*.gds compile-only \
+		-spice lib/12T/*/*.spice compile-only \
+		-xschem lib/12T/*/*.sch \
 		-library digital gf180mcu_osu_sc_12T 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
 
