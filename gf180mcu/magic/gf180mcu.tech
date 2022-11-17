@@ -1553,6 +1553,7 @@ style  import
  ignore SRAMDEF
  ignore FET5VDEF
  ignore CAPDEF
+ ignore VTEXT
 
  layer pwell PWELL
  labels PWELL
@@ -2608,7 +2609,8 @@ style  import
  calma BJTDEF 118 5
  calma MOSCAP 166 5
  calma BOUND 0 0
- calma PRBOUND 63 *
+ calma PRBOUND 63 0
+ calma VTEXT 63 63
  calma FILLOBS  111 5
  calma FILLOBS2 152 5
  calma TTEXT    230 *
