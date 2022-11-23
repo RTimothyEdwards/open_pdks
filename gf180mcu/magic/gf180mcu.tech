@@ -2245,7 +2245,7 @@ style  import
  grow 140
  shrink 130
 
-#ifdef MIM
+#ifdef METALS4 && MIM
  layer mimcc VIA2
  and MET3
  and CAPM
@@ -2253,7 +2253,7 @@ style  import
  grow 90
  grow 250
  shrink 250
-#endif (MIM)
+#endif (METALS4 && MIM)
 #endif (METALS3 || METALS4 || METALS5 || METALS6)
 
 #ifdef METALS4 || METALS5 || METALS6
@@ -2261,10 +2261,10 @@ style  import
  and RESDEF
  and MET4RES
 
-#ifdef MIM
+#ifdef METALS4 && MIM
  templayer mimarea CAPDEF
  and MET3
-#endif
+#endif (METALS4 && MIM)
 
  layer m4 MET4,MET4TXT
  and-not MET4RES
@@ -2285,7 +2285,7 @@ style  import
  grow 140
  shrink 130
 
-#ifdef MIM
+#ifdef METALS5 && MIM
  layer mimcc VIA3
  and MET4
  and CAPM
@@ -2293,7 +2293,7 @@ style  import
  grow 90
  grow 250
  shrink 250
-#endif (MIM)
+#endif (METALS5 && MIM)
 #endif (METALS4 || METALS5 || METALS6)
 
 #ifdef METALS5 || METALS6
@@ -2301,10 +2301,10 @@ style  import
  and RESDEF
  and MET5RES
 
-#ifdef MIM
+#ifdef METALS5 && MIM
  templayer mimarea CAPDEF
  and MET4
-#endif
+#endif (METALS5 && MIM)
 
  layer m5 MET5,MET5TXT
 #ifdef MIM && METALS6
@@ -2329,7 +2329,7 @@ style  import
  grow 140
  shrink 130
 
-#ifdef MIM
+#ifdef METALS6 && MIM
  layer mimcc VIA4
  and MET5
  and CAPM
@@ -2337,7 +2337,7 @@ style  import
  grow 90
  grow 250
  shrink 250
-#endif (MIM)
+#endif (METALS6 && MIM)
 #endif (METALS5 || METALS6)
 
 #ifdef METALS6
@@ -2359,7 +2359,7 @@ style  import
 #ifdef MIM
  templayer mimarea CAPDEF
  and MET5
-#endif
+#endif (MIM)
 
  layer viatp VIATP
  and METTP
