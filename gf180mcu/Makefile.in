@@ -160,11 +160,14 @@ GF180MCU_OSU_SC_PATH = @GF180MCU_OSU_SC_PATH@
 # Path to GF180MCU library sources
 PDK_URL = https://github.com/google
 OSU_URL = https://github.com/stineje
+EF_URL = https://github.com/efabless
 
 # Names of library repositories
-PDK_LIB_PR =       ${PDK_URL}/globalfoundries-pdk-libs-gf180mcu_fd_pr
+# NOTE:  Switching PDK_LIB_PR and PDK_LIB_SC_7T5V0 to Efabless versions
+# having "quick fixes" under development.
+PDK_LIB_PR =       ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_pr
 PDK_LIB_IO =       ${PDK_URL}/globalfoundries-pdk-libs-gf180mcu_fd_io
-PDK_LIB_SC_7T5V0 = ${PDK_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu7t5v0
+PDK_LIB_SC_7T5V0 = ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu7t5v0
 PDK_LIB_SC_9T5V0 = ${PDK_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu9t5v0
 PDK_LIB_SRAM =     ${PDK_URL}/globalfoundries-pdk-ip-gf180mcu_fd_ip_sram
 PDK_LIB_OSU_SC =   ${OSU_URL}/globalfoundries-pdk-libs-gf180mcu_osu_sc

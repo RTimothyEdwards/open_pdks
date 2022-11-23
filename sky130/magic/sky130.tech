@@ -3759,6 +3759,7 @@ style  sky130 variants (),(vendor),(legacy)
  templayer ndiccopy CONT
  and LI
  and DIODE
+ and DIFF
  and-not NWELL,nwelcheck
  and NSDM
  and-not LVTN
@@ -3775,6 +3776,7 @@ style  sky130 variants (),(vendor),(legacy)
  templayer mvndiccopy CONT
  and LI
  and DIODE
+ and DIFF
  and-not NWELL,nwelcheck
  and NSDM
  and-not LVTN
@@ -3791,6 +3793,7 @@ style  sky130 variants (),(vendor),(legacy)
  templayer pdiccopy CONT
  and LI
  and DIODE
+ and DIFF
  and PSDM
  and-not HVI,hvcheck
 
@@ -4519,9 +4522,9 @@ variants (fast),(full)
  surround pdic/a *pdi 60 directional \
 	"P-diode overlap of N-diode contact < %d in one direction (licon.5c)"
 
- surround nsc/a *nsd,corenvar 120 directional \
+ surround nsc/a *nsd,pdiff,corenvar 120 directional \
 	"N-tap overlap of N-tap contact < %d in one direction (licon.7)"
- surround psc/a *psd,corepvar 120 directional \
+ surround psc/a *psd,ndiff,corepvar 120 directional \
 	"P-tap overlap of P-tap contact < %d in one direction (licon.7)"
 
  surround mvndc/a *mvndiff,mvnfet,mvnfetesd,mvrnd 40 absence_illegal \
