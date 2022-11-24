@@ -11,14 +11,14 @@ set ::env(FP_WELLTAP_CELL) "$::env(STD_CELL_LIBRARY)__filltie"
 set ::env(FP_ENDCAP_CELL) "$::env(STD_CELL_LIBRARY)__endcap"
 
 # defaults (can be overridden by designs):
-set ::env(SYNTH_DRIVING_CELL) "$::env(STD_CELL_LIBRARY)__inv_1"
-set ::env(SYNTH_DRIVING_CELL_PIN) "ZN"
-set ::env(SYNTH_CLK_DRIVING_CELL) "$::env(STD_CELL_LIBRARY)__inv_4"
-set ::env(SYNTH_CLK_DRIVING_CELL_PIN) "ZN"
+set ::env(SYNTH_DRIVING_CELL) "$::env(STD_CELL_LIBRARY)__buf_4"
+set ::env(SYNTH_DRIVING_CELL_PIN) "Z"
+set ::env(SYNTH_CLK_DRIVING_CELL) "$::env(STD_CELL_LIBRARY)__buf_4"
+set ::env(SYNTH_CLK_DRIVING_CELL_PIN) "Z"
 
 # update these
-set ::env(SYNTH_CAP_LOAD) "72.91" ; # femtofarad from pin I in liberty file
-set ::env(SYNTH_MIN_BUF_PORT) "$::env(STD_CELL_LIBRARY)__buf_1 I Z"
+set ::env(SYNTH_CAP_LOAD) "9.096" ; # femtofarad from pin I in liberty file
+set ::env(SYNTH_MIN_BUF_PORT) "$::env(STD_CELL_LIBRARY)__dlya_4 I Z"
 set ::env(SYNTH_TIEHI_PORT) "$::env(STD_CELL_LIBRARY)__tieh Z"
 set ::env(SYNTH_TIELO_PORT) "$::env(STD_CELL_LIBRARY)__tiel ZN"
 
