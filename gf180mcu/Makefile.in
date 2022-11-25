@@ -674,9 +674,9 @@ openlane-%: openlane/config.tcl openlane/gf180mcu_fd_sc_mcu7t5v0/config.tcl open
 			${OPENLANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0/$$file ; \
 	done
 
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.min.magic
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.nom.magic
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max.magic
+	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.min.*
+	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.nom.*
+	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max.*
 
 	if test -f openlane/rules.openrcx.gf180mcu$*.min.magic ; then \
 		${CPP} ${GF180MCU$*_DEFS} openlane/rules.openrcx.gf180mcu$*.min.magic \
@@ -689,6 +689,18 @@ openlane-%: openlane/config.tcl openlane/gf180mcu_fd_sc_mcu7t5v0/config.tcl open
 	if test -f openlane/rules.openrcx.gf180mcu$*.max.magic ; then \
 		${CPP} ${GF180MCU$*_DEFS} openlane/rules.openrcx.gf180mcu$*.max.magic \
 		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max.magic ;\
+	fi
+	if test -f openlane/rules.openrcx.gf180mcu$*.min ; then \
+		${CPP} ${GF180MCU$*_DEFS} openlane/rules.openrcx.gf180mcu$*.min \
+		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.min ;\
+	fi
+	if test -f openlane/rules.openrcx.gf180mcu$*.nom ; then \
+		${CPP} ${GF180MCU$*_DEFS} openlane/rules.openrcx.gf180mcu$*.nom \
+		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.nom ;\
+	fi
+	if test -f openlane/rules.openrcx.gf180mcu$*.max ; then \
+		${CPP} ${GF180MCU$*_DEFS} openlane/rules.openrcx.gf180mcu$*.max \
+		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max ;\
 	fi
 
 vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A sram-build-A digital-osu-build-A
