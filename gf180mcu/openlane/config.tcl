@@ -105,8 +105,9 @@ set ::env(RCX_RULES_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.
 
 # Routing
 set ::env(METAL_LAYER_NAMES) "Metal1 Metal2 Metal3 Metal4 Metal5"
-set ::env(RT_MIN_LAYER) "Metal1"
+set ::env(RT_MIN_LAYER) "Metal2" ;# stdcells heavily use Metal1 - setting it to Metal1 will cause congestions
 set ::env(RT_MAX_LAYER) "Metal5"
+set ::env(DRT_MIN_LAYER) "Metal1"
 set ::env(GRT_LAYER_ADJUSTMENTS) "0,0,0,0,0"
 
 ## Tracks info
