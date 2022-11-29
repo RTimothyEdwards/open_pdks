@@ -17,7 +17,7 @@ set ::env(SYNTH_CLK_DRIVING_CELL) "$::env(STD_CELL_LIBRARY)__buf_4"
 set ::env(SYNTH_CLK_DRIVING_CELL_PIN) "Z"
 
 # update these
-set ::env(SYNTH_CAP_LOAD) "9.096" ; # femtofarad from pin I in liberty file
+set ::env(SYNTH_CAP_LOAD) "9.315" ; # femtofarad from pin I in liberty file
 set ::env(SYNTH_MIN_BUF_PORT) "$::env(STD_CELL_LIBRARY)__dlya_4 I Z"
 set ::env(SYNTH_TIEHI_PORT) "$::env(STD_CELL_LIBRARY)__tieh Z"
 set ::env(SYNTH_TIELO_PORT) "$::env(STD_CELL_LIBRARY)__tiel ZN"
