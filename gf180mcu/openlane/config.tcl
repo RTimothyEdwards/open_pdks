@@ -22,7 +22,9 @@ set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LI
 set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
 
 # Technology LEF
-set ::env(TECH_LEF)  [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*.tlef"]
+set ::env(TECH_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*.tlef"]
+set ::env(TECH_LEF_MIN)  [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*.tlef"]
+set ::env(TECH_LEF_MAX)  [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*.tlef"]
 set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lef/*.lef"]
 set ::env(GDS_FILES) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/gds/*.gds"]
 set ::env(STD_CELL_LIBRARY_CDL)	"$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/cdl/$::env(STD_CELL_LIBRARY).cdl"
@@ -97,13 +99,13 @@ set ::env(FP_PDN_CORE_RING_VOFFSET) 6
 set ::env(FP_PDN_CORE_RING_HOFFSET) 6
 
 # Timing
-set ::env(RCX_RULES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.openrcx.$::env(PDK).nom.magic"
-set ::env(RCX_RULES_MIN) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.openrcx.$::env(PDK).min.magic"
-set ::env(RCX_RULES_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.openrcx.$::env(PDK).max.magic"
+set ::env(RCX_RULES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.openrcx.$::env(PDK).nom"
+set ::env(RCX_RULES_MIN) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.openrcx.$::env(PDK).min"
+set ::env(RCX_RULES_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.openrcx.$::env(PDK).max"
 
 # Routing
 set ::env(METAL_LAYER_NAMES) "Metal1 Metal2 Metal3 Metal4 Metal5"
-set ::env(RT_MIN_LAYER) "Metal2"
+set ::env(RT_MIN_LAYER) "Metal2" ;# stdcells heavily use Metal1 - setting it to Metal1 will cause congestions
 set ::env(RT_MAX_LAYER) "Metal5"
 set ::env(DRT_MIN_LAYER) "Metal1"
 set ::env(GRT_LAYER_ADJUSTMENTS) "0,0,0,0,0"
