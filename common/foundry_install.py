@@ -2152,6 +2152,7 @@ if __name__ == '__main__':
             destdir = targetdir + cdl_reflib + 'spi'
             srcdir = targetdir + gds_reflib + 'gds'
             lefdir = targetdir + lef_reflib + 'lef'
+            cdldir = targetdir + cdl_reflib + 'cdl'
             os.makedirs(destdir, exist_ok=True)
 
         # For each library, create the library subdirectory
@@ -2165,14 +2166,17 @@ if __name__ == '__main__':
                 destlibdir = destdir + '/' + destlib
                 srclibdir = srcdir + '/' + destlib
                 leflibdir = lefdir + '/' + destlib
+                cdllibdir = cdldir + '/' + destlib
             else:
                 destdir = targetdir + cdl_reflib + destlib + '/spice'
                 srcdir = targetdir + gds_reflib + destlib + '/gds'
                 lefdir = targetdir + lef_reflib + destlib + '/lef'
+                cdldir = targetdir + cdl_reflib + destlib + '/cdl'
 
                 destlibdir = destdir
                 srclibdir = srcdir
                 leflibdir = lefdir
+                cdllibdir = cdldir
 
             os.makedirs(destlibdir, exist_ok=True)
 
@@ -2200,6 +2204,15 @@ if __name__ == '__main__':
             if not os.path.isfile(allleflibname):
                 llist = glob.glob(leflibdir + '/*.lef')
                 llist = natural_sort.natural_sort(llist)
+
+            if have_cdl and no_cdl_convert:
+                # CDL is not being converted directly to SPICE but it exists,
+                # and being the only source of pin order, it should be used
+                # for pin order annotation.
+                allcdllibname = cdllibdir + '/' + destlib + '.cdl'
+                if not os.path.isfile(allcdllibname):
+                    clist = glob.glob(cdllibdir + '/*.cdl')
+                    clist = natural_sort.natural_sort(clist)
 
             print('Creating magic generation script to generate SPICE library.') 
             with open(destlibdir + '/generate_magic.tcl', 'w') as ofile:
@@ -2231,6 +2244,14 @@ if __name__ == '__main__':
                         print('lef read ' + leffile, file=ofile)
                 else:
                     print('lef read ' + allleflibname, file=ofile)
+
+                if have_cdl and no_cdl_convert:
+                    if not os.path.isfile(allcdllibname):
+                        # Annotate the cells with pin order from the CDL files
+                        for cdlfile in clist:
+                            print('catch {readspice ' + cdlfile + '}', file=ofile)
+                    else:
+                        print('catch {readspice ' + allcdllibname + '}', file=ofile)
 
                 # Load first file and remove the (UNNAMED) cell
                 if not os.path.isfile(allgdslibname):
