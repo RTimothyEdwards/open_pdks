@@ -22,9 +22,9 @@ set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LI
 set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
 
 # Technology LEF
-set ::env(TECH_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*.tlef"]
-set ::env(TECH_LEF_MIN)  [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*.tlef"]
-set ::env(TECH_LEF_MAX)  [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*.tlef"]
+set ::env(TECH_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*__nom.tlef"]
+set ::env(TECH_LEF_MIN)  [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*__min.tlef"]
+set ::env(TECH_LEF_MAX)  [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*__max.tlef"]
 set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lef/*.lef"]
 set ::env(GDS_FILES) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/gds/*.gds"]
 set ::env(STD_CELL_LIBRARY_CDL)	"$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/cdl/$::env(STD_CELL_LIBRARY).cdl"
@@ -79,10 +79,6 @@ set ::env(CLOCK_WIRE_RC_LAYER) "Metal4"
 set ::env(FP_TAPCELL_DIST) 20
 
 ## Extra PDN configs
-
-### OpenROAD/tlef Bug
-## via resistance are missing from the tlef causing irdrop to fai
-set ::env(RUN_IRDROP_REPORT) 0
 
 set ::env(FP_PDN_RAIL_OFFSET) 0
 set ::env(FP_PDN_VWIDTH) 1.6

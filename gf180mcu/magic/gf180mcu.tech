@@ -3323,6 +3323,9 @@ end
 
 lef
 
+ masterslice pwell  Pwell PWELL
+ masterslice nwell  Nwell NWELL
+
  routing m1	Metal1 METAL1 MET1 m1 met1 metal1
  routing m2	Metal2 METAL2 MET2 m2 met2 metal2
 #ifdef METALS3 || METALS4 || METALS5 || METALS6

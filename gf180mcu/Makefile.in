@@ -168,7 +168,7 @@ EF_URL = https://github.com/efabless
 PDK_LIB_PR =       ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_pr
 PDK_LIB_IO =       ${PDK_URL}/globalfoundries-pdk-libs-gf180mcu_fd_io
 PDK_LIB_SC_7T5V0 = ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu7t5v0
-PDK_LIB_SC_9T5V0 = ${PDK_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu9t5v0
+PDK_LIB_SC_9T5V0 = ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu9t5v0
 PDK_LIB_SRAM =     ${PDK_URL}/globalfoundries-pdk-ip-gf180mcu_fd_ip_sram
 PDK_LIB_OSU_SC =   ${OSU_URL}/globalfoundries-pdk-libs-gf180mcu_osu_sc
 
@@ -758,116 +758,159 @@ digital-9t5v0-%:
 	${STAGE} -source ${GF180MCU_SC_9T5V0_PATH} \
 		-target ${STAGING_PATH}/${GF180MCU$*} \
 		-techlef tech/gf180mcu_${$*_FULLSTACK}_9t_tech.lef \
-			rename=gf180mcu_fd_sc_mcu9t5v0.tlef \
+			filter=custom/scripts/fix_techlef.py \
+			rename=gf180mcu_fd_sc_mcu9t5v0__nom.tlef \
 		-cdl cells/*/*.cdl compile-only noconvert \
 		-liberty cells/*/*_ff_125C_1v98.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__ff_125C_1v98.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ff_125C_1v98 \
 		-liberty cells/*/*_ff_n40C_1v98.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__ff_n40C_1v98.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ff_n40C_1v98 \
 		-liberty cells/*/*_ff_125C_3v60.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__ff_125C_3v60.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ff_125C_3v60 \
 		-liberty cells/*/*_ff_n40C_3v60.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__ff_n40C_3v60.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ff_n40C_3v60 \
 		-liberty cells/*/*_ff_125C_5v50.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__ff_125C_5v50.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ff_125C_5v50 \
 		-liberty cells/*/*_ff_n40C_5v50.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__ff_n40C_5v50.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ff_n40C_5v50 \
 		-liberty cells/*/*_ss_125C_1v62.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__ss_125C_1v62.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ss_125C_1v62 \
 		-liberty cells/*/*_ss_n40C_1v62.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__ss_n40C_1v62.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ss_n40C_1v62 \
 		-liberty cells/*/*_ss_125C_3v00.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__ss_125C_3v00.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ss_125C_3v00 \
 		-liberty cells/*/*_ss_n40C_3v00.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__ss_n40C_3v00.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ss_n40C_3v00 \
 		-liberty cells/*/*_ss_125C_4v50.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__ss_125C_4v50.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ss_125C_4v50 \
 		-liberty cells/*/*_ss_n40C_4v50.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__ss_n40C_4v50.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__ss_n40C_4v50 \
 		-liberty cells/*/*_tt_025C_1v80.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__tt_025C_1v80.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__tt_025C_1v80 \
 		-liberty cells/*/*_tt_025C_3v30.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__tt_025C_3v30.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__tt_025C_3v30 \
 		-liberty cells/*/*_tt_025C_5v00.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__tt_025C_5v00.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__tt_025C_5v00 \
 		-gds cells/*/*.gds compile-only \
 		-lef cells/*/*.lef compile-only \
-		-verilog cells/*/*.v compile-only \
+			filter=custom/scripts/fix_digital_lef.py \
+		-verilog models/*/*.v compile-only rename=primitives \
+		-verilog cells/*/*.v exclude=*.*.v,primitives.v \
+			compile-only filter=custom/scripts/inc_verilog.py \
 		-library digital gf180mcu_fd_sc_mcu9t5v0 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
-
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${GF180MCU$*} \
+		-library=9t5v0 2>&1 | tee -a ${GF180MCU$*}_make.log || true
 digital-7t5v0-%:
         # Install 5V 7-track digital standard cells from vendor files
 	${STAGE} -source ${GF180MCU_SC_7T5V0_PATH} \
 		-target ${STAGING_PATH}/${GF180MCU$*} \
 		-techlef tech/gf180mcu_${$*_FULLSTACK}_7t_tech.lef \
-			rename=gf180mcu_fd_sc_mcu7t5v0.tlef \
+			filter=custom/scripts/fix_techlef.py \
+			rename=gf180mcu_fd_sc_mcu7t5v0__nom.tlef \
 		-cdl cells/*/*.cdl compile-only noconvert \
 		-liberty cells/*/*_ff_125C_1v98.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu7t5v0__ff_125C_1v98.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ff_125C_1v98 \
 		-liberty cells/*/*_ff_n40C_1v98.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ff_n40C_1v98.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ff_n40C_1v98 \
 		-liberty cells/*/*_ff_125C_3v60.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ff_125C_3v60.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ff_125C_3v60 \
 		-liberty cells/*/*_ff_n40C_3v60.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ff_n40C_3v60.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ff_n40C_3v60 \
 		-liberty cells/*/*_ff_125C_5v50.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ff_125C_5v50.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ff_125C_5v50 \
 		-liberty cells/*/*_ff_n40C_5v50.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ff_n40C_5v50.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ff_n40C_5v50 \
 		-liberty cells/*/*_ss_125C_1v62.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ss_125C_1v62.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ss_125C_1v62 \
 		-liberty cells/*/*_ss_n40C_1v62.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ss_n40C_1v62.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ss_n40C_1v62 \
 		-liberty cells/*/*_ss_125C_3v00.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ss_125C_3v00.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ss_125C_3v00 \
 		-liberty cells/*/*_ss_n40C_3v00.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ss_n40C_3v00.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ss_n40C_3v00 \
 		-liberty cells/*/*_ss_125C_4v50.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ss_125C_4v50.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ss_125C_4v50 \
 		-liberty cells/*/*_ss_n40C_4v50.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__ss_n40C_4v50.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__ss_n40C_4v50 \
 		-liberty cells/*/*_tt_025C_1v80.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__tt_025C_1v80.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__tt_025C_1v80 \
 		-liberty cells/*/*_tt_025C_3v30.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__tt_025C_3v30.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__tt_025C_3v30 \
 		-liberty cells/*/*_tt_025C_5v00.lib compile-only \
+			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__tt_025C_5v00.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__tt_025C_5v00 \
 		-gds cells/*/*.gds compile-only \
 		-lef cells/*/*.lef compile-only \
-		-verilog cells/*/*.v compile-only \
+			filter=custom/scripts/fix_digital_lef.py \
+		-verilog models/*/*.v compile-only rename=primitives \
+		-verilog cells/*/*.v exclude=*.*.v,primitives.v \
+			compile-only filter=custom/scripts/inc_verilog.py \
 		-library digital gf180mcu_fd_sc_mcu7t5v0 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
+	# Create minimum/maximum technology LEF files
+	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${GF180MCU$*} \
+		-library=7t5v0 2>&1 | tee -a ${GF180MCU$*}_make.log || true
 
 digital-osu-%:
         # Install OSU 3.3V digital standard cells from vendor files
