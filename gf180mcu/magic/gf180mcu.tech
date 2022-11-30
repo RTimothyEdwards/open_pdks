@@ -21,7 +21,7 @@ end
 version
  version REVISION
  description "Global Foundries 180mcu: open PDK rules and DRC"
- requires magic-8.3.304
+ requires magic-8.3.348
 end
 
 #-----------------------------------------------------
@@ -2782,7 +2782,7 @@ drc
  spacing (ndc,nsc,pdc,psc,ndic,pdic,pc)/m1 \
 	(ndc,nsc,pdc,psc,ndic,pdic,pc)/m1 240 \
 	touching_ok "Diffusion contact spacing < %d (CO.2a - CO.6)"
- surround (ndc,nsc,pdc,psc,ndic,pdic,pc)/m1 *m1 55 \
+ surround (ndc,nsc,pdc,psc,ndic,pdic,pc)/m1 *m1 55 35 \
 	directional "Metal1 overlap of contact < %d in one direction (CO.6)"
  surround ndc/a *ndiff 65 absence_illegal \
 	"N-Diffusion overlap of contact < %d (CO.4)"
@@ -2803,7 +2803,7 @@ drc
  spacing (mvndc,mvnsc,mvpdc,mvpsc,mvndic,mvnndic,mvpdic)/m1 \
 	(mvndc,mvnsc,mvpdc,mvpsc,mvndic,mvnndic,mvpdic)/m1 240 touching_ok \
 	"Diffusion contact spacing < %d (CO.2a - CO.6)"
- surround (mvndc,mvnsc,mvpdc,mvpsc,mvndic,mvnndic,mvpdic)/m1 *m1 55 directional \
+ surround (mvndc,mvnsc,mvpdc,mvpsc,mvndic,mvnndic,mvpdic)/m1 *m1 55 35 directional \
 	"Metal1 overlap of contact < %d in one direction (CO.6)"
  surround mvndc/a *mvndiff 65 absence_illegal \
 	"MV N-Diffusion overlap of contact < %d (CO.4)"
@@ -2857,11 +2857,11 @@ variants *
 
  width v1/m1 260 "Via1 width < %d (V1.1)"
  spacing v1 v1 260 touching_ok "Via1 spacing < %d (V1.2a)"
- surround v1/m1 *m1 60 directional \
+ surround v1/m1 *m1 60 40 directional \
 	"Metal1 overlap of Via1 < %d in one direction (V1.3)"
  surround v1/m2 *m2 10 absence_illegal \
 	"Metal2 overlap of Via1 < %d (V1.4)"
- surround v1/m2 *m2 60 directional \
+ surround v1/m2 *m2 60 40 directional \
 	"Metal2 overlap of Via1 < %d in one direction (V1.4i)"
  exact_overlap v1/m2
 
@@ -2886,7 +2886,7 @@ variants *
 
  width v2/m2 280 "Via2 width < %d (V2.1 + 2 * V2.3)"
  spacing v2 v2 240 touching_ok "Via2 spacing < %d (V2.2a - 2 * V2.3)"
- surround v2/m2 *m2 50 directional \
+ surround v2/m2 *m2 50 30 directional \
 	"Metal2 overlap of Via2 < %d in one direction (V2.3i - V2.3)"
 
  exact_overlap v2/m3
@@ -2908,7 +2908,7 @@ variants *
 	"Thick Metal3 overlap of Via2 < %d in one direction (MT30.6 - V2.4)"
 
 #elseif defined(THICKMET0P9 || THICKMET1P1)
- surround v2/m3 *m3 50 directional \
+ surround v2/m3 *m3 50 30 directional \
 	"Metal3 overlap of Via2 < %d in one direction (V2.4i - V2.4)"
 
  width *m3,rm3 440 "Metal3 width < %d (MT.1)"
@@ -2920,7 +2920,7 @@ variants (fast),(full)
 	"Metal3 > %c spacing to unrelated m3 < %d (MT.2b)"
 
 #else (!(THICKMET3P0 || THICKMET0P9 || THICKMET1P1))
- surround v2/m3 *m3 50 directional \
+ surround v2/m3 *m3 50 30 directional \
 	"Metal3 overlap of Via2 < %d in one direction (V2.4i - V2.4)"
 
  width *m3,rm3 360 "Metal3 width < %d (MT.1)"
@@ -2932,7 +2932,7 @@ variants (fast),(full)
 	"Metal3 > %c spacing to unrelated m3 < %d (MT.2b)"
 #endif (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
 #else (!METALS3)
- surround v2/m3 *m3 50 directional \
+ surround v2/m3 *m3 50 30 directional \
 	"Metal3 overlap of Via2 < %d in one direction (V2.4i - V2.4)"
 
  width *m3,rm3 280 "Metal3 width < %d (M3.1)"
@@ -2954,7 +2954,7 @@ variants *
 
  width v3/m3 280 "Via3 width < %d (V3.1 + 2 * V3.4)"
  spacing v3 v3 240 touching_ok "Via3 spacing < %d (V3.2a - 2 * V3.4)"
- surround v3/m3 *m3 50 directional \
+ surround v3/m3 *m3 50 30 directional \
 	"Metal3 overlap of Via3 < %d in one direction (V3.3i - V3.3)"
 
  exact_overlap v3/m4
@@ -2975,7 +2975,7 @@ variants *
 	"Thick Metal4 overlap of Via3 < %d in one direction (MT30.6 - V3.4)"
 
 #elseif defined(THICKMET0P9 || THICKMET1P1)
- surround v3/m4 *m4 50 directional \
+ surround v3/m4 *m4 50 30 directional \
 	"Metal4 overlap of Via3 < %d in one direction (V3.4i - V3.4)"
 
  width *m4,rm4 440 "Metal4 width < %d (MT.1)"
@@ -2986,7 +2986,7 @@ variants (fast),(full)
  widespacing allm4,obsm4 10000 allm4,obsm4  600 touching_ok \
 	"Metal4 > %c spacing to unrelated m4 < %d (MT.2b)"
 #else (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
- surround v3/m4 *m4 50 directional \
+ surround v3/m4 *m4 50 30 directional \
 	"Metal4 overlap of Via3 < %d in one direction (V3.4i - V3.4)"
 
  width *m4,rm4 360 "Metal4 width < %d (MT.1)"
@@ -2998,7 +2998,7 @@ variants (fast),(full)
 	"Metal4 > %c spacing to unrelated m4 < %d (MT.2b)"
 #endif (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
 #else (!METALS4)
- surround v3/m4 *m4 50 directional \
+ surround v3/m4 *m4 50 30 directional \
 	"Metal4 overlap of Via3 < %d in one direction (V3.4i - V3.4)"
 
  width *m4,rm4 200 "Metal4 width < %d (M4.1)"
@@ -3038,9 +3038,9 @@ variants *
 	"Metal5 overlap of Via4 < %d in one direction (MT30.6 - V4.4)"
 
 #elseif defined(THICKMET1P1 || THICKMET0P9)
- surround v4/m4 *m4 50 directional \
+ surround v4/m4 *m4 50 30 directional \
 	"Metal4 overlap of Via4 < %d in one direction (V4.3i - V4.3)"
- surround v4/m5 *m5 50 directional \
+ surround v4/m5 *m5 50 30 directional \
 	"Metal5 overlap of Via4 < %d in one direction (V4.4i - V4.4)"
 
  width *m5,rm5 440 "Metal5 width < %d (MT.1)"
@@ -3051,9 +3051,9 @@ variants (fast),(full)
  widespacing allm5,obsm5 10000 allm5,obsm5  600 touching_ok \
 	"Metal5 > %c spacing to unrelated m5 < %d (MT.2b)"
 #else (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
- surround v4/m4 *m4 50 directional \
+ surround v4/m4 *m4 50 30 directional \
 	"Metal4 overlap of Via4 < %d in one direction (V4.3i - V4.3)"
- surround v4/m5 *m5 50 directional \
+ surround v4/m5 *m5 50 30 directional \
 	"Metal5 overlap of Via4 < %d in one direction (V4.4i - V4.4)"
 
  width *m5,rm5 360 "Metal5 width < %d (MT.1)"
@@ -3065,9 +3065,9 @@ variants (fast),(full)
 	"Metal5 > %c spacing to unrelated m5 < %d (MT.2b)"
 #endif (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
 #else (!METALS5)
- surround v4/m4 *m4 50 directional \
+ surround v4/m4 *m4 50 30 directional \
 	"Metal4 overlap of Via4 < %d in one direction (V4.3i - V4.3)"
- surround v4/m5 *m5 50 directional \
+ surround v4/m5 *m5 50 30 directional \
 	"Metal5 overlap of Via4 < %d in one direction (V4.4i - V4.4)"
 
  width *m5,rm5 200 "Metal5 width < %d (M5.1)"
