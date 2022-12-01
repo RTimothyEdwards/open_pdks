@@ -666,14 +666,24 @@ style gdsii
 # NWELL
 #-----------------------------------------------------
  layer NWELL 	allnwell
+	labels  allnwell noport
 	close	1000000
  	calma 	21 0
+
+ layer NWELLTXT
+	labels  allnwell port
+	calma	21 10
 
 #-----------------------------------------------------
 # PWELL (LVPWELL)
 #-----------------------------------------------------
  layer PWELL 	pwell
+ 	labels 	pwell noport
  	calma 	204 0
+
+ layer PWELLTXT
+	labels  pwell port
+	calma	204 10
 
 #-----------------------------------------------------
 # DIFF (COMP)
@@ -1555,11 +1565,13 @@ style  import
  ignore CAPDEF
  ignore VTEXT
 
- layer pwell PWELL
+ layer pwell PWELL,PWELLTXT
  labels PWELL
+ labels PWELLTXT port
 
- layer nwell NWELL
+ layer nwell NWELL,NWELLTXT
  labels NWELL
+ labels NWELLTXT port
 
  layer dnwell DNWELL
  labels DNWELL
@@ -2546,7 +2558,9 @@ style  import
 
  calma DNWELL 12 0
  calma NWELL 21 0
+ calma NWELLTXT 21 10
  calma PWELL 204 0
+ calma PWELLTXT 204 10
  calma DIFF 22 0
  calma DIFFFILL 22 4
  calma POLY 30 0
