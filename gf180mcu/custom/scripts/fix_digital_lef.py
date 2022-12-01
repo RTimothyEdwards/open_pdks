@@ -36,8 +36,8 @@ def filter(inname, outname):
     for line in llines:
 
         # Check for MACRO line and record the macro name
-        # NOTE:  The "filltie" cell connects the biases to the power supplies
-        # and must be excluded from this modification.
+        # NOTE:  The "filltie" and "endcap" cells connect the biases to
+	# the power supplies and must be excluded from this modification.
 
         mmatch = macrorex.match(line)
         if mmatch:
@@ -47,7 +47,7 @@ def filter(inname, outname):
 
         # Check for end of VSS pin in file
         ematch = endrex.match(line)
-        if ematch and 'filltie' not in inname:
+        if ematch and 'filltie' not in inname and 'endcap' not in inname:
             fixedlines.append('  PIN VPW')
             fixedlines.append('    DIRECTION INOUT ;')
             fixedlines.append('    USE ground ;')
