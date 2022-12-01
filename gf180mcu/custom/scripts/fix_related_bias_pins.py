@@ -24,6 +24,9 @@ def filter(inname, outname):
         print('fix_related_bias_pins.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
+    if 'filltie' in inname or 'endcap' in inname:
+        return 0
+
     # Process input with regexp
 
     fixedlines = []

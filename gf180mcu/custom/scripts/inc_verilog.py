@@ -50,8 +50,11 @@ def filter(inname, outname):
             modified = True
         else:
             # Add in substrate and well pins
-            fline = line.replace('VDD, VSS', 'VDD, VSS, VNW, VPW')
-            fline = fline.replace('.VDD(VDD),.VSS(VSS)', '.VDD(VDD),.VSS(VSS),.VNW(VNW),.VPW(VPW)')
+            if 'filltie' in inname or 'endcap' in inname:
+                fline = line
+            else:
+                fline = line.replace('VDD, VSS', 'VDD, VSS, VNW, VPW')
+                fline = fline.replace('.VDD(VDD),.VSS(VSS)', '.VDD(VDD),.VSS(VSS),.VNW(VNW),.VPW(VPW)')
             if fline != line:
                 modified = True
             fixedlines.append(fline)
