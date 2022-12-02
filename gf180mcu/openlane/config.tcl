@@ -4,8 +4,8 @@ set ::env(DEF_UNITS_PER_MICRON) 2000
 
 set ::env(VDD_PIN) "VDD"
 set ::env(GND_PIN) "VSS"
-set ::env(STD_CELL_POWER_PINS) "VDD VNW"                                                                                                                                                                         
-set ::env(STD_CELL_GROUND_PINS) "VSS VPW"  
+set ::env(STD_CELL_POWER_PINS) "VDD VNW"
+set ::env(STD_CELL_GROUND_PINS) "VSS VPW"
 
 if { ![info exist ::env(STD_CELL_LIBRARY)] } {
     set ::env(STD_CELL_LIBRARY) gf180mcu_fd_sc_mcu7t5v0
