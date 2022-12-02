@@ -824,7 +824,7 @@ digital-9t5v0-%:
 		-gds cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_sc.tcl \
 			filter=custom/scripts/fix_stdcell_gds.py \
-		-lef cells/*/*.lef compile-only \
+		-lef cells/*/*.lef annotate compile-only \
 			filter=custom/scripts/fix_digital_lef.py \
 		-verilog models/*/*.v compile-only rename=primitives \
 		-verilog cells/*/*.v exclude=*.*.v,primitives.v \
@@ -905,7 +905,7 @@ digital-7t5v0-%:
 		-gds cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_sc.tcl \
 			filter=custom/scripts/fix_stdcell_gds.py \
-		-lef cells/*/*.lef compile-only \
+		-lef cells/*/*.lef annotate compile-only \
 			filter=custom/scripts/fix_digital_lef.py \
 		-verilog models/*/*.v compile-only rename=primitives \
 		-verilog cells/*/*.v exclude=*.*.v,primitives.v \
