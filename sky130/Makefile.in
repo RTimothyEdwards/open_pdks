@@ -1407,6 +1407,7 @@ digital-hd-%:
 			rename=primitives filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-verilog %l/latest/cells/*/*.*.v \
+			filter=custom/scripts/fix_verilog.py \
 		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
