@@ -822,6 +822,7 @@ digital-9t5v0-%:
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__tt_025C_5v00.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__tt_025C_5v00 \
 		-gds cells/*/*.gds compile-only \
+			options=custom/scripts/gds_import_sc.tcl \
 			filter=custom/scripts/fix_stdcell_gds.py \
 		-lef cells/*/*.lef compile-only \
 			filter=custom/scripts/fix_digital_lef.py \
@@ -902,6 +903,7 @@ digital-7t5v0-%:
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__tt_025C_5v00.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__tt_025C_5v00 \
 		-gds cells/*/*.gds compile-only \
+			options=custom/scripts/gds_import_sc.tcl \
 			filter=custom/scripts/fix_stdcell_gds.py \
 		-lef cells/*/*.lef compile-only \
 			filter=custom/scripts/fix_digital_lef.py \
