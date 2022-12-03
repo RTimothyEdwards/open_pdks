@@ -1160,17 +1160,17 @@ if __name__ == '__main__':
                     if not have_lefanno:
                         create_lef_library(destlibdir, compname, do_compile_only, excludelist)
 
-                if do_compile_only == True:
-                    if newname and targname:
-                        if os.path.isfile(targname):
-                            if have_lefanno:
-                                # If the original source is a single file
-                                # but is used for annotation, then save the
-                                # file name and delete it just before writing
-                                # the LEF library
-                                lef_savelibname = targname
-                            else:
-                                os.remove(targname)
+                    if do_compile_only == True:
+                        if newname and targname:
+                            if os.path.isfile(targname):
+                                if have_lefanno:
+                                    # If the original source is a single file
+                                    # but is used for annotation, then save the
+                                    # file name and delete it just before writing
+                                    # the LEF library
+                                    lef_savelibname = targname
+                                else:
+                                    os.remove(targname)
 
                 # "rename" with "compile" or "compile-only":  Change the name
                 # of the compiled file.
