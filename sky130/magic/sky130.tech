@@ -1480,6 +1480,9 @@ style gdsii
  layer FILLOBSM4 fillblock,fillblock4
  	calma 	112 4
 
+ layer FILLOBSM5 fillblock,fillblock4
+	calma	117 4
+
  render	DNWELL 	cwell       -0.1    0.1
  render	NWELL	nwell        0.0    0.2062
  render DIFF	ndiffusion   0.2062 0.12
@@ -3961,7 +3964,11 @@ style  sky130 variants (),(vendor),(legacy)
  layer comment TTEXT
  labels TTEXT text
 
- layer fillblock  FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4
+ layer fillblock  FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4,FILLOBSM5
+ labels FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4,FILLOBSM5
+
+ layer fillblock4  FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4
+ and-not FILLOBSM5
  labels FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4
 
  layer obsactive  FILLOBSFOM
@@ -4163,6 +4170,7 @@ style  sky130 variants (),(vendor),(legacy)
  calma FILLOBSM2  105 52
  calma FILLOBSM3  107 24
  calma FILLOBSM4  112  4
+ calma FILLOBSM5  117  4
  calma FILLOBSFOM  22 24
  calma FILLOBSPOLY 33 24
 
