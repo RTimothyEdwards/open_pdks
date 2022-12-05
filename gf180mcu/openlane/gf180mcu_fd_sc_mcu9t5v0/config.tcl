@@ -2,7 +2,7 @@ set current_folder [file dirname [file normalize [info script]]]
 
 # Placement site for core cells
 # This can be found in the technology lef
-set ::env(PLACE_SITE) "$::env(STD_CELL_LIBRARY)"
+set ::env(PLACE_SITE) "GF018hv5v_green_sc9"
 set ::env(PLACE_SITE_WIDTH) 0.56
 set ::env(PLACE_SITE_HEIGHT) 3.92
 
@@ -36,7 +36,6 @@ set ::env(DIODE_CELL) "$::env(STD_CELL_LIBRARY)__antenna"
 set ::env(DIODE_CELL_PIN) "I"
 set ::env(DIODE_INSERTION_STRATEGY) {4}
 
-set ::env(CELL_PAD) 2
 set ::env(CELL_PAD_EXCLUDE) "$::env(STD_CELL_LIBRARY)__filltie_* $::env(STD_CELL_LIBRARY)__filldecap_* $::env(STD_CELL_LIBRARY)__fill_* $::env(STD_CELL_LIBRARY)__endcap_*"
 
 # TritonCTS configurations
@@ -48,4 +47,7 @@ set ::env(FP_PDN_RAIL_WIDTH) 0.6
 
 # The library maximum transition is 8.9ns; setting it to lower value
 set ::env(DEFAULT_MAX_TRAN) 3
+
+set ::env(GPL_CELL_PADDING) {0}
+set ::env(DPL_CELL_PADDING) {2}
 
