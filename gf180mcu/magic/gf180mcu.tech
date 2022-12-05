@@ -747,7 +747,7 @@ style gdsii
 	grow 160
 
  layer NPLUS
-        bloat-or *ndif,*ndiode,*nndiode,ndiffres,*mvndif,*mvndiode,*mvnndiode,mvndiffres * 20 allpactivenonfet 0
+        bloat-or *ndif,*ndiode,*nndiode,ndiffres,*mvndif,*mvndiode,*mvnndiode,mvndiffres * 160 allpactivenonfet 0
         bloat-or *nsd,*mvnsd * 20 allpactivenonfet 0
 	bloat-or allnfets,var,mvvar * 230
 	or shortntap,shortdntap

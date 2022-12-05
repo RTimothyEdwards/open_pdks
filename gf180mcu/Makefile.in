@@ -1009,6 +1009,8 @@ sram-%:
 		-cdl cells/*/*.cdl noconvert \
 		-liberty cells/*/*.lib \
 		-gds cells/*/*.gds \
+			options=custom/scripts/gds_import_sram.tcl \
+			filter=custom/scripts/fix_sram_gds.py \
 		-lef cells/*/*.lef \
 		-verilog cells/*/*.v \
 		-library general gf180mcu_fd_ip_sram 2>&1 | tee -a ${GF180MCU$*}_make.log
