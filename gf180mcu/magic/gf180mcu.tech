@@ -2320,10 +2320,6 @@ style  import
 #endif (METALS5 && MIM)
 
  layer m5 MET5,MET5TXT
-#ifdef MIM && METALS5
- and-not CAPM
- and-not mimarea
-#endif (MIM && METALS5)
  and-not MET5RES
  labels MET5
  labels MET5TXT port
