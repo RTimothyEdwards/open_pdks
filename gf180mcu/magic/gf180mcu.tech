@@ -1224,8 +1224,8 @@ style gdsii
 #------------------------------------------------------------------------
 # FILLBLOCK (NOTE: two layers define this on active, then poly & metal)
 #------------------------------------------------------------------------
- layer FILLOBS fillblock
- 	calma 	111 5
+# layer FILLOBS fillblock
+# 	calma 	111 5
 
  layer FILLOBS2 fillblock
  	calma 	152 5
@@ -1564,6 +1564,7 @@ style  import
  ignore FET5VDEF
  ignore CAPDEF
  ignore VTEXT
+ ignore FILLOBS
 
  layer pwell PWELL,PWELLTXT
  labels PWELL
@@ -2537,8 +2538,9 @@ style  import
  layer lvstext TTEXT
  labels TTEXT text
 
- layer fillblock  FILLOBS,FILLOBS2
- labels FILLOBS
+# layer fillblock  FILLOBS,FILLOBS2
+ layer fillblock  FILLOBS2
+ labels FILLOBS2
 
 # MOS Varactors
 
