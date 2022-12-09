@@ -1701,10 +1701,13 @@ if __name__ == '__main__':
                         # write procedure, but we still need the pin use and class
                         # information from the LEF file, and maybe the bounding box.
 
-                        
                         # For annotation, the LEF file output will overwrite the
                         # original source LEF file.
                         lefdest = lefsrclibdir + '/' if have_lefanno else ''
+
+                        # Delete the original files in case the naming is different
+                        for leffile in leffiles:
+                            print('file delete ' + lefsrclibdir + '/' + leffile, file=ofile)
 
                         for lefmacro in lefmacros:
                             print('if {[cellname list exists ' + lefmacro + '] != 0} {', file=ofile)
@@ -2259,7 +2262,7 @@ if __name__ == '__main__':
                 else:
                     gdslibroot = os.path.split(allgdslibname)[1]
                     print('load ' + os.path.splitext(gdslibroot)[0], file=ofile)
-                # print('cellname delete \(UNNAMED\)', file=ofile)
+                print('catch {cellname delete \(UNNAMED\)}', file=ofile)
 
                 print('ext2spice lvs', file=ofile)
 

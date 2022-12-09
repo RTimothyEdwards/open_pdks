@@ -3,3 +3,4 @@ gds ordering on
 gds polygon subcells true
 gds flatten true
 gds flatglob *_CDNS_*
+# gds noduplicates true

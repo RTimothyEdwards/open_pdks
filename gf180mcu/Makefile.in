@@ -997,7 +997,7 @@ io-%:
 		-gds cells/*/*_${$*_STACK}.gds compile-only \
 			options=custom/scripts/gds_import_io.tcl \
 		-lef cells/*/*_${$*_STACK}.lef \
-			annotate untrusted lefopts=-hide compile-only \
+			annotate lefopts=-hide compile-only \
 			filter=custom/scripts/fix_io_lef.py \
 		-verilog cells/*/*.v compile-only \
 		-library general gf180mcu_fd_io 2>&1 | tee -a ${GF180MCU$*}_make.log

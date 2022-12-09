@@ -57,8 +57,11 @@ tlefnom  = tlefbase + 'nom.tlef'
 resrex1  = re.compile('^[ \t]*RESISTANCE RPERSQ')
 resrex2  = re.compile('^[ \t]*ARRAYSPACING')
 layerrex = re.compile('^[ \t]*LAYER ([^ \t\n]+)')
+caprex   = re.compile('^[ \t]*CAPACITANCE CPERSQDIST')
 
+#--------------------------------------------------------------------
 # Resistance values, by layer
+#--------------------------------------------------------------------
 
 rnom = {}
 rmin = {}
@@ -115,6 +118,19 @@ rmin['Via4'] = '0.0'
 rmin['Metal5'] = '0.050'
 
 #--------------------------------------------------------------------
+# Capacitance values, by layer
+#--------------------------------------------------------------------
+
+cnom = {}
+
+cnom['Metal1'] = '0.0004'
+cnom['Metal2'] = '0.0003'
+cnom['Metal3'] = '0.00028'
+cnom['Metal4'] = '0.000277'
+if variant == 'gf180mcuC':
+    cnom['Metal5'] = '0.000174'
+
+#--------------------------------------------------------------------
 
 infile_name = tlefpath + '/' + tlefnom
 print('Creating minimum and maximum corner variants of ' + infile_name)
@@ -133,9 +149,11 @@ for corner in ['min', 'max', 'nom']:
     else:
         outfile  = open(outfile_name, 'w')
     curlayer = None
-    value    = None
+    rvalue   = None
+    cvalue   = None
 
     for line in infile:
+        cmatch  = caprex.match(line)
         rmatch1 = resrex1.match(line)
         rmatch2 = resrex2.match(line)
         lmatch  = layerrex.match(line)
@@ -143,20 +161,52 @@ for corner in ['min', 'max', 'nom']:
             curlayer = lmatch.group(1)
             if curlayer in rnom:
                 if corner == 'min':
-                    value = rmin[curlayer]
+                    try:
+                        rvalue = rmin[curlayer]
+                    except:
+                        rvalue = None
                 elif corner == 'max':
-                    value = rmax[curlayer]
+                    try:
+                        rvalue = rmax[curlayer]
+                    except:
+                        rvalue = None
                 else:
-                    value = rnom[curlayer]
+                    try:
+                        rvalue = rnom[curlayer]
+                    except:
+                        rvalue = None
             else:
-                value = None
+                rvalue = None
+            if curlayer in cnom:
+                if corner == 'min':
+                    try:
+                        cvalue = cmin[curlayer]
+                    except:
+                        cvalue = None
+                elif corner == 'max':
+                    try:
+                        cvalue = cmax[curlayer]
+                    except:
+                        cvalue = None
+                else:
+                    try:
+                        cvalue = cnom[curlayer]
+                    except:
+                        cvalue = None
+            else:
+                cvalue = None
             outfile.write(line)
-        elif value and rmatch1:
-            outfile.write('    RESISTANCE RPERSQ ' + value + ' ;\n')
-        elif value and rmatch2:
+        elif rvalue and rmatch1:
+            print('Layer ' + curlayer + ':  Rewriting resistance rpersq as value ' + rvalue)
+            outfile.write('    RESISTANCE RPERSQ ' + rvalue + ' ;\n')
+        elif rvalue and rmatch2:
             outfile.write(line)
             outfile.write('')
-            outfile.write('  RESISTANCE ' + value + ' ;\n')
+            print('Layer ' + curlayer + ':  Adding (via) resistance as value ' + rvalue)
+            outfile.write('  RESISTANCE ' + rvalue + ' ;\n')
+        elif cvalue and cmatch:
+            print('Layer ' + curlayer + ':  Rewriting capacitance cpersqdist as value ' + cvalue)
+            outfile.write('    CAPACITANCE CPERSQDIST ' + cvalue + ' ;\n')
         else:
             outfile.write(line)
 
@@ -165,3 +215,5 @@ for corner in ['min', 'max', 'nom']:
 
     if infile_name == outfile_name:
         os.rename(outfile_name + 'x', outfile_name)
+
+    print('Generated file ' + outfile_name + ' (Done)')

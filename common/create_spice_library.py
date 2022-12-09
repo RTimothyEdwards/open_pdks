@@ -68,12 +68,13 @@ def create_spice_library(destlibdir, destlib, spiext, do_compile_only=False, do_
             slist = glob.glob(destlibdir + '/*.cdl')
         else:
             # Sadly, there is no consensus on what a SPICE file extension should be.
-            slist = glob.glob(destlibdir + '/*.spc')
-            slist.extend(glob.glob(destlibdir + '/*.spice'))
-            slist.extend(glob.glob(destlibdir + '/*.spi'))
-            slist.extend(glob.glob(destlibdir + '/*.ckt'))
-            slist.extend(glob.glob(destlibdir + '/*.cir'))
-            slist.extend(glob.glob(destlibdir + '/*' + spiext))
+            spiexts = ['.spc', '.spice', '.spi', '.ckt', '.cir']
+            if spiext not in spiexts:
+                spiexts.append(spiext)
+            slist = []
+            for extension in spiexts:
+                slist.extend(glob.glob(destlibdir + '/*' + extension))
+
         slist = natural_sort.natural_sort(slist)
 
     if alllibname in slist:
@@ -105,7 +106,7 @@ def create_spice_library(destlibdir, destlib, spiext, do_compile_only=False, do_
                     subckts = re.findall(r'\.subckt[ \t]+([^ \t\n]+)', stext, flags=re.IGNORECASE)
                     sseen = list(item for item in subckts if item in allsubckts)
                     allsubckts.extend(list(item for item in subckts if item not in allsubckts))
-                    sfilter = remove_redundant_subckts(stext, allsubckts, sseen)
+                    sfilter = remove_redundant_subckts(stext, subckts, sseen)
                     print(sfilter, file=ofile)
                 print('\n******* EOF\n', file=ofile)
 
@@ -137,17 +138,17 @@ def remove_redundant_subckts(ntext, slist, sseen):
     for subckt in slist:
         if subckt in sseen:
             # Remove all occurrences of subckt
-            updated = re.sub(r'\n\.subckt[ \t]+' + subckt + '[ \t\n]+.*\n\.ends[ \t\n]+', '\n', updated, flags=re.IGNORECASE | re.DOTALL)
+            updated = re.sub(r'\n\.subckt[ \t]+' + subckt + '[ \t\n]+.*?\n\.ends[ \t\n]+', '\n', updated, flags=re.IGNORECASE | re.DOTALL)
 
         else:
             # Determine the number of times the subcircuit appears in the text
-            n = len(re.findall(r'\n\.subckt[ \t]+' + subckt + '[ \t\n]+.*\n\.ends[ \t\n]+', updated, flags=re.IGNORECASE | re.DOTALL))
+            n = len(re.findall(r'\n\.subckt[ \t]+' + subckt + '[ \t\n]+.*?\n\.ends[ \t\n]+', updated, flags=re.IGNORECASE | re.DOTALL))
             # Optimization:  Just keep original text if n < 2
             if n < 2:
                 continue
 
             # Remove all but one
-            updated = re.sub(r'\n\.subckt[ \t]+' + subckt + '[ \t\n]+.*\n\.ends[ \t\n]+', '\n', n - 1, updated, flags=re.IGNORECASE | re.DOTALL)
+            updated = re.sub(r'\n\.subckt[ \t]+' + subckt + '[ \t\n]+.*?\n\.ends[ \t\n]+', '\n', n - 1, updated, flags=re.IGNORECASE | re.DOTALL)
     return updated
 
 #----------------------------------------------------------------------------
@@ -202,7 +203,7 @@ if __name__ == '__main__':
 
     destlibdir = argumentlist[0]
     destlib = argumentlist[1]
-    startup_script = argumentlist[2]
+    spiext = argumentlist[2]
 
     print('')
     if spiext == '.cdl':

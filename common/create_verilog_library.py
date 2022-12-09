@@ -121,18 +121,18 @@ def remove_redundant_modules(ntext, mlist, m2list):
         # Determine the number of times the module appears in the text
         if module in m2list:
             # This module seen before outside of ntext, so remove all occurrances in ntext
-            new = re.sub(r'[ \t\n]+module[ \t]+' + module + '[ \t\n\(]+.*[ \t\n]endmodule', '\n', updated, flags=re.DOTALL)
+            new = re.sub(r'[ \t\n]+module[ \t]+' + module + '[ \t\n\(]+.*?[ \t\n]endmodule', '\n', updated, flags=re.DOTALL)
             updated = new
 
         else:
-            n = len(re.findall(r'[ \t\n]module[ \t]+' + module + '[ \t\n\(]+.*[ \t\n]endmodule', updated, flags=re.DOTALL))
+            n = len(re.findall(r'[ \t\n]module[ \t]+' + module + '[ \t\n\(]+.*?[ \t\n]endmodule', updated, flags=re.DOTALL))
             # This module defined more than once inside ntext, so remove all but one
             # Optimization:  Just keep original text if n < 2
             if n < 2:
                 continue
 
             # Remove all but one
-            updated = re.sub(r'[ \t\n]+module[ \t]+' + module + '[ \t\n]+.*[ \t\n]endmodule', '\n', n - 1, updated, flags=re.IGNORECASE | re.DOTALL)
+            updated = re.sub(r'[ \t\n]+module[ \t]+' + module + '[ \t\n]+.*?[ \t\n]endmodule', '\n', n - 1, updated, flags=re.IGNORECASE | re.DOTALL)
     return updated
 
 #----------------------------------------------------------------------------
