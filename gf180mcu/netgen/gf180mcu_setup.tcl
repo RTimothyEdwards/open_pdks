@@ -119,12 +119,12 @@ foreach dev $devices {
 #-------------------------------------------
 
 set devices {}
-lappend devices nmos_1p5
-lappend devices pmos_1p5
-lappend devices nmos_6p0
-lappend devices pmos_6p0
-lappend devices nmoscap_1p5
-lappend devices nmoscap_6p0
+lappend devices nfet_03v3
+lappend devices pfet_03v3
+lappend devices nfet_06v0
+lappend devices pfet_06v0
+lappend devices cap_nmos_03v3
+lappend devices cap_nmos_06v0
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -150,12 +150,12 @@ foreach dev $devices {
 #-------------------------------------------
 
 set devices {}
-lappend devices np_1p5
-lappend devices pn_1p5
-lappend devices np_6p0
-lappend devices pn_6p0
-lappend devices nwp_1p5
-lappend devices nwp_6p0
+lappend devices diode_nd2ps_3p3
+lappend devices diode_pd2nw_3p3
+lappend devices diode_nd2ps_6p0
+lappend devices diode_pd2nw_6p0
+lappend devices diode_nw2pw_3p3
+lappend devices diode_nw2pw_6p0
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -181,20 +181,31 @@ foreach dev $devices {
 #-----------------------------------------------
 
 set devices {}
-lappend devices vnpn_lv_2p5x2p5
-lappend devices vnpn_lv_5x5
-lappend devices vnpn_lv_10x10
+lappend devices npn_10p00x10p00
+lappend devices npn_05p00x05p00
+lappend devices npn_00p54x16p00
+lappend devices npn_00p54x08p00
+lappend devices npn_00p54x04p00
+lappend devices npn_00p54x02p00
+lappend devices pnp_10p00x00p42
+lappend devices pnp_05p00x00p42
+lappend devices pnp_10p00x10p00
+lappend devices pnp_05p00x05p00
 
-lappend devices vnpn_mv_2p5x2p5
-lappend devices vnpn_mv_5x5
-lappend devices vnpn_mv_10x10
-lappend devices apmom_bb
 #ifdef MIM
-lappend devices mim_sm_bb
-#endif
-#ifdef DMIM
-lappend devices mim_dm_bb
-#endif
+#ifdef METALS3
+lappend devices cap_mim_2f0_m2m3_noshield
+#endif (METALS3)
+#ifdef METALS4
+lappend devices cap_mim_2f0_m3m4_noshield
+#endif (METALS4)
+#ifdef METALS5
+lappend devices cap_mim_2f0_m4m5_noshield
+#endif (METALS5)
+#ifdef METALS6
+lappend devices cap_mim_2f0_m5m6_noshield
+#endif (METALS6)
+#endif (MIM)
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
