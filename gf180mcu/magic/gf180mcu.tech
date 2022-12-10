@@ -753,6 +753,7 @@ style gdsii
 	or shortntap,shortdntap
 	grow 	200 
 	shrink 200
+	mask-hints NPLUS
 	calma   32 0
 
  # rpps requires PPLUS
@@ -766,6 +767,7 @@ style gdsii
 	grow 200
 	grow 200
 	shrink 200
+	mask-hints PPLUS
 	calma   31 0
 
  # standard generation of PPLUS, including hires resistors
@@ -815,6 +817,7 @@ style gdsii
 	bloat-or allpdiffmv * 240
 	grow 219
 	shrink 219
+	mask-hints DUALGATE
 	calma 55 0
 
  # DUALGATE completely covers deep nwell
@@ -1148,6 +1151,7 @@ style gdsii
  	bloat-or allsblkdev * 0 space/a 220
  	grow 	215
  	shrink 	215
+	mask-hints SBLK
  	calma 	49 0
 
  # sblk from rdn/rdp of esd fet 
