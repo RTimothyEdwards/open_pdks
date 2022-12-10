@@ -748,6 +748,9 @@ style gdsii
 
  layer NPLUS
         bloat-or *ndif,*ndiode,*nndiode,ndiffres,*mvndif,*mvndiode,*mvnndiode,mvndiffres * 160 allpactivenonfet 0
+        # NOTE:  Rule CO.5a applies to butted contacts but Calibre rule is
+	# implemented for all contacts, so the Calibre rule is being followed.
+        bloat-or nsc,mvnsc * 95
         bloat-or *nsd,*mvnsd * 20 allpactivenonfet 0
 	bloat-or allnfets,var,mvvar * 230
 	or shortntap,shortdntap
@@ -794,6 +797,9 @@ style gdsii
 	and-not RESDEF
 #endif (HRPOLY1K)
         bloat-or  *pdif,*pdiode,pdiffres,pfet,*mvpdif,*mvpdiode,mvpdiffres,mvpfet * 160 allnactivenonfet 0
+        # NOTE:  Rule CO.5b applies to butted contacts but Calibre rule is
+	# implemented for all contacts, so the Calibre rule is being followed.
+        bloat-or psc,mvpsc * 95
         bloat-or *psd,*mvpsd * 20 allnactivenonfet 0
 	bloat-or allpfets * 230
 	or shortptap,shortdptap
@@ -4408,30 +4414,30 @@ variants *
 # All devices except diodes are modeled as subcircuits
 
 # device list:
-#  nmos_3p3		mosfet
-#  pmos_3p3		mosfet
-#  nmos_6p0		mosfet (thick oxide)
-#  pmos_6p0		mosfet (thick oxide)
-#  nmos_6p0_nat		mosfet (native Vt)
-#  nmos_3p3_sab		mosfet (unsalicided drain)
-#  pmos_3p3_sab		mosfet (unsalicided drain)
-#  nmos_6p0_sab		mosfet (unsalicided drain, thick oxide)
-#  pmos_6p0_sab		mosfet (unsalicided drain, thick oxide)
-#  nmos_10p0_asym	LDNMOS (extended drain)
-#  pmos_10p0_asym	LDPMOS (extended drain)
+#  nfet_03v3		mosfet
+#  pfet_03v3		mosfet
+#  nfet_06v0		mosfet (thick oxide)
+#  pfet_06v0		mosfet (thick oxide)
+#  nfet_06v0_nvt	mosfet (native Vt)
+#  nfet_03v3_dss	mosfet (unsalicided drain)
+#  pfet_03v3_dss	mosfet (unsalicided drain)
+#  nfet_06v0_dss	mosfet (unsalicided drain, thick oxide)
+#  pfet_06v0_dss	mosfet (unsalicided drain, thick oxide)
+#  nfet_10v0_asym	LDNMOS (extended drain)
+#  pfet_10v0_asym	LDPMOS (extended drain)
 #
-#  np_3p3		diode  (N+/pwell)
-#  pn_3p3		diode  (P+/nwell)
-#  np_6p0		diode  (N+/pwell, high voltage)
-#  pn_6p0		diode  (P+/nwell, high voltage)
-#  nwp_3p3		diode  (nwell/pwell)
-#  nwp_6p0		diode  (nwell/pwell, high voltage)
-#  dnwpw		diode  (pwell/dnwell)
-#  dnwps		diode  (dnwll/substrate)
+#  diode_nd2ps_03v3	diode  (N+/pwell)
+#  diode_pd2nw_03v3	diode  (P+/nwell)
+#  diode_nd2ps_06v0	diode  (N+/pwell, high voltage)
+#  diode_pd2nw_06v0	diode  (P+/nwell, high voltage)
+#  diode_nw2pw_03v3	diode  (nwell/pwell)
+#  diode_nw2pw_06v0	diode  (nwell/pwell, high voltage)
+#  diode_dnw2pw		diode  (pwell/dnwell)
+#  diode_dnw2ps		diode  (dnwll/substrate)
 #  sc_diode		diode  (Schottky)
 #
-#  vpnp_WxL		BJT    (10x10, 5x5, 0.42x10, 0.42x5 emitter sizes)
-#  vnpn_WxL		BJT    (10x10, 5x5, 0.54x16, 0.54x8, 0.54x4, 0.54x2)
+#  pnp_WxL		BJT    (10x10, 5x5, 0.42x10, 0.42x5 emitter sizes)
+#  npn_WxL		BJT    (10x10, 5x5, 0.54x16, 0.54x8, 0.54x4, 0.54x2)
 #
 #  npolyf_u		resistor (N+ poly, unsalicided)
 #  ppolyf_u		resistor (P+ poly, unsalicided)
@@ -4454,16 +4460,16 @@ variants *
 #  tm11k		resistor (top metal, 1.1um thick)
 #  tm30k		resistor (top metal, 3.0um thick)
 #
-#  nmoscap_3p3		mosfet	 (source-drain tied)
-#  pmoscap_3p3		mosfet	 (source-drain tied)
-#  nmoscap_6p0		mosfet	 (source-drain tied, high voltage)
-#  pmoscap_6p0		mosfet	 (source-drain tied, high voltage)
-#  nmoscap_3p3_b	mosfet   (n-varactor)
-#  pmoscap_3p3_b	mosfet   (p-varactor)
-#  nmoscap_6p0_b	mosfet   (n-varactor, high voltage)
-#  pmoscap_6p0_b	mosfet   (p-varactor, high voltage)
+#  cap_nmos_03v3	mosfet	 (source-drain tied)
+#  cap_pmos_03v3	mosfet	 (source-drain tied)
+#  cap_nmos_06v0	mosfet	 (source-drain tied, high voltage)
+#  cap_pmos_06v0	mosfet	 (source-drain tied, high voltage)
+#  cap_nmos_03v3_b	mosfet   (n-varactor)
+#  cap_pmos_03v3_b	mosfet   (p-varactor)
+#  cap_nmos_06v0_b	mosfet   (n-varactor, high voltage)
+#  cap_pmos_06v0_b	mosfet   (p-varactor, high voltage)
 #
-#  mim_2p0fF		capacitor (MiM)*
+#  cap_mim_2f0fF		capacitor (MiM)*
 
 #
 # *Note that there are multiple mutually exclusive process options for the
@@ -4472,18 +4478,18 @@ variants *
 #
 # **The top metal may be any of metal3 to metaltp, depending on the stackup
 
- device msubcircuit pmos_3p3 pfet pdiff,pdc pdiff,pdc allnwell error l=l w=w
- device msubcircuit nmos_3p3 nfet ndiff,ndc ndiff,ndc allpsub error l=l w=w
- device msubcircuit pmos_6p0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error l=l w=w
- device msubcircuit nmos_6p0 mvnfet mvndiff,mvndc mvndiff,mvndc allpsub error l=l w=w
- device msubcircuit pmos_3p3_sab pfet pdiffres pdiffres allnwell error l=l w=w
- device msubcircuit nmos_3p3_sab nfet ndiffres ndiffres allpsub error l=l w=w
- device msubcircuit pmos_6p0_sab mvpfet mvpdiffres mvpdiffres allnwell error l=l w=w
- device msubcircuit nmos_6p0_sab mvnfet mvndiffres mvndiffres allpsub error l=l w=w
- device msubcircuit nmos_6p0_nat mvnnfet mvndiff,mvndiffres,mvndc \
+ device msubcircuit pfet_03v3 pfet pdiff,pdc pdiff,pdc allnwell error l=l w=w
+ device msubcircuit nfet_03v3 nfet ndiff,ndc ndiff,ndc allpsub error l=l w=w
+ device msubcircuit pfet_06v0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error l=l w=w
+ device msubcircuit nfet_06v0 mvnfet mvndiff,mvndc mvndiff,mvndc allpsub error l=l w=w
+ device msubcircuit pfet_03v3_dss pfet pdiffres pdiffres allnwell error l=l w=w
+ device msubcircuit nfet_03v3_dss nfet ndiffres ndiffres allpsub error l=l w=w
+ device msubcircuit pfet_06v0_dss mvpfet mvpdiffres mvpdiffres allnwell error l=l w=w
+ device msubcircuit nfet_06v0_dss mvnfet mvndiffres mvndiffres allpsub error l=l w=w
+ device msubcircuit nfet_06v0_nvt mvnnfet mvndiff,mvndiffres,mvndc \
 	mvndiff,mvndiffres,mvndc allpsub error l=l w=w
- device subcircuit nmoscap_3p3 varactor *nndiff allnwell error l=l w=w
- device subcircuit nmoscap_6p0 mvvaractor *mvnndiff allnwell error l=l w=w
+ device subcircuit cap_nmos_03v3 varactor *nndiff allnwell error l=l w=w
+ device subcircuit cap_nmos_06v0 mvvaractor *mvnndiff allnwell error l=l w=w
 
  device rsubcircuit rm1 rm1 *m1 l=r_length w=r_width
  device rsubcircuit rm2 rm2 *m2 l=r_length w=r_width
@@ -4555,24 +4561,24 @@ variants *
  device rsubcircuit nplus_u  mvndiffres *mvndiff allpsub error l=r_length w=r_width
  device rsubcircuit nwell rnw   nwell allpsub error l=r_length w=r_width
 
- device pdiode pn_3p3     *pdiode allnwell a=area p=pj
- device ndiode np_3p3     *ndiode allpsub a=area p=pj
- device pdiode pn_6p0     *mvpdiode allnwell a=area p=pj
- device ndiode np_6p0     *mvndiode allpsub a=area p=pj
- device ndiode np_6p0_nat *mvnndiode allpsub a=area p=pj
+ device pdiode diode_pd2nw_03p3     *pdiode allnwell a=area p=pj
+ device ndiode diode_nd2ps_03p3     *ndiode allpsub a=area p=pj
+ device pdiode diode_pd2nw_06p0     *mvpdiode allnwell a=area p=pj
+ device ndiode diode_nd2ps_06p0     *mvndiode allpsub a=area p=pj
+ device ndiode diode_nd2ps_06p0_nvt *mvnndiode allpsub a=area p=pj
 
 #ifdef MIM
 #ifdef METALS6
- device csubcircuit mim_2p0fF *mimcap  *m5   l=c_length w=c_width
+ device csubcircuit cap_mim_2f0fF *mimcap  *m5   l=c_length w=c_width
 #endif
 #ifdef METALS5
- device csubcircuit mim_2p0fF *mimcap  *m4   l=c_length w=c_width
+ device csubcircuit cap_mim_2f0fF *mimcap  *m4   l=c_length w=c_width
 #endif
 #ifdef METALS4
- device csubcircuit mim_2p0fF *mimcap  *m3   l=c_length w=c_width
+ device csubcircuit cap_mim_2f0fF *mimcap  *m3   l=c_length w=c_width
 #endif
 #ifdef METALS3
- device csubcircuit mim_2p0fF *mimcap  *m2   l=c_length w=c_width
+ device csubcircuit cap_mim_2f0fF *mimcap  *m2   l=c_length w=c_width
 #endif
 #endif (MIM)
 
