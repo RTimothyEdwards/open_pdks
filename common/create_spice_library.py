@@ -148,7 +148,7 @@ def remove_redundant_subckts(ntext, slist, sseen):
                 continue
 
             # Remove all but one
-            updated = re.sub(r'\n\.subckt[ \t]+' + subckt + '[ \t\n]+.*?\n\.ends[ \t\n]+', '\n', n - 1, updated, flags=re.IGNORECASE | re.DOTALL)
+            updated = re.sub(r'\n\.subckt[ \t]+' + subckt + '[ \t\n]+.*?\n\.ends[ \t\n]+', '\n', updated, n - 1, flags=re.IGNORECASE | re.DOTALL)
     return updated
 
 #----------------------------------------------------------------------------

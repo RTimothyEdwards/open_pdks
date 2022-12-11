@@ -89,7 +89,12 @@ def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=F
                     modules = re.findall(r'[ \t\n]module[ \t]+([^ \t\n\(]+)', vtext)
                     mseen = list(item for item in modules if item in allmodules)
                     allmodules.extend(list(item for item in modules if item not in allmodules))
-                    vfilter = remove_redundant_modules(vtext, allmodules, mseen)
+                    # NOTE:  "remove_redundant_modules" is disabled because it is
+                    # not checking if duplicate modules might exist within separate
+                    # blocks of an "ifdef".
+                    # vfilter = remove_redundant_modules(vtext, modules, mseen)
+                    vfilter = vtext
+
                     # NOTE:  The following workaround resolves an issue with iverilog,
                     # which does not properly parse specify timing paths that are not in
                     # parentheses.  Easy to work around
@@ -113,6 +118,10 @@ def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=F
 # "mlist" is a list of all module names including those in "ntext".
 # The reason for doing this is that some verilog files may includes modules used
 # by all the files, and if included more than once, then iverilog complains.
+#
+# Important note:  This module has been disabled.  It needs to check if
+# duplicate modules are inside mutually exclusive conditions of an ifdef
+# block.
 #----------------------------------------------------------------------------
 
 def remove_redundant_modules(ntext, mlist, m2list):
@@ -132,7 +141,7 @@ def remove_redundant_modules(ntext, mlist, m2list):
                 continue
 
             # Remove all but one
-            updated = re.sub(r'[ \t\n]+module[ \t]+' + module + '[ \t\n]+.*?[ \t\n]endmodule', '\n', n - 1, updated, flags=re.IGNORECASE | re.DOTALL)
+            updated = re.sub(r'[ \t\n]+module[ \t]+' + module + '[ \t\n]+.*?[ \t\n]endmodule', '\n', updated, n - 1, flags=re.IGNORECASE | re.DOTALL)
     return updated
 
 #----------------------------------------------------------------------------
