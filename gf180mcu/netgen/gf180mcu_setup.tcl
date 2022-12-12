@@ -55,8 +55,8 @@ foreach dev $devices {
 	property "-circuit1 $dev" parallel enable
 	property "-circuit1 $dev" serial enable
 	permute "-circuit1 $dev" 1 2
-	property "-circuit1 $dev" merge {l ser_critical} {w add_critical}
-	property "-circuit1 $dev" tolerance {l 0.01} {w 0.01}
+	property "-circuit1 $dev" merge {r_length ser_critical} {r_width add_critical}
+	property "-circuit1 $dev" tolerance {r_length 0.01} {r_width 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete par1 pm
     }
@@ -64,8 +64,8 @@ foreach dev $devices {
 	property "-circuit2 $dev" parallel enable
 	property "-circuit2 $dev" serial enable
 	permute "-circuit2 $dev" 1 2
-	property "-circuit2 $dev" merge {l ser_critical} {w add_critical}
-	property "-circuit2 $dev" tolerance {l 0.01} {w 0.01}
+	property "-circuit2 $dev" merge {r_length ser_critical} {r_width add_critical}
+	property "-circuit2 $dev" tolerance {r_length 0.01} {r_width 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete par1 pm
     }
@@ -101,14 +101,14 @@ foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
 	property "-circuit1 $dev" parallel enable
 	permute "-circuit1 $dev" 1 2
-	property "-circuit1 $dev" tolerance {l 0.01} {w 0.01}
+	property "-circuit1 $dev" tolerance {r_length 0.01} {r_width 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete par1 pm
     }
     if {[lsearch $cells2 $dev] >= 0} {
 	property "-circuit2 $dev" parallel enable
 	permute "-circuit2 $dev" 1 2
-	property "-circuit2 $dev" tolerance {l 0.01} {w 0.01}
+	property "-circuit2 $dev" tolerance {r_length 0.01} {r_width 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete par1 pm
     }
