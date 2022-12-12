@@ -146,6 +146,11 @@ AC_PATH_PROG(PATCH, patch)
 if test -z "$PATCH"; then
    AC_MSG_ERROR([You need 'patch' to apply patches.])
 fi
+AC_PATH_PROG(KLAYOUT, klayout)
+if test -z "$KLAYOUT"; then
+   AC_MSG_ERROR([You need 'klayout' to apply gds patches.])
+fi
+
 
 # Other installations (libraries or tools if applicable)
 AC_DEFUN([M4_GEN_INSTALLATION], [
