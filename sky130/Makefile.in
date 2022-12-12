@@ -147,6 +147,7 @@ SHELLOPTS := pipefail
 export SHELLOPTS
 MV = mv
 PATCH = patch
+KLAYOUT = klayout
 SED = @SED@
 
 prefix = @prefix@
@@ -568,6 +569,7 @@ ifeq (${EF_STYLE}, 1)
 	HVL_PATCH4 = 4b
 	HVL_CDL = cdl/sky130_fd_sc_hvl
 	SPIEXT = spi
+	HD_GDS = gds/sky130_fd_sc_hd
 else
 	IO_VERILOG = sky130_fd_io/verilog
 	IO_GDS = sky130_fd_io/gds
@@ -587,6 +589,7 @@ else
 	HVL_PATCH4 = 4
 	HVL_CDL = sky130_fd_sc_hvl/cdl
 	SPIEXT = spice
+	HD_GDS = sky130_fd_sc_hd/gds
 endif
 
 reference: ${TECH}.json
@@ -1434,6 +1437,12 @@ digital-hd-%:
 	${PATCH} -p1 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_VERILOG} \
 		< custom/patches/hd_wire_syntax.patch \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
+	# Apply gds patch to add missing pin labels
+	${KLAYOUT} -z \
+		-rd infile=${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_GDS}/sky130_fd_sc_hd.gds \
+		-rd patch=custom/sky130_fd_sc_hd/gds/sky130_fd_sc_hd__missing_labels_patch.gds \
+		-rd outfile=${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_GDS}/sky130_fd_sc_hd.gds \
+		-r custom/scripts/patch_gds.rb
 
 digital-hdll-%:
 	# Install all SkyWater digital standard cells.
