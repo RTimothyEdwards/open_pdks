@@ -21,7 +21,7 @@ end
 version
  version REVISION
  description "Global Foundries 180mcu: open PDK rules and DRC"
- requires magic-8.3.348
+ requires magic-8.3.352
 end
 
 #-----------------------------------------------------
@@ -1169,26 +1169,18 @@ style gdsii
 #-----------------------------------------------------
 
  layer SBLK
+	bloat-all rnd *nfet
+	bloat-all rpd *pfet
+	bloat-all mvrnd *mvnfet
+	bloat-all mvrpd *mvpfet
+	and allfets
+	grow 220
  	bloat-or allsblkdev * 0 space/a 220
  	grow 	215
  	shrink 	215
 	mask-hints SBLK
  	calma 	49 0
 
- # sblk from rdn/rdp of esd fet 
- # assume that the diff in only 0.05um
- layer SBLK rdp
-	grow 100
-	and pfet
-	grow 400
- 	calma 	49 0
-
- layer SBLK rdn
-	grow 250
-	and nfet
-	grow 400
- 	calma 	49 0
-	
 #-----------------------------------------------------
 # RESDEF MARK
 #-----------------------------------------------------
@@ -1233,7 +1225,7 @@ style gdsii
 #-----------------------------------------------------
 # MOSCAP MARK
 #-----------------------------------------------------
- layer MOSCAP nvar,mvvar,pvar,mvpvar,ncap,pcap,mvncap,mvpcap
+ layer MOSCAP nvar,mvnvar,pvar,mvpvar,ncap,pcap,mvncap,mvpcap
  calma 166 5
 
 #ifdef HRPOLY1K
@@ -4552,16 +4544,25 @@ variants *
 #
 # **The top metal may be any of metal3 to metaltp, depending on the stackup
 
- device msubcircuit pfet_03v3 pfet pdiff,pdc pdiff,pdc allnwell error l=l w=w
- device msubcircuit nfet_03v3 nfet ndiff,ndc ndiff,ndc allpsub error l=l w=w
- device msubcircuit pfet_06v0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error l=l w=w
- device msubcircuit nfet_06v0 mvnfet mvndiff,mvndc mvndiff,mvndc allpsub error l=l w=w
- device msubcircuit pfet_03v3_dss pfet pdiffres pdiffres allnwell error l=l w=w
- device msubcircuit nfet_03v3_dss nfet ndiffres ndiffres allpsub error l=l w=w
- device msubcircuit pfet_06v0_dss mvpfet mvpdiffres mvpdiffres allnwell error l=l w=w
- device msubcircuit nfet_06v0_dss mvnfet mvndiffres mvndiffres allpsub error l=l w=w
+ device msubcircuit pfet_03v3 pfet pdiff,pdc pdiff,pdc allnwell error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit nfet_03v3 nfet ndiff,ndc ndiff,ndc allpsub error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit pfet_06v0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit nfet_06v0 mvnfet mvndiff,mvndc mvndiff,mvndc allpsub error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit pfet_03v3_dss pfet pdiffres pdiffres allnwell error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit nfet_03v3_dss nfet ndiffres ndiffres allpsub error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit pfet_06v0_dss mvpfet mvpdiffres mvpdiffres allnwell error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit nfet_06v0_dss mvnfet mvndiffres mvndiffres allpsub error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit nfet_06v0_nvt mvnnfet mvndiff,mvndiffres,mvndc \
-	mvndiff,mvndiffres,mvndc allpsub error l=l w=w
+	mvndiff,mvndiffres,mvndc allpsub error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
  device subcircuit cap_nmos_03v3_b nvaractor *nndiff l=c_length w=c_width
  device subcircuit cap_nmos_06v0_b mvnvaractor *mvnndiff l=c_length w=c_width
  device subcircuit cap_pmos_03v3_b pvaractor *ppdiff l=c_length w=c_width
@@ -4625,13 +4626,13 @@ variants *
 #endif
 #endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
 
- device rsubcircuit ppolyf_s  rpps   *poly allpsub error l=r_length w=r_width
- device rsubcircuit npolyf_s  rnps   *poly allpsub error l=r_length w=r_width
- device rsubcircuit ppolyf_u  rpp    *poly allpsub error l=r_length w=r_width
- device rsubcircuit npolyf_u  rnp    *poly allpsub error l=r_length w=r_width
+ device rsubcircuit ppolyf_s  rpps   *poly allnwell,allpsub error l=r_length w=r_width
+ device rsubcircuit npolyf_s  rnps   *poly allnwell,allpsub error l=r_length w=r_width
+ device rsubcircuit ppolyf_u  rpp    *poly allnwell,allpsub error l=r_length w=r_width
+ device rsubcircuit npolyf_u  rnp    *poly allnwell,allpsub error l=r_length w=r_width
 #ifdef HRPOLY1K
- device rsubcircuit ppolyf_u_1k hires *poly allpsub error l=r_length w=r_width
- device rsubcircuit ppolyf_u_1k_6p0 mvhires *poly allpsub error l=r_length w=r_width
+ device rsubcircuit ppolyf_u_1k hires *poly allnwell,allpsub error l=r_length w=r_width
+ device rsubcircuit ppolyf_u_1k_6p0 mvhires *poly allnwell,allpsub error l=r_length w=r_width
 #endif (HRPOLY1K)
  device rsubcircuit pplus_u  rpd  *pdiff allnwell error l=r_length w=r_width
  device rsubcircuit nplus_u  rnd  *ndiff allpsub error l=r_length w=r_width
@@ -4641,11 +4642,17 @@ variants *
  device rsubcircuit nplus_u  mvndiffres *mvndiff allpsub error l=r_length w=r_width
  device rsubcircuit nwell rnw   nwell allpsub error l=r_length w=r_width
 
- device pdiode diode_pd2nw_03p3     *pdiode allnwell a=area p=pj
- device ndiode diode_nd2ps_03p3     *ndiode allpsub a=area p=pj
- device pdiode diode_pd2nw_06p0     *mvpdiode allnwell a=area p=pj
- device ndiode diode_nd2ps_06p0     *mvndiode allpsub a=area p=pj
- device ndiode diode_nd2ps_06p0_nvt *mvnndiode allpsub a=area p=pj
+ # The following absorbs the source/drain resistor into a *_dss FET device
+ device subcircuit Short mvndiffres *mvndiff mvnfet allpsub error
+ device subcircuit Short mvpdiffres *mvpdiff mvpfet allnwell error
+ device subcircuit Short ndiffres *ndiff nfet allpsub error
+ device subcircuit Short pdiffres *pdiff pfet allnwell error
+
+ device pdiode diode_pd2nw_03v3     *pdiode allnwell a=area p=pj
+ device ndiode diode_nd2ps_03v3     *ndiode allpsub a=area p=pj
+ device pdiode diode_pd2nw_06v0     *mvpdiode allnwell a=area p=pj
+ device ndiode diode_nd2ps_06v0     *mvndiode allpsub a=area p=pj
+ device ndiode diode_nd2ps_06v0_nvt *mvnndiode allpsub a=area p=pj
 
 #ifdef MIM
 #ifdef METALS6
