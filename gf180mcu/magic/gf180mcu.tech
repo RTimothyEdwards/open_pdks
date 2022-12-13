@@ -93,8 +93,16 @@ types
   active mvnsubdiffcont,mvnsubstratencontact,mvnsc
  -active obsactive
  -active mvobsactive
-  active varactor,varact,var
-  active mvvaractor,mvvaract,mvvar
+# Varactors
+  active nvaractor,nvaract,nvar
+  active pvaractor,pvaract,pvar
+  active mvnvaractor,mvnvaract,mvnvar
+  active mvpvaractor,mvpvaract,mvpvar
+# MOSCAPs
+ -active nmoscap,ncap
+ -active pmoscap,pcap
+ -active mvnmoscap,mvncap
+ -active mvpmoscap,mvpcap
 # Poly
   active polysilicon,poly,p
   active polycontact,pcontact,polycut,pc,polyc
@@ -289,12 +297,12 @@ aliases
   # Allwells contains obstruction-on-well-plane but not space-on-well-plane
   allwells         allnwell,allpwell,obswell
 
-  allnfets	   nfet,mvnfet,nnfet,mvnnfet
-  allnfetsnonnat   nfet,mvnfet
-  allpfets	   pfet,mvpfet
-  allfets	   allnfets,allpfets,varactor,mvvaractor
-  allfetsnonnat	   allnfetsnonnat,allpfets,varactor,mvvaractor
-  allfetsmv	   mvnfet,mvpfet,mvnnfet,mvvaractor
+  allnfets	   nfet,mvnfet,nnfet,mvnnfet,ncap,mvncap
+  allnfetsnonnat   nfet,mvnfet,ncap,mvncap
+  allpfets	   pfet,mvpfet,pcap,mvpcap
+  allfets	   allnfets,allpfets,nvaractor,mvnvaractor,pvaractor,mvpvaractor
+  allfetsnonnat	   allnfetsnonnat,allpfets,nvaractor,mvnvaractor,pvaractor,mvpvaractor
+  allfetsmv	   mvnfet,mvpfet,mvnnfet,mvnvaractor,mvpvaractor,mvncap,mvpcap
 
   allnactivenonfet *ndiff,*nsd,*ndiode,*nndiode,*mvndiff,*mvnsd,*mvndiode,*mvnndiode
   allnactive	   allnactivenonfet,allnfets
@@ -307,15 +315,15 @@ aliases
 
   allactiveres	   ndiffres,pdiffres,mvndiffres,mvpdiffres
 
-  allndifflv       *ndif,*nsd,*ndiode,*nndiode,ndiffres,nfet,nnfet
-  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet
+  allndifflv       *ndif,*nsd,*ndiode,*nndiode,ndiffres,nfet,nnfet,ncap
+  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,pcap
   alldifflv        allndifflv,allpdifflv
   allndifflvnonfet *ndif,*nsd,*ndiode,*nndiode,ndiffres
   allpdifflvnonfet *pdif,*psd,*pdiode,pdiffres
   alldifflvnonfet  allndifflvnonfet,allpdifflvnonfet
 
-  allndiffmv       *mvndif,*mvnsd,*mvndiode,mvndiffres,mvnfet,mvnnfet,mvvaractor,*mvnndiode
-  allpdiffmv       *mvpdif,*mvpsd,*mvpdiode,mvpdiffres,mvpfet
+  allndiffmv       *mvndif,*mvnsd,*mvndiode,mvndiffres,mvnfet,mvnnfet,mvnvaractor,*mvnndiode,mvncap
+  allpdiffmv       *mvpdif,*mvpsd,*mvpdiode,mvpdiffres,mvpfet,mvpvaractor,mvpcap
   alldiffmv        allndiffmv,allpdiffmv
   allndiffmvnonfet *mvndif,*mvnsd,*mvndiode,mvndiffres,*mvnndiode
   allpdiffmvnonfet *mvpdif,*mvpsd,*mvpdiode,mvpdiffres
@@ -323,10 +331,6 @@ aliases
 
   alldiffnonfet	   alldifflvnonfet,alldiffmvnonfet
   alldiff	   alldifflv,alldiffmv
-
-  allnactivenonhv  nfet,mvnfet,nnfet,mvnnfet,varactor,mvvaractor,*ndiff,*mvndiff,*nsd,*mvnsd,*ndiode,*nndiode,*mvndiode,*mvnndiode
-  allpactivenonhv  pfet,mvpfet,*pdiff,*mvpdiff,*psd,*mvpsd,*pdiode,*mvpdiode
-  allactivenonhv   allnactivenonhv,allpactivenonhv
 
 #ifdef HRPOLY1K
   allpolyres	   rpp,rnp,rpps,rnps,hires,mvhires
@@ -413,11 +417,14 @@ styles
   nfet      ntransistor    ntransistor_stripes
   nnfet     ntransistor    ndiff_in_nwell
   pfet      ptransistor    ptransistor_stripes
-  var       polysilicon    ndiff_in_nwell
+  nvar      polysilicon    ndiff_in_nwell
+  pvar      polysilicon    pdiff_in_pwell
   ndc       ndiffusion     metal1  contact_X'es
   pdc       pdiffusion     metal1  contact_X'es
   nsc       ndiff_in_nwell metal1  contact_X'es
   psc       pdiff_in_pwell metal1  contact_X'es
+  ncap      ntransistor    ntransistor_stripes
+  pcap      ptransistor    ptransistor_stripes
 
   mvndiff     ndiffusion     hvndiff_mask
   mvpdiff     pdiffusion     hvpdiff_mask
@@ -426,11 +433,14 @@ styles
   mvnfet      ntransistor    ntransistor_stripes hvndiff_mask
   mvnnfet     ntransistor    ndiff_in_nwell hvndiff_mask
   mvpfet      ptransistor    ptransistor_stripes
-  mvvar       polysilicon    ndiff_in_nwell hvndiff_mask
+  mvnvar      polysilicon    ndiff_in_nwell hvndiff_mask
+  mvpvar      polysilicon    pdiff_in_pwell hvpdiff_mask
   mvndc       ndiffusion     metal1  contact_X'es hvndiff_mask
   mvpdc       pdiffusion     metal1  contact_X'es hvpdiff_mask
   mvnsc       ndiff_in_nwell metal1  contact_X'es hvndiff_mask
   mvpsc       pdiff_in_pwell metal1  contact_X'es hvpdiff_mask
+  mvncap      ntransistor    ntransistor_stripes hvndiff_mask
+  mvpcap      ptransistor    ptransistor_stripes
 
   poly      polysilicon 
   pc        polysilicon    metal1  contact_X'es
@@ -561,11 +571,13 @@ end
 compose
   compose  nfet  poly  ndiff
   compose  pfet  poly  pdiff
-  compose  var   poly  nsd
+  compose  nvar  poly  nsd
+  compose  pvar  poly  psd
 
   compose  mvnfet  poly  mvndiff
   compose  mvpfet  poly  mvpdiff
-  compose  var     poly  mvnsd
+  compose  mvnvar  poly  mvnsd
+  compose  mvpvar  poly  mvpsd
   
 #ifdef MIM
 #ifdef METALS3
@@ -752,7 +764,7 @@ style gdsii
 	# implemented for all contacts, so the Calibre rule is being followed.
         bloat-or nsc,mvnsc * 95
         bloat-or *nsd,*mvnsd * 20 allpactivenonfet 0
-	bloat-or allnfets,var,mvvar * 230
+	bloat-or allnfets,nvar,mvnvar * 230
 	or shortntap,shortdntap
 	grow 	200 
 	shrink 200
@@ -796,19 +808,16 @@ style gdsii
 	grow 200
 	and-not RESDEF
 #endif (HRPOLY1K)
-        bloat-or  *pdif,*pdiode,pdiffres,pfet,*mvpdif,*mvpdiode,mvpdiffres,mvpfet * 160 allnactivenonfet 0
+        bloat-or  *pdif,*pdiode,pdiffres,pfet,pcap,*mvpdif,*mvpdiode,mvpdiffres,mvpfet,mvpcap * 160 allnactivenonfet 0
         # NOTE:  Rule CO.5b applies to butted contacts but Calibre rule is
 	# implemented for all contacts, so the Calibre rule is being followed.
         bloat-or psc,mvpsc * 95
         bloat-or *psd,*mvpsd * 20 allnactivenonfet 0
-	bloat-or allpfets * 230
+	bloat-or allpfets,pvar,mvpvar * 230
 	or shortptap,shortdptap
 	grow	200
 	shrink	200
 	calma	31 0
- 
- templayer varactive
- bloat-all var *nsd
 
 #-----------------------------------------------------
 # DUALGATE (thickox)
@@ -1218,7 +1227,7 @@ style gdsii
 #-----------------------------------------------------
 # MOSCAP MARK
 #-----------------------------------------------------
- layer MOSCAP var,mvvar
+ layer MOSCAP nvar,mvvar,pvar,mvpvar,ncap,pcap,mvncap,mvpcap
  calma 166 5
 
 #ifdef HRPOLY1K
@@ -1569,7 +1578,6 @@ style  import
  options ignore-unknown-layer-labels options no-reconnect-labels 
 
  ignore BJTDEF
- ignore MOSCAP
  ignore SRAMDEF
  ignore FET5VDEF
  ignore CAPDEF
@@ -1738,6 +1746,11 @@ style  import
  and POLY
 
  layer pfet pfetarea
+ and-not MOSCAP
+ labels DIFF
+
+ layer pcap pfetarea
+ and MOSCAP
  labels DIFF
 
  templayer pfetexpand pfetarea
@@ -1774,6 +1787,11 @@ style  import
  and POLY
 
  layer mvpfet mvpfetarea
+ and-not MOSCAP
+ labels DIFF
+
+ layer mvpcap mvpfetarea
+ and MOSCAP
  labels DIFF
 
  templayer mvpfetexpand mvpfetarea
@@ -1801,6 +1819,17 @@ style  import
  and-not NWELL
  and NPLUS
  and-not NAT
+ and-not MOSCAP
+ labels DIFF
+
+ layer ncap DIFF
+ and POLY
+ and-not PPLUS
+ and-not DUALGATE
+ and-not NWELL
+ and NPLUS
+ and-not NAT
+ and MOSCAP
  labels DIFF
 
  layer nnfet DIFF
@@ -1811,7 +1840,6 @@ style  import
  and NPLUS
  and NAT
  labels DIFF
-
 
  templayer nsdarea DIFF
  and NPLUS
@@ -1867,6 +1895,17 @@ style  import
  and-not NAT
  and-not NWELL
  and DUALGATE
+ and-not MOSCAP
+ labels DIFF
+
+ layer mvncap DIFF
+ and POLY
+ and-not PPLUS
+ and NPLUS
+ and-not NAT
+ and-not NWELL
+ and DUALGATE
+ and MOSCAP
  labels DIFF
 
  layer mvnnfet DIFF
@@ -2550,17 +2589,31 @@ style  import
 
 # MOS Varactors
 
- layer var POLY
+ layer nvar POLY
  and DIFF
  and NPLUS
  and NWELL
  and-not DUALGATE
  labels POLY
 
- layer mvvar POLY
+ layer mvnvar POLY
  and DIFF
  and NPLUS
  and NWELL
+ and DUALGATE
+ labels POLY
+
+ layer pvar POLY
+ and DIFF
+ and PPLUS
+ and-not NWELL
+ and-not DUALGATE
+ labels POLY
+
+ layer mvpvar POLY
+ and DIFF
+ and PPLUS
+ and-not NWELL
  and DUALGATE
  labels POLY
 
@@ -2725,14 +2778,14 @@ drc
  width alldiffmv 300 "Diffusion width < %d (DF.1a)"
  area alldifflv 202500 220 "Diffusion minimum area < %a (DF.9)"
  area alldiffmv 202500 300 "Diffusion minimum area < %a (DF.9)"
- spacing alldifflv,var alldifflv,var 280 touching_ok \
+ spacing alldifflv,nvar,pvar alldifflv,nvar,pvar 280 touching_ok \
 	"Diffusion spacing < %d (DF.3a)"
- spacing alldiffmv,mvvar alldiffmv,mvvar 360 touching_ok \
+ spacing alldiffmv,mvnvar,mvpvar alldiffmv,mvnvar,mvpvar 360 touching_ok \
 	"Diffusion spacing < %d (DF.3a)"
 
- spacing *ndiff,*ndiode,nfet,nnfet allnwell 430 touching_illegal \
+ spacing *ndiff,*ndiode,nfet,nnfet,ncap allnwell 430 touching_illegal \
 	"N-Diffusion spacing to N-well < %d (DF.8)"
- spacing *mvndiff,*mvndiode,mvnfet,mvnnfet allnwell 600 touching_illegal \
+ spacing *mvndiff,*mvndiode,mvnfet,mvncap,mvnnfet allnwell 600 touching_illegal \
 	"N-Diffusion spacing to N-well < %d (DF.8)"
  spacing *psd allnwell 120 touching_illegal \
 	"P-Ohmic spacing to N-well < %d (DF.5)"
@@ -2742,9 +2795,9 @@ drc
 	"N-well overlap of N-Ohmic < %d (DF.4a)"
  surround *mvnsd allnwell 160 absence_illegal \
 	"N-well overlap of N-Ohmic < %d (DF.4a)"
- surround *pdiff,*pdiode,pfet allnwell 430 absence_illegal \
+ surround *pdiff,*pdiode,pfet,pcap allnwell 430 absence_illegal \
 	"N-well overlap of P-Diffusion < %d (DF.7)"
- surround *mvpdiff,*mvpdiode,mvpfet allnwell 600 absence_illegal \
+ surround *mvpdiff,*mvpdiode,mvpfet,mvpcap allnwell 600 absence_illegal \
 	"N-well overlap of P-Diffusion < %d (DF.7)"
  surround *psd pwell 120 absence_ok \
 	"P-field overlap of P-Ohmic < %d (DF.5)"
@@ -2765,11 +2818,11 @@ drc
 	"Poly spacing to diffusion < %d (PL.5a)"
  spacing allpolynonfet alldiffmvnonfet 300 corner_ok allfets \
 	"Poly spacing to MV diffusion < %d (PL.5a)
- overhang *ndiff,rndiff nfet,nnfet 230 "N-Diffusion overhang of nmos < %d (DF.6)"
- overhang *mvndiff,mvrndiff mvnfet,mvnnfet 230 \
+ overhang *ndiff,rndiff nfet,nnfet,ncap 230 "N-Diffusion overhang of nmos < %d (DF.6)"
+ overhang *mvndiff,mvrndiff mvnfet,mvncap,mvnnfet 230 \
 	"N-Diffusion overhang of nmos < %d (DF.6)"
- overhang *pdiff,rpdiff pfet 230 "P-Diffusion overhang of pmos < %d (DF.6)"
- overhang *mvpdiff,mvrpdiff mvpfet 230 "P-Diffusion overhang of pmos < %d (DF.6)"
+ overhang *pdiff,rpdiff pfet,pcap 230 "P-Diffusion overhang of pmos < %d (DF.6)"
+ overhang *mvpdiff,mvrpdiff mvpfet,mvpcap 230 "P-Diffusion overhang of pmos < %d (DF.6)"
  overhang *poly allfetsnonnat 220 "Poly overhang of transistor < %d (PL.4)"
  overhang *poly nnfet,mvnnfet 350 "Poly overhang of NAT transistor < %d (NAT.6)"
 
@@ -3176,25 +3229,27 @@ variants *
  extend mvnnfet *mvndiff 1200 exclusive "MV nn Transistor length < %d (NAT.4)"
  width mvnnfet 400 "MV nn Transistor width < %d (DF.2c)"
 
- extend pfet *pdiff 280 exclusive "Transistor length < %d (PL.1a)"
- extend nfet *ndiff 280 exclusive "Transistor length < %d (PL.1a)"
- width pfet 300 angles "Bent Transistor length < %d (PL.7)"
- width nfet 300 angles "Bent Transistor length < %d (PL.7)"
+ extend pfet,pcap *pdiff 280 exclusive "Transistor length < %d (PL.1a)"
+ extend nfet,pcap *ndiff 280 exclusive "Transistor length < %d (PL.1a)"
+ width pfet,pcap 300 angles "Bent Transistor length < %d (PL.7)"
+ width nfet,pcap 300 angles "Bent Transistor length < %d (PL.7)"
 
- extend mvpfet *mvpdiff 500 exclusive "MV Transistor length < %d (PL.1a)"
- extend mvnfet *mvndiff 600 exclusive "MV Transistor length < %d (PL.1a)"
- width mvpfet 700 angles "Bent MV Transistor length < %d (PL.7)"
- width mvnfet 700 angles "Bent MV Transistor length < %d (PL.7)"
+ extend mvpfet,mvpcap *mvpdiff 500 exclusive "MV Transistor length < %d (PL.1a)"
+ extend mvnfet,mvpcap *mvndiff 600 exclusive "MV Transistor length < %d (PL.1a)"
+ width mvpfet,mvpcap 700 angles "Bent MV Transistor length < %d (PL.7)"
+ width mvnfet,mvpcap 700 angles "Bent MV Transistor length < %d (PL.7)"
 
  # NOTE:  Use edge4way to deal with butted junctions
- # spacing *nsd,*mvnsd pfet,mvnnfet,mvpfet 330 touching_illegal \
+ # spacing *nsd,*mvnsd pfet,pcap,mvnnfet,mvpfet,mvpcap 330 touching_illegal \
  #	"n-ohmic spacing to PMOS gate < %d (NP.4b)"
- # spacing *psd,*mvpsd nfet,nnfet,mvnfet 330 touching_illegal \
+ # spacing *psd,*mvpsd nfet,ncap,nnfet,mvnfet,mvncap 330 touching_illegal \
  #	"p-ohmic spacing to NMOS gate < %d (NP.4c)"
 
- edge4way pfet,mvnnfet,mvpfet *poly/a 330 ~(*nsd,*mvnsd)/a (*pdiff,*mvpdiff)/a 300 \
+ edge4way pfet,pcap,mvnnfet,mvpfet,mvpcap *poly/a 330 \
+	~(*nsd,*mvnsd)/a (*pdiff,*mvpdiff)/a 300 \
 	"n-ohmic spacing to PMOS gate < %d (NP.4b + PP.4c)"
- edge4way nfet,nnfet,mvnfet *poly/a 330 ~(*psd,*mvpsd)/a (*ndiff,*mvndiff)/a 300 \
+ edge4way nfet,ncap,nnfet,mvnfet,mvncap *poly/a 330 \
+	~(*psd,*mvpsd)/a (*ndiff,*mvndiff)/a 300 \
 	"p-ohmic spacing to NMOS gate < %d (PP.4b + NP.4c)"
 
  # Butting junction rules (flag p/nsd distance to butting junction < 0.03um)
@@ -3258,13 +3313,22 @@ variants *
 # MOS Varactor device rules
 #------------------------------------
 
- overhang *nsd var 320 \
+ overhang *nsd nvar 320 \
 	"N-Ohmic overhang of Varactor < %d (FIXME)"
 
- overhang *mvnsd mvvar 320 \
+ overhang *mvnsd mvnvar 320 \
 	"N-Ohmic overhang of Varactor < %d (FIXME)"
 
- width var,mvvar 1000 \
+ width nvar,mvnvar 1000 \
+	"Varactor length and width < %d (DF.1c)"
+
+ overhang *psd pvar 320 \
+	"P-Ohmic overhang of Varactor < %d (FIXME)"
+
+ overhang *mvpsd mvpvar 320 \
+	"P-Ohmic overhang of Varactor < %d (FIXME)"
+
+ width pvar,mvpvar 1000 \
 	"Varactor length and width < %d (DF.1c)"
 
 #ifdef MIM
@@ -4488,8 +4552,14 @@ variants *
  device msubcircuit nfet_06v0_dss mvnfet mvndiffres mvndiffres allpsub error l=l w=w
  device msubcircuit nfet_06v0_nvt mvnnfet mvndiff,mvndiffres,mvndc \
 	mvndiff,mvndiffres,mvndc allpsub error l=l w=w
- device subcircuit cap_nmos_03v3 varactor *nndiff allnwell error l=l w=w
- device subcircuit cap_nmos_06v0 mvvaractor *mvnndiff allnwell error l=l w=w
+ device subcircuit cap_nmos_03v3_b nvaractor *nndiff l=c_length w=c_width
+ device subcircuit cap_nmos_06v0_b mvnvaractor *mvnndiff l=c_length w=c_width
+ device subcircuit cap_pmos_03v3_b pvaractor *ppdiff l=c_length w=c_width
+ device subcircuit cap_pmos_06v0_b mvpvaractor *mvppdiff l=c_length w=c_width
+ device subcircuit cap_pmos_03v3 pcap pdiff,pdc l=c_length w=c_width
+ device subcircuit cap_nmos_03v3 ncap ndiff,ndc l=c_length w=c_width
+ device subcircuit cap_pmos_06v0 mvpcap mvpdiff,mvpdc l=c_length w=c_width
+ device subcircuit cap_nmos_06v0 mvncap mvndiff,mvndc l=c_length w=c_width
 
  device rsubcircuit rm1 rm1 *m1 l=r_length w=r_width
  device rsubcircuit rm2 rm2 *m2 l=r_length w=r_width

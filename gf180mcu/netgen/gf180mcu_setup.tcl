@@ -52,20 +52,26 @@ lappend devices ppolyf_u_2k_6p0
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
-	property "-circuit1 $dev" parallel enable
-	property "-circuit1 $dev" serial enable
 	permute "-circuit1 $dev" 1 2
-	property "-circuit1 $dev" merge {l ser_critical} {w add_critical}
-	property "-circuit1 $dev" tolerance {l 0.01} {w 0.01}
+	property "-circuit1 $dev" series enable
+	property "-circuit1 $dev" series {r_width critical}
+	property "-circuit1 $dev" series {r_length add}
+	property "-circuit1 $dev" parallel enable
+	property "-circuit1 $dev" parallel {r_length critical}
+	property "-circuit1 $dev" parallel {r_width add}
+	property "-circuit1 $dev" tolerance {r_length 0.01} {r_width 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete par1 pm
     }
     if {[lsearch $cells2 $dev] >= 0} {
-	property "-circuit2 $dev" parallel enable
-	property "-circuit2 $dev" serial enable
 	permute "-circuit2 $dev" 1 2
-	property "-circuit2 $dev" merge {l ser_critical} {w add_critical}
-	property "-circuit2 $dev" tolerance {l 0.01} {w 0.01}
+	property "-circuit2 $dev" series enable
+	property "-circuit2 $dev" series {r_width critical}
+	property "-circuit2 $dev" series {r_length add}
+	property "-circuit2 $dev" parallel enable
+	property "-circuit2 $dev" parallel {r_length critical}
+	property "-circuit2 $dev" parallel {r_width add}
+	property "-circuit2 $dev" tolerance {r_length 0.01} {r_width 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete par1 pm
     }
@@ -99,16 +105,26 @@ lappend devices rmtk
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
-	property "-circuit1 $dev" parallel enable
 	permute "-circuit1 $dev" 1 2
-	property "-circuit1 $dev" tolerance {l 0.01} {w 0.01}
+	property "-circuit1 $dev" series enable
+	property "-circuit1 $dev" series {r_width critical}
+	property "-circuit1 $dev" series {r_length add}
+	property "-circuit1 $dev" parallel enable
+	property "-circuit1 $dev" parallel {r_length critical}
+	property "-circuit1 $dev" parallel {r_width add}
+	property "-circuit1 $dev" tolerance {r_length 0.01} {r_width 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete par1 pm
     }
     if {[lsearch $cells2 $dev] >= 0} {
-	property "-circuit2 $dev" parallel enable
 	permute "-circuit2 $dev" 1 2
-	property "-circuit2 $dev" tolerance {l 0.01} {w 0.01}
+	property "-circuit2 $dev" series enable
+	property "-circuit2 $dev" series {r_width critical}
+	property "-circuit2 $dev" series {r_length add}
+	property "-circuit2 $dev" parallel enable
+	property "-circuit2 $dev" parallel {r_length critical}
+	property "-circuit2 $dev" parallel {r_width add}
+	property "-circuit2 $dev" tolerance {r_length 0.01} {r_width 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete par1 pm
     }
@@ -123,23 +139,88 @@ lappend devices nfet_03v3
 lappend devices pfet_03v3
 lappend devices nfet_06v0
 lappend devices pfet_06v0
-lappend devices cap_nmos_03v3
-lappend devices cap_nmos_06v0
+lappend devices nfet_06v0_nvt
+
+foreach dev $devices {
+    if {[lsearch $cells1 $dev] >= 0} {
+	permute "-circuit1 $dev" 1 3
+	property "-circuit1 $dev" parallel enable
+	property "-circuit1 $dev" parallel {l critical}
+	property "-circuit1 $dev" parallel {w add}
+	property "-circuit1 $dev" tolerance {w 0.01} {l 0.01}
+	# Ignore these properties
+	property "-circuit2 $dev" delete par1 NRD NRS
+    }
+    if {[lsearch $cells2 $dev] >= 0} {
+	permute "-circuit2 $dev" 1 3
+	property "-circuit2 $dev" parallel enable
+	property "-circuit2 $dev" parallel {l critical}
+	property "-circuit2 $dev" parallel {w add}
+	property "-circuit2 $dev" tolerance {w 0.01} {l 0.01}
+	# Ignore these properties
+	property "-circuit2 $dev" delete par1 NRD NRS
+    }
+}
+
+#-------------------------------------------
+# (MOS) transistors asymmetric source/drain
+#-------------------------------------------
+
+set devices {}
+lappend devices nfet_03v3_dss
+lappend devices pfet_03v3_dss
+lappend devices nfet_06v0_dss
+lappend devices pfet_06v0_dss
+lappend devices nfet_10v0_asym
+lappend devices pfet_10v0_asym
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
 	property "-circuit1 $dev" parallel enable
-	permute "-circuit1 $dev" 1 3
-	property "-circuit1 $dev" merge {w add_critical}
+	property "-circuit1 $dev" parallel {l critical}
+	property "-circuit1 $dev" parallel {w add}
 	property "-circuit1 $dev" tolerance {w 0.01} {l 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete par1 NRD NRS
     }
     if {[lsearch $cells2 $dev] >= 0} {
 	property "-circuit2 $dev" parallel enable
-	permute "-circuit2 $dev" 1 3
-	property "-circuit2 $dev" merge {w add_critical}
+	property "-circuit2 $dev" parallel {l critical}
+	property "-circuit2 $dev" parallel {w add}
 	property "-circuit2 $dev" tolerance {w 0.01} {l 0.01}
+	# Ignore these properties
+	property "-circuit2 $dev" delete par1 NRD NRS
+    }
+}
+
+#-------------------------------------------
+# MOSCAP capacitors and varactors
+#-------------------------------------------
+
+set devices {}
+lappend devices cap_nmos_03v3
+lappend devices cap_nmos_06v0
+lappend devices cap_pmos_03v3
+lappend devices cap_pmos_06v0
+lappend devices cap_nmos_03v3_b
+lappend devices cap_nmos_06v0_b
+lappend devices cap_pmos_03v3_b
+lappend devices cap_pmos_06v0_b
+
+foreach dev $devices {
+    if {[lsearch $cells1 $dev] >= 0} {
+	property "-circuit1 $dev" parallel enable
+	property "-circuit1 $dev" parallel {c_length critical}
+	property "-circuit1 $dev" parallel {c_width add}
+	property "-circuit1 $dev" tolerance {c_width 0.01} {c_length 0.01}
+	# Ignore these properties
+	property "-circuit2 $dev" delete par1 NRD NRS
+    }
+    if {[lsearch $cells2 $dev] >= 0} {
+	property "-circuit2 $dev" parallel enable
+	property "-circuit2 $dev" parallel {c_length critical}
+	property "-circuit2 $dev" parallel {c_width add}
+	property "-circuit2 $dev" tolerance {c_width 0.01} {c_length 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete par1 NRD NRS
     }
@@ -156,6 +237,9 @@ lappend devices diode_nd2ps_6p0
 lappend devices diode_pd2nw_6p0
 lappend devices diode_nw2pw_3p3
 lappend devices diode_nw2pw_6p0
+lappend devices diode_dnw2pw
+lappend devices diode_dnw2ps
+lappend devices sc_diode
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -163,14 +247,14 @@ foreach dev $devices {
 	property "-circuit1 $dev" merge {area add_critical}
 	property "-circuit1 $dev" tolerance {area 0.02}
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1 peri
+	property "-circuit2 $dev" delete par1 pj
     }
     if {[lsearch $cells2 $dev] >= 0} {
 	property "-circuit2 $dev" parallel enable
 	property "-circuit2 $dev" merge {area add_critical}
 	property "-circuit2 $dev" tolerance {area 0.02}
 	# Ignore these properties
-	property "-circuit2 $dev" delete par1 peri
+	property "-circuit2 $dev" delete par1 pj
     }
 }
 
