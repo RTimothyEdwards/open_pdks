@@ -675,6 +675,12 @@ style gdsii
 	calma	12 0
 
 #-----------------------------------------------------
+# SUBCUT
+#-----------------------------------------------------
+ layer SUBCUT	isosub
+	calma	23 5
+
+#-----------------------------------------------------
 # NWELL
 #-----------------------------------------------------
  layer NWELL 	allnwell
@@ -1594,6 +1600,9 @@ style  import
 
  layer dnwell DNWELL
  labels DNWELL
+
+ layer isosub SUBCUT
+ labels SUBCUT
 
  templayer ndiffarea DIFF
  and-not POLY
@@ -2622,6 +2631,7 @@ style  import
  calma NWELLTXT 21 10
  calma PWELL 204 0
  calma PWELLTXT 204 10
+ calma SUBCUT 23 5
  calma DIFF 22 0
  calma DIFFFILL 22 4
  calma POLY 30 0
@@ -3582,7 +3592,7 @@ variants ()
 # See document 180MCU_YI-141-EP059-01_10.pdf
 
  resist (nwell,dnwell)/well      1000000
- resist (pwell)/well	 	 3250000
+ resist (pwell,isosub)/well 	 3250000
 
  resist (*ndiff,nsd)/active 	  6300
  resist (*pdiff,*psd)/active	  7000
@@ -3686,7 +3696,7 @@ variants (hrhc),(hrlc)
  # High-end corner resistances (milliohms per square)
 
  resist (nwell,dnwell)/well      1200000
- resist (pwell)/well	 	 3250000
+ resist (pwell,isosub)/well 	 3250000
 
  resist (*ndiff,nsd)/active 	 15000
  resist (*pdiff,*psd)/active	 15000
@@ -3790,7 +3800,7 @@ variants (lrhc),(lrlc)
  # Low-end corner resistances (milliohms per square)
 
  resist (nwell,dnwell)/well       800000
- resist (pwell)/well	 	 3250000
+ resist (pwell,isosub)/well 	 3250000
 
  resist (*ndiff,nsd)/active 	  1000
  resist (*pdiff,*psd)/active	  1000
