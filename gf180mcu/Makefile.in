@@ -994,6 +994,8 @@ io-%:
 		-liberty cells/*/*_tt_025C_5v00.lib compile-only \
                         header=liberty/gf180mcu_fd_io__tt_025C_5v00.lib \
 			rename=gf180mcu_fd_io__tt_025C_5v00 \
+		-spice cells/*/*.cdl compile-only \
+			filter=custom/scripts/convert_io_cdl.py \
 		-gds cells/*/*_${$*_STACK}.gds compile-only \
 			options=custom/scripts/gds_import_io.tcl \
 		-lef cells/*/*_${$*_STACK}.lef \
