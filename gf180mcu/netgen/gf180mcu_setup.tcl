@@ -130,9 +130,11 @@ foreach dev $devices {
     }
 }
 
-#-------------------------------------------
+#------------------------------------------------------------------
 # (MOS) transistors
-#-------------------------------------------
+# (NOTE:  _dss devices are treated as symmetric because the
+#  salicide block is present on both sides of the gate.)
+#------------------------------------------------------------------
 
 set devices {}
 lappend devices nfet_03v3
@@ -140,6 +142,10 @@ lappend devices pfet_03v3
 lappend devices nfet_06v0
 lappend devices pfet_06v0
 lappend devices nfet_06v0_nvt
+lappend devices nfet_03v3_dss
+lappend devices pfet_03v3_dss
+lappend devices nfet_06v0_dss
+lappend devices pfet_06v0_dss
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -171,10 +177,6 @@ foreach dev $devices {
 #-------------------------------------------
 
 set devices {}
-lappend devices nfet_03v3_dss
-lappend devices pfet_03v3_dss
-lappend devices nfet_06v0_dss
-lappend devices pfet_06v0_dss
 lappend devices nfet_10v0_asym
 lappend devices pfet_10v0_asym
 

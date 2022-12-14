@@ -1,6 +1,6 @@
 # Set GDS import styles as needed to deal with the I/O cells.
+# NOTE: "gds polygon subcells true" removed since magic v. 8.3.352
+# no longer has the issue of slow reads of complex polygons.
 gds ordering on
-gds polygon subcells true
 gds flatten true
 gds flatglob *_CDNS_*
-# gds noduplicates true
