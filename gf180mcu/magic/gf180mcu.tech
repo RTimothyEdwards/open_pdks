@@ -21,7 +21,7 @@ end
 version
  version REVISION
  description "Global Foundries 180mcu: open PDK rules and DRC"
- requires magic-8.3.352
+ requires magic-8.3.353
 end
 
 #-----------------------------------------------------
@@ -4553,13 +4553,13 @@ variants *
  device msubcircuit nfet_06v0 mvnfet mvndiff,mvndc mvndiff,mvndc allpsub error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit pfet_03v3_dss pfet pdiffres pdiffres allnwell error \
-	l=l w=w a1=as p1=ps a2=ad p2=pd
+	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
  device msubcircuit nfet_03v3_dss nfet ndiffres ndiffres allpsub error \
-	l=l w=w a1=as p1=ps a2=ad p2=pd
+	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
  device msubcircuit pfet_06v0_dss mvpfet mvpdiffres mvpdiffres allnwell error \
-	l=l w=w a1=as p1=ps a2=ad p2=pd
+	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
  device msubcircuit nfet_06v0_dss mvnfet mvndiffres mvndiffres allpsub error \
-	l=l w=w a1=as p1=ps a2=ad p2=pd
+	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
  device msubcircuit nfet_06v0_nvt mvnnfet mvndiff,mvndiffres,mvndc \
 	mvndiff,mvndiffres,mvndc allpsub error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd
