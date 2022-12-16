@@ -5,7 +5,7 @@
 #	directory, untar it, and remove the tarball file.  If the URL is
 #	a repository and not a file, then clone it.
 #
-#	Usage:  download.sh <url> <target_dir> [<strip>]
+#	Usage:  download.sh <url> <target_dir> [<strip>|<commit>|<tag>]
 #
 # where:
 #
@@ -19,6 +19,8 @@
 #	<strip> is the number of directory levels to strip off the front of the
 #		tarball contents.  Defaults to 1 if not specified (only
 #		applicable if <url> points to a tarball).
+#	<commit> or <tag> is a specific reference commit to clone.  If the
+#		<url> is not a git repository, then this option has no effect.
 #
 
 # Check if <url> points to a tarball or a repository (note:  this assumes
@@ -68,7 +70,14 @@ else
 
     if type "git" > /dev/null; then
         echo "Cloning $1 to $2"
-        git clone --depth 1 $1 $2
+    	if [ $# -gt 2 ]; then
+            # git clone $1 $2
+	    # git checkout $3
+	    git clone --branch $3 --single-branch $1 $2
+	else
+            git clone --depth 1 $1 $2
+    	fi
+
     else
         echo "ERROR: \"git\" is required to automatically install tools."
         exit 1

@@ -157,6 +157,8 @@ GF180MCU_SC_9T5V0_PATH = @GF180MCU_FD_SC_MCU9T5V0_PATH@
 GF180MCU_SRAM_PATH = @GF180MCU_FD_IP_SRAM_PATH@
 GF180MCU_OSU_SC_PATH = @GF180MCU_OSU_SC_PATH@
 
+USE_REFERENCE = @USE_REFERENCE@
+
 # Path to GF180MCU library sources
 PDK_URL = https://github.com/google
 OSU_URL = https://github.com/stineje
@@ -428,6 +430,8 @@ ifneq (${XCIRCUIT_DISABLED}, 1)
         TOOLS += xcircuit
 endif
 
+all: $(foreach var, ${VARIANTS}, all-$(var))
+
 reference: ${TECH}.json
 	# Rewrite the ${TECH}.json file to change the commit values in
 	# "reference" to reflect the state of the system when  "make
@@ -435,8 +439,6 @@ reference: ${TECH}.json
 	# repository to create a known reference configuration of all
 	# tools.
 	../common/save_commit_refs.py ${COMMIT_DEFS} ${TECH}.json
-
-all: $(foreach var, ${VARIANTS}, all-$(var))
 
 # Handle prerequisites
 prerequisites: pr-repo io-repo sc-7t-repo sc-9t-repo sram-repo osu-sc-repo
@@ -821,6 +823,8 @@ digital-9t5v0-%:
 			filter=custom/scripts/fix_related_bias_pins.py \
                         header=liberty/gf180mcu_fd_sc_mcu9t5v0__tt_025C_5v00.lib \
 			rename=gf180mcu_fd_sc_mcu9t5v0__tt_025C_5v00 \
+		-spice cells/*/*.cdl compile-only \
+			filter=custom/scripts/convert_sc_cdl.py \
 		-gds cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_sc.tcl \
 			filter=custom/scripts/fix_stdcell_gds.py \
@@ -834,6 +838,7 @@ digital-9t5v0-%:
 	# Create minimum/maximum technology LEF files
 	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${GF180MCU$*} \
 		-library=9t5v0 2>&1 | tee -a ${GF180MCU$*}_make.log || true
+
 digital-7t5v0-%:
         # Install 5V 7-track digital standard cells from vendor files
 	${STAGE} -source ${GF180MCU_SC_7T5V0_PATH} \
@@ -902,6 +907,8 @@ digital-7t5v0-%:
 			filter=custom/scripts/fix_related_bias_pins.py \
 			header=liberty/gf180mcu_fd_sc_mcu7t5v0__tt_025C_5v00.lib \
 			rename=gf180mcu_fd_sc_mcu7t5v0__tt_025C_5v00 \
+		-spice cells/*/*.cdl compile-only \
+			filter=custom/scripts/convert_sc_cdl.py \
 		-gds cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_sc.tcl \
 			filter=custom/scripts/fix_stdcell_gds.py \
@@ -919,34 +926,32 @@ digital-7t5v0-%:
 digital-osu-%:
         # Install OSU 3.3V digital standard cells from vendor files
 	# NOTE: Work in progress (to be completed)
-	${STAGE} -source ${GF180MCU_OSU_SC_PATH} \
+	${STAGE} -source ${GF180MCU_OSU_SC_PATH}/gf180mcu_osu_sc_gp9t3v3 \
 		-target ${STAGING_PATH}/${GF180MCU$*} \
-		-techlef lib/9T/tlef/gf180mcu_*_tech.lef \
-			rename=gf180mcu_osu_sc_9T.tlef \
-		-liberty lib/9T/lib/gf180mcu_9T_TT_3P3_25C*.lib \
-			rename=gf180mcu_osu_sc_9T__tt_025C_3v30 \
-		-verilog lib/9T/verilog/*.v \
-			rename=gf180mcu_osu_sc_9T \
-		-lef lib/9T/lef/*.lef \
-		-gds lib/9T/*/*.gds compile-only \
-		-spice lib/9T/*/*.spice compile-only \
-		-xschem lib/9T/*/*.sch \
-		-library digital gf180mcu_osu_sc_9T 2>&1 | \
+		-techlef ../tlef/gf180mcu_5LM_1TM_9K_9t.tlef \
+			rename=gf180mcu_fd_sc_mcu7t5v0__nom.tlef \
+		-liberty lib/gf180mcu_osu_sc_gp9t3v3_TT_3P3_25C.ccs.lib \
+			rename=gf180mcu_osu_sc_gp9t3v3__tt_025C_3v30 \
+		-verilog cells/*/*.v compile-only \
+		-lef cells/*/*.lef compile-only \
+		-gds cells/*/*.gds compile-only \
+		-spice cells/*/*.spice compile-only \
+		-xschem cells/*/*.sch \
+		-library digital gf180mcu_osu_sc_gp9t3v3 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
 
-	${STAGE} -source ${GF180MCU_OSU_SC_PATH} \
+	${STAGE} -source ${GF180MCU_OSU_SC_PATH}/gf180mcu_osu_sc_gp12t3v3 \
 		-target ${STAGING_PATH}/${GF180MCU$*} \
-		-techlef lib/12T/tlef/gf180mcu_*_tech.lef \
-			rename=gf180mcu_osu_sc_12T.tlef \
-		-liberty lib/12T/lib/gf180mcu_12T_TT_3P3_25C*.lib \
-			rename=gf180mcu_osu_sc_12T__tt_025C_3v30 \
-		-verilog lib/12T/verilog/*.v \
-			rename=gf180mcu_osu_sc_12T \
-		-lef lib/12T/lef/*.lef \
-		-gds lib/12T/*/*.gds compile-only \
-		-spice lib/12T/*/*.spice compile-only \
-		-xschem lib/12T/*/*.sch \
-		-library digital gf180mcu_osu_sc_12T 2>&1 | \
+		-techlef ../tlef/gf180mcu_5LM_1TM_9K_12t.tlef \
+			rename=gf180mcu_fd_sc_mcu7t5v0__nom.tlef \
+		-liberty lib/gf180mcu_osu_sc_gp12t3v3_TT_25C.ccs.lib \
+			rename=gf180mcu_osu_sc_gp12t3v3__tt_025C_3v30 \
+		-verilog cells/*/*.v compile-only \
+		-lef cells/*/*.lef compile-only \
+		-gds cells/*/*.gds compile-only \
+		-spice cells/*/*.spice compile-only \
+		-xschem cells/*/*.sch \
+		-library digital gf180mcu_osu_sc_gp12t3v3 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
 
 io-%:
@@ -976,9 +981,9 @@ io-%:
 		-liberty cells/*/*_ff_n40C_5v50.lib compile-only \
                         header=liberty/gf180mcu_fd_io__ff_n40C_5v50.lib \
 			rename=gf180mcu_fd_io__ff_n40C_5v50 \
-		-liberty cells/*/*_ss_125C_2v50.lib compile-only \
-                        header=liberty/gf180mcu_fd_io__ss_125C_2v50.lib \
-			rename=gf180mcu_fd_io__ss_125C_2v50 \
+		-liberty cells/*/*_ss_125C_2v25.lib compile-only \
+                        header=liberty/gf180mcu_fd_io__ss_125C_2v25.lib \
+			rename=gf180mcu_fd_io__ss_125C_2v25 \
 		-liberty cells/*/*_ss_125C_2v97.lib compile-only \
                         header=liberty/gf180mcu_fd_io__ss_125C_2v97.lib \
 			rename=gf180mcu_fd_io__ss_125C_2v97 \
@@ -1010,6 +1015,9 @@ sram-%:
 		-target ${STAGING_PATH}/${GF180MCU$*} \
 		-cdl cells/*/*.cdl noconvert \
 		-liberty cells/*/*.lib \
+		-spice cells/*/*.cdl \
+			filter=custom/scripts/convert_sram_cdl.py \
+			rename=*.spice \
 		-gds cells/*/*.gds \
 			options=custom/scripts/gds_import_sram.tcl \
 			filter=custom/scripts/fix_sram_gds.py \

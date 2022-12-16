@@ -245,6 +245,8 @@ OSU_T12_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_o
 OSU_T15_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t15
 OSU_T18_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t18
 
+USE_REFERENCE = @USE_REFERENCE@
+
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
 #
@@ -589,6 +591,8 @@ else
 	SPIEXT = spice
 endif
 
+all: $(foreach var, ${VARIANTS}, all-$(var))
+
 reference: ${TECH}.json
 	# Rewrite the ${TECH}.json file to change the commit values in
 	# "reference" to reflect the state of the system when  "make
@@ -596,8 +600,6 @@ reference: ${TECH}.json
 	# repository to create a known reference configuration of all
 	# tools.
 	../common/save_commit_refs.py ${COMMIT_DEFS} ${TECH}.json
-
-all: $(foreach var, ${VARIANTS}, all-$(var))
 
 # Handle prerequisites (fetch and install the PDK and requested libraries)
 prerequisites: pdk-repo alpha-repo xschem-repo klayout-repo precheck-repo sram-repo osu-t12-repo osu-t15-repo osu-t18-repo

@@ -38,7 +38,9 @@
 #
 #	annotate the technology JSON file with the current
 #	commit state of all repositories used by the PDK to
-#	create a reference set of PDKs.
+#	create a reference set of PDKs.  Can be used with
+#	the configure --with-reference option to compile
+#	to sources from a specific set of commits.
 #
 #---------------------------------------------------
 #

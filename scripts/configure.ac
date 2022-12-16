@@ -275,6 +275,22 @@ AC_DEFUN([M4_GEN_WITH_TOOLS], [
 
 AC_MSG_NOTICE([Tools enabled for PDK setup installation: M4_GET_TOOLS()])
 
+# Check for "--with-reference"
+USE_REFERENCE=0
+AC_ARG_WITH(
+    [reference],
+    AS_HELP_STRING(
+        [--with-reference],
+        [Use PDK JSON file reference commit values for sources @<:@default=no@:>@]
+    ), [
+        pdks_reference=$withval
+        if test "$withval" == "yes" -o "$withval" == "YES"; then
+            USE_REFERENCE=1
+        fi
+    ],
+)
+AC_SUBST(USE_REFERENCE)
+
 # Check for "--with-ef-style"
 EF_STYLE=0
 AC_ARG_WITH(
@@ -289,8 +305,8 @@ AC_ARG_WITH(
         fi
     ],
 )
-
 AC_SUBST(EF_STYLE)
+
 # Export the list of enabled technologies to the Makefile
 AC_SUBST(ENABLED_TECHS)
 # Export the top level directory of open_pdks

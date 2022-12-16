@@ -128,10 +128,13 @@
 #
 #	rename :   Followed by "=" and an alternative name.  For any
 #		    file that is a single entry, change the name of
-#		    the file in the target directory to this (To-do:
-#		    take regexps for multiple files).  When used with
-#		    "compile" or "compile-only", this refers to the
-# 		    name of the target compiled file.
+#		    the file in the target directory to this.  If the
+#		    alternative name is a file extension (optionally
+#		    preceded by '*', as in "rename=*.spice", then all
+#		    input files are renamed with the indicated file
+#		    extension (To-do: take regexps for multiple files).
+#		    When used with "compile" or "compile-only", this
+#		    refers to the name of the target compiled file.
 #
 #	filter:	   Followed by "=" and the name of a script.
 #		    Each file is passed through the filter script
@@ -1008,6 +1011,10 @@ if __name__ == '__main__':
 
                     if len(liblist) == 1:
                         destfile = newname
+                    elif newname.startswith('*.'):
+                        destfile = os.path.splitext(libfile)[0] + newname[1:]
+                    elif newname.startswith('.'):
+                        destfile = os.path.splitext(libfile)[0] + newname
                     else:
                         if not do_compile and not do_compile_only:
                             print('Error:  rename specified but more than one file found!')

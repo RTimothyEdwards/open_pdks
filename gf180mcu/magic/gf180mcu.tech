@@ -3429,18 +3429,18 @@ lef
  routing mtp	MetalTop Metal6 METAL6 METTP mtp mettp MET6 m6 met6 metal6
 #endif (METALS6)
 
- cut m2c  Via1 VIA1 via1 cont2 via12
+ cut m2c  Via1 VIA1 via1 cont2 via12 VIA12
 #ifdef METALS3 || METALS4 || METALS5 || METALS6
- cut m3c  Via2 VIA2 via2 cont3 via23
+ cut m3c  Via2 VIA2 via2 cont3 via23 VIA23
 #endif (METALS3 || METALS4 || METALS5 || METALS6)
 #ifdef METALS4 || METALS5 || METALS6
- cut via3 Via3 VIA3 via3 cont4 via34
+ cut via3 Via3 VIA3 via3 cont4 via34 VIA34
 #endif (METALS4 || METALS5 || METALS6)
 #ifdef METALS5 || METALS6
- cut via4 Via4 VIA4 via4 cont5 via45
+ cut via4 Via4 VIA4 via4 cont5 via45 VIA45
 #endif (METALS5 || METALS6)
 #ifdef METALS6
- cut viatp Via5 viatp VIATP VIA5 vtp via5 cont6 via56
+ cut viatp Via5 viatp VIATP VIA5 vtp via5 cont6 via56 VIA56
 #endif (METALS6)
 
  obs obsm1   Metal1
