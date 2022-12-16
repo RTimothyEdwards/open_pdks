@@ -84,8 +84,8 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "7c3797bed470ebecf64c8f155fbb7dc3e08d6f48",
-        "magic": "13a1bfcc2e30f063b63fd34be501820b77677bf5",
+        "open_pdks": "229580810660a5c14eebc70cf6694187801ea20e",
+        "magic": "3b396d65f09ae8ec64ca5bdc44b0cf9523fe5852",
         "gf180mcu_pdk": "a897aa30369d3bcec87d9d50ce9b01f320f854ef",
         "gf180mcu_fd_pr": "612c346a3600bec3387e2974c8cdc692215be107",
         "gf180mcu_fd_io": "2aeec51ea2824b6cc0b396acfc39f4535f40b23a",

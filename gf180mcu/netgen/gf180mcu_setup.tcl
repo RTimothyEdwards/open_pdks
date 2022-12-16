@@ -132,8 +132,6 @@ foreach dev $devices {
 
 #------------------------------------------------------------------
 # (MOS) transistors
-# (NOTE:  _dss devices are treated as symmetric because the
-#  salicide block is present on both sides of the gate.)
 #------------------------------------------------------------------
 
 set devices {}
@@ -142,10 +140,6 @@ lappend devices pfet_03v3
 lappend devices nfet_06v0
 lappend devices pfet_06v0
 lappend devices nfet_06v0_nvt
-lappend devices nfet_03v3_dss
-lappend devices pfet_03v3_dss
-lappend devices nfet_06v0_dss
-lappend devices pfet_06v0_dss
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
@@ -169,6 +163,45 @@ foreach dev $devices {
 	property "-circuit2 $dev" delete par1 NRD NRS par
 	property "-circuit2 $dev" delete sa sb sd par dtemp nf
 	property "-circuit2 $dev" delete as ad ps pd
+    }
+}
+
+#------------------------------------------------------------------
+# (MOS) salicide block extended source/drain transistors
+# (NOTE:  _dss devices are treated as symmetric because the
+#  salicide block is present on both sides of the gate.)
+#------------------------------------------------------------------
+
+set devices {}
+lappend devices nfet_03v3_dss
+lappend devices pfet_03v3_dss
+lappend devices nfet_06v0_dss
+lappend devices pfet_06v0_dss
+
+foreach dev $devices {
+    if {[lsearch $cells1 $dev] >= 0} {
+	permute "-circuit1 $dev" 1 3
+	property "-circuit1 $dev" parallel enable
+	property "-circuit1 $dev" parallel {l critical}
+	property "-circuit1 $dev" parallel {w add}
+	property "-circuit1 $dev" tolerance {w 0.01} {l 0.01}
+	# Ignore these properties
+	property "-circuit1 $dev" delete par1 NRD NRS par
+	property "-circuit1 $dev" delete sa sb sd par dtemp nf
+	property "-circuit1 $dev" delete as ad ps pd
+	property "-circuit1 $dev" associate {d_sab 1} {s_sab 3}
+    }
+    if {[lsearch $cells2 $dev] >= 0} {
+	permute "-circuit2 $dev" 1 3
+	property "-circuit2 $dev" parallel enable
+	property "-circuit2 $dev" parallel {l critical}
+	property "-circuit2 $dev" parallel {w add}
+	property "-circuit2 $dev" tolerance {w 0.01} {l 0.01}
+	# Ignore these properties
+	property "-circuit2 $dev" delete par1 NRD NRS par
+	property "-circuit2 $dev" delete sa sb sd par dtemp nf
+	property "-circuit2 $dev" delete as ad ps pd
+	property "-circuit2 $dev" associate {d_sab 1} {s_sab 3}
     }
 }
 
