@@ -1162,6 +1162,11 @@ style gdsii
  layer CAPDEF	*mimcap
 	grow 200
 	calma 	117 5
+
+ layer CAP_LENGTH
+	mask-hints CAP_LENGTH
+	calma	117 10
+
 #endif (MIM)
 
 #-----------------------------------------------------
