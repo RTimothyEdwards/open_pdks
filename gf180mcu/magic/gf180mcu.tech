@@ -2451,6 +2451,8 @@ style  import
  layer mimcap CAPM
  and CAPDEF
  labels CAPM
+
+ templayer nolayer CAP_LENGTH
 #endif (MIM)
 
  # Find diffusion not covered in
@@ -2687,7 +2689,10 @@ style  import
  calma HRES 62 0
 #endif (HRPOLY1K)
  calma NAT 5 0
+#ifdef MIM
  calma CAPM 75 0
+ calma CAP_LENGTH 117 10
+#endif (MIM)
  calma DIODE  115 5
  calma CAPDEF 117 5
  calma BJTDEF 118 5
