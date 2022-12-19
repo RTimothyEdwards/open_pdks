@@ -1150,6 +1150,7 @@ style gdsii
 	calma 0 0 
 
 #ifdef MIM
+#undef MIM
 #-----------------------------------------------------
 # CAPM
 #-----------------------------------------------------
@@ -1167,6 +1168,7 @@ style gdsii
 	mask-hints CAP_LENGTH
 	calma	117 10
 
+#define MIM
 #endif (MIM)
 
 #-----------------------------------------------------
@@ -3031,7 +3033,7 @@ variants *
 
 #ifdef METALS4 || METALS5 || METALS6
 #--------------------------------------------------------------
-# VIA 3 - Requires METALS4, METALS5, or METALS6 Module
+# VIA 3 - Requires METAL4, METAL5, or METAL6 Module
 #--------------------------------------------------------------
 
  width v3/m3 280 "Via3 width < %d (V3.1 + 2 * V3.4)"
@@ -3042,7 +3044,7 @@ variants *
  exact_overlap v3/m4
 
 #-----------------------------
-# METAL 4 - METALS4 Module
+# METAL 4 - METAL4 Module
 #-----------------------------
 
 #ifdef METALS4
@@ -3097,7 +3099,7 @@ variants *
 
 #ifdef METALS5 || METALS6
 #------------------------------------------------------
-# VIA 4 - Requires METALS5 Module
+# VIA 4 - Requires METAL5 Module
 #------------------------------------------------------
 
  width v4/m4 280 "Via4 width < %d (V4.1 + 2 * V4.4)"
@@ -3105,7 +3107,7 @@ variants *
  exact_overlap v4/m5
 
 #-----------------------------
-# METALS 5 - METALS5 Module
+# METAL 5 - METAL5 Module
 #-----------------------------
 
 #ifdef METALS5
@@ -3167,7 +3169,7 @@ variants *
 
 #ifdef METALS6
 #-----------------------------------------------------------------------------------
-# VIA TP - Requires METALS6 Module
+# VIA TP - Requires METAL6 Module
 #-----------------------------------------------------------------------------------
 
  spacing vtp vtp 340 touching_ok "ViaTP spacing < %d (VT.2a - VT.3)"
@@ -3178,7 +3180,7 @@ variants *
  exact_overlap vtp/m5
 
 #----------------------------------------------------------------------
-# METAL TP - Top metal for METALS6 module
+# METAL TP - Top metal for METAL6 module
 #----------------------------------------------------------------------
 
 variants *
@@ -3237,14 +3239,14 @@ variants *
  width mvnnfet 400 "MV nn Transistor width < %d (DF.2c)"
 
  extend pfet,pcap *pdiff 280 exclusive "Transistor length < %d (PL.1a)"
- extend nfet,pcap *ndiff 280 exclusive "Transistor length < %d (PL.1a)"
+ extend nfet,ncap *ndiff 280 exclusive "Transistor length < %d (PL.1a)"
  width pfet,pcap 300 angles "Bent Transistor length < %d (PL.7)"
- width nfet,pcap 300 angles "Bent Transistor length < %d (PL.7)"
+ width nfet,ncap 300 angles "Bent Transistor length < %d (PL.7)"
 
  extend mvpfet,mvpcap *mvpdiff 500 exclusive "MV Transistor length < %d (PL.1a)"
- extend mvnfet,mvpcap *mvndiff 600 exclusive "MV Transistor length < %d (PL.1a)"
+ extend mvnfet,mvncap *mvndiff 600 exclusive "MV Transistor length < %d (PL.1a)"
  width mvpfet,mvpcap 700 angles "Bent MV Transistor length < %d (PL.7)"
- width mvnfet,mvpcap 700 angles "Bent MV Transistor length < %d (PL.7)"
+ width mvnfet,mvncap 700 angles "Bent MV Transistor length < %d (PL.7)"
 
  # NOTE:  Use edge4way to deal with butted junctions
  # spacing *nsd,*mvnsd pfet,pcap,mvnnfet,mvpfet,mvpcap 330 touching_illegal \
@@ -3252,10 +3254,10 @@ variants *
  # spacing *psd,*mvpsd nfet,ncap,nnfet,mvnfet,mvncap 330 touching_illegal \
  #	"p-ohmic spacing to NMOS gate < %d (NP.4c)"
 
- edge4way pfet,pcap,mvnnfet,mvpfet,mvpcap *poly/a 330 \
+ edge4way pfet,pcap,mvpfet,mvpcap *poly/a 330 \
 	~(*nsd,*mvnsd)/a (*pdiff,*mvpdiff)/a 300 \
 	"n-ohmic spacing to PMOS gate < %d (NP.4b + PP.4c)"
- edge4way nfet,ncap,nnfet,mvnfet,mvncap *poly/a 330 \
+ edge4way nfet,ncap,nnfet,mvnnfet,mvnfet,mvncap *poly/a 330 \
 	~(*psd,*mvpsd)/a (*ndiff,*mvndiff)/a 300 \
 	"p-ohmic spacing to NMOS gate < %d (PP.4b + NP.4c)"
 
@@ -3339,6 +3341,7 @@ variants *
 	"Varactor length and width < %d (DF.1c)"
 
 #ifdef MIM
+#undef MIM
 #-------------------------------------------------
 # CAPM (FuseTop)
 #-------------------------------------------------
@@ -3398,6 +3401,7 @@ variants *
 	"MiM bottom plate to unrelated metal < 1.2um (MIMTM.1)"
  cifmaxwidth mim_bot_cont_surround 0 bend_illegal \
 	"MiM bottom plate surrounds contact < 0.4um (MIMTM.2)"
+#define MIM
 #endif (MIM)
 
 #----------------------------
