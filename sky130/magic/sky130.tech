@@ -831,24 +831,24 @@ style gdsii
  	calma 	64 20
 
  layer WELLTXT
- 	labels allnwell noport
-	calma 64 16
+ 	labels allnwell
+	calma 64 5
 
  layer WELLPIN
  	labels allnwell port
-	calma 64 5
+	calma 64 16
 
 #----------------------------------------------------------------
 # SUB (text/port only)
 #----------------------------------------------------------------
 
  layer SUBTXT
- 	labels pwell noport
-	calma 122 16
+ 	labels pwell
+	calma 64 59
 
  layer SUBPIN
  	labels pwell port
-	calma 64 59
+	calma 122 16
 
 #----------------------------------------------------------------
 # DIFF
@@ -858,23 +858,23 @@ style gdsii
  	calma 	65 20
 
  layer DIFFTXT
- 	labels allnactivenontap,allpactivenontap noport
-	calma	65 16
+ 	labels allnactivenontap,allpactivenontap
+	calma	65 6
 
  layer DIFFPIN
  	labels allnactivenontap,allpactivenontap port
-	calma	65 6
+	calma	65 16
 
 #----------------------------------------------------------------
 # TAP
 #----------------------------------------------------------------
 
  layer TAP 	allnactivetap,allpactivetap
- 	labels 	allnactivetap,allpactivetap noport
+ 	labels 	allnactivetap,allpactivetap port
 	calma	65 44
 
- layer TAPPIN
- 	labels 	allnactivetap,allpactivetap port
+ layer TAPTXT
+ 	labels 	allnactivetap,allpactivetap
  	calma 	65 5
 
 #----------------------------------------------------------------
@@ -1094,12 +1094,12 @@ style gdsii
  	calma 	66 20
 
  layer POLYTXT
-	labels  allpoly noport
-	calma	66 16
+	labels  allpoly
+	calma	66 5
 
  layer POLYPIN
 	labels  allpoly port
-	calma	66 5
+	calma	66 16
 
  layer POLYFILL	polyfill
 	labels 	polyfill
@@ -1220,12 +1220,12 @@ style gdsii
 	calma 67 20
 
  layer LITXT
- 	labels *locali,coreli noport
-	calma 67 16
+ 	labels *locali,coreli
+	calma 67 5
 
  layer LIPIN
  	labels *locali,coreli port
-	calma 67 5
+	calma 67 16
 
  layer LIRES rli
 	labels rli
@@ -1249,12 +1249,12 @@ style gdsii
  	calma 	68 20
 
  layer MET1TXT
-	labels	allm1 noport
-	calma 	68 16
+	labels	allm1
+	calma 	68 5
 
  layer MET1PIN
 	labels	allm1 port
-	calma 	68 5
+	calma 	68 16
 
  layer MET1RES rm1
 	labels rm1
@@ -1289,12 +1289,12 @@ style gdsii
  	calma 	69 20
 
  layer MET2TXT
-	labels	allm2 noport
-	calma	69 16
+	labels	allm2
+	calma	69 5
 
  layer MET2PIN
 	labels	allm2 port
-	calma	69 5
+	calma	69 16
 
  layer MET2RES rm2
 	labels rm2
@@ -1318,12 +1318,12 @@ style gdsii
  	calma 	70 20
 
  layer MET3TXT
- 	labels 	allm3 noport
-	calma	70 16 
+ 	labels 	allm3
+	calma	70 5
 
  layer MET3PIN
 	labels	allm3 port
-	calma	70 5
+	calma	70 16 
 
  layer MET3RES rm3
 	labels rm3
@@ -1351,12 +1351,12 @@ style gdsii
  	calma 	71 20
 
  layer MET4TXT
-	labels	allm4 noport
-	calma	71 16
+	labels	allm4
+	calma	71 5
 
  layer MET4PIN
 	labels	allm4 port
-	calma	71 5
+	calma	71 16
 
  layer MET4RES rm4
 	labels rm4
@@ -1383,12 +1383,12 @@ style gdsii
  	calma 	72 20
 
  layer MET5TXT
-	labels	allm5 noport
-	calma	72 16
+	labels	allm5
+	calma	72 5
 
  layer MET5PIN
 	labels	allm5 port
-	calma	72 5
+	calma	72 16
 
  layer MET5RES rm5
 	labels rm5
@@ -1408,12 +1408,12 @@ style gdsii
 	calma   74 20
 
   layer RDLTXT
-	labels	*metrdl noport
-	calma	74 16
+	labels	*metrdl
+	calma	74 5
 
   layer RDLPIN
 	labels  *metrdl port
-	calma	74 5
+	calma	74 16
 
   layer PI1	*metrdl
 	and	padl,glass
@@ -2382,7 +2382,7 @@ cifinput
 # or else magic will scale below the allowed layout grid size
 #-----------------------------------------------------------------------
 
-style  sky130 variants (),(vendor),(legacy)
+style  sky130 variants (),(vendor)
  scalefactor 10 nanometers
  gridlimit 5
 
@@ -2418,20 +2418,13 @@ style  sky130 variants (),(vendor),(legacy)
  and PNPID
  labels NWELL
  labels WELLPIN port
- variants (),(vendor)
  labels WELLTXT text
- variants (legacy)
- labels WELLTXT port
- variants *
 
  layer nwell NWELL,WELLTXT,WELLPIN
  and-not PNPID
  labels NWELL
  labels WELLPIN port
- variants (),(vendor)
  labels WELLTXT text
- variants (legacy)
- labels WELLTXT port
  variants *
 
  templayer nwellarea NWELL
@@ -2457,11 +2450,7 @@ style  sky130 variants (),(vendor),(legacy)
  grow 420
  shrink 420
  labels SUBPIN port
- variants (),(vendor)
  labels SUBTXT text
- variants (legacy)
- labels SUBTXT port
- variants *
 
  layer dnwell DNWELL
  labels DNWELL
@@ -2492,10 +2481,7 @@ style  sky130 variants (),(vendor),(legacy)
  copyup ndifcheck
  labels DIFF
  labels DIFFPIN port
- variants (),(vendor)
  labels DIFFTXT text
- variants (legacy)
- labels DIFFTXT port
  variants *
 
  layer ndiff ndiffarea
@@ -2515,11 +2501,7 @@ style  sky130 variants (),(vendor),(legacy)
  copyup ndifcheck
  labels DIFF
  labels DIFFPIN port
- variants (),(vendor)
  labels DIFFTXT text
- variants (legacy)
- labels DIFFTXT port
- variants *
 
  layer mvndiff mvndiffarea
 
@@ -2568,11 +2550,7 @@ style  sky130 variants (),(vendor),(legacy)
  copyup pdifcheck
  labels DIFF 
  labels DIFFPIN port
- variants (),(vendor)
  labels DIFFTXT text
- variants (legacy)
- labels DIFFTXT port
- variants *
 
  layer pdiff pdiffarea
 
@@ -2616,11 +2594,7 @@ style  sky130 variants (),(vendor),(legacy)
  copyup mvpdifcheck
  labels DIFF
  labels DIFFPIN port
- variants (),(vendor)
  labels DIFFTXT text
- variants (legacy)
- labels DIFFTXT port
- variants *
 
  layer mvpdiff mvpdiffarea
 
@@ -2762,11 +2736,7 @@ style  sky130 variants (),(vendor),(legacy)
  and-not DIFFRES
  labels DIFF
  labels DIFFPIN port
- variants (),(vendor)
  labels DIFFTXT text
- variants (legacy)
- labels DIFFTXT port
- variants *
 
  layer pdiffres DIFFRES
  and PSDM
@@ -2862,12 +2832,12 @@ style  sky130 variants (),(vendor),(legacy)
  layer nsd nsdarea
  labels TAP
 
- layer nsd TAP,TAPPIN
+ layer nsd TAP,TAPTXT
  and NSDM
  and-not POLY
  and-not HVI,hvcheck
  labels TAP
- labels TAPPIN port
+ labels TAPTXT text
 
  layer corenvar TAP
  and NSDM
@@ -2899,7 +2869,7 @@ style  sky130 variants (),(vendor),(legacy)
  and-not POLY
  and-not HVI,hvcheck
  labels TAP
- labels TAPPIN port
+ labels TAPTXT text
 
  layer corepvar TAP
  and PSDM
@@ -2917,11 +2887,7 @@ style  sky130 variants (),(vendor),(legacy)
  and mvpfetexpand
  labels DIFF
  labels DIFFPIN port
- variants (),(vendor)
  labels DIFFTXT text
- variants (legacy)
- labels DIFFTXT port
- variants *
 
  layer mvpdiffres DIFFRES
  and PSDM
@@ -2987,11 +2953,11 @@ style  sky130 variants (),(vendor),(legacy)
  layer mvnsd mvnsdarea
  labels TAP
 
- layer mvnsd TAP,TAPPIN
+ layer mvnsd TAP,TAPTXT
  and NSDM
  and HVI,hvcheck
  labels TAP
- labels TAPPIN port
+ labels TAPTXT text
 
  templayer mvnsdexpand mvnsdarea
  grow 500
@@ -3012,11 +2978,11 @@ style  sky130 variants (),(vendor),(legacy)
  layer mvpsd mvpsdarea
  labels DIFF
 
- layer mvpsd TAP,TAPPIN
+ layer mvpsd TAP,TAPTXT
  and PSDM
  and HVI,hvcheck
  labels TAP
- labels TAPPIN port
+ labels TAPTXT text
 
  templayer mvpsdexpand mvpsdarea
  grow 500
@@ -3117,11 +3083,7 @@ style  sky130 variants (),(vendor),(legacy)
  layer poly polyarea
  labels POLY
  labels POLYPIN port
- variants (),(vendor)
  labels POLYTXT text
- variants (legacy)
- labels POLYTXT port
- variants *
 
  # Copy (non-resistor) poly areas up for contact checks
  templayer xpolycheck polycheck
@@ -3518,22 +3480,14 @@ style  sky130 variants (),(vendor),(legacy)
  and COREID
  labels LI
  labels LIPIN port
- variants (),(vendor)
  labels LITXT text
- variants (legacy)
- labels LITXT port
- variants *
 
  layer locali LI,LITXT,LIPIN
  and-not LIRES,LISHORT
  and-not COREID
  labels LI
  labels LIPIN port
- variants (),(vendor)
  labels LITXT text
- variants (legacy)
- labels LITXT port
- variants *
 
  layer rli LI
  and LIRES,LISHORT
@@ -3554,11 +3508,7 @@ style  sky130 variants (),(vendor),(legacy)
  and-not MET1RES,MET1SHORT
  labels MET1
  labels MET1PIN port
- variants (),(vendor)
  labels MET1TXT text
- variants (legacy)
- labels MET1TXT port
- variants *
 
  layer rm1 MET1
  and MET1RES,MET1SHORT
@@ -3626,11 +3576,7 @@ style  sky130 variants (),(vendor),(legacy)
  and-not MET2RES,MET2SHORT
  labels MET2
  labels MET2PIN port
- variants (),(vendor)
  labels MET2TXT text
- variants (legacy)
- labels MET2TXT port
- variants *
 
  layer rm2 MET2
  and MET2RES,MET2SHORT
@@ -3653,11 +3599,7 @@ style  sky130 variants (),(vendor),(legacy)
  and-not MET3RES,MET3SHORT
  labels MET3
  labels MET3PIN port
- variants (),(vendor)
  labels MET3TXT text
- variants (legacy)
- labels MET3TXT port
- variants *
 
  layer rm3 MET3
  and MET3RES,MET3SHORT
@@ -3685,11 +3627,7 @@ style  sky130 variants (),(vendor),(legacy)
  and-not MET4RES,MET4SHORT
  labels MET4
  labels MET4PIN port
- variants (),(vendor)
  labels MET4TXT text
- variants (legacy)
- labels MET4TXT port
- variants *
 
  layer rm4 MET4
  and MET4RES,MET4SHORT
@@ -3702,11 +3640,7 @@ style  sky130 variants (),(vendor),(legacy)
  and-not MET5RES,MET5SHORT
  labels MET5
  labels MET5PIN port
- variants (),(vendor)
  labels MET5TXT text
- variants (legacy)
- labels MET5TXT port
- variants *
 
  layer rm5 MET5
  and MET5RES,MET5SHORT
@@ -3733,11 +3667,7 @@ style  sky130 variants (),(vendor),(legacy)
  layer metrdl RDL,RDLTXT,RDLPIN
  labels RDL
  labels RDLPIN port
- variants (),(vendor)
  labels RDLTXT text
- variants (legacy)
- labels RDLTXT port
- variants *
 #endif
 
  # Find diffusion not covered in
@@ -3949,11 +3879,7 @@ style  sky130 variants (),(vendor),(legacy)
  layer glass GLASS,PADTXT,PADPIN
  labels GLASS
  labels PADPIN port
- variants (),(vendor)
  labels PADTXT text
- variants (legacy)
- labels PADTXT port
- variants *
 
  templayer boundary BOUND,STDCELL,PADCELL
  boundary
@@ -4094,22 +4020,22 @@ style  sky130 variants (),(vendor),(legacy)
 #endif
  calma GLASS 76 20
 
- calma SUBPIN  64 59
- calma PADPIN  76 5
- calma DIFFPIN 65 6
- calma TAPPIN  65 5
- calma WELLPIN  64 5
- calma LIPIN 67 5
- calma POLYPIN 66 5
- calma MET1PIN 68 5
- calma MET2PIN 69 5
- calma MET3PIN 70 5
+ calma SUBTXT  64 59
+ calma PADTXT  76 5
+ calma DIFFTXT 65 6
+ calma TAPTXT  65 5
+ calma WELLTXT 64 5
+ calma LITXT   67 5
+ calma POLYTXT 66 5
+ calma MET1TXT 68 5
+ calma MET2TXT 69 5
+ calma MET3TXT 70 5
 #ifdef METAL5
- calma MET4PIN 71 5
- calma MET5PIN 72 5
+ calma MET4TXT 71 5
+ calma MET5TXT 72 5
 #endif
 #ifdef REDISTRIBUTION
- calma RDLPIN 74 5
+ calma RDLTXT 74 5
 #endif
 
  calma LIRES 67 13
@@ -4140,21 +4066,21 @@ style  sky130 variants (),(vendor),(legacy)
  calma MET5SHORT 72 15
 #endif
 
- calma SUBTXT 122 16
- calma PADTXT 76 16
- calma DIFFTXT 65 16
- calma POLYTXT 66 16
- calma WELLTXT 64 16
- calma LITXT 67 16
- calma MET1TXT 68 16
- calma MET2TXT 69 16
- calma MET3TXT 70 16
+ calma SUBPIN 122 16
+ calma PADPIN 76 16
+ calma DIFFPIN 65 16
+ calma POLYPIN 66 16
+ calma WELLPIN 64 16
+ calma LIPIN 67 16
+ calma MET1PIN 68 16
+ calma MET2PIN 69 16
+ calma MET3PIN 70 16
 #ifdef METAL5
- calma MET4TXT 71 16
- calma MET5TXT 72 16
+ calma MET4PIN 71 16
+ calma MET5PIN 72 16
 #endif
 #ifdef REDISTRIBUTION
- calma RDLTXT 74 16
+ calma RDLPIN 74 16
 #endif
 
  calma BOUND 235 4
