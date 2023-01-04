@@ -236,6 +236,7 @@ M4_GEN_INSTALLATION(precheck_sky130, precheck-sky130, ../sources)
 
 # SkyWater sky130 optional
 M4_OPT_INSTALLATION(sky130_sram_macros, sram-sky130, ../sources)
+M4_OPT_INSTALLATION(sky130_fd_bd_sram, sram-space-sky130, ../sources)
 M4_OPT_INSTALLATION(sky130_osu_t12, osu-t12-sky130, ../sources)
 M4_OPT_INSTALLATION(sky130_osu_t15, osu-t15-sky130, ../sources)
 M4_OPT_INSTALLATION(sky130_osu_t18, osu-t18-sky130, ../sources)
@@ -249,9 +250,6 @@ M4_GEN_INSTALLATION(gf180mcu_fd_ip_sram, sram-gf180mcu, ../sources)
 
 # GlobalFoundries gf180mcu optional
 M4_GEN_INSTALLATION(gf180mcu_osu_sc, osu-sc-gf180mcu, ../sources)
-
-# GlobalFoundries gf180mcu optional
-# (None yet)
 
 AC_DEFUN([M4_GEN_WITH_TOOLS], [
     m4_foreach_w(tool, $1, [

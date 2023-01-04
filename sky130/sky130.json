@@ -76,6 +76,7 @@
     },
     "memory": {
         "sky130_sram_macros": "SRAM_COMMIT"
+        "sky130_fd_bd_sram": "SRAM_BUILD_COMMIT"
     },
     "other": {
         "sky130_ml_xx_hd": "ALPHA_COMMIT",
@@ -92,8 +93,8 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "237959eeddfe01b19f76dd7a500e25b36d36a23f",
-        "magic": "be40825e9aadc1bed858801572bef0415444b516",
+        "open_pdks": "3f9bdbd857564726b731760dc2c817e84ca7d8ac",
+        "magic": "6cefbd13f1dac2293aaa1537a6ee2ad23c11a273",
         "skywater_pdk": "f70d8ca46961ff92719d8870a18a076370b85f6c",
         "sky130_osu_sc_t12": "ac90ef0c622a9377a16b5218d9da3ac4169eeaaf",
         "sky130_osu_sc_t15": "95d1c19abb47e1b2945847acb4e817b1b8417c43",

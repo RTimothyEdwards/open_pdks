@@ -97,6 +97,11 @@
 #		the SRAM library will be cloned from the repository and
 #		installed.
 #
+#	--enable-sram-space-sky130[=<path>]
+#		If enabled, install the sky130_fd_bd_sram library from
+#		google on github.   If <path> is not specified, then the
+#		library will be cloned from the repository and installed.
+#
 #	--enable-osu-t12-sky130[=<path>]
 #		If enabled, install the sky130_osu_sc_t12 libraries from
 #		foss-eda-tools on googlesource.   If <path> is not
@@ -231,6 +236,7 @@ XSCHEM_PATH = @XSCHEM_SKY130_PATH@
 KLAYOUT_PATH = @KLAYOUT_SKY130_PATH@
 PRECHECK_PATH = @PRECHECK_SKY130_PATH@
 SRAM_PATH = @SKY130_SRAM_MACROS_PATH@
+SRAM_SPACE_PATH = @SKY130_FD_BD_SRAM_PATH@
 OSU_T12_PATH = @SKY130_OSU_T12_PATH@
 OSU_T15_PATH = @SKY130_OSU_T15_PATH@
 OSU_T18_PATH = @SKY130_OSU_T18_PATH@
@@ -241,6 +247,7 @@ XSCHEM_URL = https://github.com/StefanSchippers/xschem_sky130
 KLAYOUT_URL = https://github.com/mabrains/sky130_klayout_pdk
 PRECHECK_URL = https://github.com/efabless/mpw_precheck
 SRAM_URL = https://github.com/efabless/sky130_sram_macros
+SRAM_SPACE_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_fd_bd_sram
 OSU_T12_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t12
 OSU_T15_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t15
 OSU_T18_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t18
@@ -317,6 +324,11 @@ ifeq (${SRAM_PATH},)
     COMMIT_DEFS += -DSRAM_COMMIT="unknown"
 else
     COMMIT_DEFS += -DSRAM_COMMIT=$(shell cd ${SRAM_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${SRAM_SPACE_PATH},)
+    COMMIT_DEFS += -DSRAM_SPACE_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DSRAM_SPACE_COMMIT=$(shell cd ${SRAM_SPACE_PATH} ; git rev-parse HEAD)
 endif
 ifeq (${OSU_T12_PATH},)
     COMMIT_DEFS += -DOSU_T12_COMMIT="unknown"
@@ -602,7 +614,7 @@ reference: ${TECH}.json
 	../common/save_commit_refs.py ${COMMIT_DEFS} ${TECH}.json
 
 # Handle prerequisites (fetch and install the PDK and requested libraries)
-prerequisites: pdk-repo alpha-repo xschem-repo klayout-repo precheck-repo sram-repo osu-t12-repo osu-t15-repo osu-t18-repo
+prerequisites: pdk-repo alpha-repo xschem-repo klayout-repo precheck-repo sram-repo sram-space-repo osu-t12-repo osu-t15-repo osu-t18-repo
 
 pdk-repo:
 	if test "x${SKYWATER_PATH}" != "x" ; then \
@@ -631,6 +643,16 @@ sram-repo:
 		else \
 			echo "Downloading SRAM macro library from ${SRAM_URL}" ; \
 			../scripts/download.sh ${SRAM_URL} ${SRAM_PATH} ; \
+		fi ; \
+	fi
+
+sram-space-repo:
+	if test "x${SRAM_SPACE_PATH}" != "x" ; then \
+		if test -d "${SRAM_SPACE_PATH}" ; then \
+			echo "Using existing installation of SRAM build-space library from ${SRAM_SPACE_PATH}" ; \
+		else \
+			echo "Downloading SRAM build-space library from ${SRAM_SPACE_URL}" ; \
+			../scripts/download.sh ${SRAM_SPACE_URL} ${SRAM_SPACE_PATH} ; \
 		fi ; \
 	fi
 
@@ -695,7 +717,7 @@ osu-t18-repo:
 	fi
 
 # Update prerequisites
-update: update-pdk-repo update-alpha-repo update-xschem-repo update-klayout-repo update-precheck-repo update-sram-repo update-osu-t12-repo update-osu-t15-repo update-osu-t18-repo
+update: update-pdk-repo update-alpha-repo update-xschem-repo update-klayout-repo update-precheck-repo update-sram-repo update-sram-space-repo update-osu-t12-repo update-osu-t15-repo update-osu-t18-repo
 
 update-pdk-repo:
 	if test "x${SKYWATER_PATH}" != "x" ; then \
@@ -713,6 +735,12 @@ update-sram-repo:
 	if test "x${SRAM_PATH}" != "x" ; then \
 		echo "Updating SRAM macro library from ${SRAM_URL}" ; \
 		../scripts/update.sh ${SRAM_PATH} ; \
+	fi
+
+update-sram-space-repo:
+	if test "x${SRAM_SPACE_PATH}" != "x" ; then \
+		echo "Updating SRAM build-space library from ${SRAM_SPACE_URL}" ; \
+		../scripts/update.sh ${SRAM_SPACE_PATH} ; \
 	fi
 
 update-xschem-repo:
@@ -1101,9 +1129,9 @@ openlane-%: openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl openlane/sky
 	${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_osu_sc_t18/tracks.info \
 		${OPENLANE_STAGING_$*}/sky130_osu_sc_t18/tracks.info
 
-vendor-A: primitive-build-A io-build-A sram-build-A digital-hd-build-A digital-hvl-build-A digital-hdll-build-A digital-lp-build-A digital-hs-build-A digital-ms-build-A digital-ls-build-A alpha-build-A osu-t12-build-A osu-t15-build-A osu-t18-build-A
+vendor-A: primitive-build-A io-build-A sram-build-A sram-space-build-A digital-hd-build-A digital-hvl-build-A digital-hdll-build-A digital-lp-build-A digital-hs-build-A digital-ms-build-A digital-ls-build-A alpha-build-A osu-t12-build-A osu-t15-build-A osu-t18-build-A
 
-vendor-B: primitive-build-B io-build-B sram-build-B digital-hd-build-B digital-hvl-build-B digital-hdll-build-B digital-lp-build-B digital-hs-build-B digital-ms-build-B digital-ls-build-B alpha-build-B osu-t12-build-B osu-t15-build-B osu-t18-build-B
+vendor-B: primitive-build-B io-build-B sram-build-B sram-space-build-B digital-hd-build-B digital-hvl-build-B digital-hdll-build-B digital-lp-build-B digital-hs-build-B digital-ms-build-B digital-ls-build-B alpha-build-B osu-t12-build-B osu-t15-build-B osu-t18-build-B
 
 primitive-build-%:
 	# Build targets conditionally based on what repositories or submodules
@@ -1175,6 +1203,12 @@ sram-build-%:
 	if test "x${SRAM_PATH}" != "x" ; then \
 		echo "Building SRAM macro library" ;\
 		make sram-$* ;\
+	fi
+
+sram-space-build-%:
+	if test "x${SRAM_SPACE_PATH}" != "x" ; then \
+		echo "Building SRAM build-space library" ;\
+		make sram-space-$* ;\
 	fi
 
 osu-t12-build-%:
@@ -1698,6 +1732,14 @@ sram-%:
 		-spice %l/*/*.lvs.sp filter=custom/scripts/sp_to_spice.py \
 		-verilog %l/*/*.v \
 		-library general sky130_sram_macros 2>&1 | tee -a ${SKY130$*}_make.log
+
+sram-space-%:
+	# Install SRAM build-space library.
+	${STAGE} -source ${SRAM_SPACE_PATH}/.. -target ${STAGING_PATH}/${SKY130$*} \
+		-gds %l/cells/*/*.gds compile-only \
+		-lef %l/cells/*/*.lef compile-only \
+		-spice %l/cells/*/*.lvs.calibre.spice compile-only \
+		-library general sky130_fd_bd_sram 2>&1 | tee -a ${SKY130$*}_make.log
 
 osu-t12-%:
 	# Install OSU T12 hs digital standard cells.

@@ -590,6 +590,7 @@ LIBOBJS
 OPENPDKS_TOP
 ENABLED_TECHS
 EF_STYLE
+USE_REFERENCE
 GF180MCU_OSU_SC_PATH
 GF180MCU_FD_IP_SRAM_PATH
 GF180MCU_FD_SC_MCU9T5V0_PATH
@@ -599,6 +600,7 @@ GF180MCU_FD_PR_PATH
 SKY130_OSU_T18_PATH
 SKY130_OSU_T15_PATH
 SKY130_OSU_T12_PATH
+SKY130_FD_BD_SRAM_PATH
 SKY130_SRAM_MACROS_PATH
 PRECHECK_SKY130_PATH
 KLAYOUT_SKY130_PATH
@@ -692,6 +694,7 @@ enable_xschem_sky130
 enable_klayout_sky130
 enable_precheck_sky130
 enable_sram_sky130
+enable_sram_space_sky130
 enable_osu_t12_sky130
 enable_osu_t15_sky130
 enable_osu_t18_sky130
@@ -701,6 +704,7 @@ enable_sc_7t5v0_gf180mcu
 enable_sc_9t5v0_gf180mcu
 enable_sram_gf180mcu
 enable_osu_sc_gf180mcu
+with_reference
 with_ef_style
 '
       ac_precious_vars='build_alias
@@ -1378,6 +1382,9 @@ Optional Features:
   --enable-sram-sky130[=path]
                           Install sky130_sram_macros. If path is omitted, the repository
                           will be downloaded. [default=disabled]
+  --enable-sram-space-sky130[=path]
+                          Install sky130_fd_bd_sram. If path is omitted, the repository
+                          will be downloaded. [default=disabled]
   --enable-osu-t12-sky130[=path]
                           Install sky130_osu_t12. If path is omitted, the repository
                           will be downloaded. [default=disabled]
@@ -1415,6 +1422,8 @@ Optional Packages:
   --with-gf180mcu-variants=all|A|B|...
                           "compile/install specified PDK variants only
                           [default=all]"
+  --with-reference        Use PDK JSON file reference commit values for
+                          sources [default=no]
   --with-ef-style         Use efabless style file system structure
                           [default=no]
 
@@ -2902,6 +2911,47 @@ fi
 
     # echo target targetvar flag location
 
+    SKY130_FD_BD_SRAM_PATH=""
+
+    # Check whether --enable-sram-space-sky130 was given.
+if test "${enable_sram_space_sky130+set}" = set; then :
+  enableval=$enable_sram_space_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_bd_sram' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_bd_sram' will be installed automatically during make." >&6;}
+        	export SKY130_FD_BD_SRAM_PATH=../sources/sky130_fd_bd_sram
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_fd_bd_sram'" >&5
+$as_echo "$as_me: Disabling package 'sky130_fd_bd_sram'" >&6;}
+    		export SKY130_FD_BD_SRAM_PATH=""
+            else
+                SKY130_FD_BD_SRAM_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_fd_bd_sram' at $SKY130_FD_BD_SRAM_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_fd_bd_sram' at $SKY130_FD_BD_SRAM_PATH" >&6;}
+            fi
+            SKY130_FD_BD_SRAM_PATH=`realpath $SKY130_FD_BD_SRAM_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_bd_sram' will not be installed." >&5
+$as_echo "$as_me: Package 'sky130_fd_bd_sram' will not be installed." >&6;}
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
     SKY130_OSU_T12_PATH=""
 
     # Check whether --enable-osu-t12-sky130 was given.
@@ -3274,13 +3324,25 @@ fi
 
 
 
-# GlobalFoundries gf180mcu optional
-# (None yet)
-
 
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow xschem xcircuit" >&5
 $as_echo "$as_me: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow xschem xcircuit" >&6;}
+
+# Check for "--with-reference"
+USE_REFERENCE=0
+
+# Check whether --with-reference was given.
+if test "${with_reference+set}" = set; then :
+  withval=$with_reference;
+        pdks_reference=$withval
+        if test "$withval" == "yes" -o "$withval" == "YES"; then
+            USE_REFERENCE=1
+        fi
+
+fi
+
+
 
 # Check for "--with-ef-style"
 EF_STYLE=0
