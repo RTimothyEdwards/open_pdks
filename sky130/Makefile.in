@@ -254,6 +254,12 @@ OSU_T18_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_o
 
 USE_REFERENCE = @USE_REFERENCE@
 
+ifeq (${USE_REFERENCE}, 1)
+    REFERENCE_JSON = ${TECH}.json
+else
+    REFERENCE_JSON =
+endif
+
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
 #
@@ -300,6 +306,11 @@ else
     COMMIT_DEFS = -DOPEN_PDKS_COMMIT=${OPEN_PDKS_COMMIT}
 endif
 
+ifeq (${SKYWATER_PATH},)
+    COMMIT_DEFS += -DSKYWATER_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DSKYWATER_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse HEAD)
+endif
 ifeq (${XSCHEM_PATH},)
     COMMIT_DEFS += -DXSCHEM_COMMIT="unknown"
 else
@@ -617,102 +628,132 @@ reference: ${TECH}.json
 prerequisites: pdk-repo alpha-repo xschem-repo klayout-repo precheck-repo sram-repo sram-space-repo osu-t12-repo osu-t15-repo osu-t18-repo
 
 pdk-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		SKYWATER_COMMIT = `cat ${REFERENCE_JSON} | grep skywater_pdk | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
 	if test "x${SKYWATER_PATH}" != "x" ; then \
 		if test -d "${SKYWATER_PATH}" ; then \
 			echo "Using existing installation of SkyWater PDK from ${SKYWATER_PATH}" ; \
 		else \
 			echo "Downloading SkyWater PDK from ${PDK_URL}" ; \
-			custom/scripts/pdk_download.sh ${PDK_URL} ${SKYWATER_PATH} ; \
+			custom/scripts/pdk_download.sh ${PDK_URL} ${SKYWATER_PATH} ${SKYWATER_COMMIT} ; \
 		fi ; \
 	fi
 
 alpha-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		ALPHA_COMMIT = `cat ${REFERENCE_JSON} | grep sky130_ml_xx_hd | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
 	if test "x${ALPHA_PATH}" != "x" ; then \
 		if test -d "${ALPHA_PATH}" ; then \
 			echo "Using existing installation of alphanumeric library from ${ALPHA_PATH}" ; \
 		else \
 			echo "Downloading alphanumeric library from ${ALPHA_URL}" ; \
-			../scripts/download.sh ${ALPHA_URL} ${ALPHA_PATH} ; \
+			../scripts/download.sh ${ALPHA_URL} ${ALPHA_PATH} ${ALPHA_COMMIT} ; \
 		fi ; \
 	fi
 
 sram-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		SRAM_COMMIT = `cat ${REFERENCE_JSON} | grep sky130_sram_macros | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
 	if test "x${SRAM_PATH}" != "x" ; then \
 		if test -d "${SRAM_PATH}" ; then \
 			echo "Using existing installation of SRAM macro library from ${SRAM_PATH}" ; \
 		else \
 			echo "Downloading SRAM macro library from ${SRAM_URL}" ; \
-			../scripts/download.sh ${SRAM_URL} ${SRAM_PATH} ; \
+			../scripts/download.sh ${SRAM_URL} ${SRAM_PATH} ${SRAM_COMMIT}; \
 		fi ; \
 	fi
 
 sram-space-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		SRAM_SPACE_COMMIT = `cat ${REFERENCE_JSON} | grep sky130_fd_bd_sram | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
 	if test "x${SRAM_SPACE_PATH}" != "x" ; then \
 		if test -d "${SRAM_SPACE_PATH}" ; then \
 			echo "Using existing installation of SRAM build-space library from ${SRAM_SPACE_PATH}" ; \
 		else \
 			echo "Downloading SRAM build-space library from ${SRAM_SPACE_URL}" ; \
-			../scripts/download.sh ${SRAM_SPACE_URL} ${SRAM_SPACE_PATH} ; \
+			../scripts/download.sh ${SRAM_SPACE_URL} ${SRAM_SPACE_PATH} ${SRAM_SPACE_COMMIT} ; \
 		fi ; \
 	fi
 
 xschem-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		XSCHEM_COMMIT = `cat ${REFERENCE_JSON} | grep xschem_sky130 | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
 	if test "x${XSCHEM_PATH}" != "x" ; then \
 		if test -d "${XSCHEM_PATH}" ; then \
 			echo "Using existing installation of xschem setup from ${XSCHEM_PATH}" ; \
 		else \
 			echo "Downloading xschem setup from ${XSCHEM_URL}" ; \
-			../scripts/download.sh ${XSCHEM_URL} ${XSCHEM_PATH} ; \
+			../scripts/download.sh ${XSCHEM_URL} ${XSCHEM_PATH} ${XSCHEM_COMMIT} ; \
 		fi ; \
 	fi
 
 klayout-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		KLAYOUT_COMMIT = `cat ${REFERENCE_JSON} | grep klayout_sky130 | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
 	if test "x${KLAYOUT_PATH}" != "x" ; then \
 		if test -d "${KLAYOUT_PATH}" ; then \
 			echo "Using existing installation of klayout setup from ${KLAYOUT_PATH}" ; \
 		else \
 			echo "Downloading klayout setup from ${KLAYOUT_URL}" ; \
-			../scripts/download.sh ${KLAYOUT_URL} ${KLAYOUT_PATH} ; \
+			../scripts/download.sh ${KLAYOUT_URL} ${KLAYOUT_PATH} ${KLAYOUT_COMMIT} ; \
 		fi ; \
 	fi
 
 precheck-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		PRECHECK_COMMIT = `cat ${REFERENCE_JSON} | grep precheck_sky130 | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
 	if test "x${PRECHECK_PATH}" != "x" ; then \
 		if test -d "${PRECHECK_PATH}" ; then \
 			echo "Using existing installation of klayout setup from ${PRECHECK_PATH}" ; \
 		else \
 			echo "Downloading klayout setup from ${PRECHECK_URL}" ; \
-			../scripts/download.sh ${PRECHECK_URL} ${PRECHECK_PATH} ; \
+			../scripts/download.sh ${PRECHECK_URL} ${PRECHECK_PATH} ${PRECHECK_COMMIT} ; \
 		fi ; \
 	fi
 
 osu-t12-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		OSU_T12_COMMIT = `cat ${REFERENCE_JSON} | grep sky130_osu_sc_t12 | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
 	if test "x${OSU_T12_PATH}" != "x" ; then \
 		if test -d "${OSU_T12_PATH}" ; then \
 			echo "Using existing installation of OSU T12 standard cell library from ${OSU_T12_PATH}" ; \
 		else \
 			echo "Downloading OSU standard T12 cell library from ${OSU_T12_URL}" ; \
-			../scripts/download.sh ${OSU_T12_URL} ${OSU_T12_PATH} 0 ; \
+			../scripts/download.sh ${OSU_T12_URL} ${OSU_T12_PATH} ${OSU_T12_COMMIT} ; \
 		fi ; \
 	fi
 
 osu-t15-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		OSU_T15_COMMIT = `cat ${REFERENCE_JSON} | grep sky130_osu_sc_t15 | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
 	if test "x${OSU_T15_PATH}" != "x" ; then \
 		if test -d "${OSU_T15_PATH}" ; then \
 			echo "Using existing installation of OSU T15 standard cell library from ${OSU_T15_PATH}" ; \
 		else \
 			echo "Downloading OSU standard T15 cell library from ${OSU_T15_URL}" ; \
-			../scripts/download.sh ${OSU_T15_URL} ${OSU_T15_PATH} 0 ; \
+			../scripts/download.sh ${OSU_T15_URL} ${OSU_T15_PATH} ${OSU_T15_COMMIT} ; \
 		fi ; \
 	fi
 
 osu-t18-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		OSU_T18_COMMIT = `cat ${REFERENCE_JSON} | grep sky130_osu_sc_t18 | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
 	if test "x${OSU_T18_PATH}" != "x" ; then \
 		if test -d "${OSU_T18_PATH}" ; then \
 			echo "Using existing installation of OSU T18 standard cell library from ${OSU_T18_PATH}" ; \
 		else \
 			echo "Downloading OSU standard T18 cell library from ${OSU_T18_URL}" ; \
-			../scripts/download.sh ${OSU_T18_URL} ${OSU_T18_PATH} 0 ; \
+			../scripts/download.sh ${OSU_T18_URL} ${OSU_T18_PATH} ${OSU_T18_COMMIT} ; \
 		fi ; \
 	fi
 

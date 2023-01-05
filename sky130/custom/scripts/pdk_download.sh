@@ -5,7 +5,7 @@
 #	Download and install a PDK from git
 # 	(mainly for use with the Google/SkyWater SKY130 PDK)
 #
-#  Usage:	pdk_download.sh <url> <destination>
+#  Usage:	pdk_download.sh <url> <destination> [<commit>|<tag>]
 #
 
 pdir=`dirname $2`
@@ -15,7 +15,15 @@ cd $pdir
 # Clone repository
 
 echo "Cloning PDK repository"
-git clone $1 $2
+if [ $# -gt 2 ]; then
+    if [ "$3" == "unknown" ]; then
+    	git clone $1 $2
+    else
+	git clone --branch $3 --single-branch $1 $2
+    fi
+else
+    git clone $1 $2
+fi
 
 # Get submodules
 

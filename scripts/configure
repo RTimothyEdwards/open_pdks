@@ -3338,6 +3338,8 @@ if test "${with_reference+set}" = set; then :
         pdks_reference=$withval
         if test "$withval" == "yes" -o "$withval" == "YES"; then
             USE_REFERENCE=1
+	else
+            USE_REFERENCE="$pdks_reference"
         fi
 
 fi

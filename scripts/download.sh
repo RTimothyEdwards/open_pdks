@@ -71,9 +71,13 @@ else
     if type "git" > /dev/null; then
         echo "Cloning $1 to $2"
     	if [ $# -gt 2 ]; then
-            # git clone $1 $2
-	    # git checkout $3
-	    git clone --branch $3 --single-branch $1 $2
+	    if [ "$3" == "unknown" ]; then
+            	git clone --depth 1 $1 $2
+	    else
+		# git clone $1 $2
+		# git checkout $3
+		git clone --branch $3 --single-branch $1 $2
+	    fi
 	else
             git clone --depth 1 $1 $2
     	fi

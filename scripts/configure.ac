@@ -284,6 +284,8 @@ AC_ARG_WITH(
         pdks_reference=$withval
         if test "$withval" == "yes" -o "$withval" == "YES"; then
             USE_REFERENCE=1
+	else
+            USE_REFERENCE="$pdks_reference"
         fi
     ],
 )
