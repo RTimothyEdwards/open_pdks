@@ -17,28 +17,17 @@ FROM almalinux:8 as build
 
 # Common development tools and libraries (kitchen sink approach)
 RUN yum groupinstall -y "Development Tools"
-# "Development Libraries"
-#RUN yum -y install centos-release-scl && \
-#    yum -y install devtoolset-8 devtoolset-8-libatomic-devel
-
-# python 3.6
-#RUN yum install -y https://repo.ius.io/ius-release-el6.rpm
-#RUN yum install -y python36u python36u-libs python36u-devel python36u-pip python36u-tkinter
-#RUN alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 60
 
 # magic dependencies
 RUN yum install -y csh wget tcl-devel tk-devel libX11-devel cairo-devel ncurses-devel
 
 #General utils
-#RUN yum install -y tcllib
 RUN yum install -y git tcl tk libjpeg libgomp libXext libSM libXft libffi cairo gettext Xvfb
 RUN yum install -y python3 python3-pip python3-tkinter python3-devel
 
 RUN git clone git://opencircuitdesign.com/magic magic_15102020
 
 WORKDIR magic_15102020
-
-#RUN git checkout 4bbe4ef74e5eac98c503bf6483ee7a40dbb0547a
 
 # build
 RUN ./configure --prefix=/build && \
