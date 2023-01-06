@@ -15,8 +15,8 @@
 set -e
 
 if type "git" > /dev/null; then
-    echo "Pulling $1 into $2"
-    cd $2
+    echo "Pulling $1"
+    cd $1
     git pull
 
 else
