@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # syntax = docker/dockerfile:1.0-experimental
-FROM centos:centos8 as build
+FROM almalinux:8 as build
 
 # Common development tools and libraries (kitchen sink approach)
 RUN yum groupinstall -y "Development Tools"
