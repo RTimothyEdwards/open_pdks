@@ -52,6 +52,8 @@ set ::env(GPIO_PADS_LEF) "\
 # sky130_fd_io.v is not parsable by yosys, so it cannot be included it here just yet...
 set ::env(GPIO_PADS_VERILOG) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/verilog/sky130_fd_io/sky130_ef_io.v"
 
+set ::env(GPIO_PADS_PREFIX) "sky130_fd_io sky130_ef_io"
+
 # Optimization library
 set ::env(TECH_LEF_OPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/techlef/$::env(STD_CELL_LIBRARY_OPT)__nom.tlef"
 set ::env(CELLS_LEF_OPT) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/lef/*.lef"]
