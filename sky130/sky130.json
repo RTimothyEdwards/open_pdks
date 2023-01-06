@@ -75,7 +75,7 @@
         "sky130_fd_pr": "FD_PR_COMMIT"
     },
     "memory": {
-        "sky130_sram_macros": "SRAM_COMMIT"
+        "sky130_sram_macros": "SRAM_COMMIT",
         "sky130_fd_bd_sram": "SRAM_BUILD_COMMIT"
     },
     "other": {
