@@ -17,7 +17,7 @@
 OPEN_PDKS_ROOT ?= $(shell pwd)/..
 THREADS ?= $(shell nproc)
 STD_CELL_LIBRARY ?= sky130_fd_sc_hd
-SKYWATER_COMMIT ?= b5ff6174d9aa921f670f12a2893969fe4a516f6c
+SKYWATER_COMMIT ?= main
 
 .DEFAULT_GOAL := all
 
