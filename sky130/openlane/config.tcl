@@ -50,7 +50,9 @@ set ::env(GPIO_PADS_LEF) "\
 	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lef/sky130_ef_io.lef\
 "
 # sky130_fd_io.v is not parsable by yosys, so it cannot be included it here just yet...
-set ::env(GPIO_PADS_VERILOG) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/verilog/sky130_fd_io/sky130_ef_io.v"
+set ::env(GPIO_PADS_VERILOG) "\
+	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/verilog/sky130_ef_io.v
+"
 
 set ::env(GPIO_PADS_PREFIX) "sky130_fd_io sky130_ef_io"
 
