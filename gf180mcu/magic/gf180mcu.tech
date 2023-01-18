@@ -3960,16 +3960,18 @@ defaultareacap     nwell well 120
 # defaultperimeter   allpolynonfet active   57
 
  defaultsidewall    *poly active  16.46
- defaultareacap     *poly active nwell,obswell,pwell well  110.677
- defaultperimeter   *poly active nwell,obswell,pwell well  51.29
+ defaultareacap     *poly active  110.677
+ defaultperimeter   *poly active  51.29
+ defaultoverlap     *poly active nwell,obswell,pwell well  110.677
+ defaultsideoverlap *poly active nwell,obswell,pwell well  51.29
 
 #metal1
- defaultsidewall    allm1 metal1       28.01
- defaultareacap     allm1 metal1 nwell,obswell,pwell well  29.3046
- defaultperimeter   allm1 metal1 nwell,obswell,pwell well  25.783
+ defaultsidewall    allm1 metal1  28.01
+ defaultareacap     allm1 metal1  29.3046
+ defaultperimeter   allm1 metal1  25.783
  defaultoverlap     allm1 metal1 nwell well 29.3046
-
-#metal1->diff
+ defaultsideoverlap allm1 metal1 nwell well 25.783
+#metal1->active
  defaultoverlap     allm1 metal1 allactivenonfet active 39.2181
  defaultsideoverlap allm1 metal1 allactivenonfet active 30.683
 
@@ -3978,10 +3980,11 @@ defaultareacap     nwell well 120
  defaultsideoverlap allm1 metal1 allpolynonres active 35.602
 
 #metal2
- defaultsidewall    allm2 metal2      30.381
- defaultareacap     allm2 metal2 nwell,obswell,pwell well 15.0162
- defaultperimeter   allm2 metal2 nwell,obswell,pwell well 18.263
+ defaultsidewall    allm2 metal2  30.381
+ defaultareacap     allm2 metal2  15.0162
+ defaultperimeter   allm2 metal2  18.263
  defaultoverlap     allm2 metal2 nwell well 15.0162
+ defaultsideoverlap allm2 metal2 nwell well 18.263
 #metal2->active
  defaultoverlap     allm2 metal2 allactivenonfet active 17.2506
  defaultsideoverlap allm2 metal2 allactivenonfet active 20.018
@@ -3996,10 +3999,11 @@ defaultareacap     nwell well 120
 
 #ifdef METALS3 || METALS4 || METALS5 || METALS6
 #metal3
- defaultsidewall    allm3 metal3     30.774
- defaultareacap     allm3 metal3 nwell,obswell,pwell well 10.0944
+ defaultsidewall    allm3 metal3  30.774
+ defaultareacap     allm3 metal3  10.0944
+ defaultperimeter   allm3 metal3  13.52
  defaultoverlap     allm3 metal3 nwell well 10.0944
- defaultperimeter   allm3 metal3 nwell,obswell,pwell well 13.52
+ defaultsideoverlap allm3 metal3 nwell well 13.52
 
 #metal3->active
  defaultoverlap     allm3 metal3 allactive active 11.0571
@@ -4020,10 +4024,11 @@ defaultareacap     nwell well 120
 
 #ifdef METALS4 || METALS5 || METALS6
 #metal4
- defaultsidewall    allm4 metal4       30.994
- defaultareacap     allm4 metal4 nwell,obswell,pwell well 7.6025
+ defaultsidewall    allm4 metal4  30.994
+ defaultareacap     allm4 metal4  7.6025
+ defaultperimeter   allm4 metal4  10.649
  defaultoverlap     allm4 metal4 nwell well 7.6025
- defaultperimeter   allm4 metal4 well  10.649
+ defaultsideoverlap allm4 metal4 nwell well 10.649
 
 #metal4->active
  defaultoverlap     allm4 metal4 allactivenonfet active 8.1360
@@ -4055,9 +4060,10 @@ defaultareacap     nwell well 120
 #endif
 
 #ifdef METALS5 || METALS6
- defaultareacap     allm5 metal5 nwell,obswell,pwell well 5.7979
+ defaultareacap     allm5 metal5  5.7979
+ defaultperimeter   allm5 metal5  10.850
  defaultoverlap     allm5 metal5 nwell well 5.7979
- defaultperimeter   allm5 metal5 well  10.850
+ defaultsideoverlap allm5 metal5 nwell well 10.850
 
 #metal5->active
  defaultoverlap     allm5 metal5 allactivenonfet active 6.1031
@@ -4086,10 +4092,11 @@ defaultareacap     nwell well 120
 
 #ifdef METALS6
 #metaltp
- defaultsidewall    allmtp metaltp      54.335
- defaultareacap     allmtp metaltp nwell,obswell,pwell well 4.8793
+ defaultsidewall    allmtp metaltp  54.335
+ defaultareacap     allmtp metaltp  4.8793
+ defaultperimeter   allmtp metaltp  9.5950
  defaultoverlap     allmtp metaltp nwell well 4.8793
- defaultperimeter   allmtp metaltp well  9.5950
+ defaultsideoverlap allmtp metaltp nwell well 9.5950
 
 #metaltp->active
  defaultoverlap     allmtp metaltp allactivenonfet active 5.0937
@@ -4149,16 +4156,18 @@ defaultareacap     nwell well 120
 # defaultperimeter   allpolynonfet active   57
 
  defaultsidewall    *poly active  16.56
- defaultareacap     *poly active nwell,obswell,pwell well  130.2
- defaultperimeter   *poly active nwell,obswell,pwell well  54.018
+ defaultareacap     *poly active  130.2
+ defaultperimeter   *poly active  54.018
+ defaultoverlap     *poly active nwell,obswell,pwell well  130.2
+ defaultsideoverlap *poly active nwell,obswell,pwell well  54.018
 
 #metal1
- defaultsidewall    allm1 metal1       29.294
- defaultareacap     allm1 metal1 nwell,obswell,pwell well  33.126
- defaultperimeter   allm1 metal1 nwell,obswell,pwell well  25.790
+ defaultsidewall    allm1 metal1  29.294
+ defaultareacap     allm1 metal1  33.126
+ defaultperimeter   allm1 metal1  25.790
  defaultoverlap     allm1 metal1 nwell well 33.126
-
-#metal1->diff
+ defaultsid3overlap allm1 metal1 nwell well 25.790
+#metal1->active
  defaultoverlap     allm1 metal1 allactivenonfet active 43.636
  defaultsideoverlap allm1 metal1 allactivenonfet active 30.445
 
@@ -4167,10 +4176,11 @@ defaultareacap     nwell well 120
  defaultsideoverlap allm1 metal1 allpolynonres active 36.440
 
 #metal2
- defaultsidewall    allm2 metal2      31.727
- defaultareacap     allm2 metal2 nwell,obswell,pwell well 16.472
- defaultperimeter   allm2 metal2 nwell,obswell,pwell well 18.124
+ defaultsidewall    allm2 metal2  31.727
+ defaultareacap     allm2 metal2  16.472
+ defaultperimeter   allm2 metal2  18.124
  defaultoverlap     allm2 metal2 nwell well 16.472
+ defaultsideoverlap allm2 metal2 nwell well 18.124
 #metal2->active
  defaultoverlap     allm2 metal2 allactivenonfet active 18.713
  defaultsideoverlap allm2 metal2 allactivenonfet active 19.744
@@ -4185,10 +4195,11 @@ defaultareacap     nwell well 120
 
 #ifdef METALS3 || METALS4 || METALS5 || METALS6
 #metal3
- defaultsidewall    allm3 metal3     32.049
+ defaultsidewall    allm3 metal3  32.049
+ defaultareacap     allm3 metal3  10.961
+ defaultperimeter   allm3 metal3  13.270
  defaultoverlap     allm3 metal3 nwell well 11.910
- defaultareacap     allm3 metal3 nwell,obswell,pwell well 10.961
- defaultperimeter   allm3 metal3 nwell,obswell,pwell well 13.270
+ defaultsideoverlap allm3 metal3 nwell well 13.270
 
 #metal3->active
  defaultoverlap     allm3 metal3 allactive active 11.910
@@ -4209,10 +4220,11 @@ defaultareacap     nwell well 120
 
 #ifdef METALS4 || METALS5 || METALS6
 #metal4
- defaultsidewall    allm4 metal4       32.265
- defaultareacap     allm4 metal4 nwell,obswell,pwell well 8.213
+ defaultsidewall    allm4 metal4  32.265
+ defaultareacap     allm4 metal4  8.213
+ defaultperimeter   allm4 metal4  10.397
  defaultoverlap     allm4 metal4 nwell well 8.213
- defaultperimeter   allm4 metal4 well  10.397
+ defaultsideoverlap allm4 metal4 nwell well 10.397
 
 #metal4->active
  defaultoverlap     allm4 metal4 allactivenonfet active 8.735
@@ -4237,10 +4249,11 @@ defaultareacap     nwell well 120
 
 #ifdef METALS5 || METALS6
 #metal5
- defaultsidewall    allm5 metal5       57.012
- defaultareacap     allm5 metal5 nwell,obswell,pwell well 6.241
+ defaultsidewall    allm5 metal5  57.012
+ defaultareacap     allm5 metal5  6.241
+ defaultperimeter   allm5 metal5  10.676
  defaultoverlap     allm5 metal5 nwell well 6.241
- defaultperimeter   allm5 metal5 well  10.676
+ defaultsideoverlap allm5 metal5 nwell well 10.676
 
 #metal5->active
  defaultoverlap     allm5 metal5 allactivenonfet active 6.537
@@ -4269,10 +4282,10 @@ defaultareacap     nwell well 120
 
 #ifdef METALS6
 #metaltp
- defaultsidewall    allmtp metaltp       57.187
- defaultareacap     allmtp metaltp nwell,obswell,pwell well 5.242
+ defaultsidewall    allmtp metaltp  57.187
+ defaultareacap     allmtp metaltp  5.242
+ defaultperimeter   allmtp metaltp  9.407
  defaultoverlap     allmtp metaltp nwell well 5.242
- defaultperimeter   allmtp metaltp well  9.407
 
 #metaltp->active
  defaultoverlap     allmtp metaltp allactivenonfet active 5.450
@@ -4332,16 +4345,17 @@ defaultareacap     nwell well 120
 # defaultperimeter   allpolynonfet active   57
 
  defaultsidewall    *poly active  16.388
- defaultareacap     *poly active nwell,obswell,pwell well  96.241
- defaultperimeter   *poly active nwell,obswell,pwell well  48.943
+ defaultareacap     *poly active  96.241
+ defaultperimeter   *poly active  48.943
+ defaultoverlap     *poly active nwell,obswell,pwell well  96.241
+ defaultsideoverlap *poly active nwell,obswell,pwell well  48.943
 
 #metal1
- defaultsidewall    allm1 metal1     26.630   
- defaultareacap     allm1 metal1 nwell,obswell,pwell well  26.274
- defaultperimeter   allm1 metal1 nwell,obswell,pwell well  25.666
+ defaultsidewall    allm1 metal1  26.630   
+ defaultareacap     allm1 metal1  26.274
+ defaultperimeter   allm1 metal1  25.666
  defaultoverlap     allm1 metal1 nwell well 26.274
-
-#metal1->diff
+#metal1->active
  defaultoverlap     allm1 metal1 allactivenonfet active 35.612
  defaultsideoverlap allm1 metal1 allactivenonfet active 30.684
 
@@ -4350,9 +4364,9 @@ defaultareacap     nwell well 120
  defaultsideoverlap allm1 metal1 allpolynonres active 34.738
 
 #metal2
- defaultsidewall    allm2 metal2     29.023 
- defaultareacap     allm2 metal2 nwell,obswell,pwell well 13.797
- defaultperimeter   allm2 metal2 nwell,obswell,pwell well 18.332
+ defaultsidewall    allm2 metal2  29.023 
+ defaultareacap     allm2 metal2  13.797
+ defaultperimeter   allm2 metal2  18.332
  defaultoverlap     allm2 metal2 nwell well 13.797
 #metal2->active
  defaultoverlap     allm2 metal2 allactivenonfet active 16.000
@@ -4368,10 +4382,11 @@ defaultareacap     nwell well 120
 
 #ifdef METALS3 || METALS4 || METALS5 || METALS6
 #metal3
- defaultsidewall    allm3 metal3     28.809
+ defaultsidewall    allm3 metal3  28.809
+ defaultareacap     allm3 metal3  9.355
+ defaultperimeter   allm3 metal3  13.710
  defaultoverlap     allm3 metal3 nwell well 9.355
- defaultareacap     allm3 metal3 nwell,obswell,pwell well 9.355
- defaultperimeter   allm3 metal3 nwell,obswell,pwell well 13.710
+ defaultsideoverlap allm3 metal3 nwell well 13.710
 
 #metal3->active
  defaultoverlap     allm3 metal3 allactive active 10.318
@@ -4392,10 +4407,11 @@ defaultareacap     nwell well 120
 
 #ifdef METALS4 || METALS5 || METALS6
 #metal4
- defaultsidewall    allm4 metal4       29.629
- defaultareacap     allm4 metal4 nwell,obswell,pwell well 7.076
+ defaultsidewall    allm4 metal4  29.629
+ defaultareacap     allm4 metal4  7.076
+ defaultperimeter   allm4 metal4  10.870
  defaultoverlap     allm4 metal4 nwell well 7.076
- defaultperimeter   allm4 metal4 well  10.870
+ defaultsideoverlap allm4 metal4 nwell well 10.870
 
 #metal4->active
  defaultoverlap     allm4 metal4 allactivenonfet active 7.614
@@ -4420,10 +4436,11 @@ defaultareacap     nwell well 120
 
 #ifdef METALS5 || METALS6
 #metal5
- defaultsidewall    allm5 metal5       51.169
- defaultareacap     allm5 metal5 nwell,obswell,pwell well 5.414
+ defaultsidewall    allm5 metal5  51.169
+ defaultareacap     allm5 metal5  5.414
+ defaultperimeter   allm5 metal5  10.992
  defaultoverlap     allm5 metal5 nwell well 5.414
- defaultperimeter   allm5 metal5 well  10.992
+ defaultsideoverlap allm5 metal5 nwell well 10.992
 
 #metal5->active
  defaultoverlap     allm5 metal5 allactivenonfet active 5.723
@@ -4452,10 +4469,11 @@ defaultareacap     nwell well 120
 
 #ifdef METALS6
 #metaltp
- defaultsidewall    allmtp metaltp       51.353
- defaultareacap     allmtp metaltp nwell,obswell,pwell well 4.563
+ defaultsidewall    allmtp metaltp  51.353
+ defaultareacap     allmtp metaltp  4.563
+ defaultperimeter   allmtp metaltp  9.764
  defaultoverlap     allmtp metaltp nwell well 4.563
- defaultperimeter   allmtp metaltp well  9.764
+ defaultsideoverlap allmtp metaltp nwell well 9.764
 
 #metaltp->active
  defaultoverlap     allmtp metaltp allactivenonfet active 4.781
