@@ -3,4 +3,5 @@
 # no longer has the issue of slow reads of complex polygons.
 gds ordering on
 gds flatten true
+gds polygon subcells true
 gds flatglob *_CDNS_*
