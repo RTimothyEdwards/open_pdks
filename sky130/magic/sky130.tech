@@ -5378,6 +5378,7 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsidewall    *poly active 16.0
  defaultareacap     *poly active 106.13
  defaultperimeter   *poly active 55.27
+ defaultoverlap     *poly active nwell,pwell well  106.13
  defaultsideoverlap *poly active nwell,pwell well  55.27
 
 #locali
@@ -5708,6 +5709,7 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsidewall    *poly active 17.0	0.21
  defaultareacap     *poly active 80.4
  defaultperimeter   *poly active 48.83
+ defaultoverlap     *poly active nwell,pwell well  80.4
  defaultsideoverlap *poly active nwell,pwell well  48.83
 
 #locali
@@ -6038,6 +6040,7 @@ defaultareacap     nwell well dnwell dwell 120
  defaultsidewall    *poly active 17.0	0.21
  defaultareacap     *poly active 155.0
  defaultperimeter   *poly active 64.82
+ defaultoverlap     *poly active nwell,pwell well  155.0
  defaultsideoverlap *poly active nwell,pwell well  64.82
 
 #locali
