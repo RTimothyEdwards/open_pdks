@@ -244,7 +244,7 @@ OSU_T18_PATH = @SKY130_OSU_T18_PATH@
 PDK_URL = https://github.com/google/skywater-pdk
 ALPHA_URL = https://github.com/PaulSchulz/sky130_pschulz_xx_hd
 XSCHEM_URL = https://github.com/StefanSchippers/xschem_sky130
-KLAYOUT_URL = https://github.com/mabrains/sky130_klayout_pdk
+KLAYOUT_URL = https://github.com/efabless/sky130_klayout_pdk
 PRECHECK_URL = https://github.com/efabless/mpw_precheck
 SRAM_URL = https://github.com/efabless/sky130_sram_macros
 SRAM_SPACE_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_fd_bd_sram
@@ -1009,6 +1009,7 @@ klayout-%: ${KLAYOUT_PATH}
 		cp -rp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/pymacros/* ${KLAYOUT_STAGING_$*}/pymacros/ ; \
 		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.lyp ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyp ; \
 		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.lyt ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyt ; \
+		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.lmp ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lmp ; \
 		cp -rp ${KLAYOUT_PATH}/scripts/* ${KLAYOUT_STAGING_$*}/scripts/ ; \
 	fi
 	# Copy original DRC deck from open_pdks (is this useful?)

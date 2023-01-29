@@ -104,7 +104,7 @@
         "sky130_fd_bd_sram": "be33adbcf188fdeab5c061699847d9d440f7a084",
         "sky130_ml_xx_hd": "6eb3b0718552b034f1bf1870285ff135e3fb2dcb",
         "xschem_sky130": "5fa1b2e30eda4cdc9949a989d7482531a30b56d4",
-        "klayout_sky130": "7cd7d32bdcbbe32f456a73a02e4653983a6a1850",
+        "klayout_sky130": "dc579b007d27180cbf4085d82e01c732fc34e454",
         "precheck_sky130": "a8a54b74961a43f3a7b85d44843ae2adbc93b233"
     }
 }
