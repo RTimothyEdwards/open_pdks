@@ -14,6 +14,9 @@ if { ![info exist ::env(STD_CELL_LIBRARY_OPT)] } {
 set ::env(VDD_PIN) "VPWR"
 set ::env(GND_PIN) "VGND"
 
+set ::env(VDD_PIN_VOLTAGE) "1.80"
+set ::env(GND_PIN_VOLTAGE) "0.00"
+
 set ::env(STD_CELL_POWER_PINS) "VPWR VPB"
 set ::env(STD_CELL_GROUND_PINS) "VGND VNB"
 

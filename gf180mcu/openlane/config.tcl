@@ -4,6 +4,9 @@ set ::env(DEF_UNITS_PER_MICRON) 2000
 
 set ::env(VDD_PIN) "VDD"
 set ::env(GND_PIN) "VSS"
+set ::env(VDD_PIN_VOLTAGE) "5.00"
+set ::env(GND_PIN_VOLTAGE) "0.00"
+
 set ::env(STD_CELL_POWER_PINS) "VDD VNW"
 set ::env(STD_CELL_GROUND_PINS) "VSS VPW"
 
