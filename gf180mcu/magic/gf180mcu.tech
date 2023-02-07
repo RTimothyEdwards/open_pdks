@@ -4166,7 +4166,7 @@ defaultareacap     nwell well 120
  defaultareacap     allm1 metal1  33.126
  defaultperimeter   allm1 metal1  25.790
  defaultoverlap     allm1 metal1 nwell well 33.126
- defaultsid3overlap allm1 metal1 nwell well 25.790
+ defaultsideoverlap allm1 metal1 nwell well 25.790
 #metal1->active
  defaultoverlap     allm1 metal1 allactivenonfet active 43.636
  defaultsideoverlap allm1 metal1 allactivenonfet active 30.445
