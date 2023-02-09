@@ -4,9 +4,6 @@ set current_folder [file dirname [file normalize [info script]]]
 #ifdef EF_FORMAT
 set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(STD_CELL_LIBRARY)/sky130_fd_sc_hvl__tt_025C_3v30.lib"
 
-set ::env(VDD_PIN_VOLTAGE) "3.30"
-set ::env(GND_PIN_VOLTAGE) "0.00"
-
 set ::env(LIB_FASTEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(STD_CELL_LIBRARY)/sky130_fd_sc_hvl__ff_n40C_5v50.lib"
 set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(STD_CELL_LIBRARY)/sky130_fd_sc_hvl__ss_150C_1v65.lib"
 #else (!EF_FORMAT)
@@ -16,6 +13,9 @@ set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LI
 #endif (!EF_FORMAT)
 
 set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
+
+set ::env(VDD_PIN_VOLTAGE) "3.30"
+set ::env(GND_PIN_VOLTAGE) "0.00"
 
 # MUX4 mapping
 set ::env(SYNTH_MUX4_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/$::env(STD_CELL_LIBRARY)/mux4_map.v"
