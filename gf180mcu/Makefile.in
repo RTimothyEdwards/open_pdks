@@ -60,6 +60,7 @@
 #  gf180mcuA   =  METALS3 | MIM | THICKMET3P0 | HRPOLY1K
 #  gf180mcuB   =  METALS4 | MIM | THICKMET1P1 | HRPOLY1K
 #  gf180mcuC   =  METALS5 | MIM | THICKMET0P9 | HRPOLY1K
+#  gf180mcuD   =  METALS5 | MIM | THICKMET1P1 | HRPOLY1K
 #
 # Written by Tim Edwards April 2022
 # Efabless, Inc.
@@ -187,25 +188,30 @@ endif
 GF180MCUA = gf180mcuA
 GF180MCUB = gf180mcuB
 GF180MCUC = gf180mcuC
+GF180MCUD = gf180mcuD
 
 DIST_LINK_TARGETS_A = ${LINK_TARGETS_A}
 DIST_LINK_TARGETS_B = ${SHARED_PDKS_PATH}/${LINK_TARGETS_B}
 DIST_LINK_TARGETS_C = ${SHARED_PDKS_PATH}/${LINK_TARGETS_C}
+DIST_LINK_TARGETS_D = ${SHARED_PDKS_PATH}/${LINK_TARGETS_D}
 
 # Basic definitions for each process node
 GF180MCUA_DEFS = -DTECHNAME=gf180mcuA -DREVISION=${REVISION}
 GF180MCUB_DEFS = -DTECHNAME=gf180mcuB -DREVISION=${REVISION}
 GF180MCUC_DEFS = -DTECHNAME=gf180mcuC -DREVISION=${REVISION}
+GF180MCUD_DEFS = -DTECHNAME=gf180mcuD -DREVISION=${REVISION}
 
 # Module definitions for each process node (see top)
 GF180MCUA_DEFS += -DMETALS3 -DMIM -DTHICKMET3P0 -DHRPOLY1K
 GF180MCUB_DEFS += -DMETALS4 -DMIM -DTHICKMET1P1 -DHRPOLY1K
 GF180MCUC_DEFS += -DMETALS5 -DMIM -DTHICKMET0P9 -DHRPOLY1K
+GF180MCUD_DEFS += -DMETALS5 -DMIM -DTHICKMET1P1 -DHRPOLY1K
 
 # Add staging path
 GF180MCUA_DEFS += -DSTAGING_PATH=${STAGING_PATH}
 GF180MCUB_DEFS += -DSTAGING_PATH=${STAGING_PATH}
 GF180MCUC_DEFS += -DSTAGING_PATH=${STAGING_PATH}
+GF180MCUD_DEFS += -DSTAGING_PATH=${STAGING_PATH}
 
 # Get the timestamp of the open_pdks commit to use for stamping layouts.
 OPEN_PDKS_TIMESTAMP = $(shell git log -1 --format="%ad" --date=raw | cut -d' ' -f1)
@@ -254,6 +260,7 @@ ifeq (${EF_STYLE}, 1)
     GF180MCUA_DEFS += -DEF_FORMAT
     GF180MCUB_DEFS += -DEF_FORMAT
     GF180MCUC_DEFS += -DEF_FORMAT
+    GF180MCUD_DEFS += -DEF_FORMAT
 else
     EF_FORMAT = -std_format
 endif
@@ -345,19 +352,42 @@ XSCHEM_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${XSCHEMPATH}
 XCIRCUIT_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${XCIRCUITPATH}
 NGSPICE_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${NGSPICEPATH}
 
+MAGICTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${MAGICTOP}
+NETGENTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${NETGENTOP}
+IRSIMTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${IRSIMTOP}
+QFLOWTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${QFLOWTOP}
+KLAYOUTTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${KLAYOUTTOP}
+OPENLANETOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${OPENLANETOP}
+XSCHEMTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${XSCHEMTOP}
+XCIRCUITTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${XCIRCUITTOP}
+NGSPICETOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${NGSPICETOP}
+
+MAGIC_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${MAGICPATH}
+NETGEN_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${NETGENPATH}
+IRSIM_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${IRSIMPATH}
+QFLOW_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${QFLOWPATH}
+KLAYOUT_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${KLAYOUTPATH}
+OPENLANE_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${OPENLANEPATH}
+XSCHEM_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${XSCHEMPATH}
+XCIRCUIT_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${XCIRCUITPATH}
+NGSPICE_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${NGSPICEPATH}
+
 GF180MCUA_DEFS += -DMAGIC_CURRENT=${MAGIC_CURRENT}
 GF180MCUB_DEFS += -DMAGIC_CURRENT=${MAGIC_CURRENT}
 GF180MCUC_DEFS += -DMAGIC_CURRENT=${MAGIC_CURRENT}
+GF180MCUD_DEFS += -DMAGIC_CURRENT=${MAGIC_CURRENT}
 
 # These definitions are used by the build recipes
 A_STACK = 3lm
 B_STACK = 4lm
 C_STACK = 5lm
+D_STACK = 5lm
 
 # These definitions are used by the build recipes for the tech LEF
 A_FULLSTACK = 3LM_1TM_30K
 B_FULLSTACK = 4LM_1TM_11K
 C_FULLSTACK = 5LM_1TM_9K
+D_FULLSTACK = 5LM_1TM_11K
 
 # Openlane has a number of files that are common to all digital
 # standard cell libraries, so these are collected in one definition
@@ -559,6 +589,8 @@ tools-B: $(addsuffix -B, $(TOOLS))
 
 tools-C: $(addsuffix -C, $(TOOLS))
 
+tools-D: $(addsuffix -D, $(TOOLS))
+
 magic-%: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${TECH}.tcl
 	mkdir -p ${MAGICTOP_STAGING_$*}
 	mkdir -p ${MAGIC_STAGING_$*}
@@ -708,6 +740,8 @@ vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build
 vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B sram-build-B digital-osu-build-B
 
 vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C sram-build-C digital-osu-build-C
+
+vendor-D: primitive-build-D digital-7t5v0-build-D digital-9t5v0-build-D io-build-D sram-build-D digital-osu-build-D
 
 primitive-build-%:
 	if test -d ${GF180MCU_PR_PATH} ; then \
@@ -995,6 +1029,15 @@ install-C: install-A
 		-link_from ${DIST_LINK_TARGETS_C} 2>&1 | tee -a ${GF180MCUC}_install.log
 	echo "Ended GF180MCU PDK migration on "`date` >> ${GF180MCUC}_install.log
 
+install-D: install-A
+	echo "Starting GF180MCU PDK migration on "`date` > ${GF180MCUD}_install.log
+	${INSTALL} \
+		-source ${STAGING_PATH}/${GF180MCUD} \
+		-finalpath ${SHARED_PDKS_PATH}/${GF180MCUD} \
+		-variable PDKPATH \
+		-link_from ${DIST_LINK_TARGETS_C} 2>&1 | tee -a ${GF180MCUD}_install.log
+	echo "Ended GF180MCU PDK migration on "`date` >> ${GF180MCUD}_install.log
+
 uninstall: $(foreach var, ${VARIANTS}, uninstall-$(var))
 
 uninstall-A:
@@ -1018,6 +1061,13 @@ uninstall-C:
 	fi
 	echo "Finished GF180MCU PDK uninstall"
 
+uninstall-D:
+	echo "Uninstalling GF180MCU PDK from ${SHARED_PDKS_PATH}"
+	if test "x${SHARED_PDKS_PATH}" != "x" ; then \
+		${RM} -rf ${SHARED_PDKS_PATH}/${GF180MCUD} ; \
+	fi
+	echo "Finished GF180MCU PDK uninstall"
+
 clean: $(foreach var, ${VARIANTS}, clean-$(var))
 
 clean-A:
@@ -1028,6 +1078,9 @@ clean-B:
 
 clean-C:
 	${STAGE} -target ${STAGING_PATH}/${GF180MCUC} -clean
+
+clean-D:
+	${STAGE} -target ${STAGING_PATH}/${GF180MCUD} -clean
 
 veryclean: $(foreach var, ${VARIANTS}, veryclean-$(var))
 
@@ -1042,5 +1095,9 @@ veryclean-B: clean-B
 veryclean-C: clean-C
 	${RM} ${GF180MCUC}_make.log
 	${RM} ${GF180MCUC}_install.log
+
+veryclean-D: clean-D
+	${RM} ${GF180MCUD}_make.log
+	${RM} ${GF180MCUD}_install.log
 
 

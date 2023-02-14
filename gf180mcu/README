@@ -34,7 +34,8 @@ The installation directory below PDK_ROOT is the name of the PDK;  e.g.,
 
 	    gf180mcuA/	3-metal backend stack
 	    gf180mcuB/	4-metal backend stack
-	    gf180mcuC/	5-metal backend stack
+	    gf180mcuC/	5-metal backend stack (9K)
+	    gf180mcuC/	5-metal backend stack (11K)
 
 (Again, see the Makefile for the complete description.)
 
