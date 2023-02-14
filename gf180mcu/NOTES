@@ -3,3 +3,8 @@ gf180mcu (180nm) open PDK.
 
 July 27, 2022:  Open source repositories now available on github, so integrating
 directly into open_pdks.
+
+February 14, 2023:  Added PDK variant gf180mcuD, which is like gf180mcuC except
+has a top metal thickness of 1.1um instead of 0.9um.  According to GF, this is
+preferred for better wire bonding yield on the pads.  The first open MPW was
+done with gf180mcuC, but all subsequent open MPWs will be done with gf180mcuD.
