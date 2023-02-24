@@ -5172,10 +5172,12 @@ variants (),(orig),(si)
 #endif (REDISTRIBUTION)
 
  contact ndc,nsc		185000
+ contact ndic,ndilvtc,nndic	185000
  contact pdc,psc		585000
- contact mvndc,mvnsc		185000
- contact mvpdc,mvpsc	  	585000
- contact pc			152000
+ contact pdic,pdilvtc,pdihvtc	585000
+ contact mvndc,mvnsc,mvndic	185000
+ contact mvpdc,mvpsc,mvpdic  	585000
+ contact pc,xpc			152000
  contact mcon			  9300
 #ifdef RERAM
  contact m2c			  9000
@@ -5232,10 +5234,12 @@ variants (hrhc),(hrlc)
 #endif (REDISTRIBUTION)
 
  contact ndc,nsc		280000
+ contact ndic,ndilvtc,nndic	280000
  contact pdc,psc		840000
- contact mvndc,mvnsc		280000
- contact mvpdc,mvpsc	  	840000
- contact pc			252000
+ contact pdic,pdilvtc,pdihvtc	840000
+ contact mvndc,mvnsc,mvndic	280000
+ contact mvpdc,mvpsc,mvpdic  	840000
+ contact pc,xpc			252000
  contact mcon			 23000
 #ifdef RERAM
  contact m2c			 30000
@@ -5292,10 +5296,12 @@ variants (lrhc),(lrlc)
 #endif (REDISTRIBUTION)
 
  contact ndc,nsc		 95000
+ contact ndic,ndilvtc,nndic	 95000
  contact pdc,psc		345000
- contact mvndc,mvnsc		 95000
- contact mvpdc,mvpsc	  	345000
- contact pc			 52000
+ contact pdic,pdilvtc,pdihvtc	345000
+ contact mvndc,mvnsc,mvndic	 95000
+ contact mvpdc,mvpsc,mvpdic  	345000
+ contact pc,xpc			 52000
  contact mcon			  1600
 #ifdef RERAM
  contact m2c			  4000
@@ -5344,7 +5350,7 @@ variants *
 # should be split between the two terminals.  Unsure of the correct model.
 #-------------------------------------------------------------------------
 
-variants (),(orig),(si),(hrhc),(lrhc),(hrlc),(lrlc)
+variants (),(orig),(si)
 # Nominal capacitances
 
 #deep n-well

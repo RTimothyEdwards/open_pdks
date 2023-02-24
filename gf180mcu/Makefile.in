@@ -81,8 +81,8 @@ prefix = @prefix@
 datarootdir = @datarootdir@
 datadir = @datadir@
 
-# Find path to open_pdks (even though this directory may be a symbolic link)
-SCRIPTSDIR = $(patsubst %/gf180mcu,%,$(PWD))
+# Path to open_pdks root directory (may need changing if it is a symbolic link)
+SCRIPTSDIR ?= ..
 
 # Use git revision if this is a cloned repo;  otherwise get the revision
 # from the VERSION file in the directory above.
@@ -134,6 +134,7 @@ SHARED_PDKS_PATH ?= $(datadir)/pdk
 LINK_TARGETS_A = @GF180MCU_LINK_TARGETS@
 LINK_TARGETS_B = gf180mcuA
 LINK_TARGETS_C = gf180mcuA
+LINK_TARGETS_D = gf180mcuA
 
 # ENABLED_VARIANTS = all | A | B | C | D
 ENABLED_VARIANTS = @GF180MCU_ENABLED_VARIANTS@
