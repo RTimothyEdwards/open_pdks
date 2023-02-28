@@ -74,6 +74,9 @@
     "primitive": {
         "gf180mcu_fd_pr": "FD_PR_COMMIT"
     },
+    "verification": {
+        "gf180mcu_fd_pv": "FD_PV_COMMIT"
+    },
     "memory": {
         "gf180mcu_fd_ip_sram": "FD_IP_SRAM_COMMIT"
     },
@@ -86,15 +89,16 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "237959eeddfe01b19f76dd7a500e25b36d36a23f",
-        "magic": "be40825e9aadc1bed858801572bef0415444b516",
+        "open_pdks": "815863e7bf1848eb9e21ac1fba50fba0fcbde173",
+        "magic": "e72f85fd105f2f87a809a0512f85b0da75b0350e",
         "gf180mcu_pdk": "a897aa30369d3bcec87d9d50ce9b01f320f854ef",
-        "gf180mcu_fd_pr": "e50ad570729356f65dd77e8c5f0745a6a27afd6c",
+        "gf180mcu_fd_pr": "9d03c3186e8ebfb97c0d05e3d35e64fe6dbbf511",
+        "gf180mcu_fd_pv": "1984a3ca2749350060799115ebb1af41ad4af495",
         "gf180mcu_fd_io": "2aeec51ea2824b6cc0b396acfc39f4535f40b23a",
         "gf180mcu_fd_sc_mcu7t5v0": "8743b6f9641eb8707179c4e51703380d4dc90f16",
         "gf180mcu_fd_sc_mcu9t5v0": "376ea56fa36ce7702595ce4e0e3c9357ee38c81c",
         "gf180mcu_fd_ip_sram": "9c411928870ce15226228fa52ddb6ecc0ea4ffbe",
-	"gf180mcu_osu_sc_gf12t3v3": "e16f26cda99e81e004d7141fc815e67b66f971c2",
-	"gf180mcu_osu_sc_gf9t3v3": "e16f26cda99e81e004d7141fc815e67b66f971c2"
+	"gf180mcu_osu_sc_gf12t3v3": "c33c01c9de46b944401f3f33d9787fb16280be11",
+	"gf180mcu_osu_sc_gf9t3v3": "c33c01c9de46b944401f3f33d9787fb16280be11"
     }
 }

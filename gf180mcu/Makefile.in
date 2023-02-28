@@ -153,6 +153,7 @@ endif
 # Path to GF180MCU open PDK sources.  If this is specified, then all
 # library repositories must be subdirectories of this path.
 GF180MCU_PR_PATH = @GF180MCU_FD_PR_PATH@
+GF180MCU_PV_PATH = @GF180MCU_FD_PV_PATH@
 GF180MCU_IO_PATH = @GF180MCU_FD_IO_PATH@
 GF180MCU_SC_7T5V0_PATH = @GF180MCU_FD_SC_MCU7T5V0_PATH@
 GF180MCU_SC_9T5V0_PATH = @GF180MCU_FD_SC_MCU9T5V0_PATH@
@@ -176,6 +177,7 @@ EF_URL = https://github.com/efabless
 # NOTE:  Switching PDK_LIB_PR and PDK_LIB_SC_7T5V0 to Efabless versions
 # having "quick fixes" under development.
 PDK_LIB_PR =       ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_pr
+PDK_LIB_PV =       ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_pv
 PDK_LIB_IO =       ${PDK_URL}/globalfoundries-pdk-libs-gf180mcu_fd_io
 PDK_LIB_SC_7T5V0 = ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu7t5v0
 PDK_LIB_SC_9T5V0 = ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu9t5v0
@@ -248,6 +250,11 @@ ifeq (${GF180MCU_PR_PATH},)
     COMMIT_DEFS += -DFD_PR_COMMIT="unknown"
 else
     COMMIT_DEFS += -DFD_PR_COMMIT=$(shell cd ${GF180MCU_PR_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${GF180MCU_PV_PATH},)
+    COMMIT_DEFS += -DFD_PV_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DFD_PV_COMMIT=$(shell cd ${GF180MCU_PV_PATH} ; git rev-parse HEAD)
 endif
 ifeq (${GF180MCU_IO_PATH},)
     COMMIT_DEFS += -DFD_IO_COMMIT="unknown"
@@ -483,7 +490,7 @@ reference: ${TECH}.json
 	../common/save_commit_refs.py ${COMMIT_DEFS} ${TECH}.json
 
 # Handle prerequisites
-prerequisites: pr-repo io-repo sc-7t-repo sc-9t-repo sram-repo osu-sc-repo
+prerequisites: pr-repo pv-repo io-repo sc-7t-repo sc-9t-repo sram-repo osu-sc-repo
 
 pr-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
@@ -495,6 +502,19 @@ pr-repo:
 		else \
 			echo "Downloading primitive library from ${GF180MCU_PR_PATH}" ; \
 			../scripts/download.sh ${PDK_LIB_PR} ${GF180MCU_PR_PATH} ${FD_PR_COMMIT}; \
+		fi ; \
+	fi
+
+pv-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		FD_PV_COMMIT = `cat ${REFERENCE_JSON} | grep gf180mcu_fd_pv | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
+	if test "x${GF180MCU_PV_PATH}" != "x" ; then \
+		if test -d "${GF180MCU_PV_PATH}" ; then \
+			echo "Using existing installation of verification library from ${GF180MCU_PV_PATH}" ; \
+		else \
+			echo "Downloading verification library from ${GF180MCU_PV_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_PV} ${GF180MCU_PV_PATH} ${FD_PV_COMMIT}; \
 		fi ; \
 	fi
 
@@ -564,12 +584,18 @@ osu-sc-repo:
 	fi
 
 # Update prerequisites
-update: update-pr-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-osu-sc-repo
+update: update-pr-repo update-pv-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-osu-sc-repo
 
 update-pr-repo:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
 		echo "Updating GF180MCU primitive library from ${PDK_LIB_PR}" ; \
 		../scripts/update.sh ${GF180MCU_PR_PATH} ; \
+	fi
+
+update-pv-repo:
+	if test "x${GF180MCU_PV_PATH}" != "x" ; then \
+		echo "Updating GF180MCU verification library from ${PDK_LIB_PV}" ; \
+		../scripts/update.sh ${GF180MCU_PV_PATH} ; \
 	fi
 
 update-io-repo:
@@ -678,7 +704,7 @@ irsim-%:
 	mkdir -p ${IRSIMTOP_STAGING_$*}
 	mkdir -p ${IRSIM_STAGING_$*}
 
-klayout-%: ${GF180MCU_PR_PATH}
+klayout-%: ${GF180MCU_PV_PATH} ${GF180MCU_PR_PATH}
 	mkdir -p ${KLAYOUTTOP_STAGING_$*}
 	mkdir -p ${KLAYOUT_STAGING_$*}
 	rm -rf ${KLAYOUT_STAGING_$*}/drc
@@ -690,7 +716,7 @@ klayout-%: ${GF180MCU_PR_PATH}
 	mkdir ${KLAYOUT_STAGING_$*}/tech
 	mkdir ${KLAYOUT_STAGING_$*}/pymacros
 
-	cp -rp ${GF180MCU_PR_PATH}/rules/klayout/drc/* \
+	cp -rp ${GF180MCU_PV_PATH}/klayout/drc/* \
 		${KLAYOUT_STAGING_$*}/drc
 	cp -rp ${GF180MCU_PR_PATH}/rules/klayout/lvs/* \
 		${KLAYOUT_STAGING_$*}/lvs

@@ -243,6 +243,7 @@ M4_OPT_INSTALLATION(sky130_osu_t18, osu-t18-sky130, ../sources)
 
 # GlobalFoundries gf180mcu essential
 M4_GEN_INSTALLATION(gf180mcu_fd_pr, primitive-gf180mcu, ../sources)
+M4_GEN_INSTALLATION(gf180mcu_fd_pv, verification-gf180mcu, ../sources)
 M4_GEN_INSTALLATION(gf180mcu_fd_io, io-gf180mcu, ../sources)
 M4_GEN_INSTALLATION(gf180mcu_fd_sc_mcu7t5v0, sc-7t5v0-gf180mcu, ../sources)
 M4_GEN_INSTALLATION(gf180mcu_fd_sc_mcu9t5v0, sc-9t5v0-gf180mcu, ../sources)

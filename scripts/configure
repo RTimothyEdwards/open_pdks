@@ -596,6 +596,7 @@ GF180MCU_FD_IP_SRAM_PATH
 GF180MCU_FD_SC_MCU9T5V0_PATH
 GF180MCU_FD_SC_MCU7T5V0_PATH
 GF180MCU_FD_IO_PATH
+GF180MCU_FD_PV_PATH
 GF180MCU_FD_PR_PATH
 SKY130_OSU_T18_PATH
 SKY130_OSU_T15_PATH
@@ -699,6 +700,7 @@ enable_osu_t12_sky130
 enable_osu_t15_sky130
 enable_osu_t18_sky130
 enable_primitive_gf180mcu
+enable_verification_gf180mcu
 enable_io_gf180mcu
 enable_sc_7t5v0_gf180mcu
 enable_sc_9t5v0_gf180mcu
@@ -1396,6 +1398,9 @@ Optional Features:
                           will be downloaded. [default=disabled]
   --enable-primitive-gf180mcu[=path]
                           Install gf180mcu_fd_pr. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-verification-gf180mcu[=path]
+                          Install gf180mcu_fd_pv. If path is omitted, the repository
                           will be downloaded. [default=enabled]
   --enable-io-gf180mcu[=path]
                           Install gf180mcu_fd_io. If path is omitted, the repository
@@ -3102,6 +3107,48 @@ else
             { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'gf180mcu_fd_pr' will be installed automatically during make." >&5
 $as_echo "$as_me: Package 'gf180mcu_fd_pr' will be installed automatically during make." >&6;}
 	    GF180MCU_FD_PR_PATH=../sources/gf180mcu_fd_pr
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    GF180MCU_FD_PV_PATH=""
+
+    # Check whether --enable-verification-gf180mcu was given.
+if test "${enable_verification_gf180mcu+set}" = set; then :
+  enableval=$enable_verification_gf180mcu;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'gf180mcu_fd_pv' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'gf180mcu_fd_pv' will be installed automatically during make." >&6;}
+        	export GF180MCU_FD_PV_PATH=../sources/gf180mcu_fd_pv
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'gf180mcu_fd_pv'" >&5
+$as_echo "$as_me: Disabling package 'gf180mcu_fd_pv'" >&6;}
+    		export GF180MCU_FD_PV_PATH=""
+            else
+                GF180MCU_FD_PV_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'gf180mcu_fd_pv' at $GF180MCU_FD_PV_PATH" >&5
+$as_echo "$as_me: Enabling package 'gf180mcu_fd_pv' at $GF180MCU_FD_PV_PATH" >&6;}
+            fi
+            GF180MCU_FD_PV_PATH=`realpath $GF180MCU_FD_PV_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'gf180mcu_fd_pv' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'gf180mcu_fd_pv' will be installed automatically during make." >&6;}
+	    GF180MCU_FD_PV_PATH=../sources/gf180mcu_fd_pv
 
 
 fi

@@ -94,17 +94,17 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "3f9bdbd857564726b731760dc2c817e84ca7d8ac",
-        "magic": "6cefbd13f1dac2293aaa1537a6ee2ad23c11a273",
-        "skywater_pdk": "f70d8ca46961ff92719d8870a18a076370b85f6c",
-        "sky130_osu_sc_t12": "ac90ef0c622a9377a16b5218d9da3ac4169eeaaf",
-        "sky130_osu_sc_t15": "95d1c19abb47e1b2945847acb4e817b1b8417c43",
-        "sky130_osu_sc_t18": "aa2b509f3c8f32ea94fdb55ac9768754667c1658",
-        "sky130_sram_macros": "c2333394e0b0b9d9d71185678a8d8087715d5e3b",
+        "open_pdks": "815863e7bf1848eb9e21ac1fba50fba0fcbde173",
+        "magic": "e72f85fd105f2f87a809a0512f85b0da75b0350e",
+        "skywater_pdk": "unknown",
+        "sky130_osu_sc_t12": "unknown",
+        "sky130_osu_sc_t15": "unknown",
+        "sky130_osu_sc_t18": "unknown",
+        "sky130_sram_macros": "unknown",
         "sky130_fd_bd_sram": "be33adbcf188fdeab5c061699847d9d440f7a084",
         "sky130_ml_xx_hd": "6eb3b0718552b034f1bf1870285ff135e3fb2dcb",
-        "xschem_sky130": "5fa1b2e30eda4cdc9949a989d7482531a30b56d4",
-        "klayout_sky130": "1d53b55625d854ebfdd9f7f2941a35f3ffbdf185",
-        "precheck_sky130": "a8a54b74961a43f3a7b85d44843ae2adbc93b233"
+        "xschem_sky130": "e5e0ff5c76732ae899d2b96bf556523118a3982b",
+        "klayout_sky130": "00f6055166cf790587c457f90bbcba33fc076dcd",
+        "precheck_sky130": "86b7c42bfeb41d39c053a4f54677fb187ab350b1"
     }
 }
