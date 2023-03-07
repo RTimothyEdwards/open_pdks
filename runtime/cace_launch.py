@@ -31,13 +31,10 @@ from spiceunits import spice_unit_convert
 import file_compressor
 import cace_makeplot
 
-import config
-
-# Values imported from config:
-#
-mktp_server_url = config.mktp_server_url
-# obs: og_server_url = config.og_server_url
-simulation_path = config.simulation_path
+# Fix this. . .
+simulation_path = ""
+og_server_url = ""
+mktp_server_url = ""
 
 # Variables needing to be global until this file is properly made into a class
 simfiles_path = []
@@ -91,7 +88,7 @@ def cleanup_exit(signum, frame):
         else:
             subprocess.run(['rm', '-r', root_path])
     else:
-        # Remove all .spi files, .data files, .raw files and copy of datasheet
+        # Remove all .spice files, .data files, .raw files and copy of datasheet
         os.chdir(simfiles_path)
         if os.path.exists('datasheet.json'):
             os.remove('datasheet.json')
@@ -102,7 +99,7 @@ def cleanup_exit(signum, frame):
             except:
                 pass
             else:
-                if fileext == '.spi' or fileext == '.data' or fileext == '.raw':
+                if fileext == '.spice' or fileext == '.data' or fileext == '.raw':
                     os.remove(filename)
                 elif fileext == '.tv' or fileext == '.tvo' or fileext == '.lxt' or fileext == '.vcd':
                     os.remove(filename)
@@ -491,11 +488,11 @@ def run_and_analyze_lvs(dsheet):
     # the original one for backwards compatibility.
     if node == 'XH035':
         node = 'EFXH035A'
-    mag_path = netlist_path + '/lvs/' + ipname + '.spi'
-    schem_path = netlist_path + '/stub/' + ipname + '.spi'
+    mag_path = netlist_path + '/lvs/' + ipname + '.spice'
+    schem_path = netlist_path + ipname + '.spice'
 
     if not os.path.exists(schem_path):
-        schem_path = netlist_path + '/' + ipname + '.spi'
+        schem_path = netlist_path + '/' + ipname + '.spice'
     if not os.path.exists(schem_path):
         if os.path.exists(root_path + '/verilog'):
             schem_path = root_path + '/verilog/' + ipname + '.v'
@@ -527,16 +524,16 @@ def run_and_analyze_lvs(dsheet):
         pdkdir = os.path.realpath(root_path + '/.ef-config/techdir')
     else:
         foundry = dsheet['foundry']
-        pdkdir = '/ef/tech/' + foundry + '/' + node
+        pdkdir = '/usr/share/pdk/' + node
     lvs_setup = pdkdir + '/libs.tech/netgen/' + node + '_setup.tcl'
 
     # Run LVS as a subprocess and wait for it to finish.  Use the -json
     # switch to get a file that is easy to parse.
 
-    print('cace_launch.py:  running /ef/apps/bin/netgen -batch lvs ')
+    print('cace_launch.py:  running netgen -batch lvs ')
     print(layout_arg + ' ' + schem_path + ' ' + ipname + ' ' + lvs_setup + ' comp.out -json -blackbox')
 
-    lvsproc = subprocess.run(['/ef/apps/bin/netgen', '-batch', 'lvs',
+    lvsproc = subprocess.run(['netgen', '-batch', 'lvs',
 		layout_arg, schem_path + ' ' + ipname,
 		lvs_setup, 'comp.out', '-json', '-blackbox'], cwd=layout_path,
 		stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=0)
@@ -1185,7 +1182,7 @@ if __name__ == '__main__':
         if root_path:
             simfiles_path = root_path + '/' + hashname
         else:
-            simfiles_path = config.simulation_path + '/' + hashname
+            simfiles_path = simulation_path + '/' + hashname
 
     if not os.path.isdir(simfiles_path):
         print('Error:  Simulation folder ' + simfiles_path + ' does not exist.')
@@ -1197,10 +1194,10 @@ if __name__ == '__main__':
 
     if not netlist_path:
         if root_path:
-            netlist_path = root_path + '/spi'
+            netlist_path = root_path + '/spice'
 
     # Change location to the simulation directory
-    os.chdir(simfiles_path)
+    # os.chdir(simfiles_path)
 
     # pull out the relevant part of the JSON file, which is "data-sheet"
     dsheet = datatop['data-sheet']
@@ -1322,13 +1319,13 @@ if __name__ == '__main__':
             my_env = os.environ.copy()
             if os.path.exists(verilog):
                 cosim = True
-                simulator = '/ef/apps/bin/vvp'
+                simulator = 'vvp'
                 simargs = ['-M.', '-md_hdl_vpi']
                 filename = verilog + 'o'
                 # Copy the d_hdl object file into the simulation directory
-                shutil.copy('/ef/efabless/lib/iverilog/d_hdl_vpi.vpi', simfiles_path)
+                shutil.copy('d_hdl_vpi.vpi', simfiles_path)
                 # Generate the output executable (.tvo) file for vvp.
-                subprocess.call(['/ef/apps/bin/iverilog', '-o' + filename, verilog])
+                subprocess.call(['iverilog', '-o' + filename, verilog])
                 # Specific version of ngspice must be used for cosimulation
                 # (Deprecated; default version of ngspice now supports cosimulation)
                 # my_env['NGSPICE_VERSION'] = 'cosim1'
@@ -1338,7 +1335,7 @@ if __name__ == '__main__':
                     os.remove('simulator_pipe')
             else:
                 cosim = False
-                simulator = '/ef/apps/bin/ngspice'
+                simulator = 'ngspice'
                 simargs = ['-b']
                 # Do not generate LXT files, as CACE does not have any methods to handle
                 # the data in them anyway.
@@ -1855,7 +1852,7 @@ if __name__ == '__main__':
                 # May want to watch stderr for error messages and/or handle
                 # exit status.
 
-                postproc = subprocess.Popen(['/ef/apps/bin/octave-cli', tb_path],
+                postproc = subprocess.Popen(['octave-cli', tb_path],
 			stdout = subprocess.PIPE)
                 rvalues = postproc.communicate()[0].decode('ascii').splitlines()
 
@@ -2036,9 +2033,9 @@ if __name__ == '__main__':
             if layout_path and netlist_path:
 
                 # Run the device area (area estimation) script
-                if os.path.exists(netlist_path + '/' + ipname + '.spi'):
-                    estproc = subprocess.Popen(['/ef/efabless/bin/layout_estimate.py',
-				netlist_path + '/' + ipname + '.spi', node.lower()],
+                if os.path.exists(netlist_path + '/' + ipname + '.spice'):
+                    estproc = subprocess.Popen(['layout_estimate.py',
+				netlist_path + '/' + ipname + '.spice', node.lower()],
 				stdout=subprocess.PIPE,
 				cwd = layout_path, universal_newlines = True)
                     outlines = estproc.communicate()[0]
@@ -2096,7 +2093,7 @@ if __name__ == '__main__':
                     # script.  Result is either an actual area or an area estimate.
 
                     if os.path.exists(layout_path + '/' + ipname + '.mag'):
-                        areaproc = subprocess.Popen(['/ef/apps/bin/magic',
+                        areaproc = subprocess.Popen(['magic',
 				'-dnull', '-noconsole', layout_path + '/' + ipname + '.mag'],
 				stdin = subprocess.PIPE, stdout = subprocess.PIPE,
 				cwd = layout_path, universal_newlines = True)
@@ -2167,7 +2164,7 @@ if __name__ == '__main__':
                     # Find the layout directory and check if there is a layout
                     # for the cell there.
 
-                    areaproc = subprocess.Popen(['/ef/apps/bin/magic',
+                    areaproc = subprocess.Popen(['magic',
 				'-dnull', '-noconsole', layout_path + '/' + ipname + '.mag'],
 				stdin = subprocess.PIPE, stdout = subprocess.PIPE,
 				cwd = layout_path, universal_newlines = True)
@@ -2207,15 +2204,15 @@ if __name__ == '__main__':
             if not os.path.exists(layout_path):
                 os.makedirs(layout_path)
             if not os.path.exists(layout_path + '/.magicrc'):
-                pdkdir = '/ef/tech/' + foundry + '/' + node + '/libs.tech/magic/current'
+                pdkdir = '/usr/share/pdk/' + node + '/libs.tech/magic'
                 if os.path.exists(pdkdir + '/' + node + '.magicrc'):
                     shutil.copy(pdkdir + '/' + node + '.magicrc', layout_path + '/.magicrc')
 
             # Netlists should have been generated by cace_gensim.py
-            has_layout_nl = os.path.exists(netlist_path + '/lvs/' + ipname + '.spi')
-            has_schem_nl = os.path.exists(netlist_path + '/' + ipname + '.spi')
+            has_layout_nl = os.path.exists(netlist_path + '/lvs/' + ipname + '.spice')
+            has_schem_nl = os.path.exists(netlist_path + '/' + ipname + '.spice')
             has_vlog_nl = os.path.exists(root_path + '/verilog/' + ipname + '.v')
-            has_stub_nl = os.path.exists(netlist_path + '/stub/' + ipname + '.spi')
+            has_stub_nl = os.path.exists(netlist_path + '/stub/' + ipname + '.spice')
             if has_layout_nl and has_stub_nl and not netlist_source == 'schematic':
                 failures = run_and_analyze_lvs(dsheet)
             elif has_layout_nl and has_vlog_nl and not netlist_source == 'schematic':
@@ -2223,23 +2220,23 @@ if __name__ == '__main__':
             elif netlist_path and has_schem_nl:
                 if not has_layout_nl or not has_stub_nl:
                     if not has_layout_nl:
-                        print("Did not find layout LVS netlist " + netlist_path + '/lvs/' + ipname + '.spi')
+                        print("Did not find layout LVS netlist " + netlist_path + '/lvs/' + ipname + '.spice')
                     if not has_stub_nl:
-                        print("Did not find schematic LVS netlist " + netlist_path + '/' + ipname + '.spi')
+                        print("Did not find schematic LVS netlist " + netlist_path + '/' + ipname + '.spice')
                 print("Running layout device pre-check.")
                 if localmode == True:
                     if keepmode == True:
                         precheck_opts = ['-log', '-debug']
                     else:
                         precheck_opts = ['-log']
-                    print('/ef/efabless/bin/layout_precheck.py ' + netlist_path + '/' + ipname + '.spi ' + node.lower() + ' ' + ' '.join(precheck_opts))
-                    chkproc = subprocess.Popen(['/ef/efabless/bin/layout_precheck.py',
-				netlist_path + '/' + ipname + '.spi', node.lower(), *precheck_opts],
+                    print('layout_precheck.py ' + netlist_path + '/' + ipname + '.spice ' + node.lower() + ' ' + ' '.join(precheck_opts))
+                    chkproc = subprocess.Popen(['layout_precheck.py',
+				netlist_path + '/' + ipname + '.spice', node.lower(), *precheck_opts],
 				stdout=subprocess.PIPE,
 				cwd = layout_path, universal_newlines = True)
                 else:
-                    chkproc = subprocess.Popen(['/ef/efabless/bin/layout_precheck.py',
-				netlist_path + '/' + ipname + '.spi', node.lower()],
+                    chkproc = subprocess.Popen(['layout_precheck.py',
+				netlist_path + '/' + ipname + '.spice', node.lower()],
 				stdout=subprocess.PIPE,
 				cwd = layout_path, universal_newlines = True)
                 outlines = chkproc.communicate()[0]
@@ -2307,7 +2304,7 @@ if __name__ == '__main__':
             print('Simulation results retained per -local option\n')
             # If cace_gensim and cace_launch are run locally, keep the results
             # since they won't be posted, but remove all other generated files.
-            os.chdir(simfiles_path)
+            # os.chdir(simfiles_path)
             if os.path.exists('datasheet.json'):
                 os.remove('datasheet.json')
             for filename in filessimmed:

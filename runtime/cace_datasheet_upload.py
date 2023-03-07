@@ -17,8 +17,6 @@ import subprocess
 import file_compressor
 import file_request_hash
 
-import config
-
 """
  standalone script.
  Makes rest calls to marketplace REST server to save datasheet
@@ -27,7 +25,7 @@ import config
  has no other side effects.
 """
 
-mktp_server_url = config.mktp_server_url
+mktp_server_url = ""
 
 # Make request to server sending json passed in.
 def send_doc(doc):

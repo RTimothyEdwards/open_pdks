@@ -69,13 +69,10 @@ import subprocess
 import faulthandler
 from functools import reduce
 from spiceunits import spice_unit_convert
-from fix_libdirs import fix_libdirs
 
-import config
+# Application path (path where this script is located)
+apps_path = os.path.realpath(os.path.dirname(__file__))
 
-# Values obtained from config:
-#
-apps_path = config.apps_path
 launchproc = []
 
 def construct_dut_from_path(pname, pathname, pinlist, foundry, node):
@@ -107,16 +104,9 @@ def construct_dut_from_path(pname, pathname, pinlist, foundry, node):
             nlfoundry = lmatch.group(2)
             if nlfoundry != foundry:
                 print('Error:  Foundry is ' + foundry + ' in spec sheet, ' + nlfoundry + ' in netlist.')
-                # Not yet fixed in Electric
-                ## return ""
             if nlnode != node:
-                # Hack for legacy node name
-                if nlnode == 'XH035A' and node == 'XH035':
-                    pass
-                else:
-                    print('Error:  Node is ' + node + ' in spec sheet, ' + nlnode + ' in netlist.')
-                    # Not yet fixed in Electric
-                    ## return ""
+                print('Error:  Node is ' + node + ' in spec sheet, ' + nlnode + ' in netlist.')
+
         lmatch = subrex.match(line)
         if lmatch:
             rest = lmatch.group(1) 
@@ -131,11 +121,12 @@ def construct_dut_from_path(pname, pathname, pinlist, foundry, node):
                     except StopIteration:
                         # Maybe this is not the DUT?
                         found = 0
-                        # Try the next line
+                        # Try the next line (to be done)
                         break
                     else:
                         outline = outline + pin + ' '
                         found += 1
+                break
 
     if found == 0 and dutname == "":
         print('File ' + pathname + ' does not contain any subcircuits!')
@@ -413,13 +404,13 @@ def inline_dut(filename, functional, rootpath, ofile):
     endrex = re.compile(r'[ \t]*\.end[ \t]*', re.IGNORECASE)
     endsrex = re.compile(r'[ \t]*\.ends[ \t]*', re.IGNORECASE)
     # IP names in the ridiculously complicated form
-    # <user_path>/design/ip/<proj_name>/<version>/<spi-type>/<proj_name>/<proj_netlist>
+    # <user_path>/design/ip/<proj_name>/<version>/<spice-type>/<proj_name>/<proj_netlist>
     ippathrex = re.compile(r'(.+)/design/ip/([^/]+)/([^/]+)/([^/]+)/([^/]+)/([^/ \t]+)')
     locpathrex = re.compile(r'(.+)/design/([^/]+)/spi/([^/]+)/([^/ \t]+)')
     # This form does not appear on servers but is used if an IP block is being prepared locally.
     altpathrex = re.compile(r'(.+)/design/([^/]+)/([^/]+)/([^/]+)/([^/ \t]+)')
     # Local IP names in the form
-    # <user_path>/design/<project>/spi/<spi-type>/<proj_netlist>
+    # <user_path>/design/<project>/spi/<spice-type>/<proj_netlist>
 
     # To be completed
     with open(filename, 'r') as ifile:
@@ -462,7 +453,7 @@ def inline_dut(filename, functional, rootpath, ofile):
                     spitype = ippath.group(4)
                     ipname3 = ippath.group(5)
                     ipnetlist = ippath.group(6)
-                    funcpath = userpath + '/design/ip/' + ipname2 + '/' + ipversion + '/spi-func/' + ipname + '.spi' 
+                    funcpath = userpath + '/design/ip/' + ipname2 + '/' + ipversion + '/spice-func/' + ipname + '.spice'
                 else:
                     locpath = locpathrex.match(incpath)
                     if locpath:
@@ -470,7 +461,7 @@ def inline_dut(filename, functional, rootpath, ofile):
                         ipname2 = locpath.group(2)
                         spitype = locpath.group(3)
                         ipnetlist = locpath.group(4)
-                        funcpath = userpath + '/design/' + ipname2 + '/spi/func/' + ipname + '.spi' 
+                        funcpath = userpath + '/design/' + ipname2 + '/spi/func/' + ipname + '.spice' 
                     else:
                         altpath = altpathrex.match(incpath)
                         if altpath:
@@ -479,7 +470,7 @@ def inline_dut(filename, functional, rootpath, ofile):
                             spitype = altpath.group(3)
                             ipname3 = altpath.group(4)
                             ipnetlist = altpath.group(5)
-                            funcpath = userpath + '/design/' + ipname2 + '/spi/func/' + ipname + '.spi' 
+                            funcpath = userpath + '/design/' + ipname2 + '/spi/func/' + ipname + '.spice' 
                         
                 funcpath = os.path.expanduser(funcpath)
                 if funcpath and os.path.exists(funcpath):
@@ -553,6 +544,7 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
     colonsepex = re.compile(r'^([^:]+):([^:]+)$')	# a:b (colon-separated values)
     vectrex = re.compile(r'([^\[]+)\[([0-9]+)\]')       # pin name is a vector signal
     vect2rex = re.compile(r'([^<]+)<([0-9]+)>')         # pin name is a vector signal (alternate style)
+    vect3rex = re.compile(r'([a-zA-Z][^0-9]*)([0-9]+)') # pin name is a vector signal (alternate style)
     libdirrex = re.compile(r'.lib[ \t]+(.*)[ \t]+')     # pick up library name from .lib
     vinclrex = re.compile(r'[ \t]*`include[ \t]+"([^"]+)"')	# verilog include statement
 
@@ -669,6 +661,7 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
 
                     repl = []
                     no_repl_ok = False
+                    vtype = -1
                     sweeprec = sweepex.match(vpattern)
                     if sweeprec:
                         sweeptype = sweeprec.group(2)
@@ -687,11 +680,19 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
                             if lmatch:
                                 pinidx = int(lmatch.group(2))
                                 vcondition = lmatch.group(1)
+                                vtype = 0
                             else:
                                 lmatch = vect2rex.match(condition)
                                 if lmatch:
                                     pinidx = int(lmatch.group(2))
                                     vcondition = lmatch.group(1)
+                                    vtype = 1
+                                else:
+                                    lmatch = vect3rex.match(condition)
+                                    if lmatch:
+                                        pinidx = int(lmatch.group(2))
+                                        vcondition = lmatch.group(1)
+                                        vtype = 3
                                 
                             try:
                                  entry = next((item for item in simval if item[0] == condition))
@@ -821,8 +822,18 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
                                         try:
                                             entry = next((item for item in simval if item[0].split('[')[0].split('<')[0] == vcondition))
                                         except:
-                                            # if no match, subsline remains as-is.
-                                            pass
+                                            if vtype == 3:
+                                                for entry in simval:
+                                                    lmatch = vect3rex.match(entry[0])
+                                                    if lmatch:
+                                                        if lmatch.group(1) == vcondition:
+                                                            vlen = len(entry[2])
+                                                            uval = entry[2][(vlen - 1) - pinidx]
+                                                            repl = str(uval)
+                                                            break
+                                            else:
+                                                # if no match, subsline remains as-is.
+                                                pass
                                         else:
                                             # Handle as vector bit slice (see below)
                                             vlen = len(entry[2])
@@ -978,6 +989,7 @@ def generate_simfiles(datatop, fileinfo, arguments, methods, localmode):
     pinlist = []
     vectrex = re.compile(r"([^\[]+)\[([0-9]+):([0-9]+)\]")
     vect2rex = re.compile(r"([^<]+)\<([0-9]+):([0-9]+)\>")
+    vect3rex = re.compile(r"([^0-9]+)([0-9]+):([0-9]+)")
     for pinrec in dsheet['pins']:
         vmatch = vectrex.match(pinrec['name'])
         if vmatch:
@@ -1005,7 +1017,20 @@ def generate_simfiles(datatop, fileinfo, arguments, methods, localmode):
                     pinlist.append(newpinrec)
                     newpinrec['name'] = pinname + '<' + str(i) + '>'
             else:
-                pinlist.append(pinrec)
+                vmatch = vect3rex.match(pinrec['name'])
+                if vmatch:
+                    pinname = vmatch.group(1)
+                    pinmin = vmatch.group(2)
+                    pinmax = vmatch.group(3)
+                    if int(pinmin) > int(pinmax):
+                        pinmin = vmatch.group(3)
+                        pinmax = vmatch.group(2)
+                    for i in range(int(pinmin), int(pinmax) + 1):
+                        newpinrec = pinrec.copy()
+                        pinlist.append(newpinrec)
+                        newpinrec['name'] = pinname + str(i)
+                else:
+                    pinlist.append(pinrec)
 
     # Make sure all local conditions define a pin.  Those that are not
     # associated with a pin will have a null string for the pin name.
@@ -1162,21 +1187,21 @@ def generate_simfiles(datatop, fileinfo, arguments, methods, localmode):
         # it and make substitutions
         # NOTE:  Schematic methods are bundled with the DUT schematic
 
-        template = testbenchpath + '/' + testbench.lower() + '.spi'
+        template = testbenchpath + '/' + testbench.lower() + '.spice'
 
         if testbench_orig and not os.path.isfile(template):
             print('Warning:  Alternate testbench ' + testbench + ' cannot be found.')
             print('Reverting to original testbench ' + testbench_orig)
             testbench = testbench_orig
             filename = testbench + fsuffix
-            template = testbenchpath + '/' + testbench.lower() + '.spi'
+            template = testbenchpath + '/' + testbench.lower() + '.spice'
 
         if os.path.isfile(template):
             param['testbenches'] = substitute(filename, fileinfo, template,
 			simvals, maxtime, schemline, localmode, param)
 
-            # For cosimulations, if there is a '.tv' file corresponding to the '.spi' file,
-            # then make substitutions as for the .spi file, and place in characterization
+            # For cosimulations, if there is a '.tv' file corresponding to the '.spice' file,
+            # then make substitutions as for the .spice file, and place in characterization
             # directory.
 
             vtemplate = testbenchpath + '/' + testbench.lower() + '.tv'
@@ -1218,16 +1243,16 @@ def generate_simfiles(datatop, fileinfo, arguments, methods, localmode):
 
     return prescore
 
-def check_layout_out_of_date(spipath, layoutpath):
-    # Check if a netlist (spipath) is out-of-date relative to the layouts
+def check_layout_out_of_date(spicepath, layoutpath):
+    # Check if a netlist (spicepath) is out-of-date relative to the layouts
     # (layoutpath).  Need to read the netlist and check all of the subcells.
     need_capture = False
-    if not os.path.isfile(spipath):
+    if not os.path.isfile(spicepath):
         need_capture = True
     elif not os.path.isfile(layoutpath):
         need_capture = True
     else:
-        spi_statbuf = os.stat(spipath)
+        spi_statbuf = os.stat(spicepath)
         lay_statbuf = os.stat(layoutpath)
         if spi_statbuf.st_mtime < lay_statbuf.st_mtime:
             # netlist exists but is out-of-date
@@ -1238,7 +1263,7 @@ def check_layout_out_of_date(spipath, layoutpath):
             # and check those dates, too.
             layoutdir = os.path.split(layoutpath)[0]
             subrex = re.compile('^[^\*]*[ \t]*.subckt[ \t]+([^ \t]+).*$', re.IGNORECASE)
-            with open(spipath, 'r') as ifile:
+            with open(spicepath, 'r') as ifile:
                 duttext = ifile.read()
             dutlines = duttext.replace('\n+', ' ').splitlines()
             for line in dutlines:
@@ -1256,19 +1281,19 @@ def check_layout_out_of_date(spipath, layoutpath):
                             break
     return need_capture
 
-def check_schematic_out_of_date(spipath, schempath):
-    # Check if a netlist (spipath) is out-of-date relative to the schematics
+def check_schematic_out_of_date(spicepath, schempath):
+    # Check if a netlist (spicepath) is out-of-date relative to the schematics
     # (schempath).  Need to read the netlist and check all of the subcells.
     need_capture = False
-    if not os.path.isfile(spipath):
+    if not os.path.isfile(spicepath):
         print('Schematic-captured netlist does not exist.  Need to regenerate.')
         need_capture = True
     elif not os.path.isfile(schempath):
         need_capture = True
     else:
-        spi_statbuf = os.stat(spipath)
+        spi_statbuf = os.stat(spicepath)
         sch_statbuf = os.stat(schempath)
-        print('DIAGNOSTIC:  Comparing ' + spipath + ' to ' + schempath)
+        print('DIAGNOSTIC:  Comparing ' + spicepath + ' to ' + schempath)
         if spi_statbuf.st_mtime < sch_statbuf.st_mtime:
             # netlist exists but is out-of-date
             print('Netlist is older than top-level schematic')
@@ -1279,27 +1304,22 @@ def check_schematic_out_of_date(spipath, schempath):
             # netlist.  Now need to read the netlist, find all subcircuits,
             # and check those dates, too.
             schemdir = os.path.split(schempath)[0]
+            schrex = re.compile('\*\*[ \t]*sch_path:[ \t]*([^ \t\n]+)', re.IGNORECASE)
             subrex = re.compile('^[^\*]*[ \t]*.subckt[ \t]+([^ \t]+).*$', re.IGNORECASE)
-            with open(spipath, 'r') as ifile:
+            with open(spicepath, 'r') as ifile:
                 duttext = ifile.read()
 
             dutlines = duttext.replace('\n+', ' ').splitlines()
             for line in dutlines:
-                lmatch = subrex.match(line)
+                # xschem helpfully adds a "sch_path" comment line for every subcircuit
+                # coming from a separate schematic file.
+
+                lmatch = schrex.match(line)
                 if lmatch:
-                    subname = lmatch.group(1)
-                    # NOTE: Electric uses library:cell internally to track libraries,
-                    # and maps the ":" to "__" in the netlist.  Not entirely certain that
-                    # the double-underscore uniquely identifies the library:cell. . .
-                    librex = re.compile('(.*)__(.*)', re.IGNORECASE)
-                    lmatch = librex.match(subname)
-                    if lmatch:
-                        elecpath = os.path.split(os.path.split(schempath)[0])[0]
-                        libname = lmatch.group(1)
-                        subschem = elecpath + '/' + libname + '.delib/' + lmatch.group(2) + '.sch'
-                    else:
-                        libname = {}
-                        subschem = schemdir + '/' + subname + '.sch'
+                    subschem = lmatch.group(1)
+                    subfile = os.path.split(subschem)[1]
+                    subname = os.path.splitext(subfile)[0]
+
                     # subcircuits that cannot be found in the current directory are
                     # assumed to be library components or read-only IP components and
                     # therefore never out-of-date.
@@ -1310,31 +1330,6 @@ def check_schematic_out_of_date(spipath, schempath):
                             print('Netlist is older than subcircuit schematic ' + subname)
                             need_capture = True
                             break
-                    # mapping of characters to what's allowed in SPICE makes finding
-                    # the associated schematic file a bit difficult.  Requires wild-card
-                    # searching.
-                    elif libname:
-                        restr = lmatch.group(2) + '.sch'
-                        restr = restr.replace('.', '\.')
-                        restr = restr.replace('_', '.')
-                        schrex = re.compile(restr, re.IGNORECASE)
-                        try:
-                            liblist = os.listdir(elecpath + '/' + libname + '.delib')
-                        except FileNotFoundError:
-                            # Potentially could look through the paths in LIBDIR. . .
-                            pass
-                        else:
-                            for file in liblist:
-                                lmatch = schrex.match(file)
-                                if lmatch:
-                                    subschem = elecpath + '/' + libname + '.delib/' + file
-                                    sub_statbuf = os.stat(subschem)
-                                    if spi_statbuf.st_mtime < sch_statbuf.st_mtime:
-                                        # netlist exists but is out-of-date
-                                        need_capture = True
-                                        print('Netlist is older than subcircuit schematic ' + file)
-                                        print('In library ' + libname)
-                                    break
     return need_capture
 
 def printwarn(output):
@@ -1472,17 +1467,17 @@ def layout_netlist_includes(pexnetlist, dspath):
 
                 versionpath = ipfullpath + '/' + useversion
 
-                # First to do:  Check for /spi-stub entry (which is readable), and
+                # First to do:  Check for /spice/lvs entry (which is readable), and
                 # check if pin order is correct.  Flag a warning if it is not, and
                 # save the pin order in a record so that all X records can be pin
                 # sorted correctly.
 
-                if os.path.exists(versionpath + '/spi-stub'):
-                    stubpath = versionpath + '/spi-stub/' + subname + '/' + subname + '__' + subname + '.spi'
+                if os.path.exists(versionpath + '/spice/lvs'):
+                    lvspath = versionpath + '/spice/lvs/' + subname + '.spice'
                     # More spice file reading!  This should be quick, as these files have
                     # only a single empty subcircuit in them.
                     found = False
-                    with open(stubpath, 'r') as sfile:
+                    with open(lvspath, 'r') as sfile:
                         stubtext = sfile.read()
                         stublines = stubtext.replace('\n+', ' ').replace(',', '|').splitlines()
                         for line in stublines:
@@ -1492,7 +1487,7 @@ def layout_netlist_includes(pexnetlist, dspath):
                                 stubname = smatch.group(1) 
                                 stublist = smatch.group(2).split()
                                 if stubname != subname + '__' + subname:
-                                    print('Error:  Looking for subcircuit ' + subname + '__' + subname + ' in file ' + stubpath + ' but found subcircuit ' + stubname + ' instead!')
+                                    print('Error:  Looking for subcircuit ' + subname + '__' + subname + ' in file ' + lvspath + ' but found subcircuit ' + stubname + ' instead!')
                                     print("This simulation probably isn't going to go well.")
                                 else:
                                     needsort = False
@@ -1508,26 +1503,26 @@ def layout_netlist_includes(pexnetlist, dspath):
                                         pinsorts[subname] = pinorder
                                 break
                     if not found:
-                        print('Error:  Cannot find subcircuit in IP spi-stub entry.') 
+                        print('Error:  Cannot find subcircuit in IP spice-stub entry.') 
                 else:
-                    print('Warning: IP has no spi-stub entry, cannot verify pin order.')
+                    print('Warning: IP has no spice-stub entry, cannot verify pin order.')
 
-                if os.path.exists(versionpath + '/spi-rcx'):
+                if os.path.exists(versionpath + '/spice/rcx'):
                     # This path is restricted and can only be seen by ngspice, which is privileged
-                    # to read it.  So we can only assume that it matches the spi-stub entry.
+                    # to read it.  So we can only assume that it matches the spice/stub entry.
                     # NOTE (10/16/2018): Use unexpanded tilde expression in file.
-                    # rcxpath = versionpath + '/spi-rcx/' + subname + '/' + subname + '__' + subname + '.spi'
-                    rcxpath = ippath + '/' + useversion + '/spi-rcx/' + subname + '/' + subname + '__' + subname + '.spi'
+                    # rcxpath = versionpath + '/spice/rcx/' + subname + '/' + subname + '__' + subname + '.spice'
+                    rcxpath = ippath + '/' + useversion + '/spice/rcx/' + subname + '/' + subname + '__' + subname + '.spice'
                     newspilines.append('* Black-box entry replaced by path to RCX netlist')
                     newspilines.append('.include ' + rcxpath)
                     extended_names.append(subname.upper())
-                elif os.path.exists(ipfullpath + '/' + useversion + '/spi'):
-                    # In a pinch, if there is no spi-rcx, try plain spi
+                elif os.path.exists(ipfullpath + '/' + useversion + '/spice'):
+                    # In a pinch, if there is no spice/rcx, try plain spice
                     # NOTE (10/16/2018): Use unexpanded tilde expression in file.
-                    # spipath = versionpath + '/spi/' + subname + '.spi'
-                    spipath = ippath + '/' + useversion + '/spi/' + subname + '.spi'
+                    # spicepath = versionpath + '/spice/' + subname + '.spice'
+                    spicepath = ippath + '/' + useversion + '/spice/' + subname + '.spice'
                     newspilines.append('* Black-box entry replaced by path to schematic netlist')
-                    newspilines.append('.include ' + spipath)
+                    newspilines.append('.include ' + spicepath)
                 else:
                     # Leave as is, and let it force an error
                     newspilines.append(line)
@@ -1550,12 +1545,12 @@ def layout_netlist_includes(pexnetlist, dspath):
                         # files in spi/!
 
                         newspilines.append('* Need include to schematic netlist for ' + subname)
-                        # However, the CDL stub file can be used to check pin order
-                        stubpath = techdir + '/libs.ref/cdlStub/' + techsubdir + '/stub.cdl'
-                        if os.path.exists(stubpath):
+                        # However, the CDL file can be used to check pin order
+                        cdlpath = techdir + '/libs.ref/' + techsubdir + '/' + techsubdir + '.cdl'
+                        if os.path.exists(cdlpath):
                             # More spice file reading!  This should be quick, as these files have
                             # only a empty subcircuits in them.
-                            with open(stubpath, 'r') as sfile:
+                            with open(cdlpath, 'r') as sfile:
                                 stubtext = sfile.read()
                                 stublines = stubtext.replace('\n+', ' ').replace(',', '|').splitlines()
                                 for line in spilines:
@@ -1580,7 +1575,7 @@ def layout_netlist_includes(pexnetlist, dspath):
                                         break
 
                         else:
-                            print('No file ' + stubpath + ' found.')
+                            print('No file ' + cdlpath + ' found.')
                             print('Failure to find stub netlist for checking pin order.  Good luck.')
                         break
 
@@ -1605,28 +1600,25 @@ def regenerate_netlists(localmode, dspath, dsheet):
     dname = dsheet['ip-name']
     magpath = dspath + '/mag/'
 
-    spipath = dspath + '/spi/'		# Schematic netlist for sim
-    stubpath = dspath + '/spi/stub/'	# Schematic netlist for LVS
-    pexpath = dspath + '/spi/pex/'	# Layout netlist for sim
-    lvspath = dspath + '/spi/lvs/'	# Layout netlist for LVS
+    spicepath = dspath + '/spice/'	# Schematic netlist for sim
+    pexpath = dspath + '/spice/pex/'	# Layout netlist for sim (C-parasitics)
+    rcxpath = dspath + '/spice/rcx/'	# Layout netlist for sim (R+C-parasitics)
+    lvspath = dspath + '/spice/lvs/'	# Layout netlist for LVS
     vlogpath = dspath + '/verilog/'	# Verilog netlist for sim and LVS
 
-    netlistname = dname + '.spi'
-    schnetlist = spipath + netlistname
-    stubnetlist = stubpath + netlistname
+    netlistname = dname + '.spice'
+    schnetlist = spicepath + netlistname
+    rcxnetlist = rcxpath + netlistname
     pexnetlist = pexpath + netlistname
-    laynetlist = lvspath + netlistname
+    lvsnetlist = lvspath + netlistname
 
     layoutpath = magpath + dname + '.mag'
-    elecpath = dspath + '/elec/' + dname + '.delib'
-    schempath = elecpath + '/' + dname + '.sch'
+    schempath = dspath + '/xschem/' + dname + '.sch'
     verilogpath = vlogpath + dname + '.v'
     pathlast = os.path.split(dspath)[1]
-    verilogaltpath = vlogpath + pathlast + '/' + dname + '.vgl'
     need_sch_capture = True
-    need_stub_capture = True
-    need_lay_capture = True
-    need_pex_capture = True
+    need_extract = True
+    need_pex = True
     force_regenerate = False
 
     # Check if datasheet has been marked for forced netlist regeneration
@@ -1634,20 +1626,8 @@ def regenerate_netlists(localmode, dspath, dsheet):
         if dsheet['regenerate'] == 'force':
             force_regenerate = True
 
-    # If schempath does not exist, check if the .sch file is in a different
-    # library.
     if not os.path.exists(schempath):
         print('No schematic in path ' + schempath)
-        print('Checking for other library paths.')
-        for libname in os.listdir(dspath + '/elec/'):
-            if os.path.splitext(libname)[1] == '.delib':
-                elecpath = dspath + '/elec/' + libname
-                if os.path.exists(elecpath):
-                    for schfile in os.listdir(elecpath):
-                        if schfile == dname + '.sch':
-                            schempath = elecpath + '/' + schfile
-                            print('Schematic found in ' + schempath)
-                            break
 
     # Guess the source based on the file or files in the design directory,
     # with preference given to layout.  This may be overridden in local mode.
@@ -1656,15 +1636,14 @@ def regenerate_netlists(localmode, dspath, dsheet):
         print("Checking for out-of-date netlists.\n")
         netlist_source = dsheet['netlist-source']
         need_sch_capture = check_schematic_out_of_date(schnetlist, schempath)
-        need_stub_capture = check_schematic_out_of_date(stubnetlist, schempath)
         if netlist_source == 'layout':
             netlist_path = pexnetlist
-            need_pex_capture = check_layout_out_of_date(pexnetlist, layoutpath)
-            need_lay_capture = check_layout_out_of_date(laynetlist, layoutpath)
+            need_pex_extract = check_layout_out_of_date(pexnetlist, layoutpath)
+            need_lvs_extract = check_layout_out_of_date(laynetlist, layoutpath)
         else:
             netlist_path = schnetlist
-            need_lay_capture = False
-            need_pex_capture = False
+            need_lvs_extract = False
+            need_pex_extract = False
     else:
         if not localmode:
             print("Remote use, ", end='');
@@ -1675,8 +1654,8 @@ def regenerate_netlists(localmode, dspath, dsheet):
                 netlist_path = pexnetlist
             else:
                 netlist_path = schnetlist
-                need_lay_capture = False
-                need_pex_capture = False
+                need_lvs_extract = False
+                need_pex_extract = False
         else:
             if os.path.exists(layoutpath):
                 netlist_path = pexnetlist
@@ -1684,24 +1663,22 @@ def regenerate_netlists(localmode, dspath, dsheet):
             elif os.path.exists(schempath):
                 netlist_path = schnetlist
                 dsheet['netlist-source'] = 'schematic'
-                need_lay_capture = False
-                need_pex_capture = False
+                need_lvs_extract = False
+                need_pex_extract = False
             elif os.path.exists(verilogpath):
                 netlist_path = verilogpath
                 dsheet['netlist-source'] = 'verilog'
-                need_lay_capture = False
-                need_pex_capture = False
+                need_lvs_extract = False
+                need_pex_extract = False
                 need_sch_capture = False
-                need_stub_capture = False
             elif os.path.exists(verilogaltpath):
                 netlist_path = verilogaltpath
                 dsheet['netlist-source'] = 'verilog'
-                need_lay_capture = False
-                need_pex_capture = False
+                need_lvs_extract = False
+                need_pex_extract = False
                 need_sch_capture = False
-                need_stub_capture = False
 
-    if need_lay_capture or need_pex_capture:
+    if need_lvs_extract or need_pex_extract:
         # Layout LVS netlist needs regenerating.  Check for magic layout.
         if not os.path.isfile(layoutpath):
             print('Error:  No netlist or layout for project ' + dname + '.')
@@ -1717,7 +1694,7 @@ def regenerate_netlists(localmode, dspath, dsheet):
             os.makedirs(pexpath)
 
         print("Extracting LVS netlist from layout. . .")
-        mproc = subprocess.Popen(['/ef/apps/bin/magic', '-dnull', '-noconsole',
+        mproc = subprocess.Popen(['magic', '-dnull', '-noconsole',
 		layoutpath], stdin = subprocess.PIPE, stdout=subprocess.PIPE,
 		stderr=subprocess.STDOUT, cwd = dspath + '/mag',
 		universal_newlines = True)
@@ -1733,11 +1710,11 @@ def regenerate_netlists(localmode, dspath, dsheet):
         # Don't want black box entries, but create them so that we know which
         # subcircuits are in the ip path, then replace them.
         mproc.stdin.write("ext2spice blackbox on\n")
-        if need_lay_capture:
+        if need_lvs_extract:
             mproc.stdin.write("ext2spice cthresh infinite\n")
             mproc.stdin.write("ext2spice rthresh infinite\n")
             mproc.stdin.write("ext2spice -o " + laynetlist + "\n")
-        if need_pex_capture:
+        if need_pex_extract:
             mproc.stdin.write("ext2spice cthresh 0.005\n")
             mproc.stdin.write("ext2spice rthresh 1\n")
             mproc.stdin.write("ext2spice -o " + pexnetlist + "\n")
@@ -1747,20 +1724,20 @@ def regenerate_netlists(localmode, dspath, dsheet):
         if mproc.returncode != 0:
             print('Magic process returned error code ' + str(mproc.returncode) + '\n')
 
-        if need_lay_capture and not os.path.isfile(laynetlist):
+        if need_lvs_extract and not os.path.isfile(laynetlist):
             print('Error:  No LVS netlist extracted from magic.')
-        if need_pex_capture and not os.path.isfile(pexnetlist):
+        if need_pex_extract and not os.path.isfile(pexnetlist):
             print('Error:  No parasitic extracted netlist extracted from magic.')
 
-        if (mproc.returncode != 0) or (need_lay_capture and not os.path.isfile(laynetlist)) or (need_pex_capture and not os.path.isfile(pexnetlist)):
+        if (mproc.returncode != 0) or (need_lvs_extract and not os.path.isfile(laynetlist)) or (need_pex_extract and not os.path.isfile(pexnetlist)):
             return False
 
-        if need_pex_capture and os.path.isfile(pexnetlist):
+        if need_pex_extract and os.path.isfile(pexnetlist):
             print('Generating include statements for read-only IP blocks in layout, if needed')
             layout_netlist_includes(pexnetlist, dspath)
 
-    if need_sch_capture or need_stub_capture:
-        # Netlist needs regenerating.  Check for electric schematic
+    if need_sch_capture:
+        # Netlist needs regenerating.  Check for xschem schematic
         if not os.path.isfile(schempath):
             if os.path.isfile(verilogpath):
                 print('No schematic for project.')
@@ -1776,80 +1753,35 @@ def regenerate_netlists(localmode, dspath, dsheet):
                 print('Error:  No verilog netlist ' + verilogpath + ' or ' + verilogaltpath + ', either.')
                 return False
 
-        # Check if there is a .java directory, if not (e.g., for remote CACE),
-        # then copy it from the defaults.
-        if not os.path.exists(dspath + '/elec/.java'):
-            shutil.copytree('/ef/efabless/deskel/dotjava', dspath + '/elec/.java',
-			symlinks = True)
-
-    # Fix the LIBDIRS file if needed
-    if not os.path.isfile(dspath + '/elec/LIBDIRS'):
-        fix_libdirs(dspath, create = True)
-    elif need_sch_capture or need_stub_capture:
-        fix_libdirs(dspath)
-
     if need_sch_capture:
         print("Generating simulation netlist from schematic. . .")
         # Generate the netlist
-        print('Calling /ef/efabless/bin/elec2spi -o ')
-        libpath = os.path.split(schempath)[0]
-        libname = os.path.split(libpath)[1]
-        print(schnetlist + ' -TS -NTI ' + libname + ' ' + dname + '.sch\n')
+        print('Calling xschem to generate netlist')
 
-        # elec2spi requires that the /spi/ and /spi/stub directory exists
-        if not os.path.exists(spipath):
-            os.makedirs(spipath)
+        if not os.path.exists(spicepath):
+            os.makedirs(spicepath)
 
-        eproc = subprocess.Popen(['/ef/efabless/bin/elec2spi',
-		'-o', schnetlist, '-TS', '-NTI', libname, dname + '.sch'],
+        xproc = subprocess.Popen(['xschem', '-n', '-r', '-q',
+		'--tcl "set top_subckt 1',
+		'-o', schnetlist, dname + '.sch'],
 		stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-		cwd = dspath + '/elec')
+		cwd = dspath + '/xschem')
 
-        elecout = eproc.communicate()[0]
-        if eproc.returncode != 0:
-            for line in elecout.splitlines():
+        xout = xproc.communicate()[0]
+        if xproc.returncode != 0:
+            for line in xout.splitlines():
                 print(line.decode('utf-8'))
 
-            print('Electric process returned error code ' + str(eproc.returncode) + '\n')
+            print('Xschem process returned error code ' + str(xproc.returncode) + '\n')
         else:
-            printwarn(elecout)
+            printwarn(xout)
 
         if not os.path.isfile(schnetlist):
             print('Error: No netlist found for the circuit!\n')
             print('(schematic netlist for simulation ' + schnetlist + ' not found.)\n')
 
-    if need_stub_capture:
-        print("Generating LVS netlist from schematic. . .")
-        # Generate the netlist
-        print('Calling /ef/efabless/bin/elec2spi -o ')
-        libpath = os.path.split(schempath)[0]
-        libname = os.path.split(libpath)[1]
-        print(stubnetlist + ' -LP -TS -NTI ' + libname + ' ' + dname + '.sch\n')
-
-        # elec2spi requires that the /spi/stub directory exists
-        if not os.path.exists(stubpath):
-            os.makedirs(stubpath)
-
-        eproc = subprocess.Popen(['/ef/efabless/bin/elec2spi',
-		'-o', stubnetlist, '-LP', '-TS', '-NTI', libname, dname + '.sch'],
-		stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-		cwd = dspath + '/elec')
-
-        elecout = eproc.communicate()[0]
-        if eproc.returncode != 0:
-            for line in elecout.splitlines():
-                print(line.decode('utf-8'))
-
-            print('Electric process returned error code ' + str(eproc.returncode) + '\n')
-        else:
-            printwarn(elecout)
-
-        if not os.path.isfile(stubnetlist):
-            print('Error: No netlist found for the circuit!\n')
-            print('(schematic netlist for LVS ' + stubnetlist + ' not found.)\n')
-
-    if need_sch_capture or need_stub_capture:
-        if (not os.path.isfile(schnetlist)) or (not os.path.isfile(stubnetlist)):
+    if need_sch_capture:
+        if (not os.path.isfile(schnetlist)):
             return False
 
     return netlist_path
@@ -2009,7 +1941,7 @@ if __name__ == '__main__':
                 datasheet_name = 'datasheet.json'
             elif localmode and root_path:
                 # Use normal path to local simulation workspace
-                simulation_path = root_path + '/ngspice/char'
+                simulation_path = root_path + '/ngspice'
 
     # Check that datasheet path exists and that the datasheet is there
     if not os.path.isdir(datasheet_path):
@@ -2032,8 +1964,8 @@ if __name__ == '__main__':
         if 'request-hash' in datatop:
             hashname = datatop['request-hash']
             simulation_path = root_path + '/' + hashname
-        elif os.path.isdir(root_path + '/ngspice/char'):
-            simulation_path = root_path + '/ngspice/char'
+        elif os.path.isdir(root_path + '/ngspice'):
+            simulation_path = root_path + '/ngspice'
         else:
             simulation_path = root_path
     elif not os.path.isabs(simulation_path):

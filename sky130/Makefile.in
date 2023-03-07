@@ -1009,6 +1009,7 @@ klayout-%: ${KLAYOUT_PATH}
 		cp -rp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/pymacros/* ${KLAYOUT_STAGING_$*}/pymacros/ ; \
 		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.lyp ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyp ; \
 		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.lyt ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyt ; \
+		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.map ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.map ; \
 	fi
 	# Copy original DRC deck from open_pdks (is this useful?)
 	cp klayout/sky130.lydrc ${KLAYOUT_STAGING_$*}/drc/${SKY130$*}.lydrc

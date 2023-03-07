@@ -46,10 +46,11 @@ from editparam import EditParam
 from settings import Settings
 from simhints import SimHints
 
-import config
-
 # User preferences file (if it exists)
 prefsfile = '~/design/.profile/prefs.json'
+
+# Application path (path where this script is located)
+apps_path = os.path.realpath(os.path.dirname(__file__))
 
 #------------------------------------------------------
 # Simple dialog for confirming quit or upload
@@ -176,7 +177,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         self.help = HelpWindow(self, fontsize = fontsize)
 
         with io.StringIO() as buf, contextlib.redirect_stdout(buf):
-            self.help.add_pages_from_file(config.apps_path + '/characterize_help.txt')
+            self.help.add_pages_from_file(apps_path + '/characterize_help.txt')
             message = buf.getvalue()
 
         # Set the help display to the first page
@@ -220,21 +221,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         if 'username' in self.prefs:
             username = self.prefs['username']
         else:
-            userid = os.environ['USER']
-            p = subprocess.run(['/ef/apps/bin/withnet',
-			config.apps_path + '/og_uid_service.py', userid],
-                        stdout = subprocess.PIPE)
-            if p.stdout:
-                uid_string = p.stdout.splitlines()[0].decode('utf-8')
-                userspec = re.findall(r'[^"\s]\S*|".+?"', uid_string)
-                if len(userspec) > 0:
-                    username = userspec[0].strip('"')
-                    # Note userspec[1] = UID and userspec[2] = role, useful
-                    # for future applications.
-                else:
-                    username = userid
-            else:
-                username = userid
+            username = os.environ['USER']
 
         # Label with the user
         self.toppane.title_frame = ttk.Frame(self.toppane)
@@ -540,8 +527,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         datasheet = os.path.split(self.cur_datasheet)[1]
         designname = os.path.splitext(datasheet)[0]
         print('Cancel characterization of ' + designname + ' (' + dspath + ' )')
-        subprocess.run(['/ef/apps/bin/withnet',
-			config.apps_path + '/cace_design_upload.py', '-cancel',
+        subprocess.run([apps_path + '/cace_design_upload.py', '-cancel',
                         dspath])
         self.removeprogress()
         self.bbar.upload_button.configure(text='Submit', state = 'enabled',
@@ -704,7 +690,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
                 return
             print('Upload selected')
 
-        # Save hints in file in spi/ directory.
+        # Save hints in file in spice/ directory.
         hintlist = []
         for eparam in dsheet['electrical-params']:
             if not 'editable' in eparam:
@@ -723,9 +709,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         if not self.settings.get_test():
             self.progress_bar_setup(dspath)
             self.update_idletasks()
-        subprocess.run(['/ef/apps/bin/withnet',
-			config.apps_path + '/cace_design_upload.py',
-                        dspath])
+        subprocess.run([apps_path + '/cace_design_upload.py', dspath])
 
         # Remove the settings file
         os.remove(dspath + '/settings.json')
@@ -1006,13 +990,17 @@ class OpenGalaxyCharacterize(ttk.Frame):
         self.stat_label.configure(text='(in progress)', style='blue.TLabel')
         # Update status now
         self.update_idletasks()
+
+        if dspath == '':
+            dspath = '.'
+
         print('Datasheet directory is = ' + dspath + '\n')
 
         # Instead of using the original datasheet, use the one in memory so that
         # it accumulates results.  A "save" button will update the original.
         if not os.path.isdir(dspath + '/ngspice'):
             os.makedirs(dspath + '/ngspice')
-        dsdir = dspath + '/ngspice/char'
+        dsdir = dspath + '/ngspice'
         if not os.path.isdir(dsdir):
             os.makedirs(dsdir)
         with open(dsdir + '/datasheet.json', 'w') as file:
@@ -1025,7 +1013,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         # Call cace_gensim with full set of options
         # First argument is the root directory
         # (Diagnostic)
-        design_path = dspath + '/spi'
+        design_path = dspath + '/spice'
 
         print('Calling cace_gensim.py ' + dspath + 
 			' -local -method=' + method)
@@ -1043,7 +1031,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         print(' -layoutdir=' + dspath + '/mag' + ' -testbenchdir=' + dspath + '/testbench')
         print(' -datasheet=datasheet.json')
         
-        self.caceproc = subprocess.Popen([config.apps_path + '/cace_gensim.py', dspath,
+        self.caceproc = subprocess.Popen([apps_path + '/cace_gensim.py', dspath,
 			*modetext,
 			'-method=' + method,  # Call local mode w/method
 			'-simdir=' + dsdir,
@@ -1194,7 +1182,9 @@ class OpenGalaxyCharacterize(ttk.Frame):
         # file if it predates the unannotated datasheet (that indicates
         # simulator failure, and no results).
         dspath = os.path.split(self.cur_datasheet)[0]
-        dsdir = dspath + '/ngspice/char'
+        if dspath == '':
+            dspath = '.'
+        dsdir = dspath + '/ngspice'
         anno = dsdir + '/datasheet_' + suffix + '.json'
         unanno = dsdir + '/datasheet.json'
 
@@ -1221,7 +1211,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
     def save_results(self):
         # Write datasheet_save with all the locally processed results.
         dspath = os.path.split(self.cur_datasheet)[0]
-        dsdir = dspath + '/ngspice/char'
+        dsdir = dspath + '/ngspice'
 
         if self.origin.get() == 'Layout Extracted':
             jsonfile = dsdir + '/datasheet_lsave.json'
@@ -1255,7 +1245,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
         # recent than 'datasheet_anno'.  If so, return True, else False.
 
         [dspath, dsname] = os.path.split(self.cur_datasheet)
-        dsdir = dspath + '/ngspice/char'
+        dsdir = dspath + '/ngspice'
 
         if self.origin.get() == 'Layout Extracted':
             savefile = dsdir + '/datasheet_lsave.json'
@@ -1338,7 +1328,7 @@ class OpenGalaxyCharacterize(ttk.Frame):
     def load_results(self, value={}):
         # Check if datasheet_save exists and is more recent than the
         # latest design netlist.  If so, load it;  otherwise, not.
-        # NOTE:  Name of .spi file comes from the project 'ip-name'
+        # NOTE:  Name of .spice file comes from the project 'ip-name'
         # in the datasheet.
 
         [dspath, dsname] = os.path.split(self.cur_datasheet)
@@ -1346,6 +1336,9 @@ class OpenGalaxyCharacterize(ttk.Frame):
             dsheet = self.datatop['data-sheet']
         except KeyError:
             return
+
+        if dspath == '':
+            dspath = '.'
 
         dsroot = dsheet['ip-name']
 
@@ -1357,15 +1350,19 @@ class OpenGalaxyCharacterize(ttk.Frame):
 
         # dsroot = os.path.splitext(dsname)[0]
 
-        dsdir = dspath + '/spi'
+        dsdir = dspath + '/spice'
+
+        if not os.path.exists(dsdir):
+            print('Error:  Cannot find directory spice/ in path ' + dspath)
+
         if self.origin.get() == 'Layout Extracted':
-            spifile = dsdir + '/pex/' + dsroot + '.spi'
+            spifile = dsdir + '/pex/' + dsroot + '.spice'
             savesuffix = 'lsave'
         else:
-            spifile = dsdir + '/' + dsroot + '.spi'
+            spifile = dsdir + '/' + dsroot + '.spice'
             savesuffix = 'save'
 
-        dsdir = dspath + '/ngspice/char'
+        dsdir = dspath + '/ngspice'
         savefile = dsdir + '/datasheet_' + savesuffix + '.json'
 
         if os.path.exists(savefile):

@@ -81,7 +81,8 @@ try:
 except:
     pdk_root = 'PREFIX/pdk'
 
-apps_path = pdk_root + '/scripts'
+# Application path (path where this script is located)
+apps_path = os.path.realpath(os.path.dirname(__file__))
 
 #---------------------------------------------------------------
 # Watch a directory for modified time change.  Repeat every two
@@ -223,7 +224,7 @@ class NewProjectDialog(tksimpledialog.Dialog):
         self.nentry.insert(0, seed or '')      # may be None
         self.pvar = tkinter.StringVar(master)
         if not importnode:
-            # Add PDKs as found by searching /ef/tech for 'libs.tech' directories
+            # Add PDKs as found by searching /usr/share/pdk for 'libs.tech' directories
             ttk.Label(master, text="Select foundry/node:").grid(row = 2, column = 0)
         else:
             ttk.Label(master, text="Foundry/node:").grid(row = 2, column = 0)
@@ -239,9 +240,6 @@ class NewProjectDialog(tksimpledialog.Dialog):
             node_def = "EFXH035B"
 
         # use glob instead of os.walk. Don't need to recurse large PDK hier.
-        # TODO: stop hardwired default EFXH035B: get from an overall flow /ef/tech/.ef-config/plist.json
-        # (or get it from the currently selected project)
-        #EFABLESS PLATFORM
         for pdkdir_lr in glob.glob(pdk_root + '/*/libs.tech/'):
             pdkdir = os.path.split( os.path.split( pdkdir_lr )[0])[0]    # discard final .../libs.tech/
             (foundry, foundry_name, node, desc, status) = ProjectManager.pdkdir2fnd( pdkdir )
@@ -254,8 +252,6 @@ class NewProjectDialog(tksimpledialog.Dialog):
             if node == node_def and not pdk_def:
                 pdk_def = key
             
-        # Quick hack:  sorting puts EFXH035A before EFXH035LEGACY.  However, some
-        # ranking is needed.
         pdklist = sorted( self.pdkmap.keys())
         if not pdklist:
             raise ValueError( "assertion failed, no available PDKs found")
@@ -656,7 +652,7 @@ class ImportDialog(tksimpledialog.Dialog):
             self.error_label.configure(text = 'Cannot import a parent directory into itself.')
             return False
         #Find project pdk
-        if os.path.exists(self.projectpath + '/.config/techdir') or os.path.exists(self.projectpath + '/.ef-config/techdir'):
+        if os.path.exists(self.projectpath + '/.config/techdir') or os.path.exists(self.projectpath + '/.config/techdir'):
             self.project_pdkdir = os.path.realpath(self.projectpath + ProjectManager.config_path( self.projectpath) + '/techdir')
             self.foundry, foundry_name, self.node, desc, status = ProjectManager.pdkdir2fnd( self.project_pdkdir )
         else:
@@ -1181,12 +1177,10 @@ class ProjectManager(ttk.Frame):
     
     @classmethod
     def config_path(cls, path):
-        #returns the config directory that 'path' contains between .config and .ef-config
+        #returns the config directory that 'path' contains (.config)
         if (os.path.exists(path + '/.config')):
             return '/.config'
-        elif (os.path.exists(path + '/.ef-config')):
-            return '/.ef-config'
-        raise Exception('Neither '+path+'/.config nor '+path+'/.ef-config exists.')
+        raise Exception(' '+path+'/.config does not exist.')
 
     #------------------------------------------------------------------------
     # Check if a name is blacklisted for being a project folder
@@ -1231,8 +1225,7 @@ class ProjectManager(ttk.Frame):
             
             # 
             #EFABLESS PLATFORM
-            p = subprocess.run(['/ef/apps/bin/withnet' ,
-			apps_path + '/og_uid_service.py', userid],
+            p = subprocess.run([apps_path + '/og_uid_service.py', userid],
 			stdout = subprocess.PIPE)
             if p.stdout:
                 uid_string = p.stdout.splitlines()[0].decode('utf-8')
@@ -1362,60 +1355,6 @@ class ProjectManager(ttk.Frame):
         return projectlist
 
     #------------------------------------------------------------------------
-    # utility: [re]intialize a project's elec/ dir: the .java preferences and LIBDIRS.
-    # So user can just delete .java, and restart electric (from projectManager), to reinit preferences.
-    # So user can just delete LIBDIRS, and restart electric (from projectManager), to reinit LIBDIRS.
-    # So project copies/imports can filter ngspice/run (and ../.allwaves), we'll recreate it here.
-    #
-    # The global /ef/efabless/deskel/* is used and the PDK name substituted.
-    #
-    # This SINGLE function is used to setup elec/ contents for new projects, in addition to being
-    # called in-line prior to "Edit Schematics" (on-the-fly).
-    #------------------------------------------------------------------------
-    @classmethod
-    def reinitElec(cls, design):
-        pdkdir = os.path.join( design, ".ef-config/techdir")
-        elec = os.path.join( design, "elec")
-
-        # on the fly, ensure has elec/ dir, ensure has ngspice/run/allwaves dir
-        try:
-            os.makedirs(design + '/elec', exist_ok=True)
-        except IOError as e:
-            print('Error in os.makedirs(elec): ' + str(e))
-        try:
-            os.makedirs(design + '/ngspice/run/.allwaves', exist_ok=True)
-        except IOError as e:
-            print('Error in os.makedirs(.../.allwaves): ' + str(e))
-        #EFABLESS PLATFORM
-        deskel = '/ef/efabless/deskel'
-        
-        # on the fly:
-        # .../elec/.java : reinstall if missing. From PDK-specific if any.
-        if not os.path.exists( os.path.join( elec, '.java')):
-            # Copy Electric preferences
-            try:
-                shutil.copytree(deskel + '/dotjava', design + '/elec/.java', symlinks = True)
-            except IOError as e:
-                print('Error copying files: ' + str(e))
-
-        # .../elec/LIBDIRS : reinstall if missing, from PDK-specific LIBDIRS
-        # in libs.tech/elec/LIBDIRS
-
-        libdirsloc = pdkdir + '/libs.tech/elec/LIBDIRS'
-
-        if not os.path.exists( os.path.join( elec, 'LIBDIRS')):
-            if os.path.exists( libdirsloc ):
-                # Copy Electric LIBDIRS
-                try:
-                    shutil.copy(libdirsloc, design + '/elec/LIBDIRS')
-                except IOError as e:
-                    print('Error copying files: ' + str(e))
-            else:
-                print('Info: PDK not configured for Electric: no libs.tech/elec/LIBDIRS')
-
-        return None
-
-    #------------------------------------------------------------------------
     # utility: filter a list removing: empty strings, strings with any whitespace
     #------------------------------------------------------------------------
     whitespaceREX = re.compile('\s')
@@ -1444,7 +1383,7 @@ class ProjectManager(ttk.Frame):
     # is always ''. And an optional foundry extension is pruned/dropped.
     # thus '.../XFAB.2/EFXP018A4' -> 'XFAB', 'EFXP018A4', ''
     #
-    # optionally store in each PDK: .ef-config/nodeinfo.json which can define keys:
+    # optionally store in each PDK: .config/nodeinfo.json which can define keys:
     # 'foundry', 'node', 'description' to override the foundry (computed from the path)
     # and (fixed, empty) description currently returned by this.
     #
@@ -1488,7 +1427,7 @@ class ProjectManager(ttk.Frame):
                     status = nodeinfo['status']
                 return foundry, foundry_name, node, description, status
             
-            infofile = pdkdir + '/.ef-config/nodeinfo.json'
+            infofile = pdkdir + '/.config/nodeinfo.json'
             if os.path.exists(infofile):
                 with open(infofile, 'r') as ifile:
                     nodeinfo = json.load(ifile)
@@ -1541,11 +1480,11 @@ class ProjectManager(ttk.Frame):
     # Get the PDK attached to a project for display as: '<foundry> : <node>'
     # unless path=True: then return true PDK dir-path.
     #
-    # TODO: the ef-config prog output is not used below. Intent was use
-    # ef-config to be the one official query for *any* project's PDK value, and
+    # TODO: the config prog output is not used below. Intent was use
+    # config to be the one official query for *any* project's PDK value, and
     # therein-only hide a built-in default for legacy projects without techdir symlink.
-    # In below ef-config will always give an EF_TECHDIR, so that code-branch always
-    # says '(default)', the ef-config subproc is wasted, and '(no PDK)' is never
+    # In below config will always give an EF_TECHDIR, so that code-branch always
+    # says '(default)', the config subproc is wasted, and '(no PDK)' is never
     # reached.
     #------------------------------------------------------------------------
     def get_pdk_dir(self, project, path=False):
@@ -1555,9 +1494,9 @@ class ProjectManager(ttk.Frame):
         foundry, foundry_name, node, desc, status = self.pdkdir2fnd( pdkdir )
         return foundry + ' : ' + node
         '''
-        if os.path.isdir(project + '/.ef-config'):
-            if os.path.exists(project + '/.ef-config/techdir'):
-                pdkdir = os.path.realpath(project + '/.ef-config/techdir')
+        if os.path.isdir(project + '/.config'):
+            if os.path.exists(project + '/.config/techdir'):
+                pdkdir = os.path.realpath(project + '/.config/techdir')
                 
         elif os.path.isdir(project + '/.config'):
             if os.path.exists(project + '/.config/techdir'):
@@ -1569,10 +1508,10 @@ class ProjectManager(ttk.Frame):
         '''
         '''
         if not pdkdir:
-            # Run "ef-config" script for backward compatibility
+            # Run "config" script for backward compatibility
             export = {'EF_DESIGNDIR': project}
             #EFABLESS PLATFORM
-            p = subprocess.run(['/ef/efabless/bin/ef-config', '-sh', '-t'],
+            p = subprocess.run(['config', '-sh', '-t'],
 			stdout = subprocess.PIPE, env = export)
             config_out = p.stdout.splitlines()
             for line in config_out:
@@ -1823,8 +1762,6 @@ class ProjectManager(ttk.Frame):
         if not os.path.exists(newproject + '/mag'):
             os.makedirs(newproject + '/mag')
 
-        self.reinitElec(newproject)   # [re]install elec/.java, elec/LIBDIRS if needed, from pdk-specific if-any
-
         return 1	# Success
 
     #------------------------------------------------------------------------
@@ -1856,7 +1793,7 @@ class ProjectManager(ttk.Frame):
                 os.makedirs(newproject + '/cdl/')
             shutil.copy(importfile, newproject + '/cdl/' + newfile)
             try:
-                p = subprocess.run(['/ef/apps/bin/cdl2spi', importfile],
+                p = subprocess.run(['cdl2spi', importfile],
 			stdout = subprocess.PIPE, stderr = subprocess.PIPE,
 			check = True)
             except subprocess.CalledProcessError as e:
@@ -1906,7 +1843,7 @@ class ProjectManager(ttk.Frame):
 
         # Run cdl2icon perl script
         try:
-            p = subprocess.run(['/ef/apps/bin/cdl2icon', '-file', importfile, '-cellname',
+            p = subprocess.run(['cdl2icon', '-file', importfile, '-cellname',
 			subname, '-libname', pname, '-projname', pname, '--prntgussddirs'],
 			stdout = subprocess.PIPE, stderr = subprocess.PIPE, check = True)
         except subprocess.CalledProcessError as e:
@@ -1940,7 +1877,7 @@ class ProjectManager(ttk.Frame):
         # Call cdl2icon with the final pin directions
         outname = newproject + '/elec/' + pname + '.delib/' + os.path.splitext(newfile)[0] + '.ic'
         try:
-            p = subprocess.run(['/ef/apps/bin/cdl2icon', '-file', importfile, '-cellname',
+            p = subprocess.run(['cdl2icon', '-file', importfile, '-cellname',
 			subname, '-libname', pname, '-projname', pname, '-output',
 			outname, '-pindircmbndstring', ','.join(pin_info_list)],
 			stdout = subprocess.PIPE, stderr = subprocess.PIPE, check = True)
@@ -2446,7 +2383,7 @@ class ProjectManager(ttk.Frame):
 				+ parentdir + "/docs/.\n")
 
             # Get the names of verilog libraries in this PDK.
-            pdkdir = os.path.realpath(ppath + '/.ef-config/techdir')
+            pdkdir = os.path.realpath(ppath + '/.config/techdir')
             pdkvlog = pdkdir + '/libs.ref/verilog'
             pdkvlogfiles = glob.glob(pdkvlog + '/*/*.v')
 
@@ -2746,7 +2683,7 @@ class ProjectManager(ttk.Frame):
 
         newproject = self.projectdir + '/' + pname
         try:
-            p = subprocess.run(['/ef/apps/bin/vglImport', importfile, pname, elecLib],
+            p = subprocess.run(['vglImport', importfile, pname, elecLib],
                                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                check=True, universal_newlines=True)
         except subprocess.CalledProcessError as e:
@@ -2935,7 +2872,7 @@ class ProjectManager(ttk.Frame):
         if not confirm == 'okay':
             print('Warning: Must quit and restart to get any fixes or updates.')
             return
-        os.execl('/ef/efabless/opengalaxy/project_manager.py', 'appsel_zenity.sh')
+        os.execl('project_manager.py', 'appsel_zenity.sh')
         # Does not return; replaces existing process.
 
     #----------------------------------------------------------------------
@@ -3146,33 +3083,16 @@ class ProjectManager(ttk.Frame):
             os.makedirs(newproject + '/testbench')
             os.makedirs(newproject + '/verilog')
             os.makedirs(newproject + '/verilog/source')
-            os.makedirs(newproject + '/.ef-config')
+            os.makedirs(newproject + '/.config')
             if 'xschem' in schemapps:
                 os.makedirs(newproject + '/xschem')
 
             pdkname = os.path.split(newpdk)[1]
 
             # Symbolic links
-            os.symlink(newpdk, newproject + '/.ef-config/techdir')
-
-            # Copy preferences
-            # deskel = '/ef/efabless/deskel'
-            #
-            # Copy examples (disabled;  this is too confusing to the end user.  Also, they
-            # should not be in user space at all, as they are not user editable.
-            #
-            # for item in os.listdir(deskel + '/exlibs'):
-            #     shutil.copytree(deskel + '/exlibs/' + item, newproject + '/elec/' + item)
-            # for item in os.listdir(deskel + '/exmag'):
-            #     if os.path.splitext(item)[1] == '.mag':
-            #         shutil.copy(deskel + '/exmag/' + item, newproject + '/mag/' + item)
+            os.symlink(newpdk, newproject + '/.config/techdir')
 
             # Put tool-specific startup files into the appropriate user directories.
-            if 'electric' in layoutapps or 'electric' in schemapps:
-                self.reinitElec(newproject)   # [re]install elec/.java, elec/LIBDIRS if needed, from pdk-specific if-any
-                # Set up electric
-                self.create_electric_header_file(newproject, newname)
-
             if 'magic' in layoutapps:
                 shutil.copy(newpdk + '/libs.tech/magic/' + pdkname + '.magicrc', newproject + '/mag/.magicrc')
 
@@ -3415,17 +3335,8 @@ class ProjectManager(ttk.Frame):
                 os.makedirs(newproject + '/ngspice/run/.allwaves')
             except FileExistsError:
                 pass
-        '''
-        if not elprefs:
-            # Copy preferences
-            deskel = '/ef/efabless/deskel'
-            try:
-                shutil.copytree(deskel + '/dotjava', newproject + '/elec/.java', symlinks = True)
-            except IOError as e:
-                print('Error copying files: ' + e)
-        '''
 
-#----------------------------------------------------------------------
+    #----------------------------------------------------------------------
     # Allow the user to choose the flow of the project
     #----------------------------------------------------------------------
     
@@ -3594,7 +3505,7 @@ class ProjectManager(ttk.Frame):
         
         def make_techdirs(projectpath, project_pdkdir):
             # Recursively create techdirs in project and subproject folders
-            if not (os.path.exists(projectpath + '/.config') or os.path.exists(projectpath + '/.ef-config')):
+            if not (os.path.exists(projectpath + '/.config') or os.path.exists(projectpath + '/.config')):
                 os.makedirs(projectpath + '/.config')
             if not os.path.exists(projectpath + self.config_path(projectpath) + '/techdir'):
                 os.symlink(project_pdkdir, projectpath + self.config_path(projectpath) + '/techdir')
@@ -3936,7 +3847,7 @@ class ProjectManager(ttk.Frame):
 
         export = dict(os.environ)
         export['EF_DESIGNDIR'] = ppath
-        subprocess.Popen(['/ef/apps/bin/padframe-calc', elecLib, cellname], cwd = ppath, env = export)
+        subprocess.Popen(['padframe-calc', elecLib, cellname], cwd = ppath, env = export)
 
         # not yet any useful return value or reporting of results here in projectManager...
         return 1
@@ -3994,21 +3905,7 @@ class ProjectManager(ttk.Frame):
             libs = []
             ellibrex = re.compile(r'^(tech_.*|ef_examples)\.[dj]elib$', re.IGNORECASE)
 
-            self.reinitElec(design)
-
-            # /elec and /.java are prerequisites for running electric
-            if not os.path.exists(design + '/elec'):
-                print("No path to electric design folder.")
-                return
-
-            if not os.path.exists(design + '/elec/.java'):
-                print("No path to electric .java folder.")
-                return
-
-            # Fix the LIBDIRS file if needed
-            #fix_libdirs(design, create = True)
-
-            # Check for legacy directory (missing .ef-config and/or .ef-config/techdir);
+            # Check for legacy directory (missing .config and/or .config/techdir);
             # Handle as necessary.
 
             # don't sometimes yield pdkdir as some subdir of techdir
@@ -4017,7 +3914,7 @@ class ProjectManager(ttk.Frame):
                 export = dict(os.environ)
                 export['EF_DESIGNDIR'] = design
                 '''
-                p = subprocess.run(['/ef/efabless/bin/ef-config', '-sh', '-t'],
+                p = subprocess.run(['config', '-sh', '-t'],
 			stdout = subprocess.PIPE, env = export)
                 config_out = p.stdout.splitlines()
                 for line in config_out:
@@ -4084,7 +3981,7 @@ class ProjectManager(ttk.Frame):
             if indirectlibs:
                 export['EOPENARGS'] = ' '.join(indirectlibs)
                 arguments.append('-s')
-                arguments.append('/ef/efabless/lib/elec/elecOpen.bsh')
+                arguments.append('elecOpen.bsh')
 
             try:
                 arguments.append(libs[-1])
@@ -4213,9 +4110,9 @@ class ProjectManager(ttk.Frame):
             pdkdir = ''
             pdkname = ''
             
-            if os.path.exists(design + '/.ef-config/techdir/libs.tech'):
-                pdkdir = design + '/.ef-config/techdir/libs.tech/magic/current'
-                pdkname = os.path.split(os.path.realpath(design + '/.ef-config/techdir'))[1]
+            if os.path.exists(design + '/.config/techdir/libs.tech'):
+                pdkdir = design + '/.config/techdir/libs.tech/magic/current'
+                pdkname = os.path.split(os.path.realpath(design + '/.config/techdir'))[1]
             elif os.path.exists(design + '/.config/techdir/libs.tech'):
                 pdkdir = design + '/.config/techdir/libs.tech/magic'
                 pdkname = os.path.split(os.path.realpath(design + '/.config/techdir'))[1]
@@ -4287,9 +4184,9 @@ class ProjectManager(ttk.Frame):
                     # NOTE:  netlist_to_layout script will attempt to generate a
                     # schematic netlist if one does not exist.
 
-                    print('Running /ef/efabless/bin/netlist_to_layout.py ../spi/' + designname + '.spi')
+                    print('Running netlist_to_layout.py ../spi/' + designname + '.spi')
                     try:
-                        p = subprocess.run(['/ef/efabless/bin/netlist_to_layout.py',
+                        p = subprocess.run(['netlist_to_layout.py',
 					'../spi/' + designname + '.spi'],
 					stdin = subprocess.PIPE, stdout = subprocess.PIPE,
 					stderr = subprocess.PIPE, cwd = design + '/mag')
@@ -4303,7 +4200,7 @@ class ProjectManager(ttk.Frame):
                     else:
                         if os.path.exists(design + '/mag/create_script.tcl'):
                             with open(design + '/mag/create_script.tcl', 'r') as infile:
-                                magproc = subprocess.run(['/ef/apps/bin/magic',
+                                magproc = subprocess.run(['magic',
 					'-dnull', '-noconsole', '-rcfile ',
 					pdkdir + '/' + pdkname + '.magicrc', designname],
 					stdin = infile, stdout = subprocess.PIPE,
@@ -4356,7 +4253,6 @@ class ProjectManager(ttk.Frame):
     #----------------------------------------------------------------------
 
     def upload(self):
-        '''
         global apps_path
         value = self.projectselect.selected()
         if value:
@@ -4364,10 +4260,8 @@ class ProjectManager(ttk.Frame):
             # designname = value['text']
             designname = self.project_name
             print('Upload design ' + designname + ' (' + design + ' )')
-            subprocess.run(['/ef/apps/bin/withnet',
-			apps_path + '/cace_design_upload.py',
+            subprocess.run([apps_path + '/cace_design_upload.py',
 			design, '-test'])
-	'''
 
     #--------------------------------------------------------------------------
 
@@ -4398,8 +4292,8 @@ class ProjectManager(ttk.Frame):
         
         if os.path.exists(svalues[0] + '/.config'):
             pdkdir = svalues[0] + '/.config/techdir'
-        elif os.path.exists(svalues[0] + '/.ef-config'):
-            pdkdir = svalues[0] + '/.ef-config/techdir'
+        elif os.path.exists(svalues[0] + '/.config'):
+            pdkdir = svalues[0] + '/.config/techdir'
             ef_style=True
         
         if pdkdir == '':

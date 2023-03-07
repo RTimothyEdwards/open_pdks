@@ -8,6 +8,10 @@ import re
 import os
 import matplotlib
 from matplotlib.figure import Figure
+
+# Warning: PIL Tk required, may not be in default install of python3.
+# For Fedora, for example, need "yum install python-pillow-tk"
+
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 
