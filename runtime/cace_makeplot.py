@@ -235,7 +235,7 @@ def makeplot(plotrec, results, variables, parent = None):
     else:
         ax = fig.add_subplot(121)
 
-    fig.hold(True)
+    # fig.hold(True)
     for record in pdata:
         pdict = pdata[record]
 
@@ -294,13 +294,13 @@ def makeplot(plotrec, results, variables, parent = None):
         legnd = None
 
     if legnd:
-        legnd.draggable()
+        legnd.set_draggable(True)
 
     if parent == None:
-        if not os.path.exists('simulation_files'):
-            os.makedirs('simulation_files')
+        if not os.path.exists('ngspice/simulation_files'):
+            os.makedirs('ngspice/simulation_files')
 
-        filename = 'simulation_files/' + plotrec['filename']
+        filename = 'ngspice/simulation_files/' + plotrec['filename']
         # NOTE: print_figure only makes use of bbox_extra_artists if
         # bbox_inches is set to 'tight'.  This forces a two-pass method
         # that calculates the real maximum bounds of the figure.  Otherwise

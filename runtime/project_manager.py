@@ -224,7 +224,7 @@ class NewProjectDialog(tksimpledialog.Dialog):
         self.nentry.insert(0, seed or '')      # may be None
         self.pvar = tkinter.StringVar(master)
         if not importnode:
-            # Add PDKs as found by searching /usr/share/pdk for 'libs.tech' directories
+            # Add PDKs as found by searching PDK_ROOT for 'libs.tech' directories
             ttk.Label(master, text="Select foundry/node:").grid(row = 2, column = 0)
         else:
             ttk.Label(master, text="Foundry/node:").grid(row = 2, column = 0)
@@ -1525,7 +1525,7 @@ class ProjectManager(ttk.Frame):
         
 
         return pdkdir
-#------------------------------------------------------------------------
+    #------------------------------------------------------------------------
     # Get PDK directory for projects without a techdir (most likely the project is being imported)
     #------------------------------------------------------------------------
     @classmethod
@@ -1540,8 +1540,13 @@ class ProjectManager(ttk.Frame):
             project_process = project_data['process']
                 
         project_pdkdir = ''
+
+        if os.getenv('PDK_ROOT'):
+            PDK_ROOT = os.getenv('PDK_ROOT')
+        else:
+            PDK_ROOT = 'PREFIX/share/pdk/'
        
-        for pdkdir_lr in glob.glob('/usr/share/pdk/*/libs.tech/'):
+        for pdkdir_lr in glob.glob(PDK_ROOT + '*/libs.tech/'):
             pdkdir = os.path.split( os.path.split( pdkdir_lr )[0])[0]
             foundry, foundry_name, node, desc, status = ProjectManager.pdkdir2fnd( pdkdir )
             if not foundry or not node:
@@ -4110,13 +4115,13 @@ class ProjectManager(ttk.Frame):
             pdkdir = ''
             pdkname = ''
             
-            if os.path.exists(design + '/.config/techdir/libs.tech'):
-                pdkdir = design + '/.config/techdir/libs.tech/magic/current'
-                pdkname = os.path.split(os.path.realpath(design + '/.config/techdir'))[1]
+            # Check for .ef-config (efabless format) vs. .config (open_pdks format)
+            if os.path.exists(design + '/.ef-config/techdir/libs.tech'):
+                pdkdir = design + '/.ef-config/techdir/libs.tech/magic/current'
+                pdkname = os.path.split(os.path.realpath(design + '/.ef-config/techdir'))[1]
             elif os.path.exists(design + '/.config/techdir/libs.tech'):
                 pdkdir = design + '/.config/techdir/libs.tech/magic'
                 pdkname = os.path.split(os.path.realpath(design + '/.config/techdir'))[1]
-            
 
             # Check if the project has a /mag directory.  Create it and
             # put the correct .magicrc file in it, if it doesn't.

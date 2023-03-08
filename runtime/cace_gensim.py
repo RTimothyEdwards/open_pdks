@@ -1376,8 +1376,8 @@ def layout_netlist_includes(pexnetlist, dspath):
     # entries with filename paths.
 
     # Find project tech path
-    if os.path.exists(dspath + '/.ef-config/techdir'):
-        techdir = os.path.realpath(dspath + '/.ef-config/techdir')
+    if os.path.exists(dspath + '/.config/techdir'):
+        techdir = os.path.realpath(dspath + '/.config/techdir')
         maglefdir = techdir + '/libs.ref/maglef'
     else:
         print('Warning:  Project ' + dspath + ' does not define a target process!')
@@ -1392,8 +1392,8 @@ def layout_netlist_includes(pexnetlist, dspath):
 
     depends = {}
     ipname = ''
-    if os.path.exists(dspath + '/.ef-config/info'):
-       with open(dspath + '/.ef-config/info', 'r') as ifile:
+    if os.path.exists(dspath + '/.config/info'):
+       with open(dspath + '/.config/info', 'r') as ifile:
            infolines = ifile.read().splitlines
            deprec = False
            for line in infolines:
@@ -1406,7 +1406,7 @@ def layout_netlist_includes(pexnetlist, dspath):
                            depends[ipname] = version
                            ipname = ''
                        else:
-                           print('Error:  Badly formed info file in .ef-config', file=sys.stderr)
+                           print('Error:  Badly formed info file in .config', file=sys.stderr)
                    else:
                        ipname = line.strip(':')
 
@@ -1454,7 +1454,7 @@ def layout_netlist_includes(pexnetlist, dspath):
             ippath = '~/design/ip/' + subname
             ipfullpath = os.path.expanduser(ippath)
             if os.path.exists(ipfullpath):
-                # Version control:  Use the versions specified in the .ef-config/info
+                # Version control:  Use the versions specified in the .config/info
                 # version list.  If it does not exist (legacy behavior), then use the
                 # method outlined below (finds highest version number available).
                 if subname in depends:
@@ -2016,8 +2016,8 @@ if __name__ == '__main__':
     if not os.path.exists(layout_path + '/.magicrc'):
         # Make sure correct .magicrc file exists
         configdir = os.path.split(layout_path)[0]
-        rcpath = configdir + '/.ef-config/techdir/libs.tech/magic/current'
-        pdkname = os.path.split(os.path.realpath(configdir + '/.ef-config/techdir'))[1]
+        rcpath = configdir + '/.config/techdir/libs.tech/magic'
+        pdkname = os.path.split(os.path.realpath(configdir + '/.config/techdir'))[1]
         rcfile = rcpath + '/' + pdkname + '.magicrc'
         if os.path.isdir(rcpath):
             if os.path.exists(rcfile):

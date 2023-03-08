@@ -10,7 +10,12 @@
 #
 # Usage, e.g.:
 #
-# changepath.py /home/tim/projects/efabless/tech/XFAB/EFXH035B/libs.ref/mag/D_CELLS /ef/tech/XFAB/EFXH035B/libs.ref/mag/D_CELLS
+# changepath.py /home/tim/pdk/sky130A/libs.ref/sky130_fd_sc_hd/mag /usr/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/mag
+#
+# NOTE:  This file is deprecated as moving GDS_FILE properties from
+# library to library is taken care of by the open_pdks installer, and
+# portability is largely taken care of through use of the $PDK_PATH
+# variable in the prefix of the GDS_FILE name.
 
 import os
 import re

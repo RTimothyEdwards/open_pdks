@@ -59,7 +59,7 @@ def create_symbol(projectpath, verilogfile, project, destfile=None, debug=False,
 
     vdir = os.path.split(verilogfile)[0]
     vtempfile = vdir + '/vtemp.out'
-    p = subprocess.run(['/ef/apps/ocd/qflow/current/share/qflow/bin/vlog2Verilog',
+    p = subprocess.run(['/usr/local/share/qflow/bin/vlog2Verilog',
 			'-p', '-o', vtempfile, verilogfile], stdout = subprocess.PIPE)
 
     if not os.path.exists(vtempfile):
@@ -366,7 +366,7 @@ def create_symbol(projectpath, verilogfile, project, destfile=None, debug=False,
         height = 40
 
     # Run electric -v to get version string
-    p = subprocess.run(['/ef/apps/bin/electric', '-v'], stdout = subprocess.PIPE)
+    p = subprocess.run(['electric', '-v'], stdout = subprocess.PIPE)
     vstring = p.stdout.decode('utf-8').rstrip()
 
     # Get timestamp

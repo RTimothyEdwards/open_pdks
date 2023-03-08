@@ -89,7 +89,7 @@ class PuntDialog(tksimpledialog.Dialog):
 # Main class for this application
 #------------------------------------------------------
 
-class OpenGalaxyCharacterize(ttk.Frame):
+class CACECharacterize(ttk.Frame):
     """local characterization GUI."""
 
     def __init__(self, parent, *args, **kwargs):
@@ -1770,7 +1770,7 @@ if __name__ == '__main__':
             arguments.append(item)
 
     root = tkinter.Tk()
-    app = OpenGalaxyCharacterize(root)
+    app = CACECharacterize(root)
     if arguments:
         print('Calling set_datasheet with argument ' + arguments[0])
         app.set_datasheet(arguments[0])

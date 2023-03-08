@@ -1,4 +1,4 @@
-#!/ef/efabless/opengalaxy/venv/bin/python3
+#!/usr/bin/env python3
 """spice_units.py: Converts tuple of (unit, value) into standard unit numeric value."""
 
 import re

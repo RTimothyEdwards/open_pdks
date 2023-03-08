@@ -519,12 +519,17 @@ def run_and_analyze_lvs(dsheet):
     else:
         layout_arg = mag_path
 
+    if os.getenv('PDK_ROOT'):
+        PDK_ROOT = os.getenv('PDK_ROOT')
+    else:
+        PDK_ROOT = 'PREFIX/share/pdk'
+
     # Get PDK name for finding the netgen setup file
-    if os.path.exists(root_path + '/.ef-config'):
-        pdkdir = os.path.realpath(root_path + '/.ef-config/techdir')
+    if os.path.exists(root_path + '/.config'):
+        pdkdir = os.path.realpath(root_path + '/.config/techdir')
     else:
         foundry = dsheet['foundry']
-        pdkdir = '/usr/share/pdk/' + node
+        pdkdir = PDK_ROOT + node
     lvs_setup = pdkdir + '/libs.tech/netgen/' + node + '_setup.tcl'
 
     # Run LVS as a subprocess and wait for it to finish.  Use the -json
@@ -1054,7 +1059,12 @@ def read_ascii_datafile(file, *args):
         if os.path.isfile(filepath + '.data'):
             filepath = filepath + '.data'
         else:
+            print('Failed to find data file at path ' + filepath)
             return 0
+
+    if not os.path.isfile(filepath):
+        print('Failed to find data file at path ' + filepath)
+        return 0
 
     with open(filepath, 'r') as afile:
         for line in afile.readlines():
@@ -1341,6 +1351,13 @@ if __name__ == '__main__':
                 # the data in them anyway.
                 my_env['NGSPICE_LXT2NO'] = '1'
 
+                # Is there a .spiceinit file in the simulation directory, and is
+                # one needed?
+                if not os.path.exists('.spiceinit'):
+                    if os.path.exists(PDK_ROOT + node + '/libs.tech/ngspice/spinit'):
+                        print('Copying ngspice configuration file from PDK.')
+                        shutil.copy(PDK_ROOT + node + '/libs.tech/ngspice/spinit', '.spiceinit')
+
             # ngspice writes to both stdout and stderr;  capture all
             # output equally.  Print each line in real-time, flush the
             # output buffer, and then accumulate the lines for processing.
@@ -1416,6 +1433,7 @@ if __name__ == '__main__':
                                     data_args.append(locvarresult[varname])
 
                                 rsize = read_ascii_datafile(extra[0], *data_args)
+                                # print('Read data file, rsize = ' + str(rsize))
 
                                 # All values in extra[1:] should be param['variables'].  If not, add
                                 # an entry and flag a warning because information may be incomplete.
@@ -1473,6 +1491,8 @@ if __name__ == '__main__':
                                 else:
                                     # For plots, there is not necessarily any measurements.  Just
                                     # copy values into locparamresult and loccondresult.
+                                    if len(locvarresult) == 0:
+                                        print('Warning: No result data for plot!')
                                     for varname in locvarresult:
                                         varrec = next(item for item in pvars if item['condition'] == varname)
                                         if 'result' in varrec:
@@ -2204,7 +2224,7 @@ if __name__ == '__main__':
             if not os.path.exists(layout_path):
                 os.makedirs(layout_path)
             if not os.path.exists(layout_path + '/.magicrc'):
-                pdkdir = '/usr/share/pdk/' + node + '/libs.tech/magic'
+                pdkdir = PDK_ROOT + node + '/libs.tech/magic'
                 if os.path.exists(pdkdir + '/' + node + '.magicrc'):
                     shutil.copy(pdkdir + '/' + node + '.magicrc', layout_path + '/.magicrc')
 

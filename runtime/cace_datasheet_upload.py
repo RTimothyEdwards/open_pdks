@@ -141,8 +141,8 @@ if __name__ == '__main__':
 
     # Put the current git system state into the target directory
     # prior to tarballing
-    if os.path.isfile('/ef/.ef-version'):
-        with open('/ef/.ef-version', 'r') as f:
+    if os.path.isfile('.version'):
+        with open('.version', 'r') as f:
             ef_version = f.read().rstrip()
         docinfo['ef-version'] = ef_version
 

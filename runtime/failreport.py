@@ -208,7 +208,7 @@ class FailReport(tkinter.Toplevel):
         canvas = cace_makeplot.makeplot(plotrec, results, variables, parent = self.plotframe)
         if 'display' in param:
             ttk.Label(self.plotframe, text=param['display'], style='title.TLabel').grid(row=1, column=0)
-        canvas.show()
+        canvas.draw()
         canvas.get_tk_widget().grid(row=0, column=0, sticky = 'nsew')
         # Finally, open the window if it was not already open.
         self.open()
@@ -242,7 +242,7 @@ class FailReport(tkinter.Toplevel):
         canvas = cace_makeplot.makeplot(plotrec, results, variables, parent = self.plotframe)
         if 'display' in param:
             ttk.Label(self.plotframe, text=param['display'], style='title.TLabel').grid(row=1, column=0)
-        canvas.show()
+        canvas.draw()
         canvas.get_tk_widget().grid(row=0, column=0, sticky = 'nsew')
         # Display the button to return to the table view
         # except for transient and Monte Carlo simulations which are too large to tabulate.
@@ -289,7 +289,7 @@ class FailReport(tkinter.Toplevel):
             if 'display' in param:
                 ttk.Label(self.plotframe, text=param['display'],
 				style='title.TLabel').grid(row=1, column=0)
-            canvas.show()
+            canvas.draw()
             canvas.get_tk_widget().grid(row=0, column=0, sticky = 'nsew')
             self.data = param
             # Display the button to return to the table view

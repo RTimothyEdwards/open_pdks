@@ -33,14 +33,19 @@ if __name__ == '__main__':
         print_usage()
         sys.exit(0)
 
-    # Search the /ef/ tree and find all foundry name (root name of the
+    # Search the PDK_ROOT tree and find all foundry name (root name of the
     # directory above the foundry node name).  If nothing is found,
     # assume that this is the project name.  If the project name
     # is already set, then generate an error.
 
     proclist = []
 
-    for procnode in glob.glob('/ef/tech/*/*/.ef-config/nodeinfo.json'):
+    if os.getenv('PDK_ROOT'):
+        PDK_ROOT = os.getenv('PDK_ROOT')
+    else:
+        PDK_ROOT = 'PREFIX/share/pdk/'
+
+    for procnode in glob.glob(PDK_ROOT + '*/.config/nodeinfo.json'):
         try:
             with open(procnode, 'r') as ifile:
                 process = json.load(ifile)
