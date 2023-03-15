@@ -69,6 +69,11 @@ def filter(inname, outname):
         fixedline = re.sub('^(.subckt .*)( ad=0 .*)( mf=1)(.*)',
 			'\g<1> nf=1\g<2>\g<4>', fixedline)
 
+        # This substitution extends the special_pfet_pass model length limits
+        # to cover the device found in the dual-port SRAM library.
+        fixedline = re.sub('lmin = 0.25e-007 lmax = 0.5e-007',
+			'lmin = 0.245e-007 lmax = 0.805e-007', fixedline)
+
         fixedlines.append(fixedline)
         if fixedline != line:
             modified = True

@@ -70,6 +70,7 @@ if {[file isdir ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}]} {
     addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_osu_sc
     addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_osu_sc_t18
     addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_ml_xx_hd
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_bd_sram
     addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_sram_macros
 } else {
     addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_pr/${MAGTYPE}
@@ -84,6 +85,7 @@ if {[file isdir ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}]} {
     addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_osu_sc/${MAGTYPE}
     addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_osu_sc_t18/${MAGTYPE}
     addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_ml_xx_hd/${MAGTYPE}
+    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_bd_sram/${MAGTYPE}
     addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_sram_macros/${MAGTYPE}
 }
 

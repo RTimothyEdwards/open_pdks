@@ -60,6 +60,18 @@ unittypes = {
 	"": "none"
 }
 
+# Convert string to either integer or float, with priority on integer
+# If argument is not a string, just return the argument.
+
+def numeric(s):
+    if isinstance(s, str):
+        try:
+            return int(s)
+        except ValueError:
+            return float(s)
+    else:
+        return s
+
 # Define how to convert SI units to spice values
 #
 # NOTE: spice_unit_unconvert can act on a tuple of (units, value) where
@@ -79,20 +91,20 @@ def spice_unit_convert(valuet, restrict=[]):
     # Recursive handling of '/' and multiplicatioon dot in expressions
     if '/' in valuet[0]:
         parts = valuet[0].split('/', 1)
-        result = float(spice_unit_convert([parts[0], valuet[1]], restrict))
-        result /= float(spice_unit_convert([parts[1], "1.0"], restrict))
+        result = numeric(spice_unit_convert([parts[0], valuet[1]], restrict))
+        result /= numeric(spice_unit_convert([parts[1], "1.0"], restrict))
         return str(result)
 
     if '\u22c5' in valuet[0]:	# multiplication dot
         parts = valuet[0].split('\u22c5')
-        result = float(spice_unit_convert([parts[0], valuet[1]], restrict))
-        result *= float(spice_unit_convert([parts[1], "1.0"], restrict))
+        result = numeric(spice_unit_convert([parts[0], valuet[1]], restrict))
+        result *= numeric(spice_unit_convert([parts[1], "1.0"], restrict))
         return str(result)
 
     if '\u00b2' in valuet[0]:	# squared
         part = valuet[0].split('\u00b2')[0]
-        result = float(spice_unit_unconvert([part, valuet[1]], restrict))
-        result *= float(spice_unit_unconvert([part, "1.0"], restrict))
+        result = numeric(spice_unit_unconvert([part, valuet[1]], restrict))
+        result *= numeric(spice_unit_unconvert([part, "1.0"], restrict))
         return str(result)
 
     if valuet[0] == "":		# null case, no units
@@ -111,15 +123,15 @@ def spice_unit_convert(valuet, restrict=[]):
             if re.match('^' + prerec + unitrec + '$', valuet[0]):
                 if restrict:
                     if unittypes[unitrec] == restrict.lower():
-                        newvalue = float(valuet[1]) * prefixtypes[prerec]
+                        newvalue = numeric(valuet[1]) * prefixtypes[prerec]
                         return str(newvalue)
                 else:
-                    newvalue = float(valuet[1]) * prefixtypes[prerec]
+                    newvalue = numeric(valuet[1]) * prefixtypes[prerec]
                     return str(newvalue)
 
     # Check for "%", which can apply to anything.
     if valuet[0][0] == '%':
-        newvalue = float(valuet[1]) * 0.01
+        newvalue = numeric(valuet[1]) * 0.01
         return str(newvalue)
     
     if restrict:

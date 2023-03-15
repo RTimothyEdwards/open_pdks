@@ -69,6 +69,7 @@ import subprocess
 import faulthandler
 from functools import reduce
 from spiceunits import spice_unit_convert
+from spiceunits import numeric
 
 # Application path (path where this script is located)
 apps_path = os.path.realpath(os.path.dirname(__file__))
@@ -177,9 +178,9 @@ conditiontypes = {
 # floating-point numeric sequence generators, to be used with condition generator
 
 def linseq(condition, unit, start, stop, step):
-    a = float(start)
-    e = float(stop)
-    s = float(step)
+    a = numeric(start)
+    e = numeric(stop)
+    s = numeric(step)
     while (a < e + s):
         if (a > e):
             yield (condition, unit, stop)
@@ -188,9 +189,9 @@ def linseq(condition, unit, start, stop, step):
         a = a + s
 
 def logseq(condition, unit, start, stop, step):
-    a = float(start)
-    e = float(stop)
-    s = float(step)
+    a = numeric(start)
+    e = numeric(stop)
+    s = numeric(step)
     while (a < e * s):
         if (a > e):
             yield (condition, unit, stop)
@@ -312,7 +313,7 @@ def findmaxtime(param, lcondlist):
         if 'target' in prec:
             pmax = prec['target']
             try:
-                maxval = float(spice_unit_convert([simunit, pmax], 'time'))
+                maxval = numeric(spice_unit_convert([simunit, pmax], 'time'))
                 found = True
             except:
                 pass
@@ -321,7 +322,7 @@ def findmaxtime(param, lcondlist):
         if 'target' in prec:
             ptyp = prec['target']
             try:
-                maxval = float(spice_unit_convert([simunit, ptyp], 'time'))
+                maxval = numeric(spice_unit_convert([simunit, ptyp], 'time'))
                 found = True
             except:
                 pass
@@ -330,7 +331,7 @@ def findmaxtime(param, lcondlist):
         if 'target' in prec:
             pmin = prec['target']
             try:
-                maxval = float(spice_unit_convert([simunit, pmin], 'time'))
+                maxval = numeric(spice_unit_convert([simunit, pmin], 'time'))
                 found = True
             except:
                 pass
@@ -343,13 +344,13 @@ def findmaxtime(param, lcondlist):
             condunit = cond['unit']
             maxval = 0.0
             if 'max' in cond:
-                maxval = float(spice_unit_convert([condunit, cond['max']], 'time'))
+                maxval = numeric(spice_unit_convert([condunit, cond['max']], 'time'))
             elif 'enum' in cond:
-                maxval = float(spice_unit_convert([condunit, cond['enum'][-1]], 'time'))
+                maxval = numeric(spice_unit_convert([condunit, cond['enum'][-1]], 'time'))
             elif 'typ' in cond:
-                maxval = float(spice_unit_convert([condunit, cond['typ']], 'time'))
+                maxval = numeric(spice_unit_convert([condunit, cond['typ']], 'time'))
             elif 'min' in cond:
-                maxval = float(spice_unit_convert([condunit, cond['min']], 'time'))
+                maxval = numeric(spice_unit_convert([condunit, cond['min']], 'time'))
             if maxval > maxtime:
                 maxtime = maxval
 
@@ -599,7 +600,7 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
                         sys.stdout.buffer.write(ptext.encode('utf-8'))
                     else:
                         units = simrec[1]
-                        lvals.append(float(simrec[2]))
+                        lvals.append(numeric(simrec[2]))
                         simval.remove(simrec)
 
                 # Remove non-unique entries from lvals
@@ -735,7 +736,7 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
                                     watchend = smatch.start()
                                     ltok = subsline[0:watchend].replace('=', ' = ').split()
                                     ntok = ltok[:-2]
-                                    ntok.append(str(float(ltok[-2]) + float(ltok[-1])))
+                                    ntok.append(str(numeric(ltok[-2]) + numeric(ltok[-1])))
                                     subsline = ' '.join(ntok).replace(' = ', '=') + line[patmatch.end():]
                                     repl = ''
                                     no_repl_ok = True
@@ -744,7 +745,7 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
                                     watchend = smatch.start()
                                     ltok = subsline[0:watchend].replace('=', ' = ').split()
                                     ntok = ltok[:-2]
-                                    ntok.append(str(float(ltok[-2]) - float(ltok[-1])))
+                                    ntok.append(str(numeric(ltok[-2]) - numeric(ltok[-1])))
                                     subsline = ' '.join(ntok).replace(' = ', '=') + line[patmatch.end():]
                                     repl = ''
                                     no_repl_ok = True
@@ -753,7 +754,7 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
                                     watchend = smatch.start()
                                     ltok = subsline[0:watchend].replace('=', ' = ').split()
                                     ntok = ltok[:-2]
-                                    ntok.append(str(float(ltok[-2]) * float(ltok[-1])))
+                                    ntok.append(str(numeric(ltok[-2]) * numeric(ltok[-1])))
                                     subsline = ' '.join(ntok).replace(' = ', '=') + line[patmatch.end():]
                                     repl = ''
                                     no_repl_ok = True
@@ -762,7 +763,7 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
                                     watchend = smatch.start()
                                     ltok = subsline[0:watchend].replace('=', ' = ').split()
                                     ntok = ltok[:-2]
-                                    ntok.append(str(float(ltok[-2]) / float(ltok[-1])))
+                                    ntok.append(str(numeric(ltok[-2]) / numeric(ltok[-1])))
                                     subsline = ' '.join(ntok).replace(' = ', '=') + line[patmatch.end():]
                                     repl = ''
                                     no_repl_ok = True
@@ -771,7 +772,7 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
                                     watchend = smatch.start()
                                     ltok = subsline[0:watchend].replace('=', ' = ').split()
                                     ntok = ltok[:-2]
-                                    ntok.append(str(max(float(ltok[-2]), float(ltok[-1]))))
+                                    ntok.append(str(max(numeric(ltok[-2]), numeric(ltok[-1]))))
                                     subsline = ' '.join(ntok).replace(' = ', '=') + line[patmatch.end():]
                                     repl = ''
                                     no_repl_ok = True
@@ -780,7 +781,7 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
                                     watchend = smatch.start()
                                     ltok = subsline[0:watchend].replace('=', ' = ').split()
                                     ntok = ltok[:-2]
-                                    ntok.append(str(min(float(ltok[-2]), float(ltok[-1]))))
+                                    ntok.append(str(min(numeric(ltok[-2]), numeric(ltok[-1]))))
                                     subsline = ' '.join(ntok).replace(' = ', '=') + line[patmatch.end():]
                                     repl = ''
                                     no_repl_ok = True
@@ -790,7 +791,17 @@ def substitute(filename, fileinfo, template, simvals, maxtime, schemline,
                                     watchend = smatch.start()
                                     ltok = subsline[0:watchend].replace('=', ' = ').split()
                                     ntok = ltok[:-1]
-                                    ntok.append(str(-float(ltok[-1])))
+                                    ntok.append(str(-numeric(ltok[-1])))
+                                    subsline = ' '.join(ntok).replace(' = ', '=') + line[patmatch.end():]
+                                    repl = ''
+                                    no_repl_ok = True
+                                # 'INT' also acts on only the previous value in the string.
+                                elif condition == 'INT':
+                                    smatch = varex.search(subsline)
+                                    watchend = smatch.start()
+                                    ltok = subsline[0:watchend].replace('=', ' = ').split()
+                                    ntok = ltok[:-1]
+                                    ntok.append(str(int(ltok[-1])))
                                     subsline = ' '.join(ntok).replace(' = ', '=') + line[patmatch.end():]
                                     repl = ''
                                     no_repl_ok = True
