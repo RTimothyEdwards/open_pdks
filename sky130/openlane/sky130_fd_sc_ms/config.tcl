@@ -56,7 +56,7 @@ set ::env(DIODE_CELL) "sky130_fd_sc_ms__diode_2"
 set ::env(DIODE_CELL_PIN) "DIODE"
 
 set ::env(GPL_CELL_PADDING) {0}
-set ::env(DPL_CELL_PADDING) {4}
+set ::env(DPL_CELL_PADDING) {0}
 set ::env(CELL_PAD_EXCLUDE) "$::env(STD_CELL_LIBRARY)__tap* $::env(STD_CELL_LIBRARY)__decap* $::env(STD_CELL_LIBRARY)__fill*"
 
 # Clk Buffers info CTS data

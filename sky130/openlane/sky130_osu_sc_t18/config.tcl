@@ -57,7 +57,7 @@ set ::env(DIODE_CELL) "ANTFILL"
 set ::env(DIODE_CELL_PIN) "A"
 
 set ::env(GPL_CELL_PADDING) {0}
-set ::env(DPL_CELL_PADDING) {4}
+set ::env(DPL_CELL_PADDING) {0}
 set ::env(CELL_PAD_EXCLUDE) "FILLX*"
 
 # Clk Buffers info CTS data

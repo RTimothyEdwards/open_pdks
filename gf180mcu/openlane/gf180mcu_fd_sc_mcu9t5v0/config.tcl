@@ -49,5 +49,5 @@ set ::env(FP_PDN_RAIL_WIDTH) 0.6
 set ::env(DEFAULT_MAX_TRAN) 3
 
 set ::env(GPL_CELL_PADDING) {0}
-set ::env(DPL_CELL_PADDING) {2}
+set ::env(DPL_CELL_PADDING) {0}
 

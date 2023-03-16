@@ -55,7 +55,7 @@ set ::env(DIODE_CELL) "sky130_fd_sc_hs__diode_2"
 set ::env(DIODE_CELL_PIN) "DIODE"
 
 set ::env(GPL_CELL_PADDING) {0}
-set ::env(DPL_CELL_PADDING) {4}
+set ::env(DPL_CELL_PADDING) {0}
 set ::env(CELL_PAD_EXCLUDE) "sky130_fd_sc_hs__tap* sky130_fd_sc_hs__decap* sky130_fd_sc_hs__fill*"
 
 set ::env(ROOT_CLK_BUFFER) sky130_fd_sc_hs__clkbuf_16

@@ -57,7 +57,7 @@ set ::env(FAKEDIODE_CELL) "sky130_ef_sc_hd__fakediode_2"
 set ::env(DIODE_CELL_PIN) "DIODE"
 
 set ::env(GPL_CELL_PADDING) {0}
-set ::env(DPL_CELL_PADDING) {4}
+set ::env(DPL_CELL_PADDING) {0}
 set ::env(CELL_PAD_EXCLUDE) "sky130_fd_sc_hd__tap* sky130_fd_sc_hd__decap* sky130_ef_sc_hd__decap* sky130_fd_sc_hd__fill*"
 
 # Clk Buffers info CTS data
