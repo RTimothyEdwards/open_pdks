@@ -76,7 +76,7 @@ proc make_bump_bond {{orient 0}} {
     select top cell
     set orig_cell [cellname list self]
 
-    load bump_bond${orient} -quiet
+    load bump_bond${orient} -silent
     box values 0 0 0 0
 
     set rbump 125.0	;# under-bump material radius, in microns

@@ -1377,7 +1377,7 @@ io-%:
 		-spice %l/spice/*.spice \
 		-lib %l/lib/*.lib \
 		-gds %l/gds/*.gds options=custom/scripts/gds_import_io.tcl \
-		-lef %l/lef/*.lef exclude=sky130_fd_io__top_xres4v2.lef,sky130_fd_io__top_power_hvc_wpadv2.lef \
+		-lef %l/lef/*.lef exclude=sky130_fd_io__top_xres4v2.lef,sky130_fd_io__top_power_hvc_wpadv2.lef,sky130_fd_io__top_gpiov2.lef \
 			compile-only rename=sky130_ef_io \
 		-lef %l/lef/sky130_fd_io__top_*.lef \
 		-library general sky130_fd_io 2>&1 | tee -a ${SKY130$*}_make.log
@@ -1417,8 +1417,8 @@ io-%:
 			sort=../common/sort_pdkfiles.py \
 		-lef %l/latest/cells/*/*.lef annotate lefopts=-hide compile-only \
 			filter=custom/scripts/fix_io_lef.py \
-			no-copy=sky130_fd_io__top_xres4v2.lef \
-			include=sky130_fd_io__top_xres4v2.lef,sky130_fd_io__top_power_hvc_wpadv2.lef \
+			no-copy=sky130_fd_io__top_xres4v2.lef,sky130_fd_io__top_gpiov2.lef \
+			include=sky130_fd_io__top_xres4v2.lef,sky130_fd_io__top_power_hvc_wpadv2.lef,sky130_fd_io__top_gpiov2.lef \
 			exclude=*.magic.lef,sky130_ef_io.lef \
 			sort=../common/sort_pdkfiles.py \
 		-doc %l/latest/cells/*/*.pdf \

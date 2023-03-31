@@ -11,23 +11,23 @@ end
 
 planes
    m5
+   pi1
    rdl
+   pi2
    ubm
    glass
 end
 
 types
-   m5 metal5 m5
-   m5    pi1
+   m5 metal5,m5
+   pi1   pi1
    rdl   rdl
-   rdl   pi2
+   pi2   pi2
    ubm   ubm
    glass glass
 end 
 
 contact
-   pi1	  metal5 rdl
-   pi2	  rdl	 ubm
 end
 
 styles
@@ -44,6 +44,10 @@ compose
 end
 
 connect
+   pi2	ubm
+   rdl	pi2
+   pi1	rdl
+   m5	pi1
 end
 
 cifoutput
@@ -57,7 +61,7 @@ style micross
    labels pi1
    calma  5 0
 
-   layer RDL rdl,pi1
+   layer RDL rdl
    labels rdl
    calma 10 0
 
@@ -65,9 +69,33 @@ style micross
    labels pi2
    calma 15 0
 
-   layer UBM ubm,pi2
+   layer UBM ubm
    labels ubm
    calma 20 0
+
+style sky130
+   scalefactor 1
+   options calma-permissive-labels
+
+   layer MET5 m5
+   labels m5
+   calma 72 20
+
+   layer GLASS glass
+   labels glass
+   calma 76 20
+
+style gf180mcuC
+   scalefactor 1
+   options calma-permissive-labels
+
+   layer MET5 m5
+   labels m5
+   calma 81 0
+
+   layer GLASS glass
+   labels glass
+   calma 37 0
 
 end
 
@@ -78,29 +106,34 @@ style micross
    # NOTE:  metal5 and glass are for reference;  GDS numbers correspond
    # to SkyWater SKY130
 
-   layer metal5 MET5
-   labels MET5
-
-   layer glass GLASS
-
-   layer pi1 PI1
-   labels PI1
-
-   layer rdl RDL
-   labels RDL
+   layer ubm UBM
+   labels UBM
 
    layer pi2 PI2
    labels PI2
 
-   layer ubm UBM
-   labels UBM
+   layer rdl RDL
+   labels RDL
 
-   calma MET5  72 20
-   calma GLASS 76 20
+   layer pi1 PI1
+   labels PI1
+
+   layer metal5 MET5,MET5GF
+   labels MET5
+
+   layer glass GLASS,GLASSGF
+   labels GLASS
+
    calma PI1    5 0
    calma RDL   10 0
    calma PI2   15 0
    calma UBM   20 0
+
+   calma MET5  72 20
+   calma GLASS 76 20
+
+   calma MET5GF 81 0
+   calma GLASSGF 37 0
 
 end
 
@@ -118,9 +151,11 @@ style generic
    sidehalo 0
 
   planeorder m5  0
-  planeorder rdl 1
-  planeorder ubm 2
-  planeorder glass 3
+  planeorder pi1 1
+  planeorder rdl 2
+  planeorder pi2 3
+  planeorder ubm 4
+  planeorder glass 5
 end
 
 # wiring
