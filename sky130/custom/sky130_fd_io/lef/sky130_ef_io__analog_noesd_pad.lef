@@ -1,0 +1,345 @@
+VERSION 5.7 ;
+  NOWIREEXTENSIONATPIN ON ;
+  DIVIDERCHAR "/" ;
+  BUSBITCHARS "[]" ;
+MACRO sky130_ef_io__analog_noesd_pad
+  CLASS PAD ;
+  FOREIGN sky130_ef_io__analog_noesd_pad ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 75.000 BY 200.000 ;
+  PIN P_CORE
+    PORT
+      LAYER met3 ;
+        RECT 24.720 0.000 49.720 82.350 ;
+    END
+  END P_CORE
+  PIN VSSA
+    PORT
+      LAYER met4 ;
+        RECT 0.000 36.735 1.270 40.185 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 56.405 75.000 56.735 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 47.735 75.000 48.065 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 51.645 1.270 52.825 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 36.735 75.000 40.185 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 56.405 75.000 56.735 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 47.735 75.000 48.065 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 51.645 75.000 52.825 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 73.730 36.840 75.000 40.085 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 47.735 1.270 56.735 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 36.840 1.270 40.085 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 73.730 47.735 75.000 56.735 ;
+    END
+  END VSSA
+  PIN VSSD
+    PORT
+      LAYER met4 ;
+        RECT 0.000 41.585 1.270 46.235 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 41.585 75.000 46.235 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 41.685 1.270 46.135 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 73.730 41.685 75.000 46.135 ;
+    END
+  END VSSD
+  PIN AMUXBUS_B
+    PORT
+      LAYER met4 ;
+        RECT 0.000 48.365 75.000 51.345 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 48.365 75.000 51.345 ;
+    END
+  END AMUXBUS_B
+  PIN AMUXBUS_A
+    PORT
+      LAYER met4 ;
+        RECT 0.000 53.125 75.000 56.105 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 53.125 75.000 56.105 ;
+    END
+  END AMUXBUS_A
+  PIN VDDIO_Q
+    PORT
+      LAYER met4 ;
+        RECT 0.000 64.085 1.270 68.535 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 64.085 75.000 68.535 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 73.730 64.185 75.000 68.435 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 64.185 1.270 68.435 ;
+    END
+  END VDDIO_Q
+  PIN VDDIO
+    PORT
+      LAYER met4 ;
+        RECT 0.000 70.035 1.270 95.000 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 19.785 1.270 24.435 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 70.035 75.000 95.000 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 19.785 75.000 24.435 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 19.885 1.270 24.335 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 70.035 1.270 94.985 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 73.730 19.885 75.000 24.335 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 73.730 70.035 75.000 94.985 ;
+    END
+  END VDDIO
+  PIN VSWITCH
+    PORT
+      LAYER met4 ;
+        RECT 0.000 31.885 1.270 35.335 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 31.885 75.000 35.335 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 73.730 31.985 75.000 35.235 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 31.985 1.270 35.235 ;
+    END
+  END VSWITCH
+  PIN VSSIO
+    PORT
+      LAYER met4 ;
+        RECT 0.000 25.835 1.270 30.485 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 25.835 75.000 30.485 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.000 175.785 1.270 200.000 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 0.630 191.600 0.640 191.610 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 175.785 75.000 200.000 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 74.360 191.600 74.370 191.610 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 73.730 25.935 75.000 30.385 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 73.730 175.785 75.000 200.000 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 175.785 1.270 200.000 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 25.935 1.270 30.385 ;
+    END
+  END VSSIO
+  PIN VDDA
+    PORT
+      LAYER met4 ;
+        RECT 0.000 14.935 0.965 18.385 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 74.035 14.935 75.000 18.385 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 15.035 0.965 18.285 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 74.035 15.035 75.000 18.285 ;
+    END
+  END VDDA
+  PIN VCCD
+    PORT
+      LAYER met4 ;
+        RECT 0.000 8.885 1.270 13.535 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 8.885 75.000 13.535 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 8.985 1.270 13.435 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 73.730 8.985 75.000 13.435 ;
+    END
+  END VCCD
+  PIN VCCHIB
+    PORT
+      LAYER met4 ;
+        RECT 0.000 2.035 1.270 7.485 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 2.035 75.000 7.485 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 2.135 1.270 7.385 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 73.730 2.135 75.000 7.385 ;
+    END
+  END VCCHIB
+  PIN VSSIO_Q
+    PORT
+      LAYER met4 ;
+        RECT 0.000 58.235 1.270 62.685 ;
+    END
+    PORT
+      LAYER met4 ;
+        RECT 73.730 58.235 75.000 62.685 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 73.730 58.335 75.000 62.585 ;
+    END
+    PORT
+      LAYER met5 ;
+        RECT 0.000 58.335 1.270 62.585 ;
+    END
+  END VSSIO_Q
+  PIN P_PAD
+    PORT
+      LAYER met5 ;
+        RECT 7.050 105.120 67.890 165.945 ;
+    END
+  END P_PAD
+  OBS
+      LAYER li1 ;
+        RECT 2.905 48.265 72.045 181.100 ;
+      LAYER met1 ;
+        RECT 4.250 46.255 70.440 48.855 ;
+      LAYER met2 ;
+        RECT 4.250 46.255 70.440 48.855 ;
+      LAYER met3 ;
+        RECT 0.455 82.750 74.250 173.315 ;
+        RECT 0.455 14.905 24.320 82.750 ;
+        RECT 50.120 14.905 74.250 82.750 ;
+      LAYER met4 ;
+        RECT 1.670 175.385 73.330 200.000 ;
+        RECT 0.965 95.400 74.035 175.385 ;
+        RECT 1.670 69.635 73.330 95.400 ;
+        RECT 0.965 68.935 74.035 69.635 ;
+        RECT 1.670 63.685 73.330 68.935 ;
+        RECT 0.965 63.085 74.035 63.685 ;
+        RECT 1.670 57.835 73.330 63.085 ;
+        RECT 0.965 57.135 74.035 57.835 ;
+        RECT 1.670 51.745 73.330 52.725 ;
+        RECT 0.965 46.635 74.035 47.335 ;
+        RECT 1.670 41.185 73.330 46.635 ;
+        RECT 0.965 40.585 74.035 41.185 ;
+        RECT 1.670 36.335 73.330 40.585 ;
+        RECT 0.965 35.735 74.035 36.335 ;
+        RECT 1.670 31.485 73.330 35.735 ;
+        RECT 0.965 30.885 74.035 31.485 ;
+        RECT 1.670 25.435 73.330 30.885 ;
+        RECT 0.965 24.835 74.035 25.435 ;
+        RECT 1.670 19.385 73.330 24.835 ;
+        RECT 0.965 18.785 74.035 19.385 ;
+        RECT 1.365 14.535 73.635 18.785 ;
+        RECT 0.965 13.935 74.035 14.535 ;
+        RECT 1.670 8.485 73.330 13.935 ;
+        RECT 0.965 7.885 74.035 8.485 ;
+        RECT 1.670 2.035 73.330 7.885 ;
+      LAYER met5 ;
+        RECT 2.870 174.185 72.130 200.000 ;
+        RECT 0.000 167.545 75.000 174.185 ;
+        RECT 0.000 103.520 5.450 167.545 ;
+        RECT 69.490 103.520 75.000 167.545 ;
+        RECT 0.000 96.585 75.000 103.520 ;
+        RECT 2.870 36.840 72.130 96.585 ;
+        RECT 0.000 36.835 75.000 36.840 ;
+        RECT 2.870 18.285 72.130 36.835 ;
+        RECT 2.565 15.035 72.435 18.285 ;
+        RECT 2.870 2.135 72.130 15.035 ;
+  END
+END sky130_ef_io__analog_noesd_pad
+END LIBRARY
+
