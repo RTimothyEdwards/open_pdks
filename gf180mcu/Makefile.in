@@ -739,6 +739,7 @@ xschem-%: ${GF180MCU_PR_PATH}
 	cp -rp ${GF180MCU_PR_PATH}/cells/xschem/symbols ${XSCHEM_STAGING_$*}
 	cp -rp ${GF180MCU_PR_PATH}/cells/xschem/tests ${XSCHEM_STAGING_$*}
 	cp -rp ${GF180MCU_PR_PATH}/cells/xschem/xschemrc ${XSCHEM_STAGING_$*}
+	cat ./custom/xschem/xschemrc_append >> ${XSCHEM_STAGING_$*}/xschemrc
 
 openlane-%: openlane/config.tcl openlane/gf180mcu_fd_sc_mcu7t5v0/config.tcl openlane/gf180mcu_fd_sc_mcu9t5v0/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_$*}
