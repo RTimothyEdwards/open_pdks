@@ -1,0 +1,5 @@
+
+# allow a user-specific path add-on (https://github.com/iic-jku/iic-osic-tools/issues/7)
+if { [info exists ::env(XSCHEM_USER_LIBRARY_PATH) ] } {
+    append XSCHEM_LIBRARY_PATH :$env(XSCHEM_USER_LIBRARY_PATH)
+}
