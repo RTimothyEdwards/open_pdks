@@ -3032,33 +3032,33 @@ style  sky130 variants (),(vendor)
  and-not HVI,hvcheck
  grow 3000
 
- layer pfet POLY
+ layer pfet DIFF
  and diffresarea
- and DIFF
+ and POLY
  and-not NSDM
  and-not STDCELL
  and-not HVI
 
- layer mvpfet POLY
+ layer mvpfet DIFF
  and diffresarea
- and DIFF
+ and POLY
  and-not NSDM
  and-not STDCELL
  and HVI
 
- layer scpfet POLY
+ layer scpfet STDCELL
+ and POLY
  and diffresarea
  and DIFF
  and-not NSDM
  and-not HVTP
- and STDCELL
 
- layer scpfethvt POLY
+ layer scpfethvt STDCELL
+ and POLY
  and diffresarea
  and DIFF
  and-not NSDM
  and HVTP
- and STDCELL
 
 # End of resistor area hack
 
@@ -3078,6 +3078,9 @@ style  sky130 variants (),(vendor)
  and-not TAP
  and-not RPM
  and-not URPM
+ # Remove areas too small for a contact
+ shrink 130
+ grow 130
  copyup polycheck
 
  layer poly polyarea
@@ -3089,28 +3092,28 @@ style  sky130 variants (),(vendor)
  templayer xpolycheck polycheck
  copyup polycheck
 
- layer mrp1 POLY
- and POLYRES
+ layer mrp1 POLYRES
+ and POLY
  and-not RPM
  and-not URPM
  labels POLY
 
- layer rmp POLY
- and POLYSHORT
+ layer rmp POLYSHORT
+ and POLY
  labels POLY
 
- layer xhrpoly POLY
+ layer xhrpoly RPM
  and POLYRES
- and RPM
+ and POLY
  and-not URPM
  and PSDM
  and NPC
  and-not xpolyterm
  labels POLY
 
- layer uhrpoly POLY
+ layer uhrpoly URPM
  and POLYRES
- and URPM
+ and POLY
  and-not RPM
  and NPC
  and-not xpolyterm
