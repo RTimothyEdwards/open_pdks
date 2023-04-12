@@ -3078,6 +3078,8 @@ style  sky130 variants (),(vendor)
  and-not TAP
  and-not RPM
  and-not URPM
+
+ templayer polycontarea polyarea
  # Remove areas too small for a contact
  shrink 130
  grow 130
