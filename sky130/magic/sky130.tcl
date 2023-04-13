@@ -5083,7 +5083,7 @@ proc sky130::sky130_fd_pr__cap_var_lvt_defaults {} {
 		compatible {sky130_fd_pr__cap_var_lvt \
 		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 gshield 1}
 }
 
 proc sky130::sky130_fd_pr__cap_var_hvt_defaults {} {
@@ -5093,7 +5093,7 @@ proc sky130::sky130_fd_pr__cap_var_hvt_defaults {} {
 		compatible {sky130_fd_pr__cap_var_lvt \
 		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 gshield 1}
 }
 
 proc sky130::sky130_fd_pr__cap_var_defaults {} {
@@ -5103,7 +5103,7 @@ proc sky130::sky130_fd_pr__cap_var_defaults {} {
 		compatible {sky130_fd_pr__cap_var_lvt \
 		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 gshield 1}
 }
 
 #----------------------------------------------------------------
@@ -5221,6 +5221,9 @@ proc sky130::mos_dialog {device parameters} {
        magic::add_selectlist gencell "Device type" $sellist $parameters $device
     }
 
+    # Default-empty message area, used by the varactor dialog.
+    magic::add_message minfo "" $parameters brown
+
     magic::add_entry diffcov "Diffusion contact coverage (%)" $parameters
     magic::add_entry polycov "Poly contact coverage (%)" $parameters
     magic::add_entry rlcov "Guard ring contact coverage (%)" $parameters
@@ -5242,6 +5245,10 @@ proc sky130::mos_dialog {device parameters} {
     }
     if {[dict exists $parameters gtc]} {
 	magic::add_checkbox gtc "Add top guard ring contact" $parameters
+    }
+
+    if {[string first "cap_var" $device] != -1} {
+	magic::add_checkbox gshield "Metal shield over gate" $parameters
     }
 
     magic::add_entry viasrc "Source via coverage \[+/-\](%)" $parameters
@@ -5731,6 +5738,7 @@ proc sky130::mos_device {parameters} {
     set dev_sub_dist 0	;# device substrate distance (if nondefault dev_sub_type)
     set min_effl 0	;# gate length below which finger pitch must be stretched
     set diff_overlap_cont 0	;# extra overlap of end contact by diffusion
+    set gshield 0	;# no metal shield over gate (used for varactors)
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -5918,6 +5926,27 @@ proc sky130::mos_device {parameters} {
 		${diff_type} ${diff_contact_type} li vert]]
     set diffarea $cext
     popbox
+    # Gate shield (only on varactors)
+    if {$gshield == 1} {
+ 	pushbox
+	box move w ${he}um
+	box move w ${gate_to_diffcont}um
+	box width [* 2 [+ ${he} ${gate_to_diffcont}]]um
+	box grow n [/ $cdwfull 2]um
+	box grow s [/ $cdwfull 2]um
+	paint m1
+	# Enforce slotting of large metal
+	set gsh [magic::i2u [box height]]
+	if {$gsh > 25} {
+	   box move n [/ $gsh 2]um
+	   box move s 1.15um
+	   box height 2.3um	;# Minimum m1 slot width
+	   box grow w -${via_size}um
+	   box grow e -${via_size}um
+	   erase m1
+	}
+	popbox
+    }
     # Top poly contact
     if {$topc} {
        pushbox
@@ -6673,6 +6702,15 @@ proc sky130::mos_check {device parameters} {
     if {$nf != $orignf} {
        puts stderr "X repeat reduced to prevent tap distance violation"
        dict set parameters nf $nf
+    }
+
+    # Used by varactor only
+    if {$device == "sky130_fd_pr__cap_var"} {
+	# NOTE: Removed until update behavior is fixed.
+        # set magic::minfo_val "Warning:  No model exists for this device!"
+        set magic::minfo_val ""
+    } else {
+        set magic::minfo_val ""
     }
 
     return $parameters
