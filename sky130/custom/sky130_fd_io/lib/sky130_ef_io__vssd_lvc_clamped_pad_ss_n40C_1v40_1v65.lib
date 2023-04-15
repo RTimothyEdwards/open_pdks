@@ -74,7 +74,7 @@ library (sky130_ef_io__vssd_lvc_clamped_pad_ss_n40C_1v40_1v65) {
 
   
 
-  operating_conditions (deep_sleep_max_-40) {
+  operating_conditions ("deep_sleep_max_-40") {
     process	: 1 ;
     temperature : -40	;
     voltage	: 1.40	;
