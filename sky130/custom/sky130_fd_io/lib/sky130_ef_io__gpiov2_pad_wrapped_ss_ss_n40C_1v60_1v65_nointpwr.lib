@@ -1089,6 +1089,7 @@ dont_use : true;
 			rise_capacitance : 0.026190;
 			capacitance : 0.026280;
 			fall_capacitance : 0.026371;
+			/* no_internal_power () {
 				rise_power ("power_inputs_1") {
 					index_1("0.0100000, 0.2600000, 0.5100000, 0.7600000, 1.0000000, 1.2500000, 1.5000000");
 					values("-0.0031046, -0.0033688, -0.0036331, -0.0037343, -0.0038314, -0.0039325, -0.0040337");
@@ -1280,6 +1281,7 @@ dont_use : true;
 			fall_capacitance : 0.031693;
 			capacitance : 0.032127;
 			rise_capacitance : 0.032560;
+			/* no_internal_power () {
 				rise_power ("power_inputs_1") {
 					index_1("0.0100000, 0.2600000, 0.5100000, 0.7600000, 1.0000000, 1.2500000, 1.5000000");
 					values("0.0502289, 0.0651197, 0.0800105, 0.0800087, 0.0800069, 0.0800051, 0.0800033");
@@ -1471,6 +1473,7 @@ dont_use : true;
 			fall_capacitance : 0.050800;
 			capacitance : 0.051200;
 			rise_capacitance : 0.051599;
+			/* no_internal_power () {
 				rise_power ("power_inputs_1") {
 					index_1("0.0100000, 0.2600000, 0.5100000, 0.7600000, 1.0000000, 1.2500000, 1.5000000");
 					values("-0.0119384, -0.0121619, -0.0123855, -0.0123867, -0.0123878, -0.0123889, -0.0123901");
@@ -1661,6 +1664,7 @@ dont_use : true;
 			rise_capacitance : 0.016687;
 			capacitance : 0.016507;
 			fall_capacitance : 0.016327;
+			/* no_internal_power () {
 				rise_power ("power_inputs_1") {
 					index_1("0.0100000, 0.2600000, 0.5100000, 0.7600000, 1.0000000, 1.2500000, 1.5000000");
 					values("0.0177023, 0.0173015, 0.0169008, 0.0168346, 0.0167711, 0.0167049, 0.0166387");
@@ -2111,6 +2115,7 @@ dont_use : true;
 			fall_capacitance : 0.009441;
 			capacitance : 0.009687;
 			rise_capacitance : 0.009934;
+			/* no_internal_power () {
 				rise_power ("power_inputs_1") {
 					index_1("0.0100000, 0.2600000, 0.5100000, 0.7600000, 1.0000000, 1.2500000, 1.5000000");
 					values("-0.0040147, 0.0182602, 0.0405350, 0.2355953, 0.4228531, 0.6179133, 0.8129736");
@@ -2561,6 +2566,7 @@ dont_use : true;
 			fall_capacitance : 0.017243;
 			capacitance : 0.017403;
 			rise_capacitance : 0.017563;
+			/* no_internal_power () {
 				rise_power ("power_inputs_1") {
 					index_1("0.0100000, 0.2600000, 0.5100000, 0.7600000, 1.0000000, 1.2500000, 1.5000000");
 					values("0.0592545, 0.0885380, 0.1178214, 0.1480761, 0.1771206, 0.2073752, 0.2376299");
@@ -4080,6 +4086,7 @@ dont_use : true;
 			fall_capacitance : 0.014607;
 			capacitance : 0.015082;
 			rise_capacitance : 0.015556;
+			/* no_internal_power () {
 				rise_power ("power_inputs_1") {
 					index_1("0.0100000, 0.2600000, 0.5100000, 0.7600000, 1.0000000, 1.2500000, 1.5000000");
 					values("-0.0116067, -0.0013654, 0.0088758, 0.0208884, 0.0324205, 0.0444331, 0.0564456");
@@ -4271,6 +4278,7 @@ dont_use : true;
 			rise_capacitance : 0.030962;
 			capacitance : 0.030976;
 			fall_capacitance : 0.030989;
+			/* no_internal_power () {
 				rise_power ("power_inputs_1") {
 					index_1("0.0100000, 0.2600000, 0.5100000, 0.7600000, 1.0000000, 1.2500000, 1.5000000");
 					values("-0.0044549, -0.0042680, -0.0040812, -0.0042472, -0.0044066, -0.0045726, -0.0047387");
@@ -4979,6 +4987,7 @@ dont_use : true;
 			function : "(PAD&!INP_DIS)";
 			max_capacitance : 0.672007;
 			max_transition : 1.518265;
+			/* no_internal_power () {
 				related_pin : "PAD";
 				when : "(  IB_MODE_SEL )";
 				rise_power ("power_outputs_1") {
@@ -5004,7 +5013,7 @@ dont_use : true;
 					  "1.8586261, 1.8558636, 1.8463917, 1.8465917, 1.8598445, 1.8493696, 1.8617453");
 				}
 			}*/
-
+			/* no_internal_power () {
 				related_pin : "PAD";
 				when : "(  !IB_MODE_SEL & !VTRIP_SEL )";
 				rise_power ("power_outputs_1") {
@@ -5030,6 +5039,7 @@ dont_use : true;
 					  "1.9915688, 1.9898343, 2.0021797, 2.0040380, 2.0043260, 2.0078891, 1.9982336");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "PAD";
 				when : "(  !IB_MODE_SEL & VTRIP_SEL )";
 				rise_power ("power_outputs_1") {
@@ -5055,6 +5065,7 @@ dont_use : true;
 					  "1.7942172, 1.8129210, 1.8141714, 1.8472960, 1.8767312, 1.9414418, 1.9869588");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "INP_DIS";
 				fall_power ("power_outputs_1") {
 					index_1("0.01, 0.26, 0.51, 0.76, 1, 1.25, 1.5");
@@ -5372,6 +5383,7 @@ dont_use : true;
 			function : "(PAD&!INP_DIS)";
 			max_capacitance : 1.269730;
 			max_transition : 3.753621;
+			/* no_internal_power () {
 				related_pin : "PAD";
 				when : "(  IB_MODE_SEL )";
 				rise_power ("power_outputs_1") {
@@ -5397,7 +5409,7 @@ dont_use : true;
 					  "1.8468159, 1.8588985, 1.8573979, 1.8506386, 1.8646189, 1.8542307, 1.8761765");
 				}
 			}*/
-
+			/* no_internal_power () {
 				related_pin : "PAD";
 				when : "(  !IB_MODE_SEL & VTRIP_SEL )";
 				fall_power ("power_outputs_1") {
@@ -5423,6 +5435,7 @@ dont_use : true;
 					  "-0.1238265, -0.1331743, -0.1326800, -0.1304831, -0.1190560, -0.1121293, -0.1251196");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "PAD";
 				when : "(  !IB_MODE_SEL & !VTRIP_SEL )";
 				rise_power ("power_outputs_1") {
@@ -5448,6 +5461,7 @@ dont_use : true;
 					  "1.9926814, 2.0016308, 1.9937663, 1.9942537, 2.0075306, 2.0147035, 2.0659511");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "INP_DIS";
 				rise_power ("power_outputs_1") {
 					index_1("0.01, 0.26, 0.51, 0.76, 1, 1.25, 1.5");
@@ -5769,6 +5783,7 @@ dont_use : true;
 			capacitance : 1.195242;
 			max_capacitance : 551.195000;
 			max_transition : 25.0;
+			/* no_internal_power () {
 				related_pin : "OUT";
 				when : "(  !OE_N & !DM[2] & DM[1] & !DM[0] & !SLOW )";
 				fall_power ("power_outputs_1") {
@@ -5794,6 +5809,7 @@ dont_use : true;
 					  "7.8567578, 7.8726496, 7.8559694, 7.8897063, 7.7787698, 6.8342797, -9.5074495");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OUT";
 				when : "(  !OE_N & !DM[2] & DM[1] & DM[0] & SLOW )";
 				fall_power ("power_outputs_1") {
@@ -5819,6 +5835,7 @@ dont_use : true;
 					  "6.5865109, 6.5946563, 6.6559271, 7.0052298, 7.7287612, 7.4421415, 1.2443958");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				when : "(  DM[2] & !DM[1] & DM[0] & SLOW )";
 				fall_power ("power_outputs_1") {
@@ -5844,6 +5861,7 @@ dont_use : true;
 					  "5.5460497, 5.5466022, 5.5492650, 5.5557785, 5.5540923, 5.3182627, -0.9037996");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				when : "(  DM[2] & DM[1] & DM[0] & SLOW )";
 				rise_power ("power_outputs_1") {
@@ -5869,6 +5887,7 @@ dont_use : true;
 					  "2.4165910, 2.4170750, 2.4179887, 2.4184831, 2.4243571, 2.4337814, 2.4283296");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OUT";
 				when : "(  !OE_N & DM[2] & !DM[1] & !DM[0] & SLOW )";
 				fall_power ("power_outputs_1") {
@@ -5894,6 +5913,7 @@ dont_use : true;
 					  "0.6921904, 0.6921875, 0.6921691, 0.6921407, 0.6922556, 0.6918403, 0.6920585");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OUT";
 				when : "(  !OE_N & DM[2] & !DM[1] & !DM[0] & !SLOW )";
 				fall_power ("power_outputs_1") {
@@ -5919,6 +5939,7 @@ dont_use : true;
 					  "0.7076633, 0.7076610, 0.7076309, 0.7075149, 0.7069778, 0.7065232, 0.7064253");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				when : "(  !DM[2] & DM[1] & DM[0] & !SLOW )";
 				rise_power ("power_outputs_1") {
@@ -5944,6 +5965,7 @@ dont_use : true;
 					  "2.4175997, 2.4212021, 2.4174857, 2.4203443, 2.4269445, 2.4313359, 2.4295004");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				when : "(  !DM[2] & DM[1] & !DM[0] & !SLOW )";
 				rise_power ("power_outputs_1") {
@@ -5969,6 +5991,7 @@ dont_use : true;
 					  "0.4673188, 0.4673181, 0.4673247, 0.4673316, 0.4673427, 0.4673410, 0.4672751");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OUT";
 				when : "(  !OE_N & DM[2] & DM[1] & DM[0] & !SLOW )";
 				rise_power ("power_outputs_1") {
@@ -5994,6 +6017,7 @@ dont_use : true;
 					  "2.8711309, 2.8701690, 2.8740711, 2.8705268, 2.8778114, 2.8884491, 2.8751846");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				when : "(  DM[2] & !DM[1] & DM[0] & !SLOW )";
 				fall_power ("power_outputs_1") {
@@ -6019,6 +6043,7 @@ dont_use : true;
 					  "6.7110666, 6.7170735, 6.7426555, 6.8601218, 6.7591666, 5.5608907, -0.1111942");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OUT";
 				when : "(  !OE_N & DM[2] & DM[1] & DM[0] & SLOW )";
 				rise_power ("power_outputs_1") {
@@ -6044,6 +6069,7 @@ dont_use : true;
 					  "2.8710015, 2.8701500, 2.8629496, 2.8710403, 2.8780022, 2.8626534, 2.8838246");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OUT";
 				when : "(  !OE_N & DM[2] & !DM[1] & DM[0] & SLOW )";
 				rise_power ("power_outputs_1") {
@@ -6069,6 +6095,7 @@ dont_use : true;
 					  "0.4072829, 0.4072198, 0.4068596, 0.4056876, 0.4046439, 0.4040420, 0.4038179");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OUT";
 				when : "(  !OE_N & DM[2] & DM[1] & !DM[0] & !SLOW )";
 				rise_power ("power_outputs_1") {
@@ -6094,6 +6121,7 @@ dont_use : true;
 					  "4.4140127, 4.4184700, 4.4527976, 4.5897371, 4.9516455, 5.9028478, 6.3205141");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				when : "(  DM[2] & !DM[1] & !DM[0] & !SLOW )";
 				rise_power ("power_outputs_1") {
@@ -6119,6 +6147,7 @@ dont_use : true;
 					  "3.0238422, 3.0283180, 3.0407692, 3.1019579, 3.1787010, 3.4448245, 5.0452190");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				when : "(  DM[2] & !DM[1] & !DM[0] & SLOW )";
 				fall_power ("power_outputs_1") {
@@ -6144,6 +6173,7 @@ dont_use : true;
 					  "0.4492822, 0.4492805, 0.4492819, 0.4492770, 0.4492085, 0.4492733, 0.4492108");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				when : "(  !DM[2] & DM[1] & !DM[0] & SLOW )";
 				rise_power ("power_outputs_1") {
@@ -6169,6 +6199,7 @@ dont_use : true;
 					  "2.4256662, 2.4276735, 2.4307006, 2.4520505, 2.5858209, 3.4462086, 4.2183821");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				when : "(  !DM[2] & DM[1] & DM[0] & SLOW )";
 				fall_power ("power_outputs_1") {
@@ -6194,6 +6225,7 @@ dont_use : true;
 					  "5.5472618, 5.5465354, 5.5493032, 5.5558075, 5.5623427, 5.2958202, -0.7191433");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OUT";
 				when : "(  !OE_N & DM[2] & !DM[1] & DM[0] & !SLOW )";
 				rise_power ("power_outputs_1") {
@@ -6219,6 +6251,7 @@ dont_use : true;
 					  "0.4072852, 0.4072212, 0.4070006, 0.4056915, 0.4046496, 0.4040168, 0.4039253");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				when : "(  DM[2] & DM[1] & !DM[0] & SLOW )";
 				fall_power ("power_outputs_1") {
@@ -6244,6 +6277,7 @@ dont_use : true;
 					  "5.5454573, 5.5461516, 5.5480299, 5.5541027, 5.5567863, 5.3181209, -0.9191256");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				when : "(  DM[2] & DM[1] & DM[0] & !SLOW )";
 				rise_power ("power_outputs_1") {
@@ -6269,6 +6303,7 @@ dont_use : true;
 					  "2.4190948, 2.4159155, 2.4178413, 2.4163594, 2.4279931, 2.4209490, 2.4437715");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				when : "(  DM[2] & DM[1] & !DM[0] & !SLOW )";
 				rise_power ("power_outputs_1") {
@@ -6294,6 +6329,7 @@ dont_use : true;
 					  "0.4671195, 0.4671163, 0.4671103, 0.4672028, 0.4676969, 0.4680785, 0.4681054");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OUT";
 				when : "(  !OE_N & !DM[2] & DM[1] & DM[0] & !SLOW )";
 				fall_power ("power_outputs_1") {
@@ -6319,6 +6355,7 @@ dont_use : true;
 					  "7.6839707, 7.6920163, 7.7286580, 7.9096313, 8.1962397, 8.0159039, 2.0186765");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OUT";
 				when : "(  !OE_N & DM[2] & DM[1] & !DM[0] & SLOW )";
 				rise_power ("power_outputs_1") {
@@ -6344,6 +6381,7 @@ dont_use : true;
 					  "3.6328407, 3.6348655, 3.6448458, 3.6952191, 3.8620531, 4.7366786, 5.5109347");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OUT";
 				when : "(  !OE_N & !DM[2] & DM[1] & !DM[0] & SLOW )";
 				fall_power ("power_outputs_1") {
@@ -6369,6 +6407,7 @@ dont_use : true;
 					  "7.8708151, 7.8782831, 7.8421089, 7.8941602, 7.7723756, 6.7673181, -9.7943025");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OE_N";
 				fall_power ("power_outputs_1") {
 					index_1("0.01, 0.26, 0.51, 0.76, 1, 1.25, 1.5");
@@ -6393,6 +6432,7 @@ dont_use : true;
 					  "6.2835583, 6.2844475, 6.2912519, 6.3161402, 6.2255157, 5.3417697, -4.7521956");
 				}
 			}*/
+			/* no_internal_power () {
 				related_pin : "OUT";
 				fall_power ("power_outputs_1") {
 					index_1("0.01, 0.26, 0.51, 0.76, 1, 1.25, 1.5");
@@ -8217,6 +8257,7 @@ dont_use : true;
 			rise_capacitance : 0.157976;
 			capacitance : 0.157476;
 			fall_capacitance : 0.156975;
+			/* no_internal_power () {
 				rise_power ("power_inputs_1") {
 					index_1("0.0100000, 0.2600000, 0.5100000, 0.7600000, 1.0000000, 1.2500000, 1.5000000");
 					values("-0.0487250, -0.0473064, -0.0458878, -0.0462409, -0.0465798, -0.0469328, -0.0472858");
@@ -8247,6 +8288,7 @@ dont_use : true;
 			rise_capacitance : 0.150650;
 			capacitance : 0.150117;
 			fall_capacitance : 0.149584;
+			/* no_internal_power () {
 				rise_power ("power_inputs_1") {
 					index_1("0.0100000, 0.2600000, 0.5100000, 0.7600000, 1.0000000, 1.2500000, 1.5000000");
 					values("-0.0490589, -0.0476052, -0.0461516, -0.0464106, -0.0466593, -0.0469183, -0.0471773");
