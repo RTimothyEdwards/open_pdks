@@ -81,7 +81,7 @@ library (sky130_fd_io__top_ground_lvc_wpad_tt_100C_1v80_3v30) {
   voltage_map(BDY2_B2B, 0.00);
   voltage_map(G_CORE, 0.00);
 
-  operating_conditions (typ_ind) {
+  operating_conditions ("typ_ind") {
     process	: 1 ;
     temperature : 100	;
     voltage	: 1.80	;

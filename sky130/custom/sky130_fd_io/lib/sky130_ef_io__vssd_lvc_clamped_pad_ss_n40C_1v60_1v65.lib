@@ -74,7 +74,7 @@ library (sky130_ef_io__vssd_lvc_clamped_pad_ss_n40C_1v60_1v65) {
 
   
 
-  operating_conditions (Max) {
+  operating_conditions ("Max") {
     process	: 1 ;
     temperature : -40	;
     voltage	: 1.60	;

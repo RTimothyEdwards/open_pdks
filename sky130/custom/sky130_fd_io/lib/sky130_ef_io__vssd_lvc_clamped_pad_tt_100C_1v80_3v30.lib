@@ -74,7 +74,7 @@ library (sky130_ef_io__vssd_lvc_clamped_pad_tt_100C_1v80_3v30) {
 
   
 
-  operating_conditions (typ_ind) {
+  operating_conditions ("typ_ind") {
     process	: 1 ;
     temperature : 100	;
     voltage	: 1.80	;

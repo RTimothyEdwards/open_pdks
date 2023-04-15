@@ -81,7 +81,7 @@ library (sky130_fd_io__top_ground_lvc_wpad_ff_n40C_1v95_5v50) {
   voltage_map(BDY2_B2B, 0.00);
   voltage_map(G_CORE, 0.00);
 
-  operating_conditions (Min) {
+  operating_conditions ("Min") {
     process	: 1 ;
     temperature : -40	;
     voltage	: 1.95	;

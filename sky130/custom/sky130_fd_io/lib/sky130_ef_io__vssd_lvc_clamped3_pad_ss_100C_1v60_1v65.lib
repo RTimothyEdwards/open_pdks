@@ -76,7 +76,7 @@ library (sky130_ef_io__vssd_lvc_clamped3_pad_ss_100C_1v60_1v65) {
   
   voltage_map(VSSD1, 0.00);
 
-  operating_conditions (max_ind) {
+  operating_conditions ("max_ind") {
     process	: 1 ;
     temperature : 100	;
     voltage	: 1.60	;
