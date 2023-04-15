@@ -82,7 +82,7 @@ library (sky130_ef_io__vssd_lvc_clamped3_pad_ss_n40C_1v45_1v65) {
     voltage	: 1.45	;
     tree_type	: balanced_tree ;
   }
-  default_operating_conditions : "deep_sleep_lfclk_max_-40"	
+  default_operating_conditions : "deep_sleep_lfclk_max_-40";
 
 cell (sky130_ef_io__vssd_lvc_clamped3_pad) {
     cell_leakage_power :   0.01;  

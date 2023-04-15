@@ -87,7 +87,7 @@ library (sky130_fd_io__top_ground_lvc_wpad_tt_100C_1v80_3v30) {
     voltage	: 1.80	;
     tree_type	: balanced_tree ;
   }
-  default_operating_conditions : "typ_ind"	
+  default_operating_conditions : "typ_ind";
 
 cell (sky130_fd_io__top_ground_lvc_wpad) {
     cell_leakage_power : 145.39  ;  

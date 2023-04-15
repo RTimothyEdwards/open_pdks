@@ -87,7 +87,7 @@ library (sky130_fd_io__top_ground_lvc_wpad_ss_n40C_1v40_1v65) {
     voltage	: 1.40	;
     tree_type	: balanced_tree ;
   }
-  default_operating_conditions : "deep_sleep_max_-40"	
+  default_operating_conditions : "deep_sleep_max_-40";
 
 cell (sky130_fd_io__top_ground_lvc_wpad) {
     cell_leakage_power :  0.01 ;  

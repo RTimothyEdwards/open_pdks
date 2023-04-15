@@ -82,7 +82,7 @@ library (sky130_ef_io__vssd_lvc_clamped3_pad_tt_025C_1v80_3v30) {
     voltage	: 1.80	;
     tree_type	: balanced_tree ;
   }
-  default_operating_conditions : "Typ"	
+  default_operating_conditions : "Typ";
 
 cell (sky130_ef_io__vssd_lvc_clamped3_pad) {
     cell_leakage_power :   2.65;  

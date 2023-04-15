@@ -80,7 +80,7 @@ library (sky130_ef_io__vssd_lvc_clamped_pad_ss_n40C_1v60_1v65) {
     voltage	: 1.60	;
     tree_type	: balanced_tree ;
   }
-  default_operating_conditions : "Max"	
+  default_operating_conditions : "Max";
 
 cell (sky130_ef_io__vssd_lvc_clamped_pad) {
     cell_leakage_power :  0.03 ;  
