@@ -142,7 +142,7 @@ library ("sky130_fd_io__top_gpiov2_ff_ff_100C_1v95_5v50") {
 		 downto    : true; 
 	 } 
 	cell ("sky130_fd_io__top_gpiov2") {
-			is_macro_cell : true
+			is_macro_cell : true;
 			dont_use : true;
 		interface_timing : true;
 		pad_cell : true;

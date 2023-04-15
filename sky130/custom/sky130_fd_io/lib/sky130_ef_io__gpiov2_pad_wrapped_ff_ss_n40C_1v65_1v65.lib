@@ -143,7 +143,7 @@ library ("sky130_ef_io__gpiov2_pad_wrapped_ff_ss_n40C_1v65_1v65") {
 		 downto    : true; 
 	 } 
 	cell ("sky130_ef_io__gpiov2_pad_wrapped") {
-			is_macro_cell : true
+			is_macro_cell : true;
 			dont_use : true;
 		interface_timing : true;
 		pad_cell : true;
