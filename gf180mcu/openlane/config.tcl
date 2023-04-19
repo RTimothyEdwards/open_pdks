@@ -70,9 +70,9 @@ set ::env(RCX_RULES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rcx_rules.
 ## Layer Info
 set ::env(FP_IO_HLAYER) "Metal3"
 set ::env(FP_IO_VLAYER) "Metal2"
-set ::env(FP_PDN_RAILS_LAYER) "Metal1"
-set ::env(FP_PDN_LOWER_LAYER) "Metal4"
-set ::env(FP_PDN_UPPER_LAYER) "Metal5"
+set ::env(FP_PDN_RAIL_LAYER) "Metal1"
+set ::env(FP_PDN_VERTICAL_LAYER) "Metal4"
+set ::env(FP_PDN_HORIZONTAL_LAYER) "Metal5"
 set ::env(MACRO_BLOCKAGES_LAYER) "Metal1 Metal2 Metal3 Metal4 Metal5"
 set ::env(WIRE_RC_LAYER) "Metal2"
 set ::env(DATA_WIRE_RC_LAYER) "Metal2"
@@ -88,6 +88,10 @@ set ::env(FP_PDN_VWIDTH) 1.6
 set ::env(FP_PDN_HWIDTH) 1.6
 set ::env(FP_PDN_VSPACING) 1.7
 set ::env(FP_PDN_HSPACING) 1.7
+set ::env(FP_PDN_VOFFSET) 16.32
+set ::env(FP_PDN_VPITCH) 153.6
+set ::env(FP_PDN_HOFFSET) 16.65
+set ::env(FP_PDN_HPITCH) 153.18
 
 ## Core Ring PDN defaults
 set ::env(FP_PDN_CORE_RING_VWIDTH) 1.6
