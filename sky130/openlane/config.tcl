@@ -144,14 +144,19 @@ if { [file exists "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/rules.openrcx
 }
 
 # Extra PDN configs
-set ::env(FP_PDN_RAILS_LAYER) met1
-set ::env(FP_PDN_LOWER_LAYER) met4
-set ::env(FP_PDN_UPPER_LAYER) met5
+set ::env(FP_PDN_RAIL_LAYER) met1
+set ::env(FP_PDN_VERTICAL_LAYER) met4
+set ::env(FP_PDN_HORIZONTAL_LAYER) met5
 set ::env(FP_PDN_RAIL_OFFSET) 0
 set ::env(FP_PDN_VWIDTH) 1.6
 set ::env(FP_PDN_HWIDTH) 1.6
 set ::env(FP_PDN_VSPACING) 1.7
 set ::env(FP_PDN_HSPACING) 1.7
+set ::env(FP_PDN_VOFFSET) 16.32
+set ::env(FP_PDN_VPITCH) 153.6
+set ::env(FP_PDN_HOFFSET) 16.65
+set ::env(FP_PDN_HPITCH) 153.18
+
 
 # Core Ring PDN defaults
 set ::env(FP_PDN_CORE_RING_VWIDTH) 1.6
