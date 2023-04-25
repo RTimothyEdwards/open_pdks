@@ -33,7 +33,7 @@ Xsky130_fd_io__top_power_hvc_base
 * Instantiate the underlying power pad (connects P_PAD to VCCD)
 Xsky130_fd_io__top_power_lvc_base
 + AMUXBUS_A AMUXBUS_B BDY2_B2B DRN_LVC1 DRN_LVC2 BDY2_B2B
-+ VCCD VCCD_PAD
++ PADISOL PADISOR VCCD VCCD_PAD
 + SRC_BDY_LVC1 SRC_BDY_LVC2 VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_lvc_wpad
@@ -54,7 +54,7 @@ Xsky130_fd_io__top_power_lvc_base
 * Instantiate the underlying power pad (connects P_PAD to VDDA)
 Xsky130_fd_io__top_power_lvc_base
 + AMUXBUS_A AMUXBUS_B BDY2_B2B DRN_LVC1 DRN_LVC2 BDY2_B2B
-+ VDDA VDDA_PAD
++ PADISOL PADISOR VDDA VDDA_PAD
 + SRC_BDY_LVC1 SRC_BDY_LVC2 VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_lvc_wpad
@@ -94,7 +94,7 @@ Xsky130_fd_io__top_power_hvc_base
 * Instantiate the underlying power pad (connects P_PAD and VDDIO_Q to VDDIO)
 Xsky130_fd_io__top_power_lvc_base
 + AMUXBUS_A AMUXBUS_B BDY2_B2B DRN_LVC1 DRN_LVC2 BDY2_B2B
-+ VDDIO VDDIO_PAD
++ PADISOL PADISOR VDDIO VDDIO_PAD
 + SRC_BDY_LVC1 SRC_BDY_LVC2 VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_lvc_wpad
@@ -134,7 +134,7 @@ Xsky130_fd_io__top_power_hvc_base
 * Instantiate the underlying ground pad (connects G_PAD to VSSD)
 Xsky130_fd_io__top_ground_lvc_base
 + AMUXBUS_A AMUXBUS_B BDY2_B2B DRN_LVC1 DRN_LVC2
-+ VSSD VSSD_PAD
++ VSSD VSSD_PAD PADISOL PADISOR
 + BDY2_B2B SRC_BDY_LVC1 SRC_BDY_LVC2 VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_ground_lvc_wpad
@@ -174,7 +174,7 @@ Xsky130_fd_io__top_ground_hvc_base
 * Instantiate the underlying ground pad (connects G_PAD and VSSIO_Q to VSSIO)
 Xsky130_fd_io__top_ground_lvc_base
 + AMUXBUS_A AMUXBUS_B BDY2_B2B DRN_LVC1 DRN_LVC2
-+ VSSIO VSSIO_PAD
++ VSSIO VSSIO_PAD PADISOL PADISOR
 + BDY2_B2B SRC_BDY_LVC1 SRC_BDY_LVC2 VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_ground_lvc_wpad
@@ -214,7 +214,7 @@ Xsky130_fd_io__top_ground_hvc_base
 * Instantiate the underlying ground pad (connects G_PAD to VSSA)
 Xsky130_fd_io__top_ground_lvc_base
 + AMUXBUS_A AMUXBUS_B BDY2_B2B DRN_LVC1 DRN_LVC2
-+ VSSA VSSA_PAD
++ VSSA VSSA_PAD PADISOL PADISOR
 + BDY2_B2B SRC_BDY_LVC1 SRC_BDY_LVC2 VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_ground_lvc_wpad
@@ -489,7 +489,7 @@ Xsky130_fd_io__top_ground_hvc_base
 * Instantiate the underlying power pad (connects P_PAD to VCCD)
 Xsky130_fd_io__top_power_lvc_base
 + AMUXBUS_A AMUXBUS_B VSSA VCCD VCCD VSSA
-+ VCCD VCCD_PAD
++ PADISOL PADISOR VCCD VCCD_PAD
 + VSSIO VSSD VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_lvc_wpad
@@ -510,7 +510,7 @@ Xsky130_fd_io__top_power_lvc_base
 * Instantiate the underlying ground pad (connects G_PAD to VSSD)
 Xsky130_fd_io__top_ground_lvc_base
 + AMUXBUS_A AMUXBUS_B VSSA VCCD VCCD
-+ VSSD VSSD_PAD
++ VSSD VSSD_PAD PADISOL PADISOR
 + VSSA VSSIO VSSD VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_ground_lvc_wpad
@@ -532,7 +532,7 @@ Xsky130_fd_io__top_ground_lvc_base
 * Instantiate the underlying power pad (connects P_PAD to VCCD)
 Xsky130_fd_io__top_power_lvc_base
 + AMUXBUS_A AMUXBUS_B VSSIO VCCD1 VCCD1 VSSIO
-+ VCCD1 VCCD_PAD
++ PADISOL PADISOR VCCD1 VCCD_PAD
 + VSSD1 VSSD1 VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_lvc_wpad
@@ -554,7 +554,7 @@ Xsky130_fd_io__top_power_lvc_base
 * Instantiate the underlying ground pad (connects G_PAD to VSSD)
 Xsky130_fd_io__top_ground_lvc_base
 + AMUXBUS_A AMUXBUS_B VSSIO VCCD1 VCCD1
-+ VSSD1 VSSD_PAD
++ VSSD1 VSSD_PAD PADISOL PADISOR
 + VSSIO VSSD1 VSSD1 VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_ground_lvc_wpad
@@ -575,7 +575,7 @@ Xsky130_fd_io__top_ground_lvc_base
 * Instantiate the underlying power pad (connects P_PAD to VCCD)
 Xsky130_fd_io__top_power_lvc_base
 + AMUXBUS_A AMUXBUS_B VSSA VCCD VCCD VSSA
-+ VCCD VCCD_PAD
++ PADISOL PADISOR VCCD VCCD_PAD
 + VSSIO VSSD VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_lvc_wpad
@@ -596,7 +596,7 @@ Xsky130_fd_io__top_power_lvc_base
 * Instantiate the underlying ground pad (connects G_PAD to VSSD)
 Xsky130_fd_io__top_ground_lvc_base
 + AMUXBUS_A AMUXBUS_B VSSA VCCD VCCD
-+ VSSD VSSD_PAD
++ VSSD VSSD_PAD PADISOL PADISOR
 + VSSA VSSIO VSSD VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_ground_lvc_wpad
@@ -621,6 +621,50 @@ Xsky130_fd_io__top_power_hvc_base
 + P_CORE P_PAD SRC_BDY_HVC VCCD VCCHIB VDDA VDDIO VDDIO_Q
 + VSSA VSSD VSSIO VSSIO_Q VSWITCH
 + sky130_fd_io__top_power_hvc_wpadv2
+
+.ENDS
+
+*--------------------------------------------------------------------------
+* sky130_ef_io__vddio_lvc_clamped_pad
+* sky130_ef_io__vddio_lvc_pad with LV clamp connections to VDDIO and VSSIO,
+* for use with 1.8V VDDIO.  The back-to-back diodes are both shorted to
+* VSSIO.
+*--------------------------------------------------------------------------
+
+.SUBCKT sky130_ef_io__vddio_lvc_clamped_pad
++ AMUXBUS_A AMUXBUS_B VDDIO_PAD
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD
++ VSSIO VSSD VSSIO_Q
+
+* Instantiate the underlying power pad (connects P_PAD to VCCIO)
+Xsky130_fd_io__top_power_lvc_base
++ AMUXBUS_A AMUXBUS_B VSSIO VDDIO VDDIO VSSIO
++ VDDIO_Q VDDIO_Q VDDIO VDDIO_PAD
++ VSSIO VSSIO VCCD VCCHIB VDDA VDDIO VDDIO_Q
++ VSSA VSSD VSSIO VSSIO_Q VSWITCH
++ sky130_fd_io__top_power_lvc_wpad
+
+.ENDS
+
+*--------------------------------------------------------------------------
+* sky130_ef_io__vssio_lvc_clamped_pad
+* sky130_ef_io__vssio_lvc_pad with LV clamp connections to VDDIO and VSSIO,
+* for use with 1.8V VDDIO.  The back-to-back diodes are both shorted to
+* VSSIO.
+*--------------------------------------------------------------------------
+
+.SUBCKT sky130_ef_io__vssio_lvc_clamped_pad
++ AMUXBUS_A AMUXBUS_B VSSIO_PAD
++ VSSA VDDA VSWITCH VDDIO_Q VCCHIB VDDIO VCCD
++ VSSIO VSSD VSSIO_Q
+
+* Instantiate the underlying ground pad (connects G_PAD to VSSIO)
+Xsky130_fd_io__top_ground_lvc_base
++ AMUXBUS_A AMUXBUS_B VSSIO VDDIO VDDIO
++ VSSIO VSSIO_PAD VSSIO VSSIO_Q VSSIO_Q
++ VSSIO VSSIO VCCD VCCHIB VDDA VDDIO VDDIO_Q
++ VSSA VSSD VSSIO VSSIO_Q VSWITCH
++ sky130_fd_io__top_ground_lvc_wpad
 
 .ENDS
 

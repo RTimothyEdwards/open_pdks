@@ -1410,6 +1410,30 @@ io-%:
 	./custom/scripts/fix_vssio_overlay_gds.py \
 		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__overlay_vssio_hvc.gds
 
+	# Copy the GDS file for the LVC power pad, then run the script that fixes it.
+	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/top_power_lvc_wpad/sky130_fd_io__top_power_lvc_wpad.gds \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
+	./custom/scripts/fix_vddio_lvc_gds.py \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__top_power_lvc_wpad.gds
+
+	# Copy the GDS file for the LVC power pad overlay, then run the script that fixes it.
+	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/overlay_vddio_lvc/sky130_fd_io__overlay_vddio_lvc.gds \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
+	./custom/scripts/fix_vddio_overlay_lvc.py \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__overlay_vddio_lvc.gds
+
+	# Copy the GDS file for the LVC ground pad, then run the script that fixes it.
+	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/top_ground_lvc_wpad/sky130_fd_io__top_ground_lvc_wpad.gds \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
+	./custom/scripts/fix_vssio_lvc_gds.py \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__top_ground_lvc_wpad.gds
+
+	# Copy the GDS file for the LVC ground pad overlay, then run the script that fixes it.
+	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/overlay_vssio_lvc/sky130_fd_io__overlay_vssio_lvc.gds \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
+	./custom/scripts/fix_vssio_overlay_lvc.py \
+		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__overlay_vssio_lvc.gds
+
 	# Install SkyWater I/O pad library
 	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
@@ -1426,8 +1450,8 @@ io-%:
 		-gds %l/latest/cells/*/*.gds compile-only \
 			sort=../common/sort_pdkfiles.py \
 			options=custom/scripts/gds_import_io.tcl \
-			no-copy=sky130_fd_io__top_gpiov2.gds,sky130_fd_io__top_ground_hvc_wpad.gds,sky130_fd_io__top_power_hvc_wpadv2.gds,sky130_fd_io__overlay_vssio_hvc.gds,sky130_fd_io__overlay_vddio_hvc.gds \
-			include=sky130_fd_io__top_gpiov2.gds,sky130_fd_io__top_ground_hvc_wpad.gds,sky130_fd_io__top_power_hvc_wpadv2.gds,sky130_fd_io__overlay_vssio_hvc.gds,sky130_fd_io__overlay_vddio_hvc.gds \
+			no-copy=sky130_fd_io__top_gpiov2.gds,sky130_fd_io__top_ground_hvc_wpad.gds,sky130_fd_io__top_power_hvc_wpadv2.gds,sky130_fd_io__overlay_vssio_hvc.gds,sky130_fd_io__overlay_vddio_hvc.gds,sky130_fd_io__top_ground_lvc_wpad.gds,sky130_fd_io__top_power_lvc_wpad.gds,sky130_fd_io__overlay_vssio_lvc.gds,sky130_fd_io__overlay_vddio_lvc.gds \
+			include=sky130_fd_io__top_gpiov2.gds,sky130_fd_io__top_ground_hvc_wpad.gds,sky130_fd_io__top_power_hvc_wpadv2.gds,sky130_fd_io__overlay_vssio_hvc.gds,sky130_fd_io__overlay_vddio_hvc.gds,sky130_fd_io__top_ground_lvc_wpad.gds,sky130_fd_io__top_power_lvc_wpad.gds,sky130_fd_io__overlay_vssio_lvc.gds,sky130_fd_io__overlay_vddio_lvc.gds \
 		-verilog %l/latest/cells/*/*.*.v \
 		-verilog %l/latest/cells/*/*.v exclude=*.*.v,sky130_ef_io.v \
 			compile-only filter=custom/scripts/inc_verilog.py \

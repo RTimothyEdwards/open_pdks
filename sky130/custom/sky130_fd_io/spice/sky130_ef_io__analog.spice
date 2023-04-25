@@ -1,0 +1,66 @@
+* NGSPICE file created from sky130_ef_io__analog --- technology: sky130A
+* Library of analog pads for sky130
+*---------------------------------------------------------------------------
+
+*---------------------------------------------------------------------------
+* sky130_ef_io__analog_noesd_pad:
+*---------------------------------------------------------------------------
+* Simple pad, straight through, no ESD protection.
+*---------------------------------------------------------------------------
+
+.subckt sky130_ef_io__analog_noesd_pad P_CORE VSSA VSSD AMUXBUS_B AMUXBUS_A
++ VDDIO_Q VDDIO VSWITCH VSSIO VDDA VCCD VCCHIB VSSIO_Q P_PAD
+
+R0 P_PAD P_CORE sky130_fd_pr__res_generic_m5 w=253 l=0.1
+.ends
+
+*---------------------------------------------------------------------------
+* sky130_ef_io__analog_pad:
+*---------------------------------------------------------------------------
+* Simple pad, straight through, with ESD diodes (5 each P and N).
+*---------------------------------------------------------------------------
+
+.subckt sky130_ef_io__analog_pad P_CORE VSSA VSSD AMUXBUS_B AMUXBUS_A VDDIO_Q VDDIO
++ VSWITCH VSSIO VDDA VCCD VCCHIB VSSIO_Q P_PAD
+R0 P_PAD P_CORE sky130_fd_pr__res_generic_m5 w=253 l=0.1
+
+D0 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
+D1 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
+D2 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
+D3 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
+D4 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
+
+D5 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
+D6 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
+D7 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
+D8 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
+D9 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
+.ends
+
+*---------------------------------------------------------------------------
+* sky130_ef_io__analog_minesd_pad:
+*---------------------------------------------------------------------------
+* Simple pad, straight through, with ESD diodes (1 each P and N).
+*---------------------------------------------------------------------------
+
+.subckt sky130_ef_io__analog_minesd_pad P_CORE VSSA VSSD AMUXBUS_B AMUXBUS_A VDDIO_Q VDDIO
++ VSWITCH VSSIO VDDA VCCD VCCHIB VSSIO_Q P_PAD
+R0 P_PAD P_CORE sky130_fd_pr__res_generic_m5 w=253 l=0.1
+
+D0 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
+D1 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
+.ends
+
+*---------------------------------------------------------------------------
+* sky130_ef_io__analog_minesd_pad_short:
+*---------------------------------------------------------------------------
+* Simple pad, straight through, with ESD diodes (1 each P and N).
+* All busses except for VDDIO and VSSIO removed
+*---------------------------------------------------------------------------
+
+.subckt sky130_ef_io__analog_minesd_pad_short P_CORE VDDIO VSSIO P_PAD
+R0 P_PAD P_CORE sky130_fd_pr__res_generic_m5 w=253 l=0.1
+
+D0 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
+D1 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
+.ends
