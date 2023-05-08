@@ -51,7 +51,7 @@ set ::env(CELL_CLK_PORT) CLK
 set ::env(PL_LIB) $::env(LIB_TYPICAL)
 
 # Fillcell insertion
-set ::env(FILL_CELL) "sky130_fd_sc_hvl__fill_"
+set ::env(FILL_CELL) "sky130_fd_sc_hvl__fill*"
 set ::env(DECAP_CELL) "sky130_fd_sc_hvl__decap_"
 set ::env(RE_BUFFER_CELL) "sky130_fd_sc_hvl__buf_1"
 
