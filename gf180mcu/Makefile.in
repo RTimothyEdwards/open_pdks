@@ -494,7 +494,7 @@ prerequisites: pr-repo pv-repo io-repo sc-7t-repo sc-9t-repo sram-repo osu-sc-re
 
 pr-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		FD_PR_COMMIT = `cat ${REFERENCE_JSON} | grep gf180mcu_fd_pr | grep -v COMMIT | cut -d'"' -f4` ; \
+		FD_PR_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_fd_pr | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
 		if test -d "${GF180MCU_PR_PATH}" ; then \
@@ -507,7 +507,7 @@ pr-repo:
 
 pv-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		FD_PV_COMMIT = `cat ${REFERENCE_JSON} | grep gf180mcu_fd_pv | grep -v COMMIT | cut -d'"' -f4` ; \
+		FD_PV_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_fd_pv | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${GF180MCU_PV_PATH}" != "x" ; then \
 		if test -d "${GF180MCU_PV_PATH}" ; then \
@@ -520,7 +520,7 @@ pv-repo:
 
 io-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		FD_IO_COMMIT = `cat ${REFERENCE_JSON} | grep gf180mcu_fd_io | grep -v COMMIT | cut -d'"' -f4` ; \
+		FD_IO_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_fd_io | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${GF180MCU_IO_PATH}" != "x" ; then \
 		if test -d "${GF180MCU_IO_PATH}" ; then \
@@ -533,7 +533,7 @@ io-repo:
 
 sc-7t-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		FD_SC_MCU7T5V0_COMMIT = `cat ${REFERENCE_JSON} | grep gf180mcu_fd_sc_mcu7t5v0 | grep -v COMMIT | cut -d'"' -f4` ; \
+		FD_SC_MCU7T5V0_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_fd_sc_mcu7t5v0 | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${GF180MCU_SC_7T5V0_PATH}" != "x" ; then \
 		if test -d "${GF180MCU_SC_7T5V0_PATH}" ; then \
@@ -546,7 +546,7 @@ sc-7t-repo:
 
 sc-9t-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		FD_SC_MCU9T5V0_COMMIT = `cat ${REFERENCE_JSON} | grep gf180mcu_fd_sc_mcu9t5v0 | grep -v COMMIT | cut -d'"' -f4` ; \
+		FD_SC_MCU9T5V0_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_fd_sc_mcu9t5v0 | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${GF180MCU_SC_9T5V0_PATH}" != "x" ; then \
 		if test -d "${GF180MCU_SC_9T5V0_PATH}" ; then \
@@ -559,7 +559,7 @@ sc-9t-repo:
 
 sram-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		FD_IP_SRAM_COMMIT = `cat ${REFERENCE_JSON} | grep gf180mcu_fd_ip_sram | grep -v COMMIT | cut -d'"' -f4` ; \
+		FD_IP_SRAM_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_fd_ip_sram | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${GF180MCU_SRAM_PATH}" != "x" ; then \
 		if test -d "${GF180MCU_SRAM_PATH}" ; then \
@@ -572,7 +572,7 @@ sram-repo:
 
 osu-sc-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		OSU_SC_COMMIT = `cat ${REFERENCE_JSON} | grep gf180mcu_osu_sc_gf12t3v3 | grep -v COMMIT | cut -d'"' -f4` ; \
+		OSU_SC_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_osu_sc_gf12t3v3 | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${GF180MCU_OSU_SC_PATH}" != "x" ; then \
 		if test -d "${GF180MCU_OSU_SC_PATH}" ; then \

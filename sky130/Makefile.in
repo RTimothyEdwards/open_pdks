@@ -629,7 +629,7 @@ prerequisites: pdk-repo alpha-repo xschem-repo klayout-repo precheck-repo sram-r
 
 pdk-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		SKYWATER_COMMIT = `cat ${REFERENCE_JSON} | grep skywater_pdk | grep -v COMMIT | cut -d'"' -f4` ; \
+		SKYWATER_COMMIT=`cat ${REFERENCE_JSON} | grep skywater_pdk | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${SKYWATER_PATH}" != "x" ; then \
 		if test -d "${SKYWATER_PATH}" ; then \
@@ -642,7 +642,7 @@ pdk-repo:
 
 alpha-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		ALPHA_COMMIT = `cat ${REFERENCE_JSON} | grep sky130_ml_xx_hd | grep -v COMMIT | cut -d'"' -f4` ; \
+		ALPHA_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_ml_xx_hd | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${ALPHA_PATH}" != "x" ; then \
 		if test -d "${ALPHA_PATH}" ; then \
@@ -655,7 +655,7 @@ alpha-repo:
 
 sram-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		SRAM_COMMIT = `cat ${REFERENCE_JSON} | grep sky130_sram_macros | grep -v COMMIT | cut -d'"' -f4` ; \
+		SRAM_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_sram_macros | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${SRAM_PATH}" != "x" ; then \
 		if test -d "${SRAM_PATH}" ; then \
@@ -668,7 +668,7 @@ sram-repo:
 
 sram-space-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		SRAM_SPACE_COMMIT = `cat ${REFERENCE_JSON} | grep sky130_fd_bd_sram | grep -v COMMIT | cut -d'"' -f4` ; \
+		SRAM_SPACE_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_bd_sram | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${SRAM_SPACE_PATH}" != "x" ; then \
 		if test -d "${SRAM_SPACE_PATH}" ; then \
@@ -681,7 +681,7 @@ sram-space-repo:
 
 xschem-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		XSCHEM_COMMIT = `cat ${REFERENCE_JSON} | grep xschem_sky130 | grep -v COMMIT | cut -d'"' -f4` ; \
+		XSCHEM_COMMIT=`cat ${REFERENCE_JSON} | grep xschem_sky130 | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${XSCHEM_PATH}" != "x" ; then \
 		if test -d "${XSCHEM_PATH}" ; then \
@@ -694,7 +694,7 @@ xschem-repo:
 
 klayout-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		KLAYOUT_COMMIT = `cat ${REFERENCE_JSON} | grep klayout_sky130 | grep -v COMMIT | cut -d'"' -f4` ; \
+		KLAYOUT_COMMIT=`cat ${REFERENCE_JSON} | grep klayout_sky130 | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${KLAYOUT_PATH}" != "x" ; then \
 		if test -d "${KLAYOUT_PATH}" ; then \
@@ -707,7 +707,7 @@ klayout-repo:
 
 precheck-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		PRECHECK_COMMIT = `cat ${REFERENCE_JSON} | grep precheck_sky130 | grep -v COMMIT | cut -d'"' -f4` ; \
+		PRECHECK_COMMIT=`cat ${REFERENCE_JSON} | grep precheck_sky130 | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${PRECHECK_PATH}" != "x" ; then \
 		if test -d "${PRECHECK_PATH}" ; then \
@@ -720,7 +720,7 @@ precheck-repo:
 
 osu-t12-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		OSU_T12_COMMIT = `cat ${REFERENCE_JSON} | grep sky130_osu_sc_t12 | grep -v COMMIT | cut -d'"' -f4` ; \
+		OSU_T12_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_osu_sc_t12 | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${OSU_T12_PATH}" != "x" ; then \
 		if test -d "${OSU_T12_PATH}" ; then \
@@ -733,7 +733,7 @@ osu-t12-repo:
 
 osu-t15-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		OSU_T15_COMMIT = `cat ${REFERENCE_JSON} | grep sky130_osu_sc_t15 | grep -v COMMIT | cut -d'"' -f4` ; \
+		OSU_T15_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_osu_sc_t15 | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${OSU_T15_PATH}" != "x" ; then \
 		if test -d "${OSU_T15_PATH}" ; then \
@@ -746,7 +746,7 @@ osu-t15-repo:
 
 osu-t18-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		OSU_T18_COMMIT = `cat ${REFERENCE_JSON} | grep sky130_osu_sc_t18 | grep -v COMMIT | cut -d'"' -f4` ; \
+		OSU_T18_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_osu_sc_t18 | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
 	if test "x${OSU_T18_PATH}" != "x" ; then \
 		if test -d "${OSU_T18_PATH}" ; then \
