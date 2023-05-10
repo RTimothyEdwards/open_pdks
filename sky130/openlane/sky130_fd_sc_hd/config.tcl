@@ -70,3 +70,5 @@ set ::env(FP_PDN_RAIL_WIDTH) 0.48
 # Determined from https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hd/blob/ac7fb61f06e6470b94e8afdf7c25268f62fbd7b1/cells/clkbuf/sky130_fd_sc_hd__clkbuf_16__tt_025C_1v80.lib.json
 set ::env(CTS_MAX_CAP) 1.53169
 set ::env(DEFAULT_MAX_TRAN) 0.75
+
+set ::env(TRISTATE_CELL_PREFIX) "$::env(STD_CELL_LIBRARY)__ebuf"

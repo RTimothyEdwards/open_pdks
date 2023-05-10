@@ -51,3 +51,4 @@ set ::env(DEFAULT_MAX_TRAN) 3
 set ::env(GPL_CELL_PADDING) {0}
 set ::env(DPL_CELL_PADDING) {0}
 
+set ::env(TRISTATE_CELL_PREFIX) "$::env(STD_CELL_LIBRARY)__bufz"
