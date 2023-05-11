@@ -1799,9 +1799,16 @@ sram-%:
 		-library general sky130_sram_macros 2>&1 | tee -a ${SKY130$*}_make.log
 
 sram-space-%:
+	# Install custom additions to SRAM space
+	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130$*} \
+		-gds sky130_fd_bd_sram/*.gds \
+			options=custom/scripts/gds_import_setup.tcl \
+		-library general sky130_fd_bd_sram 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install SRAM build-space library.
 	${STAGE} -source ${SRAM_SPACE_PATH}/.. -target ${STAGING_PATH}/${SKY130$*} \
 		-gds %l/cells/*/*.gds compile-only \
+			no-copy=custom/sky130_fd_bd_sram/*.gds \
+			include=custom/sky130_fd_bd_sram/*.gds \
 		-lef %l/cells/*/*.lef compile-only \
 		-spice %l/cells/*/*.lvs.calibre.spice compile-only \
 		-library general sky130_fd_bd_sram 2>&1 | tee -a ${SKY130$*}_make.log
