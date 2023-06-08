@@ -78,3 +78,7 @@ MODIFICATIONS:
 6/24/2021:  Fixed cell top_power_hvc, which had a Y offset of -47um.
 
 10/28/2021: Corrected an offset overlay on sky130_ef_io__vdda_hvc_pad.
+
+6/8/2023:   Corrected an issue with the vccd_lvc_clamped3 and
+	    vssd_lvc_clamped3 pads overdrawing the m3 resistor with
+	    metal3 and via2, respectively.
