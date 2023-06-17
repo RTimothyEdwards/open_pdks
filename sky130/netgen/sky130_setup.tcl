@@ -426,25 +426,22 @@ foreach cell $cells1 {
     }
 }
 foreach cell $cells2 {
-    if {[regexp {sky130_ef_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
+    if {[regexp {sky130_.._sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
 	property "-circuit2 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
+    if {[regexp {sky130_.._sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
 	property "-circuit2 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+    if {[regexp {sky130_.._sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
 	property "-circuit2 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
+    if {[regexp {sky130_.._sc_[^_]+__diode_[[:digit:]]+} $cell match]} {
 	property "-circuit2 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__diode_[[:digit:]]+} $cell match]} {
+    if {[regexp {sky130_.._sc_[^_]+__fill_diode_[[:digit:]]+} $cell match]} {
 	property "-circuit2 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__fill_diode_[[:digit:]]+} $cell match]} {
-	property "-circuit2 $cell" parallel enable
-    }
-    if {[regexp {sky130_ef_sc_[^_]+__fakediode_[[:digit:]]+} $cell match]} {
+    if {[regexp {sky130_.._sc_[^_]+__fakediode_[[:digit:]]+} $cell match]} {
 	property "-circuit2 $cell" parallel enable
     }
 }
