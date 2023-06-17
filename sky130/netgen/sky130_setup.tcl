@@ -401,61 +401,27 @@ foreach dev $devices {
 # e.g., ignore class "-circuit2 sky130_fc_sc_hd__decap_3"
 #---------------------------------------------------------------
 
-if { [info exist ::env(MAGIC_EXT_USE_GDS)] && $::env(MAGIC_EXT_USE_GDS) } {
-    foreach cell $cells1 {
-#        if {[regexp {sky130_fd_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
-#            ignore class "-circuit1 $cell"
-#        }
-        if {[regexp {sky130_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
-            ignore class "-circuit1 $cell"
-        }
-        if {[regexp {sky130_fd_sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
-            ignore class "-circuit1 $cell"
-        }
-        if {[regexp {sky130_ef_sc_[^_]+__fakediode_[[:digit:]]+} $cell match]} {
-            ignore class "-circuit1 $cell"
-        }
-    }
-    foreach cell $cells2 {
-#        if {[regexp {sky130_fd_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
-#            ignore class "-circuit2 $cell"
-#        }
-        if {[regexp {sky130_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
-            ignore class "-circuit2 $cell"
-        }
-        if {[regexp {sky130_fd_sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
-            ignore class "-circuit2 $cell"
-        }
-        if {[regexp {sky130_ef_sc_[^_]+__fakediode_[[:digit:]]+} $cell match]} {
-            ignore class "-circuit2 $cell"
-        }
-    }
-}
-
 #---------------------------------------------------------------
 # Allow the fill, decap, etc., cells to be parallelized
 #---------------------------------------------------------------
 
 foreach cell $cells1 {
-    if {[regexp {sky130_ef_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
+    if {[regexp {.*sky130_.._sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
 	property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
+    if {[regexp {.*sky130_.._sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
 	property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+    if {[regexp {.*sky130_.._sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
 	property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__tapvpwrvgnd_[[:digit:]]+} $cell match]} {
+    if {[regexp {.*sky130_.._sc_[^_]+__diode_[[:digit:]]+} $cell match]} {
 	property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__diode_[[:digit:]]+} $cell match]} {
+    if {[regexp {.*sky130_.._sc_[^_]+__fill_diode_[[:digit:]]+} $cell match]} {
 	property "-circuit1 $cell" parallel enable
     }
-    if {[regexp {sky130_fd_sc_[^_]+__fill_diode_[[:digit:]]+} $cell match]} {
-	property "-circuit1 $cell" parallel enable
-    }
-    if {[regexp {sky130_ef_sc_[^_]+__fakediode_[[:digit:]]+} $cell match]} {
+    if {[regexp {.*sky130_.._sc_[^_]+__fakediode_[[:digit:]]+} $cell match]} {
 	property "-circuit1 $cell" parallel enable
     }
 }
@@ -532,3 +498,42 @@ if {[model blackbox]} {
 }
 
 #---------------------------------------------------------------
+# Equate sram layout cells with corresponding source
+foreach cell $cells1 {
+    if {[regexp {([A-Z][A-Z0-9]_)*sky130_sram_([^_]+)_([^_]+)_([^_]+)_([^_]+)_(.+)} $cell match prefix memory_size memory_type matrix io cellname]} {
+	if {([lsearch $cells2 $cell] < 0) && \
+		([lsearch $cells2 $cellname] >= 0) && \
+		([lsearch $cells1 $cellname] < 0)} {
+	    # netlist with the N names should always be the second netlist
+	    equate classes "-circuit2 $cellname" "-circuit1 $cell"
+	    puts stdout "Equating $cell in circuit 1 and $cellname in circuit 2"
+	}
+    }
+}
+
+# Equate prefixed layout cells with corresponding source
+foreach cell $cells1 {
+    set layout $cell
+    while {[regexp {([A-Z][A-Z0-9]_)(.*)} $layout match prefix cellname]} {
+        # Removes a 2 character prefix and checks for a match until there is no such prefix.
+	if {([lsearch $cells2 $cell] < 0) && \
+		([lsearch $cells2 $cellname] >= 0)} {
+	    # netlist with the N names should always be the second netlist
+	    equate classes "-circuit2 $cellname" "-circuit1 $cell"
+	    puts stdout "Equating $cell in circuit 1 and $cellname in circuit 2"
+	}
+	set layout $cellname
+    }
+}
+
+# Equate suffixed layout cells with corresponding source
+foreach cell $cells1 {
+    if {[regexp {(.*)(\$[0-9])} $cell match cellname suffix]} {
+	if {([lsearch $cells2 $cell] < 0) && \
+		([lsearch $cells2 $cellname] >= 0)} {
+	    # netlist with the N names should always be the second netlist
+	    equate classes "-circuit2 $cellname" "-circuit1 $cell"
+	    puts stdout "Equating $cell in circuit 1 and $cellname in circuit 2"
+	}
+    }
+}

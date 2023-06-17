@@ -2382,7 +2382,7 @@ cifinput
 # or else magic will scale below the allowed layout grid size
 #-----------------------------------------------------------------------
 
-style  sky130 variants (),(vendor)
+style  sky130 variants (),(vendor),(nowell)
  scalefactor 10 nanometers
  gridlimit 5
 
@@ -2413,6 +2413,20 @@ style  sky130 variants (),(vendor)
  ignore PADDIFFID
  ignore PADMETALID
  ignore PADCENTERID
+variants (nowell)
+ ignore DNWELL
+ ignore SUBCUT
+ ignore NWELL
+ ignore PWRES
+ ignore NPNID
+ ignore PNPID
+ ignore PHOTO
+ ignore SUBTXT
+ ignore WELLTXT
+ ignore SUBPIN
+ ignore WELLPIN
+
+variants (),(vendor)
 
  layer pnp NWELL,WELLTXT,WELLPIN
  and PNPID
@@ -2425,7 +2439,6 @@ style  sky130 variants (),(vendor)
  labels NWELL
  labels WELLPIN port
  labels WELLTXT text
- variants *
 
  templayer nwellarea NWELL
  copyup nwelcheck
@@ -2433,13 +2446,6 @@ style  sky130 variants (),(vendor)
  # Copy nwell areas up for diffusion checks
  templayer xnwelcheck nwelcheck
  copyup nwelcheck
-
- templayer hvarea HVI
- copyup hvcheck
-
- # Copy high-voltage (HVI) areas up for diffusion checks
- templayer xhvcheck hvcheck
- copyup hvcheck
 
  # Always draw pwell under p-tap and n-diff.  This is not always
  # necessary but works better with deep nwell for correct extraction.
@@ -2468,6 +2474,14 @@ style  sky130 variants (),(vendor)
  layer rpw PWRES
  and DNWELL
  labels PWRES
+
+variants *
+ templayer hvarea HVI
+ copyup hvcheck
+
+ # Copy high-voltage (HVI) areas up for diffusion checks
+ templayer xhvcheck hvcheck
+ copyup hvcheck
 
  templayer ndiffarea DIFF,DIFFTXT,DIFFPIN,barediff
  and-not POLY
@@ -4997,14 +5011,14 @@ end
 #-----------------------------------------------------
 
 extract
- style ngspice variants (),(orig),(si),(hrhc),(lrhc),(hrlc),(lrlc)
+ style ngspice variants (),(orig),(si),(hrhc),(lrhc),(hrlc),(lrlc),(nowell)
  cscale 1
  # NOTE: SkyWater SPICE libraries use .option scale 1E6 so all
  # dimensions must be in units of microns in the extract file.
  # Use extract style "ngspice(si)" to override this and produce
  # a file with SI units for length/area.
 
- variants (),(orig),(hrhc),(lrhc),(hrlc),(lrlc)
+ variants (),(orig),(hrhc),(lrhc),(hrlc),(lrlc),(nowell)
  lambda  1E6
  variants (si)
  lambda 1.0
@@ -5136,13 +5150,18 @@ extract
 
  tiedown alldiffnonfet
 
+variants (),(orig),(si),(hrhc),(lrhc),(hrlc),(lrlc)
+ # for all variants except (nowell)
+
  substrate *ppdiff,*mvppdiff,space/w,pwell well $SUB -dnwell,isosub
+
+variants *
 
 # Resistances are in milliohms per square
 # Optional 3rd argument is the corner adjustment fraction
 # Device values come from trtc.cor (typical corner)
 
-variants (),(orig),(si)
+variants (),(orig),(si),(nowell)
 
  resist (pwell,isosub)/well     4400000
  resist (dnwell)/dwell          2200000
@@ -6503,6 +6522,167 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device ndiode sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area*1E12 p=pj*1E6
  device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area*1E12 p=pj*1E6
  device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area*1E12 p=pj*1E6
+
+#ifdef RERAM
+ device csubcircuit sky130_fd_pr__reram_reram_cell reram m1 a=area_ox
+#endif (RERAM)
+
+#ifdef MIM
+ device csubcircuit sky130_fd_pr__cap_mim_m3_1 *mimcap  *m3 w=w l=l
+ device csubcircuit sky130_fd_pr__cap_mim_m3_2 *mimcap2 *m4 w=w l=l
+#endif (MIM)
+
+variants (nowell)
+
+ device msubcircuit sky130_fd_pr__pfet_01v8 pfet,scpfet \
+	*pdiff,pdiffres *pdiff,pdiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__special_pfet_pass ppu \
+	*pdiff,pdiffres *pdiff,pdiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__pfet_01v8_lvt pfetlvt \
+	*pdiff,pdiffres *pdiff,pdiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__pfet_01v8_mvt pfetmvt \
+	*pdiff,pdiffres *pdiff,pdiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__pfet_01v8_hvt pfethvt,scpfethvt \
+	*pdiff,pdiffres *pdiff,pdiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+
+ device msubcircuit sky130_fd_pr__nfet_01v8 nfet,scnfet \
+	*ndiff,ndiffres *ndiff,ndiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__special_nfet_latch npd \
+	*ndiff,ndiffres *ndiff,ndiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__special_nfet_latch npd \
+	*ndiff,ndiffres *srampvar  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__special_nfet_pass npass \
+	*ndiff,ndiffres *ndiff,ndiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__nfet_01v8_lvt nfetlvt \
+	*ndiff,ndiffres *ndiff,ndiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_bs_flash__special_sonosfet_star nsonos \
+	*ndiff,ndiffres *ndiff,ndiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device subcircuit sky130_fd_pr__cap_var_lvt varactor \
+	*nndiff  l=l w=w
+ device subcircuit sky130_fd_pr__cap_var_hvt varhvt \
+	*nndiff  l=l w=w
+ device subcircuit sky130_fd_pr__cap_var mvvaractor \
+	*mvnndiff  l=l w=w
+
+ # Bipolars
+# device msubcircuit sky130_fd_pr__npn_05v5_W1p00L1p00 npn *ndiff dnwell space/w \
+#	error +npn1p00
+# device msubcircuit sky130_fd_pr__npn_05v5_W1p00L2p00 npn *ndiff dnwell space/w \
+#	error +npn2p00
+# device msubcircuit sky130_fd_pr__npn_05v5 npn *ndiff dnwell space/w error a2=area
+# device msubcircuit sky130_fd_pr__pnp_05v5_W0p68L0p68 pnp *pdiff \
+#	pwell,space/w +pnp0p68
+# device msubcircuit sky130_fd_pr__pnp_05v5_W3p40L3p40 pnp *pdiff \
+#	pwell,space/w +pnp3p40
+# device msubcircuit sky130_fd_pr__pnp_05v5 pnp *pdiff pwell,space/w a2=area
+# device msubcircuit sky130_fd_pr__npn_11v0_W1p00L1p00 npn *mvndiff \
+#	dnwell space/w error +npn11p0
+# device msubcircuit sky130_fd_pr__npn_11v0 npn *mvndiff dnwell space/w error a2=area
+
+ # Ignore the extended-drain FET geometry that forms part of the high-voltage
+ # bipolar devices.
+# device msubcircuit Ignore mvnfet *mvndiff,mvndiffres dnwell pwell,space/w error +npn,pnp
+# device msubcircuit Ignore mvpfet *mvpdiff,mvpdiffres pwell,space/w nwell error +npn,pnp
+
+ # Extended drain devices (must appear before the regular devices)
+# device msubcircuit sky130_fd_pr__nfet_20v0_nvt mvnnfet *mvndiff,mvndiffres \
+#	dnwell pwell,space/w error l=l w=w a1=as a2=ad p1=ps p2=pd
+# device msubcircuit sky130_fd_pr__nfet_20v0 mvnfet *mvndiff,mvndiffres \
+#	dnwell pwell,space/w error l=l w=w a1=as a2=ad p1=ps p2=pd
+# device msubcircuit sky130_fd_pr__pfet_20v0 mvpfet *mvpdiff,mvpdiffres \
+#	pwell,space/w nwell error l=l w=w a1=as a2=ad p1=ps p2=pd
+
+ device msubcircuit sky130_fd_pr__pfet_g5v0d10v5 mvpfet \
+	*mvpdiff,mvpdiffres *mvpdiff,mvpdiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__nfet_g5v0d10v5 mvnfet \
+	*mvndiff,mvndiffres *mvndiff,mvndiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__nfet_05v0_nvt mvnnfet \
+	*mvndiff,mvndiffres *mvndiff,mvndiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__nfet_03v3_nvt nnfet \
+	*mvndiff,mvndiffres *mvndiff,mvndiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__esd_nfet_g5v0d10v5 mvnfetesd \
+	*mvndiff,mvndiffres *mvndiff,mvndiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__esd_pfet_g5v0d10v5 mvpfetesd \
+	*mvpdiff,mvpdiffres *mvpdiff,mvpdiffres  l=l w=w \
+	a1=as p1=ps a2=ad p2=pd
+
+ device resistor sky130_fd_pr__res_generic_l1 rli1 *li,coreli
+ device resistor sky130_fd_pr__res_generic_m1 rmetal1 *metal1
+ device resistor sky130_fd_pr__res_generic_m2 rmetal2 *metal2
+ device resistor sky130_fd_pr__res_generic_m3 rmetal3 *metal3
+#ifdef METAL5
+ device resistor sky130_fd_pr__res_generic_m4 rm4 *m4
+ device resistor sky130_fd_pr__res_generic_m5 rm5 *m5
+#endif (METAL5)
+# device ndiode   sky130_fd_pr__model__parasitic__diode_ps2dn \
+#	photo pwell,space/w error a=area
+
+ device rsubcircuit sky130_fd_pr__res_high_po_0p35 xhrpoly \
+	xpc  +res0p35 l=l
+ device rsubcircuit sky130_fd_pr__res_high_po_0p69  xhrpoly \
+	xpc  +res0p69 l=l
+ device rsubcircuit sky130_fd_pr__res_high_po_1p41  xhrpoly \
+	xpc  +res1p41 l=l
+ device rsubcircuit sky130_fd_pr__res_high_po_2p85  xhrpoly \
+	xpc  +res2p85 l=l
+ device rsubcircuit sky130_fd_pr__res_high_po_5p73  xhrpoly \
+	xpc  +res5p73 l=l
+ device rsubcircuit sky130_fd_pr__res_high_po	    xhrpoly \
+	xpc  l=l w=w
+ device rsubcircuit sky130_fd_pr__res_xhigh_po_0p35  uhrpoly \
+	xpc  +res0p35 l=l
+ device rsubcircuit sky130_fd_pr__res_xhigh_po_0p69  uhrpoly \
+	xpc  +res0p69 l=l
+ device rsubcircuit sky130_fd_pr__res_xhigh_po_1p41  uhrpoly \
+	xpc  +res1p41 l=l
+ device rsubcircuit sky130_fd_pr__res_xhigh_po_2p85  uhrpoly \
+	xpc  +res2p85 l=l
+ device rsubcircuit sky130_fd_pr__res_xhigh_po_5p73  uhrpoly \
+	xpc  +res5p73 l=l
+ device rsubcircuit sky130_fd_pr__res_xhigh_po	     uhrpoly \
+	xpc  l=l w=w
+
+ device rsubcircuit sky130_fd_pr__res_generic_nd     ndiffres \
+	*ndiff  l=l w=w
+ device rsubcircuit sky130_fd_pr__res_generic_pd     pdiffres \
+	*pdiff  l=l w=w
+# device rsubcircuit sky130_fd_pr__res_iso_pw   rpw \
+#        pwell dnwell error l=l w=w
+ device rsubcircuit sky130_fd_pr__res_generic_nd__hv  mvndiffres \
+	*mvndiff  l=l w=w
+ device rsubcircuit sky130_fd_pr__res_generic_pd__hv  mvpdiffres \
+	*mvpdiff  l=l w=w
+
+ device resistor sky130_fd_pr__res_generic_po rmp *poly
+ device resistor sky130_fd_pr__res_generic_po mrp1 *poly
+
+ # NOTE: SkyWater diode models have bizarre units requiring bizarre scaling
+# device pdiode sky130_fd_pr__diode_pd2nw_05v5 *pdiode nwell a=area*1E12 p=pj*1E6
+# device pdiode sky130_fd_pr__diode_pd2nw_05v5_lvt *pdiodelvt nwell a=area*1E12 p=pj*1E6
+# device pdiode sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area*1E12 p=pj*1E6
+# device pdiode sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area*1E12 p=pj*1E6
+#
+# device ndiode sky130_fd_pr__diode_pw2nd_05v5 *ndiode pwell,space/w a=area*1E12 p=pj*1E6
+# device ndiode sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area*1E12 p=pj*1E6
+# device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area*1E12 p=pj*1E6
+# device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area*1E12 p=pj*1E6
+
 
 #ifdef RERAM
  device csubcircuit sky130_fd_pr__reram_reram_cell reram m1 a=area_ox

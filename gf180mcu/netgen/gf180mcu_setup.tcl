@@ -467,3 +467,15 @@ if {[model blackbox]} {
 }
 
 #---------------------------------------------------------------
+
+# parallel reduce abstract cells
+foreach cell $cells1 {
+    if {[regexp {.*gf180mcu_fd_sc_.*__fillcap_[[:digit:]]+} $cell match]} {
+	property "-circuit1 $cell" parallel enable
+    }
+}
+foreach cell $cells2 {
+    if {[regexp {gf180mcu_fd_sc_.*__fillcap_[[:digit:]]+} $cell match]} {
+	property "-circuit2 $cell" parallel enable
+    }
+}
