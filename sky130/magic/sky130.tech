@@ -2820,7 +2820,7 @@ style  sky130 variants (),(vendor)
  and SONOS
  labels DIFF
 
- templayer nsdarea TAP
+ templayer nsdarea TAP,DIFF
  and NSDM
  and NWELL,nwelcheck
  and-not POLY
@@ -2852,7 +2852,7 @@ style  sky130 variants (),(vendor)
  templayer xnsubcheck nsubcheck
  copyup nsubcheck
 
- templayer psdarea TAP
+ templayer psdarea TAP,DIFF
  and PSDM
  and-not NWELL,nwelcheck
  and-not POLY
@@ -2942,7 +2942,7 @@ style  sky130 variants (),(vendor)
  and-not LVID
  labels DIFF
 
- templayer mvnsdarea TAP
+ templayer mvnsdarea TAP,DIFF
  and NSDM
  and NWELL,nwelcheck
  and-not POLY
@@ -2966,7 +2966,7 @@ style  sky130 variants (),(vendor)
  templayer mvxnsubcheck mvnsubcheck
  copyup mvnsubcheck
 
- templayer mvpsdarea DIFF,barediff
+ templayer mvpsdarea TAP,DIFF,barediff
  and PSDM
  and-not NWELL,nwelcheck
  and-not POLY
