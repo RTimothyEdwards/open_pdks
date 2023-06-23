@@ -1582,7 +1582,7 @@ cifinput
 # NOTE:  All values in this section MUST be multiples of 25 
 # or else magic will scale below the allowed layout grid size
 
-style  import
+style  import variants (),(nowell)
  scalefactor 50 nanometers
  gridlimit 5
 
@@ -1594,7 +1594,14 @@ style  import
  ignore CAPDEF
  ignore VTEXT
  ignore FILLOBS
+variants (nowell)
+ ignore DNWELL
+ ignore SUBCUT
+ ignore NWELL
+ ignore PWELLTXT
+ ignore NWELLTXT
 
+variants ()
  layer pwell PWELL,PWELLTXT
  labels PWELL
  labels PWELLTXT port
@@ -1609,6 +1616,7 @@ style  import
  layer isosub SUBCUT
  labels SUBCUT
 
+variants *
  templayer ndiffarea DIFF
  and-not POLY
  and-not NWELL
@@ -3488,7 +3496,7 @@ end
 #-----------------------------------------------------
 
 extract
- style ngspice variants (),(hrhc),(lrhc),(hrlc),(lrlc)
+ style ngspice variants (),(hrhc),(lrhc),(hrlc),(lrlc),(nowell)
  cscale 1
  lambda  5.0
  units	microns
@@ -3597,7 +3605,7 @@ extract
 
 # Layer resistance
 
-variants ()
+variants (),(nowell)
 
 # Resistances are in milliohms per square
 # Optional 3rd argument is the corner adjustment fraction
@@ -4683,6 +4691,7 @@ variants *
 #
 # **The top metal may be any of metal3 to metaltp, depending on the stackup
 
+variants ()
  device msubcircuit pfet_03v3 pfet pdiff,pdc pdiff,pdc allnwell error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit nfet_03v3 nfet ndiff,ndc ndiff,ndc allpsub error \
@@ -4702,6 +4711,29 @@ variants *
  device msubcircuit nfet_06v0_nvt mvnnfet mvndiff,mvndiffres,mvndc \
 	mvndiff,mvndiffres,mvndc allpsub error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd
+
+variants (nowell)
+ device msubcircuit pfet_03v3 pfet pdiff,pdc pdiff,pdc \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit nfet_03v3 nfet ndiff,ndc ndiff,ndc \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit pfet_06v0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit nfet_06v0 mvnfet mvndiff,mvndc mvndiff,mvndc \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit pfet_03v3_dss pfet pdiffres pdiffres \
+	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
+ device msubcircuit nfet_03v3_dss nfet ndiffres ndiffres \
+	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
+ device msubcircuit pfet_06v0_dss mvpfet mvpdiffres mvpdiffres \
+	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
+ device msubcircuit nfet_06v0_dss mvnfet mvndiffres mvndiffres \
+	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
+ device msubcircuit nfet_06v0_nvt mvnnfet mvndiff,mvndiffres,mvndc \
+	mvndiff,mvndiffres,mvndc \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+
+variants *
  device subcircuit cap_nmos_03v3_b nvaractor *nndiff l=c_length w=c_width
  device subcircuit cap_nmos_06v0_b mvnvaractor *mvnndiff l=c_length w=c_width
  device subcircuit cap_pmos_03v3_b pvaractor *ppdiff l=c_length w=c_width
@@ -4765,6 +4797,7 @@ variants *
 #endif
 #endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
 
+variants ()
  device rsubcircuit ppolyf_s  rpps   *poly allnwell,allpsub error l=r_length w=r_width
  device rsubcircuit npolyf_s  rnps   *poly allnwell,allpsub error l=r_length w=r_width
  device rsubcircuit ppolyf_u  rpp    *poly allnwell,allpsub error l=r_length w=r_width
@@ -4793,6 +4826,34 @@ variants *
  device ndiode diode_nd2ps_06v0     *mvndiode allpsub a=area p=pj
  device ndiode diode_nd2ps_06v0_nvt *mvnndiode allpsub a=area p=pj
 
+variants (nowell)
+ device rsubcircuit ppolyf_s  rpps   *poly l=r_length w=r_width
+ device rsubcircuit npolyf_s  rnps   *poly l=r_length w=r_width
+ device rsubcircuit ppolyf_u  rpp    *poly l=r_length w=r_width
+ device rsubcircuit npolyf_u  rnp    *poly l=r_length w=r_width
+ device rsubcircuit ppolyf_u_1k hires *poly l=r_length w=r_width
+ device rsubcircuit ppolyf_u_1k_6p0 mvhires *poly l=r_length w=r_width
+ device rsubcircuit pplus_u  rpd  *pdiff l=r_length w=r_width
+ device rsubcircuit nplus_u  rnd  *ndiff l=r_length w=r_width
+ device rsubcircuit pplus_s  rpds *pdiff l=r_length w=r_width
+ device rsubcircuit nplus_s  rnds *ndiff l=r_length w=r_width
+ device rsubcircuit pplus_u  mvpdiffres *mvpdiff l=r_length w=r_width
+ device rsubcircuit nplus_u  mvndiffres *mvndiff l=r_length w=r_width
+ #device rsubcircuit nwell rnw   nwell l=r_length w=r_width
+
+ # The following absorbs the source/drain resistor into a *_dss FET device
+ device subcircuit Short mvndiffres *mvndiff mvnfet
+ device subcircuit Short mvpdiffres *mvpdiff mvpfet
+ device subcircuit Short ndiffres *ndiff nfet
+ device subcircuit Short pdiffres *pdiff pfet
+
+ #device pdiode diode_pd2nw_03v3     *pdiode allnwell a=area p=pj
+ #device ndiode diode_nd2ps_03v3     *ndiode allpsub a=area p=pj
+ #device pdiode diode_pd2nw_06v0     *mvpdiode allnwell a=area p=pj
+ #device ndiode diode_nd2ps_06v0     *mvndiode allpsub a=area p=pj
+ #device ndiode diode_nd2ps_06v0_nvt *mvnndiode allpsub a=area p=pj
+
+variants *
 #ifdef MIM
 #ifdef METALS6
  device csubcircuit cap_mim_2f0_m5m6_noshield *mimcap  *m5   l=c_length w=c_width
