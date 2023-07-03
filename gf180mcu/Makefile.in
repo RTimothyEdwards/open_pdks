@@ -428,6 +428,10 @@ else
 INSTALL = ${SCRIPTSDIR}/common/staging_install.py ${EF_FORMAT}
 endif
 
+# The script(s) below are used for custom changes to the vendor PDK files
+PORTORDER = ../common/port_order.py ${EF_FORMAT}
+ADDPROP = ../common/insert_property.py ${EF_FORMAT}
+
 # List the EDA tools to install local setup files for
 TOOLS =
 
@@ -659,7 +663,7 @@ magic-%: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${
 	rm -f ${MAGIC_STAGING_$*}/${GF180MCU$*}-BindKeys
 	rm -f ${MAGIC_STAGING_$*}/magicrc
 	if test "${EF_STYLE}" == "1" ; then \
-            (cd ${MAGICTOP_STAGING_$*} ; ln -s ${REV_DIR} current) ; \
+            (cd ${MAGICTOP_STAGING_$*} ; ln -f -s ${REV_DIR} current) ; \
 	fi
 
 	${CPP} ${GF180MCU$*_DEFS} magic/${TECH}.tech \
@@ -682,7 +686,7 @@ netgen-%: netgen/${TECH}_setup.tcl
 	rm -f ${NETGEN_STAGING_$*}/setup.tcl
 	${CPP} ${GF180MCU$*_DEFS} netgen/${TECH}_setup.tcl \
 		${NETGEN_STAGING_$*}/${GF180MCU$*}_setup.tcl
-	(cd ${NETGEN_STAGING_$*} ; ln -s ${GF180MCU$*}_setup.tcl setup.tcl)
+	(cd ${NETGEN_STAGING_$*} ; ln -f -s ${GF180MCU$*}_setup.tcl setup.tcl)
 
 qflow-%: qflow/${TECH}.sh qflow/${TECH}.par
 	mkdir -p ${QFLOWTOP_STAGING_$*}
@@ -845,6 +849,55 @@ primitive-%:
 		-ngspice models/ngspice/*.ngspice \
 		-xyce models/xyce/*.xyce \
 		2>&1 | tee -a ${GF180MCU$*}_make.log
+	# Install primitive device fixed layout cells from GDS
+	${STAGE} -source ${GF180MCU_PR_PATH} \
+		-target ${STAGING_PATH}/${GF180MCU$*} \
+		-gds cells/klayout/pymacros/cells/*/*.gds noextract \
+		-library primitive gf180mcu_fd_pr \
+		2>&1 | tee -a ${GF180MCU$*}_make.log
+	# The klayout GUI prefers that drc/ and lvs/ exist under tech/,
+	# so make symbolic links.
+	(cd ${STAGING_PATH}/${GF180MCU$*}/libs.tech/klayout/tech ; \
+		ln -f -s ../lvs ; ln -f -s ../drc)
+	# Add "device primitive" property to the bipolar devices and
+	# order the ports correctly to match the subcircuit model.  This
+	# ensures that the bipolar layouts extract correctly.
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_00p54x02p00 "device primitive"
+	${PORTORDER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_00p54x02p00 I1_default_C I1_default_B I1_default_E I1_default_S
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_00p54x04p00 "device primitive"
+	${PORTORDER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_00p54x04p00 I1_default_C I1_default_B I1_default_E I1_default_S
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_00p54x08p00 "device primitive"
+	${PORTORDER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_00p54x08p00 I1_default_C I1_default_B I1_default_E I1_default_S
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_00p54x16p00 "device primitive"
+	${PORTORDER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_00p54x16p00 I1_default_C I1_default_B I1_default_E I1_default_S
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_05p00x05p00 "device primitive"
+	${PORTORDER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_05p00x05p00 I1_default_C I1_default_B I1_default_E I1_default_S
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_10p00x10p00 "device primitive"
+	${PORTORDER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_10p00x10p00 I1_default_C I1_default_B I1_default_E I1_default_S
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		pnp_05p00x00p42 "device primitive"
+	${PORTORDER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		pnp_05p00x00p42 I1_default_C I1_default_B I1_default_E
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		pnp_05p00x05p00 "device primitive"
+	${PORTORDER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		pnp_05p00x05p00 I1_default_C I1_default_B I1_default_E
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		pnp_10p00x10p00 "device primitive"
+	${PORTORDER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		pnp_10p00x10p00 I1_default_C I1_default_B I1_default_E
 
 digital-9t5v0-%:
         # Install 5V 9-track digital standard cells from vendor files

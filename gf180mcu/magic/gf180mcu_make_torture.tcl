@@ -43,7 +43,7 @@ proc mos_array {n devname startx starty} {
          if {[rand] > 0.5} {set gt 1} else {set gt 0}
          if {[rand] > 0.5} {set gb 1} else {set gb 0}
 
-         magic::gencell efgf013::${devname} ${devname}_$i w $w l $l m $m nf $nf diffcov $dcov polycov $pcov rlcov $rlcov poverlap $pov doverlap $dov topc $tc botc $bc full_metal $fm glc $gl grc $gr gbc $gb gtc $gt
+         magic::gencell gf180mcu::${devname} ${devname}_$i w $w l $l m $m nf $nf diffcov $dcov polycov $pcov rlcov $rlcov poverlap $pov doverlap $dov topc $tc botc $bc full_metal $fm glc $gl grc $gr gbc $gb gtc $gt
          select cell ${devname}_$i
          set bh [box height]
          set bh [+ $bh 124]
@@ -85,7 +85,7 @@ proc res_array {n devname startx starty} {
          if {[rand] > 0.5} {set gt 1} else {set gt 0}
          if {[rand] > 0.5} {set gb 1} else {set gb 0}
 
-         magic::gencell efgf013::${devname} ${devname}_$i w $w l $l m $m nx $nx endcov $ecov roverlap $rov snake $sn full_metal $fm glc $gl grc $gr gbc $gb gtc $gt
+         magic::gencell gf180mcu::${devname} ${devname}_$i w $w l $l m $m nx $nx endcov $ecov roverlap $rov snake $sn full_metal $fm glc $gl grc $gr gbc $gb gtc $gt
          select cell ${devname}_$i
          set bh [box height]
          set bh [+ $bh 124]
@@ -127,7 +127,7 @@ proc diode_array {n devname startx starty} {
          if {[rand] > 0.5} {set gt 1} else {set gt 0}
          if {[rand] > 0.5} {set gb 1} else {set gb 0}
 
-         magic::gencell efgf013::${devname} ${devname}_$i w $w l $l nx $nx ny $ny doverlap $dov full_metal $fm elc $el erc $er etc $et ebc $eb glc $gl grc $gr gbc $gb gtc $gt
+         magic::gencell gf180mcu::${devname} ${devname}_$i w $w l $l nx $nx ny $ny doverlap $dov full_metal $fm elc $el erc $er etc $et ebc $eb glc $gl grc $gr gbc $gb gtc $gt
          select cell ${devname}_$i
          set bh [box height]
          set bh [+ $bh 124]
@@ -161,7 +161,7 @@ proc cap_array {n devname startx starty} {
          if {[rand] > 0.5} {set bc 1} else {set bc 0}
          if {[rand] > 0.5} {set tc 1} else {set tc 0}
 
-         magic::gencell efgf013::${devname} ${devname}_$i w $w l $l nx $nx ny $ny bconnect $bc tconnect $tc
+         magic::gencell gf180mcu::${devname} ${devname}_$i w $w l $l nx $nx ny $ny bconnect $bc tconnect $tc
          select cell ${devname}_$i
          set bh [box height]
          set bh [+ $bh 160]
@@ -195,7 +195,7 @@ proc fixed_array {n devname startx starty} {
          # set r [int [* [rand] 10]]
          set deltay [/ $r 10.0]
 
-         magic::gencell efgf013::${devname} ${devname}_$i nx $nx ny $ny deltax $deltax deltay $deltay
+         magic::gencell gf180mcu::${devname} ${devname}_$i nx $nx ny $ny deltax $deltax deltay $deltay
          select cell ${devname}_$i
          set bh [box height]
          set bh [* $bh [+ $ny 1]]
@@ -225,16 +225,16 @@ box size 0 0
 #
 
 
-mos_array 6 nmos_1p2 0 0
-mos_array 6 pmos_1p2 0 75000
-mos_array 6 nmos_3p3 0 150000 
-mos_array 6 pmos_3p3 0 225000
-mos_array 6 pmos_1p2_lvt 0 300000
-mos_array 6 pmos_1p2_hvt 0 375000
-mos_array 6 nmos_1p2_lvt 0 450000
-mos_array 6 nmos_1p2_hvt 0 525000
-mos_array 6 nmos_1p2_nat 0 600000
-mos_array 6 nmos_3p3_nat 0 675000
+mos_array 6 nmos_3p3 0 0
+mos_array 6 pmos_3p3 0 75000
+mos_array 6 nmos_6p0 0 150000 
+mos_array 6 pmos_6p0 0 225000
+mos_array 6 pmos_3p3_lvt 0 300000
+mos_array 6 pmos_3p3_hvt 0 375000
+mos_array 6 nmos_3p3_lvt 0 450000
+mos_array 6 nmos_3p3_hvt 0 525000
+mos_array 6 nmos_3p3_nat 0 600000
+mos_array 6 nmos_6p0_nat 0 675000
 
 res_array 6 nplus_u 100000 0 
 res_array 6 pplus_u 100000 180000

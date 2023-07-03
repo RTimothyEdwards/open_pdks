@@ -167,6 +167,10 @@
 #		    specified for installation:  Do parasitic extraction
 #		    (NOTE:  Only does parasitic capacitance extraction).
 #
+#	noextract: Used with "-gds".  Do not extract the layout into a
+#		    netlist (implies that the layout uses the "device
+#		    primitive" property).
+#
 #	options:   Followed by "=" and the name of a script.  Behavior
 #		    is dependent on the mode;  if applied to "-gds",
 #		    then the script is inserted before the GDS read
@@ -1257,6 +1261,7 @@ if __name__ == '__main__':
     no_gds_convert = False
     no_lef_convert = False
     do_parasitics = False
+    no_extract = False
     cdl_compile_only = False
     lef_compile = False
     lef_compile_only = False
@@ -1301,6 +1306,10 @@ if __name__ == '__main__':
         if 'dorcx' in option:
             if option[0] == 'gds':
                 do_parasitics = True
+
+        if 'noextract' in option:
+            if option[0] == 'gds':
+                no_extract = True
 
         # Option 'privileged' is a standalone keyword.
         if 'priv' in option or 'privileged' in option or 'private' in option:
@@ -2150,7 +2159,7 @@ if __name__ == '__main__':
                 print('Running (in ' + destlibdir + '): ' + ' '.join(procopts))
                 subprocess_run('cdl2spi.py', procopts, cwd = destlibdir)
 
-    elif have_gds and not no_gds_convert:
+    elif have_gds and not no_gds_convert and not no_extract:
         # If neither SPICE nor CDL formats is available in the source, then
         # read GDS;  if the result has no ports, then read the corresponding
         # LEF library to get port information.  Then write out a SPICE netlist

@@ -66,6 +66,8 @@ types
  -well obswell
 # Well resistors
   well rnw,rnwell
+  well pbase,npn
+  well nbase,pnp
 
 # Transistors
   active nmos,ntransistor,nfet
@@ -111,6 +113,7 @@ types
   active ppolyres,ppres,rpp
   active npolysilicide,nsresistor,nspres,rnps
   active ppolysilicide,psresistor,pspres,rpps
+  active efuse
 #ifdef HRPOLY1K
   active nhighres,nhires,hires
   active mvnhighres,mvnhires,mvhires
@@ -284,9 +287,9 @@ end
 
 aliases
 
-  allnwell	   nwell,rnwell
+  allnwell	   nwell,rnwell,nbase
 
-  allpsub	   space/w,pwell
+  allpsub	   space/w,pwell,pbase
 
   # Similar to allpsub* but does not include space-on-well-plane
   allpwell	   pwell
@@ -432,6 +435,9 @@ styles
   ncap      ntransistor    ntransistor_stripes
   pcap      ptransistor    ptransistor_stripes
 
+  nbase	    nwell ntransistor_stripes
+  pbase	    pwell ptransistor_stripes
+
   mvndiff     ndiffusion     hvndiff_mask
   mvpdiff     pdiffusion     hvpdiff_mask
   mvnsd       ndiff_in_nwell hvndiff_mask
@@ -452,6 +458,7 @@ styles
   pc        polysilicon    metal1  contact_X'es
   npolyres  polysilicon    silicide_block nselect2
   ppolyres  polysilicon    silicide_block pselect2
+  efuse	    polysilicon	   electrode
 
   pdiode    pdiffusion     pselect2
   ndiode    ndiffusion     nselect2
@@ -632,8 +639,8 @@ end
 #-----------------------------------------------------
 
 connect
-  nwell,*nsd,*mvnsd nwell,*nsd,*mvnsd
-  pwell,*psd,*mvpsd,isosub  pwell,*psd,*mvpsd,isosub
+  nwell,*nsd,*mvnsd,nbase,dnwell nwell,*nsd,*mvnsd,nbase,dnwell
+  pwell,*psd,*mvpsd,pbase,isosub  pwell,*psd,*mvpsd,pbase,isosub
   *psd,*mvpsd  *psd,*mvpsd
   *m1	*m1
   *m2	*m2
@@ -701,12 +708,12 @@ style gdsii
 #-----------------------------------------------------
 # PWELL (LVPWELL)
 #-----------------------------------------------------
- layer PWELL 	pwell
- 	labels 	pwell noport
+ layer PWELL 	allpwell
+ 	labels 	allpwell noport
  	calma 	204 0
 
  layer PWELLTXT
-	labels  pwell port
+	labels  allpwell port
 	calma	204 10
 
 #-----------------------------------------------------
@@ -719,6 +726,20 @@ style gdsii
  layer DIFFFILL	filldiff
 	labels	filldiff
 	calma	22 4
+
+#-----------------------------------------------------
+# Bipolar ID markers
+#-----------------------------------------------------
+
+ layer BJTDRC nbase
+	grow 580
+	bloat-all pbase dnwell
+	grow 20
+
+ layer BJTLVS nbase
+	grow 580
+	bloat-all pbase dnwell
+	grow 20
 
 #-----------------------------------------------------
 # PPLUS, NPLUS
@@ -882,6 +903,13 @@ style gdsii
  layer POLYFILL	fillpoly
 	labels	fillpoly
 	calma	30 4
+
+ layer PLFUSE	efuse
+	calma	125 5
+
+ layer EFUSE	efuse
+	bloat-all efuse *poly
+	calma	80 5
 
 #-----------------------------------------------------
 # CONT
@@ -1588,18 +1616,31 @@ style  import
 
  options ignore-unknown-layer-labels options no-reconnect-labels 
 
- ignore BJTDEF
  ignore SRAMDEF
  ignore FET5VDEF
  ignore CAPDEF
+ ignore EFUSE
+ ignore SOURCE
  ignore VTEXT
  ignore FILLOBS
 
  layer pwell PWELL,PWELLTXT
+ and-not BJTDEF,BJTDRC
+ labels PWELL
+ labels PWELLTXT port
+
+ layer pbase PWELL,PWELLTXT
+ and BJTDEF,BJTDRC
  labels PWELL
  labels PWELLTXT port
 
  layer nwell NWELL,NWELLTXT
+ and-not BJTDEF,BJTDRC
+ labels NWELL
+ labels NWELLTXT port
+
+ layer nbase NWELL,NWELLTXT
+ and BJTDEF,BJTDRC
  labels NWELL
  labels NWELLTXT port
 
@@ -1609,9 +1650,15 @@ style  import
  layer isosub SUBCUT
  labels SUBCUT
 
+ # Implicit nwell defined by DNWELL outside of PWELL
+ templayer nwelldef DNWELL
+ shrink 500
+ and-not PWELL
+ or NWELL
+
  templayer ndiffarea DIFF
  and-not POLY
- and-not NWELL
+ and-not nwelldef
  and-not PPLUS
  and-not SBLK
  and-not DUALGATE
@@ -1630,7 +1677,7 @@ style  import
 
  templayer mvndiffarea DIFF
  and-not POLY
- and-not NWELL
+ and-not nwelldef
  and-not PPLUS
  and-not SBLK
  and DUALGATE
@@ -1647,7 +1694,7 @@ style  import
  layer ndiode DIFF
  and NPLUS
  and DIODE
- and-not NWELL
+ and-not nwelldef
  and-not POLY
  and-not PPLUS
  and-not DUALGATE
@@ -1657,7 +1704,7 @@ style  import
  layer nndiode DIFF
  and NPLUS
  and DIODE
- and-not NWELL
+ and-not nwelldef
  and-not POLY
  and-not PPLUS
  and-not DUALGATE
@@ -1666,7 +1713,7 @@ style  import
 
  templayer ndiodearea DIODE
  and NPLUS
- and-not NWELL
+ and-not nwelldef
  and-not DUALGATE
  copyup DIODE,NPLUS
 
@@ -1679,7 +1726,7 @@ style  import
 
  templayer pdiffarea DIFF
  and-not POLY
- and NWELL
+ and nwelldef
  and-not NPLUS
  and-not SBLK
  and-not DIODE
@@ -1710,7 +1757,7 @@ style  import
 
  templayer mvndiodearea DIODE
  and NPLUS
- and-not NWELL
+ and-not nwelldef
  and DUALGATE
  copyup DIODE,NPLUS
 
@@ -1723,7 +1770,7 @@ style  import
 
  templayer mvpdiffarea DIFF
  and-not POLY
- and NWELL
+ and nwelldef
  and-not NPLUS
  and-not SBLK
  and-not DIODE
@@ -1815,14 +1862,14 @@ style  import
  and-not DUALGATE
  and-not NPLUS
  and-not POLY
- and NWELL
+ and nwelldef
  and pfetexpand
  labels DIFF
 
  layer pdiffres DIFF
  and-not POLY
  and PPLUS
- and NWELL
+ and nwelldef
  and SBLK
  labels DIFF
 
@@ -1830,7 +1877,7 @@ style  import
  and POLY
  and-not PPLUS
  and-not DUALGATE
- and-not NWELL
+ and-not nwelldef
  and NPLUS
  and-not NAT
  and-not MOSCAP
@@ -1840,7 +1887,7 @@ style  import
  and POLY
  and-not PPLUS
  and-not DUALGATE
- and-not NWELL
+ and-not nwelldef
  and NPLUS
  and-not NAT
  and MOSCAP
@@ -1850,14 +1897,14 @@ style  import
  and POLY
  and-not PPLUS
  and-not DUALGATE
- and-not NWELL
+ and-not nwelldef
  and NPLUS
  and NAT
  labels DIFF
 
  templayer nsdarea DIFF
  and NPLUS
- and NWELL
+ and nwelldef
  and-not POLY
  and-not PPLUS
  and-not DUALGATE
@@ -1875,7 +1922,7 @@ style  import
  templayer psdarea DIFF
  and PPLUS
  and-not DUALGATE
- and-not NWELL
+ and-not nwelldef
  and-not POLY
  and-not NPLUS
  and-not pfetexpand
@@ -1890,7 +1937,7 @@ style  import
  layer mvpdiff DIFF
  and-not NPLUS
  and-not POLY
- and NWELL
+ and nwelldef
  and DUALGATE
  and mvpfetexpand
  labels DIFF
@@ -1907,7 +1954,7 @@ style  import
  and-not PPLUS
  and NPLUS
  and-not NAT
- and-not NWELL
+ and-not nwelldef
  and DUALGATE
  and-not MOSCAP
  labels DIFF
@@ -1917,7 +1964,7 @@ style  import
  and-not PPLUS
  and NPLUS
  and-not NAT
- and-not NWELL
+ and-not nwelldef
  and DUALGATE
  and MOSCAP
  labels DIFF
@@ -1927,7 +1974,7 @@ style  import
  and-not PPLUS
  and NPLUS
  and NAT
- and-not NWELL
+ and-not nwelldef
  and DUALGATE
  labels DIFF
 
@@ -1935,7 +1982,7 @@ style  import
  and NPLUS
  and-not POLY
  and-not PPLUS
- and NWELL
+ and nwelldef
  and DUALGATE
  copyup mvnsubcheck
 
@@ -1951,7 +1998,7 @@ style  import
 
  templayer mvpsdarea DIFF
  and PPLUS
- and-not NWELL
+ and-not nwelldef
  and-not POLY
  and-not NPLUS
  and DUALGATE
@@ -1983,7 +2030,7 @@ style  import
  and-not PPLUS
  and-not NPLUS
  and-not POLY
- and NWELL
+ and nwelldef
  and-not DUALGATE
  and nsdexpand
 
@@ -1991,7 +2038,7 @@ style  import
  and-not PPLUS
  and-not NPLUS
  and-not POLY
- and-not NWELL
+ and-not nwelldef
  and DUALGATE
  and-not mvpfetexpand
  and mvpsdexpand
@@ -2000,13 +2047,14 @@ style  import
  and-not PPLUS
  and-not NPLUS
  and-not POLY
- and NWELL
+ and nwelldef
  and DUALGATE
  and mvnsdexpand
 
  templayer polyarea POLY
  and-not DIFF
  and-not SBLK
+ and-not PLFUSE
 #ifdef HRPOLY1K
  and-not HRES
 #endif (HRPOLY1K)
@@ -2054,6 +2102,11 @@ style  import
  and-not RESDEF
  labels POLY
 
+ layer efuse POLY
+ and-not DIFF
+ and PLFUSE
+ labels POLY
+
  layer rnp POLY
  and SBLK
  and NPLUS
@@ -2088,7 +2141,7 @@ style  import
  layer ndc CONT
  and DIFF
  and NPLUS
- and-not NWELL
+ and-not nwelldef
  and MET1
  and-not DUALGATE
  and-not DIODE
@@ -2098,7 +2151,7 @@ style  import
  layer nsc CONT
  and DIFF
  and NPLUS
- and NWELL
+ and nwelldef
  and MET1
  and-not DUALGATE
  and-not DIODE
@@ -2108,7 +2161,7 @@ style  import
  layer pdc CONT
  and DIFF
  and PPLUS
- and NWELL
+ and nwelldef
  and MET1
  and-not DUALGATE
  and-not DIODE
@@ -2128,7 +2181,7 @@ style  import
  layer psc CONT
  and DIFF
  and PPLUS
- and-not NWELL
+ and-not nwelldef
  and MET1
  and-not DUALGATE
  and-not DIODE
@@ -2178,7 +2231,7 @@ style  import
  layer mvndc CONT
  and DIFF
  and NPLUS
- and-not NWELL
+ and-not nwelldef
  and MET1
  and DUALGATE
  and-not DIODE
@@ -2190,7 +2243,7 @@ style  import
  and NPLUS
  and MET1
  and DUALGATE
- and NWELL
+ and nwelldef
  and-not DIODE
  grow 145
  shrink 140
@@ -2200,7 +2253,7 @@ style  import
  and PPLUS
  and MET1
  and DUALGATE
- and NWELL
+ and nwelldef
  and-not DIODE
  grow 145
  shrink 140
@@ -2218,7 +2271,7 @@ style  import
  layer mvpsc CONT
  and DIFF
  and PPLUS
- and-not NWELL
+ and-not nwelldef
  and MET1
  and DUALGATE
  and-not DIODE
@@ -2608,28 +2661,28 @@ style  import
  layer nvar POLY
  and DIFF
  and NPLUS
- and NWELL
+ and nwelldef
  and-not DUALGATE
  labels POLY
 
  layer mvnvar POLY
  and DIFF
  and NPLUS
- and NWELL
+ and nwelldef
  and DUALGATE
  labels POLY
 
  layer pvar POLY
  and DIFF
  and PPLUS
- and-not NWELL
+ and-not nwelldef
  and-not DUALGATE
  labels POLY
 
  layer mvpvar POLY
  and DIFF
  and PPLUS
- and-not NWELL
+ and-not nwelldef
  and DUALGATE
  labels POLY
 
@@ -2694,6 +2747,9 @@ style  import
 #ifdef HRPOLY1K
  calma HRES 62 0
 #endif (HRPOLY1K)
+ calma EFUSE 80 5
+ calma PLFUSE 125 5
+ calma SOURCE 100 8
  calma NAT 5 0
 #ifdef MIM
  calma CAPM 75 0
@@ -2702,6 +2758,7 @@ style  import
  calma DIODE  115 5
  calma CAPDEF 117 5
  calma BJTDEF 118 5
+ calma BJTDRC 127 5
  calma MOSCAP 166 5
  calma BOUND 0 0
  calma PRBOUND 63 0
@@ -4675,6 +4732,8 @@ variants *
 #  cap_pmos_06v0_b	mosfet   (p-varactor, high voltage)
 #
 #  cap_mim_2f0_mXmY_noshield	capacitor (MiM)*,**
+#
+#  efuse		fuse
 
 #
 # *Note that there are multiple mutually exclusive process options for the
@@ -4710,6 +4769,8 @@ variants *
  device subcircuit cap_nmos_03v3 ncap ndiff,ndc l=c_length w=c_width
  device subcircuit cap_pmos_06v0 mvpcap mvpdiff,mvpdc l=c_length w=c_width
  device subcircuit cap_nmos_06v0 mvncap mvndiff,mvndc l=c_length w=c_width
+
+ device rsubcircuit efuse efuse *poly
 
  device rsubcircuit rm1 rm1 *m1 l=r_length w=r_width
  device rsubcircuit rm2 rm2 *m2 l=r_length w=r_width
