@@ -21,7 +21,7 @@ end
 version
  version REVISION
  description "Global Foundries 180mcu: open PDK rules and DRC"
- requires magic-8.3.353
+ requires magic-8.3.411
 end
 
 #-----------------------------------------------------
@@ -4769,6 +4769,18 @@ variants *
  device subcircuit cap_nmos_03v3 ncap ndiff,ndc l=c_length w=c_width
  device subcircuit cap_pmos_06v0 mvpcap mvpdiff,mvpdc l=c_length w=c_width
  device subcircuit cap_nmos_06v0 mvncap mvndiff,mvndc l=c_length w=c_width
+
+ device msubcircuit npn_10p00x10p00 npn *ndiff dnwell space/w error a1>99.0 a1<101.0
+ device msubcircuit npn_05p00x05p00 npn *ndiff dnwell space/w error a1>24.0 a1<26.0
+ device msubcircuit npn_00p54x16p00 npn *ndiff dnwell space/w error a1>8.5 a1<8.7
+ device msubcircuit npn_00p54x08p00 npn *ndiff dnwell space/w error a1>4.2 a1<4.4
+ device msubcircuit npn_00p54x04p00 npn *ndiff dnwell space/w error a1>2.0 a1<2.2
+ device msubcircuit npn_00p54x02p00 npn *ndiff dnwell space/w error a1>1.0 a1<1.2
+
+ device msubcircuit pnp_10p00x00p42 pnp *pdiff pwell,space/w error a1>4.1 a1<4.3
+ device msubcircuit pnp_05p00x00p42 pnp *pdiff pwell,space/w error a1>2.0 a1<2.2
+ device msubcircuit pnp_10p00x10p00 pnp *pdiff pwell,space/w error a1>99.0 a1<101.0
+ device msubcircuit pnp_05p00x05p00 pnp *pdiff pwell,space/w error a1>24.0 a1<26.0
 
  device rsubcircuit efuse efuse *poly
 

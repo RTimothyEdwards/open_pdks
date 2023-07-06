@@ -3617,7 +3617,6 @@ proc sky130::sky130_fd_pr__res_high_po_0p35_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		ppres \
-	    res_idtype		res0p35 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \
@@ -3690,7 +3689,6 @@ proc sky130::sky130_fd_pr__res_high_po_0p69_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		ppres \
-	    res_idtype		res0p69 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \
@@ -3763,7 +3761,6 @@ proc sky130::sky130_fd_pr__res_high_po_1p41_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		ppres \
-	    res_idtype		res1p41 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \
@@ -3836,7 +3833,6 @@ proc sky130::sky130_fd_pr__res_high_po_2p85_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		ppres \
-	    res_idtype		res2p85 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \
@@ -3909,7 +3905,6 @@ proc sky130::sky130_fd_pr__res_high_po_5p73_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		ppres \
-	    res_idtype		res5p73 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \
@@ -3984,7 +3979,6 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p35_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		xpres \
-	    res_idtype		res0p35 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \
@@ -4059,7 +4053,6 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p35_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		xpres \
-	    res_idtype		res0p35 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \
@@ -4132,7 +4125,6 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p69_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		xpres \
-	    res_idtype		res0p69 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \
@@ -4205,7 +4197,6 @@ proc sky130::sky130_fd_pr__res_xhigh_po_1p41_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		xpres \
-	    res_idtype		res1p41 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \
@@ -4278,7 +4269,6 @@ proc sky130::sky130_fd_pr__res_xhigh_po_2p85_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		xpres \
-	    res_idtype		res2p85 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \
@@ -4351,7 +4341,6 @@ proc sky130::sky130_fd_pr__res_xhigh_po_5p73_draw {parameters} {
 
     set newdict [dict create \
 	    res_type		xpres \
-	    res_idtype		res5p73 \
 	    end_type 		xpc \
 	    end_contact_type	xpc \
 	    end_contact_size	0 \

@@ -23,7 +23,7 @@ end
 version
  version REVISION
  description "SkyWater SKY130: Open Source rules and DRC"
- requires magic-8.3.306
+ requires magic-8.3.411
 end
 
 #------------------------------------------------------------------------
@@ -311,18 +311,6 @@ types
  -block  fillblock,fillblock4
   comment comment
  -comment obscomment
-# fixed resistor width identifiers
- -comment res0p35
- -comment res0p69
- -comment res1p41
- -comment res2p85
- -comment res5p73
-# fixed bipolar area identifiers
- -comment pnp0p68
- -comment pnp3p40
- -comment npn1p00
- -comment npn2p00
- -comment npn11p0
 
 end
 
@@ -471,7 +459,6 @@ aliases
   psub		pwell
 
   obstypes	obswell,mvobsactive,obsactive,obsli,obsmcon,obsm1,obsm2,obsm3,obsm4,obsm5,obsmrdl,obscomment
-  idtypes	res0p35,res0p69,res1p41,res2p85,res5p73,pnp0p68,pnp3p40,npn1p00,npn2p00,npn11p0
   blocktypes	fillblock,fillblock4
   
 end
@@ -542,17 +529,6 @@ styles
   ppolyres  polysilicon    silicide_block pselect2
   xpc	    polysilicon	   pselect2  metal1  contact_X'es
   rmp	    polysilicon	   poly_resist_stripes
-
-  res0p35   implant1
-  res0p69   implant1
-  res1p41   implant1
-  res2p85   implant1
-  res5p73   implant1
-  pnp0p68   implant1
-  pnp3p40   implant1
-  npn1p00   implant1
-  npn2p00   implant1
-  npn11p0   implant1
 
   pdiode    pdiffusion     pselect2
   ndiode    ndiffusion     nselect2
@@ -5331,7 +5307,6 @@ variants *
  # These types should not be considered as electrical nodes
  resist blocktypes	 	 None
  resist obstypes	 	 None
- resist idtypes	 	 	 None
  resist comment	 	 	 None
 
 #-------------------------------------------------------------------------
@@ -6397,19 +6372,19 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
 	*mvnndiff pwell,space/w error l=l w=w
 
  # Bipolars
- device msubcircuit sky130_fd_pr__npn_05v5_W1p00L1p00 npn *ndiff dnwell space/w \
-	error +npn1p00
- device msubcircuit sky130_fd_pr__npn_05v5_W1p00L2p00 npn *ndiff dnwell space/w \
-	error +npn2p00
  device msubcircuit sky130_fd_pr__npn_05v5 npn *ndiff dnwell space/w error a1=area
- device msubcircuit sky130_fd_pr__pnp_05v5_W0p68L0p68 pnp *pdiff \
-	pwell,space/w +pnp0p68
- device msubcircuit sky130_fd_pr__pnp_05v5_W3p40L3p40 pnp *pdiff \
-	pwell,space/w +pnp3p40
+ device msubcircuit sky130_fd_pr__npn_05v5_W1p00L1p00 npn *ndiff dnwell space/w \
+	error a1>0.99 a1<1.01
+ device msubcircuit sky130_fd_pr__npn_05v5_W1p00L2p00 npn *ndiff dnwell space/w \
+	error a1>1.99 a1<2.01
  device msubcircuit sky130_fd_pr__pnp_05v5 pnp *pdiff pwell,space/w a1=area
- device msubcircuit sky130_fd_pr__npn_11v0_W1p00L1p00 npn *mvndiff \
-	dnwell space/w error +npn11p0
+ device msubcircuit sky130_fd_pr__pnp_05v5_W0p68L0p68 pnp *pdiff \
+	pwell,space/w a1>0.45 a1<0.47
+ device msubcircuit sky130_fd_pr__pnp_05v5_W3p40L3p40 pnp *pdiff \
+	pwell,space/w a1>11.55 a1<11.57
  device msubcircuit sky130_fd_pr__npn_11v0 npn *mvndiff dnwell space/w error a1=area
+ device msubcircuit sky130_fd_pr__npn_11v0_W1p00L1p00 npn *mvndiff \
+	dnwell space/w error a1>0.99 a1<1.01
 
  # Ignore the extended-drain FET geometry that forms part of the high-voltage
  # bipolar devices.
@@ -6454,30 +6429,30 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device ndiode   sky130_fd_pr__model__parasitic__diode_ps2dn \
 	photo pwell,space/w error a=area
 
- device rsubcircuit sky130_fd_pr__res_high_po_0p35 xhrpoly \
-	xpc pwell,space/w error +res0p35 l=l
- device rsubcircuit sky130_fd_pr__res_high_po_0p69  xhrpoly \
-	xpc pwell,space/w error +res0p69 l=l
- device rsubcircuit sky130_fd_pr__res_high_po_1p41  xhrpoly \
-	xpc pwell,space/w error +res1p41 l=l
- device rsubcircuit sky130_fd_pr__res_high_po_2p85  xhrpoly \
-	xpc pwell,space/w error +res2p85 l=l
- device rsubcircuit sky130_fd_pr__res_high_po_5p73  xhrpoly \
-	xpc pwell,space/w error +res5p73 l=l
  device rsubcircuit sky130_fd_pr__res_high_po	    xhrpoly \
 	xpc pwell,space/w error l=l w=w
- device rsubcircuit sky130_fd_pr__res_xhigh_po_0p35  uhrpoly \
-	xpc pwell,space/w error +res0p35 l=l
- device rsubcircuit sky130_fd_pr__res_xhigh_po_0p69  uhrpoly \
-	xpc pwell,space/w error +res0p69 l=l
- device rsubcircuit sky130_fd_pr__res_xhigh_po_1p41  uhrpoly \
-	xpc pwell,space/w error +res1p41 l=l
- device rsubcircuit sky130_fd_pr__res_xhigh_po_2p85  uhrpoly \
-	xpc pwell,space/w error +res2p85 l=l
- device rsubcircuit sky130_fd_pr__res_xhigh_po_5p73  uhrpoly \
-	xpc pwell,space/w error +res5p73 l=l
+ device rsubcircuit sky130_fd_pr__res_high_po_0p35 xhrpoly \
+	xpc pwell,space/w error w>0.34 w<0.36 l=l
+ device rsubcircuit sky130_fd_pr__res_high_po_0p69  xhrpoly \
+	xpc pwell,space/w error w>0.68 w<0.70 l=l
+ device rsubcircuit sky130_fd_pr__res_high_po_1p41  xhrpoly \
+	xpc pwell,space/w error w>1.40 w<1.42 l=l
+ device rsubcircuit sky130_fd_pr__res_high_po_2p85  xhrpoly \
+	xpc pwell,space/w error w>2.84 w<2.86 l=l
+ device rsubcircuit sky130_fd_pr__res_high_po_5p73  xhrpoly \
+	xpc pwell,space/w error w>5.72 w<5.74 l=l
  device rsubcircuit sky130_fd_pr__res_xhigh_po	     uhrpoly \
 	xpc pwell,space/w error l=l w=w
+ device rsubcircuit sky130_fd_pr__res_xhigh_po_0p35  uhrpoly \
+	xpc pwell,space/w error w>0.34 w<0.36 l=l
+ device rsubcircuit sky130_fd_pr__res_xhigh_po_0p69  uhrpoly \
+	xpc pwell,space/w error w>0.68 w<0.70 l=l
+ device rsubcircuit sky130_fd_pr__res_xhigh_po_1p41  uhrpoly \
+	xpc pwell,space/w error w>1.40 w<1.42 l=l
+ device rsubcircuit sky130_fd_pr__res_xhigh_po_2p85  uhrpoly \
+	xpc pwell,space/w error w>2.84 w<2.86 l=l
+ device rsubcircuit sky130_fd_pr__res_xhigh_po_5p73  uhrpoly \
+	xpc pwell,space/w error w>5.72 w<5.74 l=l
 
  device rsubcircuit sky130_fd_pr__res_generic_nd     ndiffres \
 	*ndiff pwell,space/w  error l=l w=w
@@ -6591,14 +6566,19 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device pdiode sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area*1E12 p=pj*1E6
  device pdiode sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area*1E12 p=pj*1E6
 
- device bjt sky130_fd_pr__npn_05v5_W1p00L1p00 npn *ndiff dnwell space/w error +npn1p00
- device bjt sky130_fd_pr__npn_05v5_W1p00L2p00 npn *ndiff dnwell space/w error +npn2p00
  device bjt sky130_fd_pr__npn_05v5 npn *ndiff dnwell space/w error a1=area
- device bjt sky130_fd_pr__pnp_05v5_W0p68L0p68 pnp *pdiff pwell,space/w +pnp0p68
- device bjt sky130_fd_pr__pnp_05v5_W3p40L3p40 pnp *pdiff pwell,space/w +pnp3p40
+ device bjt sky130_fd_pr__npn_05v5_W1p00L1p00 npn *ndiff dnwell space/w error \
+	a1>0.99 a1<1.01
+ device bjt sky130_fd_pr__npn_05v5_W1p00L2p00 npn *ndiff dnwell space/w error \
+	a1>1.99 a1<2.01
  device bjt sky130_fd_pr__pnp_05v5 pnp *pdiff pwell,space/w a1=area
- device bjt sky130_fd_pr__npn_11v0_W1p00L1p00 npn *mvndiff dnwell space/w error +npn11p0
+ device bjt sky130_fd_pr__pnp_05v5_W0p68L0p68 pnp *pdiff pwell,space/w \
+	a1>0.45 a1<0.48
+ device bjt sky130_fd_pr__pnp_05v5_W3p40L3p40 pnp *pdiff pwell,space/w \
+	a1>11.55 a1<11.57
  device bjt sky130_fd_pr__npn_11v0 npn *mvndiff dnwell space/w error a1=area
+ device bjt sky130_fd_pr__npn_11v0_W1p00L1p00 npn *mvndiff dnwell space/w error \
+	a1>0.99 a1<1.01
 
 #ifdef MIM
  device capacitor sky130_fd_pr__cap_mim_m3_1 *mimcap  *m3 1

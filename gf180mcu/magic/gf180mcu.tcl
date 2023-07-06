@@ -103,7 +103,7 @@ proc gf180mcu::addtechmenu {framename} {
    magic::add_toolkit_command $layoutframe "pn_3p3 - p-diode" "magic::gencell gf180mcu::pn_3p3" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
-   magic::add_toolkit_command $layoutframe "XXX_5x5     (3.3V) - 5.0um^2 " "magic::gencell gf180mcu::vnpn_2x2" pdk1
+   magic::add_toolkit_command $layoutframe "vnpn_5x5     (3.3V) - 5.0um^2 " "magic::gencell gf180mcu::vnpn_2x2" pdk1
    magic::add_toolkit_command $layoutframe "vnpn_5x0p42  (3.3V) - 5.0um x 0.42um " "magic::gencell gf180mcu::vnpn_5x0p42" pdk1
    magic::add_toolkit_command $layoutframe "vnpn_10x10   (3.3V) - 10.0um^2 " "magic::gencell gf180mcu::vnpn_5x5" pdk1
    magic::add_toolkit_command $layoutframe "vnpn_10x0p42 (3.3V) - 10.0um x 0.42um " "magic::gencell gf180mcu::vnpn_10x0p42" pdk1
