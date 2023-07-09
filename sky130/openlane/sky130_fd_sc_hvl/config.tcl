@@ -38,7 +38,7 @@ set ::env(SYNTH_DRIVING_CELL) "sky130_fd_sc_hvl__inv_2"
 #capacitance : 0.017653;
 set ::env(SYNTH_DRIVING_CELL_PIN) "Y"
 # update these
-set ::env(SYNTH_CAP_LOAD) "70.77" ; # femtofarad __inv_16 pin A cap (https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hvl/blob/main/cells/inv/sky130_fd_sc_hvl__inv_16__tt_025C_3v30.lib.json)
+set ::env(OUTPUT_CAP_LOAD) "70.77" ; # femtofarad __inv_16 pin A cap (https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hvl/blob/main/cells/inv/sky130_fd_sc_hvl__inv_16__tt_025C_3v30.lib.json)
 set ::env(SYNTH_MIN_BUF_PORT) "sky130_fd_sc_hvl__buf_1 A X"
 set ::env(SYNTH_TIEHI_PORT) "sky130_fd_sc_hvl__conb_1 HI"
 set ::env(SYNTH_TIELO_PORT) "sky130_fd_sc_hvl__conb_1 LO"
@@ -69,6 +69,7 @@ set ::env(CLK_BUFFER) sky130_fd_sc_hvl__buf_4
 set ::env(CLK_BUFFER_INPUT) A
 set ::env(CLK_BUFFER_OUTPUT) X
 set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_hvl__buf_8 sky130_fd_sc_hvl__buf_4 sky130_fd_sc_hvl__buf_2"
-set ::env(CTS_MAX_CAP) 5.57100
-set ::env(DEFAULT_MAX_TRAN) 0.75
+set ::env(MAX_CAP) 5.57100
+set ::env(MAX_SLEW) 0.75
+set ::env(MAX_FANOUT) 10
 set ::env(FP_PDN_RAIL_WIDTH) 0.51

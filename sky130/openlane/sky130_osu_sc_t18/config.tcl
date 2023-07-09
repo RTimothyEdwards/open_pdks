@@ -29,7 +29,7 @@ set ::env(SYNTH_DRIVING_CELL) "INVX8"
 set ::env(SYNTH_DRIVING_CELL_PIN) "Y"
 # capacitance : 0.037357;
 # update these
-set ::env(SYNTH_CAP_LOAD) "37.357" ; # femtofarad INVX8 pin A cap
+set ::env(OUTPUT_CAP_LOAD) "37.357" ; # femtofarad INVX8 pin A cap
 set ::env(SYNTH_MIN_BUF_PORT) "BUFX1 A Y"
 set ::env(SYNTH_TIEHI_PORT) "TIEHI Y"
 set ::env(SYNTH_TIELO_PORT) "TIELO Y"
@@ -69,6 +69,6 @@ set ::env(CTS_CLK_BUFFER_LIST) "CLKBUFX1"
 # TODO...
 set ::env(CTS_SQR_CAP) 0.258e-3
 set ::env(CTS_SQR_RES) 0.125
-set ::env(CTS_MAX_CAP) 1.53169
+set ::env(MAX_CAP) 1.53169
 
 set ::env(FP_PDN_RAIL_WIDTH) 0.48
