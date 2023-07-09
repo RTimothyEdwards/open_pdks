@@ -65,8 +65,8 @@ set ::env(CLK_BUFFER_OUTPUT) X
 set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_hdll__clkbuf_8 sky130_fd_sc_hdll__clkbuf_4 sky130_fd_sc_hdll__clkbuf_2"
 set ::env(FP_PDN_RAIL_WIDTH) 0.48
 # Determined from https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hdll/blob/0694bd23893de20f5233ef024acf6cca1e750ac6/cells/clkbuf/sky130_fd_sc_hdll__clkbuf_16__tt_025C_1v80.lib.json
-set ::env(MAX_CAP) 1.03547
-set ::env(MAX_SLEW) 0.75
-set ::env(MAX_FANOUT) 10
+set ::env(CTS_MAX_CAP) 1.03547
+set ::env(MAX_TRANSITION_CONSTRAINT) 0.75
+set ::env(MAX_FANOUT_CONSTRAINT) 10
 
 set ::env(TRISTATE_CELL_PREFIX) "$::env(STD_CELL_LIBRARY)__ebuf"

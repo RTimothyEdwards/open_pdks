@@ -69,6 +69,6 @@ set ::env(CTS_CLK_BUFFER_LIST) "CLKBUFX1"
 # TODO...
 set ::env(CTS_SQR_CAP) 0.258e-3
 set ::env(CTS_SQR_RES) 0.125
-set ::env(MAX_CAP) 1.53169
+set ::env(CTS_MAX_CAP) 1.53169
 
 set ::env(FP_PDN_RAIL_WIDTH) 0.48

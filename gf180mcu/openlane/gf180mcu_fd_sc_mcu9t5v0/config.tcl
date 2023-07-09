@@ -41,13 +41,13 @@ set ::env(CELL_PAD_EXCLUDE) "$::env(STD_CELL_LIBRARY)__filltie_* $::env(STD_CELL
 # TritonCTS configurations
 set ::env(CTS_ROOT_BUFFER) "$::env(STD_CELL_LIBRARY)__clkbuf_16"
 set ::env(CTS_CLK_BUFFER_LIST) "$::env(STD_CELL_LIBRARY)__clkbuf_2 $::env(STD_CELL_LIBRARY)__clkbuf_4 $::env(STD_CELL_LIBRARY)__clkbuf_8"
-set ::env(MAX_CAP) 0.5
+set ::env(CTS_MAX_CAP) 0.5
 
 set ::env(FP_PDN_RAIL_WIDTH) 0.6
 
 # The library maximum transition is 8.9ns; setting it to lower value
-set ::env(MAX_SLEW) 3
-set ::env(MAX_FANOUT) 10
+set ::env(MAX_TRANSITION_CONSTRAINT) 3
+set ::env(MAX_FANOUT_CONSTRAINT) 10
 
 set ::env(GPL_CELL_PADDING) {0}
 set ::env(DPL_CELL_PADDING) {0}
