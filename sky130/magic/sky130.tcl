@@ -2498,14 +2498,15 @@ proc sky130::sky130_fd_pr__cap_mim_m3_2_check {parameters} {
 #----------------------------------------------------------------
 
 #----------------------------------------------------------------
-# sky130_fd_pr__res_iso_pw: Specify all user-editable default values and those
-# needed by sky130_fd_pr__res_iso_pw_check
-# NOTE:  Work in progress.  These values need to be corrected.
+# sky130_fd_pr__res_iso_pw: Specify all user-editable default values
+# and those needed by sky130_fd_pr__res_iso_pw_check
+# NOTE:  Work in progress.  Some values need to be corrected.
+# Discrepancy between sheet rho value in documentation vs. model.
 #----------------------------------------------------------------
 
 proc sky130::sky130_fd_pr__res_iso_pw_defaults {} {
     return {w 2.650 l 26.50 m 1 nx 1 wmin 2.650 lmin 26.50 \
-	 	rho 975 val 4875 dummy 0 dw 0.25 term 1.0 \
+	 	rho 3050 val 30502 dummy 0 dw 0.25 term 1.0 \
 		guard 1 endcov 100 full_metal 1 vias 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
