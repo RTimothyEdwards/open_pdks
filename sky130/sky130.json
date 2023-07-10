@@ -96,7 +96,7 @@
     "reference": {
         "open_pdks": "b6627279552bd1f0f852b1119af10effb2edafd7",
         "magic": "b899a500d59fe4f0788231a4a3911efadacc3d06",
-        "skywater_pdk": "unknown",
+        "skywater_pdk": "7198cf647113f56041e02abf3eb623692820c5e1",
         "sky130_osu_sc_t12": "unknown",
         "sky130_osu_sc_t15": "unknown",
         "sky130_osu_sc_t18": "unknown",
