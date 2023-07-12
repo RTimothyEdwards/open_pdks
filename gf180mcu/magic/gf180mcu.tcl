@@ -665,7 +665,7 @@ proc gf180mcu::diode_nd2ps_03v3_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 full_metal 1 \
-	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0 diode_nd2ps_06v0}}
+	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0}}
 }
 
 proc gf180mcu::diode_pd2nw_03v3_defaults {} {
@@ -676,6 +676,13 @@ proc gf180mcu::diode_pd2nw_03v3_defaults {} {
 	compatible {diode_pd2nw_03v3 diode_pd2nw_06v0}}
 }
 
+proc gf180mcu::diode_nd2ps_06v0_defaults {} {
+    return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
+	full_metal 1 \
+	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0}}
+}
 
 proc gf180mcu::diode_pd2nw_06v0_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
@@ -695,6 +702,9 @@ proc gf180mcu::diode_pd2nw_03v3_convert {parameters} {
     return [gf180mcu::diode_convert $parameters]
 }
 
+proc gf180mcu::diode_nd2ps_06v0_convert {parameters} {
+    return [gf180mcu::diode_convert $parameters]
+}
 
 proc gf180mcu::diode_pd2nw_06v0_convert {parameters} {
     return [gf180mcu::diode_convert $parameters]
@@ -710,6 +720,10 @@ proc gf180mcu::diode_pd2nw_03v3_dialog {parameters} {
     gf180mcu::diode_dialog diode_pd2nw_03v3 $parameters
 }
 
+proc gf180mcu::diode_nd2ps_06v0_dialog {parameters} {
+    gf180mcu::diode_dialog diode_nd2ps_06v0 $parameters
+}
+
 proc gf180mcu::diode_pd2nw_06v0_dialog {parameters} {
     gf180mcu::diode_dialog diode_pd2nw_06v0 $parameters
 }
@@ -721,6 +735,10 @@ proc gf180mcu::diode_nd2ps_03v3_check {parameters} {
 }
 
 proc gf180mcu::diode_pd2nw_03v3_check {parameters} {
+    gf180mcu::diode_check $parameters
+}
+
+proc gf180mcu::diode_nd2ps_06v0_check {parameters} {
     gf180mcu::diode_check $parameters
 }
 
@@ -956,7 +974,30 @@ proc gf180mcu::diode_pd2nw_03v3_draw {parameters} {
 
 #----------------------------------------------------------------
 
-#----------------------------------------------------------------
+proc gf180mcu::diode_nd2ps_06v0_draw {parameters} {
+
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $gf180mcu::ruleset] {
+        set $key [dict get $gf180mcu::ruleset $key]
+    }
+
+    set newdict [dict create \
+	    diff_poly_space	0.30 \
+	    diff_gate_space	0.30 \
+	    diff_spacing	0.36 \
+	    dev_type 		mvndiode \
+	    dev_contact_type	mvndic \
+	    end_type		mvpsd \
+	    end_contact_type	mvpsc \
+	    end_sub_type	pwell \
+	    dev_spacing		0.25 \
+	    dev_surround	${diff_surround} \
+	    end_spacing		0.36 \
+	    end_surround	${diff_surround} \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::diode_draw $drawdict]
+}
 
 #----------------------------------------------------------------
 
