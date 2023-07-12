@@ -665,7 +665,7 @@ proc gf180mcu::diode_nd2ps_03v3_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 full_metal 1 \
-	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0 diode_nd2ps_06v0_nat}}
+	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0 diode_nd2ps_06v0}}
 }
 
 proc gf180mcu::diode_pd2nw_03v3_defaults {} {
@@ -681,15 +681,15 @@ proc gf180mcu::np_6p0_defaults {} {
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	full_metal 1 \
-	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0np_6p0_nat}}
+	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0 np_6p0}}
 }
 
-proc gf180mcu::np_6p0_nat_defaults {} {
+proc gf180mcu::np_6p0_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	full_metal 1 \
-	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0np_6p0_nat}}
+	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0 np_6p0}}
 }
 
 proc gf180mcu::diode_pd2nw_06v0_defaults {} {
@@ -714,7 +714,7 @@ proc gf180mcu::np_6p0_convert {parameters} {
     return [gf180mcu::diode_convert $parameters]
 }
 
-proc gf180mcu::np_6p0_nat_convert {parameters} {
+proc gf180mcu::np_6p0_convert {parameters} {
     return [gf180mcu::diode_convert $parameters]
 }
 
@@ -733,11 +733,11 @@ proc gf180mcu::diode_pd2nw_03v3_dialog {parameters} {
 }
 
 proc gf180mcu::np_6p0_dialog {parameters} {
-    gf180mcu::diode_dialog diode_nd2ps_06v0$parameters
+    gf180mcu::diode_dialog diode_nd2ps_06v0 $parameters
 }
 
-proc gf180mcu::np_6p0_nat_dialog {parameters} {
-    gf180mcu::diode_dialog np_6p0_nat $parameters
+proc gf180mcu::np_6p0_dialog {parameters} {
+    gf180mcu::diode_dialog np_6p0 $parameters
 }
 
 proc gf180mcu::diode_pd2nw_06v0_dialog {parameters} {
@@ -758,7 +758,7 @@ proc gf180mcu::np_6p0_check {parameters} {
     gf180mcu::diode_check $parameters
 }
 
-proc gf180mcu::np_6p0_nat_check {parameters} {
+proc gf180mcu::np_6p0_check {parameters} {
     gf180mcu::diode_check $parameters
 }
 
@@ -1021,7 +1021,7 @@ proc gf180mcu::np_6p0_draw {parameters} {
 
 #----------------------------------------------------------------
 
-proc gf180mcu::np_6p0_nat_draw {parameters} {
+proc gf180mcu::np_6p0_draw {parameters} {
 
     # Set a local variable for each rule in ruleset
     foreach key [dict keys $gf180mcu::ruleset] {
@@ -3281,7 +3281,7 @@ proc gf180mcu::nfet_03v3_defaults {} {
 		compatible {nfet_03v3 nfet_06v0 nfet_06v0_nvt}}
 }
 
-proc gf180mcu::nfet_06v0_nvtdefaults {} {
+proc gf180mcu::nfet_06v0_nvt_defaults {} {
     return {w 0.3 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 0.3 \
@@ -3353,7 +3353,7 @@ proc gf180mcu::nfet_03v3_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
-proc gf180mcu::nfet_06v0_nvtconvert {parameters} {
+proc gf180mcu::nfet_06v0_nvt_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
@@ -3433,7 +3433,7 @@ proc gf180mcu::nfet_06v0_nvtdialog {parameters} {
 }
 
 proc gf180mcu::nfet_06v0_nvt_dialog {parameters} {
-    gf180mcu::mos_dialog nfet_06v0_nat $parameters
+    gf180mcu::mos_dialog nfet_06v0 $parameters
 }
 
 proc gf180mcu::pfet_03v3_dialog {parameters} {
@@ -4133,7 +4133,7 @@ proc gf180mcu::nfet_06v0_draw {parameters} {
     return [gf180mcu::mos_draw $drawdict]
 }
 
-proc gf180mcu::nfet_06v0_nat_draw {parameters} {
+proc gf180mcu::nfet_06v0_draw {parameters} {
     set newdict [dict create \
 	    gate_type		mvnnfet \
 	    diff_type 		mvndiff \
@@ -4314,7 +4314,7 @@ proc gf180mcu::nfet_06v0_check {parameters} {
 }
 
 proc gf180mcu::nfet_06v0_nvt_check {parameters} {
-   return [gf180mcu::mos_check $parameters]
+    return [gf180mcu::mos_check $parameters]
 }
 
 proc gf180mcu::pfet_03v3_check {parameters} {
