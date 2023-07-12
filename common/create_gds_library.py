@@ -7,11 +7,16 @@
 # of cells, create a single GDL library file named <alllibname> and place
 # it in the same directory.  This is done for the option "compile" if specified
 # for the "-gds" install.
+#
+# Because GDS files are large, this script supports reading gzipped GDS files.
+# The file (de-)compression is handled in Magic;  it is only necessary in this
+# script to accept ".gds.gz" as a valid filename extension for GDS files.
 #----------------------------------------------------------------------------
 
 import os
 import sys
 import glob
+import gzip
 import fnmatch
 import subprocess
 import natural_sort
@@ -57,6 +62,8 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=Fals
         glist = glob.glob(destlibdir + '/*.gds')
         glist.extend(glob.glob(destlibdir + '/*.gdsii'))
         glist.extend(glob.glob(destlibdir + '/*.gds2'))
+        glist.extend(glob.glob(destlibdir + '/*.gds.gz'))
+        
         glist = natural_sort.natural_sort(glist)
 
     if alllibname in glist:

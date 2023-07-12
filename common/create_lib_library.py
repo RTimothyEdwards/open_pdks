@@ -7,10 +7,14 @@
 # of cells, create a single liberty library file named <alllibname> and place
 # it in the same directory.  This is done for the option "compile" if specified
 # for the "-lib" install.
+#
+# Because liberty files tend to be both huge and ASCII, this script supports
+# handling sets of gzipped .lib files (expecting name ".lib.gz").
 #----------------------------------------------------------------------------
 
 import sys
 import os
+import gzip
 import glob
 import fnmatch
 import natural_sort
@@ -46,6 +50,7 @@ def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[
 	headerfile=None):
 
     headerdone = False
+    compressed = False
 
     # destlib should not have a file extension
     destlibroot = os.path.splitext(destlib)[0]
@@ -80,7 +85,11 @@ def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[
             for rfile in rlist:
                 llist.append(destlibdir + '/' + rfile)
     else:
-        llist = glob.glob(destlibdir + '/*.lib')
+        llist = glob.glob(destlibdir + '/*.lib.gz')
+        if len(llist) == 0:
+            llist = glob.glob(destlibdir + '/*.lib')
+        else:
+            compressed = True
         llist = natural_sort.natural_sort(llist)
 
     # Create exclude list with glob-style matching using fnmatch
@@ -111,21 +120,26 @@ def create_lib_library(destlibdir, destlib, do_compile_only=False, excludelist=[
                 if not os.path.exists(lfile):
                     print('Error: File ' + lfile + ' not found (skipping).')
                     continue
-                with open(lfile, 'r') as ifile:
-                    # print('Adding ' + lfile + ' to library.')
-                    ltext = ifile.read()
-                    llines = ltext.splitlines()
-                    headerseen = False
-                    for lline in llines:
-                        if headerdone:
-                            if not headerseen:
-                                ltok = lline.split('(')
-                                if len(ltok) == 0 or not ltok[0].strip() == 'cell':
-                                    continue
-                                else:
-                                    headerseen = True
-                        print(lline, file=ofile)
-                    headerdone = True
+                if compressed:
+                    with gzip.open(lfile, 'rb') as ifile:
+                        # print('Adding ' + lfile + ' to library.')
+                        ltext = ifile.read()
+                else:
+                    with open(lfile, 'r') as ifile:
+                        # print('Adding ' + lfile + ' to library.')
+                        ltext = ifile.read()
+                llines = ltext.splitlines()
+                headerseen = False
+                for lline in llines:
+                    if headerdone:
+                        if not headerseen:
+                            ltok = lline.split('(')
+                            if len(ltok) == 0 or not ltok[0].strip() == 'cell':
+                                continue
+                            else:
+                                headerseen = True
+                    print(lline, file=ofile)
+                headerdone = True
                 print('/*--------EOF---------*/\n', file=ofile)
 
             if headerfile:

@@ -103,14 +103,14 @@ proc gf180mcu::addtechmenu {framename} {
    magic::add_toolkit_command $layoutframe "diode_pd2nw_03v3 - p-diode" "magic::gencell gf180mcu::diode_pd2nw_03v3" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
-   magic::add_toolkit_command $layoutframe "npn_05p00x05p00     (3.3V) - 5.0um^2 " "magic::gencell gf180mcu::vnpn_2x2" pdk1
-   magic::add_toolkit_command $layoutframe "vnpn_5x0p42  (3.3V) - 5.0um x 0.42um " "magic::gencell gf180mcu::vnpn_5x0p42" pdk1
-   magic::add_toolkit_command $layoutframe "npn_10p00x10p00   (3.3V) - 10.0um^2 " "magic::gencell gf180mcu::npn_05p00x05p00" pdk1
-   magic::add_toolkit_command $layoutframe "vnpn_10x0p42 (3.3V) - 10.0um x 0.42um " "magic::gencell gf180mcu::vnpn_10x0p42" pdk1
-   magic::add_toolkit_command $layoutframe "pnp_05p00x05p00     (3.3V) - 5.0um^2 " "magic::gencell gf180mcu::pnp_05p00x05p00" pdk1
-   magic::add_toolkit_command $layoutframe "vpnp_5x0p42  (3.3V) - 5.0um^2 x 0.42um " "magic::gencell gf180mcu::vpnp_5x0p42" pdk1
-   magic::add_toolkit_command $layoutframe "pnp_10p00x10p00   (3.3V) - 10.0um^2 " "magic::gencell gf180mcu::pnp_10p00x10p00" pdk1
-   magic::add_toolkit_command $layoutframe "vpnp_10x0p42 (3.3V) - 10.0um^2 x 0.42um " "magic::gencell gf180mcu::vpnp_10x0p42" pdk1
+   magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 10.0um x 10.0um " "magic::gencell gf180mcu::npn_05p00x05p00" pdk1
+   magic::add_toolkit_command $layoutframe "npn_05p00x05p00  (3.3V) - 5.0um x 5.0um " "magic::gencell gf180mcu::npn_05p00x05p00" pdk1
+   magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 0.54um x 4.0um " "magic::gencell gf180mcu::npn_00p54x04p00" pdk1
+   magic::add_toolkit_command $layoutframe "npn_00p54x02p00  (3.3V) - 0.54um x 2.0um " "magic::gencell gf180mcu::npn_00p54x02p00" pdk1
+   magic::add_toolkit_command $layoutframe "pnp_10p00x10p00  (3.3V) - 10.0um x 10.0um " "magic::gencell gf180mcu::pnp_10p00x10p00" pdk1
+   magic::add_toolkit_command $layoutframe "pnp_05p00x05p00  (3.3V) - 5.0um x 5.0um " "magic::gencell gf180mcu::pnp_05p00x05p00" pdk1
+   magic::add_toolkit_command $layoutframe "pnp_10p00x00p42  (3.3V) - 10.0um x 0.42um " "magic::gencell gf180mcu::pnp_10p00x00p42" pdk1
+   magic::add_toolkit_command $layoutframe "pnp_05p00x00p42  (3.3V) - 5.0um x 0.42um " "magic::gencell gf180mcu::pnp_05p00x00p42" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
    magic::add_toolkit_command $layoutframe "mos capacitor" "magic::gencell gf180mcu::nmoscap_3p3" pdk1
@@ -4272,7 +4272,7 @@ proc gf180mcu::npn_05p00x05p00_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.94 ystep 13.94}
 }
 
-proc gf180mcu::vnpn_5x0p42_defaults {} {
+proc gf180mcu::npn_00p54x02p00_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 16.22}
 }
 
@@ -4280,7 +4280,7 @@ proc gf180mcu::npn_10p00x10p00_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 16.94 ystep 16.94}
 }
 
-proc gf180mcu::vnpn_10x0p42_defaults {} {
+proc gf180mcu::npn_00p54x04p00_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 21.22}
 }
 
@@ -4288,7 +4288,7 @@ proc gf180mcu::pnp_05p00x05p00_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.94 ystep 13.94}
 }
 
-proc gf180mcu::vpnp_5x0p42_defaults {} {
+proc gf180mcu::pnp_05p00x00p42_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 16.22}
 }
 
@@ -4296,7 +4296,7 @@ proc gf180mcu::pnp_10p00x10p00_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 16.94 ystep 16.94}
 }
 
-proc gf180mcu::vpnp_10x0p42_defaults {} {
+proc gf180mcu::pnp_10p00x00p42_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 21.22}
 }
 
@@ -4322,7 +4322,7 @@ proc gf180mcu::npn_05p00x05p00_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
-proc gf180mcu::vnpn_5x0p42_convert {parameters} {
+proc gf180mcu::npn_00p54x02p00_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
@@ -4330,7 +4330,7 @@ proc gf180mcu::npn_10p00x10p00_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
-proc gf180mcu::vnpn_10x0p42_convert {parameters} {
+proc gf180mcu::npn_00p54x04p00_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
@@ -4338,7 +4338,7 @@ proc gf180mcu::pnp_05p00x05p00_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
-proc gf180mcu::vpnp_5x0p42_convert {parameters} {
+proc gf180mcu::pnp_05p00x00p42_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
@@ -4346,7 +4346,7 @@ proc gf180mcu::pnp_10p00x10p00_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
-proc gf180mcu::vpnp_10x0p42_convert {parameters} {
+proc gf180mcu::pnp_10p00x00p42_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
@@ -4399,7 +4399,7 @@ proc gf180mcu::npn_05p00x05p00_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
-proc gf180mcu::vnpn_5x0p42_dialog {parameters} {
+proc gf180mcu::npn_00p54x02p00_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
@@ -4407,7 +4407,7 @@ proc gf180mcu::npn_10p00x10p00_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
-proc gf180mcu::vnpn_10x0p42_dialog {parameters} {
+proc gf180mcu::npn_00p54x04p00_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
@@ -4415,7 +4415,7 @@ proc gf180mcu::pnp_05p00x05p00_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
-proc gf180mcu::vpnp_5x0p42_dialog {parameters} {
+proc gf180mcu::pnp_05p00x00p42_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
@@ -4423,7 +4423,7 @@ proc gf180mcu::pnp_10p00x10p00_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
-proc gf180mcu::vpnp_10x0p42_dialog {parameters} {
+proc gf180mcu::pnp_10p00x00p42_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
@@ -4466,35 +4466,35 @@ proc gf180mcu::fixed_draw {devname parameters} {
 #----------------------------------------------------------------
 
 proc gf180mcu::npn_05p00x05p00_draw {parameters} {
-   return [gf180mcu::fixed_draw npn_05p00x05p00 $parameters]
+   return [gf180mcu::fixed_draw npn_05p00x05p00_0 $parameters]
 }
 
-proc gf180mcu::vnpn_5x0p42_draw {parameters} {
-   return [gf180mcu::fixed_draw vnpn_5x0p42 $parameters]
+proc gf180mcu::npn_00p54x02p00_draw {parameters} {
+   return [gf180mcu::fixed_draw npn_00p54x02p00_0 $parameters]
 }
 
 proc gf180mcu::npn_10p00x10p00_draw {parameters} {
-   return [gf180mcu::fixed_draw npn_10p00x10p00 $parameters]
+   return [gf180mcu::fixed_draw npn_10p00x10p00_0 $parameters]
 }
 
-proc gf180mcu::vnpn_10x0p42_draw {parameters} {
-   return [gf180mcu::fixed_draw vnpn_10X0p42 $parameters]
+proc gf180mcu::npn_00p54x04p00_draw {parameters} {
+   return [gf180mcu::fixed_draw npn_00p54x04p00_0 $parameters]
 }
 
 proc gf180mcu::pnp_05p00x05p00_draw {parameters} {
-   return [gf180mcu::fixed_draw pnp_05p00x05p00 $parameters]
+   return [gf180mcu::fixed_draw pnp_05p00x05p00_0 $parameters]
 }
 
-proc gf180mcu::vpnp_5x0p42_draw {parameters} {
-   return [gf180mcu::fixed_draw vpnp_5x0p42 $parameters]
+proc gf180mcu::pnp_05p00x00p42_draw {parameters} {
+   return [gf180mcu::fixed_draw pnp_05p00x00p42_0 $parameters]
 }
 
 proc gf180mcu::pnp_10p00x10p00_draw {parameters} {
-   return [gf180mcu::fixed_draw pnp_10p00x10p00 $parameters]
+   return [gf180mcu::fixed_draw pnp_10p00x10p00_0 $parameters]
 }
 
-proc gf180mcu::vpnp_10x0p42_draw {parameters} {
-   return [gf180mcu::fixed_draw vpnp_10X0p42 $parameters]
+proc gf180mcu::pnp_10p00x00p42_draw {parameters} {
+   return [gf180mcu::fixed_draw pnp_10p00x00p42_0 $parameters]
 }
 
 #----------------------------------------------------------------
@@ -4551,7 +4551,7 @@ proc gf180mcu::npn_05p00x05p00_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
-proc gf180mcu::vnpn_5x0p42_check {parameters} {
+proc gf180mcu::npn_00p54x02p00_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
@@ -4559,7 +4559,7 @@ proc gf180mcu::npn_10p00x10p00_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
-proc gf180mcu::vnpn_10x0p42_check {parameters} {
+proc gf180mcu::npn_00p54x04p00_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
@@ -4567,7 +4567,7 @@ proc gf180mcu::pnp_05p00x05p00_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
-proc gf180mcu::vpnp_5x0p42_check {parameters} {
+proc gf180mcu::pnp_05p00x00p42_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
@@ -4575,7 +4575,7 @@ proc gf180mcu::pnp_10p00x10p00_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
-proc gf180mcu::vpnp_10x0p42_check {parameters} {
+proc gf180mcu::pnp_10p00x00p42_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
