@@ -95,21 +95,21 @@ proc gf180mcu::addtechmenu {framename} {
    # List of devices is long.  Divide into two sections for active and passive deivces
    magic::add_toolkit_menu $layoutframe "Devices 1" pdk1
 
-   magic::add_toolkit_command $layoutframe "nmos - nMOSFET" "magic::gencell gf180mcu::nmos_3p3" pdk1
-   magic::add_toolkit_command $layoutframe "pmos - pMOSFET" "magic::gencell gf180mcu::pmos_3p3" pdk1
+   magic::add_toolkit_command $layoutframe "nmos - nMOSFET" "magic::gencell gf180mcu::nfet_03v3" pdk1
+   magic::add_toolkit_command $layoutframe "pmos - pMOSFET" "magic::gencell gf180mcu::pfet_03v3" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
-   magic::add_toolkit_command $layoutframe "np_3p3 - n-diode" "magic::gencell gf180mcu::np_3p3" pdk1
-   magic::add_toolkit_command $layoutframe "pn_3p3 - p-diode" "magic::gencell gf180mcu::pn_3p3" pdk1
+   magic::add_toolkit_command $layoutframe "diode_nd2ps_03v3 - n-diode" "magic::gencell gf180mcu::diode_nd2ps_03v3" pdk1
+   magic::add_toolkit_command $layoutframe "diode_pd2nw_03v3 - p-diode" "magic::gencell gf180mcu::diode_pd2nw_03v3" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
-   magic::add_toolkit_command $layoutframe "vnpn_5x5     (3.3V) - 5.0um^2 " "magic::gencell gf180mcu::vnpn_2x2" pdk1
+   magic::add_toolkit_command $layoutframe "npn_05p00x05p00     (3.3V) - 5.0um^2 " "magic::gencell gf180mcu::vnpn_2x2" pdk1
    magic::add_toolkit_command $layoutframe "vnpn_5x0p42  (3.3V) - 5.0um x 0.42um " "magic::gencell gf180mcu::vnpn_5x0p42" pdk1
-   magic::add_toolkit_command $layoutframe "vnpn_10x10   (3.3V) - 10.0um^2 " "magic::gencell gf180mcu::vnpn_5x5" pdk1
+   magic::add_toolkit_command $layoutframe "npn_10p00x10p00   (3.3V) - 10.0um^2 " "magic::gencell gf180mcu::npn_05p00x05p00" pdk1
    magic::add_toolkit_command $layoutframe "vnpn_10x0p42 (3.3V) - 10.0um x 0.42um " "magic::gencell gf180mcu::vnpn_10x0p42" pdk1
-   magic::add_toolkit_command $layoutframe "vpnp_5x5     (3.3V) - 5.0um^2 " "magic::gencell gf180mcu::vpnp_5x5" pdk1
+   magic::add_toolkit_command $layoutframe "pnp_05p00x05p00     (3.3V) - 5.0um^2 " "magic::gencell gf180mcu::pnp_05p00x05p00" pdk1
    magic::add_toolkit_command $layoutframe "vpnp_5x0p42  (3.3V) - 5.0um^2 x 0.42um " "magic::gencell gf180mcu::vpnp_5x0p42" pdk1
-   magic::add_toolkit_command $layoutframe "vpnp_10x10   (3.3V) - 10.0um^2 " "magic::gencell gf180mcu::vpnp_10x10" pdk1
+   magic::add_toolkit_command $layoutframe "pnp_10p00x10p00   (3.3V) - 10.0um^2 " "magic::gencell gf180mcu::pnp_10p00x10p00" pdk1
    magic::add_toolkit_command $layoutframe "vpnp_10x0p42 (3.3V) - 10.0um^2 x 0.42um " "magic::gencell gf180mcu::vpnp_10x0p42" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
@@ -186,7 +186,7 @@ proc gf180mcu::addtechmenu {framename} {
    magic::add_toolkit_separator	$layoutframe pdk2
 
 #ifdef MIM
-   magic::add_toolkit_command $layoutframe "mim_2p0fF - MiM cap " "magic::gencell gf180mcu::mim_2p0fF" pdk2
+   magic::add_toolkit_command $layoutframe "cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_mim_2p0fF - MiM cap " "magic::gencell gf180mcu::cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_mim_2p0fF" pdk2
 #endif (MIM)
    magic::add_toolkit_separator	$layoutframe pdk2
 
@@ -388,7 +388,7 @@ proc gf180mcu::subcon_3p3_draw {} {
 
 #----------------------------------------------------------------
 
-proc gf180mcu::subconmos_6p0_draw {} {
+proc gf180mcu::subconfet_06v0_draw {} {
    set w [magic::i2u [box width]]
    set h [magic::i2u [box height]]
    if {$w < 0.23} {
@@ -661,19 +661,19 @@ proc gf180mcu::diode_check {parameters} {
 
 #----------------------------------------------------------------
 
-proc gf180mcu::np_3p3_defaults {} {
+proc gf180mcu::diode_nd2ps_03v3_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 full_metal 1 \
-	compatible {np_3p3 np_6p0 np_6p0_nat}}
+	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0diode_nd2ps_06v0diode_nd2ps_06v0np_6p0_nat}}
 }
 
-proc gf180mcu::pn_3p3_defaults {} {
+proc gf180mcu::diode_pd2nw_03v3_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 0 gbc 0 doverlap 0 full_metal 1 \
-	compatible {pn_3p3 pn_6p0}}
+	compatible {diode_pd2nw_03v3 diode_pd2nw_06v0}}
 }
 
 proc gf180mcu::np_6p0_defaults {} {
@@ -681,7 +681,7 @@ proc gf180mcu::np_6p0_defaults {} {
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	full_metal 1 \
-	compatible {np_3p3 np_6p0 np_6p0_nat}}
+	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0np_6p0_nat}}
 }
 
 proc gf180mcu::np_6p0_nat_defaults {} {
@@ -689,24 +689,24 @@ proc gf180mcu::np_6p0_nat_defaults {} {
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	full_metal 1 \
-	compatible {np_3p3 np_6p0 np_6p0_nat}}
+	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0np_6p0_nat}}
 }
 
-proc gf180mcu::pn_6p0_defaults {} {
+proc gf180mcu::diode_pd2nw_06v0_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 0 gbc 0 doverlap 0 \
-	compatible {pn_3p3 pn_6p0}}
+	compatible {diode_pd2nw_03v3 diode_pd2nw_06v0}}
 }
 
 #----------------------------------------------------------------
 
-proc gf180mcu::np_3p3_convert {parameters} {
+proc gf180mcu::diode_nd2ps_03v3_convert {parameters} {
     return [gf180mcu::diode_convert $parameters]
 }
 
-proc gf180mcu::pn_3p3_convert {parameters} {
+proc gf180mcu::diode_pd2nw_03v3_convert {parameters} {
     return [gf180mcu::diode_convert $parameters]
 }
 
@@ -718,39 +718,39 @@ proc gf180mcu::np_6p0_nat_convert {parameters} {
     return [gf180mcu::diode_convert $parameters]
 }
 
-proc gf180mcu::pn_6p0_convert {parameters} {
+proc gf180mcu::diode_pd2nw_06v0_convert {parameters} {
     return [gf180mcu::diode_convert $parameters]
 }
 
 #----------------------------------------------------------------
 
-proc gf180mcu::np_3p3_dialog {parameters} {
-    gf180mcu::diode_dialog np_3p3 $parameters
+proc gf180mcu::diode_nd2ps_03v3_dialog {parameters} {
+    gf180mcu::diode_dialog diode_nd2ps_03v3 $parameters
 }
 
-proc gf180mcu::pn_3p3_dialog {parameters} {
-    gf180mcu::diode_dialog pn_3p3 $parameters
+proc gf180mcu::diode_pd2nw_03v3_dialog {parameters} {
+    gf180mcu::diode_dialog diode_pd2nw_03v3 $parameters
 }
 
 proc gf180mcu::np_6p0_dialog {parameters} {
-    gf180mcu::diode_dialog np_6p0 $parameters
+    gf180mcu::diode_dialog diode_nd2ps_06v0$parameters
 }
 
 proc gf180mcu::np_6p0_nat_dialog {parameters} {
     gf180mcu::diode_dialog np_6p0_nat $parameters
 }
 
-proc gf180mcu::pn_6p0_dialog {parameters} {
-    gf180mcu::diode_dialog pn_6p0 $parameters
+proc gf180mcu::diode_pd2nw_06v0_dialog {parameters} {
+    gf180mcu::diode_dialog diode_pd2nw_06v0 $parameters
 }
 
 #----------------------------------------------------------------
 
-proc gf180mcu::np_3p3_check {parameters} {
+proc gf180mcu::diode_nd2ps_03v3_check {parameters} {
     gf180mcu::diode_check $parameters
 }
 
-proc gf180mcu::pn_3p3_check {parameters} {
+proc gf180mcu::diode_pd2nw_03v3_check {parameters} {
     gf180mcu::diode_check $parameters
 }
 
@@ -762,7 +762,7 @@ proc gf180mcu::np_6p0_nat_check {parameters} {
     gf180mcu::diode_check $parameters
 }
 
-proc gf180mcu::pn_6p0_check {parameters} {
+proc gf180mcu::diode_pd2nw_06v0_check {parameters} {
     gf180mcu::diode_check $parameters
 }
 
@@ -940,7 +940,7 @@ proc gf180mcu::diode_draw {parameters} {
 
 #----------------------------------------------------------------
 
-proc gf180mcu::np_3p3_draw {parameters} {
+proc gf180mcu::diode_nd2ps_03v3_draw {parameters} {
 
     # Set a local variable for each rule in ruleset
     foreach key [dict keys $gf180mcu::ruleset] {
@@ -965,7 +965,7 @@ proc gf180mcu::np_3p3_draw {parameters} {
 
 #----------------------------------------------------------------
 
-proc gf180mcu::pn_3p3_draw {parameters} {
+proc gf180mcu::diode_pd2nw_03v3_draw {parameters} {
 
     # Set a local variable for each rule in ruleset
     foreach key [dict keys $gf180mcu::ruleset] {
@@ -1047,7 +1047,7 @@ proc gf180mcu::np_6p0_nat_draw {parameters} {
 
 #----------------------------------------------------------------
 
-proc gf180mcu::pn_6p0_draw {parameters} {
+proc gf180mcu::diode_pd2nw_06v0_draw {parameters} {
 
     # Set a local variable for each rule in ruleset
     foreach key [dict keys $gf180mcu::ruleset] {
@@ -1082,7 +1082,7 @@ proc gf180mcu::pn_6p0_draw {parameters} {
 # MiM minimum size set to 2.165 to prevent isolated via
 
 #ifdef MIM
-proc gf180mcu::mim_2p0fF_defaults {} {
+proc gf180mcu::cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_mim_2p0fF_defaults {} {
     return {w 5.00 l 5.00 val 50.000 carea 25.00 cperi 20.00 \
 		nx 1 ny 1 dummy 0 square 0 lmin 5.00 wmin 5.00 \
 		lmax 100.0 wmax 100.0 dc 0 bconnect 1 tconnect 1}
@@ -1167,7 +1167,7 @@ proc gf180mcu::cap_convert {parameters} {
 }
 
 #ifdef MIM
-proc gf180mcu::mim_2p0fF_convert {parameters} {
+proc gf180mcu::cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_mim_2p0fF_convert {parameters} {
     return [cap_convert $parameters]
 }
 #endif
@@ -1204,8 +1204,8 @@ proc gf180mcu::cap_dialog {device parameters} {
 }
 
 #ifdef MIM
-proc gf180mcu::mim_2p0fF_dialog {parameters} {
-    gf180mcu::cap_dialog mim_2p0fF $parameters
+proc gf180mcu::cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_mim_2p0fF_dialog {parameters} {
+    gf180mcu::cap_dialog cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_mim_2p0fF $parameters
 }
 #endif
 
@@ -1645,7 +1645,7 @@ proc gf180mcu::cap_draw {parameters} {
 #----------------------------------------------------------------
 
 #ifdef MIM
-proc gf180mcu::mim_2p0fF_draw {parameters} {
+proc gf180mcu::cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_mim_2p0fF_draw {parameters} {
     set newdict [dict create \
 #ifdef METALS6
 	    top_type 		mtp \
@@ -1765,7 +1765,7 @@ proc gf180mcu::cap_check {parameters} {
 }
 
 #ifdef MIM
-proc gf180mcu::mim_2p0fF_check {parameters} {
+proc gf180mcu::cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_cap_mim_2p0fF_check {parameters} {
     return [gf180mcu::cap_check $parameters]
 }
 #endif
@@ -3252,20 +3252,20 @@ proc gf180mcu::ppolyf_u_1k_6p0_check {parameters} {
 # needed by pmos_check
 #----------------------------------------------------------------
 
-proc gf180mcu::pmos_3p3_defaults {} {
+proc gf180mcu::pfet_03v3_defaults {} {
     return {w 0.220 l 0.280 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
 		full_metal 1 \
-		compatible {pmos_3p3 pmos_6p0}}
+		compatible {pfet_03v3 pfet_06v0}}
 }
 
-proc gf180mcu::pmos_6p0_defaults {} {
+proc gf180mcu::pfet_06v0_defaults {} {
     return {w 0.3 l 0.5 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.5 wmin 0.3 \
 		full_metal 1 \
-		compatible {pmos_3p3 pmos_6p0}}
+		compatible {pfet_03v3 pfet_06v0}}
 }
 
 #----------------------------------------------------------------
@@ -3273,28 +3273,28 @@ proc gf180mcu::pmos_6p0_defaults {} {
 # needed by nmos_check
 #----------------------------------------------------------------
 
-proc gf180mcu::nmos_3p3_defaults {} {
+proc gf180mcu::nfet_03v3_defaults {} {
     return {w 0.220 l 0.280 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
 		full_metal 1 \
-		compatible {nmos_3p3 nmos_6p0 nmos_6p0_nat}}
+		compatible {nfet_03v3 nfet_06v0 nfet_06v0_nat}}
 }
 
-proc gf180mcu::nmos_6p0_defaults {} {
+proc gf180mcu::nfet_06v0_defaults {} {
     return {w 0.3 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 0.3 \
 		full_metal 1 \
-		compatible {nmos_3p3 nmos_6p0 nmos_6p0_nat}}
+		compatible {nfet_03v3 nfet_06v0 nfet_06v0_nat}}
 }
 
-proc gf180mcu::nmos_6p0_nat_defaults {} {
+proc gf180mcu::nfet_06v0_nat_defaults {} {
     return {w 0.8 l 1.8 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 1.8 wmin 0.8 \
 		full_metal 1 \
-		compatible {nmos_3p3 nmos_6p0 nmos_6p0_nat}}
+		compatible {nfet_03v3 nfet_06v0 nfet_06v0_nat}}
 }
 
 #----------------------------------------------------------------
@@ -3349,23 +3349,23 @@ proc gf180mcu::mos_convert {parameters} {
 
 #----------------------------------------------------------------
 
-proc gf180mcu::nmos_3p3_convert {parameters} {
+proc gf180mcu::nfet_03v3_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
-proc gf180mcu::nmos_6p0_convert {parameters} {
+proc gf180mcu::nfet_06v0_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
-proc gf180mcu::nmos_6p0_nat_convert {parameters} {
+proc gf180mcu::nfet_06v0_nat_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
-proc gf180mcu::pmos_3p3_convert {parameters} {
+proc gf180mcu::pfet_03v3_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
-proc gf180mcu::pmos_6p0_convert {parameters} {
+proc gf180mcu::pfet_06v0_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
@@ -3424,24 +3424,24 @@ proc gf180mcu::mos_dialog {device parameters} {
 
 #----------------------------------------------------------------
 
-proc gf180mcu::nmos_3p3_dialog {parameters} {
-    gf180mcu::mos_dialog nmos_3p3 $parameters
+proc gf180mcu::nfet_03v3_dialog {parameters} {
+    gf180mcu::mos_dialog nfet_03v3 $parameters
 }
 
-proc gf180mcu::nmos_6p0_dialog {parameters} {
-    gf180mcu::mos_dialog nmos_6p0 $parameters
+proc gf180mcu::nfet_06v0_dialog {parameters} {
+    gf180mcu::mos_dialog nfet_06v0 $parameters
 }
 
-proc gf180mcu::nmos_6p0_nat_dialog {parameters} {
-    gf180mcu::mos_dialog nmos_6p0_nat $parameters
+proc gf180mcu::nfet_06v0_nat_dialog {parameters} {
+    gf180mcu::mos_dialog nfet_06v0_nat $parameters
 }
 
-proc gf180mcu::pmos_3p3_dialog {parameters} {
-    gf180mcu::mos_dialog pmos_3p3 $parameters
+proc gf180mcu::pfet_03v3_dialog {parameters} {
+    gf180mcu::mos_dialog pfet_03v3 $parameters
 }
 
-proc gf180mcu::pmos_6p0_dialog {parameters} {
-    gf180mcu::mos_dialog pmos_6p0 $parameters
+proc gf180mcu::pfet_06v0_dialog {parameters} {
+    gf180mcu::mos_dialog pfet_06v0 $parameters
 }
 
 proc gf180mcu::nmoscap_3p3_dialog {parameters} {
@@ -4050,7 +4050,7 @@ proc gf180mcu::mos_draw {parameters} {
 # nMOS 3.3V
 #-------------------
 
-proc gf180mcu::nmos_3p3_draw {parameters} {
+proc gf180mcu::nfet_03v3_draw {parameters} {
     set newdict [dict create \
 	    gate_type		nfet \
 	    diff_type 		ndiff \
@@ -4070,7 +4070,7 @@ proc gf180mcu::nmos_3p3_draw {parameters} {
 # pMOS 3.3V
 #-------------------
 
-proc gf180mcu::pmos_3p3_draw {parameters} {
+proc gf180mcu::pfet_03v3_draw {parameters} {
     set newdict [dict create \
 	    gate_type		pfet \
 	    diff_type 		pdiff \
@@ -4090,7 +4090,7 @@ proc gf180mcu::pmos_3p3_draw {parameters} {
 # pMOS 6.0V
 #-------------------
 
-proc gf180mcu::pmos_6p0_draw {parameters} {
+proc gf180mcu::pfet_06v0_draw {parameters} {
     set newdict [dict create \
 	    diff_poly_space	0.30 \
 	    diff_gate_space	0.30 \
@@ -4114,7 +4114,7 @@ proc gf180mcu::pmos_6p0_draw {parameters} {
 # nMOS 6.0V
 #-------------------
 
-proc gf180mcu::nmos_6p0_draw {parameters} {
+proc gf180mcu::nfet_06v0_draw {parameters} {
     set newdict [dict create \
 	    diff_poly_space	0.30 \
 	    diff_gate_space	0.30 \
@@ -4133,7 +4133,7 @@ proc gf180mcu::nmos_6p0_draw {parameters} {
     return [gf180mcu::mos_draw $drawdict]
 }
 
-proc gf180mcu::nmos_6p0_nat_draw {parameters} {
+proc gf180mcu::nfet_06v0_nat_draw {parameters} {
     set newdict [dict create \
 	    gate_type		mvnnfet \
 	    diff_type 		mvndiff \
@@ -4305,23 +4305,23 @@ proc gf180mcu::mos_check {parameters} {
 
 #----------------------------------------------------------------
 
-proc gf180mcu::nmos_3p3_check {parameters} {
+proc gf180mcu::nfet_03v3_check {parameters} {
    return [gf180mcu::mos_check $parameters]
 }
 
-proc gf180mcu::nmos_6p0_check {parameters} {
+proc gf180mcu::nfet_06v0_check {parameters} {
    return [gf180mcu::mos_check $parameters]
 }
 
-proc gf180mcu::nmos_6p0_nat_check {parameters} {
+proc gf180mcu::nfet_06v0_nat_check {parameters} {
    return [gf180mcu::mos_check $parameters]
 }
 
-proc gf180mcu::pmos_3p3_check {parameters} {
+proc gf180mcu::pfet_03v3_check {parameters} {
    return [gf180mcu::mos_check $parameters]
 }
 
-proc gf180mcu::pmos_6p0_check {parameters} {
+proc gf180mcu::pfet_06v0_check {parameters} {
    return [gf180mcu::mos_check $parameters]
 }
 
@@ -4355,7 +4355,7 @@ proc gf180mcu::nmoscap_6p0_check {parameters} {
 # ystep  --- Height of the cell (nominal array pitch in Y)
 #----------------------------------------------------------------
 
-proc gf180mcu::vnpn_5x5_defaults {} {
+proc gf180mcu::npn_05p00x05p00_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.94 ystep 13.94}
 }
 
@@ -4363,7 +4363,7 @@ proc gf180mcu::vnpn_5x0p42_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 16.22}
 }
 
-proc gf180mcu::vnpn_10x10_defaults {} {
+proc gf180mcu::npn_10p00x10p00_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 16.94 ystep 16.94}
 }
 
@@ -4371,7 +4371,7 @@ proc gf180mcu::vnpn_10x0p42_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 21.22}
 }
 
-proc gf180mcu::vpnp_5x5_defaults {} {
+proc gf180mcu::pnp_05p00x05p00_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.94 ystep 13.94}
 }
 
@@ -4379,7 +4379,7 @@ proc gf180mcu::vpnp_5x0p42_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 16.22}
 }
 
-proc gf180mcu::vpnp_10x10_defaults {} {
+proc gf180mcu::pnp_10p00x10p00_defaults {} {
     return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 16.94 ystep 16.94}
 }
 
@@ -4405,7 +4405,7 @@ proc gf180mcu::fixed_convert {parameters} {
 
 #----------------------------------------------------------------
 
-proc gf180mcu::vnpn_5x5_convert {parameters} {
+proc gf180mcu::npn_05p00x05p00_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
@@ -4413,7 +4413,7 @@ proc gf180mcu::vnpn_5x0p42_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
-proc gf180mcu::vnpn_10x10_convert {parameters} {
+proc gf180mcu::npn_10p00x10p00_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
@@ -4421,7 +4421,7 @@ proc gf180mcu::vnpn_10x0p42_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
-proc gf180mcu::vpnp_5x5_convert {parameters} {
+proc gf180mcu::pnp_05p00x05p00_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
@@ -4429,7 +4429,7 @@ proc gf180mcu::vpnp_5x0p42_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
-proc gf180mcu::vpnp_10x10_convert {parameters} {
+proc gf180mcu::pnp_10p00x10p00_convert {parameters} {
     return [gf180mcu::fixed_convert $parameters]
 }
 
@@ -4482,7 +4482,7 @@ proc gf180mcu::fixed_dialog {parameters} {
 
 #----------------------------------------------------------------
 
-proc gf180mcu::vnpn_5x5_dialog {parameters} {
+proc gf180mcu::npn_05p00x05p00_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
@@ -4490,7 +4490,7 @@ proc gf180mcu::vnpn_5x0p42_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
-proc gf180mcu::vnpn_10x10_dialog {parameters} {
+proc gf180mcu::npn_10p00x10p00_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
@@ -4498,7 +4498,7 @@ proc gf180mcu::vnpn_10x0p42_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
-proc gf180mcu::vpnp_5x5_dialog {parameters} {
+proc gf180mcu::pnp_05p00x05p00_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
@@ -4506,7 +4506,7 @@ proc gf180mcu::vpnp_5x0p42_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
-proc gf180mcu::vpnp_10x10_dialog {parameters} {
+proc gf180mcu::pnp_10p00x10p00_dialog {parameters} {
     gf180mcu::fixed_dialog $parameters
 }
 
@@ -4552,32 +4552,32 @@ proc gf180mcu::fixed_draw {devname parameters} {
 # No additional parameters declared for drawing
 #----------------------------------------------------------------
 
-proc gf180mcu::vnpn_5x5_draw {parameters} {
-   return [gf180mcu::fixed_draw vnpn_5x5 $parameters]
+proc gf180mcu::npn_05p00x05p00_draw {parameters} {
+   return [gf180mcu::fixed_draw npn_05p00x05p00 $parameters]
 }
 
 proc gf180mcu::vnpn_5x0p42_draw {parameters} {
    return [gf180mcu::fixed_draw vnpn_5x0p42 $parameters]
 }
 
-proc gf180mcu::vnpn_10x10_draw {parameters} {
-   return [gf180mcu::fixed_draw vnpn_10X10 $parameters]
+proc gf180mcu::npn_10p00x10p00_draw {parameters} {
+   return [gf180mcu::fixed_draw npn_10p00x10p00 $parameters]
 }
 
 proc gf180mcu::vnpn_10x0p42_draw {parameters} {
    return [gf180mcu::fixed_draw vnpn_10X0p42 $parameters]
 }
 
-proc gf180mcu::vpnp_5x5_draw {parameters} {
-   return [gf180mcu::fixed_draw vpnp_5x5 $parameters]
+proc gf180mcu::pnp_05p00x05p00_draw {parameters} {
+   return [gf180mcu::fixed_draw pnp_05p00x05p00 $parameters]
 }
 
 proc gf180mcu::vpnp_5x0p42_draw {parameters} {
    return [gf180mcu::fixed_draw vpnp_5x0p42 $parameters]
 }
 
-proc gf180mcu::vpnp_10x10_draw {parameters} {
-   return [gf180mcu::fixed_draw vpnp_10X10 $parameters]
+proc gf180mcu::pnp_10p00x10p00_draw {parameters} {
+   return [gf180mcu::fixed_draw pnp_10p00x10p00 $parameters]
 }
 
 proc gf180mcu::vpnp_10x0p42_draw {parameters} {
@@ -4634,7 +4634,7 @@ proc gf180mcu::fixed_check {parameters} {
 
 #----------------------------------------------------------------
 
-proc gf180mcu::vnpn_5x5_check {parameters} {
+proc gf180mcu::npn_05p00x05p00_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
@@ -4642,7 +4642,7 @@ proc gf180mcu::vnpn_5x0p42_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
-proc gf180mcu::vnpn_10x10_check {parameters} {
+proc gf180mcu::npn_10p00x10p00_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
@@ -4650,7 +4650,7 @@ proc gf180mcu::vnpn_10x0p42_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
-proc gf180mcu::vpnp_5x5_check {parameters} {
+proc gf180mcu::pnp_05p00x05p00_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
@@ -4658,7 +4658,7 @@ proc gf180mcu::vpnp_5x0p42_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
-proc gf180mcu::vpnp_10x10_check {parameters} {
+proc gf180mcu::pnp_10p00x10p00_check {parameters} {
     return [gf180mcu::fixed_check $parameters]
 }
 
