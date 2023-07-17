@@ -23,11 +23,6 @@ def filter(inname, outname):
         print('fix_verilog.py: failed to open ' + inname + ' for reading.', file=sys.stderr)
         return 1
 
-    # Check if input file is a base cell or strength-specific cell, and
-    # check if it has a "specify" block file.  To enable this, change
-    # dospecify from False to True.
-    dospecify = False
-
     # Process input with regexp
 
     fixedlines = []

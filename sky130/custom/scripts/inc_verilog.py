@@ -28,7 +28,7 @@ def filter(inname, outname):
     # Check if input file is a base cell or strength-specific cell, and
     # check if it has a "specify" block file.  To enable this, change
     # dospecify from False to True.
-    dospecify = False
+    dospecify = True
 
     # Process input with regexp
 
@@ -89,7 +89,39 @@ def filter(inname, outname):
                                         v3text = ispec.read()
                                         v3lines = v3text.splitlines()
                                         for line3 in v3lines:
+
+                                            # Fix issues in specify files
+                                            line3 = line3.replace('RESETB_delayed', 'RESET_B_delayed')
+                                            line3 = line3.replace('GATEN_delayed', 'GATE_N_delayed')
+                                            line3 = line3.replace('AWAKE', 'awake')
+                                            line3 = line3.replace('COND0', 'cond0')
+                                            line3 = line3.replace('COND1', 'cond1')
+                                            line3 = line3.replace('COND2', 'cond2')
+                                            line3 = line3.replace('COND3', 'cond3')
+                                            line3 = line3.replace('COND4', 'cond4')
                                             fixedlines.append(line3)
+
+                            # Fix issues in included files
+                            if '    wire 1             ;' in line2:
+                                continue
+
+                            line2 = line2.replace('\tB2', '   ')
+                            line2 = line2.replace('\tCIN', '    ')
+                            line2 = line2.replace('\tcsi_opt_276,', '             ')
+                            line2 = line2.replace('\tB1', '   ')
+                            line2 = line2.replace('\tA4', '   ')
+                            line2 = line2.replace('\tC1', '   ')
+                            line2 = line2.replace('\tX', '  ')
+                            line2 = line2.replace('\tD', '  ')
+                            line2 = line2.replace('\tbuf_Q', '      ')
+                            line2 = line2.replace('\tgate', '     ')
+                            line2 = line2.replace('\tcsi_opt_296,', '             ')
+                            line2 = line2.replace('\tY', '  ')
+
+                            line2 = line2.replace('    wire  N not0_out          ;', '    wire    not0_out          ;')
+                            line2 = line2.replace('    wire  N nor0_out          ;', '    wire    nor0_out          ;')
+                            line2 = line2.replace('    wire  N nand0_out         ;', '    wire    nand0_out         ;')
+
                             fixedlines.append(line2)
             else:
                 # single-dot:  Ignore this line
