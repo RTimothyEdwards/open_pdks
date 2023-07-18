@@ -93,12 +93,18 @@ def filter(inname, outname):
                                             # Fix issues in specify files
                                             line3 = line3.replace('RESETB_delayed', 'RESET_B_delayed')
                                             line3 = line3.replace('GATEN_delayed', 'GATE_N_delayed')
+                                            line3 = line3.replace('SETB_delayed', 'SET_B_delayed')
+                                            line3 = line3.replace('CLKN_delayed', 'CLK_N_delayed')
                                             line3 = line3.replace('AWAKE', 'awake')
                                             line3 = line3.replace('COND0', 'cond0')
                                             line3 = line3.replace('COND1', 'cond1')
                                             line3 = line3.replace('COND2', 'cond2')
                                             line3 = line3.replace('COND3', 'cond3')
                                             line3 = line3.replace('COND4', 'cond4')
+                                            line3 = line3.replace('CONDB', 'condb')
+                                            line3 = line3.replace('COND_D', 'cond_D')
+                                            line3 = line3.replace('COND_SCD', 'cond_SCD')
+                                            line3 = line3.replace('COND_SCE', 'cond_SCE')
                                             fixedlines.append(line3)
 
                             # Fix issues in included files
