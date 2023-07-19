@@ -164,7 +164,6 @@ devlist = ['sky130_fd_pr__cap_vpp_02p4x04p6_m1m2_noshield',
 	   'sky130_fd_pr__rf_pfet_01v8_bM04W5p00L0p25',
 	   'sky130_fd_pr__rf_pfet_01v8_mvt_aF02W0p84L0p15']
 
-
 # The portlist array contains the names of the ports used in the layout in the order that
 # they appear in the device subcircuit model.  Note that none of the pin names match between
 # the layout and device definition, so the usual annotation method in magic won't work.
@@ -276,6 +275,23 @@ portlist = [	['C0', 'C1', 'SUB'],
 		['DRAIN', 'GATE', 'SOURCE', 'BULK'],
 		['DRAIN', 'GATE', 'SOURCE', 'BULK']]
 
+# List of devices which have a layout cell name that is different
+# from the parameterized cell (gencell) and so must change the
+# default "gencell" property.
+
+dev2list = ['sky130_fd_pr__rf_npn_05v5_W1p00L1p00',
+	    'sky130_fd_pr__rf_npn_05v5_W1p00L2p00',
+	    'sky130_fd_pr__rf_pnp_05v5_W0p68L0p68',
+	    'sky130_fd_pr__rf_pnp_05v5_W3p40L3p40',
+	    'sky130_fd_pr__rf_npn_11v0_W1p00L1p00'];
+
+
+prop2list = ['sky130_fd_pr__npn_05v5_W1p00L1p00',
+	     'sky130_fd_pr__npn_05v5_W1p00L2p00',
+	     'sky130_fd_pr__pnp_05v5_W0p68L0p68',
+	     'sky130_fd_pr__pnp_05v5_W3p40L3p40',
+	     'sky130_fd_pr__npn_11v0_W1p00L1p00'];
+
 #--------------------------------------------------------------------
 # Do this for files both in mag/ and maglef/ . . .
 
@@ -343,4 +359,25 @@ for idx, device in enumerate(devlist):
     infile_name = spicepath + '/' + device + '.spice'
     if os.path.isfile(infile_name):
         os.remove(infile_name)
+
+# Handle the gencell property changes
+
+for idx, device in enumerate(dev2list):
+    for path in pathlist:
+        infile_name = path + '/' + device + '.mag'
+
+        if not os.path.exists(infile_name):
+            print('Error:  Cannot find file ' + infile_name)
+            continue
+
+        print('Altering gencell property in device ' + device + ' layout')
+        gencell = prop2list[idx]
+
+        propcmd = ['../common/insert_property.py', variant, 'sky130_fd_pr',
+		device, 'gencell ' + gencell]
+        if ef_format:
+            propcmd.append('-ef_format')
+
+        # Just call the insert_property.py script
+        subprocess.run(propcmd, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 

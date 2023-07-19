@@ -898,6 +898,30 @@ primitive-%:
 		pnp_10p00x10p00 "device primitive"
 	${PORTORDER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
 		pnp_10p00x10p00 I1_default_C I1_default_B I1_default_E
+	# Cells which have a different cell name than the device name
+	# should replace the "gencell" property with the device name.
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		efuse_cell "gencell efuse"
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_00p54x02p00_0 "gencell npn_00p54x02p00"
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_00p54x04p00_0 "gencell npn_00p54x04p00"
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_00p54x08p00_0 "gencell npn_00p54x08p00"
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_00p54x16p00_0 "gencell npn_00p54x16p00"
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_05p00x05p00_0 "gencell npn_05p00x05p00"
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		npn_10p00x10p00_0 "gencell npn_10p00x10p00"
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		pnp_05p00x00p42_0 "gencell pnp_05p00x00p42"
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		pnp_05p00x05p00_0 "gencell pnp_05p00x05p00"
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		pnp_10p00x00p42_0 "gencell pnp_10p00x00p42"
+	${ADDPROP} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_pr \
+		pnp_10p00x10p00_0 "gencell pnp_10p00x10p00"
 
 digital-9t5v0-%:
         # Install 5V 9-track digital standard cells from vendor files

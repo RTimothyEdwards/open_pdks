@@ -607,6 +607,15 @@ PRECHECK_SKY130_PATH
 KLAYOUT_SKY130_PATH
 XSCHEM_SKY130_PATH
 SKY130_ML_XX_HD_PATH
+SKY130_FD_SC_HVL_PATH
+SKY130_FD_SC_HDLL_PATH
+SKY130_FD_SC_HD_PATH
+SKY130_FD_SC_LP_PATH
+SKY130_FD_SC_LS_PATH
+SKY130_FD_SC_MS_PATH
+SKY130_FD_SC_HS_PATH
+SKY130_FD_IO_PATH
+SKY130_FD_PR_PATH
 PATCH
 MAGIC
 XCIRCUIT_DISABLED
@@ -690,6 +699,15 @@ enable_openlane
 enable_qflow
 enable_xschem
 enable_xcircuit
+enable_primitive_sky130
+enable_io_sky130
+enable_sc_hs_sky130
+enable_sc_ms_sky130
+enable_sc_ls_sky130
+enable_sc_lp_sky130
+enable_sc_hd_sky130
+enable_sc_hdll_sky130
+enable_sc_hvl_sky130
 enable_alpha_sky130
 enable_xschem_sky130
 enable_klayout_sky130
@@ -1369,6 +1387,33 @@ Optional Features:
                 Enable or disable xcircuit setup [default=enabled]
 
 
+  --enable-primitive-sky130[=path]
+                          Install sky130_fd_pr. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-io-sky130[=path]
+                          Install sky130_fd_io. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-sc-hs-sky130[=path]
+                          Install sky130_fd_sc_hs. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-sc-ms-sky130[=path]
+                          Install sky130_fd_sc_ms. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-sc-ls-sky130[=path]
+                          Install sky130_fd_sc_ls. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-sc-lp-sky130[=path]
+                          Install sky130_fd_sc_lp. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-sc-hd-sky130[=path]
+                          Install sky130_fd_sc_hd. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-sc-hdll-sky130[=path]
+                          Install sky130_fd_sc_hdll. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-sc-hvl-sky130[=path]
+                          Install sky130_fd_sc_hvl. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
   --enable-alpha-sky130[=path]
                           Install sky130_ml_xx_hd. If path is omitted, the repository
                           will be downloaded. [default=enabled]
@@ -2697,6 +2742,384 @@ fi
 # the open PDK directories.
 
 # SkyWater sky130 essential
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_FD_PR_PATH=""
+
+    # Check whether --enable-primitive-sky130 was given.
+if test "${enable_primitive_sky130+set}" = set; then :
+  enableval=$enable_primitive_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_pr' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_pr' will be installed automatically during make." >&6;}
+        	export SKY130_FD_PR_PATH=../sources/sky130_fd_pr
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_fd_pr'" >&5
+$as_echo "$as_me: Disabling package 'sky130_fd_pr'" >&6;}
+    		export SKY130_FD_PR_PATH=""
+            else
+                SKY130_FD_PR_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_fd_pr' at $SKY130_FD_PR_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_fd_pr' at $SKY130_FD_PR_PATH" >&6;}
+            fi
+            SKY130_FD_PR_PATH=`realpath $SKY130_FD_PR_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_pr' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_pr' will be installed automatically during make." >&6;}
+	    SKY130_FD_PR_PATH=../sources/sky130_fd_pr
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_FD_IO_PATH=""
+
+    # Check whether --enable-io-sky130 was given.
+if test "${enable_io_sky130+set}" = set; then :
+  enableval=$enable_io_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_io' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_io' will be installed automatically during make." >&6;}
+        	export SKY130_FD_IO_PATH=../sources/sky130_fd_io
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_fd_io'" >&5
+$as_echo "$as_me: Disabling package 'sky130_fd_io'" >&6;}
+    		export SKY130_FD_IO_PATH=""
+            else
+                SKY130_FD_IO_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_fd_io' at $SKY130_FD_IO_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_fd_io' at $SKY130_FD_IO_PATH" >&6;}
+            fi
+            SKY130_FD_IO_PATH=`realpath $SKY130_FD_IO_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_io' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_io' will be installed automatically during make." >&6;}
+	    SKY130_FD_IO_PATH=../sources/sky130_fd_io
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_FD_SC_HS_PATH=""
+
+    # Check whether --enable-sc-hs-sky130 was given.
+if test "${enable_sc_hs_sky130+set}" = set; then :
+  enableval=$enable_sc_hs_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_hs' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_hs' will be installed automatically during make." >&6;}
+        	export SKY130_FD_SC_HS_PATH=../sources/sky130_fd_sc_hs
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_fd_sc_hs'" >&5
+$as_echo "$as_me: Disabling package 'sky130_fd_sc_hs'" >&6;}
+    		export SKY130_FD_SC_HS_PATH=""
+            else
+                SKY130_FD_SC_HS_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_fd_sc_hs' at $SKY130_FD_SC_HS_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_fd_sc_hs' at $SKY130_FD_SC_HS_PATH" >&6;}
+            fi
+            SKY130_FD_SC_HS_PATH=`realpath $SKY130_FD_SC_HS_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_hs' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_hs' will be installed automatically during make." >&6;}
+	    SKY130_FD_SC_HS_PATH=../sources/sky130_fd_sc_hs
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_FD_SC_MS_PATH=""
+
+    # Check whether --enable-sc-ms-sky130 was given.
+if test "${enable_sc_ms_sky130+set}" = set; then :
+  enableval=$enable_sc_ms_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_ms' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_ms' will be installed automatically during make." >&6;}
+        	export SKY130_FD_SC_MS_PATH=../sources/sky130_fd_sc_ms
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_fd_sc_ms'" >&5
+$as_echo "$as_me: Disabling package 'sky130_fd_sc_ms'" >&6;}
+    		export SKY130_FD_SC_MS_PATH=""
+            else
+                SKY130_FD_SC_MS_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_fd_sc_ms' at $SKY130_FD_SC_MS_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_fd_sc_ms' at $SKY130_FD_SC_MS_PATH" >&6;}
+            fi
+            SKY130_FD_SC_MS_PATH=`realpath $SKY130_FD_SC_MS_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_ms' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_ms' will be installed automatically during make." >&6;}
+	    SKY130_FD_SC_MS_PATH=../sources/sky130_fd_sc_ms
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_FD_SC_LS_PATH=""
+
+    # Check whether --enable-sc-ls-sky130 was given.
+if test "${enable_sc_ls_sky130+set}" = set; then :
+  enableval=$enable_sc_ls_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_ls' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_ls' will be installed automatically during make." >&6;}
+        	export SKY130_FD_SC_LS_PATH=../sources/sky130_fd_sc_ls
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_fd_sc_ls'" >&5
+$as_echo "$as_me: Disabling package 'sky130_fd_sc_ls'" >&6;}
+    		export SKY130_FD_SC_LS_PATH=""
+            else
+                SKY130_FD_SC_LS_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_fd_sc_ls' at $SKY130_FD_SC_LS_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_fd_sc_ls' at $SKY130_FD_SC_LS_PATH" >&6;}
+            fi
+            SKY130_FD_SC_LS_PATH=`realpath $SKY130_FD_SC_LS_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_ls' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_ls' will be installed automatically during make." >&6;}
+	    SKY130_FD_SC_LS_PATH=../sources/sky130_fd_sc_ls
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_FD_SC_LP_PATH=""
+
+    # Check whether --enable-sc-lp-sky130 was given.
+if test "${enable_sc_lp_sky130+set}" = set; then :
+  enableval=$enable_sc_lp_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_lp' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_lp' will be installed automatically during make." >&6;}
+        	export SKY130_FD_SC_LP_PATH=../sources/sky130_fd_sc_lp
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_fd_sc_lp'" >&5
+$as_echo "$as_me: Disabling package 'sky130_fd_sc_lp'" >&6;}
+    		export SKY130_FD_SC_LP_PATH=""
+            else
+                SKY130_FD_SC_LP_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_fd_sc_lp' at $SKY130_FD_SC_LP_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_fd_sc_lp' at $SKY130_FD_SC_LP_PATH" >&6;}
+            fi
+            SKY130_FD_SC_LP_PATH=`realpath $SKY130_FD_SC_LP_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_lp' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_lp' will be installed automatically during make." >&6;}
+	    SKY130_FD_SC_LP_PATH=../sources/sky130_fd_sc_lp
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_FD_SC_HD_PATH=""
+
+    # Check whether --enable-sc-hd-sky130 was given.
+if test "${enable_sc_hd_sky130+set}" = set; then :
+  enableval=$enable_sc_hd_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_hd' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_hd' will be installed automatically during make." >&6;}
+        	export SKY130_FD_SC_HD_PATH=../sources/sky130_fd_sc_hd
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_fd_sc_hd'" >&5
+$as_echo "$as_me: Disabling package 'sky130_fd_sc_hd'" >&6;}
+    		export SKY130_FD_SC_HD_PATH=""
+            else
+                SKY130_FD_SC_HD_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_fd_sc_hd' at $SKY130_FD_SC_HD_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_fd_sc_hd' at $SKY130_FD_SC_HD_PATH" >&6;}
+            fi
+            SKY130_FD_SC_HD_PATH=`realpath $SKY130_FD_SC_HD_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_hd' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_hd' will be installed automatically during make." >&6;}
+	    SKY130_FD_SC_HD_PATH=../sources/sky130_fd_sc_hd
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_FD_SC_HDLL_PATH=""
+
+    # Check whether --enable-sc-hdll-sky130 was given.
+if test "${enable_sc_hdll_sky130+set}" = set; then :
+  enableval=$enable_sc_hdll_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_hdll' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_hdll' will be installed automatically during make." >&6;}
+        	export SKY130_FD_SC_HDLL_PATH=../sources/sky130_fd_sc_hdll
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_fd_sc_hdll'" >&5
+$as_echo "$as_me: Disabling package 'sky130_fd_sc_hdll'" >&6;}
+    		export SKY130_FD_SC_HDLL_PATH=""
+            else
+                SKY130_FD_SC_HDLL_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_fd_sc_hdll' at $SKY130_FD_SC_HDLL_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_fd_sc_hdll' at $SKY130_FD_SC_HDLL_PATH" >&6;}
+            fi
+            SKY130_FD_SC_HDLL_PATH=`realpath $SKY130_FD_SC_HDLL_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_hdll' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_hdll' will be installed automatically during make." >&6;}
+	    SKY130_FD_SC_HDLL_PATH=../sources/sky130_fd_sc_hdll
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_FD_SC_HVL_PATH=""
+
+    # Check whether --enable-sc-hvl-sky130 was given.
+if test "${enable_sc_hvl_sky130+set}" = set; then :
+  enableval=$enable_sc_hvl_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_hvl' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_hvl' will be installed automatically during make." >&6;}
+        	export SKY130_FD_SC_HVL_PATH=../sources/sky130_fd_sc_hvl
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_fd_sc_hvl'" >&5
+$as_echo "$as_me: Disabling package 'sky130_fd_sc_hvl'" >&6;}
+    		export SKY130_FD_SC_HVL_PATH=""
+            else
+                SKY130_FD_SC_HVL_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_fd_sc_hvl' at $SKY130_FD_SC_HVL_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_fd_sc_hvl' at $SKY130_FD_SC_HVL_PATH" >&6;}
+            fi
+            SKY130_FD_SC_HVL_PATH=`realpath $SKY130_FD_SC_HVL_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_sc_hvl' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_sc_hvl' will be installed automatically during make." >&6;}
+	    SKY130_FD_SC_HVL_PATH=../sources/sky130_fd_sc_hvl
+
+
+fi
+
+
+
+
+
+
 
 
 

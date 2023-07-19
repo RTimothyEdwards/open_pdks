@@ -10,17 +10,15 @@
 # updated March 2020 (refactored the install process)
 # updated May 2020 (changed to new process name Sky130)
 # updated January 2022 (divided into two variants A and B)
+# updated July 2023 (sky130 repositories switched to github/efabless)
 #
 # Instructions:
 #
 # Run "configure" from the top level directory.  Use the following
 # configuration options to match your environment:
 #
-#	--enable-sky130-pdk[=<path>]
-#		If enabled, install the skywater PDK.  If <path> is specified,
-#		then the skywater PDK is expected to be found rooted at the
-#		given path.  If not specified, then the skywater PDK will be
-#		downloaded and installed to <repo root>/pdks.
+#	--enable-sky130-pdk
+#		If enabled, install the skywater PDK.
 #		If explicitly disabled, sky130 is skipped over entirely.
 #
 #	--with-sky130-link-targets=<value>
@@ -33,7 +31,8 @@
 #		If specified, then the installation uses the efabless style,
 #		which swaps the file hierarchy of file formats vs. IP libraries;
 #		e.g., "gds/sky130_fd_sc_hd/" with ef-style, vs.
-#		"sky130_fd_sc_hd/gds/" without it.
+#		"sky130_fd_sc_hd/gds/" without it.  Normally this should not
+#		be enabled.
 #
 # Enable/disable for specific libraries to be installed (and downloaded if
 # needed).  Libraries that are part of the open_pdks repository are enabled
@@ -67,6 +66,52 @@
 #
 # External (third-party) libraries and tool setups are the following (enabled
 # by default):
+#
+#	--enable-primitive-sky130[=<path>]
+#		If enabled, install the sky130 primitives library.
+#		If <path> is not specified, then the primitives library will be
+#		cloned from the git repository and installed.
+#
+#	--enable-io-sky130[=<path>]
+#		If enabled, install the sky130 I/O library.
+#		If <path> is not specified, then the I/O library will be
+#		cloned from the git repository and installed.
+#
+#	--enable-sc-hs-sky130[=<path>]
+#		If enabled, install the sky130 high-speed standard cell library.
+#		If <path> is not specified, then the high-speed standard cell
+#		library will be cloned from the git repository and installed.
+#
+#	--enable-sc-ms-sky130[=<path>]
+#		If enabled, install the sky130 medium-speed standard cell library.
+#		If <path> is not specified, then the medium-speed standard cell
+#		library will be cloned from the git repository and installed.
+#
+#	--enable-sc-ls-sky130[=<path>]
+#		If enabled, install the sky130 low-speed standard cell library.
+#		If <path> is not specified, then the low-speed standard cell
+#		library will be cloned from the git repository and installed.
+#
+#	--enable-sc-lp-sky130[=<path>]
+#		If enabled, install the sky130 low-power standard cell library.
+#		If <path> is not specified, then the low-power standard cell
+#		library will be cloned from the git repository and installed.
+#
+#	--enable-sc-hd-sky130[=<path>]
+#		If enabled, install the sky130 high-density standard cell library.
+#		If <path> is not specified, then the high-density standard cell
+#		library will be cloned from the git repository and installed.
+#
+#	--enable-sc-hdll-sky130[=<path>]
+#		If enabled, install the sky130 high-density low-leakage standard
+#		cell library.  If <path> is not specified, then the high-density
+#		low-leakage standard cell library will be cloned from the git
+#		repository and installed.
+#
+#	--enable-sc-hvl-sky130[=<path>]
+#		If enabled, install the sky130 high-voltage standard cell library.
+#		If <path> is not specified, then the high-voltage standard cell
+#		library will be cloned from the git repository and installed.
 #
 #	--enable-alpha-sky130[=<path>]
 #		If enabled, install the sky130_ml_xx_hd font library from
@@ -122,7 +167,6 @@
 #
 # The variables below are substituted from the configuration options:
 #
-#	SKYWATER_PATH: Points to vendor sources
 #	EF_STYLE: 1 for efabless style, 0 otherwise
 #	LINK_TARGETS_A: If "source", link back to source when possible
 #	ENABLED_VARIANTS: If not "all", then compile/install only the specified variants
@@ -222,13 +266,16 @@ endif
 
 # Paths:
 
-# Path to skywater_pdk
-SKYWATER_PATH = @SKY130_SOURCE_PATH@
-ifneq ($(SKYWATER_PATH),)
-    SKYWATER_LIBS_PATH = ${SKYWATER_PATH}/libraries
-else
-    SKYWATER_LIBS_PATH =
-endif
+# Path to SkyWater open PDK sources.
+SKY130_PR_PATH = @SKY130_FD_PR_PATH@
+SKY130_IO_PATH = @SKY130_FD_IO_PATH@
+SKY130_SC_HD_PATH = @SKY130_FD_SC_HD_PATH@
+SKY130_SC_HDLL_PATH = @SKY130_FD_SC_HDLL_PATH@
+SKY130_SC_HVL_PATH = @SKY130_FD_SC_HVL_PATH@
+SKY130_SC_HS_PATH = @SKY130_FD_SC_HS_PATH@
+SKY130_SC_MS_PATH = @SKY130_FD_SC_MS_PATH@
+SKY130_SC_LS_PATH = @SKY130_FD_SC_LS_PATH@
+SKY130_SC_LP_PATH = @SKY130_FD_SC_LP_PATH@
 
 # Path to independent library sources (to be added to configuration options).
 ALPHA_PATH = @SKY130_ML_XX_HD_PATH@
@@ -241,17 +288,6 @@ OSU_T12_PATH = @SKY130_OSU_T12_PATH@
 OSU_T15_PATH = @SKY130_OSU_T15_PATH@
 OSU_T18_PATH = @SKY130_OSU_T18_PATH@
 
-PDK_URL = https://github.com/google/skywater-pdk
-ALPHA_URL = https://github.com/PaulSchulz/sky130_pschulz_xx_hd
-XSCHEM_URL = https://github.com/StefanSchippers/xschem_sky130
-KLAYOUT_URL = https://github.com/efabless/sky130_klayout_pdk
-PRECHECK_URL = https://github.com/efabless/mpw_precheck
-SRAM_URL = https://github.com/efabless/sky130_sram_macros
-SRAM_SPACE_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_fd_bd_sram
-OSU_T12_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t12
-OSU_T15_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t15
-OSU_T18_URL = https://foss-eda-tools.googlesource.com/skywater-pdk/libs/sky130_osu_sc_t18
-
 USE_REFERENCE = @USE_REFERENCE@
 
 ifeq (${USE_REFERENCE}, 1)
@@ -259,6 +295,30 @@ ifeq (${USE_REFERENCE}, 1)
 else
     REFERENCE_JSON =
 endif
+
+EF_URL = https://github.com/efabless
+GOOGLE_URL = https://foss-eda-tools.googlesource.com
+
+# Names of library repositories
+PDK_LIB_PR = ${EF_URL}/skywater-pdk-libs-sky130_fd_pr
+PDK_LIB_IO = ${EF_URL}/skywater-pdk-libs-sky130_fd_io
+PDK_LIB_SC_HD = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_hd
+PDK_LIB_SC_HDLL = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_hdll
+PDK_LIB_SC_LP = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_lp
+PDK_LIB_SC_HS = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_hs
+PDK_LIB_SC_MS = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_ms
+PDK_LIB_SC_LS = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_ls
+PDK_LIB_SC_HVL = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_hvl
+
+ALPHA_URL =    https://github.com/PaulSchulz/sky130_pschulz_xx_hd
+XSCHEM_URL =   https://github.com/StefanSchippers/xschem_sky130
+KLAYOUT_URL =  ${EF_URL}/sky130_klayout_pdk
+PRECHECK_URL = ${EF_URL}/mpw_precheck
+SRAM_URL =     ${EF_URL}/sky130_sram_macros
+SRAM_SPACE_URL = ${GOOGLE_URL}/skywater-pdk/libs/sky130_fd_bd_sram
+OSU_T12_URL =  ${GOOGLE_URL}/skywater-pdk/libs/sky130_osu_sc_t12
+OSU_T15_URL =  ${GOOGLE_URL}/skywater-pdk/libs/sky130_osu_sc_t15
+OSU_T18_URL =  ${GOOGLE_URL}/skywater-pdk/libs/sky130_osu_sc_t18
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
@@ -305,11 +365,50 @@ ifeq (${OPEN_PDKS_COMMIT},)
 else
     COMMIT_DEFS = -DOPEN_PDKS_COMMIT=${OPEN_PDKS_COMMIT}
 endif
-
-ifeq (${SKYWATER_PATH},)
-    COMMIT_DEFS += -DSKYWATER_COMMIT="unknown"
+ifeq (${SKY130_PR_PATH},)
+    COMMIT_DEFS += -DFD_PR_COMMIT="unknown"
 else
-    COMMIT_DEFS += -DSKYWATER_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse HEAD)
+    COMMIT_DEFS += -DFD_PR_COMMIT=$(shell cd ${SKY130_PR_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${SKY130_IO_PATH},)
+    COMMIT_DEFS += -DFD_IO_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DFD_IO_COMMIT=$(shell cd ${SKY130_IO_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${SKY130_SC_HS_PATH},)
+    COMMIT_DEFS += -DFD_SC_HS_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DFD_SC_HS_COMMIT=$(shell cd ${SKY130_SC_HS_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${SKY130_SC_MS_PATH},)
+    COMMIT_DEFS += -DFD_SC_MS_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DFD_SC_MS_COMMIT=$(shell cd ${SKY130_SC_MS_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${SKY130_SC_LS_PATH},)
+    COMMIT_DEFS += -DFD_SC_LS_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DFD_SC_LS_COMMIT=$(shell cd ${SKY130_SC_LS_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${SKY130_SC_LP_PATH},)
+    COMMIT_DEFS += -DFD_SC_LP_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DFD_SC_LP_COMMIT=$(shell cd ${SKY130_SC_LP_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${SKY130_SC_HD_PATH},)
+    COMMIT_DEFS += -DFD_SC_HD_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DFD_SC_HD_COMMIT=$(shell cd ${SKY130_SC_HD_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${SKY130_SC_HDLL_PATH},)
+    COMMIT_DEFS += -DFD_SC_HDLL_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DFD_SC_HDLL_COMMIT=$(shell cd ${SKY130_SC_HDLL_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${SKY130_SC_HVL_PATH},)
+    COMMIT_DEFS += -DFD_SC_HVL_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DFD_SC_HVL_COMMIT=$(shell cd ${SKY130_SC_HVL_PATH} ; git rev-parse HEAD)
 endif
 ifeq (${XSCHEM_PATH},)
     COMMIT_DEFS += -DXSCHEM_COMMIT="unknown"
@@ -356,63 +455,7 @@ ifeq (${OSU_T18_PATH},)
 else
     COMMIT_DEFS += -DOSU_T18_COMMIT=$(shell cd ${OSU_T18_PATH} ; git rev-parse HEAD)
 endif
-ifeq (${SKYWATER_PATH},)
-    COMMIT_DEFS += -DFD_PR_COMMIT="unknown"
-    COMMIT_DEFS += -DFD_IO_COMMIT="unknown"
-    COMMIT_DEFS += -DFD_SC_HD_COMMIT="unknown"
-    COMMIT_DEFS += -DFD_SC_HDLL_COMMIT="unknown"
-    COMMIT_DEFS += -DFD_SC_HVL_COMMIT="unknown"
-    COMMIT_DEFS += -DFD_SC_HS_COMMIT="unknown"
-    COMMIT_DEFS += -DFD_SC_MS_COMMIT="unknown"
-    COMMIT_DEFS += -DFD_SC_LS_COMMIT="unknown"
-    COMMIT_DEFS += -DFD_SC_LP_COMMIT="unknown"
-else
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_pr/latest/cells),)
-	COMMIT_DEFS += -DFD_PR_COMMIT="unknown"
-    else
-	COMMIT_DEFS += -DFD_PR_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_pr/latest)
-    endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_io/latest/cells),)
-	COMMIT_DEFS += -DFD_IO_COMMIT="unknown"
-    else
-	COMMIT_DEFS += -DFD_IO_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_io/latest)
-    endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_hd/latest/cells),)
-	COMMIT_DEFS += -DFD_SC_HD_COMMIT="unknown"
-    else
-	COMMIT_DEFS += -DFD_SC_HD_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hd/latest)
-    endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_hdll/latest/cells),)
-	COMMIT_DEFS += -DFD_SC_HDLL_COMMIT="unknown"
-    else
-	COMMIT_DEFS += -DFD_SC_HDLL_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hdll/latest)
-    endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_hvl/latest/cells),)
-	COMMIT_DEFS += -DFD_SC_HVL_COMMIT="unknown"
-    else
-	COMMIT_DEFS += -DFD_SC_HVL_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hvl/latest)
-    endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_hs/latest/cells),)
-	COMMIT_DEFS += -DFD_SC_HS_COMMIT="unknown"
-    else
-	COMMIT_DEFS += -DFD_SC_HS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_hs/latest)
-    endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_ms/latest/cells),)
-	COMMIT_DEFS += -DFD_SC_MS_COMMIT="unknown"
-    else
-	COMMIT_DEFS += -DFD_SC_MS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_ms/latest)
-    endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_ls/latest/cells),)
-	COMMIT_DEFS += -DFD_SC_LS_COMMIT="unknown"
-    else
-	COMMIT_DEFS += -DFD_SC_LS_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_ls/latest)
-    endif
-    ifeq ($(wildcard ${SKYWATER_PATH}/libraries/sky130_fd_sc_lp/latest/cells),)
-	COMMIT_DEFS += -DFD_SC_LP_COMMIT="unknown"
-    else
-	COMMIT_DEFS += -DFD_SC_LP_COMMIT=$(shell cd ${SKYWATER_PATH} ; git rev-parse @:libraries/sky130_fd_sc_lp/latest)
-    endif
-endif
+
 COMMIT_DEFS += -DMAGIC_COMMIT=$(shell magic -dnull -noconsole --commit)
 COMMIT_DEFS += -DMAGIC_VERSION=$(shell magic -dnull -noconsole --version)
 COMMIT_DEFS += -DOPEN_PDKS_VERSION=$(shell cat ../VERSION)
@@ -625,18 +668,122 @@ reference: ${TECH}.json
 	../common/save_commit_refs.py ${COMMIT_DEFS} ${TECH}.json
 
 # Handle prerequisites (fetch and install the PDK and requested libraries)
-prerequisites: pdk-repo alpha-repo xschem-repo klayout-repo precheck-repo sram-repo sram-space-repo osu-t12-repo osu-t15-repo osu-t18-repo
+prerequisites: pr-repo io-repo sc-hd-repo sc-hdll-repo sc-hvl-repo sc-hs-repo sc-ms-repo sc-ls-repo sc-lp-repo alpha-repo xschem-repo klayout-repo precheck-repo sram-repo sram-space-repo osu-t12-repo osu-t15-repo osu-t18-repo
 
-pdk-repo:
+pr-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
-		SKYWATER_COMMIT=`cat ${REFERENCE_JSON} | grep skywater_pdk | grep -v COMMIT | cut -d'"' -f4` ; \
+		FD_PR_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_pr | grep -v COMMIT | cut -d'"' -f4` ; \
 	fi
-	if test "x${SKYWATER_PATH}" != "x" ; then \
-		if test -d "${SKYWATER_PATH}" ; then \
-			echo "Using existing installation of SkyWater PDK from ${SKYWATER_PATH}" ; \
+	if test "x${SKY130_PR_PATH}" != "x" ; then \
+		if test -d "${SKY130_PR_PATH}" ; then \
+			echo "Using existing installation of primitive library from ${SKY130_PR_PATH}" ; \
 		else \
-			echo "Downloading SkyWater PDK from ${PDK_URL}" ; \
-			custom/scripts/pdk_download.sh ${PDK_URL} ${SKYWATER_PATH} ${SKYWATER_COMMIT} ; \
+			echo "Downloading primitive library from ${SKY130_PR_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_PR} ${SKY130_PR_PATH} $${FD_PR_COMMIT} ; \
+		fi ; \
+	fi
+
+io-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		FD_IO_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_io | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
+	if test "x${SKY130_IO_PATH}" != "x" ; then \
+		if test -d "${SKY130_IO_PATH}" ; then \
+			echo "Using existing installation of I/O library from ${SKY130_IO_PATH}" ; \
+		else \
+			echo "Downloading I/O library from ${SKY130_IO_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_IO} ${SKY130_IO_PATH} $${FD_IO_COMMIT} ; \
+		fi ; \
+	fi
+
+sc-hs-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		FD_SC_HS_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_hs | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
+	if test "x${SKY130_SC_HS_PATH}" != "x" ; then \
+		if test -d "${SKY130_SC_HS_PATH}" ; then \
+			echo "Using existing installation of high-speed standard cell library from ${SKY130_SC_HS_PATH}" ; \
+		else \
+			echo "Downloading high-speed standard cell library from ${SKY130_SC_HS_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_SC_HS} ${SKY130_SC_HS_PATH} $${FD_SC_HS_COMMIT} ; \
+		fi ; \
+	fi
+
+sc-ms-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		FD_SC_MS_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_ms | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
+	if test "x${SKY130_SC_MS_PATH}" != "x" ; then \
+		if test -d "${SKY130_SC_MS_PATH}" ; then \
+			echo "Using existing installation of medium-speed standard cell library from ${SKY130_SC_MS_PATH}" ; \
+		else \
+			echo "Downloading medium-speed standard cell library from ${SKY130_SC_MS_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_SC_MS} ${SKY130_SC_MS_PATH} $${FD_SC_MS_COMMIT} ; \
+		fi ; \
+	fi
+
+sc-ls-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		FD_SC_LS_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_ls | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
+	if test "x${SKY130_SC_LS_PATH}" != "x" ; then \
+		if test -d "${SKY130_SC_LS_PATH}" ; then \
+			echo "Using existing installation of low-speed standard cell library from ${SKY130_SC_LS_PATH}" ; \
+		else \
+			echo "Downloading low-speed standard cell library from ${SKY130_SC_LS_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_SC_LS} ${SKY130_SC_LS_PATH} $${FD_SC_LS_COMMIT} ; \
+		fi ; \
+	fi
+
+sc-lp-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		FD_SC_LP_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_lp | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
+	if test "x${SKY130_SC_LP_PATH}" != "x" ; then \
+		if test -d "${SKY130_SC_LP_PATH}" ; then \
+			echo "Using existing installation of low-power standard cell library from ${SKY130_SC_LP_PATH}" ; \
+		else \
+			echo "Downloading low-power standard cell library from ${SKY130_SC_LP_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_SC_LP} ${SKY130_SC_LP_PATH} $${FD_SC_LP_COMMIT} ; \
+		fi ; \
+	fi
+
+sc-hd-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		FD_SC_HD_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_hd | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
+	if test "x${SKY130_SC_HD_PATH}" != "x" ; then \
+		if test -d "${SKY130_SC_HD_PATH}" ; then \
+			echo "Using existing installation of high-density standard cell library from ${SKY130_SC_HD_PATH}" ; \
+		else \
+			echo "Downloading high-density standard cell library from ${SKY130_SC_HD_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_SC_HD} ${SKY130_SC_HD_PATH} $${FD_SC_HD_COMMIT} ; \
+		fi ; \
+	fi
+
+sc-hdll-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		FD_SC_HDLL_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_hdll | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
+	if test "x${SKY130_SC_HDLL_PATH}" != "x" ; then \
+		if test -d "${SKY130_SC_HDLL_PATH}" ; then \
+			echo "Using existing installation of high-density low-leakage standard cell library from ${SKY130_SC_HDLL_PATH}" ; \
+		else \
+			echo "Downloading high-density low-leakage standard cell library from ${SKY130_SC_HDLL_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_SC_HDLL} ${SKY130_SC_HDLL_PATH} $${FD_SC_HDLL_COMMIT} ; \
+		fi ; \
+	fi
+
+sc-hvl-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		FD_SC_HVL_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_hvl | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi
+	if test "x${SKY130_SC_HVL_PATH}" != "x" ; then \
+		if test -d "${SKY130_SC_HVL_PATH}" ; then \
+			echo "Using existing installation of high-voltage standard cell library from ${SKY130_SC_HVL_PATH}" ; \
+		else \
+			echo "Downloading high-voltage standard cell library from ${SKY130_SC_HVL_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_SC_HVL} ${SKY130_SC_HVL_PATH} $${FD_SC_HVL_COMMIT} ; \
 		fi ; \
 	fi
 
@@ -758,12 +905,60 @@ osu-t18-repo:
 	fi
 
 # Update prerequisites
-update: update-pdk-repo update-alpha-repo update-xschem-repo update-klayout-repo update-precheck-repo update-sram-repo update-sram-space-repo update-osu-t12-repo update-osu-t15-repo update-osu-t18-repo
+update: update-pr-repo update-io-repo update-sc-hs-repo update-sc-ms-repo update-sc-ls-repo update-sc-lp-repo update-sc-hd-repo update-sc-hdll-repo update-sc-hvl-repo update-alpha-repo update-xschem-repo update-klayout-repo update-precheck-repo update-sram-repo update-sram-space-repo update-osu-t12-repo update-osu-t15-repo update-osu-t18-repo
 
-update-pdk-repo:
-	if test "x${SKYWATER_PATH}" != "x" ; then \
-		echo "Updating SkyWater PDK from ${PDK_URL}" ; \
-		custom/scripts/pdk_update.sh ${SKYWATER_PATH} ; \
+update-pr-repo:
+	if test "x${SKY130_PR_PATH}" != "x" ; then \
+		echo "Updating Sky130 primitive library from ${PDK_LIB_PR}" ; \
+		../scripts/update.sh ${SKY130_PR_PATH} ; \
+	fi
+
+update-io-repo:
+	if test "x${SKY130_IO_PATH}" != "x" ; then \
+		echo "Updating Sky130 I/O library from ${PDK_LIB_IO}" ; \
+		../scripts/update.sh ${SKY130_IO_PATH} ; \
+	fi
+
+update-sc-hs-repo:
+	if test "x${SKY130_SC_HS_PATH}" != "x" ; then \
+		echo "Updating Sky130 high-speed standard cell library from ${PDK_LIB_SC_HS}" ; \
+		../scripts/update.sh ${SKY130_SC_HS_PATH} ; \
+	fi
+
+update-sc-ms-repo:
+	if test "x${SKY130_SC_MS_PATH}" != "x" ; then \
+		echo "Updating Sky130 medium-speed standard cell library from ${PDK_LIB_SC_MS}" ; \
+		../scripts/update.sh ${SKY130_SC_MS_PATH} ; \
+	fi
+
+update-sc-ls-repo:
+	if test "x${SKY130_SC_LS_PATH}" != "x" ; then \
+		echo "Updating Sky130 low-speed standard cell library from ${PDK_LIB_SC_LS}" ; \
+		../scripts/update.sh ${SKY130_SC_LS_PATH} ; \
+	fi
+
+update-sc-lp-repo:
+	if test "x${SKY130_SC_LP_PATH}" != "x" ; then \
+		echo "Updating Sky130 low-power standard cell library from ${PDK_LIB_SC_LP}" ; \
+		../scripts/update.sh ${SKY130_SC_LP_PATH} ; \
+	fi
+
+update-sc-hd-repo:
+	if test "x${SKY130_SC_HD_PATH}" != "x" ; then \
+		echo "Updating Sky130 high-density standard cell library from ${PDK_LIB_SC_HD}" ; \
+		../scripts/update.sh ${SKY130_SC_HD_PATH} ; \
+	fi
+
+update-sc-hdll-repo:
+	if test "x${SKY130_SC_HDLL_PATH}" != "x" ; then \
+		echo "Updating Sky130 high-density low-leakage standard cell library from ${PDK_LIB_SC_HDLL}" ; \
+		../scripts/update.sh ${SKY130_SC_HDLL_PATH} ; \
+	fi
+
+update-sc-hvl-repo:
+	if test "x${SKY130_SC_HVL_PATH}" != "x" ; then \
+		echo "Updating Sky130 high-voltage standard cell library from ${PDK_LIB_SC_HVL}" ; \
+		../scripts/update.sh ${SKY130_SC_HVL_PATH} ; \
 	fi
 
 update-alpha-repo:
@@ -1175,61 +1370,55 @@ vendor-A: primitive-build-A io-build-A sram-build-A sram-space-build-A digital-h
 vendor-B: primitive-build-B io-build-B sram-build-B sram-space-build-B digital-hd-build-B digital-hvl-build-B digital-hdll-build-B digital-lp-build-B digital-hs-build-B digital-ms-build-B digital-ls-build-B alpha-build-B osu-t12-build-B osu-t15-build-B osu-t18-build-B
 
 primitive-build-%:
-	# Build targets conditionally based on what repositories or submodules
-	# were selected or initialized.  To be done:  Allow a library version
-	# to be specified that overrides "latest".
-	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_pr/latest/cells ; then \
+	if test -d ${SKY130_PR_PATH} ; then \
 		echo "Building primitives library and simulation models" ;\
 		make primitive-$*;\
 	fi
 
 io-build-%:
-	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells ; then \
+	if test -d ${SKY130_IO_PATH} ; then \
 		echo "Building padframe I/O libraries" ;\
 		make io-$* ;\
 	fi
 
 digital-hd-build-%:
-	# This assumes that at least the HD library submodule exists.  Also it
-	# assumes that the same library version is used for all libraries, which
-	# is fine with "latest" but otherwise probably invalid.
-	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_hd/latest/cells ; then \
+	if test -d ${SKY130_SC_HD_PATH} ; then \
 		echo "Building digital high-density standard cell library" ;\
 		make digital-hd-$* ;\
 	fi
 
 digital-hvl-build-%:
-	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_hvl/latest/cells ; then \
+	if test -d ${SKY130_SC_HVL_PATH} ; then \
 		echo "Building digital high-voltage standard cell library" ;\
 		make digital-hvl-$* ;\
 	fi
 
 digital-hdll-build-%:
-	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_hdll/latest/cells ; then \
+	if test -d ${SKY130_SC_HDLL_PATH} ; then \
 		echo "Building digital high-density low-leakage standard cell library" ;\
 		make digital-hdll-$* ;\
 	fi
 
 digital-lp-build-%:
-	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_lp/latest/cells ; then \
+	if test -d ${SKY130_SC_LP_PATH} ; then \
 		echo "Building digital low-power standard cell library" ;\
 		make digital-lp-$* ;\
 	fi
 
 digital-hs-build-%:
-	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_hs/latest/cells ; then \
+	if test -d ${SKY130_SC_HS_PATH} ; then \
 		echo "Building digital high-speed standard cell library" ;\
 		make digital-hs-$* ;\
 	fi
 
 digital-ms-build-%:
-	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_ms/latest/cells ; then \
+	if test -d ${SKY130_SC_MS_PATH} ; then \
 		echo "Building digital medium-speed standard cell library" ;\
 		make digital-ms-$* ;\
 	fi
 
 digital-ls-build-%:
-	if test -d ${SKYWATER_LIBS_PATH}/sky130_fd_sc_ls/latest/cells ; then \
+	if test -d ${SKY130_SC_LS_PATH} ; then \
 		echo "Building digital low-speed standard cell library" ;\
 		make digital-ls-$* ;\
 	fi
@@ -1272,98 +1461,22 @@ osu-t18-build-%:
 
 primitive-%:
 	# Install device subcircuits from vendor files
-	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
-		-ngspice sky130_fd_pr/latest/models/* \
+	${STAGE} -source ${SKY130_PR_PATH} -target ${STAGING_PATH}/${SKY130$*} \
+		-ngspice models/* \
 		filter=custom/scripts/rename_models.py \
 		2>&1 | tee -a ${SKY130$*}_make.log
-	# Install device layouts from custom sources
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130$*} \
-		-gds sky130_fd_pr/*.gds \
-			options=custom/scripts/gds_import_setup.tcl \
-		-library primitive sky130_fd_pr 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install base device library from vendor files.
-	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
-		-gds %l/latest/cells/*/*.gds \
-			no-copy=custom/sky130_fd_pr/*.gds \
-			include=custom/sky130_fd_pr/*.gds \
-			compile-only \
+	${STAGE} -source ${SKY130_PR_PATH} -target ${STAGING_PATH}/${SKY130$*} \
+		-gds cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
-		-lef %l/latest/cells/*/*.magic.lef compile-only \
-		-spice %l/latest/cells/*/*.spice filter=custom/scripts/rename_cells.py \
+		-lef cells/*/*.magic.lef compile-only \
+		-spice cells/*/*.spice filter=custom/scripts/rename_cells.py \
 		-library primitive sky130_fd_pr 2>&1 | tee -a ${SKY130$*}_make.log
-	# Custom:  Add "short" resistor model and subcircuit to the r+c models file
-	cat ./custom/models/short.spice >> \
-		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice
-	# Custom:  Add diodes as subcircuits to the r+c models file
-	cat ./custom/models/diode.spice >> \
-		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice
-	# Custom:  Add resistors as subcircuits to the r+c models file
-	cat ./custom/models/resistor.spice >> \
-		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice/sky130_fd_pr__model__r+c.model.spice
 
-	# Custom:  Patch the r+c.mrp1monte.spice file to make the generic poly
-	# resistor a type "R" device.
-	${PATCH} -p1 -f -d ${STAGING_PATH}/${SKY130$*} \
-		< custom/patches/sky130_fd_pr_2.patch \
+	# Run the add_properties.py script to add extraction information to layout
+	# cells for which the intended device cannot be extracted.
+	./custom/scripts/add_properties.py ${EF_FORMAT} -variant=${SKY130$*} \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
-	# Custom:  Patch the models to remove the substrate pin from the PNP
-	# device, which has no independent substrate pin (collector=substrate)
-	${PATCH} -p4 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE} \
-		< custom/patches/sky130_fd_pr_3.patch \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	# Custom:  Patch the ngspice models to add the HV diffusion resistor subcircuits
-	${PATCH} -p2 -f -d ${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice \
-		< custom/patches/sky130_fd_pr_5.patch \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	# Fix up the PNP model file before running the next modification
-	head -15 ${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE}/sky130_fd_pr__pnp_05v5_W3p40L3p40.model.spice > ${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE}/temp
-	tail -39 ${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE}/sky130_fd_pr__pnp_05v5_W3p40L3p40.model.spice >> ${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE}/temp
-	mv ${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE}/temp  ${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE}/sky130_fd_pr__pnp_05v5_W3p40L3p40.model.spice
-	# Custom:  Add the PNP 3.4x3.4um device model to the includes in "all.spice"
-	./custom/scripts/fix_spice_includes.py ${EF_FORMAT} \
-		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice/all.spice \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	# Custom:  Add the PNP 3.4x3.4um device model to the includes in "montecarlo.spice"
-	./custom/scripts/fix_spice_includes2.py ${EF_FORMAT} \
-		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice/parameters/montecarlo.spice \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	# Custom:  Parse the (commented out) statistics blocks and generate
-	# ngspice-compatible monte carlo parameters for mismatch and process
-	./custom/scripts/mismatch_params.py ${EF_FORMAT} -variant=${SKY130$*} \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	./custom/scripts/mismatch_params.py \
-		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	./custom/scripts/process_params.py ${EF_FORMAT} -variant=${SKY130$*} \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	./custom/scripts/process_params.py \
-		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	./custom/scripts/montecarlo_hack.py -variant=${SKY130$*} \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	# Custom:  Change vt to local_vt in one file for Xyce compatibilty
-	./custom/scripts/xyce_hack.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE}/sky130_fd_pr__res_iso_pw.model.spice \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	# Custom:  Remove ACM model parameters from BSIM3 devices
-	./custom/scripts/xyce_hack2.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE}/sky130_fd_pr__special_nfet_pass.pm3.spice \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	./custom/scripts/xyce_hack2.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE}/sky130_fd_pr__special_pfet_pass.pm3.spice \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	./custom/scripts/xyce_hack2.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${PR_SPICE}/sky130_fd_pr__special_nfet_latch.pm3.spice \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-
-	# Install custom corrected/enhanced sky130.lib.spice
-	cp custom/models/sky130.lib.spice \
-		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-
-	# Custom:  Add "spinit" file
-	cat ./custom/models/spinit >> \
-		${STAGING_PATH}/${SKY130$*}/libs.tech/ngspice/spinit
 
 io-%:
 	# Install custom additions to I/O pad library
@@ -1377,93 +1490,41 @@ io-%:
 			compile-only rename=sky130_ef_io \
 		-lef %l/lef/sky130_fd_io__top_*.lef \
 		-library general sky130_fd_io 2>&1 | tee -a ${SKY130$*}_make.log
-	# Copy the GDS file for the GPIOv2 cell, then run the script that fixes it.
-	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/top_gpiov2/sky130_fd_io__top_gpiov2.gds \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
-	./custom/scripts/fix_gpiov2_gds.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__top_gpiov2.gds
-	# Copy the GDS file for the HVC power pad, then run the script that fixes it.
-	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/top_power_hvc_wpadv2/sky130_fd_io__top_power_hvc_wpadv2.gds \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
-	./custom/scripts/fix_vddio_pad_gds.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__top_power_hvc_wpadv2.gds
-
-	# Copy the GDS file for the HVC power pad overlay, then run the script that fixes it.
-	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/overlay_vddio_hvc/sky130_fd_io__overlay_vddio_hvc.gds \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
-	./custom/scripts/fix_vddio_overlay_gds.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__overlay_vddio_hvc.gds
-
-	# Copy the GDS file for the HVC ground pad, then run the script that fixes it.
-	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/top_ground_hvc_wpad/sky130_fd_io__top_ground_hvc_wpad.gds \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
-	./custom/scripts/fix_vssio_pad_gds.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__top_ground_hvc_wpad.gds
-
-	# Copy the GDS file for the HVC ground pad overlay, then run the script that fixes it.
-	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/overlay_vssio_hvc/sky130_fd_io__overlay_vssio_hvc.gds \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
-	./custom/scripts/fix_vssio_overlay_gds.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__overlay_vssio_hvc.gds
-
-	# Copy the GDS file for the LVC power pad, then run the script that fixes it.
-	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/top_power_lvc_wpad/sky130_fd_io__top_power_lvc_wpad.gds \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
-	./custom/scripts/fix_vddio_lvc_gds.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__top_power_lvc_wpad.gds
-
-	# Copy the GDS file for the LVC power pad overlay, then run the script that fixes it.
-	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/overlay_vddio_lvc/sky130_fd_io__overlay_vddio_lvc.gds \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
-	./custom/scripts/fix_vddio_overlay_lvc.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__overlay_vddio_lvc.gds
-
-	# Copy the GDS file for the LVC ground pad, then run the script that fixes it.
-	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/top_ground_lvc_wpad/sky130_fd_io__top_ground_lvc_wpad.gds \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
-	./custom/scripts/fix_vssio_lvc_gds.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__top_ground_lvc_wpad.gds
-
-	# Copy the GDS file for the LVC ground pad overlay, then run the script that fixes it.
-	cp ${SKYWATER_LIBS_PATH}/sky130_fd_io/latest/cells/overlay_vssio_lvc/sky130_fd_io__overlay_vssio_lvc.gds \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}
-	./custom/scripts/fix_vssio_overlay_lvc.py \
-		${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_GDS}/sky130_fd_io__overlay_vssio_lvc.gds
 
 	# Install SkyWater I/O pad library
-	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
-		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+	${STAGE} -source ${SKY130_IO_PATH} -target ${STAGING_PATH}/${SKY130$*} \
+		-cdl cells/*/*.cdl ignore=topography compile-only \
 			include=custom/sky130_fd_io/cdl/*.cdl \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.lef annotate lefopts=-hide compile-only \
+		-lef cells/*/*.lef annotate lefopts=-hide compile-only \
 			filter=custom/scripts/fix_io_lef.py \
 			no-copy=sky130_fd_io__top_xres4v2.lef,sky130_fd_io__top_gpiov2.lef \
 			include=sky130_fd_io__top_xres4v2.lef,sky130_fd_io__top_power_hvc_wpadv2.lef,sky130_fd_io__top_gpiov2.lef \
 			exclude=*.magic.lef,sky130_ef_io.lef \
 			sort=../common/sort_pdkfiles.py \
-		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib \
-		-gds %l/latest/cells/*/*.gds compile-only \
+		-doc cells/*/*.pdf \
+		-lib timing/*.lib \
+		-spice netlist/*.spice \
+		-gds cells/*/*.gds compile-only \
 			sort=../common/sort_pdkfiles.py \
 			options=custom/scripts/gds_import_io.tcl \
-			no-copy=sky130_fd_io__top_gpiov2.gds,sky130_fd_io__top_ground_hvc_wpad.gds,sky130_fd_io__top_power_hvc_wpadv2.gds,sky130_fd_io__overlay_vssio_hvc.gds,sky130_fd_io__overlay_vddio_hvc.gds,sky130_fd_io__top_ground_lvc_wpad.gds,sky130_fd_io__top_power_lvc_wpad.gds,sky130_fd_io__overlay_vssio_lvc.gds,sky130_fd_io__overlay_vddio_lvc.gds \
-			include=sky130_fd_io__top_gpiov2.gds,sky130_fd_io__top_ground_hvc_wpad.gds,sky130_fd_io__top_power_hvc_wpadv2.gds,sky130_fd_io__overlay_vssio_hvc.gds,sky130_fd_io__overlay_vddio_hvc.gds,sky130_fd_io__top_ground_lvc_wpad.gds,sky130_fd_io__top_power_lvc_wpad.gds,sky130_fd_io__overlay_vssio_lvc.gds,sky130_fd_io__overlay_vddio_lvc.gds \
-		-verilog %l/latest/cells/*/*.*.v \
-		-verilog %l/latest/cells/*/*.v exclude=*.*.v,sky130_ef_io.v \
+		-verilog cells/*/*.blackbox.v compile-only exclude=sky130_ef_io.v \
+			rename=sky130_fd_io__blackbox.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.blackbox.pp.v \
+			exclude=sky130_ef_io.v,sky130_fd_io__blackbox.v \
+			compile-only rename=sky130_fd_io__blackbox_pp.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.*.v remove \
+		-verilog cells/*/*.v \
+			exclude=*.*.v,sky130_ef_io.v,sky130_fd_io__blackbox.v,sky130_fd_io__blackbox_pp.v \
 			compile-only filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library general sky130_fd_io 2>&1 | tee -a ${SKY130$*}_make.log
-	# Remove the base verilog files which have already been included into
-	# the libraries
-	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${IO_VERILOG}/*.*.v
 	# Add a maskhint set for the GPIO pad .mag view to prevent problems writing
 	# when writing HVI to GDS during hierarchical adjustments.
 	${ADDPROP} ${STAGING_PATH}/${SKY130$*} sky130_fd_io sky130_fd_io__top_gpiov2 \
 		"MASKHINTS_HVI 1346 17198 5828 19224 13700 1890 15920 2360 24 17522 1778 20612" -mag
-	# Run the add_properties.py script to add extraction information to layout
-	# cells for which the intended device cannot be extracted.
-	./custom/scripts/add_properties.py ${EF_FORMAT} -variant=${SKY130$*} \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
 
 digital-hd-%:
 	# Install custom additions to standard cell libraries
@@ -1473,45 +1534,42 @@ digital-hd-%:
 		-verilog %l/verilog/*.v \
 		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install all SkyWater digital standard cells.
-	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
-		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
-			rename=sky130_fd_sc_hd__nom.tlef \
-		-spice %l/latest/cells/*/*.spice compile-only \
+	${STAGE} -source ${SKY130_SC_HD_PATH} -target ${STAGING_PATH}/${SKY130$*} \
+		-techlef tech/*.tlef \
+		-spice cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
-			filter=custom/scripts/fix_sparecell_spice.py \
-			filter=custom/scripts/fix_device_models.py \
-		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
-			filter=custom/scripts/fix_sparecell_cdl.py \
-			filter=custom/scripts/fix_serxtors_cdl.py \
+		-cdl cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.lef \
+		-lef cells/*/*.lef \
 			exclude=*.magic.lef,sky130_ef_sc_hd.lef lefopts=-toplayer \
-			filter=custom/scripts/fix_digital_lef.py \
 			annotate compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib filter=custom/scripts/add_wireloads.py \
-			filter=custom/scripts/fix_default_fanout_load.py \
-			filter=custom/scripts/fix_related_bias_pins.py \
-		-gds %l/latest/cells/*/*.gds compile-only \
-			no-copy=custom/sky130_fd_sc_hd/gds/sky130_fd*.gds \
+		-doc cells/*/*.pdf \
+		-lib timing/*.lib.part* collate \
+		-lib timing/*.lib \
+		-gds cells/*/*.gds compile-only \
 			include=custom/sky130_fd_sc_hd/gds/sky130_ef*.gds \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/models/*/*.v \
-			exclude=*.*.v include=custom/sky130_fd_sc_hd/verilog/*.v \
-			compile-only \
+		-verilog models/*/*.v compile-only \
+			exclude=*.*.v \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/cells/*/*.*.v \
-			filter=custom/scripts/fix_verilog.py \
-		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
-			compile-only filter=custom/scripts/inc_verilog.py \
+		-verilog cells/*/*.blackbox.v compile-only \
+			exclude=primitives.v \
+			rename=sky130_fd_sc_hd__blackbox.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.blackbox.pp.v compile-only \
+			exclude=primitives.v,sky130_fd_sc_hd__blackbox.v \
+			rename=sky130_fd_sc_hd__blackbox_pp.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.*.v remove \
+		-verilog cells/*/*.v compile-only \
+			exclude=*.*.v,primitives.v,sky130_fd_sc_hd__blackbox.v,sky130_fd_sc_hd__blackbox_pp.v \
+			include=custom/sky130_fd_sc_hd/verilog/*.v \
+			filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130$*}_make.log
-	# Create minimum/maximum technology LEF files
-	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
-		-library=hd 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Add a maskhint set for the tap cell .mag view to prevent problems writing
 	# when writing NSDM and PSDM to GDS during hierarchical adjustments.
 	${ADDPROP} ${STAGING_PATH}/${SKY130$*} sky130_fd_sc_hd \
@@ -1524,252 +1582,223 @@ digital-hd-%:
 	${ADDLAYER} ${STAGING_PATH}/${SKY130$*} sky130_fd_sc_hd \
 		sky130_fd_sc_hd__a21bo_1 \
 		pwell "29 17 69 157" -mag
-	# Remove the base verilog files which have already been included into
-	# the libraries
-	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_VERILOG}/*.*.v
-	# Apply extra PDK patches until they get fixed properly in the source
-	${PATCH} -p1 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HD_VERILOG} \
-		< custom/patches/hd_wire_syntax.patch \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
 
 digital-hdll-%:
 	# Install all SkyWater digital standard cells.
-	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
-		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
-			rename=sky130_fd_sc_hdll__nom.tlef \
-		-spice %l/latest/cells/*/*.spice compile-only \
+	${STAGE} -source ${SKY130_SC_HDLL_PATH} -target ${STAGING_PATH}/${SKY130$*} \
+		-techlef tech/*.tlef \
+		-spice cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
-			filter=custom/scripts/fix_device_models.py \
-		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+		-cdl cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.lef annotate compile-only \
+		-lef cells/*/*.lef annotate compile-only \
 			exclude=*.magic.lef lefopts=-toplayer \
-			filter=custom/scripts/fix_digital_lef.py \
 			sort=../common/sort_pdkfiles.py \
-		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib filter=custom/scripts/add_wireloads.py \
-			filter=custom/scripts/fix_default_fanout_load.py \
-			filter=custom/scripts/fix_related_bias_pins.py \
-		-gds %l/latest/cells/*/*.gds compile-only \
+		-doc cells/*/*.pdf \
+		-lib timing/*.lib.part* collate \
+		-lib timing/*.lib \
+		-gds cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+		-verilog models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/cells/*/*.*.v \
-		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
-			compile-only filter=custom/scripts/inc_verilog.py \
+		-verilog cells/*/*.blackbox.v compile-only \
+			exclude=primitives.v \
+			rename=sky130_fd_sc_hdll__blackbox.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.blackbox.pp.v compile-only \
+			exclude=primitives.v,sky130_fd_sc_hdll__blackbox.v \
+			rename=sky130_fd_sc_hdll__blackbox_pp.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.*.v remove \
+		-verilog cells/*/*.v compile-only \
+			exclude=*.*.v,primitives.v,sky130_fd_sc_hdll__blackbox.v,sky130_fd_sc_hdll__blackbox_pp.v \
+			filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hdll 2>&1 | tee -a ${SKY130$*}_make.log
-	# Create minimum/maximum technology LEF files
-	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
-		-library=hdll 2>&1 | tee -a ${SKY130$*}_make.log || true
-	# Remove the base verilog files which have already been included into
-	# the libraries
-	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HDLL_VERILOG}/*.*.v
 
 digital-hvl-%:
-	# Install custom additions to standard cell libraries
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130$*} \
 		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
-		-spice %l/spice/*.spice \
 		-library digital sky130_fd_sc_hvl 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install all SkyWater digital standard cells.
-	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
-		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
-			rename=sky130_fd_sc_hvl__nom.tlef \
-		-spice %l/latest/cells/*/*.spice compile-only \
-			no-copy=custom/sky130_fd_sc_hvl/spice/sky130_fd*.spice \
+	${STAGE} -source ${SKY130_SC_HVL_PATH} -target ${STAGING_PATH}/${SKY130$*} \
+		-techlef tech/*.tlef \
+		-spice cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
-			filter=custom/scripts/fix_device_models.py \
-		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+		-cdl cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.lef annotate compile-only \
+		-lef cells/*/*.lef annotate compile-only \
 			exclude=*.magic.lef lefopts=-toplayer \
 			sort=../common/sort_pdkfiles.py \
-		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib filter=custom/scripts/add_wireloads.py \
-			filter=custom/scripts/fix_default_fanout_load.py \
-			filter=custom/scripts/fix_related_bias_pins.py \
-			filter=custom/scripts/fix_mismatched_opcond.py \
-		-gds %l/latest/cells/*/*.gds compile-only \
+		-doc cells/*/*.pdf \
+		-lib timing/*.lib \
+		-gds cells/*/*.gds compile-only \
 			include=custom/sky130_fd_sc_hvl/gds/sky130_ef*.gds \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+		-verilog models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/cells/*/*.*.v \
-		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
-			compile-only filter=custom/scripts/inc_verilog.py \
+		-verilog cells/*/*.blackbox.v compile-only \
+			exclude=primitives.v \
+			rename=sky130_fd_sc_hvl__blackbox.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.blackbox.pp.v compile-only \
+			exclude=primitives.v,sky130_fd_sc_hvl__blackbox.v \
+			rename=sky130_fd_sc_hvl__blackbox_pp.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.*.v remove \
+		-verilog cells/*/*.v compile-only \
+			exclude=*.*.v,primitives.v,sky130_fd_sc_hvl__blackbox.v,sky130_fd_sc_hvl__blackbox_pp.v \
+			filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hvl 2>&1 | tee -a ${SKY130$*}_make.log
-	# Create minimum/maximum technology LEF files
-	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
-		-library=hvl 2>&1 | tee -a ${SKY130$*}_make.log || true
 	# Add a maskhint to the HVL level shifter to represent the HVI layer as
 	# drawn in the GDS, and so eliminate the HVI-to-nwell DRC error.
 	${ADDPROP} ${STAGING_PATH}/${SKY130$*} sky130_fd_sc_hvl sky130_fd_sc_hvl__lsbufhv2lv_1 \
 		"MASKHINTS_HVI 22 34 706 1316" -mag
-	# Remove the base verilog files which have already been included into
-	# the libraries
-	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HVL_VERILOG}/*.*.v
-	# Custom:  Patch the HVL library to correct the resistor device names
-	${PATCH} -p3 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HVL_SPICE} \
-		< custom/patches/sky130_fd_pr_${HVL_PATCH4}.patch \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
-	${PATCH} -p3 -f -d ${STAGING_PATH}/${SKY130$*}/libs.ref/${HVL_CDL} \
-		< custom/patches/sky130_fd_pr_6.patch \
-		2>&1 | tee -a ${SKY130$*}_make.log || true
 
 digital-lp-%:
 	# Install all SkyWater digital standard cells.
-	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
-		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
-			rename=sky130_fd_sc_lp__nom.tlef \
-		-spice %l/latest/cells/*/*.spice compile-only \
+	${STAGE} -source ${SKY130_SC_LP_PATH} -target ${STAGING_PATH}/${SKY130$*} \
+		-techlef tech/*.tlef \
+		-spice cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
-			filter=custom/scripts/fix_device_models.py \
-		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+		-cdl cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.lef annotate compile-only \
+		-lef cells/*/*.lef annotate compile-only \
 			exclude=*.magic.lef lefopts=-toplayer \
-			filter=custom/scripts/fix_digital_lef.py \
 			sort=../common/sort_pdkfiles.py \
-		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib filter=custom/scripts/add_wireloads.py \
-			filter=custom/scripts/fix_default_fanout_load.py \
-			filter=custom/scripts/fix_related_bias_pins.py \
-		-gds %l/latest/cells/*/*.gds compile-only \
+		-doc cells/*/*.pdf \
+		-lib timing/*.lib.part* collate \
+		-lib timing/*.lib \
+		-gds cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+		-verilog models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/cells/*/*.*.v \
-		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
-			compile-only filter=custom/scripts/inc_verilog.py \
+		-verilog cells/*/*.blackbox.v compile-only \
+			exclude=primitives.v \
+			rename=sky130_fd_sc_lp__blackbox.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.blackbox.pp.v compile-only \
+			exclude=primitives.v,sky130_fd_sc_lp__blackbox.v \
+			rename=sky130_fd_sc_lp__blackbox_pp.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.*.v remove \
+		-verilog cells/*/*.v compile-only \
+			exclude=*.*.v,primitives.v,sky130_fd_sc_lp__blackbox.v,sky130_fd_sc_lp__blackbox_pp.v \
+			filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_lp 2>&1 | tee -a ${SKY130$*}_make.log
-	# Create minimum/maximum technology LEF files
-	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
-		-library=lp 2>&1 | tee -a ${SKY130$*}_make.log || true
-	# Remove the base verilog files which have already been included into
-	# the libraries
-	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${LP_VERILOG}/*.*.v
 
 digital-hs-%:
-	# Install custom additions to standard cell libraries
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130$*} \
-		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
-		-library digital sky130_fd_sc_hs 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install all SkyWater digital standard cells.
-	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
-		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
-			rename=sky130_fd_sc_hs__nom.tlef \
-		-spice %l/latest/cells/*/*.spice compile-only \
+	${STAGE} -source ${SKY130_SC_HS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
+		-techlef tech/*.tlef \
+		-spice cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
-			filter=custom/scripts/fix_device_models.py \
-		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+		-cdl cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.lef annotate compile-only \
+		-lef cells/*/*.lef annotate compile-only \
 			exclude=*.magic.lef lefopts=-toplayer \
-			filter=custom/scripts/fix_digital_lef.py \
 			sort=../common/sort_pdkfiles.py \
-		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib filter=custom/scripts/add_wireloads.py \
-			filter=custom/scripts/fix_default_fanout_load.py \
-			filter=custom/scripts/fix_related_bias_pins.py \
-		-gds %l/latest/cells/*/*.gds compile-only \
-			no-copy=custom/sky130_fd_sc_hs/gds/sky130_fd*.gds \
+		-doc cells/*/*.pdf \
+		-lib timing/*.lib.part* collate \
+		-lib timing/*.lib \
+		-gds cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+		-verilog models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/cells/*/*.*.v \
-		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
-			compile-only filter=custom/scripts/inc_verilog.py \
+		-verilog cells/*/*.blackbox.v compile-only \
+			exclude=primitives.v \
+			rename=sky130_fd_sc_hs__blackbox.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.blackbox.pp.v compile-only \
+			exclude=primitives.v,sky130_fd_sc_hs__blackbox.v \
+			rename=sky130_fd_sc_hs__blackbox_pp.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.*.v remove \
+		-verilog cells/*/*.v compile-only \
+			exclude=*.*.v,primitives.v,sky130_fd_sc_hs__blackbox.v,sky130_fd_sc_hs__blackbox_pp.v \
+			filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_hs 2>&1 | tee -a ${SKY130$*}_make.log
-	# Create minimum/maximum technology LEF files
-	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
-		-library=hs 2>&1 | tee -a ${SKY130$*}_make.log || true
-	# Remove the base verilog files which have already been included into
-	# the libraries
-	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${HS_VERILOG}/*.*.v
 
 digital-ms-%:
 	# Install all SkyWater digital standard cells.
-	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
-		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
-			rename=sky130_fd_sc_ms__nom.tlef \
-		-spice %l/latest/cells/*/*.spice compile-only \
+	${STAGE} -source ${SKY130_SC_MS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
+		-techlef tech/*.tlef \
+		-spice cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
-			filter=custom/scripts/fix_device_models.py \
-		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+		-cdl cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.lef annotate compile-only \
+		-lef cells/*/*.lef annotate compile-only \
 			exclude=*.magic.lef lefopts=-toplayer \
-			filter=custom/scripts/fix_digital_lef.py \
 			sort=../common/sort_pdkfiles.py \
-		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib filter=custom/scripts/add_wireloads.py \
-			filter=custom/scripts/fix_default_fanout_load.py \
-			filter=custom/scripts/fix_related_bias_pins.py \
-		-gds %l/latest/cells/*/*.gds compile-only \
+		-doc cells/*/*.pdf \
+		-lib timing/*.lib.part* collate \
+		-lib timing/*.lib \
+		-gds cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+		-verilog models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/cells/*/*.*.v \
-		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
-			compile-only filter=custom/scripts/inc_verilog.py \
+		-verilog cells/*/*.blackbox.v compile-only \
+			exclude=primitives.v \
+			rename=sky130_fd_sc_ms__blackbox.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.blackbox.pp.v compile-only \
+			exclude=primitives.v,sky130_fd_sc_ms__blackbox.v \
+			rename=sky130_fd_sc_ms__blackbox_pp.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.*.v remove \
+		-verilog cells/*/*.v compile-only \
+			exclude=*.*.v,primitives.v,sky130_fd_sc_ms__blackbox.v,sky130_fd_sc_ms__blackbox_pp.v \
+			filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_ms 2>&1 | tee -a ${SKY130$*}_make.log
-	# Create minimum/maximum technology LEF files
-	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
-		-library=ms 2>&1 | tee -a ${SKY130$*}_make.log || true
-	# Remove the base verilog files which have already been included into
-	# the libraries
-	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${MS_VERILOG}/*.*.v
 
 digital-ls-%:
 	# Install all SkyWater digital standard cells.
-	${STAGE} -source ${SKYWATER_LIBS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
-		-techlef %l/latest/tech/*.tlef filter=custom/scripts/fix_techlef$*.py \
-			rename=sky130_fd_sc_ls__nom.tlef \
-		-spice %l/latest/cells/*/*.spice compile-only \
+	${STAGE} -source ${SKY130_SC_LS_PATH} -target ${STAGING_PATH}/${SKY130$*} \
+		-techlef tech/*.tlef \
+		-spice cells/*/*.spice compile-only \
 			sort=../common/sort_pdkfiles.py \
-			filter=custom/scripts/fix_device_models.py \
-		-cdl %l/latest/cells/*/*.cdl ignore=topography compile-only \
+		-cdl cells/*/*.cdl ignore=topography compile-only \
 			sort=../common/sort_pdkfiles.py \
-		-lef %l/latest/cells/*/*.lef annotate compile-only \
+		-lef cells/*/*.lef annotate compile-only \
 			exclude=*.magic.lef lefopts=-toplayer \
-			filter=custom/scripts/fix_digital_lef.py \
 			sort=../common/sort_pdkfiles.py \
-		-doc %l/latest/cells/*/*.pdf \
-		-lib %l/latest/timing/*.lib filter=custom/scripts/add_wireloads.py \
-			filter=custom/scripts/fix_default_fanout_load.py \
-			filter=custom/scripts/fix_related_bias_pins.py \
-		-gds %l/latest/cells/*/*.gds compile-only \
+		-doc cells/*/*.pdf \
+		-lib timing/*.lib.part* collate \
+		-lib timing/*.lib \
+		-gds cells/*/*.gds compile-only \
 			options=custom/scripts/gds_import_setup.tcl \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/models/*/*.v exclude=*.*.v compile-only \
+		-verilog models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
-		-verilog %l/latest/cells/*/*.*.v \
-		-verilog %l/latest/cells/*/*.v exclude=*.*.v,primitives.v \
-			compile-only filter=custom/scripts/inc_verilog.py \
+		-verilog cells/*/*.blackbox.v compile-only \
+			exclude=primitives.v \
+			rename=sky130_fd_sc_ls__blackbox.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.blackbox.pp.v compile-only \
+			exclude=primitives.v,sky130_fd_sc_ls__blackbox.v \
+			rename=sky130_fd_sc_ls__blackbox_pp.v \
+			sort=../common/sort_pdkfiles.py \
+		-verilog cells/*/*.*.v remove \
+		-verilog cells/*/*.v compile-only \
+			exclude=*.*.v,primitives.v,sky130_fd_sc_ls__blackbox.v,sky130_fd_sc_ls__blackbox_pp.v \
+			filter=custom/scripts/inc_verilog.py \
 			sort=../common/sort_pdkfiles.py \
 		-library digital sky130_fd_sc_ls 2>&1 | tee -a ${SKY130$*}_make.log
-	# Create minimum/maximum technology LEF files
-	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${SKY130$*} \
-		-library=ls 2>&1 | tee -a ${SKY130$*}_make.log || true
-	# Remove the base verilog files which have already been included into
-	# the libraries
-	${RM} ${STAGING_PATH}/${SKY130$*}/libs.ref/${LS_VERILOG}/*.*.v
 
 alpha-%:
 	# Install alphanumeric library.

@@ -84,7 +84,7 @@
 #
 #	compile-only:	Like "compile" except that the individual
 #		    files are removed after the library file has been
-#		    created.
+#		    created (NOTE:  equivalent to "compile remove").
 #
 #	stub :	   Remove contents of subcircuits from CDL or SPICE
 #		    netlist files.
@@ -177,6 +177,14 @@
 #		    in the Tcl generate script passed to magic.  If
 #		    what follows the "=" is not a file, then it is
 #		    Tcl code to be inserted verbatim.
+#
+#	collate:   Files in the source may be split in parts and such
+#		    files should be be collated before copying.
+#
+#       remove:    Indicates that files are copied to the staging area
+#		    and removed after all operations.  This allows files
+#		    that are excluded from a library but are handled by
+#		    a filter script to be cleaned up afterward.
 #
 # NOTE:  This script can be called once for all libraries if all file
 # types (gds, cdl, lef, etc.) happen to all work with the same wildcards.
@@ -456,6 +464,7 @@ if __name__ == '__main__':
     
     optionlist = []
     newopt = []
+    removelist = []
 
     sourcedir = None
     targetdir = None
@@ -828,6 +837,9 @@ if __name__ == '__main__':
             if item.split('=')[0] == 'filter':
                 filter_scripts.append(item.split('=')[1])
 
+        # Option 'collate' is a standalone keyword
+        do_collate = 'collate' in option
+
         # Option 'stub' applies to netlists ('cdl' or 'spice') and generates
         # a file with only stub entries.
         do_stub = 'stub' in option
@@ -838,6 +850,9 @@ if __name__ == '__main__':
  
         # Option 'nospecify' is a standalone keyword ('nospec' may be used).
         do_remove_spec = 'nospecify' in option or 'nospec' in option
+
+        # Option 'remove' is a standalone keyword.
+        do_remove = 'remove' in option
 
         # Option 'exclude' has an argument
         excludelist = []
@@ -922,6 +937,33 @@ if __name__ == '__main__':
             liblist = glob.glob(testpath)
             liblist = natural_sort.natural_sort(liblist)
 
+            if do_collate:
+                # Rework liblist so that file parts are put into a list and
+                # associated with the final filename.  Replace the file parts
+                # in liblist with the collated filename.  Assume that the
+                # parts are named with an additional extension such as ".part1"
+                # ".part2" etc., and that these extensions are in natural sort
+                # order.  Note that it is not necessary for all files in the
+                # list to be split into parts.
+
+                # Regular expression catches filename "a.b.c", handling any
+                # leading dots (such as "../") and returns string "a.b"
+                basenamerex = re.compile('(\.?\.?[^.]+\..+)\.+')
+                baseliblist = []
+                splitfiles = {}
+                for libfile in liblist:
+                    bmatch = basenamerex.match(libfile)
+                    if bmatch:
+                        basename = bmatch.group(1)
+                        if basename not in baseliblist:
+                            baseliblist.append(basename)
+                            splitfiles[basename] = [libfile]
+                        else:
+                            splitfiles[basename].append(libfile)
+                    else:
+                        baseliblist.append(libfile)   ;# not a split file
+                liblist = baseliblist
+
             # Create a file "sources.txt" (or append to it if it exists)
             # and add the source directory name so that the staging install
             # script can know where the files came from.
@@ -981,6 +1023,7 @@ if __name__ == '__main__':
                 print('(' + str(len(liblist)) + ' files total)')
 
             destfilelist = []
+
             for libname in liblist:
      
                 # Note that there may be a hierarchy to the files in option[1],
@@ -1044,11 +1087,25 @@ if __name__ == '__main__':
                     if not dontcopy:
                         shutil.rmtree(targname)
 
+                # Stage items for later removal if requested
+                if do_remove:
+                    removelist.append(targname)
+
                 # NOTE:  Diagnostic, probably much too much output.
                 print('   Install:' + libname + ' to ' + targname)
-                if os.path.isfile(libname):
+                if not os.path.isdir(libname):
                     if not dontcopy:
-                        shutil.copy(libname, targname)
+                        if do_collate:
+                            if libname not in splitfiles:
+                                shutil.copy(libname, targname)
+                            else:
+                                allparts = splitfiles[libname]
+                                with open(targname, 'wb') as afd:
+                                    for filepart in allparts:
+                                        with open(filepart, 'rb') as fd:
+                                            shutil.copyfileobj(fd, afd)
+                        else:
+                            shutil.copy(libname, targname)
                 else:
                     if not dontcopy:
                         shutil.copytree(libname, targname)
@@ -2341,5 +2398,12 @@ if __name__ == '__main__':
             if os.path.isfile(allgdslibname):
                 spiext = '.spice' if not ef_format else '.spi'
                 create_spice_library(destlibdir, destlib, spiext, do_compile_only, do_stub, excludelist)
+
+    # Remove any files/directories that were marked for removal
+    for targname in removelist:
+        if os.path.isfile(targname):
+            os.remove(targname)
+        elif os.path.isdir(targname):
+            shutil.rmtree(targname)
 
     sys.exit(0)

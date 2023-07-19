@@ -26,7 +26,7 @@ device pfet sky130_fd_pr__pfet_01v8_lvt
 device pfet sky130_fd_pr__pfet_01v8_hvt
 device nfet sky130_fd_pr__special_nfet_latch
 device nfet sky130_fd_pr__special_nfet_pass
-device pfet sky130_fd_pr__special_pfet_pass
+device pfet sky130_fd_pr__special_pfet_latch
 device pfet sky130_fd_pr__pfet_g5v0d10v5
 device nfet sky130_fd_pr__nfet_g5v0d10v5
 device nfet sky130_fd_pr__nfet_05v0_nvt
@@ -102,9 +102,9 @@ resistance sky130_fd_pr__pfet_01v8_hvt dynamic-low    1.0    0.45  7.555881e+04
 resistance sky130_fd_pr__pfet_01v8_hvt static         1.0    0.45  2.516608e+04
 
 ; C=100, P(w=0.14, l=0.15)
-resistance sky130_fd_pr__special_pfet_pass dynamic-high   0.14    0.15  6.726050e+04
-resistance sky130_fd_pr__special_pfet_pass dynamic-low    0.14    0.15  2.008743e+05
-resistance sky130_fd_pr__special_pfet_pass static         0.14    0.15  1.126153e+05
+resistance sky130_fd_pr__special_pfet_latch dynamic-high   0.14    0.15  6.726050e+04
+resistance sky130_fd_pr__special_pfet_latch dynamic-low    0.14    0.15  2.008743e+05
+resistance sky130_fd_pr__special_pfet_latch static         0.14    0.15  1.126153e+05
 
 ; C=250, P(w=1.0, l=0.5)
 resistance sky130_fd_pr__pfet_g5v0d10v5 dynamic-high   1.0    0.5  1.185548e+04

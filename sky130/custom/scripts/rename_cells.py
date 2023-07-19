@@ -36,44 +36,6 @@ def filter(inname, outname):
         # These substitutions are for files originating from cells/*/*.spice
         fixedline = re.sub('\.\./\.\./models/', '../../../libs.tech/ngspice/', line)
         fixedline = re.sub('\.\./[^/\.]+/', '', fixedline)
-
-        # This substitution fixes a single error in the file
-        # sky130_fd_pr__nfet_05v0_nvt.pm3.spice
-        fixedline = re.sub('^include.*', '', fixedline)
-
-        # This subsitution makes SPICE files compatible with Xyce without
-        # breaking ngspice compatibility ('$' comments changed to ';')
-        fixedline = re.sub('(.*[ \t]+)\$([ \t+].*)', '\g<1>;\g<2>', fixedline)
-
-        # This substitution originally from patch file sky130_fd_pr.patch.
-        # Find ".param" lines with "nf = (value)" and move it to the front
-        # of the parameter list.
-        fixedline = re.sub('^(\.param.*)( ad = )(.*)( nf = 1.0)(.*)',
-			'\g<1>\g<4>\g<2>\g<3>\g<5>', fixedline)
-        fixedline = re.sub('^(\.param.*)( ad = )(.*)( nf = 1)(.*)',
-			'\g<1>\g<4>\g<2>\g<3>\g<5>', fixedline)
-
-        # This substitution originally from patch file sky130_fd_pr.patch.
-        # Find "msky..." lines with "nf = {nf}" and move it to the front
-        # of the parameter list.
-        fixedline = re.sub('^(msky130_.*)( ad = )(.*)( nf = \{nf\})(.*)',
-			'\g<1>\g<4>\g<2>\g<3>\g<5>', fixedline)
-
-        # This substitution originally from patch file sky130_fd_pr.patch.
-        # Find "xmain1" lines # and add "nf=nf" before "ad=0"
-        fixedline = re.sub('^(xmain1 .*)( ad=0 .*)', '\g<1> nf=nf\g<2>', fixedline)
-
-        # This substitution originally from patch file sky130_fd_pr.patch.
-        # Find ".subckt" lines with "mf=1" and add "nf=1" before "ad=0"
-        # and remove "mf=1".
-        fixedline = re.sub('^(.subckt .*)( ad=0 .*)( mf=1)(.*)',
-			'\g<1> nf=1\g<2>\g<4>', fixedline)
-
-        # This substitution extends the special_pfet_pass model length limits
-        # to cover the device found in the dual-port SRAM library.
-        fixedline = re.sub('lmin = 0.25e-007 lmax = 0.5e-007',
-			'lmin = 0.245e-007 lmax = 0.805e-007', fixedline)
-
         fixedlines.append(fixedline)
         if fixedline != line:
             modified = True

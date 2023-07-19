@@ -79,7 +79,6 @@
         "sky130_fd_bd_sram": "SRAM_BUILD_COMMIT"
     },
     "other": {
-        "skywater_pdk": "SKYWATER_COMMIT",
         "sky130_ml_xx_hd": "ALPHA_COMMIT",
         "xschem_sky130": "XSCHEM_COMMIT",
         "klayout_sky130": "KLAYOUT_COMMIT",
@@ -94,9 +93,17 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "3607aec4e558da5f060623e9e62ba10d094b5a5e",
+        "open_pdks": "05fda41fac52b44772d1b8467b1c184fdc7aa7c4",
         "magic": "8b3bb1ae771da1673ac148987466ff31c63513cd",
-        "skywater_pdk": "7198cf647113f56041e02abf3eb623692820c5e1",
+        "sky130_fd_pr": "7e2bb61f58345c203b693b2fcc178896965616d7",
+        "sky130_fd_io": "2b8ce839a273734b2b1ec51b632c948f31814eb5",
+        "sky130_fd_sc_hs": "51e41a54135f6f345f415f1f7a19c59a4d363c23",
+        "sky130_fd_sc_ms": "70ba6f4ac3cc06a1f740326556386baacf8aba7b",
+        "sky130_fd_sc_ls": "9ab031f0d83a0e45c38391b421f94daed7638c12",
+        "sky130_fd_sc_lp": "4a1f17641327a6cb02c185e29c336bf0016f05d9",
+        "sky130_fd_sc_hd": "d9e0178d7d6ccf360692011a939fa44344ca64fb",
+        "sky130_fd_sc_hdll": "3db78f5defcf0b6a5c85cfe10921852d504900be",
+        "sky130_fd_sc_hvl": "c7e80a4802fc1df49b007b99d4a1f61120e3a37f",
         "sky130_osu_sc_t12": "ac90ef0c622a9377a16b5218d9da3ac4169eeaaf",
         "sky130_osu_sc_t15": "95d1c19abb47e1b2945847acb4e817b1b8417c43",
         "sky130_osu_sc_t18": "aa2b509f3c8f32ea94fdb55ac9768754667c1658",

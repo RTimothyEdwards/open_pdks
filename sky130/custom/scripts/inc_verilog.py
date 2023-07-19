@@ -5,7 +5,7 @@
 # This script handles the verilog sources by removing `include statements
 # for files that are already being added to the single consolidated
 # verilog library file, and in-lining any other verilog files (namely
-# the functional and behavioral sources).
+# the functional and timing sources).
 #
 # This script is a filter to be run by setting the name of this script as
 # the value to "filter=" for the model install in the sky130 Makefile.
@@ -26,8 +26,9 @@ def filter(inname, outname):
         return 1
 
     # Check if input file is a base cell or strength-specific cell, and
-    # check if it has a "specify" block file.  To enable this, change
-    # dospecify from False to True.
+    # check if it has a "specify" block file.  Originally, this was
+    # disabled because iverilog did not handle some specify-block syntax.
+    # This has been corrected in the iverilog sources (as of 7/16/2023).
     dospecify = True
 
     # Process input with regexp
@@ -41,7 +42,7 @@ def filter(inname, outname):
     inpath = os.path.split(inname)[0]
 
     for line in vlines:
-        isbehav = False
+        needtiming = False
 
         # Check includes
         imatch = increx.match(line)
@@ -54,26 +55,16 @@ def filter(inname, outname):
                 # NOTE:  These files are assumed not to need in-line
                 # includes, but includes of primitives need to be ignored.
 
-                # Quick hack:  Remove this when the filenames are corrected
-                if not os.path.exists(inpath + '/' + incfilename):
-                    print('Detected incorrect filename')
-                    print('   Old filename was: ' + incfilename)
-                    dlist = incfilename.split('.')
-                    ilist = dlist[0:-3]
-                    ilist.append(dlist[-2])
-                    ilist.append(dlist[-3])
-                    ilist.append(dlist[-1])
-                    incfilename = '.'.join(ilist)
-                    print('   New filename is: ' + incfilename)
-
                 # If adding specify blocks, check if the include file is a
-                # behavioral base cell.
+                # timing base cell.  Accept '.behavioral.' as equivalent to
+                # '.timing.' for backwards-compatibility, although the use
+                # of the term "behavioral" is incorrect.
                 if dospecify:
-                    if '.behavioral.' in incfilename:
+                    if '.timing.' in incfilename or '.behavioral.' in incfilename:
                         specname = incfilename.split('.')[0] + '.specify.v'
                         if os.path.exists(inpath + '/' + specname):
                             print('Specfile ' + specname + ' found for cell ' + incfilename)
-                            isbehav = True
+                            needtiming = True
 
                 with open(inpath + '/' + incfilename, 'r') as incfile:
                     v2text = incfile.read()
@@ -81,53 +72,15 @@ def filter(inname, outname):
                     for line2 in v2lines:
                         i2match = increx.match(line2)
                         if not i2match:
-                            # Experimental:  Put back "specify" block.
-                            if isbehav:
+                            # Add "specify" block.
+                            if needtiming:
                                 ematch = endrex.match(line2)
                                 if ematch:
                                     with open(inpath + '/' + specname, 'r') as ispec:
                                         v3text = ispec.read()
                                         v3lines = v3text.splitlines()
                                         for line3 in v3lines:
-
-                                            # Fix issues in specify files
-                                            line3 = line3.replace('RESETB_delayed', 'RESET_B_delayed')
-                                            line3 = line3.replace('GATEN_delayed', 'GATE_N_delayed')
-                                            line3 = line3.replace('SETB_delayed', 'SET_B_delayed')
-                                            line3 = line3.replace('CLKN_delayed', 'CLK_N_delayed')
-                                            line3 = line3.replace('AWAKE', 'awake')
-                                            line3 = line3.replace('COND0', 'cond0')
-                                            line3 = line3.replace('COND1', 'cond1')
-                                            line3 = line3.replace('COND2', 'cond2')
-                                            line3 = line3.replace('COND3', 'cond3')
-                                            line3 = line3.replace('COND4', 'cond4')
-                                            line3 = line3.replace('CONDB', 'condb')
-                                            line3 = line3.replace('COND_D', 'cond_D')
-                                            line3 = line3.replace('COND_SCD', 'cond_SCD')
-                                            line3 = line3.replace('COND_SCE', 'cond_SCE')
                                             fixedlines.append(line3)
-
-                            # Fix issues in included files
-                            if '    wire 1             ;' in line2:
-                                continue
-
-                            line2 = line2.replace('\tB2', '   ')
-                            line2 = line2.replace('\tCIN', '    ')
-                            line2 = line2.replace('\tcsi_opt_276,', '             ')
-                            line2 = line2.replace('\tB1', '   ')
-                            line2 = line2.replace('\tA4', '   ')
-                            line2 = line2.replace('\tC1', '   ')
-                            line2 = line2.replace('\tX', '  ')
-                            line2 = line2.replace('\tD', '  ')
-                            line2 = line2.replace('\tbuf_Q', '      ')
-                            line2 = line2.replace('\tgate', '     ')
-                            line2 = line2.replace('\tcsi_opt_296,', '             ')
-                            line2 = line2.replace('\tY', '  ')
-
-                            line2 = line2.replace('    wire  N not0_out          ;', '    wire    not0_out          ;')
-                            line2 = line2.replace('    wire  N nor0_out          ;', '    wire    nor0_out          ;')
-                            line2 = line2.replace('    wire  N nand0_out         ;', '    wire    nand0_out         ;')
-
                             fixedlines.append(line2)
             else:
                 # single-dot:  Ignore this line

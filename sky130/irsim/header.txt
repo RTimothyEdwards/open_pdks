@@ -26,7 +26,7 @@ device pfet sky130_fd_pr__pfet_01v8_lvt
 device pfet sky130_fd_pr__pfet_01v8_hvt
 device nfet sky130_fd_pr__special_nfet_latch
 device nfet sky130_fd_pr__special_nfet_pass
-device pfet sky130_fd_pr__special_pfet_pass
+device pfet sky130_fd_pr__special_pfet_latch
 device pfet sky130_fd_pr__pfet_g5v0d10v5
 device nfet sky130_fd_pr__nfet_g5v0d10v5
 device nfet sky130_fd_pr__nfet_05v0_nvt

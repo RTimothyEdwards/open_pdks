@@ -6,7 +6,6 @@
 # (libs.tech/ngspice) directory that point to the original ../cells/
 # directory, to point to the correct location in libs.ref/sky130_fd_pr/spice/
 #
-#
 # This script is a filter to be run by setting the name of this script as
 # the value to "filter=" for the model install in the sky130 Makefile.
 
@@ -43,21 +42,8 @@ def filter(inname, outname, ef_format = True):
 
     for line in spilines:
 
-        # Fix: Replace "../cells/<name>/" with "../../libs.ref/sky130_fd_pr/spice/"
+        # Modify: Replace "../cells/<name>/" with "../../libs.ref/sky130_fd_pr/spice/"
         fixedline = re.sub('\.\./cells/[^/]+/', '../../libs.ref/' + libpath, line)
-
-        # This subsitution makes SPICE files compatible with Xyce without
-        # breaking ngspice compatibility ('$' comments changed to ';')
-        fixedline = re.sub('(.*[ \t]+)\$([ \t+].*)', '\g<1>;\g<2>', fixedline)
-
-        # Add an additional option line for Xyce compatibility.  Note that having
-        # both option lines means that both ngspice and Xyce will complain about
-        # one of them, but both will run without issues otherwise.
-        if allspice:
-            omatch = optionrex.match(fixedline)
-            if omatch:
-                fixedlines.append('.options parser scale=1.0u  ; for Xyce')
-
         fixedlines.append(fixedline)
         if fixedline != line:
             modified = True
