@@ -93,12 +93,12 @@ devices = [
 	],
 	[
 	   "SRAM latching FETs",
-	   "sky130_fd_pr__special_pfet_pass", "sky130_fd_pr__special_nfet_latch",
+	   "sky130_fd_pr__special_pfet_latch", "sky130_fd_pr__special_nfet_latch",
 	   "1v8", 0.15, 0.14, 0.15, 0.21, 100
 	],
 	[
 	   "SRAM pass nFET",
-	   "sky130_fd_pr__special_pfet_pass", "sky130_fd_pr__special_nfet_pass",
+	   "sky130_fd_pr__special_nfet_pass",
 	   "1v8", 0.15, 0.14, 0.15, 0.14, 100
 	],
 	[

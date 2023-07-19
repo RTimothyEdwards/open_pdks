@@ -34,7 +34,6 @@
 `timescale 1ns / 1ps
 `default_nettype none
 
-
 `ifdef USE_POWER_PINS
 /*********************************************************/
 
@@ -50,12 +49,7 @@ module sky130_ef_sc_hd__decap_12 (
     input VGND;
     input VPB ;
     input VNB ;
-    sky130_fd_sc_hd__decap base (
-        .VPWR(VPWR),
-        .VGND(VGND),
-        .VPB(VPB),
-        .VNB(VNB)
-    );
+    // No contents.
 
 endmodule
 `endcelldefine
@@ -64,6 +58,16 @@ endmodule
 `else // If not USE_POWER_PINS
 /*********************************************************/
 
+`ifdef FUNCTIONAL
+
+`celldefine
+module sky130_ef_sc_hd__decap_12 ();
+    // No contents.
+endmodule
+`endcelldefine
+
+`else // If not FUNCTIONAL
+
 `celldefine
 module sky130_ef_sc_hd__decap_12 ();
     // Voltage supply signals
@@ -71,14 +75,14 @@ module sky130_ef_sc_hd__decap_12 ();
     supply0 VGND;
     supply1 VPB ;
     supply0 VNB ;
-
-    sky130_fd_sc_hd__decap base ();
-
+    // No contents.
 endmodule
 `endcelldefine
 
+`endif // If not FUNCTIONAL
+
 /*********************************************************/
-`endif // USE_POWER_PINS
+`endif // If not USE_POWER_PINS
 
 `default_nettype wire
 `endif  // SKY130_EF_SC_HD__DECAP_12_V

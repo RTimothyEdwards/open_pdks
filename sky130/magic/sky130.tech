@@ -50,7 +50,7 @@ end
 # sky130_fd_bs_flash__special_sonosfet_star nsonos SONOS nFET
 # sky130_fd_pr__pfet_01v8	pfet		standard pFET
 # sky130_fd_pr__pfet_01v8	scpfet		standard pFET in standard cell**
-# sky130_fd_pr__special_pfet_pass ppu		special pFET in SRAM cell
+# sky130_fd_pr__special_pfet_latch ppu		special pFET in SRAM cell
 # sky130_fd_pr__pfet_01v8_lvt	pfetlvt		low Vt pFET
 # sky130_fd_pr__pfet_01v8_mvt	pfetmvt		med Vt pFET
 # sky130_fd_pr__pfet_01v8_hvt	pfethvt		high Vt pFET
@@ -6333,7 +6333,7 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device msubcircuit sky130_fd_pr__pfet_01v8 pfet,scpfet \
 	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w \
 	a1=as p1=ps a2=ad p2=pd
- device msubcircuit sky130_fd_pr__special_pfet_pass ppu \
+ device msubcircuit sky130_fd_pr__special_pfet_latch ppu \
 	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w \
 	a1=as p1=ps a2=ad p2=pd
  device msubcircuit sky130_fd_pr__pfet_01v8_lvt pfetlvt \
@@ -6491,13 +6491,12 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  variants (orig)
 
  device mosfet sky130_fd_pr__pfet_01v8 scpfet,pfet pdiff,pdiffres,pdc nwell 
- device mosfet sky130_fd_pr__special_pfet_pass ppu pdiff,pdiffres,pdc nwell 
+ device mosfet sky130_fd_pr__special_pfet_latch ppu pdiff,pdiffres,pdc nwell 
  device mosfet sky130_fd_pr__pfet_01v8_lvt pfetlvt pdiff,pdiffres,pdc nwell 
  device mosfet sky130_fd_pr__pfet_01v8_mvt pfetmvt pdiff,pdiffres,pdc nwell 
  device mosfet sky130_fd_pr__pfet_01v8_hvt scpfethvt,pfethvt pdiff,pdiffres,pdc nwell 
  device mosfet sky130_fd_pr__nfet_01v8 scnfet,nfet ndiff,ndiffres,ndc pwell,space/w
  device mosfet sky130_fd_pr__special_nfet_pass  npass ndiff,ndiffres,ndc pwell,space/w
- device mosfet sky130_fd_pr__special_nfet_latch npd ndiff,ndiffres,ndc pwell,space/w
  device mosfet sky130_fd_pr__special_nfet_latch npd ndiff,ndiffres,ndc pwell,space/w
  device mosfet sky130_fd_pr__nfet_01v8_lvt nfetlvt ndiff,ndiffres,ndc pwell,space/w
  device mosfet sky130_fd_bs_flash__special_sonosfet_star nsonos ndiff,ndiffres,ndc \

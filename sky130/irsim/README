@@ -78,7 +78,7 @@ Transistor devices characterized for IRSIM:
         sky130_fd_pr__pfet_01v8_hvt
         sky130_fd_pr__special_nfet_latch
         sky130_fd_pr__special_nfet_pass
-        sky130_fd_pr__special_pfet_pass
+        sky130_fd_pr__special_pfet_latch
         sky130_fd_pr__pfet_g5v0d10v5
         sky130_fd_pr__nfet_g5v0d10v5
         sky130_fd_pr__nfet_05v0_nvt

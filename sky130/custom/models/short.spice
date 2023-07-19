@@ -1,6 +1,0 @@
-* Resistor model "short" defined with a fixed resistance of 0.01 ohms.
-.model short r r=0.01
-* If "short" is called as a subcircuit, then this needs to be supported, too.
-.subckt short 1 2 SUB l=0 w=0
-R0 1 2 short
-.ends

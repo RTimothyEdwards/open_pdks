@@ -229,6 +229,15 @@ AC_DEFUN([M4_OPT_INSTALLATION], [
 # the open PDK directories.
 
 # SkyWater sky130 essential
+M4_GEN_INSTALLATION(sky130_fd_pr, primitive-sky130, ../sources)
+M4_GEN_INSTALLATION(sky130_fd_io, io-sky130, ../sources)
+M4_GEN_INSTALLATION(sky130_fd_sc_hs, sc-hs-sky130, ../sources)
+M4_GEN_INSTALLATION(sky130_fd_sc_ms, sc-ms-sky130, ../sources)
+M4_GEN_INSTALLATION(sky130_fd_sc_ls, sc-ls-sky130, ../sources)
+M4_GEN_INSTALLATION(sky130_fd_sc_lp, sc-lp-sky130, ../sources)
+M4_GEN_INSTALLATION(sky130_fd_sc_hd, sc-hd-sky130, ../sources)
+M4_GEN_INSTALLATION(sky130_fd_sc_hdll, sc-hdll-sky130, ../sources)
+M4_GEN_INSTALLATION(sky130_fd_sc_hvl, sc-hvl-sky130, ../sources)
 M4_GEN_INSTALLATION(sky130_ml_xx_hd, alpha-sky130, ../sources)
 M4_GEN_INSTALLATION(xschem_sky130, xschem-sky130, ../sources)
 M4_GEN_INSTALLATION(klayout_sky130, klayout-sky130, ../sources)
