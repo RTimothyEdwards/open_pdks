@@ -30,7 +30,7 @@ def usage():
     print('    <destlibdir>      is the directory containing the individual files')
     print('    <destlib>         is the root name of the library file')
     print('    -compile-only     remove the indidual files if specified')
-    print('    -stub             generate only the module headers for each cell')
+    print('    -stub             generate file of blackbox modules for each cell')
     print('    -excludelist=     is a comma-separated list of files to ignore')
     print('')
 
@@ -41,9 +41,15 @@ def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=F
     # 'destlib' should not have an extension, because one will be generated.
     destlibroot = os.path.splitext(destlib)[0]
 
+    allstubname = destlibdir + '/' + destlibroot + '__blackbox.v'
     alllibname = destlibdir + '/' + destlibroot + '.v'
+
     if os.path.isfile(alllibname):
         os.remove(alllibname)
+
+    if do_stub:
+        if os.path.isfile(allstubname):
+            os.remove(allstubname)
 
     print('Diagnostic:  Creating consolidated verilog library ' + destlibroot + '.v')
 
@@ -77,6 +83,8 @@ def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=F
 
     if len(vlist) > 1:
         print('New file is:  ' + alllibname)
+        if do_stub:
+            sfile = open(allstubname, 'w')
         with open(alllibname, 'w') as ofile:
             allmodules = []
             for vfile in vlist:
@@ -93,6 +101,9 @@ def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=F
                     # not checking if duplicate modules might exist within separate
                     # blocks of an "ifdef".
                     # vfilter = remove_redundant_modules(vtext, modules, mseen)
+                    if do_stub:
+                        slines = create_blackboxes(vtext)
+                        print(slines, file=sfile)
                     vfilter = vtext
 
                     # NOTE:  The following workaround resolves an issue with iverilog,
@@ -101,6 +112,9 @@ def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=F
                     vlines = re.sub(r'\)[ \t]*=[ \t]*([01]:[01]:[01])[ \t]*;', r') = ( \1 ) ;', vfilter)
                     print(vlines, file=ofile)
                 print('\n//--------EOF---------\n', file=ofile)
+
+        if do_stub:
+            sfile.close()
 
         if do_compile_only == True:
             print('Compile-only:  Removing individual verilog files')
@@ -111,6 +125,73 @@ def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=F
                     os.unlink(vfile)
     else:
         print('Only one file (' + str(vlist) + ');  ignoring "compile" option.')
+
+#----------------------------------------------------------------------------
+# Reduce a verilog file to blackbox modules
+#----------------------------------------------------------------------------
+
+def create_blackboxes(ntext):
+    updated = []
+
+    modrex = re.compile('^[ \t]*module[ \t\n]+')
+    endrex = re.compile('^[ \t]*endmodule[ \t\n]+')
+    inrex = re.compile('^[ \t]*input[ \t\n]+')
+    outrex = re.compile('^[ \t]*output[ \t\n]+')
+    inoutrex = re.compile('^[ \t]*inout[ \t\n]+')
+    ifrex = re.compile('^[ \t]*`if')
+    elsrex = re.compile('^[ \t]*`els')
+    endifrex = re.compile('^[ \t]*`end')
+    suprex = re.compile('^[ \t]*supply')
+
+    in_mod = False
+    depth = 0
+    for line in ntext.splitlines():
+        # Strip any comments from line before checking
+        nocline = re.sub('[ \t]*//.*', '', line)
+        if not in_mod:
+            mmatch = modrex.match(nocline)
+            if mmatch:
+                in_mod = True
+                updated.append('(* blackbox *)')
+                depth = 1
+            updated.append(line)
+                
+        else:
+            # "module" appearing inside a module means that there are
+            # multiple module definitions in ifdef blocks.  Ideally
+            # the ifdef blocks should be tracked, instead of this bit
+            # of a hack.
+            mmatch = modrex.match(nocline)
+            if mmatch:
+                updated.append('(* blackbox *)')
+                depth += 1
+            ematch = endrex.match(nocline)
+            if ematch:
+                depth -= 1
+                if depth == 0:
+                    in_mod = False
+                updated.append(line)
+            else:
+                # input, output, and inout lines remain in module output
+                t1match = inrex.match(nocline)
+                t2match = outrex.match(nocline)
+                t3match = inoutrex.match(nocline)
+                tmatch = t1match or t2match or t3match
+
+                # ifdef blocks remain in module output because they may
+                # modify the set of I/Os.
+                i1match = ifrex.match(nocline)
+                i2match = elsrex.match(nocline)
+                i3match = endifrex.match(nocline)
+                imatch = i1match or i2match or i3match
+
+                # supply1/supply0 lines remain in blackbox module output
+                smatch = suprex.match(nocline)
+
+                if tmatch or imatch or smatch:
+                    updated.append(line)
+
+    return '\n'.join(updated)
 
 #----------------------------------------------------------------------------
 # Remove redundant module entries from a verilog file.  "m2list" is a list of

@@ -999,7 +999,7 @@ digital-9t5v0-%:
 		-lef cells/*/*.lef annotate compile-only \
 			filter=custom/scripts/fix_digital_lef.py \
 		-verilog models/*/*.v compile-only rename=primitives \
-		-verilog cells/*/*.v exclude=*.*.v,primitives.v \
+		-verilog cells/*/*.v exclude=*.*.v,primitives.v stub \
 			compile-only filter=custom/scripts/inc_verilog.py \
 		-library digital gf180mcu_fd_sc_mcu9t5v0 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
@@ -1083,7 +1083,7 @@ digital-7t5v0-%:
 		-lef cells/*/*.lef annotate compile-only \
 			filter=custom/scripts/fix_digital_lef.py \
 		-verilog models/*/*.v compile-only rename=primitives \
-		-verilog cells/*/*.v exclude=*.*.v,primitives.v \
+		-verilog cells/*/*.v exclude=*.*.v,primitives.v stub \
 			compile-only filter=custom/scripts/inc_verilog.py \
 		-library digital gf180mcu_fd_sc_mcu7t5v0 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log

@@ -44,7 +44,7 @@ def create_spice_library(destlibdir, destlib, spiext, do_compile_only=False, do_
 
     fformat = 'CDL' if spiext == '.cdl' else 'SPICE'
 
-    allstubname = destlibdir + '/stub' + spiext
+    allstubname = destlibdir + '/' + destlibroot + '__blackbox' + spiext
     alllibname = destlibdir + '/' + destlibroot + spiext
     if do_stub:
         outputname = allstubname
@@ -107,6 +107,8 @@ def create_spice_library(destlibdir, destlib, spiext, do_compile_only=False, do_
                     sseen = list(item for item in subckts if item in allsubckts)
                     allsubckts.extend(list(item for item in subckts if item not in allsubckts))
                     sfilter = remove_redundant_subckts(stext, subckts, sseen)
+                    if do_stub:
+                        sfilter = create_blackboxes(sfilter)
                     print(sfilter, file=ofile)
                 print('\n******* EOF\n', file=ofile)
 
@@ -119,6 +121,16 @@ def create_spice_library(destlibdir, destlib, spiext, do_compile_only=False, do_
                     os.unlink(sfile)
     else:
         print('Only one file (' + str(slist) + ');  ignoring "compile" option.')
+
+#----------------------------------------------------------------------------
+# Reduce a SPICE or CDL netlist file to blackbox entries
+#----------------------------------------------------------------------------
+
+def create_blackboxes(ntext):
+    # This remains to be done;  something a bit more rigorous than
+    # runtime/makestub.py
+    updated = ntext
+    return updated
 
 #----------------------------------------------------------------------------
 # Remove redundant subcircuit entries from a SPICE or CDL netlist file.  "sseen"
