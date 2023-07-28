@@ -250,15 +250,15 @@ mos_array 6 sky130_fd_pr__pfet_01v8_lvt 0 450000
 mos_array 6 sky130_fd_pr__pfet_01v8_hvt 0 525000
 mos_array 6 sky130_fd_pr__nfet_03v3_nvt 0 600000 
 
-res_array 6 sky130_fd_pr_res_high_po 100000 0
-res_array 6 sky130_fd_pr__res_generic_l1 100000 180000
-res_array 6 sky130_fd_pr__res_xhigh_po 100000 360000
+sky130_fd_pr__res_array 6 sky130_fd_pr_res_high_po 100000 0
+sky130_fd_pr__res_array 6 sky130_fd_pr__res_generic_l1 100000 180000
+sky130_fd_pr__res_array 6 sky130_fd_pr__res_xhigh_po 100000 360000
 
-res_array 6 sky130_fd_pr__res_iso_pw 200000 0 13500 1100
-res_array 6 sky130_fd_pr__res_generic_po 200000 200000
+sky130_fd_pr__res_array 6 sky130_fd_pr__res_iso_pw 200000 0 13500 1100
+sky130_fd_pr__res_array 6 sky130_fd_pr__res_generic_po 200000 200000
 
-res_array 6 sky130_fd_pr__res_generic_nd 300000 0
-res_array 6 sky130_fd_pr__res_generic_pd 300000 180000
+sky130_fd_pr__res_array 6 sky130_fd_pr__res_generic_nd 300000 0
+sky130_fd_pr__res_array 6 sky130_fd_pr__res_generic_pd 300000 180000
 
 diode_array 6 sky130_fd_pr__diode_pw2nd_05v5 500000 0
 diode_array 6 sky130_fd_pr__diode_pd2nw_05v5 500000 30000 
