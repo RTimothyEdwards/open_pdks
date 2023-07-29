@@ -431,6 +431,7 @@ endif
 # The script(s) below are used for custom changes to the vendor PDK files
 PORTORDER = ../common/port_order.py ${EF_FORMAT}
 ADDPROP = ../common/insert_property.py ${EF_FORMAT}
+REMOVELAB = ../common/remove_label.py ${EF_FORMAT}
 
 # List the EDA tools to install local setup files for
 TOOLS =
@@ -1192,6 +1193,10 @@ sram-%:
 		-lef cells/*/*.lef \
 		-verilog cells/*/*.v \
 		-library general gf180mcu_fd_ip_sram 2>&1 | tee -a ${GF180MCU$*}_make.log
+	# Remove "BL" labels from the rarray4_* cells, otherwise extraction
+	# of the SRAMs without using "extract unique" will fail.
+	${REMOVELAB} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_ip_sram \
+		rarray4_\* BL\* -mag
 
 install: $(foreach var, ${VARIANTS}, install-$(var))
 
