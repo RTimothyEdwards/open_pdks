@@ -431,6 +431,7 @@ endif
 # The script(s) below are used for custom changes to the vendor PDK files
 PORTORDER = ../common/port_order.py ${EF_FORMAT}
 ADDPROP = ../common/insert_property.py ${EF_FORMAT}
+ADDLAYER = ../common/insert_layer.py ${EF_FORMAT}
 REMOVELAB = ../common/remove_label.py ${EF_FORMAT}
 
 # List the EDA tools to install local setup files for
@@ -1177,6 +1178,10 @@ io-%:
 			filter=custom/scripts/fix_io_lef.py \
 		-verilog cells/*/*.v compile-only \
 		-library general gf180mcu_fd_io 2>&1 | tee -a ${GF180MCU$*}_make.log
+	# Quick solution to extraction issue---add the isolated substrate layer
+	# in the corner clamp cell that contains the devices being isolated.
+	${ADDLAYER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_io ESD_CLAMP_COR \
+		isosubstrate "-42 43458 56113 57130 40932 43016 57057 55812" -mag
 
 sram-%:
 	# Install SRAM macros from vendor files
