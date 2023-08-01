@@ -485,6 +485,13 @@ ifneq (${XCIRCUIT_DISABLED}, 1)
         TOOLS += xcircuit
 endif
 
+# This definition depends on the setting of EF_STYLE
+ifeq (${EF_STYLE}, 1)
+	IO_GDS = gds/gf180mcu_fd_io
+else
+	IO_GDS = gf180mcu_fd_io/gds
+endif
+
 all: $(foreach var, ${VARIANTS}, all-$(var))
 
 reference: ${TECH}.json
@@ -1182,6 +1189,10 @@ io-%:
 	# in the corner clamp cell that contains the devices being isolated.
 	${ADDLAYER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_io ESD_CLAMP_COR \
 		isosubstrate "-42 43458 56113 57130 40932 43016 57057 55812" -mag
+	# Permanent solution to the extraction issue---modify the GDS with the
+	# isolated substrate layer.
+	./custom/scripts/fix_io_cor_gds.py \
+		${STAGING_PATH}/${GF180MCU$*}/libs.ref/${IO_GDS}/gf180mcu_fd_io.gds
 
 sram-%:
 	# Install SRAM macros from vendor files
