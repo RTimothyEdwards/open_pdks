@@ -100,10 +100,7 @@ set ::env(KLAYOUT_XOR_IGNORE_LAYERS) "81/14"
 # netgen setup
 set ::env(NETGEN_SETUP_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/netgen/TECHNAME_setup.tcl"
 # CTS luts
-set ::env(CTS_TECH_DIR) "N/A"
 
-set ::env(CTS_SQR_CAP) 0.258e-3
-set ::env(CTS_SQR_RES) 0.125
 set ::env(FP_TAPCELL_DIST) 13
 
 # Tracks info

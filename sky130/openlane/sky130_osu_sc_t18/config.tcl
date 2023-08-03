@@ -62,13 +62,8 @@ set ::env(CELL_PAD_EXCLUDE) "FILLX*"
 
 # Clk Buffers info CTS data
 set ::env(ROOT_CLK_BUFFER) CLKBUFX1
-set ::env(CLK_BUFFER) CLKBUFX1
-set ::env(CLK_BUFFER_INPUT) A
-set ::env(CLK_BUFFER_OUTPUT) Y
 set ::env(CTS_CLK_BUFFER_LIST) "CLKBUFX1"
 # TODO...
-set ::env(CTS_SQR_CAP) 0.258e-3
-set ::env(CTS_SQR_RES) 0.125
 set ::env(CTS_MAX_CAP) 1.53169
 
 set ::env(FP_PDN_RAIL_WIDTH) 0.48

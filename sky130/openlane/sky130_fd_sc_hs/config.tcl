@@ -59,9 +59,6 @@ set ::env(DPL_CELL_PADDING) {0}
 set ::env(CELL_PAD_EXCLUDE) "sky130_fd_sc_hs__tap* sky130_fd_sc_hs__decap* sky130_fd_sc_hs__fill*"
 
 set ::env(ROOT_CLK_BUFFER) sky130_fd_sc_hs__clkbuf_16
-set ::env(CLK_BUFFER) sky130_fd_sc_hs__clkbuf_4
-set ::env(CLK_BUFFER_INPUT) A
-set ::env(CLK_BUFFER_OUTPUT) X
 set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_hs__clkbuf_8 sky130_fd_sc_hs__clkbuf_4 sky130_fd_sc_hs__clkbuf_2"
 set ::env(CTS_MAX_CAP) 1.8894300000
 set ::env(MAX_TRANSITION_CONSTRAINT) 0.75

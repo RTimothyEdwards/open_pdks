@@ -61,9 +61,6 @@ set ::env(CELL_PAD_EXCLUDE) "$::env(STD_CELL_LIBRARY)__tap* $::env(STD_CELL_LIBR
 
 # Clk Buffers info CTS data
 set ::env(ROOT_CLK_BUFFER) $::env(STD_CELL_LIBRARY)__clkbuf_16
-set ::env(CLK_BUFFER) $::env(STD_CELL_LIBRARY)__clkbuf_4
-set ::env(CLK_BUFFER_INPUT) A
-set ::env(CLK_BUFFER_OUTPUT) X
 set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_ms__clkbuf_8 sky130_fd_sc_ms__clkbuf_4 sky130_fd_sc_ms__clkbuf_2"
 set ::env(CTS_MAX_CAP) 1.53169
 set ::env(MAX_TRANSITION_CONSTRAINT) 0.75

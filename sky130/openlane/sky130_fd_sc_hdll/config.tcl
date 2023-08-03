@@ -59,9 +59,6 @@ set ::env(CELL_PAD_EXCLUDE) "$::env(STD_CELL_LIBRARY)__tap* $::env(STD_CELL_LIBR
 
 # Clk Buffers info CTS data
 set ::env(ROOT_CLK_BUFFER) $::env(STD_CELL_LIBRARY)__clkbuf_16
-set ::env(CLK_BUFFER) $::env(STD_CELL_LIBRARY)__clkbuf_4
-set ::env(CLK_BUFFER_INPUT) A
-set ::env(CLK_BUFFER_OUTPUT) X
 set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_hdll__clkbuf_8 sky130_fd_sc_hdll__clkbuf_4 sky130_fd_sc_hdll__clkbuf_2"
 set ::env(FP_PDN_RAIL_WIDTH) 0.48
 # Determined from https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hdll/blob/0694bd23893de20f5233ef024acf6cca1e750ac6/cells/clkbuf/sky130_fd_sc_hdll__clkbuf_16__tt_025C_1v80.lib.json
