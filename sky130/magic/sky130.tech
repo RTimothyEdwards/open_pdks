@@ -6430,29 +6430,29 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
 	photo pwell,space/w error a=area
 
  device rsubcircuit sky130_fd_pr__res_high_po	    xhrpoly \
-	xpc pwell,space/w error l=l w=w
+	xpc nwell,pwell,space/w error l=l w=w
  device rsubcircuit sky130_fd_pr__res_high_po_0p35 xhrpoly \
-	xpc pwell,space/w error w>0.34 w<0.36 l=l
+	xpc nwell,pwell,space/w error w>0.34 w<0.36 l=l
  device rsubcircuit sky130_fd_pr__res_high_po_0p69  xhrpoly \
-	xpc pwell,space/w error w>0.68 w<0.70 l=l
+	xpc nwell,pwell,space/w error w>0.68 w<0.70 l=l
  device rsubcircuit sky130_fd_pr__res_high_po_1p41  xhrpoly \
-	xpc pwell,space/w error w>1.40 w<1.42 l=l
+	xpc nwell,pwell,space/w error w>1.40 w<1.42 l=l
  device rsubcircuit sky130_fd_pr__res_high_po_2p85  xhrpoly \
-	xpc pwell,space/w error w>2.84 w<2.86 l=l
+	xpc nwell,pwell,space/w error w>2.84 w<2.86 l=l
  device rsubcircuit sky130_fd_pr__res_high_po_5p73  xhrpoly \
-	xpc pwell,space/w error w>5.72 w<5.74 l=l
+	xpc nwell,pwell,space/w error w>5.72 w<5.74 l=l
  device rsubcircuit sky130_fd_pr__res_xhigh_po	     uhrpoly \
-	xpc pwell,space/w error l=l w=w
+	xpc nwell,pwell,space/w error l=l w=w
  device rsubcircuit sky130_fd_pr__res_xhigh_po_0p35  uhrpoly \
-	xpc pwell,space/w error w>0.34 w<0.36 l=l
+	xpc nwell,pwell,space/w error w>0.34 w<0.36 l=l
  device rsubcircuit sky130_fd_pr__res_xhigh_po_0p69  uhrpoly \
-	xpc pwell,space/w error w>0.68 w<0.70 l=l
+	xpc nwell,pwell,space/w error w>0.68 w<0.70 l=l
  device rsubcircuit sky130_fd_pr__res_xhigh_po_1p41  uhrpoly \
-	xpc pwell,space/w error w>1.40 w<1.42 l=l
+	xpc nwell,pwell,space/w error w>1.40 w<1.42 l=l
  device rsubcircuit sky130_fd_pr__res_xhigh_po_2p85  uhrpoly \
-	xpc pwell,space/w error w>2.84 w<2.86 l=l
+	xpc nwell,pwell,space/w error w>2.84 w<2.86 l=l
  device rsubcircuit sky130_fd_pr__res_xhigh_po_5p73  uhrpoly \
-	xpc pwell,space/w error w>5.72 w<5.74 l=l
+	xpc nwell,pwell,space/w error w>5.72 w<5.74 l=l
 
  device rsubcircuit sky130_fd_pr__res_generic_nd     ndiffres \
 	*ndiff pwell,space/w  error l=l w=w
