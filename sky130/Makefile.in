@@ -1370,81 +1370,99 @@ vendor-A: primitive-build-A io-build-A sram-build-A sram-space-build-A digital-h
 vendor-B: primitive-build-B io-build-B sram-build-B sram-space-build-B digital-hd-build-B digital-hvl-build-B digital-hdll-build-B digital-lp-build-B digital-hs-build-B digital-ms-build-B digital-ls-build-B alpha-build-B osu-t12-build-B osu-t15-build-B osu-t18-build-B
 
 primitive-build-%:
-	if test -d ${SKY130_PR_PATH} ; then \
-		echo "Building primitives library and simulation models" ;\
-		make primitive-$*;\
+	if test "x${SKY130_PR_PATH}" != "x" ; then \
+		if test -d ${SKY130_PR_PATH} ; then \
+			echo "Building primitives library and simulation models" ; \
+			make primitive-$*; \
+		fi ; \
 	fi
 
 io-build-%:
-	if test -d ${SKY130_IO_PATH} ; then \
-		echo "Building padframe I/O libraries" ;\
-		make io-$* ;\
+	if test "x${SKY130_IO_PATH}" != "x" ; then \
+		if test -d ${SKY130_IO_PATH} ; then \
+			echo "Building padframe I/O libraries" ; \
+			make io-$* ; \
+		fi ; \
 	fi
 
 digital-hd-build-%:
-	if test -d ${SKY130_SC_HD_PATH} ; then \
-		echo "Building digital high-density standard cell library" ;\
-		make digital-hd-$* ;\
+	if test "x${SKY130_SC_HD_PATH}" != "x" ; then \
+		if test -d ${SKY130_SC_HD_PATH} ; then \
+			echo "Building digital high-density standard cell library" ; \
+			make digital-hd-$* ; \
+		fi ; \
 	fi
 
 digital-hvl-build-%:
-	if test -d ${SKY130_SC_HVL_PATH} ; then \
-		echo "Building digital high-voltage standard cell library" ;\
-		make digital-hvl-$* ;\
+	if test "x${SKY130_SC_HVL_PATH}" != "x" ; then \
+		if test -d ${SKY130_SC_HVL_PATH} ; then \
+			echo "Building digital high-voltage standard cell library" ; \
+			make digital-hvl-$* ; \
+		fi ; \
 	fi
 
 digital-hdll-build-%:
-	if test -d ${SKY130_SC_HDLL_PATH} ; then \
-		echo "Building digital high-density low-leakage standard cell library" ;\
-		make digital-hdll-$* ;\
+	if test "x${SKY130_SC_HDLL_PATH}" != "x" ; then \
+		if test -d ${SKY130_SC_HDLL_PATH} ; then \
+			echo "Building digital high-density low-leakage standard cell library" ; \
+			make digital-hdll-$* ; \
+		fi ; \
 	fi
 
 digital-lp-build-%:
-	if test -d ${SKY130_SC_LP_PATH} ; then \
-		echo "Building digital low-power standard cell library" ;\
-		make digital-lp-$* ;\
+	if test "x${SKY130_SC_LP_PATH}" != "x" ; then \
+		if test -d ${SKY130_SC_LP_PATH} ; then \
+			echo "Building digital low-power standard cell library" ; \
+			make digital-lp-$* ; \
+		fi ; \
 	fi
 
 digital-hs-build-%:
-	if test -d ${SKY130_SC_HS_PATH} ; then \
-		echo "Building digital high-speed standard cell library" ;\
-		make digital-hs-$* ;\
+	if test "x${SKY130_SC_HS_PATH}" != "x" ; then \
+		if test -d ${SKY130_SC_HS_PATH} ; then \
+			echo "Building digital high-speed standard cell library" ; \
+			make digital-hs-$* ; \
+		fi ; \
 	fi
 
 digital-ms-build-%:
-	if test -d ${SKY130_SC_MS_PATH} ; then \
-		echo "Building digital medium-speed standard cell library" ;\
-		make digital-ms-$* ;\
+	if test "x${SKY130_SC_MS_PATH}" != "x" ; then \
+		if test -d ${SKY130_SC_MS_PATH} ; then \
+			echo "Building digital medium-speed standard cell library" ; \
+			make digital-ms-$* ; \
+		fi ; \
 	fi
 
 digital-ls-build-%:
-	if test -d ${SKY130_SC_LS_PATH} ; then \
-		echo "Building digital low-speed standard cell library" ;\
-		make digital-ls-$* ;\
+	if test "x${SKY130_SC_LS_PATH}" != "x" ; then \
+		if test -d ${SKY130_SC_LS_PATH} ; then \
+			echo "Building digital low-speed standard cell library" ; \
+			make digital-ls-$* ; \
+		fi ; \
 	fi
 
 alpha-build-%:
 	if test "x${ALPHA_PATH}" != "x" ; then \
-		echo "Building alphanumeric layout libraries" ;\
-		make alpha-$* ;\
+		echo "Building alphanumeric layout libraries" ; \
+		make alpha-$* ; \
 	fi
 
 sram-build-%:
 	if test "x${SRAM_PATH}" != "x" ; then \
-		echo "Building SRAM macro library" ;\
-		make sram-$* ;\
+		echo "Building SRAM macro library" ; \
+		make sram-$* ; \
 	fi
 
 sram-space-build-%:
 	if test "x${SRAM_SPACE_PATH}" != "x" ; then \
-		echo "Building SRAM build-space library" ;\
-		make sram-space-$* ;\
+		echo "Building SRAM build-space library" ; \
+		make sram-space-$* ; \
 	fi
 
 osu-t12-build-%:
 	if test "x${OSU_T12_PATH}" != "x" ; then \
-		echo "Building OSU 12-track-high standard cell library" ;\
-		make osu-t12-$* ;\
+		echo "Building OSU 12-track-high standard cell library" ; \
+		make osu-t12-$* ; \
 	fi
 
 osu-t15-build-%:
@@ -1455,8 +1473,8 @@ osu-t15-build-%:
 
 osu-t18-build-%:
 	if test "x${OSU_T18_PATH}" != "x" ; then \
-		echo "Building OSU 18-track-high standard cell library" ;\
-		make osu-t18-$* ;\
+		echo "Building OSU 18-track-high standard cell library" ; \
+		make osu-t18-$* ; \
 	fi
 
 primitive-%:

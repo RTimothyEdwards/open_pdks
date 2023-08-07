@@ -816,39 +816,51 @@ vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build
 vendor-D: primitive-build-D digital-7t5v0-build-D digital-9t5v0-build-D io-build-D sram-build-D digital-osu-build-D
 
 primitive-build-%:
-	if test -d ${GF180MCU_PR_PATH} ; then \
-		echo "Building primitives library and simulation models" ;\
-		make primitive-$* ;\
+	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
+		if test -d ${GF180MCU_PR_PATH} ; then \
+			echo "Building primitives library and simulation models" ;\
+			make primitive-$* ;\
+		fi ;\
 	fi
 
 io-build-%:
-	if test -d ${GF180MCU_IO_PATH} ; then \
-		echo "Building padframe I/O libraries" ;\
-		make io-$* ;\
+	if test "x${GF180MCU_IO_PATH}" != "x" ; then \
+		if test -d ${GF180MCU_IO_PATH} ; then \
+			echo "Building padframe I/O libraries" ;\
+			make io-$* ;\
+		fi ;\
 	fi
 
 digital-9t5v0-build-%:
-	if test -d ${GF180MCU_SC_9T5V0_PATH} ; then \
-		echo "Building 5V 9-track digital standard cell libraries" ;\
-		make digital-9t5v0-$* ;\
+	if test "x${GF180MCU_SC_9T5V0_PATH}" != "x" ; then \
+		if test -d ${GF180MCU_SC_9T5V0_PATH} ; then \
+			echo "Building 5V 9-track digital standard cell libraries" ;\
+			make digital-9t5v0-$* ;\
+		fi ;\
 	fi
 
 digital-7t5v0-build-%:
-	if test -d ${GF180MCU_SC_7T5V0_PATH} ; then \
-		echo "Building 5V 7-track digital standard cell libraries" ;\
-		make digital-7t5v0-$* ;\
+	if test "x${GF180MCU_SC_7T5V0_PATH}" != "x" ; then \
+		if test -d ${GF180MCU_SC_7T5V0_PATH} ; then \
+			echo "Building 5V 7-track digital standard cell libraries" ;\
+			make digital-7t5v0-$* ;\
+		fi ;\
 	fi
 
 sram-build-%:
-	if test -d ${GF180MCU_SRAM_PATH} ; then \
-		echo "Building SRAM libraries" ;\
-		make sram-$* ;\
+	if test "x${GF180MCU_SRAM_PATH}" != "x" ; then \
+		if test -d ${GF180MCU_SRAM_PATH} ; then \
+			echo "Building SRAM libraries" ;\
+			make sram-$* ;\
+		fi ;\
 	fi
 
 digital-osu-build-%:
-	if test -d ${GF180MCU_OSU_SC_PATH} ; then \
-		echo "Building OSU 3.3V digital standard cell libraries" ;\
-		make digital-osu-$* ;\
+	if test "x${GF180MCU_OSU_SC_PATH}" != "x" ; then \
+		if test -d ${GF180MCU_OSU_SC_PATH} ; then \
+			echo "Building OSU 3.3V digital standard cell libraries" ;\
+			make digital-osu-$* ;\
+		fi ;\
 	fi
 
 primitive-%:
