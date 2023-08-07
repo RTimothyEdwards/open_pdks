@@ -3,7 +3,9 @@
 # (Specifically for EFS8B)
 # (work in progress)
 #---------------------------------------
-
+## 2 torture 
+# 1 with invalid params, to show up in drc
+# 
 namespace path {::tcl::mathop ::tcl::mathfunc}
 
 # Set random seed so that torture test is not random from run to run.
@@ -17,11 +19,15 @@ proc mos_array {n devname startx starty {deltax 12700} {deltay 254}} {
    set i 0
    for {set x 0} {$x < $n} {incr x} {
       for {set y 0} {$y < $n} {incr y} {
-
+		
+	 set device_defaults [dict create {*}[sky130::${devname}_defaults]]
+	 set lmin [dict get $device_defaults lmin]
+	 set wmin [dict get $device_defaults wmin]
+         
+	 set r [int [* [rand] 20]]
+         set w [+ $wmin [* 0.5 $r]]
          set r [int [* [rand] 20]]
-         set w [+ 0.22 [* 0.5 $r]]
-         set r [int [* [rand] 20]]
-         set l [+ 0.18 [* 0.3 $r]]
+         set l [+ $lmin [* 0.3 $r]]
          set m [int [+ 1 [* [rand] 8]]]
          set nf [int [+ 1 [* [rand] 8]]]
 
@@ -46,6 +52,7 @@ proc mos_array {n devname startx starty {deltax 12700} {deltay 254}} {
 		w $w l $l m $m nf $nf diffcov $dcov polycov $pcov \
 		rlcov $rlcov poverlap $pov doverlap $dov topc $tc \
 		botc $bc full_metal $fm glc $gl grc $gr gbc $gb gtc $gt
+	 extract_drc_errors_to_file ${devname}_$i
          select cell ${devname}_$i
          set bh [box height]
          set bh [+ $bh $deltay]
@@ -69,10 +76,14 @@ proc sky130_fd_pr__res_array {n devname startx starty {deltax 12700} {deltay 254
    for {set x 0} {$x < $n} {incr x} {
       for {set y 0} {$y < $n} {incr y} {
 
-         set r [int [* [rand] 10]]
-         set w [+ 0.42 [* 0.5 $r]]
+	 set device_defaults [dict create {*}[sky130::${devname}_defaults]]
+	 set lmin [dict get $device_defaults lmin]
+	 set wmin [dict get $device_defaults wmin]
+         
+	 set r [int [* [rand] 10]]
+         set w [+ $wmin [* 0.5 $r]]
          set r [int [* [rand] 50]]
-         set l [+ 2.10 [* 2.0 $r]]
+         set l [+ $lmin [* 2.0 $r]]
          set m [int [+ 1 [* [rand] 2]]]
          set nx [int [+ 1 [* [rand] 10]]]
 
@@ -98,6 +109,7 @@ proc sky130_fd_pr__res_array {n devname startx starty {deltax 12700} {deltay 254
 		w $w l $l m $m nx $nx endcov $ecov roverlap $rov \
 		snake $sn full_metal $fm glc $gl grc $gr gbc $gb gtc $gt
 	 }
+	 extract_drc_errors_to_file ${devname}_$i
          select cell ${devname}_$i
          set bh [box height]
          set bh [+ $bh $deltay]
@@ -121,10 +133,14 @@ proc diode_array {n devname startx starty} {
    for {set x 0} {$x < $n} {incr x} {
       for {set y 0} {$y < $n} {incr y} {
 
+	 set device_defaults [dict create {*}[sky130::${devname}_defaults]]
+	 set lmin [dict get $device_defaults lmin]
+	 set wmin [dict get $device_defaults wmin]
+         
+	 set r [int [* [rand] 10]]
+         set w [+ $wmin [* 0.5 $r]]
          set r [int [* [rand] 10]]
-         set w [+ 0.42 [* 0.5 $r]]
-         set r [int [* [rand] 10]]
-         set l [+ 0.42 [* 0.5 $r]]
+         set l [+ $lmin [* 0.5 $r]]
          set nx [int [+ 1 [* [rand] 4]]]
          set ny [int [+ 1 [* [rand] 4]]]
 
@@ -143,6 +159,7 @@ proc diode_array {n devname startx starty} {
 		w $w l $l nx $nx ny $ny doverlap $dov \
 		full_metal $fm elc $el erc $er etc $et \
 		ebc $eb glc $gl grc $gr gbc $gb gtc $gt
+	 extract_drc_errors_to_file ${devname}_$i
          select cell ${devname}_$i
          set bh [box height]
          set bh [+ $bh 254]
@@ -157,6 +174,7 @@ proc diode_array {n devname startx starty} {
    resumeall
 }
 
+
 # NxN array cap devices
 
 proc cap_array {n devname startx starty {deltax 12700} {deltay 160}} {
@@ -166,10 +184,14 @@ proc cap_array {n devname startx starty {deltax 12700} {deltay 160}} {
    for {set x 0} {$x < $n} {incr x} {
       for {set y 0} {$y < $n} {incr y} {
 
+	 set device_defaults [dict create {*}[sky130::${devname}_defaults]]
+	 set lmin [dict get $device_defaults lmin]
+	 set wmin [dict get $device_defaults wmin]
+         
+	 set r [int [* [rand] 10]]
+         set w [+ $wmin [* 1.0 $r]]
          set r [int [* [rand] 10]]
-         set w [+ 2.00 [* 1.0 $r]]
-         set r [int [* [rand] 10]]
-         set l [+ 2.00 [* 1.0 $r]]
+         set l [+ $lmin [* 1.0 $r]]
          set nx [int [+ 1 [* [rand] 4]]]
          set ny [int [+ 1 [* [rand] 4]]]
 
@@ -178,6 +200,7 @@ proc cap_array {n devname startx starty {deltax 12700} {deltay 160}} {
 
          magic::gencell sky130::${devname} ${devname}_$i \
 		w $w l $l nx $nx ny $ny bconnect $bc tconnect $tc
+	 extract_drc_errors_to_file ${devname}_$i
          select cell ${devname}_$i
          set bh [box height]
          set bh [+ $bh $deltay]
@@ -213,6 +236,7 @@ proc fixed_array {n devname startx starty} {
 
          magic::gencell sky130::${devname} ${devname}_$i \
 		nx $nx ny $ny deltax $deltax deltay $deltay
+	 extract_drc_errors_to_file ${devname}_$i
          select cell ${devname}_$i
          set bh [box height]
          set bh [* $bh [+ $ny 1]]
@@ -227,6 +251,63 @@ proc fixed_array {n devname startx starty} {
    resumeall
 }
 
+proc extract_drc_errors_to_file {cell_name
+	{drc_errors_filename "drc_errors_list.txt"}} {
+
+	# go down to cell level
+	select cell $cell_name 
+	magic::pushstack
+
+	# extract the device properties, and store them in a
+	# dictionary
+	set device_c [dict create {*}[property parameters]]
+	set device_l [dict get $device_c l]
+	set device_w [dict get $device_c w]
+
+	# select the cell in the lower hierarchy
+	select
+	
+	# find drc errors in the entire cell, and output
+	# them to the errors file
+	set drcdict [dict create {*}[drc listall why]]
+	
+	# if there are any errors, output them to file
+	if {[dict size $drcdict] > 0} {
+	set drc_file [open $drc_errors_filename a]	
+		set name_extracted [exec echo $cell_name | sed {s/_[^_]*$//}]
+		# puts $drc_file "cellname extracted: $name_extracted"
+		puts $drc_file "device: $cell_name"
+		dict for {id value} $drcdict {
+			puts $drc_file "drc error: $id"
+		}
+
+
+		# find from the device defaults the lmin and
+		# wmin, and if the device has been generated
+		# with wrong parameters from the torture
+		# test, put them in the file
+		set device_defaults [dict create {*}[sky130::${name_extracted}_defaults]]
+		
+		set device_lmin [dict get $device_defaults lmin]
+		set device_wmin [dict get $device_defaults wmin]
+
+		if { $device_l < $device_lmin || $device_w < $device_wmin } {
+			puts $drc_file "torture test generated wrong parameters"
+			puts $drc_file "l_min: $device_lmin l: $device_l"
+			puts $drc_file "w_min: $device_wmin w: $device_w"
+		}
+		puts $drc_file "\n"
+		close $drc_file
+		
+		# clear selection
+		select clear 
+		
+	}
+	# return to top of hierarchy
+	magic::popstack
+	select clear
+}
+
 snap int
 box size 0 0
  
@@ -239,6 +320,9 @@ box size 0 0
 #       res_high_po  res_iso_pw res_generic_nd   res_generic_nd_hv  diode_pd2nw_05v5
 #  nfet_01v8                               diode_pw2nd_05v5
 #
+# create a drc errors file, or if one exits, delete contents
+set file_created [open ./drc_errors_list.txt w]
+close $file_created
 
 mos_array 6 sky130_fd_pr__nfet_01v8 0 0
 mos_array 6 sky130_fd_pr__pfet_01v8 0 75000
@@ -272,6 +356,8 @@ mos_array 6 sky130_fd_pr__cap_var_lvt 700000 0 15000 254
 mos_array 6 sky130_fd_pr__cap_var 700000 70000 18000 254
 mos_array 6 sky130_fd_pr__cap_var_hvt 700000 140000 15000 254
 
+
+# pnp both exits, and npn rf, first two (in libs.ref/mag/)
 fixed_array 2 sky130_fd_pr__rf_npn_1x1 850000 0
 fixed_array 2 sky130_fd_pr__rf_npn_1x2 850000 30000
 fixed_array 2 sky130_fd_pr__rf_pnp5x 850000 60000
@@ -298,7 +384,7 @@ fixed_array 2 sky130_fd_pr__cap_vpp_11p5x11p7_l1m1m2m3m4_shieldm5 950000 210000
 fixed_array 2 sky130_fd_pr__cap_vpp_11p5x11p7_m1m4_noshield 950000 240000
 fixed_array 2 sky130_fd_pr__cap_vpp_22p5x11p7_pol1m1m2m3m4m5_noshield 950000 270000
 
-# fixed_array 1 balun 1000000 0
+fixed_array 1 balun 1000000 0
 fixed_array 1 sky130_fd_pr__ind_02_04 1000000 200000
 fixed_array 1 sky130_fd_pr__ind_11_04 1250000 0
 
