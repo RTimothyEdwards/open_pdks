@@ -74,7 +74,6 @@ set ::env(FP_PDN_RAIL_LAYER) "Metal1"
 set ::env(FP_PDN_VERTICAL_LAYER) "Metal4"
 set ::env(FP_PDN_HORIZONTAL_LAYER) "Metal5"
 set ::env(MACRO_BLOCKAGES_LAYER) "Metal1 Metal2 Metal3 Metal4 Metal5"
-set ::env(WIRE_RC_LAYER) "Metal2"
 set ::env(DATA_WIRE_RC_LAYER) "Metal2"
 set ::env(CLOCK_WIRE_RC_LAYER) "Metal4"
 

@@ -167,7 +167,6 @@ set ::env(FP_PDN_CORE_RING_HOFFSET) 6
 set ::env(MACRO_BLOCKAGES_LAYER) "li1 met1 met2 met3 met4"
 
 # Used for parasitics estimation, IR drop analysis, etc
-set ::env(WIRE_RC_LAYER) "met1"
 set ::env(DATA_WIRE_RC_LAYER) "met2"
 set ::env(CLOCK_WIRE_RC_LAYER) "met5"
 
