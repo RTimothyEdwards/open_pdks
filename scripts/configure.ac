@@ -16,7 +16,8 @@ AC_PROG_SED
 AC_SUBST(SED)
 
 realpath() {
-    # Cross-platform, handles ~
+    # Cross-platform, handles empty argument, and ~
+    if @<:@ "$#" != "1" @:>@ ; then return ; fi
     python3 -c 'import os,sys;print(os.path.realpath(os.path.expanduser(sys.argv@<:@1@:>@)))' $1
 }
 
