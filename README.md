@@ -49,18 +49,23 @@ by open_pdks and can be queried using
 
     ./configure --help
 
-At a minimum you will want to pass a configure option to declare the location
-of the PDK vendor source distribution (which can be obtained separately),
+At a minimum you will want to pass a configure option to declare the PDK
+that you want to build.  It is possible to build multiple PDKs at once,
+but not recommended due to the large memory and disk space overhead
+required by each one.
 
-    ./configure --enable-[PDK_name]-pdk=[path]
+    ./configure --enable-[PDK_name]-pdk
 
 The open_pdks version of the PDK can be built locally within open_pdks without
 the need to declare an install target or run "make install".  However, it is
-recommended to declare a target location and install there, using
+highly recommended to declare a target location and install there, using
 
-    ./configure --prefix=[path] --enable-[PDK_name]-pdk=[path]
+    ./configure --prefix=[path] --enable-[PDK_name]-pdk
 
-followed by "make" and "make install".
+followed by "make" and "make install".  The default install location is
+/usr/local/share/pdk ([path] above is /usr/local).  The install location
+should be a read-only filesystem area for regular users, since the PDK
+contents should not be altered.
 
 Also see the website at http://opencircuitdesign.com/open_pdks/.  The "Install"
 page has full instructions for configuring and installing open_pdks.

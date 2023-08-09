@@ -11,12 +11,12 @@ Quick summary (TL;DR):
 
     Prerequisites:
 
-    	sudo apt-get install python3
+    	sudo apt install python3
 
     The Magic VLSI layout tool is used often by the installation.  If you do
     not have it, then obtain it and install with the following:
 
-    	sudo apt-get install m4 tcsh tcl-dev tk-dev
+    	sudo apt install m4 tcsh tcl-dev tk-dev
 
 	git clone https://github.com/RTimothyEdwards/magic
 	cd magic
@@ -30,20 +30,19 @@ Quick summary (TL;DR):
 	./configure --enable-sky130-pdk
 	make
 	sudo make install
+	make distclean
 
     This will download and install the SkyWater SKY130 PDK, the SKY130 setup
-    files for xschem, and a third-party library containing alphanumeric layouts.
-    If you prefer an installation in your user space, then use configure option
-    "--with-sky130-local-path=<path>" with <path> being some alternative like
-    ~/pdks, and "make install" does not need to be run sudo.
+    files for xschem, a third-party library containing alphanumeric layouts,
+    and others.
 
-    With he above configuration line, the PDK files will be installed into
+    With the above configuration line, the PDK files will be installed into
     the path
-		/usr/share/pdks/sky130A/
+		/usr/local/share/pdk/sky130A/
 
     From open_pdks version 1.0.269, there is a process variant
 
-		/usr/share/pdks/sky130B/
+		/usr/local/share/pdk/sky130B/
 
     which reflects support for ReRAM.
 
@@ -64,60 +63,37 @@ Prerequisites:
 
 2. Foundry source files [optional]:
 
-    If you do not have the foundry source files, the latest version will
-    be downloaded from github, built, and installed locally in the
-    open_pdks/sources/ directory.  If you have the foundry source files,
-    then you can pass the location to the open_pdks configure script.  In
-    that case, the sources will need to be completely built.  The
-    instructions below are needed ONLY if you intend to download and
-    install the PDK sources outside of open_pdks.  Instructions below
-    are only valid for the SkyWater SKY130 process.  If additional
-    open-source PDKs become available, instructions will be added as
-    needed.
+    If you do not have the foundry source files, the latest versions of
+    each library will be downloaded from github, and installed locally into
+    the open_pdks/sources/ directory.  If you have the foundry source files,
+    then you can pass the location of each library repository to the
+    open_pdks configure script.  The instructions below are needed ONLY
+    if you intend to download and install the PDK sources outside of
+    open_pdks.  Instructions below are only valid for the SkyWater SKY130
+    process.  For other open-source PDKs, instructions can be found in the
+    corresponding README file in that PDK directory.
 
     Obtain sources for the SkyWater sky130 130nm process from the git repository
     at the following location:
 
-	 https://github.com/google/skywater-pdk
+	 https://github.com/efabless/
 
-    This repository may go in any convenient location.  The Makefile suggests
-    the target location ~/projects/foundry/skywater-pdk but any location will
-    do as long as the --enable-sky130-pdk= configuration option value is set
-    appropriately.
+    As of open_pdks version 1.0.428, the Sky130 sources are no longer under
+    a single umbrella repository, so each core library must be downloaded
+    individually.  The individual core repositories are:
 
-    So cd to the target location parent directory (e.g., "cd ~/projects/foundry")
-    and run the following command:
+	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_pr
+	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_io
+	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd
+	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hdll
+	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_lp
+	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hs
+	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_ms
+	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_ls
+	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hvl
 
-	 git clone https://github.com/google/skywater-pdk
-
-    Note that many of the files in the PDK are too large for a single git
-    repository, and so each IP library in the PDK has been placed in a
-    submodule.  There are multiple versions of each library, and it is
-    nearly certain that you will only want to deal with the "latest" version
-    of each.  To make sure you have the submodules for the latest version of
-    each supported IP library, do:
-
-	cd skywater-pdk
-	git submodule init libraries/sky130_fd_io/latest
-	git submodule init libraries/sky130_fd_pr/latest
-	git submodule init libraries/sky130_fd_sc_hd/latest
-	git submodule init libraries/sky130_fd_sc_hvl/latest
-	[git submodule init libraries/sky130_fd_pr_reram/latest]
-	[git submodule init libraries/sky130_fd_sc_hdll/latest]
-	[git submodule init libraries/sky130_fd_sc_hs/latest]
-	[git submodule init libraries/sky130_fd_sc_ms/latest]
-	[git submodule init libraries/sky130_fd_sc_ls/latest]
-	[git submodule init libraries/sky130_fd_sc_lp/latest]
-	git submodule update
-
-    The liberty (.lib) files are the largest of all and so individual files
-    are too large for the git repo and need to be assembled by script.  To
-    do that, do:
-
-	make timing
-
-    That installs all of the Google/Skywater files.  To keep the overhead low,
-    you may initialize only the submodules that you need.  At a minimum, the
+    This repositories may go in any convenient location.  To keep the overhead
+    low, you may install only the repositories that you need.  At a minimum, the
     I/O library, primitive devices, and the high density and high voltage
     digital standard cell libraries should be installed.  The remaining standard
     cell libraries are optional, as needed for low-leakage, high speed, low power,
@@ -128,38 +104,17 @@ Prerequisites:
 
 PDK Installation:
 
-    There are two methods for installation:  Local and Distribution.  Use Local
-    installation if you are installing on a single host computer.  Use Distribution
-    installation if you are installing into a respository (such as git) that will
-    be distributed to multiple hosts.
-
 Step 1:
 
     Run "configure" to set the paths to the Google/SkyWater source
-    repository and to set the path to the install location.  Note that
+    repositories and to set the path to the install location.  Note that
     the configure script is located in the open_pdks top level directory,
-    not in the foundry subdirctory, and must be run from the top level
-    directory.  The mandatory configure options are as follows:
+    not in the foundry subdirctory, and should be run from the top level
+    directory.  The primary configure options are as follows:
 
-	--enable-sky130-pdk[=/path/to/sky130/pdk/source]
+	--enable-sky130-pdk
 		This is mandatory for specifying that the installation
-		is for the SKY130 PDK.  If the path is specified, then
-		the PDK is assumed to already be downloaded and installed.
-		If not, then the PDK will be downloaded automatically
-		from github and installed.  Note that the PDK repository
-		is very large, contains submodules, and the submodules
-		need to compile the liberty timing files, which can
-		take a very long time.  Be patient.
-
-	--with-ef-style
-		Select this for an efabless-style file structure.
-		The default is "no".  There are some differences in
-		these two styles, the most important of which being
-		that the order of directories for the IP libraries
-		is <file_format>/<library_name> instead of
-		<library_name>/<file_format>. Other differences
-		include version tracking of the Magic setup files
-		and the location of the technology LEF file.
+		is for the SKY130 PDK.
 
 	--with-sky130-variants=all|A|B
 		When set to "all" (which is the default), both variants
@@ -175,6 +130,89 @@ Step 1:
 		and the source foundry data will not be deleted.  For
 		distribution installations, the value must be set to
 		"none".
+
+	--with-ef-style
+		This option should not be used except in the context
+		of the Efabless "open galaxy" platform where it is
+		used.  The default is "no".  There are some differences
+		in these two styles, the most important of which being
+		that the order of directories for the IP libraries
+		is <file_format>/<library_name> instead of
+		<library_name>/<file_format>. Other differences
+		include version tracking of the Magic setup files
+		and the location of the technology LEF file.
+
+	--enable-primitive-sky130[=<path>] 
+		The path to the sky130_fd_pr library, a core PDK
+		library containing the primitive device models and
+		layouts.  If the configuration option or the path is
+		not specified, then the library will be downloaded from
+		github automatically.  To disable this package, use
+		"--disable-primitive-sky130".
+
+	--enable-io-sky130[=<path>] 
+		The path to the sky130_fd_io library, a core PDK
+		library containing the padframe cell layouts and data.
+		If the configuration option or the path is not specified,
+		then the library will be downloaded from github
+		automatically.  To disable this package, use
+		"--disable-io-sky130".
+
+	--enable-sc-hs-sky130[=<path>] 
+		The path to the sky130_fd_sc_hs library, a core PDK
+		library containing the high-speed standard cell layouts
+		and data.  If the configuration option or the path is
+		not specified, then the library will be downloaded from
+		github automatically.  To disable this package, use
+		"--disable-sc-hs-sky130".
+
+	--enable-sc-ms-sky130[=<path>] 
+		The path to the sky130_fd_sc_ms library, a core PDK
+		library containing the medium-speed standard cell layouts
+		and data.  If the configuration option or the path is
+		not specified, then the library will be downloaded from
+		github automatically.  To disable this package, use
+		"--disable-sc-ms-sky130".
+
+	--enable-sc-ls-sky130[=<path>] 
+		The path to the sky130_fd_sc_ls library, a core PDK
+		library containing the low-speed standard cell layouts
+		and data.  If the configuration option or the path is
+		not specified, then the library will be downloaded from
+		github automatically.  To disable this package, use
+		"--disable-sc-ls-sky130".
+
+	--enable-sc-lp-sky130[=<path>] 
+		The path to the sky130_fd_sc_lp library, a core PDK
+		library containing the low-power standard cell layouts
+		and data.  If the configuration option or the path is
+		not specified, then the library will be downloaded from
+		github automatically.  To disable this package, use
+		"--disable-sc-lp-sky130".
+
+	--enable-sc-hd-sky130[=<path>] 
+		The path to the sky130_fd_sc_hd library, a core PDK
+		library containing the high-density standard cell layouts
+		and data.  If the configuration option or the path is
+		not specified, then the library will be downloaded from
+		github automatically.  To disable this package, use
+		"--disable-sc-hd-sky130".
+
+	--enable-sc-hdll-sky130[=<path>] 
+		The path to the sky130_fd_sc_hdll library, a core PDK
+		library containing the high-density, low-leakage standard
+		cell layouts and data.  If the configuration option or
+		the path is not specified, then the library will be
+		downloaded from github automatically.  To disable this
+		package, use "--disable-sc-hdll-sky130".
+
+	--enable-sc-hvl-sky130[=<path>] 
+		The path to the sky130_fd_sc_hvl library, a core PDK
+		library containing the high-voltage standard cell layouts
+		and data.  If the configuration option or the path is
+		not specified, then the library will be downloaded from
+		github automatically.  To disable this package, use
+		"--disable-sc-hvl-sky130".
 
 	--enable-alpha-sky130[=<path>] 
 		The path to the sky130_ml_xx_hd library, a third-party
@@ -196,19 +234,26 @@ Step 1:
 		memory blocks from the OpenRAM open source memory compiler.
 		It is disabled by default due to the length of time
 		required to install, but it is recommended if you will be
-		using SRAM in a design.
+		using SRAM in a design.  If the path is not specified,
+		then the library will be downloaded from github automatically.
 
 	--enable-osu-t12-sky130[=<path>]
 		This 3rd party library is a set of open-source digital
-		standard cells at 12 track pitch height.
+		standard cells at 12 track pitch height.  If the path is
+		not specified, then the library will be downloaded from
+		github automatically.
 
 	--enable-osu-t15-sky130[=<path>]
 		This 3rd party library is a set of open-source digital
-		standard cells at 15 track pitch height.
+		standard cells at 15 track pitch height.  If the path is
+		not specified, then the library will be downloaded from
+		github automatically.
 
 	--enable-osu-t18-sky130[=<path>]
 		This 3rd party library is a set of open-source digital
-		standard cells at 18 track pitch height.
+		standard cells at 18 track pitch height.  If the path is
+		not specified, then the library will be downloaded from
+		github automatically.
 
 	--prefix=<path>
 		This redirects the installation destination.  open_pdks
@@ -238,29 +283,17 @@ Step 2:
 
 	This will pre-process the setup files to create the PDK-specific files
 	for the SKY130A PDK, and process all vendor files, and place everything
-	in a local staging area.
+	in a local staging area (subdirectory sky130/sky130A and/or
+	sky130/sky130B).
 
 Step 3:
 	Run:
 
 	    [sudo] make install
 
-	The behavior of installation depends on whether or not
-	--with-<pdk>-dist-path=<path> has been set (e.g.,
-	--with-sky130-dist-path).  If only the local path
-	(--with-<pdk>-local-path=<path>) has been set, then "make
-	install" copies all files from the staging area into the
-	destination.  All pointers to absolute paths in the files
-	are changed to match the local path.
-
-	If --with-<pdk>-dist-path=<path> has been set, then "make
-	install" copies all files from the staging area into the
-	destination as specified by the value of <path>.  All
-	pointers to absolute paths in the files are changed to match
-	the local path value.  The assumption is that the distribution
-	path is a repository (such as a git repo) that is cloned to
-	multiple hosts, and the destination on the hosts where it is
-	distributed is the local path.
+	This copies all files from the staging area into the
+	destination target.  All pointers to absolute paths in the
+	files are changed to match the local path.
 
 Step 4:
 	Any time you want to check if there are updates to repositories
@@ -342,34 +375,41 @@ Summary of the installation directories:
 
 		libs.ref/		foundry data
 
-		    cdl/		CDL netlists
-		    doc/		Foundry documentation
-		    gds/		GDS files
-		    lef/		LEF macro files
-		    lib/		Timing files
-		    mag/		Magic files derived from GDS
-		    maglef/		Magic files derived from LEF macros
-		    spice/		SPICE netlists (ngspice compatible)
-		    techlef/		LEF technology files
-		    verilog/		verilog modules
-
     Each subdirectory of libs.ref is further divided into sections based on the
-    IP type.  The section names are largely foundry-dependent.  For SkyWater Sky130,
+    IP libraries.  The section names are foundry-dependent.  For SkyWater Sky130,
     these sections include one or more of:
 
-			sky130_fd_sc_hd/		1.8V digital logic (high density)
-			sky130_fd_sc_hdll/		1.8V digital logic (high density low leakage)
-			sky130_fd_sc_hs/		1.8V digital logic (high speed)
-			sky130_fd_sc_hvl/		3.3V digital logic
-			sky130_fd_sc_lp/		1.8V digital logic (low power)
-			sky130_fd_sc_ls/		1.8V digital logic (low speed)
-			sky130_fd_sc_ms/		3.3V digital logic (medium speed)
+		    sky130_fd_sc_hd/		1.8V digital logic (high density)
+		    sky130_fd_sc_hdll/		1.8V digital logic (high density low leakage)
+		    sky130_fd_sc_hs/		1.8V digital logic (high speed)
+		    sky130_fd_sc_hvl/		3.3V digital logic
+		    sky130_fd_sc_lp/		1.8V digital logic (low power)
+		    sky130_fd_sc_ls/		1.8V digital logic (low speed)
+		    sky130_fd_sc_ms/		3.3V digital logic (medium speed)
 
-			sky130_fd_io/			Standard I/O
+		    sky130_fd_io/		Standard I/O
 
-			sky130_fd_pr/			Primitive devices w/fixed layout
+		    sky130_fd_pr/		Primitive devices w/fixed layout
 
-			sky130_ml_xx_hd/		Library of alphanumeric layouts
+		    sky130_ml_xx_hd/		Library of alphanumeric layouts
+
+		    sky130_sram_macros/		Library of SRAM macros
+		    sky130_fd_bd_sram/		Library of SRAM components
+
+    Each IP library has subdirectories corresponding to library standard file
+    formats.  These are the following (not all of them may be present in any
+    given library):
+
+		        cdl/		CDL netlists
+		        doc/		Foundry documentation
+		        gds/		GDS files
+		        lef/		LEF macro files
+		        lib/		Timing files
+		        mag/		Magic files derived from GDS
+		        maglef/		Magic files derived from LEF macros
+		        spice/		SPICE netlists (ngspice compatible)
+		        techlef/	LEF technology files
+		        verilog/	verilog modules
 
     The target installation destinations assume the directory structure above.  Changing
     this requires editing the source files.
