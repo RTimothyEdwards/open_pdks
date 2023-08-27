@@ -1548,8 +1548,7 @@ digital-hd-%:
 	# Install custom additions to standard cell libraries
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130$*} \
 		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
-		-lef %l/lef/*.lef \
-			compile-only lefopts=-toplayer rename=sky130_ef_sc_hd.lef \
+		-lef %l/lef/*.lef compile-only rename=sky130_ef_sc_hd.lef \
 		-verilog %l/verilog/*.v \
 		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install all SkyWater digital standard cells.

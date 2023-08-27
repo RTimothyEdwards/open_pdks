@@ -3,59 +3,47 @@ VERSION 5.7 ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
 MACRO sky130_ef_sc_hd__decap_12
-  CLASS CORE SPACER ;
+  CLASS BLOCK ;
   FOREIGN sky130_ef_sc_hd__decap_12 ;
   ORIGIN 0.000 0.000 ;
   SIZE 5.520 BY 2.720 ;
   PIN VGND
-    DIRECTION INPUT ;
     USE GROUND ;
     PORT
-      LAYER li1 ;
-        RECT 1.670 0.630 2.010 1.460 ;
-        RECT 0.085 0.085 5.430 0.630 ;
-        RECT 0.000 -0.085 5.520 0.085 ;
-      LAYER mcon ;
-        RECT 0.605 -0.085 0.775 0.085 ;
-        RECT 1.065 -0.085 1.235 0.085 ;
-        RECT 1.525 -0.085 1.695 0.085 ;
-        RECT 1.985 -0.085 2.155 0.085 ;
-        RECT 2.445 -0.085 2.615 0.085 ;
-        RECT 2.905 -0.085 3.075 0.085 ;
-        RECT 3.365 -0.085 3.535 0.085 ;
-        RECT 3.825 -0.085 3.995 0.085 ;
-        RECT 4.285 -0.085 4.455 0.085 ;
-        RECT 4.745 -0.085 4.915 0.085 ;
-        RECT 5.205 -0.085 5.375 0.085 ;
       LAYER met1 ;
         RECT 0.000 -0.240 5.520 0.240 ;
     END
   END VGND
-  PIN VNB
-    DIRECTION INPUT ;
-    USE GROUND ;
-    PORT
-      LAYER pwell ;
-        RECT 0.080 -0.130 0.360 0.150 ;
-    END
-  END VNB
-  PIN VPB
-    DIRECTION INPUT ;
+  PIN VPWR
     USE POWER ;
+    PORT
+      LAYER met1 ;
+        RECT 0.000 2.480 5.520 2.960 ;
+    END
+  END VPWR
+  PIN VPB
     PORT
       LAYER nwell ;
         RECT -0.190 1.305 5.710 2.910 ;
     END
   END VPB
-  PIN VPWR
-    DIRECTION INPUT ;
-    USE POWER ;
+  PIN VNB
     PORT
+      LAYER pwell ;
+        RECT 0.005 0.105 5.515 0.915 ;
+        RECT 0.145 -0.085 0.315 0.105 ;
+    END
+  END VNB
+  OBS
       LAYER li1 ;
         RECT 0.000 2.635 5.520 2.805 ;
         RECT 0.085 2.200 5.430 2.635 ;
+        RECT 1.670 0.630 2.010 1.460 ;
         RECT 3.490 0.950 3.840 2.200 ;
+        RECT 0.085 0.085 5.430 0.630 ;
+        RECT 0.000 -0.085 5.520 0.085 ;
       LAYER mcon ;
+        RECT 0.145 2.635 0.315 2.805 ;
         RECT 0.605 2.635 0.775 2.805 ;
         RECT 1.065 2.635 1.235 2.805 ;
         RECT 1.525 2.635 1.695 2.805 ;
@@ -67,10 +55,19 @@ MACRO sky130_ef_sc_hd__decap_12
         RECT 4.285 2.635 4.455 2.805 ;
         RECT 4.745 2.635 4.915 2.805 ;
         RECT 5.205 2.635 5.375 2.805 ;
-      LAYER met1 ;
-        RECT 0.000 2.480 5.520 2.960 ;
-    END
-  END VPWR
+        RECT 0.145 -0.085 0.315 0.085 ;
+        RECT 0.605 -0.085 0.775 0.085 ;
+        RECT 1.065 -0.085 1.235 0.085 ;
+        RECT 1.525 -0.085 1.695 0.085 ;
+        RECT 1.985 -0.085 2.155 0.085 ;
+        RECT 2.445 -0.085 2.615 0.085 ;
+        RECT 2.905 -0.085 3.075 0.085 ;
+        RECT 3.365 -0.085 3.535 0.085 ;
+        RECT 3.825 -0.085 3.995 0.085 ;
+        RECT 4.285 -0.085 4.455 0.085 ;
+        RECT 4.745 -0.085 4.915 0.085 ;
+        RECT 5.205 -0.085 5.375 0.085 ;
+  END
 END sky130_ef_sc_hd__decap_12
 END LIBRARY
 

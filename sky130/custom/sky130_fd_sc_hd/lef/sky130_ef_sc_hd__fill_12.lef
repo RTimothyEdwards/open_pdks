@@ -3,19 +3,38 @@ VERSION 5.7 ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
 MACRO sky130_ef_sc_hd__fill_12
-  CLASS CORE SPACER ;
+  CLASS BLOCK ;
   FOREIGN sky130_ef_sc_hd__fill_12 ;
   ORIGIN 0.000 0.000 ;
   SIZE 5.520 BY 2.720 ;
-  SYMMETRY X Y R90 ;
-  SITE unithd ;
-  OBS
+  PIN VPWR
+    USE POWER ;
+    PORT
+      LAYER met1 ;
+        RECT 0.000 2.480 5.520 2.960 ;
+    END
+  END VPWR
+  PIN VGND
+    USE GROUND ;
+    PORT
+      LAYER met1 ;
+        RECT 0.000 -0.240 5.520 0.240 ;
+    END
+  END VGND
+  PIN VPB
+    PORT
       LAYER nwell ;
-        RECT -0.190 1.305 5.710 2.910 ;
+        RECT -0.190 1.305 2.950 2.910 ;
+    END
+  END VPB
+  PIN VNB
+    PORT
       LAYER pwell ;
-        RECT 0.145 -0.085 0.315 0.085 ;
-        RECT 2.935 -0.060 3.045 0.060 ;
-        RECT 4.755 -0.050 4.915 0.060 ;
+        RECT 0.005 0.105 2.755 0.915 ;
+        RECT 0.145 -0.085 0.315 0.105 ;
+    END
+  END VNB
+  OBS
       LAYER li1 ;
         RECT 0.000 2.635 5.520 2.805 ;
         RECT 0.085 1.545 2.675 2.635 ;
@@ -48,9 +67,6 @@ MACRO sky130_ef_sc_hd__fill_12
         RECT 4.285 -0.085 4.455 0.085 ;
         RECT 4.745 -0.085 4.915 0.085 ;
         RECT 5.205 -0.085 5.375 0.085 ;
-      LAYER met1 ;
-        RECT 0.000 2.480 5.520 2.960 ;
-        RECT 0.000 -0.240 5.520 0.240 ;
   END
 END sky130_ef_sc_hd__fill_12
 END LIBRARY
