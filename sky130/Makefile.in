@@ -796,7 +796,7 @@ alpha-repo:
 			echo "Using existing installation of alphanumeric library from ${ALPHA_PATH}" ; \
 		else \
 			echo "Downloading alphanumeric library from ${ALPHA_URL}" ; \
-			../scripts/download.sh ${ALPHA_URL} ${ALPHA_PATH} ${ALPHA_COMMIT} ; \
+			../scripts/download.sh ${ALPHA_URL} ${ALPHA_PATH} $${ALPHA_COMMIT} ; \
 		fi ; \
 	fi
 
@@ -809,7 +809,7 @@ sram-repo:
 			echo "Using existing installation of SRAM macro library from ${SRAM_PATH}" ; \
 		else \
 			echo "Downloading SRAM macro library from ${SRAM_URL}" ; \
-			../scripts/download.sh ${SRAM_URL} ${SRAM_PATH} ${SRAM_COMMIT}; \
+			../scripts/download.sh ${SRAM_URL} ${SRAM_PATH} $${SRAM_COMMIT}; \
 		fi ; \
 	fi
 
@@ -822,7 +822,7 @@ sram-space-repo:
 			echo "Using existing installation of SRAM build-space library from ${SRAM_SPACE_PATH}" ; \
 		else \
 			echo "Downloading SRAM build-space library from ${SRAM_SPACE_URL}" ; \
-			../scripts/download.sh ${SRAM_SPACE_URL} ${SRAM_SPACE_PATH} ${SRAM_SPACE_COMMIT} ; \
+			../scripts/download.sh ${SRAM_SPACE_URL} ${SRAM_SPACE_PATH} $${SRAM_SPACE_COMMIT} ; \
 		fi ; \
 	fi
 
@@ -835,7 +835,7 @@ xschem-repo:
 			echo "Using existing installation of xschem setup from ${XSCHEM_PATH}" ; \
 		else \
 			echo "Downloading xschem setup from ${XSCHEM_URL}" ; \
-			../scripts/download.sh ${XSCHEM_URL} ${XSCHEM_PATH} ${XSCHEM_COMMIT} ; \
+			../scripts/download.sh ${XSCHEM_URL} ${XSCHEM_PATH} $${XSCHEM_COMMIT} ; \
 		fi ; \
 	fi
 
@@ -848,7 +848,7 @@ klayout-repo:
 			echo "Using existing installation of klayout setup from ${KLAYOUT_PATH}" ; \
 		else \
 			echo "Downloading klayout setup from ${KLAYOUT_URL}" ; \
-			../scripts/download.sh ${KLAYOUT_URL} ${KLAYOUT_PATH} ${KLAYOUT_COMMIT} ; \
+			../scripts/download.sh ${KLAYOUT_URL} ${KLAYOUT_PATH} $${KLAYOUT_COMMIT} ; \
 		fi ; \
 	fi
 
@@ -861,7 +861,7 @@ precheck-repo:
 			echo "Using existing installation of klayout setup from ${PRECHECK_PATH}" ; \
 		else \
 			echo "Downloading klayout setup from ${PRECHECK_URL}" ; \
-			../scripts/download.sh ${PRECHECK_URL} ${PRECHECK_PATH} ${PRECHECK_COMMIT} ; \
+			../scripts/download.sh ${PRECHECK_URL} ${PRECHECK_PATH} $${PRECHECK_COMMIT} ; \
 		fi ; \
 	fi
 
@@ -874,7 +874,7 @@ osu-t12-repo:
 			echo "Using existing installation of OSU T12 standard cell library from ${OSU_T12_PATH}" ; \
 		else \
 			echo "Downloading OSU standard T12 cell library from ${OSU_T12_URL}" ; \
-			../scripts/download.sh ${OSU_T12_URL} ${OSU_T12_PATH} ${OSU_T12_COMMIT} ; \
+			../scripts/download.sh ${OSU_T12_URL} ${OSU_T12_PATH} $${OSU_T12_COMMIT} ; \
 		fi ; \
 	fi
 
@@ -887,7 +887,7 @@ osu-t15-repo:
 			echo "Using existing installation of OSU T15 standard cell library from ${OSU_T15_PATH}" ; \
 		else \
 			echo "Downloading OSU standard T15 cell library from ${OSU_T15_URL}" ; \
-			../scripts/download.sh ${OSU_T15_URL} ${OSU_T15_PATH} ${OSU_T15_COMMIT} ; \
+			../scripts/download.sh ${OSU_T15_URL} ${OSU_T15_PATH} $${OSU_T15_COMMIT} ; \
 		fi ; \
 	fi
 
@@ -900,7 +900,7 @@ osu-t18-repo:
 			echo "Using existing installation of OSU T18 standard cell library from ${OSU_T18_PATH}" ; \
 		else \
 			echo "Downloading OSU standard T18 cell library from ${OSU_T18_URL}" ; \
-			../scripts/download.sh ${OSU_T18_URL} ${OSU_T18_PATH} ${OSU_T18_COMMIT} ; \
+			../scripts/download.sh ${OSU_T18_URL} ${OSU_T18_PATH} $${OSU_T18_COMMIT} ; \
 		fi ; \
 	fi
 
