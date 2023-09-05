@@ -93,6 +93,10 @@ types
   active nsubdiffcont,nsubstratencontact,nsc
   active mvpsubdiffcont,mvpsubstratepcontact,mvpsc
   active mvnsubdiffcont,mvnsubstratencontact,mvnsc
+  active ldndiff,ldndiffusion,ldndif
+  active ldpdiff,ldpdiffusion,ldpdif
+  active ldndiffc,ldndcontact,ldndc
+  active ldpdiffc,ldpdcontact,ldpdc
  -active obsactive
  -active mvobsactive
 # Varactors
@@ -127,6 +131,8 @@ types
   active mvndiffsilicide,mvrnds,mvrdns,mvrndiffs
   active mvpdiffsilicide,mvrpds,mvrdps,mvrpdiffs
 # Diodes
+  active schottky,skdi
+  active schottkyc,skdic
   active pdiode,pdi
   active ndiode,ndi
   active nndiode,nndi
@@ -232,6 +238,7 @@ contact
   ndic ndiode metal1
   nndic nndiode metal1
   pdic pdiode metal1
+  skdic schottky metal1
 
   mvndc mvndiff metal1
   mvpdc mvpdiff metal1
@@ -240,6 +247,9 @@ contact
   mvndic mvndiode metal1
   mvpdic mvpdiode metal1
   mvnndic mvnndiode metal1
+
+  ldndc ldndiff metal1
+  ldpdc ldpdiff metal1
 
   via1 metal1 metal2
 #ifdef METALS3 || METALS4 || METALS5 || METALS6
@@ -308,12 +318,12 @@ aliases
   allfetsmv	   mvnfet,mvpfet,mvnnfet,mvnvaractor,mvpvaractor,mvncap,mvpcap
 
   alllvnactivenonfet *ndiff,*nsd,*ndiode,*nndiode
-  allmvnactivenonfet *mvndiff,*mvnsd,*mvndiode,*mvnndiode
+  allmvnactivenonfet *mvndiff,*mvnsd,*mvndiode,*mvnndiode,*ldndiff
   allnactivenonfet alllvnactivenonfet,allmvnactivenonfet
   allnactive	   allnactivenonfet,allnfets
 
   alllvpactivenonfet *pdiff,*psd,*pdiode
-  allmvpactivenonfet *mvpdiff,*mvpsd,*mvpdiode
+  allmvpactivenonfet *mvpdiff,*mvpsd,*mvpdiode,*ldpdiff
   allpactivenonfet alllvpactivenonfet,allmvpactivenonfet
   allpactive	   allpactivenonfet,allpfets
 
@@ -331,11 +341,11 @@ aliases
   allpdifflvnonfet *pdif,*psd,*pdiode,pdiffres
   alldifflvnonfet  allndifflvnonfet,allpdifflvnonfet
 
-  allndiffmv       *mvndif,*mvnsd,*mvndiode,mvndiffres,mvnfet,mvnnfet,mvnvaractor,*mvnndiode,mvncap
-  allpdiffmv       *mvpdif,*mvpsd,*mvpdiode,mvpdiffres,mvpfet,mvpvaractor,mvpcap
+  allndiffmv       *mvndif,*mvnsd,*mvndiode,mvndiffres,mvnfet,mvnnfet,mvnvaractor,*mvnndiode,mvncap,*ldndiff
+  allpdiffmv       *mvpdif,*mvpsd,*mvpdiode,mvpdiffres,mvpfet,mvpvaractor,mvpcap,*ldpdiff
   alldiffmv        allndiffmv,allpdiffmv
-  allndiffmvnonfet *mvndif,*mvnsd,*mvndiode,mvndiffres,*mvnndiode
-  allpdiffmvnonfet *mvpdif,*mvpsd,*mvpdiode,mvpdiffres
+  allndiffmvnonfet *mvndif,*mvnsd,*mvndiode,mvndiffres,*mvnndiode,*ldndiff
+  allpdiffmvnonfet *mvpdif,*mvpsd,*mvpdiode,mvpdiffres,*ldpdiff
   alldiffmvnonfet  allndiffmvnonfet,allpdiffmvnonfet
 
   alldiffnonfet	   alldifflvnonfet,alldiffmvnonfet
@@ -370,7 +380,7 @@ aliases
   allcont	   alldiffcont,pc
 
   allres	   allpolyres,allactiveres
-  alldiode	   *pdiode,*ndiode,*nndiode,*mvpdiode,*mvndiode,*mvnndiode
+  alldiode	   *pdiode,*ndiode,*nndiode,*mvpdiode,*mvndiode,*mvnndiode,*schottky
 
   allm1		   *m1,rm1
   allm2		   *m2,rm2
@@ -447,12 +457,16 @@ styles
   mvpfet      ptransistor    ptransistor_stripes
   mvnvar      polysilicon    ndiff_in_nwell hvndiff_mask
   mvpvar      polysilicon    pdiff_in_pwell hvpdiff_mask
+  ldndiff     hvndiff
+  ldpdiff     hvpdiff
   mvndc       ndiffusion     metal1  contact_X'es hvndiff_mask
   mvpdc       pdiffusion     metal1  contact_X'es hvpdiff_mask
   mvnsc       ndiff_in_nwell metal1  contact_X'es hvndiff_mask
   mvpsc       pdiff_in_pwell metal1  contact_X'es hvpdiff_mask
   mvncap      ntransistor    ntransistor_stripes hvndiff_mask
   mvpcap      ptransistor    ptransistor_stripes
+  ldndc	      hvndiff	     metal1 contact_X'es
+  ldpdc	      hvpdiff	     metal1 contact_X'es
 
   poly      polysilicon 
   pc        polysilicon    metal1  contact_X'es
@@ -466,6 +480,8 @@ styles
   pdiodec   pdiffusion     pselect2 metal1 contact_X'es
   ndiodec   ndiffusion     nselect2 metal1 contact_X'es
   nndiodec  ndiff_in_nwell nselect2 metal1 contact_X'es
+  schottky  ndiffusion	   pdiffusion
+  schottkyc ndiffusion	   pdiffusion metal1 contact_X'es
 
   mvpdiode    pdiffusion     pselect2 hvpdiff_mask
   mvndiode    ndiffusion     nselect2 hvndiff_mask
@@ -612,11 +628,13 @@ compose
   paint  ndiff   nwell  pdiff
   paint  psd     nwell  nsd
   paint  psc     nwell  nsc
+  paint  ldndiff nwell  ldpdiff
   paint  pdc     pwell  ndc
   paint  pfet    pwell  nfet
   paint  pdiff   pwell  ndiff
   paint  nsd     pwell  psd
   paint  nsc     pwell  psc
+  paint  ldpdiff pwell  ldndiff
 
   paint  m1      obsm1  m1
   paint  m2      obsm2  m2
@@ -662,6 +680,7 @@ connect
    allnactivenonfet	allnactivenonfet
    allpactivenonfet	allpactivenonfet
   *poly,allfets		*poly,allfets
+  *schottky		*schottky
 end
 
 #-----------------------------------------------------
@@ -719,13 +738,52 @@ style gdsii
 #-----------------------------------------------------
 # DIFF (COMP)
 #-----------------------------------------------------
- layer DIFF 	alldiff
- 	labels 	alldiff
+
+ # LDFETs cut the diffusion under the gate
+ templayer ldbreak1 *ldndiff,*ldpdiff
+	grow 160
+	and mvnfet,mvpfet
+
+ templayer ldbreak mvnfet,mvpfet
+	grow 200
+	and ldndiff,ldpdiff
+	or ldbreak1
+
+ # Additional cut-back of LD diffusion for implant
+ templayer ldbreak2 mvnfet,mvpfet
+	grow 240
+	and ldndiff,ldpdiff
+
+ # Schottky diode drawn as abutting diffusion, but
+ # there is a 0.28um gap between the nsd and the
+ # Schottky diffusion.
+ templayer scsep *nsd
+	grow	280
+
+ layer DIFF 	schottky
+	and-not	scsep
+	or	alldiff
+	and-not	ldbreak
+ 	labels 	alldiff,schottky
  	calma 	22 0
 
  layer DIFFFILL	filldiff
 	labels	filldiff
 	calma	22 4
+
+#-----------------------------------------------------
+# LDFET implants
+#-----------------------------------------------------
+
+ layer MVNSD ldndiff
+	and-not ldbreak2
+	grow 800
+	calma 210 0
+	
+ layer MVPSD ldpdiff
+	and-not ldbreak2
+	grow 800
+	calma 11 39
 
 #-----------------------------------------------------
 # Bipolar ID markers
@@ -1264,6 +1322,14 @@ style gdsii
  calma 115 5
 
 #-----------------------------------------------------
+# SCHOTTKY MARK
+#-----------------------------------------------------
+ layer SCHOTTKY
+ bloat-all *schottky *nsd
+ grow 160
+ calma 241 0
+
+#-----------------------------------------------------
 # MOSCAP MARK
 #-----------------------------------------------------
  layer MOSCAP nvar,mvnvar,pvar,mvpvar,ncap,pcap,mvncap,mvpcap
@@ -1324,7 +1390,7 @@ style metfill
 # Obstruction geometry
 #-----------------------------------------------------
 
- templayer 	obstruct_diff alldiff,filldiff,obsactive
+ templayer 	obstruct_diff alldiff,schottky,filldiff,obsactive
 	grow 	2010
 	shrink 	500
 	grow 	500
@@ -1474,9 +1540,13 @@ style drc
  options calma-permissive-labels
  gridlimit 5
 
+ # Check that all p-diff and n-ohmic has either nwell or dnwell
+ templayer missing_nwell *nsd,*mvnsd,*pdiff,*mvpdiff,*pdiode,pdiffres,mvpdiffres,pfet,mvpfet,mvnvaractor
+ and-not dnwell,nwell
+
  # Check for MV and LV devices in the same dnwell
  templayer mv_dnwell
- bloat-all alldiffmv dnwell
+ bloat-all alldiffmv,schottky dnwell
 
  templayer bad_dnwell
  bloat-all alldifflv dnwell
@@ -1495,7 +1565,7 @@ style drc
  bloat-all alldiffmv nwell
 
  templayer bad_nwell
- bloat-all alldifflv nwell
+ bloat-all alldifflv,schottky nwell
  and mv_nwell
 
  # Check for nwell resistor in deep nwell
@@ -1690,6 +1760,32 @@ style  import
  # Copy mvndiff areas up for contact checks
  templayer mvxndifcheck mvndifcheck
  copyup mvndifcheck
+
+ # Save cathode areas of Schottky diodes
+ templayer sccathode SCHOTTKY
+ and DIFF
+ and NPLUS
+
+ # Grow Schottky anode so that drawn device abuts
+ # the cathode.
+ layer schottky SCHOTTKY
+ and DIFF
+ and-not NPLUS
+ and-not PPLUS
+ or sccathode
+ grow 140
+ shrink 140
+ and-not sccathode
+ labels DIFF
+
+ # Schottky contact
+ layer schottkyc SCHOTTKY
+ and CONT
+ and DIFF
+ and-not NPLUS
+ and-not PPLUS
+ grow 145
+ shrink 140
 
  layer ndiode DIFF
  and NPLUS
@@ -2756,6 +2852,7 @@ style  import
  calma CAP_LENGTH 117 10
 #endif (MIM)
  calma DIODE  115 5
+ calma SCHOTTKY 241 0
  calma CAPDEF 117 5
  calma BJTDEF 118 5
  calma BJTDRC 127 5
@@ -2868,14 +2965,28 @@ drc
 	"P-Ohmic spacing to N-well < %d (DF.5)"
  spacing *mvpsd allnwell 160 touching_illegal \
 	"P-Ohmic spacing to N-well < %d (DF.5)"
- surround *nsd allnwell 120 absence_illegal \
+
+ # NWELL and DNWELL are interchangeable under devices.
+ surround *nsd allnwell 120 absence_okay \
 	"N-well overlap of N-Ohmic < %d (DF.4a)"
- surround *mvnsd allnwell 160 absence_illegal \
+ surround *mvnsd allnwell 160 absence_okay \
 	"N-well overlap of N-Ohmic < %d (DF.4a)"
- surround *pdiff,*pdiode,pfet,pcap allnwell 430 absence_illegal \
+ surround *pdiff,*pdiode,pfet,pcap allnwell 430 absence_okay \
 	"N-well overlap of P-Diffusion < %d (DF.7)"
- surround *mvpdiff,*mvpdiode,mvpfet,mvpcap allnwell 600 absence_illegal \
+ surround *mvpdiff,*mvpdiode,mvpfet,mvpcap allnwell 600 absence_okay \
 	"N-well overlap of P-Diffusion < %d (DF.7)"
+ surround *nsd dnwell 620 absence_okay \
+	"Deep N-well overlap of N-Ohmic < %d (DF.4b)"
+ surround *mvnsd dnwell 660 absence_okay \
+	"Deep N-well overlap of N-Ohmic < %d (DF.4b)"
+ surround *pdiff,*pdiode,pfet,pcap dnwell 930 absence_okay \
+	"Deep N-well overlap of P-Diffusion < %d (DF.4e)"
+ surround *mvpdiff,*mvpdiode,mvpfet,mvpcap dnwell 1100 absence_okay \
+	"Deep N-well overlap of P-Diffusion < %d (DF.4e)"
+ # Use CIF-DRC rule to ensure that at least one exists.
+ cifmaxwidth missing_nwell 0 bend_illegal \
+	"P-diffusion and M-ohmic must be over N-well or deep N-well (DN.11)"
+
  surround *psd pwell 120 absence_ok \
 	"P-field overlap of P-Ohmic < %d (DF.5)"
  surround *mvpsd pwell  160 absence_ok \
@@ -4731,7 +4842,7 @@ variants *
 #  cap_nmos_06v0_b	mosfet   (n-varactor, high voltage)
 #  cap_pmos_06v0_b	mosfet   (p-varactor, high voltage)
 #
-#  cap_mim_2f0_mXmY_noshield	capacitor (MiM)*,**
+#  cap_mim_2f0fF	capacitor (MiM)*,**
 #
 #  efuse		fuse
 
@@ -4781,6 +4892,11 @@ variants *
  device msubcircuit pnp_05p00x00p42 pnp *pdiff pwell,space/w error a1>2.0 a1<2.2
  device msubcircuit pnp_10p00x10p00 pnp *pdiff pwell,space/w error a1>99.0 a1<101.0
  device msubcircuit pnp_05p00x05p00 pnp *pdiff pwell,space/w error a1>24.0 a1<26.0
+
+ device msubcircuit nfet_10v0_asym mvnfet *mvndiff *ldndiff allpsub error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit pfet_10v0_asym mvpfet *mvpdiff *ldpdiff allnwell error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
 
  device rsubcircuit efuse efuse *poly
 
@@ -4865,19 +4981,20 @@ variants *
  device pdiode diode_pd2nw_06v0     *mvpdiode allnwell a=area p=pj
  device ndiode diode_nd2ps_06v0     *mvndiode allpsub a=area p=pj
  device ndiode diode_nd2ps_06v0_nvt *mvnndiode allpsub a=area p=pj
+ device pdiode sc_diode		    *schottky *nsd a=area p=pj
 
 #ifdef MIM
 #ifdef METALS6
- device csubcircuit cap_mim_2f0_m5m6_noshield *mimcap  *m5   l=c_length w=c_width
+ device csubcircuit cap_mim_2f0fF *mimcap  *m5   l=c_length w=c_width
 #endif
 #ifdef METALS5
- device csubcircuit cap_mim_2f0_m4m5_noshield *mimcap  *m4   l=c_length w=c_width
+ device csubcircuit cap_mim_2f0fF *mimcap  *m4   l=c_length w=c_width
 #endif
 #ifdef METALS4
- device csubcircuit cap_mim_2f0_m3m4_noshield *mimcap  *m3   l=c_length w=c_width
+ device csubcircuit cap_mim_2f0fF *mimcap  *m3   l=c_length w=c_width
 #endif
 #ifdef METALS3
- device csubcircuit cap_mim_2f0_m2m3_noshield *mimcap  *m2   l=c_length w=c_width
+ device csubcircuit cap_mim_2f0fF *mimcap  *m2   l=c_length w=c_width
 #endif
 #endif (MIM)
 
