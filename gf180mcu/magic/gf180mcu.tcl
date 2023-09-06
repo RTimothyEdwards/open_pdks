@@ -106,8 +106,8 @@ proc gf180mcu::addtechmenu {framename} {
    magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 10.0um x 10.0um " "magic::gencell gf180mcu::npn_10p00x10p00" pdk1
    magic::add_toolkit_command $layoutframe "npn_05p00x05p00  (3.3V) - 5.0um x 5.0um " "magic::gencell gf180mcu::npn_05p00x05p00" pdk1
    magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 0.54um x 4.0um " "magic::gencell gf180mcu::npn_00p54x04p00" pdk1
-   magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 0.54um x 4.0um " "magic::gencell gf180mcu::npn_00p54x10p00" pdk1
-   magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 0.54um x 4.0um " "magic::gencell gf180mcu::npn_00p54x08p00" pdk1
+   magic::add_toolkit_command $layoutframe "npn_00p54x10p00  (3.3V) - 0.54um x 4.0um " "magic::gencell gf180mcu::npn_00p54x10p00" pdk1
+   magic::add_toolkit_command $layoutframe "npn_00p54x08p00  (3.3V) - 0.54um x 4.0um " "magic::gencell gf180mcu::npn_00p54x08p00" pdk1
    magic::add_toolkit_command $layoutframe "npn_00p54x02p00  (3.3V) - 0.54um x 2.0um " "magic::gencell gf180mcu::npn_00p54x02p00" pdk1
    magic::add_toolkit_command $layoutframe "pnp_10p00x10p00  (3.3V) - 10.0um x 10.0um " "magic::gencell gf180mcu::pnp_10p00x10p00" pdk1
    magic::add_toolkit_command $layoutframe "pnp_05p00x05p00  (3.3V) - 5.0um x 5.0um " "magic::gencell gf180mcu::pnp_05p00x05p00" pdk1
@@ -3238,7 +3238,7 @@ proc gf180mcu::nfet_03v3_defaults {} {
 		compatible {nfet_03v3 nfet_06v0 nfet_06v0_nvt}}
 }
 
-proc gf180mcu::nfet_06v0_nvt_defaults {} {
+proc gf180mcu::nfet_06v0_defaults {} {
     return {w 0.3 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 0.3 \
@@ -3310,7 +3310,7 @@ proc gf180mcu::nfet_03v3_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
-proc gf180mcu::nfet_06v0_nvt_convert {parameters} {
+proc gf180mcu::nfet_06v0_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
@@ -3385,12 +3385,12 @@ proc gf180mcu::nfet_03v3_dialog {parameters} {
     gf180mcu::mos_dialog nfet_03v3 $parameters
 }
 
-proc gf180mcu::nfet_06v0_nvtdialog {parameters} {
+proc gf180mcu::nfet_06v0_dialog {parameters} {
     gf180mcu::mos_dialog nfet_06v0 $parameters
 }
 
 proc gf180mcu::nfet_06v0_nvt_dialog {parameters} {
-    gf180mcu::mos_dialog nfet_06v0 $parameters
+    gf180mcu::mos_dialog nfet_06v0_nvt $parameters
 }
 
 proc gf180mcu::pfet_03v3_dialog {parameters} {
@@ -4090,7 +4090,7 @@ proc gf180mcu::nfet_06v0_draw {parameters} {
     return [gf180mcu::mos_draw $drawdict]
 }
 
-proc gf180mcu::nfet_06v0_draw {parameters} {
+proc gf180mcu::nfet_06v0_nvt_draw {parameters} {
     set newdict [dict create \
 	    gate_type		mvnnfet \
 	    diff_type 		mvndiff \
