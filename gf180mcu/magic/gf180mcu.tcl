@@ -105,15 +105,15 @@ proc gf180mcu::addtechmenu {framename} {
    magic::add_toolkit_separator	$layoutframe pdk1
    magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 10.0um x 10.0um " "magic::gencell gf180mcu::npn_10p00x10p00" pdk1
    magic::add_toolkit_command $layoutframe "npn_05p00x05p00  (3.3V) - 5.0um x 5.0um " "magic::gencell gf180mcu::npn_05p00x05p00" pdk1
-   magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 0.54um x 4.0um " "magic::gencell gf180mcu::npn_00p54x04p00" pdk1
-   magic::add_toolkit_command $layoutframe "npn_00p54x10p00  (3.3V) - 0.54um x 4.0um " "magic::gencell gf180mcu::npn_00p54x10p00" pdk1
-   magic::add_toolkit_command $layoutframe "npn_00p54x08p00  (3.3V) - 0.54um x 4.0um " "magic::gencell gf180mcu::npn_00p54x08p00" pdk1
+   magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 10.0um x 10.0um " "magic::gencell gf180mcu::npn_00p54x04p00" pdk1
+   magic::add_toolkit_command $layoutframe "npn_00p54x10p00  (3.3V) - 0.54um x 10.0um " "magic::gencell gf180mcu::npn_00p54x10p00" pdk1
+   magic::add_toolkit_command $layoutframe "npn_00p54x08p00  (3.3V) - 0.54um x 8.0um " "magic::gencell gf180mcu::npn_00p54x08p00" pdk1
    magic::add_toolkit_command $layoutframe "npn_00p54x02p00  (3.3V) - 0.54um x 2.0um " "magic::gencell gf180mcu::npn_00p54x02p00" pdk1
    magic::add_toolkit_command $layoutframe "pnp_10p00x10p00  (3.3V) - 10.0um x 10.0um " "magic::gencell gf180mcu::pnp_10p00x10p00" pdk1
    magic::add_toolkit_command $layoutframe "pnp_05p00x05p00  (3.3V) - 5.0um x 5.0um " "magic::gencell gf180mcu::pnp_05p00x05p00" pdk1
    magic::add_toolkit_command $layoutframe "pnp_10p00x00p42  (3.3V) - 10.0um x 0.42um " "magic::gencell gf180mcu::pnp_10p00x00p42" pdk1
    magic::add_toolkit_command $layoutframe "pnp_05p00x00p42  (3.3V) - 5.0um x 0.42um " "magic::gencell gf180mcu::pnp_05p00x00p42" pdk1
-   magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 0.54um x 4.0um " "magic::gencell gf180mcu::eFuse" pdk1
+   magic::add_toolkit_command $layoutframe "eFuse" "magic::gencell gf180mcu::eFuse" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
    magic::add_toolkit_command $layoutframe "mos capacitor" "magic::gencell gf180mcu::nmoscap_3p3" pdk1
