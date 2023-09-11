@@ -16,11 +16,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-`ifndef SKY130_EF_IO__ANALOG_PAD_V
-`define SKY130_EF_IO__ANALOG_PAD_V
+`ifndef SKY130_EF_IO__ANALOG_ESD_PAD_V
+`define SKY130_EF_IO__ANALOG_ESD_PAD_V
 
 /**
- * analog_pad: Analog PAD, without ESD structures.
+ * analog_esd_pad: Analog PAD.
  *
  * Verilog top module.
  *
@@ -52,7 +52,7 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 
-module sky130_ef_io__analog_pad (AMUXBUS_A, AMUXBUS_B, P_PAD, P_CORE
+module sky130_ef_io__analog_esd_pad (AMUXBUS_A, AMUXBUS_B, P_PAD, P_CORE
                                  ,VCCD, VCCHIB, VDDA, VDDIO, VDDIO_Q, VSSA, VSSD, VSSIO, VSSIO_Q, VSWITCH
                                 );
 inout AMUXBUS_A;
@@ -94,7 +94,7 @@ endmodule
  * SPDX-License-Identifier: Apache-2.0
 */
 
-module sky130_ef_io__analog_pad (AMUXBUS_A, AMUXBUS_B, P_PAD, P_CORE
+module sky130_ef_io__analog_esd_pad (AMUXBUS_A, AMUXBUS_B, P_PAD, P_CORE
                                  ,VCCD, VCCHIB, VDDA, VDDIO, VDDIO_Q, VSSA, VSSD, VSSIO, VSSIO_Q, VSWITCH
                                 );
 inout AMUXBUS_A;
@@ -140,7 +140,7 @@ endmodule
  * SPDX-License-Identifier: Apache-2.0
 */
 
-module sky130_ef_io__analog_pad (AMUXBUS_A, AMUXBUS_B, P_PAD, P_CORE
+module sky130_ef_io__analog_esd_pad (AMUXBUS_A, AMUXBUS_B, P_PAD, P_CORE
                                 );
 inout AMUXBUS_A;
 inout AMUXBUS_B;
@@ -181,7 +181,7 @@ endmodule
  * SPDX-License-Identifier: Apache-2.0
 */
 
-module sky130_ef_io__analog_pad (AMUXBUS_A, AMUXBUS_B, P_PAD, P_CORE
+module sky130_ef_io__analog_esd_pad (AMUXBUS_A, AMUXBUS_B, P_PAD, P_CORE
                                 );
 inout AMUXBUS_A;
 inout AMUXBUS_B;
@@ -207,4 +207,4 @@ endmodule
 `endif // USE_POWER_PINS
 
 `default_nettype wire
-`endif  // SKY130_EF_IO__ANALOG_PAD_V
+`endif  // SKY130_EF_IO__ANALOG_ESD_PAD_V
