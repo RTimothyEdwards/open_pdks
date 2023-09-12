@@ -36,7 +36,7 @@ set ::env(DIODE_CELL) "$::env(STD_CELL_LIBRARY)__antenna"
 set ::env(DIODE_CELL_PIN) "I"
 set ::env(DIODE_INSERTION_STRATEGY) {4}
 
-set ::env(CELL_PAD_EXCLUDE) "$::env(STD_CELL_LIBRARY)__filltie_* $::env(STD_CELL_LIBRARY)__filldecap_* $::env(STD_CELL_LIBRARY)__fill_* $::env(STD_CELL_LIBRARY)__endcap_*"
+set ::env(CELL_PAD_EXCLUDE) "$::env(STD_CELL_LIBRARY)__filltie $::env(STD_CELL_LIBRARY)__fill_* $::env(STD_CELL_LIBRARY)__endcap"
 
 # TritonCTS configurations
 set ::env(CTS_ROOT_BUFFER) "$::env(STD_CELL_LIBRARY)__clkbuf_16"
