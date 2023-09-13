@@ -3668,7 +3668,7 @@ proc gf180mcu::guard_ring {gw gh parameters} {
 # MOSFET: Draw a single device
 #----------------------------------------------------------------
 
-proc gf180mcu::mos_device {parameters} {
+proc gf180mcu::mos_device {xcount parameters} {
 
     # Epsilon for avoiding round-off errors
     set eps  0.0005
@@ -3685,6 +3685,19 @@ proc gf180mcu::mos_device {parameters} {
         set $key [dict get $parameters $key]
     }
 
+    # For symmetric devices, set the drain-specific parameters to be the
+    # same as the generic parameters.
+
+    if {![dict exists $parameters drain_diff_type]} {
+	set drain_diff_type $diff_type
+    }
+    if {![dict exists $parameters drain_diff_contact_type]} {
+	set drain_diff_contact_type $diff_contact_type
+    }
+    if {![dict exists $parameters drain_diff_extension]} {
+	set drain_diff_extension $diff_extension
+    }
+
     # Draw the diffusion and poly
     pushbox
     box size 0 0
@@ -3695,19 +3708,37 @@ proc gf180mcu::mos_device {parameters} {
     box grow s ${hw}um
     box grow e ${hl}um
     box grow w ${hl}um
-    pushbox
-    if {${diff_extension} > ${gate_to_diffcont}} {
-        box grow e ${diff_extension}um
-        box grow w ${diff_extension}um
+    # Set drain and source sides based on xcount.
+    if {[% $xcount 2] == 1} {
+	set dside e
+	set sside w
     } else {
-        box grow e ${gate_to_diffcont}um
-        box grow w ${gate_to_diffcont}um
+	set dside w
+	set sside e
+    }
+    pushbox
+    if {${drain_diff_extension} > ${gate_to_diffcont}} {
+        box grow $dside ${drain_diff_extension}um
+    } else {
+        box grow $dside ${gate_to_diffcont}um
         # Grow to far side of contact;  avoids diffusion separation if
 	# the contact is a dogbone and is moved outward to meet the DRC
 	# diffusion to gate spacing rule.
 	set hc [/ ${contact_size} 2.0]
-        box grow e ${hc}um
-        box grow w ${hc}um
+        box grow $dside ${hc}um
+    }
+    paint ${drain_diff_type}
+    popbox
+    pushbox
+    if {${diff_extension} > ${gate_to_diffcont}} {
+        box grow $sside ${diff_extension}um
+    } else {
+        box grow $sside ${gate_to_diffcont}um
+        # Grow to far side of contact;  avoids diffusion separation if
+	# the contact is a dogbone and is moved outward to meet the DRC
+	# diffusion to gate spacing rule.
+	set hc [/ ${contact_size} 2.0]
+        box grow $sside ${hc}um
     }
     paint ${diff_type}
     popbox
@@ -3801,18 +3832,18 @@ proc gf180mcu::mos_device {parameters} {
 	set cpl [* ${cpl} [/ ${polycov} 100.0]]
     }
 
-    # Right diffusion contact
+    # Drain diffusion contact
     pushbox
-    box move e ${hl}um
-    box move e ${gate_to_diffcont}um
+    box move $dside ${hl}um
+    box move $dside ${gate_to_diffcont}um
     set cext [gf180mcu::unionbox $cext [gf180mcu::draw_contact 0 ${cdw} \
 		${diff_surround} ${metal_surround} ${contact_size}\
-		${diff_type} ${diff_contact_type} m1 ${diffcont_orient}]]
+		${drain_diff_type} ${drain_diff_contact_type} m1 ${diffcont_orient}]]
     popbox
-    # Left diffusion contact
+    # Source diffusion contact
     pushbox
-    box move w ${hl}um
-    box move w ${gate_to_diffcont}um
+    box move $sside ${hl}um
+    box move $sside ${gate_to_diffcont}um
     set cext [gf180mcu::unionbox $cext [gf180mcu::draw_contact 0 ${cdw} \
 		${diff_surround} ${metal_surround} ${contact_size} \
 		${diff_type} ${diff_contact_type} m1 ${diffcont_orient}]]
@@ -3897,7 +3928,7 @@ proc gf180mcu::mos_draw {parameters} {
     # to duplicate it here with calculations.
 
     tech lock *
-    set bbox [gf180mcu::mos_device $parameters]
+    set bbox [gf180mcu::mos_device 0 $parameters]
     # puts stdout "Diagnostic: Device bounding box e $bbox (um)"
     tech unlock *
 
@@ -3991,7 +4022,7 @@ proc gf180mcu::mos_draw {parameters} {
     for {set xp 0} {$xp < $nf} {incr xp} {
         pushbox
         for {set yp 0} {$yp < $m} {incr yp} {
-            gf180mcu::mos_device $parameters
+            gf180mcu::mos_device $xp $parameters
             box move n ${dy}um
         }
         popbox
