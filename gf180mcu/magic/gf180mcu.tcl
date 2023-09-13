@@ -4313,15 +4313,15 @@ proc gf180mcu::nmoscap_6p0_check {parameters} {
 #----------------------------------------------------------------
 
 proc gf180mcu::npn_05p00x05p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.94 ystep 13.94}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 15.29 ystep 22.92}
 }
 
 proc gf180mcu::npn_00p54x02p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 16.22}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.55 ystep 14.95}
 }
 
 proc gf180mcu::npn_10p00x10p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 16.94 ystep 16.94}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 23.04 ystep 23.04}
 }
 
 proc gf180mcu::npn_00p54x10p00_defaults {} {
@@ -4333,7 +4333,7 @@ proc gf180mcu::eFuse_defaults {} {
 }
 
 proc gf180mcu::npn_00p54x04p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 21.22}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.92 ystep 16.96}
 }
 
 proc gf180mcu::npn_00p54x08p00_defaults {} {
@@ -4341,19 +4341,19 @@ proc gf180mcu::npn_00p54x08p00_defaults {} {
 }
 
 proc gf180mcu::pnp_05p00x05p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.94 ystep 13.94}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 8.25 ystep 8.25}
 }
 
 proc gf180mcu::pnp_05p00x00p42_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 16.22}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 3.69 ystep 8.25}
 }
 
 proc gf180mcu::pnp_10p00x10p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 16.94 ystep 16.94}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.25 ystep 13.25}
 }
 
 proc gf180mcu::pnp_10p00x00p42_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 21.22}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 3.75 ystep 13.25}
 }
 
 #----------------------------------------------------------------
