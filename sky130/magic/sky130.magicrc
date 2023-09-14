@@ -35,6 +35,13 @@ tech load $PDK_ROOT/TECHNAME/MAGIC_CURRENT/TECHNAME-F.tech
 tech load $PDK_ROOT/TECHNAME/MAGIC_CURRENT/TECHNAME.tech
 #endif
 
+# halt on error
+#ifdef FULLTECH
+if {[tech name] != "TECHNAME-F"} {quit -noprompt}
+#else
+if {[tech name] != "TECHNAME"} {quit -noprompt}
+#endif
+
 # load device generator
 source $PDK_ROOT/TECHNAME/MAGIC_CURRENT/TECHNAME.tcl
 

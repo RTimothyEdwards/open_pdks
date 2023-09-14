@@ -27,6 +27,9 @@ if {[catch {set PDK_ROOT [file nativename $env(PDK_ROOT)]}]} {
 # loading technology
 tech load $PDK_ROOT/TECHNAME/MAGIC_CURRENT/TECHNAME.tech
 
+# halt on error
+if {[tech name] != "TECHNAME"} {quit -noprompt}
+
 # load device generator
 source $PDK_ROOT/TECHNAME/MAGIC_CURRENT/TECHNAME.tcl
 
