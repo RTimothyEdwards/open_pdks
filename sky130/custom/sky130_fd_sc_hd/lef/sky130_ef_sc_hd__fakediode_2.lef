@@ -28,12 +28,16 @@ MACRO sky130_ef_sc_hd__fakediode_2
     END
   END VPWR
   PIN VPB
+    DIRECTION INOUT ;
+    USE POWER ;
     PORT
       LAYER nwell ;
         RECT -0.190 1.305 1.110 2.910 ;
     END
   END VPB
   PIN VNB
+    DIRECTION INOUT ;
+    USE GROUND ;
     PORT
       LAYER pwell ;
         RECT 0.025 0.065 0.915 1.015 ;

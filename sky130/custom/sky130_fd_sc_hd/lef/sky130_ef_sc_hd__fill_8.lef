@@ -22,12 +22,16 @@ MACRO sky130_ef_sc_hd__fill_8
     END
   END VPWR
   PIN VPB
+    DIRECTION INOUT ;
+    USE POWER ;
     PORT
       LAYER nwell ;
         RECT -0.190 1.305 3.870 2.910 ;
     END
   END VPB
   PIN VNB
+    DIRECTION INOUT ;
+    USE GROUND ;
     PORT
       LAYER pwell ;
         RECT 0.025 0.065 3.655 1.015 ;
