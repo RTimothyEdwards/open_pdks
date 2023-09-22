@@ -103,6 +103,11 @@ proc gf180mcu::addtechmenu {framename} {
    magic::add_toolkit_command $layoutframe "diode_pd2nw_03v3 - p-diode" "magic::gencell gf180mcu::diode_pd2nw_03v3" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
+   magic::add_toolkit_command $layoutframe "ldnmos - nMOSFET" "magic::gencell gf180mcu::nfet_10v0_asym" pdk1
+   magic::add_toolkit_command $layoutframe "ldpmos - nMOSFET" "magic::gencell gf180mcu::pfet_10v0_asym" pdk1
+ 
+
+   magic::add_toolkit_separator	$layoutframe pdk1
    magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 10.0um x 10.0um " "magic::gencell gf180mcu::npn_10p00x10p00" pdk1
    magic::add_toolkit_command $layoutframe "npn_05p00x05p00  (3.3V) - 5.0um x 5.0um " "magic::gencell gf180mcu::npn_05p00x05p00" pdk1
    magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 10.0um x 10.0um " "magic::gencell gf180mcu::npn_00p54x04p00" pdk1
@@ -692,6 +697,7 @@ proc gf180mcu::diode_pd2nw_06v0_defaults {} {
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 0 gbc 0 doverlap 0 \
+    full_metal 1 \
 	compatible {diode_pd2nw_03v3 diode_pd2nw_06v0}}
 }
 
@@ -935,9 +941,9 @@ proc gf180mcu::diode_nd2ps_03v3_draw {parameters} {
 	    dev_contact_type	ndic \
 	    end_type		psd \
 	    end_contact_type	psc \
-	    end_contact_size	0.16 \
+	    end_contact_size	0.25 \
 	    end_sub_type	pwell \
-	    dev_spacing		0.25 \
+	    dev_spacing		0.30 \
 	    dev_surround	${diff_surround} \
 	    end_spacing		${diff_spacing} \
 	    end_surround	${diff_surround} \
@@ -961,12 +967,12 @@ proc gf180mcu::diode_pd2nw_03v3_draw {parameters} {
 	    dev_contact_type	pdic \
 	    end_type		nsd \
 	    end_contact_type	nsc \
-	    end_contact_size	0.16 \
+	    end_contact_size	0.25 \
 	    end_sub_type	nwell \
 	    plus_diff_type	psd \
 	    plus_contact_type	psc \
 	    sub_type		pwell \
-	    dev_spacing		0.25 \
+	    dev_spacing		0.30 \
 	    dev_surround	${diff_surround} \
 	    end_spacing		${diff_spacing} \
 	    end_surround	${diff_surround} \
@@ -993,9 +999,9 @@ proc gf180mcu::diode_nd2ps_06v0_draw {parameters} {
 	    end_type		mvpsd \
 	    end_contact_type	mvpsc \
 	    end_sub_type	pwell \
-	    dev_spacing		0.25 \
+	    dev_spacing		0.40 \
 	    dev_surround	${diff_surround} \
-	    end_spacing		0.36 \
+	    end_spacing		0.17 \
 	    end_surround	${diff_surround} \
     ]
     set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
@@ -1021,10 +1027,11 @@ proc gf180mcu::diode_pd2nw_06v0_draw {parameters} {
 	    end_type		mvnsd \
 	    end_contact_type	mvnsc \
 	    end_sub_type	nwell \
+        sub_surround    0.16 \
 	    plus_diff_type	mvpsd \
 	    plus_contact_type	mvpsc \
 	    sub_type		pwell \
-	    dev_spacing		${diff_spacing} \
+	    dev_spacing		0.36 \
 	    dev_surround	${diff_surround} \
 	    end_spacing		${diff_spacing} \
 	    end_surround	${diff_surround} \
@@ -3254,6 +3261,20 @@ proc gf180mcu::nfet_06v0_nvt_defaults {} {
 		compatible {nfet_03v3 nfet_06v0 nfet_06v0_nvt}}
 }
 
+proc gf180mcu::nfet_10v0_asym_defaults {} {
+    return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 1.0 wmin 1.0 \
+		full_metal 1 }
+}
+
+proc gf180mcu::pfet_10v0_asym_defaults {} {
+    return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 1.0 wmin 1.0 \
+		full_metal 1 }
+}
+
 #----------------------------------------------------------------
 # mosvc: Specify all user-editable default values and those
 # needed by nmoscap_3p3_check
@@ -3334,6 +3355,15 @@ proc gf180mcu::nmoscap_6p0_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
+proc gf180mcu::nfet_10v0_asym_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
+proc gf180mcu::pfet_10v0_asym_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
+
 #----------------------------------------------------------------
 # mos: Interactively specifies the fixed layout parameters
 #----------------------------------------------------------------
@@ -3407,6 +3437,14 @@ proc gf180mcu::nmoscap_3p3_dialog {parameters} {
 
 proc gf180mcu::nmoscap_6p0_dialog {parameters} {
     gf180mcu::mos_dialog nmoscap_6p0 $parameters
+}
+
+proc gf180mcu::nfet_10v0_asym_dialog {parameters} {
+    gf180mcu::mos_dialog nfet_10v0_asym $parameters
+}
+
+proc gf180mcu::pfet_10v0_asym_dialog {parameters} {
+    gf180mcu::mos_dialog pfet_10v0_asym $parameters
 }
 
 #----------------------------------------------------------------
@@ -4137,6 +4175,55 @@ proc gf180mcu::nfet_06v0_nvt_draw {parameters} {
     set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
     return [gf180mcu::mos_draw $drawdict]
 }
+#-----------------------
+# 10V LDNMOS
+#-----------------------
+
+proc gf180mcu::nfet_10v0_asym_draw {parameters} {
+    set newdict [dict create \
+	    diff_poly_space	0.30 \
+	    diff_gate_space	0.30 \
+	    diff_spacing	0.36 \
+	    gate_type		mvnfet \
+	    diff_type 		mvndiff \
+	    diff_contact_type	mvndc \
+	    drain_diff_type	ldndiff \
+	    drain_diff_contact_type ldndiffc \
+	    plus_diff_type	mvpsd \
+	    plus_contact_type	mvpsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		pwell \
+	    sub_surround	0.16 \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
+
+#-----------------------
+# 10V LDPMOS
+#-----------------------
+
+proc gf180mcu::pfet_10v0_asym_draw {parameters} {
+    set newdict [dict create \
+	    diff_poly_space	0.30 \
+	    diff_gate_space	0.30 \
+	    diff_spacing	0.36 \
+	    gate_type		mvpfet \
+	    diff_type 		mvpdiff \
+	    diff_contact_type	mvpdc \
+	    drain_diff_type	ldpdiff \
+	    drain_diff_contact_type ldpdiffc \
+	    plus_diff_type	mvnsd \
+	    plus_contact_type	mvnsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		nwell \
+        sub_surround    0.16 \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
 
 #------------------------
 # MOS varactor (3.3V)
@@ -4318,6 +4405,14 @@ proc gf180mcu::nmoscap_3p3_check {parameters} {
 }
 
 proc gf180mcu::nmoscap_6p0_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::nfet_10v0_asym_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::pfet_10v0_asym_check {parameters} {
    return [gf180mcu::mos_check $parameters]
 }
 
