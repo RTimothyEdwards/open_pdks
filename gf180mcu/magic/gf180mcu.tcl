@@ -697,7 +697,7 @@ proc gf180mcu::diode_pd2nw_06v0_defaults {} {
 	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 0 gbc 0 doverlap 0 \
-    full_metal 1 \
+	full_metal 1 \
 	compatible {diode_pd2nw_03v3 diode_pd2nw_06v0}}
 }
 
@@ -1027,7 +1027,7 @@ proc gf180mcu::diode_pd2nw_06v0_draw {parameters} {
 	    end_type		mvnsd \
 	    end_contact_type	mvnsc \
 	    end_sub_type	nwell \
-        sub_surround    0.16 \
+	    sub_surround	0.16 \
 	    plus_diff_type	mvpsd \
 	    plus_contact_type	mvpsc \
 	    sub_type		pwell \

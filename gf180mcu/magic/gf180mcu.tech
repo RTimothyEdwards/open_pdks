@@ -1540,9 +1540,32 @@ style drc
  options calma-permissive-labels
  gridlimit 5
 
- # Check that all p-diff and n-ohmic has either nwell or dnwell
+ # Check that all p-diff and n-ohmic have either nwell or dnwell
  templayer missing_nwell *nsd,*mvnsd,*pdiff,*mvpdiff,*pdiode,pdiffres,mvpdiffres,pfet,mvpfet,mvnvaractor
  and-not dnwell,nwell
+
+ # Check that all p-ohmic and n-diff have either pwell + dnwell
+ # or nothing.  Can check the pwell surround at the same time.
+
+ templayer pohmic_missing_pwell *psd
+ grow 120
+ and dnwell
+ and-not pwell
+
+ templayer mvpohmic_missing_pwell *mvpsd,mvpvaractor
+ grow 160
+ and dnwell
+ and-not pwell
+
+ templayer pdiff_missing_pwell *ndiff,*ndiode,ndiffres,nfet
+ grow 430
+ and dnwell
+ and-not pwell
+
+ templayer mvpdiff_missing_pwell *mvndiff,mvndiffres,mvnfet
+ grow 600
+ and dnwell
+ and-not pwell
 
  # Check for MV and LV devices in the same dnwell
  templayer mv_dnwell
@@ -2985,12 +3008,21 @@ drc
 	"Deep N-well overlap of P-Diffusion < %d (DF.4e)"
  # Use CIF-DRC rule to ensure that at least one exists.
  cifmaxwidth missing_nwell 0 bend_illegal \
-	"P-diffusion and M-ohmic must be over N-well or deep N-well (DN.11)"
+	"P-diffusion and N-ohmic must be over N-well or deep N-well"
+ # Use CIF-DRC rules to ensure where pwell must be inside dnwell
+ cifmaxwidth pohmic_missing_pwell 0 bend_illegal \
+	"P-well must surround P-ohmic in deep N-well by 0.12um (DF.5)"
+ cifmaxwidth mvpohmic_missing_pwell 0 bend_illegal \
+	"P-well must surround MV P-ohmic in deep N-well by 0.16um (DF.5)"
+ cifmaxwidth ndiff_missing_pwell 0 bend_illegal \
+	"P-well must surround N-diffusion inside deep N-well by 0.43um (DF.8)"
+ cifmaxwidth mvndiff_missing_pwell 0 bend_illegal \
+	"P-well must surround MV N-diffusion inside deep N-well by 0.60um (DF.8)"
 
- surround *psd pwell 120 absence_ok \
-	"P-field overlap of P-Ohmic < %d (DF.5)"
- surround *mvpsd pwell  160 absence_ok \
-	"MV P-field overlap of MV P-Ohmic < %d (DF.5)"
+# surround *psd pwell 120 absence_ok \
+#	"P-well overlap of P-Ohmic < %d (DF.5)"
+# surround *mvpsd pwell  160 absence_ok \
+#	"MV P-well overlap of MV P-Ohmic < %d (DF.5)"
 
  # NAT requires additional spacing rules
  spacing *nndiode,*mvnndiode *psd,*mvpsd 610 touching_illegal \
