@@ -99,13 +99,18 @@ proc gf180mcu::addtechmenu {framename} {
    magic::add_toolkit_command $layoutframe "pmos - pMOSFET" "magic::gencell gf180mcu::pfet_03v3" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
-   magic::add_toolkit_command $layoutframe "diode_nd2ps_03v3 - n-diode" "magic::gencell gf180mcu::diode_nd2ps_03v3" pdk1
-   magic::add_toolkit_command $layoutframe "diode_pd2nw_03v3 - p-diode" "magic::gencell gf180mcu::diode_pd2nw_03v3" pdk1
+   magic::add_toolkit_command $layoutframe "nfet_03v3_dss - mosfet (unsalicided drain)" "magic::gencell gf180mcu::nfet_03v3_dss" pdk1
+   magic::add_toolkit_command $layoutframe "pfet_03v3_dss - mosfet (unsalicided drain)" "magic::gencell gf180mcu::pfet_03v3_dss" pdk1
+   magic::add_toolkit_command $layoutframe "nfet_06v0_dss - mosfet (unsalicided drain, thick oxide)" "magic::gencell gf180mcu::nfet_06v0_dss" pdk1
+   magic::add_toolkit_command $layoutframe "pfet_06v0_dss - mosfet (unsalicided drain, thick oxide)" "magic::gencell gf180mcu::pfet_06v0_dss" pdk1
 
-   magic::add_toolkit_separator	$layoutframe pdk1
+ magic::add_toolkit_separator	$layoutframe pdk1
    magic::add_toolkit_command $layoutframe "ldnmos - nMOSFET" "magic::gencell gf180mcu::nfet_10v0_asym" pdk1
    magic::add_toolkit_command $layoutframe "ldpmos - nMOSFET" "magic::gencell gf180mcu::pfet_10v0_asym" pdk1
- 
+
+   magic::add_toolkit_separator	$layoutframe pdk1
+   magic::add_toolkit_command $layoutframe "diode_nd2ps_03v3 - n-diode" "magic::gencell gf180mcu::diode_nd2ps_03v3" pdk1
+   magic::add_toolkit_command $layoutframe "diode_pd2nw_03v3 - p-diode" "magic::gencell gf180mcu::diode_pd2nw_03v3" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
    magic::add_toolkit_command $layoutframe "npn_10p00x10p00  (3.3V) - 10.0um x 10.0um " "magic::gencell gf180mcu::npn_10p00x10p00" pdk1
@@ -3232,6 +3237,21 @@ proc gf180mcu::pfet_06v0_defaults {} {
 		compatible {pfet_03v3 pfet_06v0}}
 }
 
+proc gf180mcu::pfet_03v3_dss_defaults {} {
+    return {w 0.220 l 0.280 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
+		full_metal 1 \
+		compatible {pfet_03v3_dss}}
+}
+
+proc gf180mcu::pfet_06v0_dss_defaults {} {
+    return {w 0.3 l 0.5 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.5 wmin 0.3 \
+		full_metal 1 \
+		compatible {pfet_06v0_dss}}
+}
 #----------------------------------------------------------------
 # nmos: Specify all user-editable default values and those
 # needed by nmos_check
@@ -3273,6 +3293,22 @@ proc gf180mcu::pfet_10v0_asym_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 1.0 wmin 1.0 \
 		full_metal 1 }
+}
+
+proc gf180mcu::nfet_03v3_dss_defaults {} {
+    return {w 0.220 l 0.280 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
+		full_metal 1 \
+		compatible {nfet_03v3_dss}}
+}
+
+proc gf180mcu::nfet_06v0_dss_defaults {} {
+    return {w 0.3 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 0.3 \
+		full_metal 1 \
+		compatible {nfet_06v0_dss}}
 }
 
 #----------------------------------------------------------------
@@ -3363,6 +3399,21 @@ proc gf180mcu::pfet_10v0_asym_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
+proc gf180mcu::nfet_03v3_dss_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
+proc gf180mcu::pfet_03v3_dss_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
+proc gf180mcu::nfet_06v0_dss_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
+proc gf180mcu::pfet_06v0_dss_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
 
 #----------------------------------------------------------------
 # mos: Interactively specifies the fixed layout parameters
@@ -3447,6 +3498,21 @@ proc gf180mcu::pfet_10v0_asym_dialog {parameters} {
     gf180mcu::mos_dialog pfet_10v0_asym $parameters
 }
 
+proc gf180mcu::nfet_03v3_dss_dialog {parameters} {
+    gf180mcu::mos_dialog nfet_03v3_dss $parameters
+}
+
+proc gf180mcu::nfet_06v0_dss_dialog {parameters} {
+    gf180mcu::mos_dialog nfet_06v0_dss $parameters
+}
+
+proc gf180mcu::pfet_03v3_dss_dialog {parameters} {
+    gf180mcu::mos_dialog pfet_03v3_dss $parameters
+}
+
+proc gf180mcu::pfet_06v0_dss_dialog {parameters} {
+    gf180mcu::mos_dialog pfet_06v0_dss $parameters
+}
 #----------------------------------------------------------------
 # getbox:  Get the current cursor box, in microns
 #----------------------------------------------------------------
@@ -4175,6 +4241,87 @@ proc gf180mcu::nfet_06v0_nvt_draw {parameters} {
     set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
     return [gf180mcu::mos_draw $drawdict]
 }
+#-------------------
+# nMOS dss 3.0V
+#-------------------
+proc gf180mcu::nfet_03v3_dss_draw {parameters} {
+    set newdict [dict create \
+	    gate_type		nfet \
+	    diff_type 		ndiffres \
+	    diff_contact_type	ndc \
+	    plus_diff_type	psd \
+	    plus_contact_type	psc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		pwell \
+	    sub_surround	0.12 \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
+
+proc gf180mcu::pfet_03v3_dss_draw {parameters} {
+    set newdict [dict create \
+	    gate_type		pfet \
+	    diff_type 		pdiffres \
+	    diff_contact_type	pdc \
+	    plus_diff_type	nsd \
+	    plus_contact_type	nsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    dev_surround	0.43 \
+	    sub_type		nwell \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
+
+#-------------------
+# pMOS 6.0V
+#-------------------
+
+proc gf180mcu::pfet_06v0_dss_draw {parameters} {
+    set newdict [dict create \
+	    diff_poly_space	0.30 \
+	    diff_gate_space	0.30 \
+	    diff_spacing	0.36 \
+	    gate_type		mvpfet \
+	    diff_type 		mvpdiffres \
+	    diff_contact_type	mvpdc \
+	    plus_diff_type	mvnsd \
+	    plus_contact_type	mvnsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_surround	0.16 \
+	    dev_surround	0.43 \
+	    sub_type		nwell \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
+
+#-------------------
+# nMOS 6.0V dss
+#-------------------
+
+proc gf180mcu::nfet_06v0_dss_draw {parameters} {
+    set newdict [dict create \
+	    diff_poly_space	0.30 \
+	    diff_gate_space	0.30 \
+	    diff_spacing	0.36 \
+	    gate_type		mvnfet \
+	    diff_type 		mvndiffres \
+	    diff_contact_type	mvndc \
+	    plus_diff_type	mvpsd \
+	    plus_contact_type	mvpsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		pwell \
+	    sub_surround	0.16 \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
 #-----------------------
 # 10V LDNMOS
 #-----------------------
@@ -4413,6 +4560,22 @@ proc gf180mcu::nfet_10v0_asym_check {parameters} {
 }
 
 proc gf180mcu::pfet_10v0_asym_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::nfet_03v3_dss_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::nfet_06v0_dss_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::pfet_03v3_dss_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::pfet_06v0_dss_check {parameters} {
    return [gf180mcu::mos_check $parameters]
 }
 
