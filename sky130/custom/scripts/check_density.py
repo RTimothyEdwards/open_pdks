@@ -129,7 +129,7 @@ if __name__ == '__main__':
 
         # NOTE:  This assumes that the name of the GDS file is the name of the
         # topmost cell (which should be passed as an option)
-        print('load ' + gdsroot)
+        print('load ' + gdsroot, file=ofile)
         print('', file=ofile)
 
         print('set midtime [orig_clock format [orig_clock seconds] -format "%D %T"]', file=ofile)
