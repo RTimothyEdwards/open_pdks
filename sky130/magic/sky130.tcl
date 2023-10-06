@@ -1945,8 +1945,8 @@ proc sky130::cap_device {parameters} {
     set top_met_sep [+ $end_spacing [- $cdif $top_surround]]
 
     # Diagnostic!
-    puts stdout "cdif = $cdif"
-    puts stdout "top_met_sep = $top_met_sep"
+    # puts stdout "cdif = $cdif"
+    # puts stdout "top_met_sep = $top_met_sep"
 
     # Increase end spacing if top metal spacing rule is not met
     set loc_end_spacing $end_spacing
@@ -1954,7 +1954,7 @@ proc sky130::cap_device {parameters} {
 	set loc_end_spacing [+ $loc_end_spacing [- $top_metal_space $top_met_sep]]
     }
     # Diagnostic!
-    puts stdout "loc_end_spacing = $loc_end_spacing"
+    # puts stdout "loc_end_spacing = $loc_end_spacing"
 
     # Extend bottom metal under contact to right
     box grow e ${loc_end_spacing}um
@@ -6698,11 +6698,9 @@ proc sky130::mos_check {device parameters} {
 
     # Used by varactor only
     if {$device == "sky130_fd_pr__cap_var"} {
-	# NOTE: Removed until update behavior is fixed.
-        # set magic::minfo_val "Warning:  No model exists for this device!"
-        set magic::minfo_val ""
+        catch {set magic::minfo_val "Warning:  No model exists for this device!"}
     } else {
-        set magic::minfo_val ""
+        catch {set magic::minfo_val ""}
     }
 
     return $parameters
