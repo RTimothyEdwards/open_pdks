@@ -1,0 +1,187 @@
+[33mcommit dd7771c384ed36b91a25e9f8b314355fc26561be[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop_19_09[m[33m, [m[1;33mtag: 1.0.446[m[33m, [m[1;31morigin/open_pdks-1.0[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Thu Sep 14 10:10:23 2023 -0400
+
+    Added a "halt on error" clause to the startup scripts for sky130
+    and gf180mcu.  This causes an immediate exit if the technology
+    file fails to load (might want to refine that to exit with a
+    non-zero exit code).
+
+[33mcommit 6ffd5cc20e17f138aeacef61387ef85bf04f8612[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Thu Sep 14 09:46:35 2023 -0400
+
+    Updated version to go along with the merge of pull request #400
+    from Donn (adds pin direction and use to power pins on the LEF
+    views of the custom Efabless versions of specific standard
+    cells).
+
+[33mcommit 72601f6c5eff88303cafd76d9ad5e54eca7ec088[m
+Author: Donn <me@donn.website>
+Date:   Thu Sep 14 16:33:58 2023 +0300
+
+    Fix Power Pins of `sky130_ef_sc_hd`
+    
+    Adds correct direction and power attributes to LEF views of `sky130_ef_sc_hd` cells.
+    
+    I also added a Readme with your Slack comment for documentation purposes.
+
+[33mcommit 478671302278e9708a289b8ba826d96e6df92277[m[33m ([m[1;33mtag: 1.0.445[m[33m)[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Wed Sep 13 13:55:18 2023 -0400
+
+    Extended the generated device script for GF180MCU to allow MOS
+    devices to be drawn with asymmetric source and drain.  This
+    does not affect the existing routines but will enable future
+    drawing routines for the LDMOS and DSS devices.
+
+[33mcommit 754e23df047ece3ae31b95821355487a74326397[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Wed Sep 13 10:08:39 2023 -0400
+
+    Updated version to go along with the merge of pull request #399
+    by Qurrat.
+
+[33mcommit 2bb8640101bae83e7ef90ebd1f6afebc20649f4f[m
+Author: qurratulainalam <qurratulain.mallick@gmail.com>
+Date:   Wed Sep 13 18:34:39 2023 +0500
+
+    changed values of xstep and ystep
+
+[33mcommit ac3c0df35385a1f28c181f2c9e42cb59fcb1e730[m[33m ([m[1;33mtag: 1.0.444[m[33m)[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Tue Sep 12 16:07:32 2023 -0400
+
+    Updated version to go along with pull request #398 from Kareem
+    Farid (changes to excluded cells in openlane setup for gf180mcu).
+
+[33mcommit a27276f817cee3d75f82f81766f32286a15fdb12[m
+Author: kareefardi <kareem.farid@efabless.com>
+Date:   Tue Sep 12 22:01:55 2023 +0300
+
+    fix cell pad exclude list for gf180mcu
+
+[33mcommit ebba698e38217b7af5817de5ff6e7b1f4be45fa1[m[33m ([m[1;33mtag: 1.0.443[m[33m)[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Mon Sep 11 10:38:34 2023 -0400
+
+    Changed the analog pads so that the original name "sky130_ef_io__analog_pad"
+    refers to the bare pad with no ESD, which has been used (with the same name)
+    on all sky130 tapeouts of the caravan chip.  The newer pad with the full ESD
+    structures is now named "sky130_ef_io__analog_esd_pad".  Any actual changes
+    to the caravan padframe layout will be done in the caravel repository, and
+    not caused by a change in the PDK.
+
+[33mcommit f4e9d0344cd48cdc0ea4103272ab3f12a709e5f3[m[33m ([m[1;33mtag: 1.0.442[m[33m)[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Wed Sep 6 10:18:14 2023 -0400
+
+    Updated the version to go along with pull request #396 by Qurrat.
+
+[33mcommit d19773838778e4af8584a63beba8e3b7a14be79d[m
+Author: qurratulainalam <qurratulain.mallick@gmail.com>
+Date:   Wed Sep 6 19:08:39 2023 +0500
+
+    changed the string button's error
+
+[33mcommit 28cdecd30408a6c86b47dc91df898f715bae399a[m
+Author: qurratulainalam <qurratulain.mallick@gmail.com>
+Date:   Wed Sep 6 18:15:17 2023 +0500
+
+    new devices
+
+[33mcommit 5110323ae8f11d4f3a44d2a88275799ef873d0f0[m
+Author: qurratulainalam <qurratulain.mallick@gmail.com>
+Date:   Fri Sep 1 18:42:29 2023 +0500
+
+    new devices added
+
+[33mcommit 99b76b15a3837f735e0ffa1f3c9dcec95ba80364[m[33m ([m[1;33mtag: 1.0.441[m[33m)[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Tue Sep 5 17:55:57 2023 -0400
+
+    Added preliminary support in the magic tech file for LDMOS
+    devices (N and P) and the Schottky diode.  Corrected DRC rules
+    to allow either nwell or dnwell (or both) under devices.  Many
+    DRC rules for the new devices have not yet been implemented.
+    Extraction should work but has not been tested yet.
+
+[33mcommit 43e733efca70e60743f5d0e4c1c4fad907676388[m[33m ([m[1;33mtag: 1.0.440[m[33m)[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Mon Sep 4 11:12:22 2023 -0400
+
+    Updated version to go along with the merge of pull request #394
+    from Vasil Yordanov and pull request #395 from Karim Fareed.
+
+[33mcommit 80505e3f3f1ec1143c3df5a5d95df0aa8c4fd7b2[m
+Author: Landflier <vasil.r.yordanov@gmail.com>
+Date:   Sat Sep 2 10:32:43 2023 +0200
+
+    Add: bash script in common/ to extract fr_pr device names and create a tcl file with their respective draw, defaults, dialog, check, and convert routines.
+
+[33mcommit 1a90b972db3026898848e34c04bf9934f9dbc56c[m
+Author: kareefardi <kareem.farid@efabless.com>
+Date:   Sun Sep 3 17:16:02 2023 +0300
+
+    bump sky130_klayout version
+
+[33mcommit 1380ad782fa1d2e2cc976faa5af64840d655d48f[m
+Author: kareefardi <kareem.farid@efabless.com>
+Date:   Sun Sep 3 15:25:27 2023 +0300
+
+    escape other commit versions
+
+[33mcommit 1341f54f5ce0c4955326297f235e4ace1eb6d419[m[33m ([m[1;33mtag: 1.0.439[m[33m)[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Sun Aug 27 17:13:24 2023 -0400
+
+    Corrected the LEF files of the sky130_ef_sc_hd__* cells so that they are
+    compatible with the LEF views of sky130_fd_sc_hd__*.  This *actually* fixes
+    the problem that was supposed to have been fixed in a recent commit.
+
+[33mcommit 8a7d53a6756e8d4350693c1f2af63c5879ce6d20[m[33m ([m[1;33mtag: 1.0.438[m[33m)[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Thu Aug 24 11:28:19 2023 -0400
+
+    Updated references for gf180mcu and sky130.  This updates the
+    open_pdks reference for sky130 to pick up the modified makefile
+    from the previous commit, and picks up some changes made to the
+    gf180mcu_fd_pr library by Amro Tork.
+
+[33mcommit 10d637bc671d3859099970970ec059caccd83cab[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Thu Aug 24 11:25:28 2023 -0400
+
+    Corrected the sky130 Makefile so that LEF views for the Efabless
+    library extension to sky130_fd_sc_hd (sky130_ef_sc_hd) get the same
+    flags for "lef write" as the base library.  Otherwise there are
+    incompatibilities in the "maglef" views of the cells which result
+    in feedback errors in magic when abstract views of cells from the
+    base library and the library extension overlap.
+
+[33mcommit e3b630d9b7c0e23615367d52c4f78b2d2ede58ac[m[33m ([m[1;33mtag: 1.0.437[m[33m)[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Mon Aug 21 15:38:16 2023 -0400
+
+    Updated references to catch the update to the sky130 HD standard
+    cell library (diode_2 cell perimeter value fixed in the SPICE
+    netlist for the cell).
+
+[33mcommit 89d3ef1161fb81dc835fc8e1bd2d8bd7eff7670b[m[33m ([m[1;33mtag: 1.0.436[m[33m)[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Sat Aug 19 21:51:34 2023 -0400
+
+    Corrected the SBLK-to-poly-contact spacing rule in the magic
+    device generator script from 0.335um to 0.33um.  The original value
+    did not account for the difference between the drawn contact size
+    in magic and the size of the cut layer.  The error resulted in poly
+    resistors with contacts 0.005um too far from the resistor, causing
+    a DRC violation.
+
+[33mcommit 2344182ded373376d94dad4f28d2141e294a1b56[m[33m ([m[1;33mtag: 1.0.435[m[33m)[m
+Author: Tim Edwards <tim@opencircuitdesign.com>
+Date:   Tue Aug 15 15:35:44 2023 -0400
+
+    Updated references in response to Amro Tork's request, after some
+    updates to the gf180mcu_fd_pr library.  A few other libraries for
+    both gf180mcu and sky13

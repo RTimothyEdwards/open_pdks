@@ -71,9 +71,9 @@ namespace eval gf180mcu {
     dict set ruleset diffres_spacing  0.40      ;# Diffusion resistor spacing rule
     dict set ruleset polyres_spacing  0.40      ;# Poly resistor spacing rule
     dict set ruleset diff_poly_space  0.10      ;# Diffusion to poly spacing rule
-    dict set ruleset diff_gate_space  0.10      ;# Diffusion to gate poly spacing rule
+    dict set ruleset diff_gate_space  0.11      ;# Diffusion to gate poly spacing rule
     dict set ruleset metal_spacing    0.23      ;# Metal1 spacing rule
-    dict set ruleset mmetal_spacing   0.23      ;# Metal spacing rule (above metal1)
+    dict set ruleset mmetal_spacing   0.38      ;# Metal spacing rule (above metal1)
     dict set ruleset sblk_to_cont     0.33      ;# resistor to contact center
     dict set ruleset sblk_diff_space  0.44      ;# resistor to guard ring
 }
@@ -2780,10 +2780,10 @@ proc gf180mcu::nwell_draw {parameters} {
 	    plus_contact_type	psc \
 	    sub_type		pwell \
 	    end_surround	$diff_surround \
-	    end_spacing		1.2 \
+	    end_spacing		1.4 \
 	    overlap_compress	-0.84 \
-	    res_to_endcont	0.22 \
-	    res_spacing		1.2 \
+	    res_to_endcont	0.38 \
+	    res_spacing		1.4 \
 	    res_diff_spacing	0.28 \
 	    well_res_overlap	0.24 \
     ]
@@ -2953,8 +2953,8 @@ proc gf180mcu::rm5_draw {parameters} {
 	    res_type		rm5 \
 	    end_type 		m5 \
 	    end_surround	0.0 \
-	    end_spacing		0.0 \
-	    res_to_endcont	0.2 \
+	    end_spacing		0.0\
+	    res_to_endcont	0.265 \
 	    res_spacing		$mmetal_spacing \
     ]
     set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
@@ -3282,16 +3282,16 @@ proc gf180mcu::nfet_06v0_nvt_defaults {} {
 }
 
 proc gf180mcu::nfet_10v0_asym_defaults {} {
-    return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
+    return {w 4 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
-		topc 1 botc 1 poverlap 0 doverlap 1 lmin 1.0 wmin 1.0 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 4 \
 		full_metal 1 }
 }
 
 proc gf180mcu::pfet_10v0_asym_defaults {} {
-    return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
+    return {w 4.0 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
-		topc 1 botc 1 poverlap 0 doverlap 1 lmin 1.0 wmin 1.0 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 4.0 \
 		full_metal 1 }
 }
 

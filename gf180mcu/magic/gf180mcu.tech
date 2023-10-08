@@ -4787,60 +4787,60 @@ variants *
 # All devices except diodes are modeled as subcircuits
 
 # device list:
-#  nfet_03v3		mosfet
-#  pfet_03v3		mosfet
-#  nfet_06v0		mosfet (thick oxide)
-#  pfet_06v0		mosfet (thick oxide)
-#  nfet_06v0_nvt	mosfet (native Vt)
-#  nfet_03v3_dss	mosfet (unsalicided drain)
-#  pfet_03v3_dss	mosfet (unsalicided drain)
-#  nfet_06v0_dss	mosfet (unsalicided drain, thick oxide)
-#  pfet_06v0_dss	mosfet (unsalicided drain, thick oxide)
-#  nfet_10v0_asym	LDNMOS (extended drain)
-#  pfet_10v0_asym	LDPMOS (extended drain)
+##  nfet_03v3		mosfet
+##  pfet_03v3		mosfet
+##  nfet_06v0		mosfet (thick oxide)
+##  pfet_06v0		mosfet (thick oxide)
+##  nfet_06v0_nvt	mosfet (native Vt)
+##  nfet_03v3_dss	mosfet (unsalicided drain)
+##  pfet_03v3_dss	mosfet (unsalicided drain)
+##  nfet_06v0_dss	mosfet (unsalicided drain, thick oxide)
+##  pfet_06v0_dss	mosfet (unsalicided drain, thick oxide)
+##  nfet_10v0_asym	LDNMOS (extended drain)
+##  pfet_10v0_asym	LDPMOS (extended drain)
 #
-#  diode_nd2ps_03v3	diode  (N+/pwell)
-#  diode_pd2nw_03v3	diode  (P+/nwell)
-#  diode_nd2ps_06v0	diode  (N+/pwell, high voltage)
-#  diode_pd2nw_06v0	diode  (P+/nwell, high voltage)
-#  diode_nw2pw_03v3	diode  (nwell/pwell)
-#  diode_nw2pw_06v0	diode  (nwell/pwell, high voltage)
-#  diode_dnw2pw		diode  (pwell/dnwell)
-#  diode_dnw2ps		diode  (dnwll/substrate)
-#  sc_diode		diode  (Schottky)
+##  diode_nd2ps_03v3	diode  (N+/pwell)
+##  diode_pd2nw_03v3	diode  (P+/nwell)
+##  diode_nd2ps_06v0	diode  (N+/pwell, high voltage)
+##  diode_pd2nw_06v0	diode  (P+/nwell, high voltage)
+##  diode_nw2pw_03v3	diode  (nwell/pwell)
+##  diode_nw2pw_06v0	diode  (nwell/pwell, high voltage)
+##  diode_dnw2pw		diode  (pwell/dnwell)
+##  diode_dnw2ps		diode  (dnwll/substrate)
+##  sc_diode		diode  (Schottky)
 #
 #  pnp_WxL		BJT    (10x10, 5x5, 0.42x10, 0.42x5 emitter sizes)
 #  npn_WxL		BJT    (10x10, 5x5, 0.54x16, 0.54x8, 0.54x4, 0.54x2)
 #
-#  npolyf_u		resistor (N+ poly, unsalicided)
-#  ppolyf_u		resistor (P+ poly, unsalicided)
-#  ppolyf_u_1k		resistor (high res resistor)*
-#  ppolyf_u_1k_6p0	resistor (high res resistor, high voltage)*
-#  nplus_u		resistor (N+ diffusion, unsalicided)
-#  pplus_u		resistor (P+ diffusion, unsalicided)
-#  npolyf_s		resistor (N+ poly, salicided)
-#  ppolyf_s		resistor (P+ poly, salicided)
-#  nplus_s		resistor (N+ diffusion, salicided)
-#  pplus_s		resistor (N+ diffusion, salicided)
-#  nwell		resistor (N-well resistor)
-#  rm1			resistor (metal1)
-#  rm2			resistor (metal2)
-#  rm3			resistor (metal3)
-#  rm4			resistor (metal4)
-#  rm5			resistor (metal5)
-#  tm6k			resistor (top metal, 0.6um thick (standard))**
-#  tm9k			resistor (top metal, 0.9um thick)
-#  tm11k		resistor (top metal, 1.1um thick)
-#  tm30k		resistor (top metal, 3.0um thick)
+##  npolyf_u		resistor (N+ poly, unsalicided)
+##  ppolyf_u		resistor (P+ poly, unsalicided)
+##  ppolyf_u_1k		resistor (high res resistor)*
+##  ppolyf_u_1k_6p0	resistor (high res resistor, high voltage)*
+##  nplus_u		resistor (N+ diffusion, unsalicided)
+##  pplus_u		resistor (P+ diffusion, unsalicided)
+##  npolyf_s		resistor (N+ poly, salicided)
+##  ppolyf_s		resistor (P+ poly, salicided)
+##  nplus_s		resistor (N+ diffusion, salicided)
+##  pplus_s		resistor (N+ diffusion, salicided)
+##  nwell		resistor (N-well resistor)
+##  rm1			resistor (metal1)
+##  rm2			resistor (metal2)
+##  rm3			resistor (metal3)
+##  rm4			resistor (metal4)
+##  rm5			resistor (metal5)
+##  tm6k			resistor (top metal, 0.6um thick (standard))**
+##  tm9k			resistor (top metal, 0.9um thick)
+##  tm11k		resistor (top metal, 1.1um thick)
+##  tm30k		resistor (top metal, 3.0um thick)
 #
-#  cap_nmos_03v3	mosfet	 (source-drain tied)
-#  cap_pmos_03v3	mosfet	 (source-drain tied)
-#  cap_nmos_06v0	mosfet	 (source-drain tied, high voltage)
-#  cap_pmos_06v0	mosfet	 (source-drain tied, high voltage)
-#  cap_nmos_03v3_b	mosfet   (n-varactor)
-#  cap_pmos_03v3_b	mosfet   (p-varactor)
-#  cap_nmos_06v0_b	mosfet   (n-varactor, high voltage)
-#  cap_pmos_06v0_b	mosfet   (p-varactor, high voltage)
+##  cap_nmos_03v3	mosfet	 (source-drain tied)
+##  cap_pmos_03v3	mosfet	 (source-drain tied)
+##  cap_nmos_06v0	mosfet	 (source-drain tied, high voltage)
+##  cap_pmos_06v0	mosfet	 (source-drain tied, high voltage)
+##  cap_nmos_03v3_b	mosfet   (n-varactor)
+##  cap_pmos_03v3_b	mosfet   (p-varactor)
+##  cap_nmos_06v0_b	mosfet   (n-varactor, high voltage)
+##  cap_pmos_06v0_b	mosfet   (p-varactor, high voltage)
 #
 #  cap_mim_2f0fF	capacitor (MiM)*,**
 #
