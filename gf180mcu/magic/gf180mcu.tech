@@ -1724,8 +1724,6 @@ style  import
 
  layer pbase PWELL,PWELLTXT
  and BJTDEF,BJTDRC
- labels PWELL
- labels PWELLTXT port
 
  layer nwell NWELL,NWELLTXT
  and-not BJTDEF,BJTDRC
@@ -1734,8 +1732,6 @@ style  import
 
  layer nbase NWELL,NWELLTXT
  and BJTDEF,BJTDRC
- labels NWELL
- labels NWELLTXT port
 
  layer dnwell DNWELL
  labels DNWELL
