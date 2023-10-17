@@ -35,23 +35,17 @@
 
 `celldefine
 module sky130_ef_sc_hd__fill_12 (
-    VPWR ,
-    VGND ,
-    VPB  ,
+    VPWR,
+    VGND,
+    VPB ,
     VNB
 );
 
-    input VPWR ;
-    input VGND ;
-    input VPB  ;
-    input VNB  ;
-    sky130_fd_sc_hd__fill base (
-        .VPWR(VPWR),
-        .VGND(VGND),
-        .VPB(VPB),
-        .VNB(VNB)
-    );
-
+    input VPWR;
+    input VGND;
+    input VPB ;
+    input VNB ;
+    // No contents.
 endmodule
 `endcelldefine
 
@@ -60,18 +54,14 @@ endmodule
 /*********************************************************/
 
 `celldefine
-module sky130_ef_sc_hd__fill_12 (
-);
+module sky130_ef_sc_hd__fill_12 ();
 
     // Voltage supply signals
     supply1 VPWR;
     supply0 VGND;
     supply1 VPB ;
     supply0 VNB ;
-
-    sky130_fd_sc_hd__fill base (
-    );
-
+    // No contents.
 endmodule
 `endcelldefine
 

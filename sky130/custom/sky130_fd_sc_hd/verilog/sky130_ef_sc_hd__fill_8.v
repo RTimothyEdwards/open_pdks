@@ -41,11 +41,12 @@ module sky130_ef_sc_hd__fill_8 (
     VNB
 );
 
+    // Module ports
     input VPWR;
     input VGND;
     input VPB ;
     input VNB ;
-
+    // No contents.
 endmodule
 `endcelldefine
 
@@ -55,12 +56,13 @@ endmodule
 
 `celldefine
 module sky130_ef_sc_hd__fill_8 ();
+
     // Voltage supply signals
     supply1 VPWR;
     supply0 VGND;
     supply1 VPB ;
     supply0 VNB ;
-
+    // No contents.
 endmodule
 `endcelldefine
 

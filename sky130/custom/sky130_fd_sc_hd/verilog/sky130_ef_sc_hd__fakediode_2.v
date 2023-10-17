@@ -27,8 +27,7 @@
  * every pin without making a connection.  If the net needs an antenna
  * tiedown, the fakediode cell can be replaced by the real diode cell.
  *
- * Verilog wrapper for diode with size of 2 units.  Note that the wrapper
- * is around the original SkyWater diode base cell;  because the diode
+ * Verilog wrapper for diode with size of 2 units. Because the diode
  * has no function in verilog, there is no difference between the verilog
  * definitions of the diode and fake diode other than the cell name.
  *
@@ -50,19 +49,13 @@ module sky130_ef_sc_hd__fakediode_2 (
     VNB
 );
 
+    // Module ports
     input DIODE;
     input VPWR ;
     input VGND ;
     input VPB  ;
     input VNB  ;
-    sky130_fd_sc_hd__diode base (
-        .DIODE(DIODE),
-        .VPWR(VPWR),
-        .VGND(VGND),
-        .VPB(VPB),
-        .VNB(VNB)
-    );
-
+     // No contents.
 endmodule
 `endcelldefine
 
@@ -75,6 +68,7 @@ module sky130_ef_sc_hd__fakediode_2 (
     DIODE
 );
 
+    // Module ports
     input DIODE;
 
     // Voltage supply signals
@@ -82,11 +76,7 @@ module sky130_ef_sc_hd__fakediode_2 (
     supply0 VGND;
     supply1 VPB ;
     supply0 VNB ;
-
-    sky130_fd_sc_hd__diode base (
-        .DIODE(DIODE)
-    );
-
+     // No contents.
 endmodule
 `endcelldefine
 
