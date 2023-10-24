@@ -752,7 +752,9 @@ xschem-%: ${GF180MCU_PR_PATH}
 	cp -rp ${GF180MCU_PR_PATH}/cells/xschem/symbols ${XSCHEM_STAGING_$*}
 	cp -rp ${GF180MCU_PR_PATH}/cells/xschem/tests ${XSCHEM_STAGING_$*}
 	cp -rp ${GF180MCU_PR_PATH}/cells/xschem/xschemrc ${XSCHEM_STAGING_$*}
-	cat ./custom/xschem/xschemrc_append >> ${XSCHEM_STAGING_$*}/xschemrc
+	# Make open_pdks-specific modifications to the xschemrc file
+	./custom/scripts/fix_xschemrc.py ${XSCHEM_STAGING_$*}/xschemrc \
+		${GF180MCU$*} 2>&1 | tee -a ${GF180MCU$*}_make.log || true
 
 openlane-%: openlane/config.tcl openlane/gf180mcu_fd_sc_mcu7t5v0/config.tcl openlane/gf180mcu_fd_sc_mcu9t5v0/config.tcl
 	mkdir -p ${OPENLANETOP_STAGING_$*}
@@ -1192,6 +1194,7 @@ io-%:
 			filter=custom/scripts/convert_io_cdl.py \
 		-gds cells/*/*_${$*_STACK}.gds compile-only \
 			options=custom/scripts/gds_import_io.tcl \
+			filter=custom/scripts/fix_io_cor_gds.py \
 		-lef cells/*/*_${$*_STACK}.lef \
 			annotate lefopts=-hide compile-only \
 			filter=custom/scripts/fix_io_lef.py \
@@ -1201,10 +1204,6 @@ io-%:
 	# in the corner clamp cell that contains the devices being isolated.
 	${ADDLAYER} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_io ESD_CLAMP_COR \
 		isosubstrate "-42 43458 56113 57130 40932 43016 57057 55812" -mag
-	# Permanent solution to the extraction issue---modify the GDS with the
-	# isolated substrate layer.
-	./custom/scripts/fix_io_cor_gds.py \
-		${STAGING_PATH}/${GF180MCU$*}/libs.ref/${IO_GDS}/gf180mcu_fd_io.gds
 
 sram-%:
 	# Install SRAM macros from vendor files

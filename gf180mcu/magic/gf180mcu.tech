@@ -1550,7 +1550,7 @@ style drc
  templayer pohmic_missing_pwell *psd
  grow 120
  and dnwell
- and-not pwell
+ and-not pwell,pbase
 
  templayer mvpohmic_missing_pwell *mvpsd,mvpvaractor
  grow 160
@@ -1707,7 +1707,7 @@ style  import
  scalefactor 50 nanometers
  gridlimit 5
 
- options ignore-unknown-layer-labels options no-reconnect-labels 
+ options ignore-unknown-layer-labels
 
  ignore SRAMDEF
  ignore FET5VDEF
@@ -1774,7 +1774,6 @@ style  import
  copyup mvndifcheck
 
  layer mvndiff mvndiffarea
- labels DIFF
 
  # Copy mvndiff areas up for contact checks
  templayer mvxndifcheck mvndifcheck
@@ -1795,7 +1794,6 @@ style  import
  grow 140
  shrink 140
  and-not sccathode
- labels DIFF
 
  # Schottky contact
  layer schottkyc SCHOTTKY
@@ -1814,7 +1812,6 @@ style  import
  and-not PPLUS
  and-not DUALGATE
  and-not NAT
- labels DIFF
 
  layer nndiode DIFF
  and NPLUS
@@ -1824,7 +1821,6 @@ style  import
  and-not PPLUS
  and-not DUALGATE
  and NAT
- labels DIFF
 
  templayer ndiodearea DIODE
  and NPLUS
@@ -1837,7 +1833,6 @@ style  import
  and SBLK
  and NPLUS
  and-not DUALGATE
- labels DIFF
 
  templayer pdiffarea DIFF
  and-not POLY
@@ -1850,7 +1845,6 @@ style  import
  copyup pdifcheck
 
  layer pdiff pdiffarea
- labels DIFF
 
  layer mvndiode DIFF
  and NPLUS
@@ -1859,7 +1853,6 @@ style  import
  and-not PPLUS
  and DUALGATE
  and-not NAT
- labels DIFF
 
  layer mvnndiode DIFF
  and NPLUS
@@ -1868,7 +1861,6 @@ style  import
  and-not PPLUS
  and DUALGATE
  and NAT
- labels DIFF
 
  templayer mvndiodearea DIODE
  and NPLUS
@@ -1881,7 +1873,6 @@ style  import
  and SBLK
  and NPLUS
  and DUALGATE
- labels DIFF
 
  templayer mvpdiffarea DIFF
  and-not POLY
@@ -1894,7 +1885,6 @@ style  import
  copyup mvpdifcheck
 
  layer mvpdiff mvpdiffarea
- labels DIFF
 
  # Copy pdiff areas up for contact checks
  templayer xpdifcheck pdifcheck
@@ -1906,7 +1896,6 @@ style  import
  and-not NPLUS
  and-not DUALGATE
  and DIODE
- labels DIFF
 
  templayer pdiodearea DIODE
  and PPLUS
@@ -1923,11 +1912,9 @@ style  import
 
  layer pfet pfetarea
  and-not MOSCAP
- labels DIFF
 
  layer pcap pfetarea
  and MOSCAP
- labels DIFF
 
  templayer pfetexpand pfetarea
  grow 530
@@ -1947,7 +1934,6 @@ style  import
  and-not RESDEF
  and DUALGATE
  and DIODE
- labels DIFF
 
  templayer mvpdiodearea DIODE
  and PPLUS
@@ -1964,11 +1950,9 @@ style  import
 
  layer mvpfet mvpfetarea
  and-not MOSCAP
- labels DIFF
 
  layer mvpcap mvpfetarea
  and MOSCAP
- labels DIFF
 
  templayer mvpfetexpand mvpfetarea
  grow 530
@@ -1979,14 +1963,12 @@ style  import
  and-not POLY
  and nwelldef
  and pfetexpand
- labels DIFF
 
  layer pdiffres DIFF
  and-not POLY
  and PPLUS
  and nwelldef
  and SBLK
- labels DIFF
 
  layer nfet DIFF
  and POLY
@@ -1996,7 +1978,6 @@ style  import
  and NPLUS
  and-not NAT
  and-not MOSCAP
- labels DIFF
 
  layer ncap DIFF
  and POLY
@@ -2006,7 +1987,6 @@ style  import
  and NPLUS
  and-not NAT
  and MOSCAP
- labels DIFF
 
  layer nnfet DIFF
  and POLY
@@ -2015,7 +1995,6 @@ style  import
  and-not nwelldef
  and NPLUS
  and NAT
- labels DIFF
 
  templayer nsdarea DIFF
  and NPLUS
@@ -2025,7 +2004,6 @@ style  import
  and-not DUALGATE
 
  layer nsd nsdarea
- labels DIFF
 
  templayer nsdexpand nsdarea
  grow 500
@@ -2044,7 +2022,6 @@ style  import
  copyup psubcheck
 
  layer psd psdarea
- labels DIFF
 
  templayer psdexpand psdarea
  grow 500
@@ -2055,14 +2032,12 @@ style  import
  and nwelldef
  and DUALGATE
  and mvpfetexpand
- labels DIFF
 
  layer mvpdiffres DIFF
  and-not POLY
  and PPLUS
  and SBLK
  and DUALGATE
- labels DIFF
 
  layer mvnfet DIFF
  and POLY
@@ -2072,7 +2047,6 @@ style  import
  and-not nwelldef
  and DUALGATE
  and-not MOSCAP
- labels DIFF
 
  layer mvncap DIFF
  and POLY
@@ -2082,7 +2056,6 @@ style  import
  and-not nwelldef
  and DUALGATE
  and MOSCAP
- labels DIFF
 
  layer mvnnfet DIFF
  and POLY
@@ -2091,7 +2064,6 @@ style  import
  and NAT
  and-not nwelldef
  and DUALGATE
- labels DIFF
 
  templayer mvnsdarea DIFF
  and NPLUS
@@ -2102,7 +2074,6 @@ style  import
  copyup mvnsubcheck
 
  layer mvnsd mvnsdarea
- labels DIFF
 
  templayer mvnsdexpand mvnsdarea
  grow 500
@@ -2121,7 +2092,6 @@ style  import
  copyup mvpsubcheck
 
  layer mvpsd mvpsdarea
- labels DIFF
 
  templayer mvpsdexpand mvpsdarea
  grow 500
@@ -2191,13 +2161,11 @@ style  import
  and-not SBLK
  and PPLUS
  and RESDEF
- labels POLY
 
  layer rnps POLY
  and-not SBLK
  and NPLUS
  and RESDEF
- labels POLY
 
  layer rpp POLY
  and SBLK
@@ -2206,7 +2174,6 @@ style  import
  and-not HRES
 #endif (HRPOLY1K)
  and RESDEF
- labels POLY
 
  # POLY + SBLK without RESDEF may be a salicide-blocked transistor.
  # The SBLK will be regenerated on GDS output and the poly should be
@@ -2215,12 +2182,10 @@ style  import
  and-not DIFF
  and SBLK
  and-not RESDEF
- labels POLY
 
  layer efuse POLY
  and-not DIFF
  and PLFUSE
- labels POLY
 
  layer rnp POLY
  and SBLK
@@ -2229,7 +2194,6 @@ style  import
 #ifdef HRPOLY1K
  and-not HRES
 #endif (HRPOLY1K)
- labels POLY
 
 #ifdef HRPOLY1K
  layer hires POLY
@@ -2237,14 +2201,12 @@ style  import
  and HRES
  and RESDEF
  and-not DUALGATE
- labels POLY
 
  layer mvhires POLY
  and SBLK
  and HRES
  and RESDEF
  and DUALGATE
- labels POLY
 
  # We define poly under HRES but not under SBLK to be plain poly
  layer poly POLY
@@ -2778,28 +2740,24 @@ style  import
  and NPLUS
  and nwelldef
  and-not DUALGATE
- labels POLY
 
  layer mvnvar POLY
  and DIFF
  and NPLUS
  and nwelldef
  and DUALGATE
- labels POLY
 
  layer pvar POLY
  and DIFF
  and PPLUS
  and-not nwelldef
  and-not DUALGATE
- labels POLY
 
  layer mvpvar POLY
  and DIFF
  and PPLUS
  and-not nwelldef
  and DUALGATE
- labels POLY
 
  calma DNWELL 12 0
  calma NWELL 21 0

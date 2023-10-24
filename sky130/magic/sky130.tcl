@@ -98,6 +98,12 @@ proc sky130::addtechmenu {framename} {
    magic::add_toolkit_command $layoutframe "pmos (MOSFET)" \
 	    "magic::gencell sky130::sky130_fd_pr__pfet_01v8" pdk1
 
+   # magic::add_toolkit_separator	$layoutframe pdk1
+   # magic::add_toolkit_command $layoutframe "LDNMOS (extended drain)" \
+   #	    "magic::gencell sky130::sky130_fd_pr__nfet_g5v0d16v0" pdk1
+   # magic::add_toolkit_command $layoutframe "LDPMOS (extended drain)" \
+   #	    "magic::gencell sky130::sky130_fd_pr__pfet_g5v0d16v0" pdk1
+
    magic::add_toolkit_separator	$layoutframe pdk1
    magic::add_toolkit_command $layoutframe "n-diode" \
 	    "magic::gencell sky130::sky130_fd_pr__diode_pw2nd_05v5" pdk1
@@ -4986,6 +4992,13 @@ proc sky130::sky130_fd_pr__pfet_g5v0d10v5_defaults {} {
 		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
+proc sky130::sky130_fd_pr__pfet_g5v0d16v0_defaults {} {
+    return {w 5.00 l 1.050 m 1 nf 1 diffcov 100 polycov 100 \
+		tbcov 100 rlcov 100 topc 1 botc 1 \
+		poverlap 0 doverlap 0 lmin 1.050 wmin 5.00 \
+		viasrc 100 viadrn 100 viagate 100 }
+}
+
 #----------------------------------------------------------------
 # nmos: Specify all user-editable default values and those
 # needed by mos_check
@@ -5061,6 +5074,13 @@ proc sky130::sky130_fd_pr__nfet_03v3_nvt_defaults {} {
 		sky130_fd_pr__nfet_03v3_nvt} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0}
+}
+
+proc sky130::sky130_fd_pr__nfet_g5v0d16v0_defaults {} {
+    return {w 5.00 l 1.055 m 1 nf 1 diffcov 100 polycov 100 \
+		tbcov 100 rlcov 100 topc 1 botc 1 \
+		poverlap 0 doverlap 0 lmin 1.055 wmin 5.00 \
+		viasrc 100 viadrn 100 viagate 100 }
 }
 
 #----------------------------------------------------------------
@@ -5158,6 +5178,10 @@ proc sky130::sky130_fd_pr__nfet_g5v0d10v5_convert {parameters} {
     return [sky130::mos_convert $parameters]
 }
 
+proc sky130::sky130_fd_pr__nfet_g5v0d16v0_convert {parameters} {
+    return [sky130::mos_convert $parameters]
+}
+
 proc sky130::sky130_fd_pr__nfet_05v0_nvt_convert {parameters} {
     return [sky130::mos_convert $parameters]
 }
@@ -5179,6 +5203,10 @@ proc sky130::sky130_fd_pr__pfet_01v8_hvt_convert {parameters} {
 }
 
 proc sky130::sky130_fd_pr__pfet_g5v0d10v5_convert {parameters} {
+    return [sky130::mos_convert $parameters]
+}
+
+proc sky130::sky130_fd_pr__pfet_g5v0d16v0_convert {parameters} {
     return [sky130::mos_convert $parameters]
 }
 
@@ -5270,6 +5298,10 @@ proc sky130::sky130_fd_pr__nfet_g5v0d10v5_dialog {parameters} {
     sky130::mos_dialog sky130_fd_pr__nfet_g5v0d10v5 $parameters
 }
 
+proc sky130::sky130_fd_pr__nfet_g5v0d16v0_dialog {parameters} {
+    sky130::mos_dialog sky130_fd_pr__nfet_g5v0d16v0 $parameters
+}
+
 proc sky130::sky130_fd_pr__nfet_05v0_nvt_dialog {parameters} {
     sky130::mos_dialog sky130_fd_pr__nfet_05v0_nvt $parameters
 }
@@ -5292,6 +5324,10 @@ proc sky130::sky130_fd_pr__pfet_01v8_hvt_dialog {parameters} {
 
 proc sky130::sky130_fd_pr__pfet_g5v0d10v5_dialog {parameters} {
     sky130::mos_dialog sky130_fd_pr__pfet_g5v0d10v5 $parameters
+}
+
+proc sky130::sky130_fd_pr__pfet_g5v0d16v0_dialog {parameters} {
+    sky130::mos_dialog sky130_fd_pr__pfet_g5v0d16v0 $parameters
 }
 
 proc sky130::sky130_fd_pr__cap_var_lvt_dialog {parameters} {
@@ -5709,6 +5745,20 @@ proc sky130::guard_ring {gw gh parameters} {
 }
 
 #----------------------------------------------------------------
+# LDNMOS:  Sub-procedure to draw the extended drain
+#----------------------------------------------------------------
+
+proc sky130::draw_ldnmos_drain {parameters} {
+}
+
+#----------------------------------------------------------------
+# LDPMOS:  Sub-procedure to draw the extended drain
+#----------------------------------------------------------------
+
+proc sky130::draw_ldpmos_drain {parameters} {
+}
+
+#----------------------------------------------------------------
 # MOSFET: Draw a single device
 #----------------------------------------------------------------
 
@@ -5725,12 +5775,13 @@ proc sky130::mos_device {parameters} {
     set viasrc 100	;# draw source vias
     set viadrn 100	;# draw drain vias
     set viagate 100	;# draw gate vias
-    set evens 1		;# even or odd numbered device finger, in X
+    set evens 1		;# even or odd (evens = 1 means drain is on the left)
     set dev_sub_type ""	;# device substrate type (if different from guard ring)
     set dev_sub_dist 0	;# device substrate distance (if nondefault dev_sub_type)
     set min_effl 0	;# gate length below which finger pitch must be stretched
     set diff_overlap_cont 0	;# extra overlap of end contact by diffusion
     set gshield 0	;# no metal shield over gate (used for varactors)
+    set drain_proc {}	;# no special procedure to draw the drain
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -5749,13 +5800,23 @@ proc sky130::mos_device {parameters} {
     box grow s ${hw}um
     box grow e ${hl}um
     box grow w ${hl}um
+
+    # Set drain and source sides based on "evens".
+    if {$evens == 0} {
+	set dside e
+	set sside w
+    } else {
+	set dside w
+	set sside e
+    }
+
     pushbox
     if {${diff_extension} > ${gate_to_diffcont}} {
-        box grow e ${diff_extension}um
-        box grow w ${diff_extension}um
+        box grow $dside ${diff_extension}um
+        box grow $sside ${diff_extension}um
     } else {
-        box grow e ${gate_to_diffcont}um
-        box grow w ${gate_to_diffcont}um
+        box grow $dside ${gate_to_diffcont}um
+        box grow $sside ${gate_to_diffcont}um
     }
     paint ${diff_type}
     popbox
@@ -5853,52 +5914,57 @@ proc sky130::mos_device {parameters} {
 	set cpl [* ${cpl} [/ ${polycov} 100.0]]
     }
 
-    # Right diffusion contact
-    pushbox
-    box move e ${he}um
-    box move e ${gate_to_diffcont}um
+    if {$drain_proc != {}} {
+	set cext [sky130::unionbox $cext [eval $drain_proc parameters]]
+    } else {
+	# Drain diffusion contact
+	pushbox
+	box move $dside ${he}um
+	box move $dside ${gate_to_diffcont}um
 
-    # Source via on top of contact
-    if {$evens == 1} {set viatype $viasrc} else {set viatype $viadrn}
-    if {$viatype != 0} {
-        pushbox
-        set cw $via_size
-    	set ch [* $cdwfull [/ [expr abs($viatype)] 100.0]]
-    	if {$ch < $via_size} {set ch $via_size}
-	box grow e [/ $cw 2]um
-	box grow w [/ $cw 2]um
-        set anchor [string index $viatype 0]
-	if {$anchor == "+"} {
-            box move s [/ [- $cdwfull $via_size] 2]um
-	    box grow n ${ch}um
-	} elseif {$anchor == "-"} {
-            box move n [/ [- $cdwfull $via_size] 2]um
-	    box grow s ${ch}um
-	} else {
-	    box grow n [/ $ch 2]um
-	    box grow s [/ $ch 2]um
+	# Drain via on top of contact
+	set viatype $viadrn
+	if {$viatype != 0} {
+            pushbox
+            set cw $via_size
+    	    set ch [* $cdwfull [/ [expr abs($viatype)] 100.0]]
+    	    if {$ch < $via_size} {set ch $via_size}
+	    box grow $dside [/ $cw 2]um
+	    box grow $sside [/ $cw 2]um
+            set anchor [string index $viatype 0]
+	    if {$anchor == "+"} {
+        	box move s [/ [- $cdwfull $via_size] 2]um
+		box grow n ${ch}um
+	    } elseif {$anchor == "-"} {
+        	box move n [/ [- $cdwfull $via_size] 2]um
+		box grow s ${ch}um
+	    } else {
+		box grow n [/ $ch 2]um
+		box grow s [/ $ch 2]um
+	    }
+	    sky130::mcon_draw vert
+	    popbox
 	}
-        sky130::mcon_draw vert
-        popbox
-    }
-    set cext [sky130::unionbox $cext [sky130::draw_contact 0 ${cdw} \
+	set cext [sky130::unionbox $cext [sky130::draw_contact 0 ${cdw} \
 		${diff_surround} ${metal_surround} ${contact_size}\
 		${diff_type} ${diff_contact_type} li vert]]
-    popbox
-    # Left diffusion contact
-    pushbox
-    box move w ${he}um
-    box move w ${gate_to_diffcont}um
+	popbox
+    }
 
-    # Drain via on top of contact
-    if {$evens == 1} {set viatype $viadrn} else {set viatype $viasrc}
+    # Source diffusion contact
+    pushbox
+    box move $sside ${he}um
+    box move $sside ${gate_to_diffcont}um
+
+    # Source via on top of contact
+    set viatype $viasrc
     if {$viatype != 0} {
         pushbox
         set cw $via_size
     	set ch [* $cdwfull [/ [expr abs($viatype)] 100.0]]
     	if {$ch < $via_size} {set ch $via_size}
-	box grow e [/ $cw 2]um
-	box grow w [/ $cw 2]um
+	box grow $sside [/ $cw 2]um
+	box grow $dside [/ $cw 2]um
         set anchor [string index $viatype 0]
 	if {$anchor == "+"} {
             box move s [/ [- $cdwfull $via_size] 2]um
@@ -6540,6 +6606,48 @@ proc sky130::sky130_fd_pr__cap_var_draw {parameters} {
 }
 
 #----------------------------------------------------------------
+# 16V extended-drain devices LDNMOS and LDPMOS
+#----------------------------------------------------------------
+
+proc sky130::sky130_fd_pr__nfet_g5v0d16v0_draw {parameters} {
+    set newdict [dict create \
+	    gate_type		mvnfet \
+	    diff_type 		mvndiff \
+	    diff_contact_type	mvndc \
+	    plus_diff_type	mvpsd \
+	    plus_contact_type	mvpsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		psub \
+	    diff_spacing	0.31 \
+	    diff_tap_space	0.38 \
+	    diff_gate_space	0.38 \
+	    drain_proc		sky130::draw_ldnmos_drain \
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::mos_draw $drawdict]
+}
+
+proc sky130::sky130_fd_pr__pfet_g5v0d16v0_draw {parameters} {
+    set newdict [dict create \
+	    gate_type		mvpfet \
+	    diff_type 		mvpdiff \
+	    diff_contact_type	mvpdc \
+	    plus_diff_type	mvnsd \
+	    plus_contact_type	mvnsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		nwell \
+	    diff_spacing	0.31 \
+	    diff_tap_space	0.38 \
+	    diff_gate_space	0.38 \
+	    drain_proc		sky130::draw_ldpmos_drain \
+    ]
+    set drawdict [dict merge $sky130::ruleset $newdict $parameters]
+    return [sky130::mos_draw $drawdict]
+}
+
+#----------------------------------------------------------------
 # MOSFET: Check device parameters for out-of-bounds values
 #----------------------------------------------------------------
 
@@ -6724,6 +6832,10 @@ proc sky130::sky130_fd_pr__nfet_g5v0d10v5_check {parameters} {
    return [sky130::mos_check sky130_fd_pr__nfet_g5v0d10v5 $parameters]
 }
 
+proc sky130::sky130_fd_pr__nfet_g5v0d16v0_check {parameters} {
+   return [sky130::mos_check sky130_fd_pr__nfet_g5v0d16v0 $parameters]
+}
+
 proc sky130::sky130_fd_pr__nfet_05v0_nvt_check {parameters} {
    return [sky130::mos_check sky130_fd_pr__nfet_05v0_nvt $parameters]
 }
@@ -6746,6 +6858,10 @@ proc sky130::sky130_fd_pr__pfet_01v8_hvt_check {parameters} {
 
 proc sky130::sky130_fd_pr__pfet_g5v0d10v5_check {parameters} {
    return [sky130::mos_check sky130_fd_pr__pfet_g5v0d10v5 $parameters]
+}
+
+proc sky130::sky130_fd_pr__pfet_g5v0d16v0_check {parameters} {
+   return [sky130::mos_check sky130_fd_pr__pfet_g5v0d16v0 $parameters]
 }
 
 proc sky130::sky130_fd_pr__cap_var_lvt_check {parameters} {

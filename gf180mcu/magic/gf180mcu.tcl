@@ -71,9 +71,9 @@ namespace eval gf180mcu {
     dict set ruleset diffres_spacing  0.40      ;# Diffusion resistor spacing rule
     dict set ruleset polyres_spacing  0.40      ;# Poly resistor spacing rule
     dict set ruleset diff_poly_space  0.10      ;# Diffusion to poly spacing rule
-    dict set ruleset diff_gate_space  0.10      ;# Diffusion to gate poly spacing rule
+    dict set ruleset diff_gate_space  0.11      ;# Diffusion to gate poly spacing rule
     dict set ruleset metal_spacing    0.23      ;# Metal1 spacing rule
-    dict set ruleset mmetal_spacing   0.23      ;# Metal spacing rule (above metal1)
+    dict set ruleset mmetal_spacing   0.38      ;# Metal spacing rule (above metal1)
     dict set ruleset sblk_to_cont     0.33      ;# resistor to contact center
     dict set ruleset sblk_diff_space  0.44      ;# resistor to guard ring
 }
@@ -98,15 +98,15 @@ proc gf180mcu::addtechmenu {framename} {
    magic::add_toolkit_command $layoutframe "nmos - nMOSFET" "magic::gencell gf180mcu::nfet_03v3" pdk1
    magic::add_toolkit_command $layoutframe "pmos - pMOSFET" "magic::gencell gf180mcu::pfet_03v3" pdk1
 
-   magic::add_toolkit_separator	$layoutframe pdk1
-   magic::add_toolkit_command $layoutframe "nfet_03v3_dss - mosfet (unsalicided drain)" "magic::gencell gf180mcu::nfet_03v3_dss" pdk1
-   magic::add_toolkit_command $layoutframe "pfet_03v3_dss - mosfet (unsalicided drain)" "magic::gencell gf180mcu::pfet_03v3_dss" pdk1
-   magic::add_toolkit_command $layoutframe "nfet_06v0_dss - mosfet (unsalicided drain, thick oxide)" "magic::gencell gf180mcu::nfet_06v0_dss" pdk1
-   magic::add_toolkit_command $layoutframe "pfet_06v0_dss - mosfet (unsalicided drain, thick oxide)" "magic::gencell gf180mcu::pfet_06v0_dss" pdk1
+# (NOT ADDED YET---DRAW ROUTINE IS INCOMPLETE)
+#   magic::add_toolkit_separator	$layoutframe pdk1
+#   magic::add_toolkit_command $layoutframe "nfet_dss - mosfet (unsalicided drain)" "magic::gencell gf180mcu::nfet_03v3_dss" pdk1
+#   magic::add_toolkit_command $layoutframe "pfet_dss - mosfet (unsalicided drain)" "magic::gencell gf180mcu::pfet_03v3_dss" pdk1
 
- magic::add_toolkit_separator	$layoutframe pdk1
-   magic::add_toolkit_command $layoutframe "ldnmos - nMOSFET" "magic::gencell gf180mcu::nfet_10v0_asym" pdk1
-   magic::add_toolkit_command $layoutframe "ldpmos - nMOSFET" "magic::gencell gf180mcu::pfet_10v0_asym" pdk1
+# (NOT ADDED YET---DRAW ROUTINE IS INCOMPLETE)
+# magic::add_toolkit_separator	$layoutframe pdk1
+#   magic::add_toolkit_command $layoutframe "ldnmos - nMOSFET" "magic::gencell gf180mcu::nfet_10v0_asym" pdk1
+#   magic::add_toolkit_command $layoutframe "ldpmos - nMOSFET" "magic::gencell gf180mcu::pfet_10v0_asym" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
    magic::add_toolkit_command $layoutframe "diode_nd2ps_03v3 - n-diode" "magic::gencell gf180mcu::diode_nd2ps_03v3" pdk1
@@ -2780,10 +2780,10 @@ proc gf180mcu::nwell_draw {parameters} {
 	    plus_contact_type	psc \
 	    sub_type		pwell \
 	    end_surround	$diff_surround \
-	    end_spacing		1.2 \
+	    end_spacing		1.4 \
 	    overlap_compress	-0.84 \
-	    res_to_endcont	0.22 \
-	    res_spacing		1.2 \
+	    res_to_endcont	0.38 \
+	    res_spacing		1.4 \
 	    res_diff_spacing	0.28 \
 	    well_res_overlap	0.24 \
     ]
@@ -2954,7 +2954,7 @@ proc gf180mcu::rm5_draw {parameters} {
 	    end_type 		m5 \
 	    end_surround	0.0 \
 	    end_spacing		0.0 \
-	    res_to_endcont	0.2 \
+	    res_to_endcont	0.265 \
 	    res_spacing		$mmetal_spacing \
     ]
     set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
@@ -3242,7 +3242,7 @@ proc gf180mcu::pfet_03v3_dss_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
 		full_metal 1 \
-		compatible {pfet_03v3_dss}}
+		compatible {pfet_03v3_dss pfet_06v0_dss}}
 }
 
 proc gf180mcu::pfet_06v0_dss_defaults {} {
@@ -3250,7 +3250,7 @@ proc gf180mcu::pfet_06v0_dss_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.5 wmin 0.3 \
 		full_metal 1 \
-		compatible {pfet_06v0_dss}}
+		compatible {pfet_03v3_dss pfet_06v0_dss}}
 }
 #----------------------------------------------------------------
 # nmos: Specify all user-editable default values and those
@@ -3282,16 +3282,16 @@ proc gf180mcu::nfet_06v0_nvt_defaults {} {
 }
 
 proc gf180mcu::nfet_10v0_asym_defaults {} {
-    return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
+    return {w 4.0 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
-		topc 1 botc 1 poverlap 0 doverlap 1 lmin 1.0 wmin 1.0 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 4.0 \
 		full_metal 1 }
 }
 
 proc gf180mcu::pfet_10v0_asym_defaults {} {
-    return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
+    return {w 4.0 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
-		topc 1 botc 1 poverlap 0 doverlap 1 lmin 1.0 wmin 1.0 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 4.0 \
 		full_metal 1 }
 }
 
@@ -3300,7 +3300,7 @@ proc gf180mcu::nfet_03v3_dss_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
 		full_metal 1 \
-		compatible {nfet_03v3_dss}}
+		compatible {nfet_03v3_dss nfet_06v0_dss}}
 }
 
 proc gf180mcu::nfet_06v0_dss_defaults {} {
@@ -3308,7 +3308,7 @@ proc gf180mcu::nfet_06v0_dss_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 0.3 \
 		full_metal 1 \
-		compatible {nfet_06v0_dss}}
+		compatible {nfet_03v3_dss nfet_06v0_dss}}
 }
 
 #----------------------------------------------------------------
@@ -3772,7 +3772,7 @@ proc gf180mcu::guard_ring {gw gh parameters} {
 # MOSFET: Draw a single device
 #----------------------------------------------------------------
 
-proc gf180mcu::mos_device {xcount parameters} {
+proc gf180mcu::mos_device {parameters} {
 
     # Epsilon for avoiding round-off errors
     set eps  0.0005
@@ -3783,6 +3783,7 @@ proc gf180mcu::mos_device {xcount parameters} {
     set topc 1		;# draw top poly contact
     set botc 1		;# draw bottom poly contact
     set dev_sub_type ""	;# device substrate type (if different from guard ring)
+    set evens 1		;# even or odd (evens = 1 means drain is on left)
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -3812,8 +3813,8 @@ proc gf180mcu::mos_device {xcount parameters} {
     box grow s ${hw}um
     box grow e ${hl}um
     box grow w ${hl}um
-    # Set drain and source sides based on xcount.
-    if {[% $xcount 2] == 1} {
+    # Set drain and source sides based on "evens".
+    if {$evens == 0} {
 	set dside e
 	set sside w
     } else {
@@ -4032,7 +4033,7 @@ proc gf180mcu::mos_draw {parameters} {
     # to duplicate it here with calculations.
 
     tech lock *
-    set bbox [gf180mcu::mos_device 0 $parameters]
+    set bbox [gf180mcu::mos_device $parameters]
     # puts stdout "Diagnostic: Device bounding box e $bbox (um)"
     tech unlock *
 
@@ -4123,10 +4124,13 @@ proc gf180mcu::mos_draw {parameters} {
     pushbox
     box move w ${corellx}um
     box move s ${corelly}um
+    set evens 1
     for {set xp 0} {$xp < $nf} {incr xp} {
+	dict set parameters evens $evens
+	set evens [- 1 $evens]
         pushbox
         for {set yp 0} {$yp < $m} {incr yp} {
-            gf180mcu::mos_device $xp $parameters
+            gf180mcu::mos_device $parameters
             box move n ${dy}um
         }
         popbox

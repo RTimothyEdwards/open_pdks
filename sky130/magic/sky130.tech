@@ -58,6 +58,8 @@ end
 # sky130_fd_pr__pfet_g5v0d10v5	mvpfet		thickox pFET
 # sky130_fd_pr__nfet_g5v0d10v5	mvnfet		thickox nFET
 # sky130_fd_pr__nfet_01v8_nvt	mvnnfet		thickox native nFET
+# sky130_fd_pr__nfet_g5v0d16v0	mvnfet		extended-drain nFET***
+# sky130_fd_pr__pfet_g5v0d16v0	mvpfet		extended-drain pFET***
 # sky130_fd_pr__diode_pw2nd_05v5 ndiode		n+ diff diode
 # sky130_fd_pr__diode_pw2nd_05v5_lvt ndiodelvt	low Vt n+ diff diode
 # sky130_fd_pr__diode_pw2nd_05v5_nvt nndiode	diode with nndiff
@@ -94,6 +96,10 @@ end
 # (**) nFET and pFET in standard cells are the same as devices
 # outside of the standard cell except for the DRC rule for
 # FET to diffusion contact spacing (which is 0.05um, not 0.055um)
+#
+# (***) The extended-drain devices have the same identifying
+# FET type as the thick oxide devices, but the drain side of the
+# device is represented by layer extdrain extending to nsd or psd.
 #
 #-------------------------------------------------------------
 # The following devices are not extracted but are represented
@@ -201,6 +207,7 @@ types
   active nsubdiffcont,nsubstratencontact,nsc,ntapc
   active mvpsubdiffcont,mvpsubstratepcontact,mvpsc,mvptapc
   active mvnsubdiffcont,mvnsubstratencontact,mvnsc,mvntapc
+  active extdrain,ed
  -active obsactive
  -active mvobsactive
 
@@ -522,6 +529,8 @@ styles
   mvnsc     ndiff_in_nwell metal1  contact_X'es hvndiff_mask
   mvpsc     pdiff_in_pwell metal1  contact_X'es hvpdiff_mask
 
+  extdrain  nselect pselect
+
   poly      polysilicon 
   polyfill  polysilicon
   pc        polysilicon    metal1  contact_X'es
@@ -721,8 +730,8 @@ end
 #-----------------------------------------------------
 
 connect
-  *nwell,*nsd,*mvnsd,dnwell,pnp,photo *nwell,*nsd,*mvnsd,dnwell,pnp,photo
-  pwell,*psd,*mvpsd,npn,isosub  pwell,*psd,*mvpsd,npn,isosub
+  *nwell,*nsd,*mvnsd,dnwell,pnp,photo,ed *nwell,*nsd,*mvnsd,dnwell,pnp,photo,ed
+  pwell,*psd,*mvpsd,npn,isosub,ed  pwell,*psd,*mvpsd,npn,isosub,ed
   *li,coreli,lifill	*li,coreli,lifill
   *m1,m1fill,obsmcon	*m1,m1fill,obsmcon
 #ifdef RERAM
@@ -801,9 +810,21 @@ style gdsii
 # NWELL
 #----------------------------------------------------------------
 
- layer NWELL 	allnwell
+ # Generate n-well under extended-drain nFET
+ templayer extnwell
+	bloat-or *mvnsd * 0 extdrain 1150
+	and-not *mvnsd
+	grow 660
+
+ # Erase n-well under extended-drain pFET
+ templayer extpwell
+	bloat-or *mvpsd * 0 extdrain 590
+	and-not *mvpsd
+	grow 860
+
+ layer NWELL 	allnwell,extnwell
 	bloat-all rpw dnwell
-	and-not rpw,pwell
+	and-not rpw,pwell,extpwell
  	calma 	64 20
 
  layer WELLTXT
@@ -830,7 +851,13 @@ style gdsii
 # DIFF
 #----------------------------------------------------------------
 
+ # Extended-drain FETs cut the diffusion under the gate
+ templayer ldbreak
+	bloat-or *mvnsd * 0 extdrain 1585
+	bloat-or *mvpsd * 0 extdrain 1190
+
  layer DIFF 	allnactivenontap,allpactivenontap,allactiveres
+	and-not	ldbreak
  	calma 	65 20
 
  layer DIFFTXT
@@ -898,6 +925,15 @@ style gdsii
  	close   265000
 	mask-hints NSDM
  	calma	93 44
+
+#----------------------------------------------------------------
+# EDID (Extended drain identifier)
+#----------------------------------------------------------------
+
+ layer EDID
+	bloat-all extdrain *mvnsd,*mvpsd,mvnfet,mvpfet,*mvndiff,*mvpdiff
+	labels	extdrain
+	calma	81 57
 
 #----------------------------------------------------------------
 # LVID
@@ -2362,7 +2398,7 @@ style  sky130 variants (),(vendor)
  scalefactor 10 nanometers
  gridlimit 5
 
- options ignore-unknown-layer-labels no-reconnect-labels
+ options ignore-unknown-layer-labels
 
 #ifndef MIM
  ignore CAPM
@@ -2380,6 +2416,7 @@ style  sky130 variants (),(vendor)
  ignore POLYMOD
  ignore LOWTAPDENSITY
  ignore FILLOBSPOLY
+ ignore FILLOBSFOM
  ignore MET5BLOCK
  ignore OUTLINE
  ignore POLYCUT
@@ -3878,8 +3915,6 @@ style  sky130 variants (),(vendor)
  and-not FILLOBSM5
  labels FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4
 
- layer obsactive  FILLOBSFOM
-
 # MOS Varactor
 
  layer var POLY
@@ -4255,6 +4290,15 @@ variants (fast),(full)
  # Sandwiched butting junction restrictions
  edge4way (*pdiff)/a (*nsd)/a 400 ~(*pdiff)/a 0 0 "NSDM width < %d (diff/tap.5)"
  edge4way (*ndiff)/a (*psd)/a 400 ~(*ndiff)/a 0 0 "PSDM width < %d (diff/tap.5)"
+
+ # Extended drain rules
+ edge4way space/a ed/a 5000 ~(space)/a 0 0 "LDNFET/LDPFET width < %d (denmos/depmos.2)"
+ edge4way (*mvndiff)/a mvnfet 1055 ~(ed)/a 0 0 "LDNFET length < %d (denmos.1)"
+ edge4way (*mvnsd)/a ed/a 2510 ~(*mvndiff)/a 0 0 \
+	"LDNFET drain to source < %d (denmos.6 + denmos.3)"
+ edge4way (*mvpdiff)/a mvpfet 1050 ~(ed)/a 0 0 "LDPFET length < %d (depmos.1)"
+ edge4way (*mvpsd)/a ed/a 2510 ~(*mvpdiff)/a 0 0 \
+	"LDPFET drain to source < %d (depmos.6 + depmos.3)"
 
  area  *nsd,*mvnsd 70110 150 "N-tap minimum area < 0.07011um^2 (nsd.10b)"
  area  *psd,*mvpsd 70110 150 "P-tap minimum area < 0.07011um^2 (psd.10b)"
@@ -6392,6 +6436,10 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device msubcircuit Ignore mvpfet *mvpdiff,mvpdiffres pwell,space/w nwell error +npn,pnp
 
  # Extended drain devices (must appear before the regular devices)
+ device msubcircuit sky130_fd_pr__nfet_g5v0d16v0 mvnfet *mvndiff \
+	extdrain,*mvnsd pwell,space/w error l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__pfet_g5v0d16v0 mvpfet *mvpdiff \
+	extdrain,*mvpsd nwell error l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit sky130_fd_pr__nfet_20v0_nvt mvnnfet *mvndiff,mvndiffres \
 	dnwell pwell,space/w error l=l w=w a1=as a2=ad p1=ps p2=pd
  device msubcircuit sky130_fd_pr__nfet_20v0 mvnfet *mvndiff,mvndiffres \
