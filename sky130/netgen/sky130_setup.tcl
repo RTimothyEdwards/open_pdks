@@ -380,6 +380,23 @@ foreach dev $devices {
     }
 }
 
+#ifdef RERAM
+#---------------------------------------------------------------
+# ReRAM
+#---------------------------------------------------------------
+
+set devices {sky130_fd_pr_reram__reram_cell}
+
+foreach dev $devices {
+    if {[lsearch $cells1 $dev] >= 0} {
+	property "-circuit1 $dev" delete Tfilament_0
+    }
+    if {[lsearch $cells2 $dev] >= 0} {
+	property "-circuit2 $dev" delete Tfilament_0
+    }
+}
+#endif (RERAM)
+
 #---------------------------------------------------------------
 # Schematic cells which are not extractable
 #---------------------------------------------------------------

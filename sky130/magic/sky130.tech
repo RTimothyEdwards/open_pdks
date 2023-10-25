@@ -730,8 +730,10 @@ end
 #-----------------------------------------------------
 
 connect
-  *nwell,*nsd,*mvnsd,dnwell,pnp,photo,ed *nwell,*nsd,*mvnsd,dnwell,pnp,photo,ed
-  pwell,*psd,*mvpsd,npn,isosub,ed  pwell,*psd,*mvpsd,npn,isosub,ed
+  *nwell,*nsd,*mvnsd,dnwell,pnp,photo *nwell,*nsd,*mvnsd,dnwell,pnp,photo
+  pwell,*psd,*mvpsd,npn,isosub  pwell,*psd,*mvpsd,npn,isosub
+  *mvnsd ed
+  *mvpsd ed
   *li,coreli,lifill	*li,coreli,lifill
   *m1,m1fill,obsmcon	*m1,m1fill,obsmcon
 #ifdef RERAM
@@ -810,21 +812,34 @@ style gdsii
 # NWELL
 #----------------------------------------------------------------
 
+ # Identify LDMOS drain areas
+ templayer ndrainarea
+	bloat-all ed *mvnsd
+	and-not ed
+
+ templayer pdrainarea
+	bloat-all ed *mvpsd
+	and-not ed
+
  # Generate n-well under extended-drain nFET
  templayer extnwell
 	bloat-or *mvnsd * 0 extdrain 1150
 	and-not *mvnsd
+	or ndrainarea
 	grow 660
 
  # Erase n-well under extended-drain pFET
  templayer extpwell
 	bloat-or *mvpsd * 0 extdrain 590
 	and-not *mvpsd
+	or pdrainarea
 	grow 860
 
- layer NWELL 	allnwell,extnwell
+ layer NWELL 	allnwell
 	bloat-all rpw dnwell
-	and-not rpw,pwell,extpwell
+	and-not rpw,pwell
+	or extnwell
+	and-not extpwell
  	calma 	64 20
 
  layer WELLTXT
@@ -1216,7 +1231,7 @@ style gdsii
 
  # POLYRES extends to edge of contact cut
  layer POLYRES xhrpoly,uhrpoly
-	grow 60
+	grow 80
 	and xpc
 	or xhrpoly,uhrpoly
 	calma 66 13
@@ -3078,8 +3093,8 @@ style  sky130 variants (),(vendor)
  templayer xpolyterm RPM,URPM
  and POLY
  and-not POLYRES
- # add back the 0.06um contact surround in the direction of the resistor
- grow 60
+ # add back the 0.08um contact surround in the direction of the resistor
+ grow 80
  and POLY
 
  layer xpc xpolyterm
@@ -4297,7 +4312,7 @@ variants (fast),(full)
  edge4way (*mvnsd)/a ed/a 2510 ~(*mvndiff)/a 0 0 \
 	"LDNFET drain to source < %d (denmos.6 + denmos.3)"
  edge4way (*mvpdiff)/a mvpfet 1050 ~(ed)/a 0 0 "LDPFET length < %d (depmos.1)"
- edge4way (*mvpsd)/a ed/a 2510 ~(*mvpdiff)/a 0 0 \
+ edge4way (*mvpsd)/a ed/a 2110 ~(*mvpdiff)/a 0 0 \
 	"LDPFET drain to source < %d (depmos.6 + depmos.3)"
 
  area  *nsd,*mvnsd 70110 150 "N-tap minimum area < 0.07011um^2 (nsd.10b)"
@@ -6478,29 +6493,29 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
 	photo pwell,space/w error a=area
 
  device rsubcircuit sky130_fd_pr__res_high_po	    xhrpoly \
-	xpc nwell,pwell,space/w error l=l w=w
+	xpc nwell,pwell,space/w error l=l+0.16 w=w
  device rsubcircuit sky130_fd_pr__res_high_po_0p35 xhrpoly \
-	xpc nwell,pwell,space/w error w>0.34 w<0.36 l=l
+	xpc nwell,pwell,space/w error w>0.34 w<0.36 l=l+0.16
  device rsubcircuit sky130_fd_pr__res_high_po_0p69  xhrpoly \
-	xpc nwell,pwell,space/w error w>0.68 w<0.70 l=l
+	xpc nwell,pwell,space/w error w>0.68 w<0.70 l=l+0.16
  device rsubcircuit sky130_fd_pr__res_high_po_1p41  xhrpoly \
-	xpc nwell,pwell,space/w error w>1.40 w<1.42 l=l
+	xpc nwell,pwell,space/w error w>1.40 w<1.42 l=l+0.16
  device rsubcircuit sky130_fd_pr__res_high_po_2p85  xhrpoly \
-	xpc nwell,pwell,space/w error w>2.84 w<2.86 l=l
+	xpc nwell,pwell,space/w error w>2.84 w<2.86 l=l+0.16
  device rsubcircuit sky130_fd_pr__res_high_po_5p73  xhrpoly \
-	xpc nwell,pwell,space/w error w>5.72 w<5.74 l=l
+	xpc nwell,pwell,space/w error w>5.72 w<5.74 l=l+0.16
  device rsubcircuit sky130_fd_pr__res_xhigh_po	     uhrpoly \
-	xpc nwell,pwell,space/w error l=l w=w
+	xpc nwell,pwell,space/w error l=l+0.16 w=w
  device rsubcircuit sky130_fd_pr__res_xhigh_po_0p35  uhrpoly \
-	xpc nwell,pwell,space/w error w>0.34 w<0.36 l=l
+	xpc nwell,pwell,space/w error w>0.34 w<0.36 l=l+0.16
  device rsubcircuit sky130_fd_pr__res_xhigh_po_0p69  uhrpoly \
-	xpc nwell,pwell,space/w error w>0.68 w<0.70 l=l
+	xpc nwell,pwell,space/w error w>0.68 w<0.70 l=l+0.16
  device rsubcircuit sky130_fd_pr__res_xhigh_po_1p41  uhrpoly \
-	xpc nwell,pwell,space/w error w>1.40 w<1.42 l=l
+	xpc nwell,pwell,space/w error w>1.40 w<1.42 l=l+0.16
  device rsubcircuit sky130_fd_pr__res_xhigh_po_2p85  uhrpoly \
-	xpc nwell,pwell,space/w error w>2.84 w<2.86 l=l
+	xpc nwell,pwell,space/w error w>2.84 w<2.86 l=l+0.16
  device rsubcircuit sky130_fd_pr__res_xhigh_po_5p73  uhrpoly \
-	xpc nwell,pwell,space/w error w>5.72 w<5.74 l=l
+	xpc nwell,pwell,space/w error w>5.72 w<5.74 l=l+0.16
 
  device rsubcircuit sky130_fd_pr__res_generic_nd     ndiffres \
 	*ndiff pwell,space/w  error l=l w=w
@@ -6528,7 +6543,7 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area*1E12 p=pj*1E6
 
 #ifdef RERAM
- device csubcircuit sky130_fd_pr__reram_reram_cell reram m1 a=area_ox
+ device csubcircuit sky130_fd_pr_reram__reram_cell reram m1 a=area_ox
 #endif (RERAM)
 
 #ifdef MIM
@@ -6583,17 +6598,7 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device resistor sky130_fd_pr__res_generic_m5 rm5 *m5
 #endif (METAL5)
 
- device resistor sky130_fd_pr__res_high_po_0p35 xhrpoly xpc +res0p35
- device resistor sky130_fd_pr__res_high_po_0p69 xhrpoly xpc +res0p69
- device resistor sky130_fd_pr__res_high_po_1p41 xhrpoly xpc +res1p41
- device resistor sky130_fd_pr__res_high_po_2p85 xhrpoly xpc +res2p85
- device resistor sky130_fd_pr__res_high_po_5p73 xhrpoly xpc +res5p73
  device resistor sky130_fd_pr__res_high_po xhrpoly xpc 
- device resistor sky130_fd_pr__res_xhigh_po_0p35 uhrpoly xpc +res0p35
- device resistor sky130_fd_pr__res_xhigh_po_0p69 uhrpoly xpc +res0p69
- device resistor sky130_fd_pr__res_xhigh_po_1p41 uhrpoly xpc +res1p41
- device resistor sky130_fd_pr__res_xhigh_po_2p85 uhrpoly xpc +res2p85
- device resistor sky130_fd_pr__res_xhigh_po_5p73 uhrpoly xpc +res5p73
  device resistor sky130_fd_pr__res_xhigh_po uhrpoly xpc 
  device resistor sky130_fd_pr__res_generic_po  mrp1     *poly 
  device resistor sky130_fd_pr__res_generic_nd  ndiffres *ndiff 

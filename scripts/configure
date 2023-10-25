@@ -601,6 +601,7 @@ GF180MCU_FD_PR_PATH
 SKY130_OSU_T18_PATH
 SKY130_OSU_T15_PATH
 SKY130_OSU_T12_PATH
+SKY130_FD_PR_RERAM_PATH
 SKY130_FD_BD_SRAM_PATH
 SKY130_SRAM_MACROS_PATH
 PRECHECK_SKY130_PATH
@@ -714,6 +715,7 @@ enable_klayout_sky130
 enable_precheck_sky130
 enable_sram_sky130
 enable_sram_space_sky130
+enable_reram_sky130
 enable_osu_t12_sky130
 enable_osu_t15_sky130
 enable_osu_t18_sky130
@@ -1431,6 +1433,9 @@ Optional Features:
                           will be downloaded. [default=disabled]
   --enable-sram-space-sky130[=path]
                           Install sky130_fd_bd_sram. If path is omitted, the repository
+                          will be downloaded. [default=disabled]
+  --enable-reram-sky130[=path]
+                          Install sky130_fd_pr_reram. If path is omitted, the repository
                           will be downloaded. [default=disabled]
   --enable-osu-t12-sky130[=path]
                           Install sky130_osu_t12. If path is omitted, the repository
@@ -3364,6 +3369,47 @@ else
 
             { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_bd_sram' will not be installed." >&5
 $as_echo "$as_me: Package 'sky130_fd_bd_sram' will not be installed." >&6;}
+
+
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    SKY130_FD_PR_RERAM_PATH=""
+
+    # Check whether --enable-reram-sky130 was given.
+if test "${enable_reram_sky130+set}" = set; then :
+  enableval=$enable_reram_sky130;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_pr_reram' will be installed automatically during make." >&5
+$as_echo "$as_me: Package 'sky130_fd_pr_reram' will be installed automatically during make." >&6;}
+        	export SKY130_FD_PR_RERAM_PATH=../sources/sky130_fd_pr_reram
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Disabling package 'sky130_fd_pr_reram'" >&5
+$as_echo "$as_me: Disabling package 'sky130_fd_pr_reram'" >&6;}
+    		export SKY130_FD_PR_RERAM_PATH=""
+            else
+                SKY130_FD_PR_RERAM_PATH=$enableval
+                { $as_echo "$as_me:${as_lineno-$LINENO}: Enabling package 'sky130_fd_pr_reram' at $SKY130_FD_PR_RERAM_PATH" >&5
+$as_echo "$as_me: Enabling package 'sky130_fd_pr_reram' at $SKY130_FD_PR_RERAM_PATH" >&6;}
+            fi
+            SKY130_FD_PR_RERAM_PATH=`realpath $SKY130_FD_PR_RERAM_PATH`
+
+else
+
+            { $as_echo "$as_me:${as_lineno-$LINENO}: Package 'sky130_fd_pr_reram' will not be installed." >&5
+$as_echo "$as_me: Package 'sky130_fd_pr_reram' will not be installed." >&6;}
 
 
 fi

@@ -72,7 +72,8 @@
         "sky130_fd_io": "FD_IO_COMMIT"
     },
     "primitive": {
-        "sky130_fd_pr": "FD_PR_COMMIT"
+        "sky130_fd_pr": "FD_PR_COMMIT",
+        "sky130_fd_pr_reram": "RERAM_COMMIT"
     },
     "memory": {
         "sky130_sram_macros": "SRAM_COMMIT",
@@ -93,25 +94,26 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "10d637bc671d3859099970970ec059caccd83cab",
-        "magic": "22fbb2865682485b9c4a1a5803af65d44c3585c6",
-        "sky130_fd_pr": "7e2bb61f58345c203b693b2fcc178896965616d7",
+        "open_pdks": "559a117b163cef2f920f33f30f6f690aa0b47e4c",
+        "magic": "610c86a2340701e49ac23654f81233bedf6724fa",
+        "sky130_fd_pr": "69cccc2e35cbd9e678d8feeda4a237f9c43d0f8d",
         "sky130_fd_io": "2b8ce839a273734b2b1ec51b632c948f31814eb5",
         "sky130_fd_sc_hs": "51e41a54135f6f345f415f1f7a19c59a4d363c23",
         "sky130_fd_sc_ms": "70ba6f4ac3cc06a1f740326556386baacf8aba7b",
         "sky130_fd_sc_ls": "9ab031f0d83a0e45c38391b421f94daed7638c12",
         "sky130_fd_sc_lp": "4a1f17641327a6cb02c185e29c336bf0016f05d9",
-        "sky130_fd_sc_hd": "8882f642dd6907577d2d26a65220a43dad6867cd",
+        "sky130_fd_sc_hd": "008ea7938fb2614ca64b559a7ca387d80e7f55b7",
         "sky130_fd_sc_hdll": "3db78f5defcf0b6a5c85cfe10921852d504900be",
         "sky130_fd_sc_hvl": "c7e80a4802fc1df49b007b99d4a1f61120e3a37f",
-        "sky130_osu_sc_t12": "ac90ef0c622a9377a16b5218d9da3ac4169eeaaf",
-        "sky130_osu_sc_t15": "95d1c19abb47e1b2945847acb4e817b1b8417c43",
-        "sky130_osu_sc_t18": "aa2b509f3c8f32ea94fdb55ac9768754667c1658",
-        "sky130_sram_macros": "c2333394e0b0b9d9d71185678a8d8087715d5e3b",
+        "sky130_osu_sc_t12": "unknown",
+        "sky130_osu_sc_t15": "unknown",
+        "sky130_osu_sc_t18": "unknown",
+        "sky130_sram_macros": "unknown",
         "sky130_fd_bd_sram": "be33adbcf188fdeab5c061699847d9d440f7a084",
+        "sky130_fd_pr_reram": "unknown",
         "sky130_ml_xx_hd": "6eb3b0718552b034f1bf1870285ff135e3fb2dcb",
-        "xschem_sky130": "2f994e35580020805be3e8fe01109a63da207e03",
+        "xschem_sky130": "6f398652608d2bb0a380bdd7a4d1b4f8c87672b0",
         "klayout_sky130": "c4b125f216edda5d755e429cfe876855ff300974",
-        "precheck_sky130": "5cb9874b640f386205ba033d8a1ee322be21797a"
+        "precheck_sky130": "f4dee5c793044db58533425e4879747c95ca2f41"
     }
 }

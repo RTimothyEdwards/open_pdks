@@ -98,11 +98,11 @@ proc sky130::addtechmenu {framename} {
    magic::add_toolkit_command $layoutframe "pmos (MOSFET)" \
 	    "magic::gencell sky130::sky130_fd_pr__pfet_01v8" pdk1
 
-   # magic::add_toolkit_separator	$layoutframe pdk1
-   # magic::add_toolkit_command $layoutframe "LDNMOS (extended drain)" \
-   #	    "magic::gencell sky130::sky130_fd_pr__nfet_g5v0d16v0" pdk1
-   # magic::add_toolkit_command $layoutframe "LDPMOS (extended drain)" \
-   #	    "magic::gencell sky130::sky130_fd_pr__pfet_g5v0d16v0" pdk1
+   magic::add_toolkit_separator	$layoutframe pdk1
+   magic::add_toolkit_command $layoutframe "LDNMOS (extended drain)" \
+   	    "magic::gencell sky130::sky130_fd_pr__nfet_g5v0d16v0" pdk1
+   magic::add_toolkit_command $layoutframe "LDPMOS (extended drain)" \
+   	    "magic::gencell sky130::sky130_fd_pr__pfet_g5v0d16v0" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
    magic::add_toolkit_command $layoutframe "n-diode" \
@@ -3033,6 +3033,7 @@ proc sky130::res_device {parameters} {
     set end_contact_type ""	;# no contacts for metal resistors
     set end_overlap_cont 0	;# additional end overlap on sides
     set vias 0			;# add vias over contacts
+    set l_delta 0		;# delta between measured and drawn length
     set res_idtype none
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
@@ -3043,6 +3044,9 @@ proc sky130::res_device {parameters} {
     if {![dict exists $parameters end_contact_size]} {
 	set end_contact_size $contact_size
     }
+
+    # Modify drawn length by the delta length
+    set l [+ $l [* $l_delta 2.0]]
 
     # Draw the resistor and endcaps
     pushbox
@@ -3643,6 +3647,7 @@ proc sky130::sky130_fd_pr__res_high_po_0p35_draw {parameters} {
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	-2.16 \
 	    overlap_compress	0.36 \
+	    l_delta		-0.08 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::res_draw $drawdict]
@@ -3715,6 +3720,7 @@ proc sky130::sky130_fd_pr__res_high_po_0p69_draw {parameters} {
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
+	    l_delta		-0.08 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::res_draw $drawdict]
@@ -3787,6 +3793,7 @@ proc sky130::sky130_fd_pr__res_high_po_1p41_draw {parameters} {
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
+	    l_delta		-0.08 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::res_draw $drawdict]
@@ -3859,6 +3866,7 @@ proc sky130::sky130_fd_pr__res_high_po_2p85_draw {parameters} {
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
+	    l_delta		-0.08 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::res_draw $drawdict]
@@ -3931,6 +3939,7 @@ proc sky130::sky130_fd_pr__res_high_po_5p73_draw {parameters} {
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
+	    l_delta		-0.08 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::res_draw $drawdict]
@@ -4005,6 +4014,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p35_draw {parameters} {
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
+	    l_delta		-0.08 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::res_draw $drawdict]
@@ -4079,6 +4089,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p35_draw {parameters} {
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
+	    l_delta		-0.08 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::res_draw $drawdict]
@@ -4151,6 +4162,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p69_draw {parameters} {
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
+	    l_delta		-0.08 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::res_draw $drawdict]
@@ -4223,6 +4235,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_1p41_draw {parameters} {
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
+	    l_delta		-0.08 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::res_draw $drawdict]
@@ -4295,6 +4308,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_2p85_draw {parameters} {
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
+	    l_delta		-0.08 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::res_draw $drawdict]
@@ -4367,6 +4381,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_5p73_draw {parameters} {
 	    res_diff_spacing	$gresdiff_spacing \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
+	    l_delta		-0.08 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::res_draw $drawdict]
@@ -4994,9 +5009,10 @@ proc sky130::sky130_fd_pr__pfet_g5v0d10v5_defaults {} {
 
 proc sky130::sky130_fd_pr__pfet_g5v0d16v0_defaults {} {
     return {w 5.00 l 1.050 m 1 nf 1 diffcov 100 polycov 100 \
-		tbcov 100 rlcov 100 topc 1 botc 1 \
-		poverlap 0 doverlap 0 lmin 1.050 wmin 5.00 \
-		viasrc 100 viadrn 100 viagate 100 }
+		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 0 lmin 1.050 wmin 5.00 \
+		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 #----------------------------------------------------------------
@@ -5078,9 +5094,10 @@ proc sky130::sky130_fd_pr__nfet_03v3_nvt_defaults {} {
 
 proc sky130::sky130_fd_pr__nfet_g5v0d16v0_defaults {} {
     return {w 5.00 l 1.055 m 1 nf 1 diffcov 100 polycov 100 \
-		tbcov 100 rlcov 100 topc 1 botc 1 \
-		poverlap 0 doverlap 0 lmin 1.055 wmin 5.00 \
-		viasrc 100 viadrn 100 viagate 100 }
+		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 0 lmin 1.050 wmin 5.00 \
+		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
 #----------------------------------------------------------------
@@ -5749,6 +5766,80 @@ proc sky130::guard_ring {gw gh parameters} {
 #----------------------------------------------------------------
 
 proc sky130::draw_ldnmos_drain {parameters} {
+
+    # Set a local variable for each parameter (e.g., $l, $w, etc.)
+    foreach key [dict keys $parameters] {
+        set $key [dict get $parameters $key]
+    }
+
+    # Need to regenerate some values from mos_device
+    set hl [/ $l 2.0]
+    set hw [/ $w 2.0]
+
+    # Extension is fixed at 1.585um and we assume a fixed
+    # underlap of the gate of 0.13um, which is not in the
+    # drawn device, so subtracted from the extension distance.
+    set extension 1.455
+
+    pushbox
+    # Starts with point at the device center
+    box grow n ${hw}um
+    box grow s ${hw}um
+    box move $dside ${hl}um
+    box grow $dside ${extension}um
+    paint ed
+    set cext [sky130::getbox]
+    box width 0.26um
+    box move $dside 0.26um
+    paint mvnsd
+    pushbox
+    box grow c 0.66um
+    paint nwell
+    # Force box 0.48um larger so that spacing to guard ring
+    # comes out to 0.86um.
+    box grow c 0.48um
+    set cext [sky130::unionbox $cext [sky130::getbox]]
+    popbox
+    popbox
+    # Back to the center point
+    pushbox
+    box move $dside ${hl}um
+    box move $dside ${extension}um
+    box move $dside 0.13um
+
+    # Drain via on top of contact
+    set viatype $viadrn
+    if {$viatype != 0} {
+        pushbox
+        set cw $via_size
+    	set ch [* $cdwfull [/ [expr abs($viatype)] 100.0]]
+    	if {$ch < $via_size} {set ch $via_size}
+	box grow $dside [/ $cw 2]um
+	box grow $sside [/ $cw 2]um
+        set anchor [string index $viatype 0]
+	if {$anchor == "+"} {
+            box move s [/ [- $cdwfull $via_size] 2]um
+	    box grow n ${ch}um
+	} elseif {$anchor == "-"} {
+            box move n [/ [- $cdwfull $via_size] 2]um
+	    box grow s ${ch}um
+	} else {
+	    box grow n [/ $ch 2]um
+	    box grow s [/ $ch 2]um
+	}
+	sky130::mcon_draw vert
+	popbox
+    }
+    # cdwfull was calculated for the source side and is too long for
+    # the drain side by 0.06um on top and bottom.
+    set cdwfull [- $cdwfull 0.12]
+    if {$cdw > $cdwfull} [set cdw $cdwfull]
+
+    set cext [sky130::unionbox $cext [sky130::draw_contact 0 ${cdw} \
+		0.045 ${metal_surround} ${contact_size}\
+		mvnsd mvnsc li vert]]
+    popbox
+    return $cext
 }
 
 #----------------------------------------------------------------
@@ -5756,6 +5847,96 @@ proc sky130::draw_ldnmos_drain {parameters} {
 #----------------------------------------------------------------
 
 proc sky130::draw_ldpmos_drain {parameters} {
+
+    # Set a local variable for each parameter (e.g., $l, $w, etc.)
+    foreach key [dict keys $parameters] {
+        set $key [dict get $parameters $key]
+    }
+
+    # Need to regenerate some values from mos_device
+    set hl [/ $l 2.0]
+    set hw [/ $w 2.0]
+
+    # Extension is fixed at 1.19um and we assume a fixed
+    # underlap of the gate of 0.13um, which is not in the
+    # drawn device, so subtracted from the extension distance.
+    set extension 1.06
+
+    pushbox
+    # Starts with point at the device center
+    box grow n ${hw}um
+    box grow s ${hw}um
+    # Draw nwell under the entire device
+    pushbox
+    box grow e ${hl}um
+    box grow w ${hl}um
+    # Well should cover device and meet well width on
+    # top and bottom of the area cut out for the drain
+    box grow c 0.84um
+    box grow c 0.86um
+    box grow $dside ${extension}um
+    box grow $dside 0.26um
+    box grow $sside -1.08um
+    paint nwell
+    popbox
+    box move $dside ${hl}um
+    box grow $dside ${extension}um
+    paint ed
+    set cext [sky130::getbox]
+    box width 0.26um
+    box move $dside 0.26um
+    paint mvpsd
+    pushbox
+    box grow c 0.86um
+    # Shorter on gate side to avoid DRC error;  actual
+    # nwell is erased under gate by GDS generation rules.
+    box grow $sside -0.13um
+    paint pwell
+    # Force box 0.28um larger so that spacing to guard ring
+    # comes out to 0.66um.
+    box grow c 0.28um
+    set cext [sky130::unionbox $cext [sky130::getbox]]
+    popbox
+    popbox
+    # Back to the center point
+    pushbox
+    box move $dside ${hl}um
+    box move $dside ${extension}um
+    box move $dside 0.13um
+
+    # Drain via on top of contact
+    set viatype $viadrn
+    if {$viatype != 0} {
+        pushbox
+        set cw $via_size
+    	set ch [* $cdwfull [/ [expr abs($viatype)] 100.0]]
+    	if {$ch < $via_size} {set ch $via_size}
+	box grow $dside [/ $cw 2]um
+	box grow $sside [/ $cw 2]um
+        set anchor [string index $viatype 0]
+	if {$anchor == "+"} {
+            box move s [/ [- $cdwfull $via_size] 2]um
+	    box grow n ${ch}um
+	} elseif {$anchor == "-"} {
+            box move n [/ [- $cdwfull $via_size] 2]um
+	    box grow s ${ch}um
+	} else {
+	    box grow n [/ $ch 2]um
+	    box grow s [/ $ch 2]um
+	}
+	sky130::mcon_draw vert
+	popbox
+    }
+    # cdwfull was calculated for the source side and is too long for
+    # the drain side by 0.06um on top and bottom.
+    set cdwfull [- $cdwfull 0.12]
+    if {$cdw > $cdwfull} [set cdw $cdwfull]
+
+    set cext [sky130::unionbox $cext [sky130::draw_contact 0 ${cdw} \
+		0.045 ${metal_surround} ${contact_size}\
+		mvpsd mvpsc li vert]]
+    popbox
+    return $cext
 }
 
 #----------------------------------------------------------------
@@ -5915,7 +6096,12 @@ proc sky130::mos_device {parameters} {
     }
 
     if {$drain_proc != {}} {
-	set cext [sky130::unionbox $cext [eval $drain_proc parameters]]
+	# Add variables to the parameters dictionary that we'll need
+	dict set parameters cdw $cdw
+	dict set parameters cdwfull $cdwfull
+	dict set parameters dside $dside
+	dict set parameters sside $sside
+	set cext [sky130::unionbox $cext [eval $drain_proc {$parameters}]]
     } else {
 	# Drain diffusion contact
 	pushbox
@@ -6638,6 +6824,8 @@ proc sky130::sky130_fd_pr__pfet_g5v0d16v0_draw {parameters} {
 	    poly_type		poly \
 	    poly_contact_type	pc \
 	    sub_type		nwell \
+	    guard_sub_surround	0.33 \
+	    gate_to_polycont	0.32 \
 	    diff_spacing	0.31 \
 	    diff_tap_space	0.38 \
 	    diff_gate_space	0.38 \
