@@ -1136,7 +1136,9 @@ style gdsii
 # HVI (includes rules NWELL 8-11 and DIFFTAP 14-26)
 #----------------------------------------------------------------
 
- templayer thkox_area 	alldiffmv,mvvar
+ templayer thkox_area ed
+	grow 475
+	or alldiffmv,mvvar
 	grow	185
 	bloat-all alldiffmv nwell
 	grow 345
@@ -2987,6 +2989,47 @@ style  sky130 variants (),(vendor)
  labels TAP
  labels TAPTXT text
 
+ # Fill in FET under extended drain
+ layer mvpfet EDID
+ and POLY
+ and-not DIFF
+ and-not TAP
+ and-not NWELL
+
+ layer mvnfet EDID
+ and POLY
+ and-not DIFF
+ and-not TAP
+ and NWELL
+
+ # Restrict where nwell is merged
+ templayer ldmos_nwell EDID
+ grow 1200
+ and NWELL
+
+ # Remove or add well under extended FET gate
+ layer nwell EDID
+ and POLY
+ and DIFF
+ and PSDM
+ grow 685
+ or ldmos_nwell
+ grow 420
+ shrink 420
+
+ layer pwell EDID
+ and POLY
+ and DIFF
+ and NSDM
+ grow 660
+ grow 420
+ shrink 420
+
+ layer ed EDID
+ and-not POLY
+ and-not DIFF
+ and-not TAP
+
  templayer mvnsdexpand mvnsdarea
  grow 500
 
@@ -3977,6 +4020,8 @@ style  sky130 variants (),(vendor)
  calma PSDM 94 20
  # HVI (THKOX)
  calma HVI 75 20
+ # EDID
+ calma EDID 81 57
  # NPC
  calma NPC 95 20
  # P+ POLY MASK

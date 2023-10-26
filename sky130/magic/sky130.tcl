@@ -5786,19 +5786,21 @@ proc sky130::draw_ldnmos_drain {parameters} {
     box grow n ${hw}um
     box grow s ${hw}um
     box move $dside ${hl}um
+    pushbox
     box grow $dside ${extension}um
     paint ed
     set cext [sky130::getbox]
-    box width 0.26um
-    box move $dside 0.26um
+    popbox
+    box move $dside ${extension}um
+    box move $dside 0.13um
+    box grow e 0.13um
+    box grow w 0.13um
     paint mvnsd
+    # Test:  Do not include nwell in bounding box
+    set cext [sky130::unionbox $cext [sky130::getbox]]
     pushbox
     box grow c 0.66um
     paint nwell
-    # Force box 0.48um larger so that spacing to guard ring
-    # comes out to 0.86um.
-    box grow c 0.48um
-    set cext [sky130::unionbox $cext [sky130::getbox]]
     popbox
     popbox
     # Back to the center point
@@ -5836,7 +5838,7 @@ proc sky130::draw_ldnmos_drain {parameters} {
     if {$cdw > $cdwfull} [set cdw $cdwfull]
 
     set cext [sky130::unionbox $cext [sky130::draw_contact 0 ${cdw} \
-		0.045 ${metal_surround} ${contact_size}\
+		${drain_diff_surround} ${metal_surround} ${contact_size}\
 		mvnsd mvnsc li vert]]
     popbox
     return $cext
@@ -5866,36 +5868,24 @@ proc sky130::draw_ldpmos_drain {parameters} {
     # Starts with point at the device center
     box grow n ${hw}um
     box grow s ${hw}um
-    # Draw nwell under the entire device
-    pushbox
-    box grow e ${hl}um
-    box grow w ${hl}um
-    # Well should cover device and meet well width on
-    # top and bottom of the area cut out for the drain
-    box grow c 0.84um
-    box grow c 0.86um
-    box grow $dside ${extension}um
-    box grow $dside 0.26um
-    box grow $sside -1.08um
-    paint nwell
-    popbox
     box move $dside ${hl}um
+    pushbox
     box grow $dside ${extension}um
     paint ed
     set cext [sky130::getbox]
-    box width 0.26um
-    box move $dside 0.26um
+    popbox
+    box move $dside ${extension}um
+    box move $dside 0.13um
+    box grow e 0.13um
+    box grow w 0.13um
     paint mvpsd
     pushbox
     box grow c 0.86um
-    # Shorter on gate side to avoid DRC error;  actual
+    # Shorter than necessary to avoid DRC error;  actual
     # nwell is erased under gate by GDS generation rules.
-    box grow $sside -0.13um
+    box grow e -0.15um
+    box grow w -0.15um
     paint pwell
-    # Force box 0.28um larger so that spacing to guard ring
-    # comes out to 0.66um.
-    box grow c 0.28um
-    set cext [sky130::unionbox $cext [sky130::getbox]]
     popbox
     popbox
     # Back to the center point
@@ -5933,7 +5923,7 @@ proc sky130::draw_ldpmos_drain {parameters} {
     if {$cdw > $cdwfull} [set cdw $cdwfull]
 
     set cext [sky130::unionbox $cext [sky130::draw_contact 0 ${cdw} \
-		0.045 ${metal_surround} ${contact_size}\
+		${drain_diff_surround} ${metal_surround} ${contact_size}\
 		mvpsd mvpsc li vert]]
     popbox
     return $cext
@@ -6313,9 +6303,17 @@ proc sky130::mos_draw {parameters} {
     set id2_type ""	;# additional type covering everything
     set id2_surround 0	;# amount of surround on above type
 
+    set set_x_to_guard ""	;# override x distance to guard ring
+    set set_y_to_guard ""	;# override y distance to guard ring
+
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
         set $key [dict get $parameters $key]
+    }
+
+    # Diff surround on drain is by default the same as diff surround
+    if {![dict exist $parameters drain_diff_surround]} {
+	set drain_diff_surround $diff_surround
     }
 
     # Diff-to-tap spacing is by default the same as diff spacing
@@ -6361,7 +6359,7 @@ proc sky130::mos_draw {parameters} {
 
     tech lock *
     set bbox [sky130::mos_device $parameters]
-    # puts stdout "Diagnostic: Device bounding box e $bbox (um)"
+    puts stdout "Diagnostic: Device bounding box e $bbox (um)"
     tech unlock *
 
     set fw [- [lindex $bbox 2] [lindex $bbox 0]]
@@ -6369,6 +6367,10 @@ proc sky130::mos_draw {parameters} {
     set lw [+ [lindex $bbox 2] [lindex $bbox 0]]
     set lh [+ [lindex $bbox 3] [lindex $bbox 1]]
 
+    # If the bounding box is not symmetric about x=0, then find the
+    # offset.  Assumed to be needed only for X (asymmetric drain)
+    set xoffset [+ [lindex $bbox 0] [lindex $bbox 2]]
+    
     # If dev_sub_dist > 0 then each device must be in its own substrate
     # (well) area, and overlaps are disallowed.  dev_sub_space determines
     # the distance between individual devices in an array.
@@ -6399,7 +6401,7 @@ proc sky130::mos_draw {parameters} {
 	    set dx [+ $fw $diff_spacing]
 	} else {
 	    # overlap diffusions
-	    set dx [- $fw [+ $diff_surround $diff_surround $contact_size]]
+	    set dx [- $fw [+ $drain_diff_surround $drain_diff_surround $contact_size]]
 	}
     }
 
@@ -6450,6 +6452,14 @@ proc sky130::mos_draw {parameters} {
 		set corelly [- $corelly [/ $sdiff 2.0]]
 	    }
 	}
+
+	# set_x|y_to_guard overrides the above calculations if present.
+	if {$set_x_to_guard != ""} {
+	    set gx [+ $corex [* 2.0 $set_x_to_guard]]
+	}
+	if {$set_y_to_guard != ""} {
+	    set gy [+ $corey [* 2.0 $set_y_to_guard]]
+	}
     }
     if {$guard != 0} {
 	# Draw the guard ring first, as MOS well may interact with guard ring substrate
@@ -6488,7 +6498,9 @@ proc sky130::mos_draw {parameters} {
 	    set saveeo $evenodd
 	}
         for {set yp 0} {$yp < $m} {incr yp} {
+            if {$evens != 0} {box move e ${xoffset}um}
             sky130::mos_device $parameters
+            if {$evens != 0} {box move w ${xoffset}um}
             box move n ${dy}um
 	    if {$intc == 1} {
 		set evenodd [- 1 $evenodd]
@@ -6808,6 +6820,9 @@ proc sky130::sky130_fd_pr__nfet_g5v0d16v0_draw {parameters} {
 	    diff_spacing	0.31 \
 	    diff_tap_space	0.38 \
 	    diff_gate_space	0.38 \
+	    drain_diff_surround 0.045 \
+	    set_x_to_guard	1.665 \
+	    set_y_to_guard	1.225 \
 	    drain_proc		sky130::draw_ldnmos_drain \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
@@ -6824,11 +6839,16 @@ proc sky130::sky130_fd_pr__pfet_g5v0d16v0_draw {parameters} {
 	    poly_type		poly \
 	    poly_contact_type	pc \
 	    sub_type		nwell \
+	    id_type		nwell \
+	    id_surround		0.035 \
 	    guard_sub_surround	0.33 \
 	    gate_to_polycont	0.32 \
 	    diff_spacing	0.31 \
 	    diff_tap_space	0.38 \
 	    diff_gate_space	0.38 \
+	    drain_diff_surround 0.045 \
+	    set_x_to_guard	1.665 \
+	    set_y_to_guard	1.180 \
 	    drain_proc		sky130::draw_ldpmos_drain \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
