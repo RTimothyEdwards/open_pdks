@@ -57,7 +57,7 @@ end
 # sky130_fd_pr__nfet_03v3_nvt	nnfet		native nFET
 # sky130_fd_pr__pfet_g5v0d10v5	mvpfet		thickox pFET
 # sky130_fd_pr__nfet_g5v0d10v5	mvnfet		thickox nFET
-# sky130_fd_pr__nfet_01v8_nvt	mvnnfet		thickox native nFET
+# sky130_fd_pr__nfet_05v0_nvt	mvnnfet		thickox native nFET
 # sky130_fd_pr__nfet_g5v0d16v0	mvnfet		extended-drain nFET***
 # sky130_fd_pr__pfet_g5v0d16v0	mvpfet		extended-drain pFET***
 # sky130_fd_pr__diode_pw2nd_05v5 ndiode		n+ diff diode
