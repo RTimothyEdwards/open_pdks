@@ -4971,16 +4971,16 @@ variants *
 
 #ifdef MIM
 #ifdef METALS6
- device csubcircuit cap_mim_2f0fF *mimcap  *m5   l=c_length w=c_width
+ device csubcircuit cap_mim_2f0_m5m6_noshield *mimcap  *m5   l=c_length w=c_width
 #endif
 #ifdef METALS5
- device csubcircuit cap_mim_2f0fF *mimcap  *m4   l=c_length w=c_width
+ device csubcircuit cap_mim_2f0_m4m5_noshield *mimcap  *m4   l=c_length w=c_width
 #endif
 #ifdef METALS4
- device csubcircuit cap_mim_2f0fF *mimcap  *m3   l=c_length w=c_width
+ device csubcircuit cap_mim_2f0_m3m4_noshield *mimcap  *m3   l=c_length w=c_width
 #endif
 #ifdef METALS3
- device csubcircuit cap_mim_2f0fF *mimcap  *m2   l=c_length w=c_width
+ device csubcircuit cap_mim_2f0_m2m3_noshield *mimcap  *m2   l=c_length w=c_width
 #endif
 #endif (MIM)
 
