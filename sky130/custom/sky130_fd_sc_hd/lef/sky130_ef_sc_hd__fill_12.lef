@@ -3,10 +3,12 @@ VERSION 5.7 ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
 MACRO sky130_ef_sc_hd__fill_12
-  CLASS BLOCK ;
+  CLASS CORE SPACER ;
   FOREIGN sky130_ef_sc_hd__fill_12 ;
   ORIGIN 0.000 0.000 ;
   SIZE 5.520 BY 2.720 ;
+  SYMMETRY X Y R90 ;
+  SITE unithd ;
   PIN VPWR
     USE POWER ;
     PORT

@@ -3,17 +3,12 @@ VERSION 5.7 ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
 MACRO sky130_ef_sc_hd__decap_12
-  CLASS BLOCK ;
+  CLASS CORE SPACER ;
   FOREIGN sky130_ef_sc_hd__decap_12 ;
   ORIGIN 0.000 0.000 ;
   SIZE 5.520 BY 2.720 ;
-  PIN VGND
-    USE GROUND ;
-    PORT
-      LAYER met1 ;
-        RECT 0.000 -0.240 5.520 0.240 ;
-    END
-  END VGND
+  SYMMETRY X Y R90 ;
+  SITE unithd ;
   PIN VPWR
     USE POWER ;
     PORT
@@ -21,6 +16,13 @@ MACRO sky130_ef_sc_hd__decap_12
         RECT 0.000 2.480 5.520 2.960 ;
     END
   END VPWR
+  PIN VGND
+    USE GROUND ;
+    PORT
+      LAYER met1 ;
+        RECT 0.000 -0.240 5.520 0.240 ;
+    END
+  END VGND
   PIN VPB
     DIRECTION INOUT ;
     USE POWER ;
