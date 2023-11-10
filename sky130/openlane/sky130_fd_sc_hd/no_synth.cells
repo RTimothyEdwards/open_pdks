@@ -67,9 +67,6 @@ sky130_fd_sc_hd__macro_sparecell
 sky130_fd_sc_hd__maj3_1
 sky130_fd_sc_hd__maj3_2
 sky130_fd_sc_hd__maj3_4
-sky130_fd_sc_hd__mux2i_1
-sky130_fd_sc_hd__mux2i_2
-sky130_fd_sc_hd__mux2i_4
 sky130_fd_sc_hd__sdfbbn_1
 sky130_fd_sc_hd__sdfbbn_2
 sky130_fd_sc_hd__sdfbbp_1
