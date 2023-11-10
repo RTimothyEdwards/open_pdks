@@ -27,6 +27,17 @@
 # the form on github where the filename is spelled out as ".tar.gz" and
 # not ".tgz")
 
+function GIT() {
+    set -Eeuo pipefail
+    RETRIES_NO=5
+    RETRY_DELAY=3
+    for i in $(seq 1 $RETRIES_NO); do
+        git $@ && break
+        sleep ${RETRY_DELAY}
+        [[ $i -eq $RETRIES_NO ]] && echo "Failed to execute git cmd after $RETRIES_NO retries" && exit 1
+    done
+}
+
 set -e
 
 if [ "${1: -3}" == ".gz" ] ; then
@@ -36,11 +47,11 @@ if [ "${1: -3}" == ".gz" ] ; then
 
     DL_CMD=
     if type "wget" > /dev/null; then
-        DL_CMD="wget -qO"
+        DL_CMD="wget --tries=5 -qO"
     fi
 
     if type "curl" > /dev/null; then
-        DL_CMD="curl -sLo"
+        DL_CMD="curl --retry 5 --retry-all-errors -sLo"
     fi
 
     if [ "$DL_CMD" = "" ]; then
@@ -70,18 +81,18 @@ else
 
     if type "git" > /dev/null; then
         echo "Cloning $1 to $2"
-    	if [ $# -gt 2 ]; then
-	    if [ "$3" == "unknown" ]; then
-            	git clone --depth 1 $1 $2
-	    else
-		# git clone $1 $2
-		# git checkout $3
-        { git clone --branch $3 --single-branch $1 $2; } || \
-            { git clone $1 $2 && git -C $2 checkout $3; }
-	    fi
-	else
-            git clone --depth 1 $1 $2
-    	fi
+        if [ $# -gt 2 ]; then
+            if [ "$3" == "unknown" ]; then
+                GIT clone --depth 1 $1 $2
+            else
+                # git clone $1 $2
+                # git checkout $3
+                { GIT clone --branch $3 --single-branch $1 $2; } || \
+                { GIT clone $1 $2 && GIT -C $2 checkout $3; }
+            fi
+        else
+            GIT clone --depth 1 $1 $2
+        fi
 
     else
         echo "ERROR: \"git\" is required to automatically install tools."
@@ -90,4 +101,3 @@ else
 fi
 
 exit 0
-
