@@ -95,6 +95,8 @@ set ::env(KLAYOUT_PROPERTIES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/te
 set ::env(KLAYOUT_DRC_TECH_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/drc/$::env(PDK)_mr.drc"
 set ::env(KLAYOUT_DEF_LAYER_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/$::env(PDK).map"
 set ::env(KLAYOUT_XOR_IGNORE_LAYERS) "81/14"
+# based on KLAYOUT_DRC_TECH_SCRIPT options
+set ::env(KLAYOUT_DRC_OPTIONS) [dict create beol 1 feol 1 floating_metal 1 seal 1 offgrid 1]
 #set ::env(KLAYOUT_DRC_TECH) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/$::env(PDK).lydrc"
 
 # netgen setup
