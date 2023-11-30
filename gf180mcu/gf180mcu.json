@@ -65,8 +65,8 @@
     "stdcells": {
         "gf180mcu_fd_sc_mcu9t5v0": "FD_SC_MCU9T5V0_COMMIT",
         "gf180mcu_fd_sc_mcu7t5v0": "FD_SC_MCU7T5V0_COMMIT",
-	"gf180mcu_osu_sc_gf12t3v3": "OSU_SC_COMMIT",
-	"gf180mcu_osu_sc_gf9t3v3": "OSU_SC_COMMIT"
+        "gf180mcu_osu_sc_gf12t3v3": "OSU_SC_COMMIT",
+        "gf180mcu_osu_sc_gf9t3v3": "OSU_SC_COMMIT"
     },
     "iocells": {
         "gf180mcu_fd_io": "FD_IO_COMMIT"
@@ -98,7 +98,7 @@
         "gf180mcu_fd_sc_mcu7t5v0": "8743b6f9641eb8707179c4e51703380d4dc90f16",
         "gf180mcu_fd_sc_mcu9t5v0": "376ea56fa36ce7702595ce4e0e3c9357ee38c81c",
         "gf180mcu_fd_ip_sram": "9c411928870ce15226228fa52ddb6ecc0ea4ffbe",
-	"gf180mcu_osu_sc_gf12t3v3": "df1d8ec95b2cfbfdb8e0128819e9899e968b92a4",
-	"gf180mcu_osu_sc_gf9t3v3": "df1d8ec95b2cfbfdb8e0128819e9899e968b92a4"
+        "gf180mcu_osu_sc_gf12t3v3": "df1d8ec95b2cfbfdb8e0128819e9899e968b92a4",
+        "gf180mcu_osu_sc_gf9t3v3": "df1d8ec95b2cfbfdb8e0128819e9899e968b92a4"
     }
 }
