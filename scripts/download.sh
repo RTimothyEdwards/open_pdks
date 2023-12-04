@@ -85,9 +85,9 @@ else
             if [ "$3" == "unknown" ]; then
                 git_retry clone --depth 1 $1 $2
             else
-                # git clone $1 $2
-                # git checkout $3
-                { git clone --branch $3 --single-branch $1 $2; } || \ # Not gonna retry- this is more likely to fail than not
+                # Not gonna retry on the first `git clone`- the backup command
+                # exists anyway
+                { git clone --branch $3 --single-branch $1 $2; } ||
                 { git_retry clone $1 $2 && git -C $2 checkout $3; }
             fi
         else
