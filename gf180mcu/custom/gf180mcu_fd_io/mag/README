@@ -1,0 +1,12 @@
+This custom library addendum to gf180mcu_fd_io contains an overlay
+pad for the bidirectional GPIO pad featuring an additional pin
+with a connection directly to the pad on the near side of the 100
+ohm ESD resistor, making an analog connection to the pad through
+a series 100 ohm resistor.
+
+There are three sets of pads in the PDK for 3, 4, and 5 layers of
+metal, which correspond to open_pdks' gf180mcuA, B, and C/D,
+respectively.  The base cellname is the same in each case but the
+LEF and GDS file names are given a suffix _3lm, _4lm, or _5lm.
+Since the magic database file is always the same as the cell name,
+the three versions have been placed in separate subdirectories.

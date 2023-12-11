@@ -1,0 +1,575 @@
+* Copyright 2022 GlobalFoundries PDK Authors
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+
+.SUBCKT gf180mcu_ef_io__bi_t A ANA CS DVDD DVSS IE OE PAD PD PDRV0 PDRV1 PU SL VDD VSS Y
+X0 DVDD DVSS cap_nmos_06v0 m=4.0 c_length=3e-6 c_width=3e-6
+X1 DVDD DVSS cap_nmos_06v0 m=10.0 c_length=1.5e-6 c_width=5e-6
+X2 n67 n75 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12 ad=1.32e-12
++ ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X3 n37 n67 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12 ad=1.32e-12
++ ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X4 n72 OE VSS VSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12 ad=1.32e-12
++ ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X5 n75 A n72 VSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X6 n67 n75 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12 ad=2.64e-12
++ ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X7 n37 n67 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12 ad=2.64e-12
++ ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X8 n75 OE VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12 ad=1.32e-12
++ ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X9 n75 A VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12 ad=1.32e-12
++ ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X10 PAD n43 DVDD DVDD pfet_06v0_dss m=1.0 w=80e-6 l=700e-9 nf=2.0 s_sab=280e-9
++ d_sab=2.78e-6 par=1 dtemp=0.0
+X11 PAD n55 DVSS DVSS nfet_06v0_dss m=1.0 w=38e-6 l=1.15e-6 nf=1.0 s_sab=280e-9
++ d_sab=3.78e-6 par=1 dtemp=0.0
+X12 PAD n52 DVSS DVSS nfet_06v0_dss m=1.0 w=38e-6 l=1.15e-6 nf=1.0 s_sab=280e-9
++ d_sab=3.78e-6 par=1 dtemp=0.0
+X13 PAD n48 DVDD DVDD pfet_06v0_dss m=1.0 w=40e-6 l=700e-9 nf=1.0 s_sab=280e-9
++ d_sab=2.78e-6 par=1 dtemp=0.0
+X14 PAD n42 DVDD DVDD pfet_06v0_dss m=1.0 w=80e-6 l=700e-9 nf=2.0 s_sab=280e-9
++ d_sab=2.78e-6 par=1 dtemp=0.0
+X15 PAD n56 DVSS DVSS nfet_06v0_dss m=1.0 w=38e-6 l=1.15e-6 nf=1.0 s_sab=280e-9
++ d_sab=3.78e-6 par=1 dtemp=0.0
+X16 PAD n51 DVSS DVSS nfet_06v0_dss m=1.0 w=38e-6 l=1.15e-6 nf=1.0 s_sab=280e-9
++ d_sab=3.78e-6 par=1 dtemp=0.0
+X17 PAD n47 DVDD DVDD pfet_06v0_dss m=1.0 w=40e-6 l=700e-9 nf=1.0 s_sab=280e-9
++ d_sab=2.78e-6 par=1 dtemp=0.0
+X18 PAD n44 DVDD DVDD pfet_06v0_dss m=1.0 w=80e-6 l=700e-9 nf=2.0 s_sab=280e-9
++ d_sab=2.78e-6 par=1 dtemp=0.0
+X19 PAD n54 DVSS DVSS nfet_06v0_dss m=1.0 w=38e-6 l=1.15e-6 nf=1.0 s_sab=280e-9
++ d_sab=3.78e-6 par=1 dtemp=0.0
+X20 PAD n53 DVSS DVSS nfet_06v0_dss m=1.0 w=38e-6 l=1.15e-6 nf=1.0 s_sab=280e-9
++ d_sab=3.78e-6 par=1 dtemp=0.0
+X21 PAD n49 DVDD DVDD pfet_06v0_dss m=1.0 w=40e-6 l=700e-9 nf=1.0 s_sab=280e-9
++ d_sab=2.78e-6 par=1 dtemp=0.0
+X22 PAD n45 DVDD DVDD pfet_06v0_dss m=1.0 w=80e-6 l=700e-9 nf=2.0 s_sab=280e-9
++ d_sab=2.78e-6 par=1 dtemp=0.0
+X23 PAD n57 DVSS DVSS nfet_06v0_dss m=1.0 w=38e-6 l=1.15e-6 nf=1.0 s_sab=280e-9
++ d_sab=3.78e-6 par=1 dtemp=0.0
+X24 PAD n50 DVSS DVSS nfet_06v0_dss m=1.0 w=38e-6 l=1.15e-6 nf=1.0 s_sab=280e-9
++ d_sab=3.78e-6 par=1 dtemp=0.0
+X25 PAD n46 DVDD DVDD pfet_06v0_dss m=1.0 w=40e-6 l=700e-9 nf=1.0 s_sab=280e-9
++ d_sab=2.78e-6 par=1 dtemp=0.0
+X26 n58 n41 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=2.0 as=1.32e-12 ad=780e-15
++ ps=7.76e-6 pd=4.04e-6 nrd=86.667e-3 nrs=146.667e-3 sa=440e-9 sb=440e-9
++ sd=520e-9 dtemp=0.0 par=1
+X27 n175 SL VSS VSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X28 n41 n175 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=2.0 as=1.32e-12
++ ad=780e-15 ps=7.76e-6 pd=4.04e-6 nrd=86.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X29 n58 n41 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=2.0 as=2.64e-12
++ ad=1.56e-12 ps=13.76e-6 pd=7.04e-6 nrd=43.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X30 n175 SL VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X31 n41 n175 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=2.0 as=2.64e-12
++ ad=1.56e-12 ps=13.76e-6 pd=7.04e-6 nrd=43.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+D32 A VDD diode_pd2nw_06v0 m=1.0 area=1e-12 pj=4e-6
+D33 SL VDD diode_pd2nw_06v0 m=1.0 area=1e-12 pj=4e-6
+D34 VSS PDRV0 diode_pd2nw_06v0 m=1.0 area=230.4e-15 pj=1.92e-6
+D35 VSS OE diode_pd2nw_06v0 m=1.0 area=230.4e-15 pj=1.92e-6
+X36 n188 PDRV0 VSS VSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X37 n179 OE n188 VSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X38 n39 n36 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X39 n36 n179 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X40 n179 PDRV0 VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X41 n179 OE VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X42 n39 n36 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X43 n36 n179 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+D44 VSS PDRV1 diode_pd2nw_06v0 m=1.0 area=230.4e-15 pj=1.92e-6
+D45 VSS OE diode_pd2nw_06v0 m=1.0 area=230.4e-15 pj=1.92e-6
+X46 n198 PDRV1 VSS VSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X47 n189 OE n198 VSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X48 n35 n33 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X49 n33 n189 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X50 n189 PDRV1 VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X51 n189 OE VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X52 n35 n33 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X53 n33 n189 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+D54 VSS VDD diode_pd2nw_06v0 m=1.0 area=230.4e-15 pj=1.92e-6
+D55 VSS OE diode_pd2nw_06v0 m=1.0 area=230.4e-15 pj=1.92e-6
+X56 n208 VDD VSS VSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X57 n199 OE n208 VSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X58 n32 n31 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X59 n31 n199 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X60 n199 VDD VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X61 n199 OE VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X62 n32 n31 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X63 n31 n199 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X64 n46 n58 n45 DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X65 n45 DVDD n46 DVSS nfet_06v0 m=1.0 w=1.2e-6 l=700e-9 nf=1.0 as=528e-15
++ ad=528e-15 ps=3.28e-6 pd=3.28e-6 nrd=366.667e-3 nrs=366.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X66 n50 n209 DVSS DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X67 n57 n209 DVSS DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X68 n46 n214 DVSS DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X69 n214 n37 DVSS DVSS nfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X70 n214 n39 DVSS DVSS nfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X71 n209 n36 n214 DVSS nfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X72 n50 n41 n57 DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X73 n209 n36 DVDD DVDD pfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X74 n46 n214 DVDD DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X75 n57 n209 DVDD DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X76 n50 DVSS n57 DVDD pfet_06v0 m=1.0 w=1.2e-6 l=700e-9 nf=1.0 as=528e-15
++ ad=528e-15 ps=3.28e-6 pd=3.28e-6 nrd=366.667e-3 nrs=366.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X77 n209 n37 DVDD DVDD pfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X78 n214 n39 n209 DVDD pfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X79 n45 n214 DVDD DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X80 n47 n58 n42 DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X81 n42 DVDD n47 DVSS nfet_06v0 m=1.0 w=1.2e-6 l=700e-9 nf=1.0 as=528e-15
++ ad=528e-15 ps=3.28e-6 pd=3.28e-6 nrd=366.667e-3 nrs=366.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X82 n51 n222 DVSS DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X83 n56 n222 DVSS DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X84 n47 n227 DVSS DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X85 n227 n37 DVSS DVSS nfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X86 n227 n35 DVSS DVSS nfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X87 n222 n33 n227 DVSS nfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X88 n51 n41 n56 DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X89 n222 n33 DVDD DVDD pfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X90 n47 n227 DVDD DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X91 n56 n222 DVDD DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X92 n51 DVSS n56 DVDD pfet_06v0 m=1.0 w=1.2e-6 l=700e-9 nf=1.0 as=528e-15
++ ad=528e-15 ps=3.28e-6 pd=3.28e-6 nrd=366.667e-3 nrs=366.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X93 n222 n37 DVDD DVDD pfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X94 n227 n35 n222 DVDD pfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X95 n42 n227 DVDD DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X96 n48 n58 n43 DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X97 n43 DVDD n48 DVSS nfet_06v0 m=1.0 w=1.2e-6 l=700e-9 nf=1.0 as=528e-15
++ ad=528e-15 ps=3.28e-6 pd=3.28e-6 nrd=366.667e-3 nrs=366.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X98 n52 n235 DVSS DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X99 n55 n235 DVSS DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X100 n48 n240 DVSS DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X101 n240 n37 DVSS DVSS nfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X102 n240 n35 DVSS DVSS nfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X103 n235 n33 n240 DVSS nfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X104 n52 n41 n55 DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X105 n235 n33 DVDD DVDD pfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X106 n48 n240 DVDD DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X107 n55 n235 DVDD DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X108 n52 DVSS n55 DVDD pfet_06v0 m=1.0 w=1.2e-6 l=700e-9 nf=1.0 as=528e-15
++ ad=528e-15 ps=3.28e-6 pd=3.28e-6 nrd=366.667e-3 nrs=366.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X109 n235 n37 DVDD DVDD pfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X110 n240 n35 n235 DVDD pfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X111 n43 n240 DVDD DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X112 n49 n58 n44 DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X113 n44 DVDD n49 DVSS nfet_06v0 m=1.0 w=1.2e-6 l=700e-9 nf=1.0 as=528e-15
++ ad=528e-15 ps=3.28e-6 pd=3.28e-6 nrd=366.667e-3 nrs=366.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X114 n53 n248 DVSS DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X115 n54 n248 DVSS DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X116 n49 n253 DVSS DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X117 n253 n37 DVSS DVSS nfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X118 n253 n32 DVSS DVSS nfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X119 n248 n31 n253 DVSS nfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X120 n53 n41 n54 DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X121 n248 n31 DVDD DVDD pfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X122 n49 n253 DVDD DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X123 n54 n248 DVDD DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X124 n53 DVSS n54 DVDD pfet_06v0 m=1.0 w=1.2e-6 l=700e-9 nf=1.0 as=528e-15
++ ad=528e-15 ps=3.28e-6 pd=3.28e-6 nrd=366.667e-3 nrs=366.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X125 n248 n37 DVDD DVDD pfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X126 n253 n32 n248 DVDD pfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X127 n44 n253 DVDD DVDD pfet_06v0 m=1.0 w=24e-6 l=700e-9 nf=1.0 as=10.56e-12
++ ad=10.56e-12 ps=48.88e-6 pd=48.88e-6 nrd=18.333e-3 nrs=18.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X128 n273 n262 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=2.0 as=1.32e-12
++ ad=780e-15 ps=7.76e-6 pd=4.04e-6 nrd=86.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X129 n286 IE VSS VSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X130 n262 n286 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=2.0 as=1.32e-12
++ ad=780e-15 ps=7.76e-6 pd=4.04e-6 nrd=86.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X131 n273 n262 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=2.0 as=2.64e-12
++ ad=1.56e-12 ps=13.76e-6 pd=7.04e-6 nrd=43.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X132 n286 IE VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X133 n262 n286 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=2.0 as=2.64e-12
++ ad=1.56e-12 ps=13.76e-6 pd=7.04e-6 nrd=43.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X134 n279 n263 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=2.0 as=1.32e-12
++ ad=780e-15 ps=7.76e-6 pd=4.04e-6 nrd=86.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X135 n294 CS VSS VSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X136 n263 n294 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=2.0 as=1.32e-12
++ ad=780e-15 ps=7.76e-6 pd=4.04e-6 nrd=86.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X137 n279 n263 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=2.0 as=2.64e-12
++ ad=1.56e-12 ps=13.76e-6 pd=7.04e-6 nrd=43.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X138 n294 CS VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X139 n263 n294 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=2.0 as=2.64e-12
++ ad=1.56e-12 ps=13.76e-6 pd=7.04e-6 nrd=43.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X140 n277 n265 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=2.0 as=1.32e-12
++ ad=780e-15 ps=7.76e-6 pd=4.04e-6 nrd=86.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X141 n302 n266 VSS VSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X142 n265 n302 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=2.0 as=1.32e-12
++ ad=780e-15 ps=7.76e-6 pd=4.04e-6 nrd=86.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X143 n277 n265 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=2.0 as=2.64e-12
++ ad=1.56e-12 ps=13.76e-6 pd=7.04e-6 nrd=43.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X144 n302 n266 VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X145 n265 n302 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=2.0 as=2.64e-12
++ ad=1.56e-12 ps=13.76e-6 pd=7.04e-6 nrd=43.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X146 n281 n268 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=2.0 as=1.32e-12
++ ad=780e-15 ps=7.76e-6 pd=4.04e-6 nrd=86.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X147 n310 n264 VSS VSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X148 n268 n310 DVSS DVSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=2.0 as=1.32e-12
++ ad=780e-15 ps=7.76e-6 pd=4.04e-6 nrd=86.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X149 n281 n268 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=2.0 as=2.64e-12
++ ad=1.56e-12 ps=13.76e-6 pd=7.04e-6 nrd=43.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+X150 n310 n264 VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X151 n268 n310 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=2.0 as=2.64e-12
++ ad=1.56e-12 ps=13.76e-6 pd=7.04e-6 nrd=43.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=520e-9 dtemp=0.0 par=1
+D152 PD VDD diode_pd2nw_06v0 m=1.0 area=1e-12 pj=4e-6
+D153 IE VDD diode_pd2nw_06v0 m=1.0 area=1e-12 pj=4e-6
+D154 CS VDD diode_pd2nw_06v0 m=1.0 area=1e-12 pj=4e-6
+D155 PU VDD diode_pd2nw_06v0 m=1.0 area=1e-12 pj=4e-6
+X156 n318 n263 DVDD DVDD pfet_06v0 m=1.0 w=8e-6 l=700e-9 nf=1.0 as=3.52e-12
++ ad=3.52e-12 ps=16.88e-6 pd=16.88e-6 nrd=55e-3 nrs=55e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X157 DVDD n263 n319 DVDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X158 n320 ANA DVDD DVDD pfet_06v0 m=1.0 w=3.8e-6 l=700e-9 nf=1.0 as=1.672e-12
++ ad=1.672e-12 ps=8.48e-6 pd=8.48e-6 nrd=115.789e-3 nrs=115.789e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X159 DVSS n319 n320 DVDD pfet_06v0 m=1.0 w=3.8e-6 l=700e-9 nf=1.0 as=1.672e-12
++ ad=1.672e-12 ps=8.48e-6 pd=8.48e-6 nrd=115.789e-3 nrs=115.789e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X160 n280 n262 DVDD DVDD pfet_06v0 m=1.0 w=6e-6 l=700e-9 nf=1.0 as=2.64e-12
++ ad=2.64e-12 ps=12.88e-6 pd=12.88e-6 nrd=73.333e-3 nrs=73.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X161 n280 n318 n315 DVDD pfet_06v0 m=1.0 w=2e-6 l=700e-9 nf=1.0 as=880e-15
++ ad=880e-15 ps=4.88e-6 pd=4.88e-6 nrd=220e-3 nrs=220e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X162 n280 n318 n319 DVDD pfet_06v0 m=1.0 w=2e-6 l=700e-9 nf=1.0 as=880e-15
++ ad=880e-15 ps=4.88e-6 pd=4.88e-6 nrd=220e-3 nrs=220e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X163 n280 ANA n320 DVDD pfet_06v0 m=1.0 w=4.3e-6 l=700e-9 nf=1.0 as=1.892e-12
++ ad=1.892e-12 ps=9.48e-6 pd=9.48e-6 nrd=102.326e-3 nrs=102.326e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X164 n325 n262 DVSS DVSS nfet_06v0 m=1.0 w=16e-6 l=700e-9 nf=1.0 as=7.04e-12
++ ad=7.04e-12 ps=32.88e-6 pd=32.88e-6 nrd=27.5e-3 nrs=27.5e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X165 n317 ANA n325 DVSS nfet_06v0 m=1.0 w=10.6e-6 l=700e-9 nf=1.0 as=4.664e-12
++ ad=4.664e-12 ps=22.08e-6 pd=22.08e-6 nrd=41.509e-3 nrs=41.509e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X166 n280 ANA n317 DVSS nfet_06v0 m=1.0 w=12e-6 l=700e-9 nf=1.0 as=5.28e-12
++ ad=5.28e-12 ps=24.88e-6 pd=24.88e-6 nrd=36.667e-3 nrs=36.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X167 n318 n263 DVSS DVSS nfet_06v0 m=1.0 w=4e-6 l=700e-9 nf=1.0 as=1.76e-12
++ ad=1.76e-12 ps=8.88e-6 pd=8.88e-6 nrd=110e-3 nrs=110e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X168 n280 n263 n315 DVSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X169 n280 n263 n319 DVSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X170 DVDD n315 n317 DVSS nfet_06v0 m=1.0 w=1.3e-6 l=700e-9 nf=1.0 as=572e-15
++ ad=572e-15 ps=3.48e-6 pd=3.48e-6 nrd=338.462e-3 nrs=338.462e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X171 DVSS n318 n315 DVSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X172 n333 n280 DVDD DVDD pfet_06v0 m=1.0 w=2e-6 l=700e-9 nf=1.0 as=880e-15
++ ad=880e-15 ps=4.88e-6 pd=4.88e-6 nrd=220e-3 nrs=220e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X173 n330 n333 VDD VDD pfet_06v0 m=1.0 w=10e-6 l=700e-9 nf=1.0 as=4.4e-12
++ ad=4.4e-12 ps=20.88e-6 pd=20.88e-6 nrd=44e-3 nrs=44e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X174 Y n330 VDD VDD pfet_06v0 m=1.0 w=21e-6 l=700e-9 nf=1.0 as=9.24e-12
++ ad=9.24e-12 ps=42.88e-6 pd=42.88e-6 nrd=20.952e-3 nrs=20.952e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X175 n333 n280 DVSS DVSS nfet_06v0 m=1.0 w=8e-6 l=700e-9 nf=1.0 as=3.52e-12
++ ad=3.52e-12 ps=16.88e-6 pd=16.88e-6 nrd=55e-3 nrs=55e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X176 Y n330 VSS VSS nfet_06v0 m=1.0 w=9e-6 l=700e-9 nf=1.0 as=3.96e-12
++ ad=3.96e-12 ps=18.88e-6 pd=18.88e-6 nrd=48.889e-3 nrs=48.889e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X177 n330 n333 VSS VSS nfet_06v0 m=1.0 w=2.5e-6 l=700e-9 nf=1.0 as=1.1e-12
++ ad=1.1e-12 ps=5.88e-6 pd=5.88e-6 nrd=176e-3 nrs=176e-3 sa=440e-9 sb=440e-9
++ sd=0.0 dtemp=0.0 par=1
+X178 n266 n340 VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X179 n266 PU VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X180 n341 PU VSS VSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X181 n266 n340 n341 VSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X182 n264 PD VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X183 n264 n340 VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X184 n347 n340 VSS VSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X185 n264 PD n347 VSS nfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X186 n353 n359 n340 VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X187 PU PD n340 VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X188 n359 PD VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X189 n353 PU VDD VDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X190 n353 PD n340 VSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X191 PU n359 n340 VSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X192 n359 PD VSS VSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X193 n353 PU VSS VSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X194 ANA n362 DVDD ppolyf_u r_width=800e-9 r_length=23e-6 m=1.0 r=9.94533e3 par=1
+X195 n362 n361 DVDD ppolyf_u r_width=800e-9 r_length=35.7e-6 m=1.0 r=15.3065e3 par=1
+X196 n361 n360 DVDD ppolyf_u r_width=800e-9 r_length=35.7e-6 m=1.0 r=15.3065e3 par=1
+X197 n360 n363 DVDD ppolyf_u r_width=800e-9 r_length=35.7e-6 m=1.0 r=15.3065e3 par=1
+X198 n363 n368 DVDD ppolyf_u r_width=800e-9 r_length=35.7e-6 m=1.0 r=15.3065e3 par=1
+X199 n368 n367 DVDD ppolyf_u r_width=800e-9 r_length=35.7e-6 m=1.0 r=15.3065e3 par=1
+X200 n367 n364 DVDD ppolyf_u r_width=800e-9 r_length=35.7e-6 m=1.0 r=15.3065e3 par=1
+X201 n364 n365 DVDD ppolyf_u r_width=800e-9 r_length=35.7e-6 m=1.0 r=15.3065e3 par=1
+X202 n365 n281 DVSS DVSS nfet_06v0 m=1.0 w=1.5e-6 l=700e-9 nf=1.0 as=660e-15
++ ad=660e-15 ps=3.88e-6 pd=3.88e-6 nrd=293.333e-3 nrs=293.333e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+X203 n365 n265 DVDD DVDD pfet_06v0 m=1.0 w=3e-6 l=700e-9 nf=1.0 as=1.32e-12
++ ad=1.32e-12 ps=6.88e-6 pd=6.88e-6 nrd=146.667e-3 nrs=146.667e-3 sa=440e-9
++ sb=440e-9 sd=0.0 dtemp=0.0 par=1
+D204 DVSS ANA diode_nd2ps_06v0 m=2.0 area=20e-12 pj=42e-6
+D205 ANA DVDD diode_pd2nw_06v0 m=2.0 area=20e-12 pj=42e-6
+X206 PAD ANA DVDD ppolyf_u r_width=2.5e-6 r_length=2.8e-6 m=1.0 r=432.59 par=1
+X207 PAD ANA DVDD ppolyf_u r_width=2.5e-6 r_length=2.8e-6 m=1.0 r=449.157 par=1
+X208 PAD ANA DVDD ppolyf_u r_width=2.5e-6 r_length=2.8e-6 m=1.0 r=432.59 par=1
+X209 PAD ANA DVDD ppolyf_u r_width=2.5e-6 r_length=2.8e-6 m=1.0 r=449.157 par=1
+.ENDS
+

@@ -1520,6 +1520,8 @@ primitive-%:
 	${STAGE} -source ${SKY130_PR_PATH} -target ${STAGING_PATH}/${SKY130$*} \
 		-ngspice models/* \
 		filter=custom/scripts/rename_models.py \
+		-combined combined_models/* \
+		filter=custom/scripts/rename_models.py \
 		2>&1 | tee -a ${SKY130$*}_make.log
 	# Install base device library from vendor files.
 	${STAGE} -source ${SKY130_PR_PATH} -target ${STAGING_PATH}/${SKY130$*} \

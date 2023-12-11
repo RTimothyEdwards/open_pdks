@@ -1,0 +1,209 @@
+magic
+tech gf180mcuA
+magscale 1 10
+timestamp 1698938327
+<< metal2 >>
+rect 672 69794 748 70000
+rect 1193 69794 1269 70000
+rect 1422 69794 1498 70000
+rect 1564 69794 1640 70000
+rect 1696 62761 1772 70000
+rect 2066 69794 2142 70000
+rect 2277 69794 2353 70000
+rect 13734 69794 13810 70000
+rect 13880 69794 13956 70000
+rect 14026 69794 14102 70000
+rect 14172 69794 14248 70000
+rect 1696 62587 1764 62761
+rect 1696 58950 1772 62587
+rect 1696 58870 3333 58950
+<< metal3 >>
+rect 0 68400 200 69678
+rect 14800 68400 15000 69678
+rect 0 66800 200 68200
+rect 14800 66800 15000 68200
+rect 0 65200 200 66600
+rect 14800 65200 15000 66600
+rect 0 63600 200 65000
+rect 14800 63600 15000 65000
+rect 0 62000 200 63400
+rect 14800 62000 15000 63400
+rect 0 60400 200 61800
+rect 14800 60400 15000 61800
+rect 0 58800 200 60200
+rect 14800 58800 15000 60200
+rect 0 57200 200 58600
+rect 14800 57200 15000 58600
+rect 0 55600 200 57000
+rect 14800 55600 15000 57000
+rect 0 54000 200 55400
+rect 14800 54000 15000 55400
+rect 0 52400 200 53800
+rect 14800 52400 15000 53800
+rect 0 50800 200 52200
+rect 14800 50800 15000 52200
+rect 0 49200 200 50600
+rect 14800 49200 15000 50600
+rect 0 46000 200 49000
+rect 14800 46000 15000 49000
+rect 0 42800 200 45800
+rect 14800 42800 15000 45800
+rect 0 41200 200 42600
+rect 14800 41200 15000 42600
+rect 0 39600 200 41000
+rect 14800 39600 15000 41000
+rect 0 36400 200 39400
+rect 14800 36400 15000 39400
+rect 0 33200 200 36200
+rect 14800 33200 15000 36200
+rect 0 30000 200 33000
+rect 14800 30000 15000 33000
+rect 0 26800 200 29800
+rect 14800 26800 15000 29800
+rect 0 25200 200 26600
+rect 14800 25200 15000 26600
+rect 0 23600 200 25000
+rect 14800 23600 15000 25000
+rect 0 20400 200 23400
+rect 14800 20400 15000 23400
+rect 0 17200 200 20200
+rect 14800 17200 15000 20200
+rect 0 14000 200 17000
+rect 14800 14000 15000 17000
+rect 5000 4000 10000 9000
+use gf180mcu_fd_io__bi_t  gf180mcu_fd_io__bi_t_0 $PDKPATH/libs.ref/gf180mcu_fd_io/mag
+timestamp 1698343010
+transform 1 0 0 0 1 0
+box -32 0 15032 70000
+<< labels >>
+flabel metal2 s 672 69924 748 70000 0 FreeSans 240 0 0 0 CS
+port 2 nsew signal input
+flabel metal2 s 1193 69924 1269 70000 0 FreeSans 240 0 0 0 PU
+port 11 nsew signal input
+flabel metal2 s 1422 69924 1498 70000 0 FreeSans 240 0 0 0 PDRV0
+port 9 nsew signal input
+flabel metal2 s 1564 69924 1640 70000 0 FreeSans 240 0 0 0 PDRV1
+port 10 nsew signal input
+flabel metal2 s 2066 69924 2142 70000 0 FreeSans 240 0 0 0 PD
+port 8 nsew signal input
+flabel metal2 s 2277 69924 2353 70000 0 FreeSans 240 0 0 0 IE
+port 5 nsew signal input
+flabel metal2 s 13734 69924 13810 70000 0 FreeSans 240 0 0 0 SL
+port 12 nsew signal input
+flabel metal2 s 13880 69924 13956 70000 0 FreeSans 240 0 0 0 A
+port 1 nsew signal input
+flabel metal2 s 14026 69924 14102 70000 0 FreeSans 240 0 0 0 OE
+port 6 nsew signal input
+flabel metal2 s 14172 69924 14248 70000 0 FreeSans 240 0 0 0 Y
+port 15 nsew signal output
+flabel metal2 1696 69924 1772 70000 0 FreeSans 240 0 0 0 ANA
+port 16 nsew
+flabel metal3 s 5000 4000 10000 9000 0 FreeSans 1600 0 0 0 PAD
+port 7 nsew signal bidirectional
+flabel metal3 s 0 66800 200 68200 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 0 58800 200 60200 1 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 0 52400 200 53800 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 0 54000 200 55400 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 0 55600 200 57000 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 0 41200 200 42600 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 0 42800 200 45800 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 0 26800 200 29800 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 0 30000 200 33000 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 0 33200 200 36200 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 0 36400 200 39400 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 0 23600 200 25000 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 0 68400 200 69678 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 0 65200 200 66600 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 0 60400 200 61800 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 0 57200 200 58600 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 0 46000 200 49000 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 0 39600 200 41000 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 0 25200 200 26600 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 0 14000 200 17000 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 0 17200 200 20200 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 0 20400 200 23400 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 0 62000 200 63400 0 FreeSans 560 90 0 0 VDD
+port 13 nsew power bidirectional
+flabel metal3 s 0 50800 200 52200 0 FreeSans 560 90 0 0 VDD
+port 13 nsew power bidirectional
+flabel metal3 s 0 63600 200 65000 0 FreeSans 560 90 0 0 VSS
+port 14 nsew ground bidirectional
+flabel metal3 s 0 49200 200 50600 0 FreeSans 560 90 0 0 VSS
+port 14 nsew ground bidirectional
+flabel metal3 s 14800 49200 15000 50600 0 FreeSans 560 90 0 0 VSS
+port 14 nsew ground bidirectional
+flabel metal3 s 14800 63600 15000 65000 0 FreeSans 560 90 0 0 VSS
+port 14 nsew ground bidirectional
+flabel metal3 s 14800 50800 15000 52200 0 FreeSans 560 90 0 0 VDD
+port 13 nsew power bidirectional
+flabel metal3 s 14800 62000 15000 63400 0 FreeSans 560 90 0 0 VDD
+port 13 nsew power bidirectional
+flabel metal3 s 14800 20400 15000 23400 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 14800 17200 15000 20200 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 14800 14000 15000 17000 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 14800 25200 15000 26600 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 14800 39600 15000 41000 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 14800 46000 15000 49000 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 14800 57200 15000 58600 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 14800 60400 15000 61800 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 14800 65200 15000 66600 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 14800 68400 15000 69678 0 FreeSans 560 90 0 0 DVSS
+port 4 nsew ground bidirectional
+flabel metal3 s 14800 23600 15000 25000 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 14800 36400 15000 39400 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 14800 33200 15000 36200 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 14800 30000 15000 33000 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 14800 26800 15000 29800 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 14800 42800 15000 45800 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 14800 41200 15000 42600 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 14800 55600 15000 57000 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 14800 54000 15000 55400 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 14800 52400 15000 53800 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 14800 58800 15000 60200 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+flabel metal3 s 14800 66800 15000 68200 0 FreeSans 560 90 0 0 DVDD
+port 3 nsew power bidirectional
+<< properties >>
+string FIXED_BBOX 0 0 15000 70000
+<< end >>

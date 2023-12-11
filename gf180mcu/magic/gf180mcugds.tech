@@ -1,11 +1,11 @@
 tech
     format 33
-    GF013_GDS
+    GF018MCU_GDS
 end
 
 version
     version REVISION
-    description "Global Foundries GF013 (013BCDlite): Vendor GDS layers"
+    description "Global Foundries GF018MCU: Vendor GDS layers"
 end
 
 planes

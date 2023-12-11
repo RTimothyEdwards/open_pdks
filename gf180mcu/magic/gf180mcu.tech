@@ -716,6 +716,8 @@ style gdsii
 # NWELL
 #-----------------------------------------------------
  layer NWELL 	allnwell
+	# Require nwell under n-tap and p-diffusion
+	or	*nsd,*mvnsd,*pdiff,*mvpdiff,allpfets,pdiffres,mvpdiffres
 	labels  allnwell noport
 	close	1000000
  	calma 	21 0
@@ -2456,8 +2458,7 @@ style  import
  and MET3
  and CAPM
  and CAPDEF
- grow 90
- grow 250
+ grow 260
  shrink 250
 #endif (METALS3 && MIM)
 #endif (METALS3 || METALS4 || METALS5 || METALS6)
@@ -2496,8 +2497,7 @@ style  import
  and MET4
  and CAPM
  and CAPDEF
- grow 90
- grow 250
+ grow 260
  shrink 250
 #endif (METALS4 && MIM)
 #endif (METALS4 || METALS5 || METALS6)
@@ -2536,8 +2536,7 @@ style  import
  and MET5
  and CAPM
  and CAPDEF
- grow 90
- grow 250
+ grow 260
  shrink 250
 #endif (METALS5 && MIM)
 #endif (METALS5 || METALS6)
@@ -3009,9 +3008,9 @@ drc
  spacing allpolysblkres allpolysblkres 250 touching_ok \
 	"Poly resistor spacing < %d (PRES.2)
 
- spacing allpolysblkres allpolynonres 450 touching_ok \
+ spacing allpolysblkres allpolynonres 600 touching_ok \
 	"Poly resistor spacing to unrelated poly < %d (PRES.4)"
- spacing allpolysblkres allactive,allactiveres 440 touching_illegal \
+ spacing allpolysblkres allactive,allactiveres 600 touching_illegal \
 	"Poly resistor spacing to diffusion < %d (PRES.3)"
 
  spacing allactiveres allactiveres 400 touching_ok \
