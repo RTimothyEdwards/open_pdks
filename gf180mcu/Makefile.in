@@ -178,7 +178,7 @@ EF_URL = https://github.com/efabless
 # having "quick fixes" under development.
 PDK_LIB_PR =       ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_pr
 PDK_LIB_PV =       ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_pv
-PDK_LIB_IO =       ${PDK_URL}/globalfoundries-pdk-libs-gf180mcu_fd_io
+PDK_LIB_IO =       ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_io
 PDK_LIB_SC_7T5V0 = ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu7t5v0
 PDK_LIB_SC_9T5V0 = ${EF_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu9t5v0
 PDK_LIB_SRAM =     ${PDK_URL}/globalfoundries-pdk-ip-gf180mcu_fd_ip_sram
