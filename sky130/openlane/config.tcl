@@ -181,5 +181,8 @@ set ::env(GRT_LAYER_ADJUSTMENTS) "0.99,0,0,0,0,0"
 set ::env(RT_MIN_LAYER) "met1"
 set ::env(RT_MAX_LAYER) "met5"
 
+set ::env(RT_CLOCK_MIN_LAYER) "met3"
+
 # CVC
 set ::env(CVC_SCRIPTS_DIR) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/openlane/cvc"
+
