@@ -63,7 +63,7 @@ set ::env(CTS_CLK_BUFFER_LIST) "sky130_fd_sc_hs__clkbuf_8 sky130_fd_sc_hs__clkbu
 set ::env(CTS_MAX_CAP) 1.8894300000
 set ::env(MAX_TRANSITION_CONSTRAINT) 0.75
 set ::env(MAX_FANOUT_CONSTRAINT) 10
-set ::env(MAX_CAPACITANCE_CONSTRAINT) 2
+set ::env(MAX_CAPACITANCE_CONSTRAINT) 0.2
 set ::env(FP_PDN_RAIL_WIDTH) 0.48
 
 set ::env(TRISTATE_CELL_PREFIX) "$::env(STD_CELL_LIBRARY)__ebuf"

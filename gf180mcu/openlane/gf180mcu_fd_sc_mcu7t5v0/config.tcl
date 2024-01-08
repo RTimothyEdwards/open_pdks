@@ -48,7 +48,7 @@ set ::env(FP_PDN_RAIL_WIDTH) 0.6
 # The library maximum transition is 8.9ns; setting it to lower value
 set ::env(MAX_TRANSITION_CONSTRAINT) 3
 set ::env(MAX_FANOUT_CONSTRAINT) 10
-set ::env(MAX_CAPACITANCE_CONSTRAINT) 2
+set ::env(MAX_CAPACITANCE_CONSTRAINT) 0.2
 
 set ::env(GPL_CELL_PADDING) {0}
 set ::env(DPL_CELL_PADDING) {0}
