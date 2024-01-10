@@ -25,7 +25,7 @@ set spicefile=LOCAL_PREFIX/TECHNAME/libs.ref/LIBRARY/spice/LIBRARY.spice
 #ifdef EF_STYLE
 set libertyfile=LOCAL_PREFIX/TECHNAME/libs.ref/lib/LIBRARY/LIBRARY__ss_1p62v_125c.lib
 #else
-set libertyfile=LOCAL_PREFIX/TECHNAME/libs.ref/LIBRARY/liberty/LIBRARY__ss_1p62v_125c.lib
+set libertyfile=LOCAL_PREFIX/TECHNAME/libs.ref/LIBRARY/lib/LIBRARY__ss_1p62v_125c.lib
 #endif
 
 # If there is another LEF file containing technology information
