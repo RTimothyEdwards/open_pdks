@@ -4455,6 +4455,17 @@ variants (fast),(full)
 	"Min. spacing between FET and LVTN in S/D direction < %d (lvtn.3b)"
 
 #--------------------------------------------------------------------
+# HVNTM 
+#--------------------------------------------------------------------
+
+variants (full)
+ # This requires extra spacing of hvndiff if a ptap is in between
+ cifwidth hvntm_generate 700 "Width of HVNTM < %d (hvntm.1)"
+ cifspacing hvntm_generate hvntm_generate 700 touching_ok \
+	"HVNTM spacing < %d (hvntm.2)"
+variants *
+
+#--------------------------------------------------------------------
 # NPC (Nitride poly Cut)
 #--------------------------------------------------------------------
 
