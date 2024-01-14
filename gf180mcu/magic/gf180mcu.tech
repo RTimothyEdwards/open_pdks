@@ -1069,7 +1069,7 @@ style gdsii
 
 #ifdef MIM && METALS3
  layer VIA2 	mimcapc
- 	squares-grid 10 260 500
+ 	squares-grid 40 260 500
  	calma 	38 0
 
 #endif (MIM && METALS3)
@@ -1114,7 +1114,7 @@ style gdsii
 
 #ifdef MIM && METALS4
  layer VIA3 	mimcapc
- 	squares-grid 10 260 500
+ 	squares-grid 40 260 500
  	calma 	40 0
 
 #endif (MIM && METALS4)
@@ -1160,7 +1160,7 @@ style gdsii
 
 #ifdef (MIM && METALS5)
  layer VIA4 	mimcapc
- 	squares-grid 10 260 500
+ 	squares-grid 40 260 500
  	calma 	41 0
 
 #endif (MIM && METALS5)
@@ -1206,7 +1206,7 @@ style gdsii
  
 #ifdef MIM
  layer VIATP 	mimcapc
- 	squares-grid 10 260 500
+ 	squares-grid 40 260 500
  	calma 	129 0
 
 #endif (MIM)
@@ -1600,6 +1600,23 @@ style drc
  # Check for nwell resistor in deep nwell
  templayer bad_rnw rnw
  and dnwell
+
+ # Check for minimum PPLUS and NPLUS area.  NOTE:  These are simplified
+ # versions of the cifoutput rules.
+
+ templayer check_pplus
+        bloat-or  *pdif,*pdiode,pdiffres,pfet,pcap,*mvpdif,*mvpdiode,mvpdiffres,mvpfet,mvpcap * 160 allnactivenonfet 0
+        bloat-or psc,mvpsc * 95
+        bloat-or *psd,*mvpsd * 20 allnactivenonfet 0
+	grow	200
+	shrink	200
+
+ templayer check_nplus
+        bloat-or *ndif,*ndiode,*nndiode,ndiffres,*mvndif,*mvndiode,*mvnndiode,mvndiffres * 160 allpactivenonfet 0
+        bloat-or nsc,mvnsc * 95
+        bloat-or *nsd,*mvnsd * 20 allpactivenonfet 0
+	grow 	200 
+	shrink 200
 
  # Define HRES layer for DRC checks
  templayer res_hres
@@ -2963,6 +2980,9 @@ drc
 	"Deep N-well overlap of P-Diffusion < %d (DF.4e)"
  surround *mvpdiff,*mvpdiode,mvpfet,mvpcap dnwell 1100 absence_okay \
 	"Deep N-well overlap of P-Diffusion < %d (DF.4e)"
+
+
+ variants (full)
  # Use CIF-DRC rule to ensure that at least one exists.
  cifmaxwidth missing_nwell 0 bend_illegal \
 	"P-diffusion and N-ohmic must be over N-well or deep N-well"
@@ -2975,6 +2995,10 @@ drc
 	"P-well must surround N-diffusion inside deep N-well by 0.43um (DF.8)"
  cifmaxwidth mvndiff_missing_pwell 0 bend_illegal \
 	"P-well must surround MV N-diffusion inside deep N-well by 0.60um (DF.8)"
+
+ cifarea check_pplus 350000 400 "Minimum PPLUS area >= %a (PP.8a)"
+ cifarea check_nplus 350000 400 "Minimum NPLUS area >= %a (NP.8a)"
+ variants *
 
 # surround *psd pwell 120 absence_ok \
 #	"P-well overlap of P-Ohmic < %d (DF.5)"
