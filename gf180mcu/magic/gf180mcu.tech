@@ -822,17 +822,19 @@ style gdsii
  	calma 	49 0
 #endif (HRPOLY1K)
 
- # rnps requires NPLUS
- # rnp  requires NPLUS
- # rnd  requires NPLUS
+ # rnps requires NPLUS surround 0.18um
+ # rnp  requires NPLUS surround 0.3um
+ # rnd  requires NPLUS surround 0.18um
 
  layer NPLUS
- 	bloat-all rnps *poly
  	bloat-all rnp  *poly
+	grow 120
+ 	bloat-all rnps *poly
  	bloat-all rnd  *ndiff
-	grow 200
-	grow 200
-	shrink 200
+	grow 180
+	grow 180
+	shrink 180
+	mask-hints NPLUS
 	calma   32 0
 
  # standard generation of NPLUS
@@ -864,17 +866,18 @@ style gdsii
 	mask-hints NPLUS
 	calma   32 0
 
- # rpps requires PPLUS
- # rpp  requires PPLUS
- # rpd  requires PPLUS
+ # rpps requires PPLUS surround 0.18um
+ # rpp  requires PPLUS surround 0.30um
+ # rpd  requires PPLUS surround 0.18um
 
  layer PPLUS
- 	bloat-all rpps *poly
  	bloat-all rpp  *poly
+	grow 120
+ 	bloat-all rpps *poly
  	bloat-all rpd  *pdiff
-	grow 200
-	grow 200
-	shrink 200
+	grow 180
+	grow 180
+	shrink 180
 	mask-hints PPLUS
 	calma   31 0
 
@@ -1277,6 +1280,7 @@ style gdsii
 	and allfets
 	grow 220
  	bloat-or allsblkdev * 0 space/a 220
+	bloat-or allpolysblkres * 0 space/a 280
  	grow 	215
  	shrink 	215
 	mask-hints SBLK
@@ -2874,7 +2878,7 @@ drc
  width allnwell 860 "N-well width < %d (NW.1a)"
  spacing allnwell allnwell 600 touching_ok "N-well spacing < %d (NW.2a)"
  # rnw spacing is to unrelated nwell only.
- spacing rnw allnwell 1400 touching_ok "N-well resistor spacing < %d (NW.4)"
+ spacing rnw allnwell 1400 touching_ok "N-well resistor spacing < %d (NW.2b)"
  width rnw 2000 "N-well resistor width < %d (NW.1b)"
 
  variants (full)
@@ -3005,13 +3009,13 @@ drc
 # SBLK - more rules to do here (note PRES refers only to unsalicided resistor)
 #-----------------------------------------------------------------------------
 
- spacing allpolysblkres allpolysblkres 250 touching_ok \
-	"Poly resistor spacing < %d (PRES.2)
+ spacing allpolysblkres allpolysblkres 400 touching_ok \
+	"Poly resistor spacing < %d (PRES/LRES.2)
 
  spacing allpolysblkres allpolynonres 600 touching_ok \
-	"Poly resistor spacing to unrelated poly < %d (PRES.4)"
+	"Poly resistor spacing to unrelated poly < %d (PRES/LRES.4)"
  spacing allpolysblkres allactive,allactiveres 600 touching_illegal \
-	"Poly resistor spacing to diffusion < %d (PRES.3)"
+	"Poly resistor spacing to diffusion < %d (PRES/LRES.3)"
 
  spacing allactiveres allactiveres 400 touching_ok \
 	"Diffusion resistor spacing < %d (NDRES.2)
@@ -3249,9 +3253,9 @@ variants (fast),(full)
  surround v3/m4 *m4 50 30 directional \
 	"Metal4 overlap of Via3 < %d in one direction (V3.4i - V3.4)"
 
- width *m4,rm4 200 "Metal4 width < %d (M4.1)"
- spacing allm4,obsm4  allm4,obsm4 210 touching_ok "Metal4 spacing < %d (M4.2a)"
- area allm4,obsm4 144000 200 "Metal4 minimum area < %a (M4.3)"
+ width *m4,rm4 230 "Metal4 width < %d (M4.1)"
+ spacing allm4,obsm4  allm4,obsm4 280 touching_ok "Metal4 spacing < %d (M4.2a)"
+ area allm4,obsm4 144000 230 "Metal4 minimum area < %a (M4.3)"
 
 variants (fast),(full)
  widespacing allm4,obsm4 10000 allm4,obsm4  300 touching_ok \
@@ -3318,9 +3322,9 @@ variants (fast),(full)
  surround v4/m5 *m5 50 30 directional \
 	"Metal5 overlap of Via4 < %d in one direction (V4.4i - V4.4)"
 
- width *m5,rm5 200 "Metal5 width < %d (M5.1)"
- spacing allm5,obsm5  allm5,obsm5 210 touching_ok "Metal5 spacing < %d (M5.2a)"
- area allm5,obsm5 144000 200 "Metal5 minimum area < %a (M5.3)"
+ width *m5,rm5 230 "Metal5 width < %d (M5.1)"
+ spacing allm5,obsm5  allm5,obsm5 280 touching_ok "Metal5 spacing < %d (M5.2a)"
+ area allm5,obsm5 144000 230 "Metal5 minimum area < %a (M5.3)"
 
 variants (fast),(full)
  widespacing allm5,obsm5 10000 allm5,obsm5  300 touching_ok \
@@ -3448,12 +3452,12 @@ variants *
 # RPP,RNP
 #--------------------------------------------------
  width rpp 800 "ppolyres minimum width < %d (PRES.1)"
- width rnp 800 "npolyres minimum width < %d (NRES.1)"
+ width rnp 800 "npolyres minimum width < %d (LRES.1)"
  spacing rpp rpp 400 touching_ok "ppolyres minimum spacing < %d (PRES.2)"
- spacing rnp rnp 400 touching_ok "npolyres minimum spacing < %d (NRES.2)"
+ spacing rnp rnp 400 touching_ok "npolyres minimum spacing < %d (LRES.2)"
 
- spacing rpp pc 215 touching_illegal "rpp spacing to Cont < %d (PRES.8 - CO.6)"
- spacing rnp pc 215 touching_illegal "rnp spacing to Cont < %d (NRES.8 - CO.6)"
+ spacing rpp pc 215 touching_illegal "rpp spacing to Cont < %d (PRES.7 - CO.6)"
+ spacing rnp pc 215 touching_illegal "rnp spacing to Cont < %d (LRES.7 - CO.6)"
 
 #ifdef HRPOLY1K
 #--------------------------------------------------

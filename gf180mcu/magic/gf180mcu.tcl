@@ -76,6 +76,7 @@ namespace eval gf180mcu {
     dict set ruleset mmetal_spacing   0.38      ;# Metal spacing rule (above metal1)
     dict set ruleset sblk_to_cont     0.33      ;# resistor to contact center
     dict set ruleset sblk_diff_space  0.44      ;# resistor to guard ring
+    dict set ruleset sblk_diff_space  0.60      ;# resistor to guard ring
 }
 
 #-----------------------------------------------------
@@ -2591,11 +2592,11 @@ proc gf180mcu::ppolyf_u_draw {parameters} {
 	    plus_contact_type	nsc \
 	    sub_type		nwell \
 	    end_surround	$poly_surround \
-	    end_spacing		0.44 \
+	    end_spacing		0.60 \
 	    end_to_end_space	0.52 \
 	    res_to_endcont	$sblk_to_cont \
 	    res_spacing		$polyres_spacing \
-	    res_diff_spacing	0.44 \
+	    res_diff_spacing	0.60 \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
     ]
@@ -2620,11 +2621,11 @@ proc gf180mcu::npolyf_u_draw {parameters} {
 	    plus_contact_type	psc \
 	    sub_type		pwell \
 	    end_surround	$poly_surround \
-	    end_spacing		0.44 \
+	    end_spacing		0.60 \
 	    end_to_end_space	0.52 \
 	    res_to_endcont	$sblk_to_cont \
 	    res_spacing		$polyres_spacing \
-	    res_diff_spacing	0.44 \
+	    res_diff_spacing	0.60 \
 	    mask_clearance	0.52 \
 	    overlap_compress	0.36 \
     ]
