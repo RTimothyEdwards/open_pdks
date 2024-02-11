@@ -6454,11 +6454,17 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
 	a1=as p1=ps a2=ad p2=pd
  device msubcircuit sky130_fd_pr__pfet_01v8_hvt pfethvt,scpfethvt \
 	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w \
-	a1=as p1=ps a2=ad p2=pd
+	w>=0.42 a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__special_pfet_01v8_hvt scpfethvt \
+	*pdiff,pdiffres *pdiff,pdiffres nwell error l=l w=w \
+	w<0.42 a1=as p1=ps a2=ad p2=pd
 
  device msubcircuit sky130_fd_pr__nfet_01v8 nfet,scnfet \
 	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w \
-	a1=as p1=ps a2=ad p2=pd
+	w>=0.42 a1=as p1=ps a2=ad p2=pd
+ device msubcircuit sky130_fd_pr__special_nfet_01v8 scnfet \
+	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w \
+	w<0.42 a1=as p1=ps a2=ad p2=pd
  device msubcircuit sky130_fd_pr__special_nfet_latch npd \
 	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w \
 	a1=as p1=ps a2=ad p2=pd

@@ -173,6 +173,8 @@ lappend devices sky130_fd_pr__special_nfet_latch
 lappend devices sky130_fd_pr__special_nfet_pass
 lappend devices sky130_fd_pr__special_pfet_latch
 lappend devices sky130_fd_pr__special_pfet_latch
+lappend devices sky130_fd_pr__special_nfet_01v8
+lappend devices sky130_fd_pr__special_pfet_01v8_hvt
 lappend devices sky130_fd_pr__cap_var_lvt
 lappend devices sky130_fd_pr__cap_var_hvt
 lappend devices sky130_fd_pr__cap_var
