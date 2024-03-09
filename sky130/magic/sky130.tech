@@ -6589,15 +6589,15 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device resistor sky130_fd_pr__res_generic_po mrp1 *poly
 
  # NOTE: SkyWater diode models have bizarre units requiring bizarre scaling
- device pdiode sky130_fd_pr__diode_pd2nw_05v5 *pdiode nwell a=area*1E12 p=pj*1E6
- device pdiode sky130_fd_pr__diode_pd2nw_05v5_lvt *pdiodelvt nwell a=area*1E12 p=pj*1E6
- device pdiode sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area*1E12 p=pj*1E6
- device pdiode sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area*1E12 p=pj*1E6
+ device subcircuit sky130_fd_pr__diode_pd2nw_05v5 *pdiode nwell a=area*1E12 p=perim*1E6
+ device subcircuit sky130_fd_pr__diode_pd2nw_05v5_lvt *pdiodelvt nwell a=area*1E12 p=perim*1E6
+ device subcircuit sky130_fd_pr__diode_pd2nw_05v5_hvt *pdiodehvt nwell a=area*1E12 p=perim*1E6
+ device subcircuit sky130_fd_pr__diode_pd2nw_11v0 *mvpdiode nwell a=area*1E12 p=perim*1E6
 
- device ndiode sky130_fd_pr__diode_pw2nd_05v5 *ndiode pwell,space/w a=area*1E12 p=pj*1E6
- device ndiode sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area*1E12 p=pj*1E6
- device ndiode sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area*1E12 p=pj*1E6
- device ndiode sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area*1E12 p=pj*1E6
+ device msubcircuit sky130_fd_pr__diode_pw2nd_05v5 *ndiode pwell,space/w a=area*1E12 p=perim*1E6
+ device msubcircuit sky130_fd_pr__diode_pw2nd_05v5_lvt *ndiodelvt pwell,space/w a=area*1E12 p=perim*1E6
+ device msubcircuit sky130_fd_pr__diode_pw2nd_05v5_nvt *nndiode pwell,space/w a=area*1E12 p=perim*1E6
+ device msubcircuit sky130_fd_pr__diode_pw2nd_11v0 *mvndiode pwell,space/w a=area*1E12 p=perim*1E6
 
 #ifdef RERAM
  device csubcircuit sky130_fd_pr_reram__reram_cell reram m1 a=area_ox
