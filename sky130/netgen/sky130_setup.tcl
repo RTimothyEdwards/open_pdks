@@ -172,7 +172,8 @@ lappend devices sky130_fd_pr__pfet_g5v0d10v5
 lappend devices sky130_fd_pr__special_nfet_latch
 lappend devices sky130_fd_pr__special_nfet_pass
 lappend devices sky130_fd_pr__special_pfet_latch
-lappend devices sky130_fd_pr__special_pfet_latch
+# special_pfet_pass retained for backwards compatibility.
+lappend devices sky130_fd_pr__special_pfet_pass
 lappend devices sky130_fd_pr__special_nfet_01v8
 lappend devices sky130_fd_pr__special_pfet_01v8_hvt
 lappend devices sky130_fd_pr__cap_var_lvt
