@@ -1230,12 +1230,14 @@ klayout-%: ${KLAYOUT_PATH}
 	# are rearranged to the preferred structure.  Do not recursively copy
 	# the lvs/ directory, as the subdirectory testing/ is huge and
 	# nonessential.
+	# Additionally, replace "sky130.lyp" with the pdk variant.
 	if test "x${KLAYOUT_PATH}" != "x" ; then \
 		cp -p ${KLAYOUT_PATH}/sky130_tech/tech/sky130/lvs/* ${KLAYOUT_STAGING_$*}/lvs/ ; \
 		cp -rp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/pymacros/* ${KLAYOUT_STAGING_$*}/pymacros/ ; \
 		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.lyp ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyp ; \
 		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.lyt ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyt ; \
 		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.map ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.map ; \
+		${SED} -i "s/sky130.lyp/${SKY130$*}.lyp/g" ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyt ; \
 	fi
 	# Copy original DRC deck from open_pdks (is this useful?)
 	cp klayout/sky130.lydrc ${KLAYOUT_STAGING_$*}/drc/${SKY130$*}.lydrc
