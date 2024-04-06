@@ -1781,6 +1781,7 @@ style drc
  bloat-all mvvaractor *mvnsd
  and-not hvntm_block
  grow 185
+ bridge 700 700
  grow    345
  shrink  345
  and-not hvntm_block
