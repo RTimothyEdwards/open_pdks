@@ -549,9 +549,38 @@ proc sky130::deep_nwell_draw {} {
    pushbox
    pushbox
    box grow c 0.4um
+   # Note:  Previous implementation was to draw nwell over the whole
+   # area and then erase it from the center.  That can interact with
+   # any layout already drawn in the center area.  Instead, draw four
+   # separate rectangles.
+   # -----------------
+   # paint nwell
+   # box grow c -1.43um
+   # erase nwell
+   # -----------------
+   pushbox
+   box width 1.43um
    paint nwell
-   box grow c -1.43um
-   erase nwell
+   popbox
+   pushbox
+   box height 1.43um
+   paint nwell
+   popbox
+   pushbox
+   box move n ${h}um
+   box move n 0.8um
+   box move s 1.43um
+   box height 1.43um
+   paint nwell
+   popbox
+   pushbox
+   box move e ${w}um
+   box move e 0.8um
+   box move w 1.43um
+   box width 1.43um
+   paint nwell
+   popbox
+
    popbox
    box grow c 0.03um
 
