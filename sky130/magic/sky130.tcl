@@ -4842,8 +4842,8 @@ proc sky130::res_check {device parameters} {
 	}
     }
 
-    # Diffusion resistors must satisfy diffusion-to-tap spacing of 20um.
-    # Therefore the maximum of guard ring width or height cannot exceed 40um.
+    # Diffusion resistors must satisfy diffusion-to-tap spacing of 15um.
+    # Therefore the maximum of guard ring width or height cannot exceed 30um.
     # If in violation, reduce counts first, as these are easiest to recover
     # by duplicating the device and overlapping the wells.
     if {$device == "rdn" || $device == "rdp"} {
@@ -4855,16 +4855,16 @@ proc sky130::res_check {device parameters} {
           if {[expr min($xext, $yext)] > 40.0} {
               if {$yext > 40.0 && $m > 1} {
 		 incr m -1
-	      } elseif {$xext > 40.0 && $nx > 1} {
+	      } elseif {$xext > 30.0 && $nx > 1} {
 		 incr nx -1
-	      } elseif {$yext > 40.0} {
-		 set l 36.6
-		 puts -nonewline stderr "Diffusion resistor length must be < 36.6 um"
+	      } elseif {$yext > 30.0} {
+		 set l 29
+		 puts -nonewline stderr "Diffusion resistor length must be < 29 um"
 		 puts stderr " to avoid tap spacing violation."
 		 dict set parameters l $l
-	      } elseif {$xext > 40.0} {
-		 set w 38.2
-		 puts -nonewline stderr "Diffusion resistor width must be < 38.2 um"
+	      } elseif {$xext > 30.0} {
+		 set w 29
+		 puts -nonewline stderr "Diffusion resistor width must be < 29 um"
 		 puts stderr " to avoid tap spacing violation."
 		 dict set parameters w $w
 	      }
@@ -4873,12 +4873,12 @@ proc sky130::res_check {device parameters} {
 	  }
        }
        if {$m != $origm} {
-	  puts stderr "Y repeat reduced to prevent tap distance violation"
-	  dict set parameters m $m
+	  puts stderr "Warning:  Fingers may need to be reduced to prevent tap distance violation"
+	  # dict set parameters m $m
        }
        if {$nx != $orignx} {
-	  puts stderr "X repeat reduced to prevent tap distance violation"
-	  dict set parameters nx $nx
+	  puts stderr "Warning:  M may need to be reduced to prevent tap distance violation"
+	  # dict set parameters nx $nx
        }
     }
     sky130::compute_ltot $parameters
@@ -7003,28 +7003,34 @@ proc sky130::mos_check {device parameters} {
         dict set parameters viagl 100
     }
 
-    # Values must satisfy diffusion-to-tap spacing of 20um.
-    # Therefore the maximum of guard ring width or height cannot exceed 40um.
-    # If in violation, reduce counts first, as these are easiest to recover
-    # by duplicating the device and overlapping the wells.
+    # Values must satisfy diffusion-to-tap spacing of 15um.
+    # Therefore the maximum of guard ring width or height cannot exceed 30um.
+    # This requires detailed knowledge of the layout, so can only be estimated
+    # here.  Since the estimate may be off, do not enforce the rule but just
+    # generate a warning.
+
+    # "clearance" is an estimation of the amount of space taken up by the
+    # gate or source/drain contacts.
+    set clearance 1.0
+
     set origm $m
     set orignf $nf
     while true {
-       set yext [expr ($w + 3.0) * $m]
-       set xext [expr ($l + 1.0) * $nf + 1.1]
-       if {[expr min($xext, $yext)] > 40.0} {
-          if {$yext > 40.0 && $m > 1} {
+       set yext [expr ($w + $clearance) * $m + $clearance]
+       set xext [expr ($l + $clearance) * $nf + $clearance]
+       if {[expr min($xext, $yext)] > 30.0} {
+          if {$yext > 30.0 && $m > 1} {
 	     incr m -1
-	  } elseif {$xext > 40.0 && $nf > 1} {
+	  } elseif {$xext > 30.0 && $nf > 1} {
 	     incr nf -1
-	  } elseif {$yext > 40.0} {
-	     set w 37
-	     puts -nonewline stderr "Transistor width must be < 37 um"
+	  } elseif {$yext > 30.0} {
+	     set w 29
+	     puts -nonewline stderr "Transistor width must be < 29 um"
 	     puts stderr " to avoid tap spacing violation."
 	     dict set parameters w $w
-	  } elseif {$xext > 40.0} {
-	     set l 37.9
-	     puts -nonewline stderr "Transistor length must be < 37.9 um"
+	  } elseif {$xext > 30.0} {
+	     set l 29
+	     puts -nonewline stderr "Transistor length must be < 29 um"
 	     puts stderr " to avoid tap spacing violation."
 	     dict set parameters l $l
 	  }
@@ -7033,12 +7039,12 @@ proc sky130::mos_check {device parameters} {
        }
     }
     if {$m != $origm} {
-       puts stderr "Y repeat reduced to prevent tap distance violation"
-       dict set parameters m $m
+       puts stderr "Warning: M may need to be reduced to prevent tap distance violation"
+       # dict set parameters m $m
     }
     if {$nf != $orignf} {
-       puts stderr "X repeat reduced to prevent tap distance violation"
-       dict set parameters nf $nf
+       puts stderr "Warning: Fingers may need to be reduced to prevent tap distance violation"
+       # dict set parameters nf $nf
     }
 
     # Used by varactor only
