@@ -524,6 +524,7 @@ proc sky130::nwell_draw {} {
    box grow n -0.3um
    box grow s -0.3um
    paint nsc
+   popbox
    paint nsd
    popbox
 
