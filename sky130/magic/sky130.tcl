@@ -141,12 +141,18 @@ proc sky130::addtechmenu {framename} {
 
    magic::add_toolkit_command $layoutframe "substrate contact (1.8V)" \
 	    "sky130::subconn_draw" pdk1
+   magic::add_toolkit_command $layoutframe "substrate guard ring (1.8V)" \
+	    "sky130::subconn_guard_draw" pdk1
    magic::add_toolkit_command $layoutframe "substrate contact (5.0V)" \
 	    "sky130::mvsubconn_draw" pdk1
+   magic::add_toolkit_command $layoutframe "substrate guard ring (5.0V)" \
+	    "sky130::mvsubconn_guard_draw" pdk1
    magic::add_toolkit_command $layoutframe "deep n-well region" \
 	    "sky130::deep_nwell_draw" pdk1
-   magic::add_toolkit_command $layoutframe "n-well region with guard ring" \
+   magic::add_toolkit_command $layoutframe "n-well region with guard ring (1.8V)" \
 	    "sky130::nwell_draw" pdk1
+   magic::add_toolkit_command $layoutframe "n-well region with guard ring (5.0V)" \
+	    "sky130::mvnwell_draw" pdk1
    magic::add_toolkit_command $layoutframe "mcon" \
 	    "sky130::mcon_draw" pdk1
    magic::add_toolkit_command $layoutframe "via1" \
@@ -455,6 +461,120 @@ proc sky130::mvsubconn_draw {} {
 }
 
 #----------------------------------------------------------------
+# Helper function for drawing guard rings.
+# Assumes that a box exists and defines the centerlines of the
+# guard ring contacts.
+# ctype = type to paint for contact
+# dtype = type to paint for diffusion
+#----------------------------------------------------------------
+
+proc sky130::guard_ring_draw {ctype dtype} {
+   pushbox
+   box width 0
+   box grow c 0.085um
+   paint li
+   pushbox
+   box grow n -0.3um
+   box grow s -0.3um
+   paint $ctype
+   popbox
+   paint $dtype
+   popbox
+
+   pushbox
+   box height 0
+   box grow c 0.085um
+   paint li
+   pushbox
+   box grow e -0.3um
+   box grow w -0.3um
+   paint $ctype
+   popbox
+   paint $dtype
+   popbox
+
+   pushbox
+   box move n [box height]i
+   box height 0
+   box grow c 0.085um
+   paint li
+   pushbox
+   box grow e -0.3um
+   box grow w -0.3um
+   paint $ctype
+   popbox
+   paint $dtype
+   popbox
+
+   pushbox
+   box move e [box width]i
+   box width 0
+   box grow c 0.085um
+   paint li
+   pushbox
+   box grow n -0.3um
+   box grow s -0.3um
+   paint $ctype
+   popbox
+   paint $dtype
+   popbox
+}
+
+#----------------------------------------------------------------
+
+proc sky130::subconn_guard_draw {} {
+   set w [magic::i2u [box width]]
+   set h [magic::i2u [box height]]
+   # NOTE:  Width and height are determined by the requirement for
+   # a contact on each side.  There is not much that can be done
+   # with an guarded nwell smaller than that, anyway.
+   if {$w < 0.6} {
+      puts stderr "Substrate guard ring width must be at least 0.6um"
+      return
+   }
+   if {$h < 0.6} {
+      puts stderr "Substrate guard ring height must be at least 0.6um"
+      return
+   }
+   suspendall
+   tech unlock *
+   pushbox
+
+   sky130::guard_ring_draw psc psd
+
+   popbox
+   tech revert
+   resumeall
+}
+
+#----------------------------------------------------------------
+
+proc sky130::mvsubconn_guard_draw {} {
+   set w [magic::i2u [box width]]
+   set h [magic::i2u [box height]]
+   # NOTE:  Width and height are determined by the requirement for
+   # a contact on each side.  There is not much that can be done
+   # with an guarded nwell smaller than that, anyway.
+   if {$w < 0.6} {
+      puts stderr "Substrate guard ring width must be at least 0.6um"
+      return
+   }
+   if {$h < 0.6} {
+      puts stderr "Substrate guard ring height must be at least 0.6um"
+      return
+   }
+   suspendall
+   tech unlock *
+   pushbox
+
+   sky130::guard_ring_draw mvpsc mvpsd
+
+   popbox
+   tech revert
+   resumeall
+}
+
+#----------------------------------------------------------------
 
 proc sky130::nwell_draw {} {
    set w [magic::i2u [box width]]
@@ -478,60 +598,45 @@ proc sky130::nwell_draw {} {
    paint nwell
    popbox
 
-   pushbox
-   box width 0
-   box grow c 0.085um
-   paint li
-   pushbox
-   box grow n -0.3um
-   box grow s -0.3um
-   paint nsc
-   popbox
-   paint nsd
-   popbox
-
-   pushbox
-   box height 0
-   box grow c 0.085um
-   paint li
-   pushbox
-   box grow e -0.3um
-   box grow w -0.3um
-   paint nsc
-   popbox
-   paint nsd
-   popbox
-
-   pushbox
-   box move n [box height]i
-   box height 0
-   box grow c 0.085um
-   paint li
-   pushbox
-   box grow e -0.3um
-   box grow w -0.3um
-   paint nsc
-   popbox
-   paint nsd
-   popbox
-
-   pushbox
-   box move e [box width]i
-   box width 0
-   box grow c 0.085um
-   paint li
-   pushbox
-   box grow n -0.3um
-   box grow s -0.3um
-   paint nsc
-   popbox
-   paint nsd
-   popbox
+   sky130::guard_ring_draw nsc nsd
 
    popbox
    tech revert
    resumeall
 }
+
+#----------------------------------------------------------------
+
+proc sky130::mvnwell_draw {} {
+   set w [magic::i2u [box width]]
+   set h [magic::i2u [box height]]
+   # NOTE:  Width and height are determined by the requirement for
+   # a contact on each side.  There is not much that can be done
+   # with an guarded nwell smaller than that, anyway.
+   if {$w < 0.6} {
+      puts stderr "MV N-well region width must be at least 0.6um"
+      return
+   }
+   if {$h < 0.6} {
+      puts stderr "MV N-well region height must be at least 0.6um"
+      return
+   }
+   suspendall
+   tech unlock *
+   pushbox
+   pushbox
+   box grow c 0.415um
+   paint nwell
+   popbox
+
+   sky130::guard_ring_draw mvnsc mvnsd
+
+   popbox
+   tech revert
+   resumeall
+}
+
+#----------------------------------------------------------------
 
 proc sky130::deep_nwell_draw {} {
    set w [magic::i2u [box width]]
