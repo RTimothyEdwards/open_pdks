@@ -3440,37 +3440,12 @@ variants *
  width mvpfet,mvpcap 700 angles "Bent MV Transistor length < %d (PL.7)"
  width mvnfet,mvncap 700 angles "Bent MV Transistor length < %d (PL.7)"
 
- # NOTE:  Use edge4way to deal with butted junctions
- # spacing *nsd,*mvnsd pfet,pcap,mvnnfet,mvpfet,mvpcap 330 touching_illegal \
- #	"n-ohmic spacing to PMOS gate < %d (NP.4b)"
- # spacing *psd,*mvpsd nfet,ncap,nnfet,mvnfet,mvncap 330 touching_illegal \
- #	"p-ohmic spacing to NMOS gate < %d (NP.4c)"
-
  edge4way pfet,pcap,mvpfet,mvpcap *poly/a 330 \
 	~(*nsd,*mvnsd)/a (*pdiff,*mvpdiff)/a 300 \
 	"n-ohmic spacing to PMOS gate < %d (NP.4b + PP.4c)"
  edge4way nfet,ncap,nnfet,mvnnfet,mvnfet,mvncap *poly/a 330 \
 	~(*psd,*mvpsd)/a (*ndiff,*mvndiff)/a 300 \
 	"p-ohmic spacing to NMOS gate < %d (PP.4b + NP.4c)"
-
- # Butting junction rules (flag p/nsd distance to butting junction < 0.03um)
- edge4way (*psd)/a ~(*ndiff,*psd)/a 330 ~(*ndiff)/a (*ndiff)/a 30 \
-        "N-Diffusion to P-tap spacing < %d across butted junction (PP.4b + NP.4c)"
- edge4way (*ndiff)/a ~(*ndiff,*psd)/a 330 ~(*psd)/a (*psd)/a 30 \
-        "N-Diffusion to P-tap spacing < %d across butted junction (PP.4b + NP.4c)"
- edge4way (*nsd)/a ~(*pdiff,*nsd)/a 330 ~(*pdiff)/a (*pdiff)/a 30 \
-        "P-Diffusion to N-tap spacing < %d across butted junction (NP.4b + PP.4c)"
- edge4way (*pdiff)/a ~(*pdiff,*nsd)/a 330 ~(*nsd)/a (*nsd)/a 30 \
-        "P-Diffusion to N-tap spacing < %d across butted junction (NP.4b + PP.4c)"
-
- edge4way (*mvpsd)/a ~(*mvndiff,*mvpsd)/a 330 ~(*mvndiff)/a (*mvndiff)/a 30 \
-        "MV N-Diffusion to MV P-tap spacing < %d across butted junction (PP.4b + NP.4c)"
- edge4way (*mvndiff)/a ~(*mvndiff,*mvpsd)/a 330 ~(*mvpsd)/a (*mvpsd)/a 30 \
-        "MV N-Diffusion to MV P-tap spacing < %d across butted junction (PP.4b + NP.4c)"
- edge4way (*mvnsd)/a ~(*mvpdiff,*mvnsd)/a 330 ~(*mvpdiff)/a (*mvpdiff)/a 30 \
-        "MV P-Diffusion to MV N-tap spacing < %d across butted junction (NP.4b + PP.4c)"
- edge4way (*mvpdiff)/a ~(*mvpdiff,*mvnsd)/a 330 ~(*mvnsd)/a (*mvnsd)/a 30 \
-        "MV P-Diffusion to MV N-tap spacing < %d across butted junction (NP.4b + PP.4c)"
 
 #--------------------------------------------------
 # RPP,RNP
