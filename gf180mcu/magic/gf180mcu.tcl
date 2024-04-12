@@ -47,7 +47,7 @@ if {[info commands closewrapper] == "closewrapper"} {
 }
 
 # Remove maze router layers from the toolbar by locking them
-tech lock fence,magnet,rotate
+catch {tech lock fence,magnet,rotate}
 
 namespace eval gf180mcu {
     namespace path {::tcl::mathop ::tcl::mathfunc}
