@@ -6752,6 +6752,7 @@ plot
      draw m3fill no_color_at_all
      draw m4fill no_color_at_all
      draw m5fill no_color_at_all
+     draw isosub no_color_at_all
      draw nwell cwell
 end
 
