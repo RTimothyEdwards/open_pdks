@@ -101,6 +101,22 @@ def filter_recursive(tooldir, stagingdir, finaldir):
     stagingparent = os.path.split(stagingdir)[0]
     localparent = os.path.split(finaldir)[0]
 
+    # Alternative expressions for the final location when called from
+    # Tcl scripts or shell scripts.  This affects startup scripts like
+    # .magicrc and .xcircuitrc, and qflow setup scripts.  Note that the
+    # startup scripts are detected by having a file extension ending in
+    # "rc", so if this substitution needs to happen in other files, then
+    # the code to set 'istcl' below needs to be expanded.
+    #
+    # NOTE:  $HOME does not work with 'sudo make install' but it is
+    # assumed that the user does 'make install' when installing locally.
+
+    homedir = os.environ['HOME']
+    shfinaldir = finaldir.replace(homedir, '${HOME}')
+    shlocalparent = localparent.replace(homedir, '${HOME}')
+    tclfinaldir = finaldir.replace(homedir, '$::env(HOME)')
+    tcllocalparent = localparent.replace(homedir, '$::env(HOME)')
+
     if not os.path.exists(tooldir):
         return 0
     elif os.path.islink(tooldir):
@@ -130,11 +146,27 @@ def filter_recursive(tooldir, stagingdir, finaldir):
             # Make sure this file is writable (as the original may not be)
             makeuserwritable(filepath)
 
+            # For cases in which the target is in the home directory, make
+            # the PDK more portable by replacing the home directory with the
+            # appropriate environment variable.  This is found in Tcl and shell
+            # scripts and needs to be handled accordingly.
+
+            fext = os.path.splitext(filepath)[1]
+            isshell = True if fext == '.sh' else False
+            istcl = True if fext.endswith('rc') else False
+
             modified = False
             with open(filepath, 'wb') as ofile:
                 for line in flines:
-                    newline = line.replace(stagingdir, finaldir)
-                    newline = newline.replace(stagingparent, localparent)
+                    if isshell:
+                        newline = line.replace(stagingdir, shfinaldir)
+                        newline = newline.replace(stagingparent, shlocalparent)
+                    elif istcl:
+                        newline = line.replace(stagingdir, tclfinaldir)
+                        newline = newline.replace(stagingparent, tcllocalparent)
+                    else:
+                        newline = line.replace(stagingdir, finaldir)
+                        newline = newline.replace(stagingparent, localparent)
                     ofile.write(newline.encode('utf-8'))
                     if newline != line:
                         modified = True
