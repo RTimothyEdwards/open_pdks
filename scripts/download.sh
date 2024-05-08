@@ -80,7 +80,11 @@ if [ "${1: -3}" == ".gz" ] ; then
 else
 
     if type "git" > /dev/null; then
-        echo "Cloning $1 to $2"
+        branch_commit_msg=
+        if [ "$3" != "" ]; then
+            branch_commit_msg="(Branch/Commit $3)"
+        fi
+        echo "Cloning $1 to $2 $branch_commit_msg"
         if [ $# -gt 2 ]; then
             if [ "$3" == "unknown" ]; then
                 git_retry clone --depth 1 $1 $2

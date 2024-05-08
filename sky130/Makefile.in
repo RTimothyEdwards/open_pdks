@@ -685,7 +685,7 @@ prerequisites: pr-repo io-repo sc-hd-repo sc-hdll-repo sc-hvl-repo sc-hs-repo sc
 pr-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		FD_PR_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_pr | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${SKY130_PR_PATH}" != "x" ; then \
 		if test -d "${SKY130_PR_PATH}" ; then \
 			echo "Using existing installation of primitive library from ${SKY130_PR_PATH}" ; \
@@ -698,7 +698,7 @@ pr-repo:
 io-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		FD_IO_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_io | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${SKY130_IO_PATH}" != "x" ; then \
 		if test -d "${SKY130_IO_PATH}" ; then \
 			echo "Using existing installation of I/O library from ${SKY130_IO_PATH}" ; \
@@ -711,7 +711,7 @@ io-repo:
 sc-hs-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		FD_SC_HS_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_hs | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${SKY130_SC_HS_PATH}" != "x" ; then \
 		if test -d "${SKY130_SC_HS_PATH}" ; then \
 			echo "Using existing installation of high-speed standard cell library from ${SKY130_SC_HS_PATH}" ; \
@@ -724,7 +724,7 @@ sc-hs-repo:
 sc-ms-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		FD_SC_MS_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_ms | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${SKY130_SC_MS_PATH}" != "x" ; then \
 		if test -d "${SKY130_SC_MS_PATH}" ; then \
 			echo "Using existing installation of medium-speed standard cell library from ${SKY130_SC_MS_PATH}" ; \
@@ -737,7 +737,7 @@ sc-ms-repo:
 sc-ls-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		FD_SC_LS_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_ls | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${SKY130_SC_LS_PATH}" != "x" ; then \
 		if test -d "${SKY130_SC_LS_PATH}" ; then \
 			echo "Using existing installation of low-speed standard cell library from ${SKY130_SC_LS_PATH}" ; \
@@ -750,7 +750,7 @@ sc-ls-repo:
 sc-lp-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		FD_SC_LP_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_lp | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${SKY130_SC_LP_PATH}" != "x" ; then \
 		if test -d "${SKY130_SC_LP_PATH}" ; then \
 			echo "Using existing installation of low-power standard cell library from ${SKY130_SC_LP_PATH}" ; \
@@ -763,7 +763,7 @@ sc-lp-repo:
 sc-hd-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		FD_SC_HD_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_hd | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${SKY130_SC_HD_PATH}" != "x" ; then \
 		if test -d "${SKY130_SC_HD_PATH}" ; then \
 			echo "Using existing installation of high-density standard cell library from ${SKY130_SC_HD_PATH}" ; \
@@ -776,7 +776,7 @@ sc-hd-repo:
 sc-hdll-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		FD_SC_HDLL_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_hdll | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${SKY130_SC_HDLL_PATH}" != "x" ; then \
 		if test -d "${SKY130_SC_HDLL_PATH}" ; then \
 			echo "Using existing installation of high-density low-leakage standard cell library from ${SKY130_SC_HDLL_PATH}" ; \
@@ -789,7 +789,7 @@ sc-hdll-repo:
 sc-hvl-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		FD_SC_HVL_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_sc_hvl | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${SKY130_SC_HVL_PATH}" != "x" ; then \
 		if test -d "${SKY130_SC_HVL_PATH}" ; then \
 			echo "Using existing installation of high-voltage standard cell library from ${SKY130_SC_HVL_PATH}" ; \
@@ -802,7 +802,7 @@ sc-hvl-repo:
 alpha-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		ALPHA_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_ml_xx_hd | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${ALPHA_PATH}" != "x" ; then \
 		if test -d "${ALPHA_PATH}" ; then \
 			echo "Using existing installation of alphanumeric library from ${ALPHA_PATH}" ; \
@@ -815,7 +815,7 @@ alpha-repo:
 sram-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		SRAM_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_sram_macros | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${SRAM_PATH}" != "x" ; then \
 		if test -d "${SRAM_PATH}" ; then \
 			echo "Using existing installation of SRAM macro library from ${SRAM_PATH}" ; \
@@ -828,7 +828,7 @@ sram-repo:
 sram-space-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		SRAM_SPACE_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_bd_sram | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${SRAM_SPACE_PATH}" != "x" ; then \
 		if test -d "${SRAM_SPACE_PATH}" ; then \
 			echo "Using existing installation of SRAM build-space library from ${SRAM_SPACE_PATH}" ; \
@@ -841,7 +841,7 @@ sram-space-repo:
 reram-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		RERAM_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_fd_pr_reram | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${RERAM_PATH}" != "x" ; then \
 		if test -d "${RERAM_PATH}" ; then \
 			echo "Using existing installation of RERAM library from ${RERAM_PATH}" ; \
@@ -854,7 +854,7 @@ reram-repo:
 xschem-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		XSCHEM_COMMIT=`cat ${REFERENCE_JSON} | grep xschem_sky130 | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${XSCHEM_PATH}" != "x" ; then \
 		if test -d "${XSCHEM_PATH}" ; then \
 			echo "Using existing installation of xschem setup from ${XSCHEM_PATH}" ; \
@@ -867,7 +867,7 @@ xschem-repo:
 klayout-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		KLAYOUT_COMMIT=`cat ${REFERENCE_JSON} | grep klayout_sky130 | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${KLAYOUT_PATH}" != "x" ; then \
 		if test -d "${KLAYOUT_PATH}" ; then \
 			echo "Using existing installation of klayout setup from ${KLAYOUT_PATH}" ; \
@@ -880,7 +880,7 @@ klayout-repo:
 precheck-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		PRECHECK_COMMIT=`cat ${REFERENCE_JSON} | grep precheck_sky130 | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${PRECHECK_PATH}" != "x" ; then \
 		if test -d "${PRECHECK_PATH}" ; then \
 			echo "Using existing installation of klayout setup from ${PRECHECK_PATH}" ; \
@@ -893,7 +893,7 @@ precheck-repo:
 osu-t12-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		OSU_T12_COMMIT=`cat ${REFERENCE_JSON} | grep sky130_osu_sc_t12 | grep -v COMMIT | cut -d'"' -f4` ; \
-	fi
+	fi ; \
 	if test "x${OSU_T12_PATH}" != "x" ; then \
 		if test -d "${OSU_T12_PATH}" ; then \
 			echo "Using existing installation of OSU T12 standard cell library from ${OSU_T12_PATH}" ; \
