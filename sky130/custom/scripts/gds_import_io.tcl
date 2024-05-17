@@ -1,6 +1,7 @@
 cif istyle sky130()
 #
 gds flatten true
+gds flatglob *_CDNS_*
 gds flatglob *_cdns_*
 gds flatglob *sky130_fd_pr__*_example_*
 
@@ -37,3 +38,7 @@ gds flatglob *sky130_fd_io__gpiov2_ictl_logic*
 gds flatglob *sky130_fd_io__gpio_pddrvr_strong_slowv2*
 gds flatglob *sky130_fd_io__gpiov2_pddrvr_strong*
 
+### flatten ESD devices in SIO.  Note:  HVI covering the entire device
+### in nhvnative cell would avoid this issue.
+gds flatglob *reg_pu_nhvnative*
+gds flatglob *pu_natives*
