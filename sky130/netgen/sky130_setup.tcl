@@ -74,16 +74,16 @@ foreach dev $devices {
     }
 }
 
-#-------------------------------------------
-# poly resistor
-#-------------------------------------------
+#----------------------------------------------
+# poly resistor (changed from R type to X type)
+#----------------------------------------------
 
 set devices {}
 lappend devices sky130_fd_pr__res_generic_po
 
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
-	permute "-circuit1 $dev" end_a end_b
+	permute "-circuit1 $dev" 1 2
 	property "-circuit1 $dev" series enable
 	property "-circuit1 $dev" series {w critical}
 	property "-circuit1 $dev" series {l add}
@@ -96,7 +96,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" delete mult
     }
     if {[lsearch $cells2 $dev] >= 0} {
-	permute "-circuit2 $dev" end_a end_b
+	permute "-circuit2 $dev" 1 2
 	property "-circuit2 $dev" series enable
 	property "-circuit2 $dev" series {w critical}
 	property "-circuit2 $dev" series {l add}

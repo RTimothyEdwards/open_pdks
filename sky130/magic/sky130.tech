@@ -314,7 +314,7 @@ types
 
 # Miscellaneous
  -block  glass
- -block  fillblock,fillblock4
+ -block  fillblock
   comment comment
  -comment obscomment
 
@@ -459,7 +459,7 @@ aliases
   psub		pwell
 
   obstypes	obswell,mvobsactive,obsactive,obsli,obsmcon,obsm1,obsm2,obsm3,obsm4,obsm5,obsmrdl,obscomment
-  blocktypes	fillblock,fillblock4
+  blocktypes	fillblock
   
 end
 
@@ -617,7 +617,6 @@ styles
   error_s   error_waffle
   error_ps  error_waffle
   fillblock cwell
-  fillblock4 cwell
 
   obswell   cwell
   obsactive implant4
@@ -1485,19 +1484,19 @@ style gdsii
  layer FILLOBSFOM  obsactive
 	calma	22 24
 
- layer FILLOBSM1 fillblock,fillblock4
+ layer FILLOBSM1 fillblock,obsm1
  	calma 	62 24
 
- layer FILLOBSM2 fillblock,fillblock4
+ layer FILLOBSM2 fillblock,obsm2
  	calma 	105 52
 
- layer FILLOBSM3 fillblock,fillblock4
+ layer FILLOBSM3 fillblock,obsm3
  	calma 	107 24
 
- layer FILLOBSM4 fillblock,fillblock4
+ layer FILLOBSM4 fillblock,obsm4
  	calma 	112 4
 
- layer FILLOBSM5 fillblock,fillblock4
+ layer FILLOBSM5 fillblock,obsm5
 	calma	117 4
 
  render	DNWELL 	cwell       -0.1    0.1
@@ -2109,7 +2108,7 @@ style wafflefill variants (),(tiled)
 # diff or poly.
 #---------------------------------------------------------
 
- templayer      obstruct_li_coarse allli,obsli,lifill,fillblock,fillblock4
+ templayer      obstruct_li_coarse allli,obsli,lifill,fillblock
         grow    2800
 	or	alldiff,allpoly
 	grow	200
@@ -2121,7 +2120,7 @@ style wafflefill variants (),(tiled)
         shrink  1495
         grow    1495
 
- templayer      obstruct_li_medium allli,obsli,lifill,fillblock,fillblock4
+ templayer      obstruct_li_medium allli,obsli,lifill,fillblock
         grow    2500
 	or	lifill_coarse
 	grow	300
@@ -2134,7 +2133,7 @@ style wafflefill variants (),(tiled)
         shrink  745
         grow    745
 
- templayer      obstruct_li_fine allli,obsli,lifill,fillblock,fillblock4
+ templayer      obstruct_li_fine allli,obsli,lifill,fillblock
 	or	lifill_coarse,lifill_medium
 	grow	300
 	or	alldiff,allpoly
@@ -2155,7 +2154,7 @@ style wafflefill variants (),(tiled)
 # MET1 fill
 #---------------------------------------------------
 
- templayer      obstruct_m1_coarse allm1,obsm1,m1fill,fillblock,fillblock4
+ templayer      obstruct_m1_coarse allm1,glass,obsm1,m1fill,fillblock
         grow    3000
  templayer	met1fill_coarse topbox
         # slots   0 2000 200 0 2000 200 700 0
@@ -2165,7 +2164,7 @@ style wafflefill variants (),(tiled)
         shrink  995
         grow    995
 
- templayer      obstruct_m1_medium allm1,obsm1,m1fill,fillblock,fillblock4
+ templayer      obstruct_m1_medium allm1,glass,obsm1,m1fill,fillblock
         grow    2800
 	or	met1fill_coarse
         grow    200
@@ -2176,7 +2175,7 @@ style wafflefill variants (),(tiled)
         shrink  495
         grow    495
 
- templayer      obstruct_m1_fine allm1,obsm1,m1fill,fillblock,fillblock4
+ templayer      obstruct_m1_fine allm1,glass,obsm1,m1fill,fillblock
         grow    300
 	or	met1fill_coarse,met1fill_medium
         grow    200
@@ -2187,7 +2186,7 @@ style wafflefill variants (),(tiled)
         shrink  285
         grow    285
 
- templayer      obstruct_m1_veryfine allm1,obsm1,m1fill,fillblock,fillblock4
+ templayer      obstruct_m1_veryfine allm1,glass,obsm1,m1fill,fillblock
         grow    100
 	or	met1fill_coarse,met1fill_medium,met1fill_fine
         grow    200
@@ -2207,7 +2206,7 @@ style wafflefill variants (),(tiled)
 #---------------------------------------------------
 # MET2 fill
 #---------------------------------------------------
- templayer      obstruct_m2 allm2,obsm2,m2fill,fillblock,fillblock4
+ templayer      obstruct_m2 allm2,glass,obsm2,m2fill,fillblock
         grow    3000
  templayer	met2fill_coarse topbox
         # slots   0 2000 200 0 2000 200 700 350
@@ -2217,7 +2216,7 @@ style wafflefill variants (),(tiled)
         shrink  995
         grow    995
 
- templayer      obstruct_m2_medium allm2,obsm2,m2fill,fillblock,fillblock4
+ templayer      obstruct_m2_medium allm2,glass,obsm2,m2fill,fillblock
         grow    2800
 	or	met2fill_coarse
         grow    200
@@ -2228,7 +2227,7 @@ style wafflefill variants (),(tiled)
         shrink  495
         grow    495
 
- templayer      obstruct_m2_fine allm2,obsm2,m2fill,fillblock,fillblock4
+ templayer      obstruct_m2_fine allm2,glass,obsm2,m2fill,fillblock
         grow    300
 	or	met2fill_coarse,met2fill_medium
         grow    200
@@ -2239,7 +2238,7 @@ style wafflefill variants (),(tiled)
         shrink  285
         grow    285
 
- templayer      obstruct_m2_veryfine allm2,obsm2,m2fill,fillblock,fillblock4
+ templayer      obstruct_m2_veryfine allm2,glass,obsm2,m2fill,fillblock
         grow    100
 	or	met2fill_coarse,met2fill_medium,met2fill_fine
         grow    200
@@ -2259,7 +2258,7 @@ style wafflefill variants (),(tiled)
 #---------------------------------------------------
 # MET3 fill
 #---------------------------------------------------
- templayer      obstruct_m3 allm3,glass,obsm3,m3fill,fillblock,fillblock4
+ templayer      obstruct_m3 allm3,glass,obsm3,m3fill,fillblock
         grow    3000
  templayer	met3fill_coarse topbox
         # slots   0 2000 300 0 2000 300 700 700
@@ -2269,7 +2268,7 @@ style wafflefill variants (),(tiled)
         shrink  995
         grow    995
 
- templayer      obstruct_m3_medium allm3,glass,obsm3,m3fill,fillblock,fillblock4
+ templayer      obstruct_m3_medium allm3,glass,obsm3,m3fill,fillblock
         grow    2700
 	or	met3fill_coarse
         grow    300
@@ -2280,7 +2279,7 @@ style wafflefill variants (),(tiled)
         shrink  495
         grow    495
 
- templayer      obstruct_m3_fine allm3,glass,obsm3,m3fill,fillblock,fillblock4
+ templayer      obstruct_m3_fine allm3,glass,obsm3,m3fill,fillblock
         grow    200
 	or	met3fill_coarse,met3fill_medium
         grow    300
@@ -2291,17 +2290,17 @@ style wafflefill variants (),(tiled)
         shrink  285
         grow    285
 
- templayer      obstruct_m3_veryfine allm3,glass,obsm3,m3fill,fillblock,fillblock4
+ templayer      obstruct_m3_veryfine allm3,glass,obsm3,m3fill,fillblock
 	# Note: Adding 0.1 to waffle rule to clear wide spacing rule
         grow    100
 	or	met3fill_coarse,met3fill_medium,met3fill_fine
         grow    300
  templayer	met3fill_veryfine topbox
-        slots   0 400 300 0 400 300 150 200
+        slots   0 490 300 0 490 300 150 200
         and-not obstruct_m3_veryfine
 	and	topbox
-        shrink  195
-        grow    195
+        shrink  240
+        grow    240
 
  layer	MET3FILL met3fill_coarse
 	or	met3fill_medium
@@ -2315,7 +2314,7 @@ style wafflefill variants (),(tiled)
 #---------------------------------------------------
  templayer      obstruct_m4 glass
 	grow	2500
- 	or	allm4,obsm4,m4fill,fillblock,fillblock4
+ 	or	allm4,obsm4,m4fill,fillblock
         grow    3000
  templayer	met4fill_coarse topbox
         # slots   0 2000 300 0 2000 300 700 1050
@@ -2327,7 +2326,7 @@ style wafflefill variants (),(tiled)
 
  templayer	obstruct_m4_medium glass
 	grow	2500
-	or	allm4,obsm4,m4fill,fillblock,fillblock4
+	or	allm4,obsm4,m4fill,fillblock
         grow    2700
 	or	met4fill_coarse
         grow    300
@@ -2340,7 +2339,7 @@ style wafflefill variants (),(tiled)
 
  templayer      obstruct_m4_fine glass
 	grow	5000
- 	or	allm4,obsm4,m4fill,fillblock,fillblock4
+ 	or	allm4,obsm4,m4fill,fillblock
         grow    200
 	or	met4fill_coarse,met4fill_medium
         grow    300
@@ -2353,17 +2352,17 @@ style wafflefill variants (),(tiled)
 
  templayer      obstruct_m4_veryfine glass
 	grow	5100
-	or	allm4,obsm4,m4fill,fillblock,fillblock4
+	or	allm4,obsm4,m4fill,fillblock
 	# Note: Adding 0.1 to waffle rule to clear wide spacing rule
         grow    100
 	or	met4fill_coarse,met4fill_medium,met4fill_fine
         grow    300
  templayer	met4fill_veryfine topbox
-        slots   0 400 300 0 400 300 150 300
+        slots   0 490 300 0 490 300 150 300
         and-not obstruct_m4_veryfine
 	and	topbox
-        shrink  195
-        grow    195
+        shrink  240
+        grow    240
 
  layer	MET4FILL met4fill_coarse
 	or	met4fill_medium
@@ -2429,8 +2428,6 @@ style  sky130 variants (),(vendor)
  ignore HVNTM
  ignore POLYMOD
  ignore LOWTAPDENSITY
- ignore FILLOBSPOLY
- ignore FILLOBSFOM
  ignore MET5BLOCK
  ignore OUTLINE
  ignore POLYCUT
@@ -3963,12 +3960,28 @@ style  sky130 variants (),(vendor)
  layer comment TTEXT
  labels TTEXT text
 
- layer fillblock  FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4,FILLOBSM5
- labels FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4,FILLOBSM5
+# Do not infer generic "fillblock" from GDS input
+# layer fillblock  FILLOBSM5
+# and FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4
 
- layer fillblock4  FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4
- and-not FILLOBSM5
- labels FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4
+# Use the obstruction types for fill block on individual layers
+ layer obsactive FILLOBSFOM,FILLOBSPOLY
+ labels FILLOBSFOM,FILLOBSPOLY
+
+ layer obsm1 FILLOBSM1
+ labels FILLOBSM1
+
+ layer obsm2 FILLOBSM2
+ labels FILLOBSM2
+
+ layer obsm3 FILLOBSM3
+ labels FILLOBSM3
+
+ layer obsm4 FILLOBSM4
+ labels FILLOBSM4
+
+ layer obsm5 FILLOBSM5
+ labels FILLOBSM5
 
 # MOS Varactor
 
@@ -6587,8 +6600,8 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device rsubcircuit sky130_fd_pr__res_generic_pd__hv  mvpdiffres \
 	*mvpdiff nwell  error l=l w=w
 
- device resistor sky130_fd_pr__res_generic_po rmp *poly
- device resistor sky130_fd_pr__res_generic_po mrp1 *poly
+ device rsubcircuit sky130_fd_pr__res_generic_po rmp *poly l=l w=w
+ device rsubcircuit sky130_fd_pr__res_generic_po mrp1 *poly l=l w=w
 
  # NOTE: SkyWater diode models have bizarre units requiring bizarre scaling
  device subcircuit sky130_fd_pr__diode_pd2nw_05v5 *pdiode nwell a=area*1E12 p=perim*1E6
@@ -6744,7 +6757,12 @@ plot
   style pnm
      default
      draw fillblock no_color_at_all
-     draw fillblock4 no_color_at_all
+     draw obsactive no_color_at_all
+     draw obsm1 no_color_at_all
+     draw obsm2 no_color_at_all
+     draw obsm3 no_color_at_all
+     draw obsm4 no_color_at_all
+     draw obsm5 no_color_at_all
      draw fomfill no_color_at_all
      draw polyfill no_color_at_all
      draw m1fill no_color_at_all
