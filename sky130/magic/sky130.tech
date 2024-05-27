@@ -2296,11 +2296,11 @@ style wafflefill variants (),(tiled)
 	or	met3fill_coarse,met3fill_medium,met3fill_fine
         grow    300
  templayer	met3fill_veryfine topbox
-        slots   0 490 300 0 490 300 150 200
+        slots   0 500 300 0 500 300 150 200
         and-not obstruct_m3_veryfine
 	and	topbox
-        shrink  240
-        grow    240
+        shrink  245
+        grow    245
 
  layer	MET3FILL met3fill_coarse
 	or	met3fill_medium
@@ -2358,11 +2358,11 @@ style wafflefill variants (),(tiled)
 	or	met4fill_coarse,met4fill_medium,met4fill_fine
         grow    300
  templayer	met4fill_veryfine topbox
-        slots   0 490 300 0 490 300 150 300
+        slots   0 500 300 0 500 300 150 300
         and-not obstruct_m4_veryfine
 	and	topbox
-        shrink  240
-        grow    240
+        shrink  245
+        grow    245
 
  layer	MET4FILL met4fill_coarse
 	or	met4fill_medium
