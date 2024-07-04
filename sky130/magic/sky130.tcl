@@ -147,8 +147,10 @@ proc sky130::addtechmenu {framename} {
 	    "sky130::mvsubconn_draw" pdk1
    magic::add_toolkit_command $layoutframe "substrate guard ring (5.0V)" \
 	    "sky130::mvsubconn_guard_draw" pdk1
-   magic::add_toolkit_command $layoutframe "deep n-well region" \
+   magic::add_toolkit_command $layoutframe "deep n-well region (1.8V)" \
 	    "sky130::deep_nwell_draw" pdk1
+   magic::add_toolkit_command $layoutframe "deep n-well region (5.0V)" \
+	    "sky130::mvdeep_nwell_draw" pdk1
    magic::add_toolkit_command $layoutframe "n-well region with guard ring (1.8V)" \
 	    "sky130::nwell_draw" pdk1
    magic::add_toolkit_command $layoutframe "n-well region with guard ring (5.0V)" \
@@ -741,6 +743,109 @@ proc sky130::deep_nwell_draw {} {
    paint nsc
    box grow c 0.1um
    paint nsd
+   popbox
+
+   popbox
+   tech revert
+   resumeall
+}
+
+#----------------------------------------------------------------
+
+proc sky130::mvdeep_nwell_draw {} {
+   set w [magic::i2u [box width]]
+   set h [magic::i2u [box height]]
+   if {$w < 3.0} {
+      puts stderr "MV Deep-nwell region width must be at least 3.0um"
+      return
+   }
+   if {$h < 3.0} {
+      puts stderr "MV Deep-nwell region height must be at least 3.0um"
+      return
+   }
+   suspendall
+   tech unlock *
+   paint dnwell
+   pushbox
+   pushbox
+   box grow c 0.55um
+   pushbox
+   box width 1.58um
+   paint nwell
+   popbox
+   pushbox
+   box height 1.58um
+   paint nwell
+   popbox
+   pushbox
+   box move n ${h}um
+   box move n 1.1um
+   box move s 1.58um
+   box height 1.58um
+   paint nwell
+   popbox
+   pushbox
+   box move e ${w}um
+   box move e 1.1um
+   box move w 1.58um
+   box width 1.58um
+   paint nwell
+   popbox
+
+   popbox
+   box grow c 0.03um
+
+   pushbox
+   box width 0
+   box grow c 0.085um
+   paint li
+   pushbox
+   box grow n -0.3um
+   box grow s -0.3um
+   paint mvnsc
+   popbox
+   box grow c 0.1um
+   paint mvnsd
+   popbox
+
+   pushbox
+   box height 0
+   box grow c 0.085um
+   paint li
+   pushbox
+   box grow e -0.3um
+   box grow w -0.3um
+   paint mvnsc
+   popbox
+   box grow c 0.1um
+   paint mvnsd
+   popbox
+
+   pushbox
+   box move n [box height]i
+   box height 0
+   box grow c 0.085um
+   paint li
+   pushbox
+   box grow e -0.3um
+   box grow w -0.3um
+   paint mvnsc
+   popbox
+   box grow c 0.1um
+   paint mvnsd
+   popbox
+
+   pushbox
+   box move e [box width]i
+   box width 0
+   box grow c 0.085um
+   paint li
+   pushbox
+   box grow n -0.3um
+   box grow s -0.3um
+   paint mvnsc
+   box grow c 0.1um
+   paint mvnsd
    popbox
 
    popbox
