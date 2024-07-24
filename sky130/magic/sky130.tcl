@@ -1164,7 +1164,7 @@ proc sky130::diode_check {parameters} {
 
 proc sky130::sky130_fd_pr__diode_pw2nd_05v5_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
-	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 class diode \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
 	sky130_fd_pr__diode_pw2nd_05v5_nvt sky130_fd_pr__diode_pw2nd_11v0} \
@@ -1173,7 +1173,7 @@ proc sky130::sky130_fd_pr__diode_pw2nd_05v5_defaults {} {
 
 proc sky130::sky130_fd_pr__diode_pw2nd_05v5_lvt_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
-	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 class diode \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
 	sky130_fd_pr__diode_pw2nd_05v5_nvt sky130_fd_pr__diode_pw2nd_11v0} \
@@ -1182,7 +1182,7 @@ proc sky130::sky130_fd_pr__diode_pw2nd_05v5_lvt_defaults {} {
 
 proc sky130::sky130_fd_pr__diode_pw2nd_05v5_nvt_defaults {} {
     return {w 0.45 l 0.45 area 0.2024 peri 1.8 \
-	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 class diode \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
 	sky130_fd_pr__diode_pw2nd_05v5_nvt sky130_fd_pr__diode_pw2nd_11v0} \
@@ -1191,7 +1191,7 @@ proc sky130::sky130_fd_pr__diode_pw2nd_05v5_nvt_defaults {} {
 
 proc sky130::sky130_fd_pr__diode_pw2nd_11v0_defaults {} {
     return {w 0.45 l 0.45 area 0.2024 peri 1.8 \
-	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 class diode \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
 	sky130_fd_pr__diode_pw2nd_05v5_nvt sky130_fd_pr__diode_pw2nd_11v0} \
@@ -1199,12 +1199,12 @@ proc sky130::sky130_fd_pr__diode_pw2nd_11v0_defaults {} {
 }
 
 proc sky130::sky130_fd_pr__photodiode_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 xstep 8.0 ystep 8.0}
+    return {nx 1 ny 1 deltax 0 deltay 0 xstep 8.0 ystep 8.0 class diode}
 }
 
 proc sky130::sky130_fd_pr__diode_pd2nw_05v5_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
-	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 class diode \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
@@ -1214,7 +1214,7 @@ proc sky130::sky130_fd_pr__diode_pd2nw_05v5_defaults {} {
 
 proc sky130::sky130_fd_pr__diode_pd2nw_05v5_lvt_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
-	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 class diode \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
@@ -1224,7 +1224,7 @@ proc sky130::sky130_fd_pr__diode_pd2nw_05v5_lvt_defaults {} {
 
 proc sky130::sky130_fd_pr__diode_pd2nw_05v5_hvt_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
-	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 class diode \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
@@ -1235,7 +1235,7 @@ proc sky130::sky130_fd_pr__diode_pd2nw_05v5_hvt_defaults {} {
 
 proc sky130::sky130_fd_pr__diode_pd2nw_11v0_defaults {} {
     return {w 0.45 l 0.45 area 0.2024 peri 1.8 \
-	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 class diode \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
@@ -1946,13 +1946,13 @@ proc sky130::sky130_fd_pr__photodiode_draw {parameters} {
 
 #ifdef MIM
 proc sky130::sky130_fd_pr__cap_mim_m3_1_defaults {} {
-    return {w 2.00 l 2.00 val 8.0 carea 2.00 cperi 0.19 \
+    return {w 2.00 l 2.00 val 8.0 carea 2.00 cperi 0.19 class capacitor \
 		nx 1 ny 1 dummy 0 square 0 lmin 2.00 wmin 2.00 \
 		lmax 30.0 wmax 30.0 dc 0 bconnect 1 tconnect 1 \
 		ccov 100}
 }
 proc sky130::sky130_fd_pr__cap_mim_m3_2_defaults {} {
-    return {w 2.00 l 2.00 val 8.0 carea 2.00 cperi 0.19 \
+    return {w 2.00 l 2.00 val 8.0 carea 2.00 cperi 0.19 class capacitor \
 		nx 1 ny 1 dummy 0 square 0 lmin 2.00 wmin 2.00 \
 		lmax 30.0 wmax 30.0 dc 0 bconnect 1 tconnect 1 \
 		ccov 100}
@@ -2753,7 +2753,7 @@ proc sky130::sky130_fd_pr__cap_mim_m3_2_check {parameters} {
 #----------------------------------------------------------------
 
 proc sky130::sky130_fd_pr__res_iso_pw_defaults {} {
-    return {w 2.650 l 26.50 m 1 nx 1 wmin 2.650 lmin 26.50 \
+    return {w 2.650 l 26.50 m 1 nx 1 wmin 2.650 lmin 26.50 class resistor \
 	 	rho 3050 val 30502 dummy 0 dw 0.25 term 1.0 \
 		guard 1 endcov 100 full_metal 1 vias 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
@@ -2765,7 +2765,7 @@ proc sky130::sky130_fd_pr__res_iso_pw_defaults {} {
 #----------------------------------------------------------------
 
 proc sky130::sky130_fd_pr__res_generic_po_defaults {} {
-    return {w 0.330 l 1.650 m 1 nx 1 wmin 0.330 lmin 1.650 \
+    return {w 0.330 l 1.650 m 1 nx 1 wmin 0.330 lmin 1.650 class resistor \
 		rho 48.2 val 241 dummy 0 dw 0.0 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
@@ -2775,7 +2775,7 @@ proc sky130::sky130_fd_pr__res_generic_po_defaults {} {
 
 # "term" is rho * 0.06, the distance between xpc edge and CONT.
 proc sky130::sky130_fd_pr__res_high_po_0p35_defaults {} {
-    return {w 0.350 l 0.50 m 1 nx 1 wmin 0.350 lmin 0.50 \
+    return {w 0.350 l 0.50 m 1 nx 1 wmin 0.350 lmin 0.50 class resistor \
 		rho 319.8 val 456.857 dummy 0 dw 0.0 term 194.82 \
 		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_high_po_0p35 \
@@ -2785,7 +2785,7 @@ proc sky130::sky130_fd_pr__res_high_po_0p35_defaults {} {
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_high_po_0p69_defaults {} {
-    return {w 0.690 l 1.00 m 1 nx 1 wmin 0.690 lmin 0.50 \
+    return {w 0.690 l 1.00 m 1 nx 1 wmin 0.690 lmin 0.50 class resistor \
 		rho 319.8 val 463.480 dummy 0 dw 0.0 term 194.82 \
 		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_high_po_0p35 \
@@ -2795,7 +2795,7 @@ proc sky130::sky130_fd_pr__res_high_po_0p69_defaults {} {
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_high_po_1p41_defaults {} {
-    return {w 1.410 l 2.00 m 1 nx 1 wmin 1.410 lmin 0.50 \
+    return {w 1.410 l 2.00 m 1 nx 1 wmin 1.410 lmin 0.50 class resistor \
 		rho 319.8 val 453.620 dummy 0 dw 0.0 term 194.82 \
 		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_high_po_0p35 \
@@ -2805,7 +2805,7 @@ proc sky130::sky130_fd_pr__res_high_po_1p41_defaults {} {
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_high_po_2p85_defaults {} {
-    return {w 2.850 l 3.00 m 1 nx 1 wmin 2.850 lmin 0.50 \
+    return {w 2.850 l 3.00 m 1 nx 1 wmin 2.850 lmin 0.50 class resistor \
 		rho 319.8 val 336.630 dummy 0 dw 0.0 term 194.82 \
 		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_high_po_0p35 \
@@ -2815,7 +2815,7 @@ proc sky130::sky130_fd_pr__res_high_po_2p85_defaults {} {
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_high_po_5p73_defaults {} {
-    return {w 5.730 l 6.00 m 1 nx 1 wmin 5.730 lmin 0.50 \
+    return {w 5.730 l 6.00 m 1 nx 1 wmin 5.730 lmin 0.50 class resistor \
 		rho 319.8 val 334.870 dummy 0 dw 0.0 term 194.82 \
 		sterm 0.0 caplen 0 guard 1 glc 1 grc 1 gtc 1 gbc 1 \
 		compatible {sky130_fd_pr__res_high_po_0p35 \
@@ -2827,7 +2827,7 @@ proc sky130::sky130_fd_pr__res_high_po_5p73_defaults {} {
 
 # "term" is rho * 0.06, the distance between xpc edge and CONT.
 proc sky130::sky130_fd_pr__res_xhigh_po_0p35_defaults {} {
-    return {w 0.350 l 0.50 m 1 nx 1 wmin 0.350 lmin 0.50 \
+    return {w 0.350 l 0.50 m 1 nx 1 wmin 0.350 lmin 0.50 class resistor \
 		rho 2000 val 2875.143 dummy 0 dw 0.0 term 188.2 \
 		sterm 0.0 caplen 0 wmax 0.350 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
@@ -2838,7 +2838,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p35_defaults {} {
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_0p69_defaults {} {
-    return {w 0.690 l 1.00 m 1 nx 1 wmin 0.690 lmin 0.50 \
+    return {w 0.690 l 1.00 m 1 nx 1 wmin 0.690 lmin 0.50 class resistor \
 		rho 2000 val 2898.600 dummy 0 dw 0.0 term 188.2 \
 		sterm 0.0 caplen 0 wmax 0.690 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
@@ -2849,7 +2849,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p69_defaults {} {
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_1p41_defaults {} {
-    return {w 1.410 l 2.00 m 1 nx 1 wmin 1.410 lmin 0.50 \
+    return {w 1.410 l 2.00 m 1 nx 1 wmin 1.410 lmin 0.50 class resistor \
 		rho 2000 val 2836.900 dummy 0 dw 0.0 term 188.2 \
 		sterm 0.0 caplen 0 wmax 1.410 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
@@ -2860,7 +2860,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_1p41_defaults {} {
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_2p85_defaults {} {
-    return {w 2.850 l 3.00 m 1 nx 1 wmin 2.850 lmin 0.50 \
+    return {w 2.850 l 3.00 m 1 nx 1 wmin 2.850 lmin 0.50 class resistor \
 		rho 2000 val 2105.300 dummy 0 dw 0.0 term 188.2 \
 		sterm 0.0 caplen 0 wmax 2.850 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
@@ -2871,7 +2871,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_2p85_defaults {} {
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_5p73_defaults {} {
-    return {w 5.730 l 6.00 m 1 nx 1 wmin 5.730 lmin 0.50 \
+    return {w 5.730 l 6.00 m 1 nx 1 wmin 5.730 lmin 0.50 class resistor \
 		rho 2000 val 2094.200 dummy 0 dw 0.0 term 188.2 \
 		sterm 0.0 caplen 0 wmax 5.730 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 \
@@ -2888,7 +2888,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_5p73_defaults {} {
 #----------------------------------------------------------------
 
 proc sky130::sky130_fd_pr__res_generic_nd_defaults {} {
-    return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 \
+    return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 class resistor \
 		rho 120 val 600.0 dummy 0 dw 0.05 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
@@ -2897,7 +2897,7 @@ proc sky130::sky130_fd_pr__res_generic_nd_defaults {} {
 }
 
 proc sky130::sky130_fd_pr__res_generic_nd__hv_defaults {} {
-    return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 \
+    return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 class resistor \
 		rho 120 val 600.0 dummy 0 dw 0.02 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
@@ -2911,7 +2911,7 @@ proc sky130::sky130_fd_pr__res_generic_nd__hv_defaults {} {
 #----------------------------------------------------------------
 
 proc sky130::sky130_fd_pr__res_generic_pd_defaults {} {
-    return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 \
+    return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 class resistor \
 		rho 197 val 985.0 dummy 0 dw 0.02 term 0.0 \
 		sterm 0.0 caplen 0.60 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
@@ -2920,7 +2920,7 @@ proc sky130::sky130_fd_pr__res_generic_pd_defaults {} {
 }
 
 proc sky130::sky130_fd_pr__res_generic_pd__hv_defaults {} {
-    return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 \
+    return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 class resistor \
 		rho 197 val 985.0 dummy 0 dw 0.02 term 0.0 \
 		sterm 0.0 caplen 0.60 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
@@ -2934,7 +2934,7 @@ proc sky130::sky130_fd_pr__res_generic_pd__hv_defaults {} {
 #----------------------------------------------------------------
 
 proc sky130::sky130_fd_pr__res_generic_l1_defaults {} {
-    return {w 0.170 l 0.170 m 1 nx 1 wmin 0.17 lmin 0.17 \
+    return {w 0.170 l 0.170 m 1 nx 1 wmin 0.17 lmin 0.17 class resistor \
 		rho 12.8 val 12.8 dummy 0 dw 0.0 term 0.0 snake 0 \
 		roverlap 0}
 }
@@ -2945,7 +2945,7 @@ proc sky130::sky130_fd_pr__res_generic_l1_defaults {} {
 #----------------------------------------------------------------
 
 proc sky130::sky130_fd_pr__res_generic_m1_defaults {} {
-    return {w 0.140 l 0.140 m 1 nx 1 wmin 0.14 lmin 0.14 \
+    return {w 0.140 l 0.140 m 1 nx 1 wmin 0.14 lmin 0.14 class resistor \
 		rho 0.125 val 0.125 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
@@ -2956,7 +2956,7 @@ proc sky130::sky130_fd_pr__res_generic_m1_defaults {} {
 #----------------------------------------------------------------
 
 proc sky130::sky130_fd_pr__res_generic_m2_defaults {} {
-    return {w 0.140 l 0.140 m 1 nx 1 wmin 0.14 lmin 0.14 \
+    return {w 0.140 l 0.140 m 1 nx 1 wmin 0.14 lmin 0.14 class resistor \
 		rho 0.125 val 0.125 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
@@ -2967,7 +2967,7 @@ proc sky130::sky130_fd_pr__res_generic_m2_defaults {} {
 #----------------------------------------------------------------
 
 proc sky130::sky130_fd_pr__res_generic_m3_defaults {} {
-    return {w 0.300 l 0.300 m 1 nx 1 wmin 0.30 lmin 0.30 \
+    return {w 0.300 l 0.300 m 1 nx 1 wmin 0.30 lmin 0.30 class resistor \
 		rho 0.047 val 0.047 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
@@ -2979,12 +2979,12 @@ proc sky130::sky130_fd_pr__res_generic_m3_defaults {} {
 
 #ifdef METAL5
 proc sky130::sky130_fd_pr__res_generic_m4_defaults {} {
-    return {w 0.300 l 0.300 m 1 nx 1 wmin 0.30 lmin 0.30 \
+    return {w 0.300 l 0.300 m 1 nx 1 wmin 0.30 lmin 0.30 class resistor \
 		rho 0.047 val 0.047 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
 proc sky130::sky130_fd_pr__res_generic_m5_defaults {} {
-    return {w 1.600 l 1.600 m 1 nx 1 wmin 1.60 lmin 1.60 \
+    return {w 1.600 l 1.600 m 1 nx 1 wmin 1.60 lmin 1.60 class resistor \
 		rho 0.029 val 0.029 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
@@ -5207,7 +5207,7 @@ proc sky130::sky130_fd_pr__pfet_01v8_defaults {} {
     return {w 0.42 l 0.15 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
-		compatible {sky130_fd_pr__pfet_01v8 \
+		class mosfet compatible {sky130_fd_pr__pfet_01v8 \
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
 		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
 		viasrc 100 viadrn 100 viagate 100 \
@@ -5218,7 +5218,7 @@ proc sky130::sky130_fd_pr__pfet_01v8_lvt_defaults {} {
     return {w 0.42 l 0.35 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.35 wmin 0.42 \
-		compatible {sky130_fd_pr__pfet_01v8 \
+		class mosfet compatible {sky130_fd_pr__pfet_01v8 \
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
 		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
 		viasrc 100 viadrn 100 viagate 100 \
@@ -5229,7 +5229,7 @@ proc sky130::sky130_fd_pr__pfet_01v8_hvt_defaults {} {
     return {w 0.42 l 0.15 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
-		compatible {sky130_fd_pr__pfet_01v8 \
+		class mosfet compatible {sky130_fd_pr__pfet_01v8 \
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
 		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
 		viasrc 100 viadrn 100 viagate 100 \
@@ -5240,7 +5240,7 @@ proc sky130::sky130_fd_pr__pfet_g5v0d10v5_defaults {} {
     return {w 0.42 l 0.50 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.50 wmin 0.42 \
-		compatible {sky130_fd_pr__pfet_01v8 \
+		class mosfet compatible {sky130_fd_pr__pfet_01v8 \
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
 		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
 		viasrc 100 viadrn 100 viagate 100 \
@@ -5251,7 +5251,7 @@ proc sky130::sky130_fd_pr__pfet_g5v0d16v0_defaults {} {
     return {w 5.00 l 1.050 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 0 lmin 1.050 wmin 5.00 \
-		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		class mosfet full_metal 1 viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0}
 }
 
@@ -5264,6 +5264,7 @@ proc sky130::sky130_fd_pr__nfet_01v8_defaults {} {
     return {w 0.420 l 0.150 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
+		class mosfet \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
@@ -5276,6 +5277,7 @@ proc sky130::sky130_fd_pr__nfet_01v8_lvt_defaults {} {
     return {w 0.420 l 0.150 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
+		class mosfet \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
@@ -5288,6 +5290,7 @@ proc sky130::sky130_fd_bs_flash__special_sonosfet_star_defaults {} {
     return {w 0.420 l 0.150 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
+		class mosfet \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
@@ -5300,6 +5303,7 @@ proc sky130::sky130_fd_pr__nfet_g5v0d10v5_defaults {} {
     return {w 0.42 l 0.50 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.50 wmin 0.42 \
+		class mosfet \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
@@ -5312,6 +5316,7 @@ proc sky130::sky130_fd_pr__nfet_05v0_nvt_defaults {} {
     return {w 0.42 l 0.90 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.90 wmin 0.42 \
+		class mosfet \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
@@ -5324,6 +5329,7 @@ proc sky130::sky130_fd_pr__nfet_03v3_nvt_defaults {} {
     return {w 0.42 l 0.50 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.50 wmin 0.42 \
+		class mosfet \
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
@@ -5349,7 +5355,7 @@ proc sky130::sky130_fd_pr__cap_var_lvt_defaults {} {
     return {w 1.0 l 0.18 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.18 wmin 1.0 \
-		compatible {sky130_fd_pr__cap_var_lvt \
+		class mosfet compatible {sky130_fd_pr__cap_var_lvt \
 		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 gshield 1}
@@ -5359,7 +5365,7 @@ proc sky130::sky130_fd_pr__cap_var_hvt_defaults {} {
     return {w 1.0 l 0.18 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.18 wmin 1.0 \
-		compatible {sky130_fd_pr__cap_var_lvt \
+		class mosfet compatible {sky130_fd_pr__cap_var_lvt \
 		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 gshield 1}
@@ -5369,7 +5375,7 @@ proc sky130::sky130_fd_pr__cap_var_defaults {} {
     return {w 1.0 l 0.50 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.50 wmin 1.0 \
-		compatible {sky130_fd_pr__cap_var_lvt \
+		class mosfet compatible {sky130_fd_pr__cap_var_lvt \
 		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 gshield 1}
@@ -7376,44 +7382,44 @@ proc sky130::sky130_fd_pr__cap_var_check {parameters} {
 # sky130_fd_pr__rf_test_coil3
 
 proc sky130::sky130_fd_pr__npn_05v5_W1p00L1p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 7.03 ystep 7.03}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 7.03 ystep 7.03 class bjt}
 }
 proc sky130::sky130_fd_pr__npn_05v5_W1p00L2p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 7.03 ystep 8.03}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 7.03 ystep 8.03 class bjt}
 }
 
 proc sky130::sky130_fd_pr__pnp_05v5_W0p68L0p68_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 3.72 ystep 3.72}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 3.72 ystep 3.72 class bjt}
 }
 
 proc sky130::sky130_fd_pr__pnp_05v5_W3p40L3p40_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 6.44 ystep 6.44}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 6.44 ystep 6.44 class bjt}
 }
 proc sky130::sky130_fd_pr__npn_11v0_W1p00L1p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 7.03 ystep 7.03}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 7.03 ystep 7.03 class bjt}
 }
 
 proc sky130::sky130_fd_pr__rf_test_coil1_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 258 ystep 258}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 258 ystep 258 class inductor}
 }
 proc sky130::sky130_fd_pr__rf_test_coil2_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 290 ystep 404}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 290 ystep 404 class inductor}
 }
 proc sky130::sky130_fd_pr__rf_test_coil3_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 290 ystep 404}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 290 ystep 404 class inductor}
 }
 
 proc sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2m3m4_shieldl1m5_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 11.08 ystep 11.36}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 11.08 ystep 11.36 class capacitor}
 }
 proc sky130::sky130_fd_pr__cap_vpp_11p5x11p7_m1m2_noshield_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 11.08 ystep 11.36}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 11.08 ystep 11.36 class capacitor}
 }
 proc sky130::sky130_fd_pr__cap_vpp_08p6x07p8_m1m2_shieldl1_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 11.08 ystep 11.36}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 11.08 ystep 11.36 class capacitor}
 }
 proc sky130::sky130_fd_pr__cap_vpp_04p4x04p6_m1m2_shieldl1_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 11.08 ystep 11.36}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 11.08 ystep 11.36 class capacitor}
 }
 
 #----------------------------------------------------------------

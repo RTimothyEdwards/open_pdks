@@ -677,14 +677,14 @@ proc gf180mcu::diode_check {parameters} {
 
 proc gf180mcu::diode_nd2ps_03v3_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
-	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 class diode \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 full_metal 1 \
 	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0}}
 }
 
 proc gf180mcu::diode_pd2nw_03v3_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
-	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 class diode \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 0 gbc 0 doverlap 0 full_metal 1 \
 	compatible {diode_pd2nw_03v3 diode_pd2nw_06v0}}
@@ -692,7 +692,7 @@ proc gf180mcu::diode_pd2nw_03v3_defaults {} {
 
 proc gf180mcu::diode_nd2ps_06v0_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
-	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 class diode \
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	full_metal 1 \
 	compatible {diode_nd2ps_03v3 diode_nd2ps_06v0}}
@@ -700,7 +700,7 @@ proc gf180mcu::diode_nd2ps_06v0_defaults {} {
 
 proc gf180mcu::diode_pd2nw_06v0_defaults {} {
     return {w 0.45 l 0.45 area 0.2025 peri 1.8 \
-	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 \
+	nx 1 ny 1 dummy 0 lmin 0.45 wmin 0.45 class diode \
 	elc 1 erc 1 etc 1 ebc 1 \
 	glc 1 grc 1 gtc 0 gbc 0 doverlap 0 \
 	full_metal 1 \
@@ -1054,6 +1054,7 @@ proc gf180mcu::diode_pd2nw_06v0_draw {parameters} {
 #ifdef MIM
 proc gf180mcu::cap_mim_2p0fF_defaults {} {
     return {w 5.00 l 5.00 val 50.000 carea 25.00 cperi 20.00 \
+		class capacitor \
 		nx 1 ny 1 dummy 0 square 0 lmin 5.00 wmin 5.00 \
 		lmax 100.0 wmax 100.0 dc 0 bconnect 1 tconnect 1}
 }
@@ -1774,7 +1775,7 @@ proc gf180mcu::cap_mim_2p0fF_check {parameters} {
 #----------------------------------------------------------------
 
 proc gf180mcu::nwell_defaults {} {
-    return {w 2.000 l 10.00 m 1 nx 1 wmin 2.000 lmin 2.00 \
+    return {w 2.000 l 10.00 m 1 nx 1 wmin 2.000 lmin 2.00 class resistor \
 	 	rho 1680 val 8400 dummy 0 dw 0.25 term 1.0 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
@@ -1786,7 +1787,7 @@ proc gf180mcu::nwell_defaults {} {
 #----------------------------------------------------------------
 
 proc gf180mcu::ppolyf_u_defaults {} {
-    return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 \
+    return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 class resistor \
 		rho 315 val 394 dummy 0 dw 0.07 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
@@ -1794,7 +1795,7 @@ proc gf180mcu::ppolyf_u_defaults {} {
 }
 
 proc gf180mcu::npolyf_u_defaults {} {
-    return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 \
+    return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 class resistor \
 		rho 300 val 375 dummy 0 dw 0.09 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
@@ -1807,7 +1808,7 @@ proc gf180mcu::npolyf_u_defaults {} {
 #----------------------------------------------------------------
 
 proc gf180mcu::ppolyf_s_defaults {} {
-    return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 \
+    return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 class resistor \
 		rho 7 val 8.75 dummy 0 dw 0.01 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
@@ -1815,7 +1816,7 @@ proc gf180mcu::ppolyf_s_defaults {} {
 }
 
 proc gf180mcu::npolyf_s_defaults {} {
-    return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 \
+    return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 class resistor \
 		rho 7 val 8.75 dummy 0 dw 0.01 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
@@ -1828,7 +1829,7 @@ proc gf180mcu::npolyf_s_defaults {} {
 #----------------------------------------------------------------
 
 proc gf180mcu::nplus_u_defaults {} {
-    return {w 1.000 l 1.000 m 1 nx 1 wmin 1.00 lmin 1.00 \
+    return {w 1.000 l 1.000 m 1 nx 1 wmin 1.00 lmin 1.00 class resistor \
 		rho 85 val 85.0 dummy 0 dw 0.05 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
@@ -1841,7 +1842,7 @@ proc gf180mcu::nplus_u_defaults {} {
 #----------------------------------------------------------------
 
 proc gf180mcu::pplus_u_defaults {} {
-    return {w 1.000 l 1.000 m 1 nx 1 wmin 1.00 lmin 1.00 \
+    return {w 1.000 l 1.000 m 1 nx 1 wmin 1.00 lmin 1.00 class resistor \
 		rho 128 val 128.0 dummy 0 dw 0.02 term 0.0 \
 		sterm 0.0 caplen 0.60 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
@@ -1854,7 +1855,7 @@ proc gf180mcu::pplus_u_defaults {} {
 #----------------------------------------------------------------
 
 proc gf180mcu::rm1_defaults {} {
-    return {w 0.160 l 0.160 m 1 nx 1 wmin 0.16 lmin 0.16 \
+    return {w 0.160 l 0.160 m 1 nx 1 wmin 0.16 lmin 0.16 class resistor \
 		rho 0.076 val 0.076 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
@@ -1865,7 +1866,7 @@ proc gf180mcu::rm1_defaults {} {
 #----------------------------------------------------------------
 
 proc gf180mcu::rm2_defaults {} {
-    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 \
+    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 class resistor \
 		rho 0.053 val 0.053 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
@@ -1877,7 +1878,7 @@ proc gf180mcu::rm2_defaults {} {
 
 #ifdef METALS3 || METALS4 || METALS5 || METALS6
 proc gf180mcu::rm3_defaults {} {
-    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 \
+    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 class resistor \
 		rho 0.053 val 0.053 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
@@ -1885,21 +1886,21 @@ proc gf180mcu::rm3_defaults {} {
 
 #ifdef METALS4 || METALS5 || METALS6
 proc gf180mcu::rm4_defaults {} {
-    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 \
+    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 class resistor \
 		rho 0.053 val 0.053 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
 #endif (METALS4 || METALS5 || METALS6)
 #ifdef METALS5 || METALS6
 proc gf180mcu::rm5_defaults {} {
-    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 \
+    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 class resistor \
 		rho 0.053 val 0.053 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
 #endif (METALS5 || METALS6)
 #ifdef METALS6
 proc gf180mcu::rmtp_defaults {} {
-    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 \
+    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 class resistor \
 		rho 0.053 val 0.053 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
@@ -1913,7 +1914,7 @@ proc gf180mcu::rmtp_defaults {} {
 #----------------------------------------------------------------
 
 proc gf180mcu::ppolyf_u_1k_defaults {} {
-    return {w 1.000 l 2.000 m 1 nx 1 wmin 1.000 lmin 1.000 \
+    return {w 1.000 l 2.000 m 1 nx 1 wmin 1.000 lmin 1.000 class resistor \
 		rho 1000 val 2000 dummy 0 dw 0.0 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
@@ -1922,7 +1923,7 @@ proc gf180mcu::ppolyf_u_1k_defaults {} {
 }
 
 proc gf180mcu::ppolyf_u_1k_6p0_defaults {} {
-    return {w 1.000 l 2.000 m 1 nx 1 wmin 1.000 lmin 1.000 \
+    return {w 1.000 l 2.000 m 1 nx 1 wmin 1.000 lmin 1.000 class resistor \
 		rho 1000 val 2000 dummy 0 dw 0.0 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
@@ -3226,7 +3227,7 @@ proc gf180mcu::pfet_03v3_defaults {} {
     return {w 0.220 l 0.280 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
-		full_metal 1 \
+		class mosfet full_metal 1 \
 		compatible {pfet_03v3 pfet_06v0}}
 }
 
@@ -3234,7 +3235,7 @@ proc gf180mcu::pfet_06v0_defaults {} {
     return {w 0.3 l 0.5 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.5 wmin 0.3 \
-		full_metal 1 \
+		class mosfet full_metal 1 \
 		compatible {pfet_03v3 pfet_06v0}}
 }
 
@@ -3242,7 +3243,7 @@ proc gf180mcu::pfet_03v3_dss_defaults {} {
     return {w 0.220 l 0.280 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
-		full_metal 1 \
+		class mosfet full_metal 1 \
 		compatible {pfet_03v3_dss pfet_06v0_dss}}
 }
 
@@ -3250,7 +3251,7 @@ proc gf180mcu::pfet_06v0_dss_defaults {} {
     return {w 0.3 l 0.5 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.5 wmin 0.3 \
-		full_metal 1 \
+		class mosfet full_metal 1 \
 		compatible {pfet_03v3_dss pfet_06v0_dss}}
 }
 #----------------------------------------------------------------
@@ -3262,7 +3263,7 @@ proc gf180mcu::nfet_03v3_defaults {} {
     return {w 0.220 l 0.280 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
-		full_metal 1 \
+		class mosfet full_metal 1 \
 		compatible {nfet_03v3 nfet_06v0 nfet_06v0_nvt}}
 }
 
@@ -3270,7 +3271,7 @@ proc gf180mcu::nfet_06v0_defaults {} {
     return {w 0.3 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 0.3 \
-		full_metal 1 \
+		class mosfet full_metal 1 \
 		compatible {nfet_03v3 nfet_06v0 nfet_06v0_nvt}}
 }
 
@@ -3278,7 +3279,7 @@ proc gf180mcu::nfet_06v0_nvt_defaults {} {
     return {w 0.8 l 1.8 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 1.8 wmin 0.8 \
-		full_metal 1 \
+		class mosfet full_metal 1 \
 		compatible {nfet_03v3 nfet_06v0 nfet_06v0_nvt}}
 }
 
@@ -3293,14 +3294,14 @@ proc gf180mcu::pfet_10v0_asym_defaults {} {
     return {w 4.0 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 4.0 \
-		full_metal 1 }
+		class mosfet full_metal 1 }
 }
 
 proc gf180mcu::nfet_03v3_dss_defaults {} {
     return {w 0.220 l 0.280 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
-		full_metal 1 \
+		class mosfet full_metal 1 \
 		compatible {nfet_03v3_dss nfet_06v0_dss}}
 }
 
@@ -3308,7 +3309,7 @@ proc gf180mcu::nfet_06v0_dss_defaults {} {
     return {w 0.3 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 0.3 \
-		full_metal 1 \
+		class mosfet full_metal 1 \
 		compatible {nfet_03v3_dss nfet_06v0_dss}}
 }
 
@@ -3321,14 +3322,14 @@ proc gf180mcu::nmoscap_3p3_defaults {} {
     return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
-		full_metal 1 compatible {nmoscap_3p3 nmoscap_6p0}}
+		class mosfet full_metal 1 compatible {nmoscap_3p3 nmoscap_6p0}}
 }
 
 proc gf180mcu::nmoscap_6p0_defaults {} {
     return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.3 \
-		full_metal 1 compatible {nmoscap_3p3 nmoscap_6p0}}
+		class mosfet full_metal 1 compatible {nmoscap_3p3 nmoscap_6p0}}
 }
 
 #----------------------------------------------------------------
@@ -4607,19 +4608,19 @@ proc gf180mcu::pfet_06v0_dss_check {parameters} {
 #----------------------------------------------------------------
 
 proc gf180mcu::npn_05p00x05p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 15.29 ystep 22.92}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 15.29 ystep 22.92 class bjt}
 }
 
 proc gf180mcu::npn_00p54x02p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.55 ystep 14.95}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.55 ystep 14.95 class bjt}
 }
 
 proc gf180mcu::npn_10p00x10p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 23.04 ystep 23.04}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 23.04 ystep 23.04 class bjt}
 }
 
 proc gf180mcu::npn_00p54x10p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 16.94 ystep 16.94}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 16.94 ystep 16.94 class bjt}
 }
 
 proc gf180mcu::eFuse_defaults {} {
@@ -4627,27 +4628,27 @@ proc gf180mcu::eFuse_defaults {} {
 }
 
 proc gf180mcu::npn_00p54x04p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.92 ystep 16.96}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.92 ystep 16.96 class bjt}
 }
 
 proc gf180mcu::npn_00p54x08p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 21.22}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 12.36 ystep 21.22 class bjt}
 }
 
 proc gf180mcu::pnp_05p00x05p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 8.25 ystep 8.25}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 8.25 ystep 8.25 class bjt}
 }
 
 proc gf180mcu::pnp_05p00x00p42_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 3.69 ystep 8.25}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 3.69 ystep 8.25 class bjt}
 }
 
 proc gf180mcu::pnp_10p00x10p00_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.25 ystep 13.25}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 13.25 ystep 13.25 class bjt}
 }
 
 proc gf180mcu::pnp_10p00x00p42_defaults {} {
-    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 3.75 ystep 13.25}
+    return {nx 1 ny 1 deltax 0 deltay 0 nocell 1 xstep 3.75 ystep 13.25 class bjt}
 }
 
 #----------------------------------------------------------------
