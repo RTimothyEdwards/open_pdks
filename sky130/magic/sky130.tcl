@@ -971,6 +971,10 @@ proc sky130::diode_convert {parameters} {
                 # Convert m to ny
 		dict set pdkparams ny $value
 	    }
+	    default {
+		# Allow unrecognized parameters to be passed unmodified
+		dict set pdkparams $key $value
+	    }
 	}
     }
     return $pdkparams
@@ -2021,6 +2025,10 @@ proc sky130::cap_convert {parameters} {
                 # Convert m to ny
 		dict set pdkparams ny $value
 	    }
+	    default {
+		# Allow unrecognized parameters to be passed unmodified
+		dict set pdkparams $key $value
+	    }
 	}
     }
     return $pdkparams
@@ -3005,6 +3013,10 @@ proc sky130::res_convert {parameters} {
 		# set value [expr $value * 1e6]
 		set value [magic::3digitpastdecimal $value]
 		dict set pdkparams [string tolower $key] $value
+	    }
+	    default {
+		# Allow unrecognized parameters to be passed unmodified
+		dict set pdkparams $key $value
 	    }
 	}
     }
@@ -5404,6 +5416,10 @@ proc sky130::mos_convert {parameters} {
 		# Adjustment ot W will be handled below
 		dict set pdkparams [string tolower $key] $value
 	    }
+	    default {
+		# Allow unrecognized parameters to be passed unmodified
+		dict set pdkparams $key $value
+	    }
 	}
     }
 
@@ -7432,6 +7448,10 @@ proc sky130::fixed_convert {parameters} {
 	switch -nocase $key {
 	    m {
 		 dict set pdkparams nx $value
+	    }
+	    default {
+		# Allow unrecognized parameters to be passed unmodified
+		dict set pdkparams $key $value
 	    }
 	}
     }

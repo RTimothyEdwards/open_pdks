@@ -539,6 +539,10 @@ proc gf180mcu::diode_convert {parameters} {
                 # Convert m to ny
 		dict set pdkparams ny $value
 	    }
+	    default {
+		# Allow unrecognized parameters to be passed unmodified
+		dict set pdkparams $key $value
+	    }
 	}
     }
     return $pdkparams
@@ -1131,6 +1135,10 @@ proc gf180mcu::cap_convert {parameters} {
 	    m {
                 # Convert m to ny
 		dict set pdkparams ny $value
+	    }
+	    default {
+		# Allow unrecognized parameters to be passed unmodified
+		dict set pdkparams $key $value
 	    }
 	}
     }
@@ -1958,6 +1966,10 @@ proc gf180mcu::res_convert {parameters} {
 		set value [expr $value * 1e6]
 		set value [magic::3digitpastdecimal $value]
 		dict set pdkparams [string tolower $canonkey] $value
+	    }
+	    default {
+		# Allow unrecognized parameters to be passed unmodified
+		dict set pdkparams $key $value
 	    }
 	}
     }
@@ -3358,6 +3370,10 @@ proc gf180mcu::mos_convert {parameters} {
 		    dict set pdkparams [string tolower $key] $value
 		}
 	    }
+	    default {
+		# Allow unrecognized parameters to be passed unmodified
+		dict set pdkparams $key $value
+	    }
 	}
     }
     return $pdkparams
@@ -4661,6 +4677,10 @@ proc gf180mcu::fixed_convert {parameters} {
 	switch -nocase $key {
 	    m {
 		 dict set pdkparams nx $value
+	    }
+	    default {
+		# Allow unrecognized parameters to be passed unmodified
+		dict set pdkparams $key $value
 	    }
 	}
     }
