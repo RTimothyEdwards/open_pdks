@@ -94,9 +94,9 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "bba8744a60162c27cbf86fb30d926483ff768404",
-        "magic": "cf5fd867f4e794b41fb06c66b00969e6d1dcb178",
-        "sky130_fd_pr": "49971d88997f8fc1bf8cb9d07fb6e5fa614b5ec9",
+        "open_pdks": "47df1178431cb04f57eb6600e64750ae2a7b6364",
+        "magic": "0c36365db8921397a258abbea0369cee8d560c99",
+        "sky130_fd_pr": "afc63d29f811b65b9888b2133fd3348eefc92046",
         "sky130_fd_io": "3abef97503c37e5e68f450059f51eee308432b0b",
         "sky130_fd_sc_hs": "9a855e97aa75f8a14be7eadc365c28d50045d5fc",
         "sky130_fd_sc_ms": "26d0047c0e2dbe28fe4950f171411f6e8b3d0564",
@@ -112,8 +112,8 @@
         "sky130_fd_bd_sram": "be33adbcf188fdeab5c061699847d9d440f7a084",
         "sky130_fd_pr_reram": "d6d2a3c6960aac0a0b12fc21221c31777bbf284d",
         "sky130_ml_xx_hd": "6eb3b0718552b034f1bf1870285ff135e3fb2dcb",
-        "xschem_sky130": "5c86542cfb5a01419a763f0f14156db08e2a3d63",
-        "klayout_sky130": "e4816ab2b6aca53c6b53759c647b3395f772b112",
-        "precheck_sky130": "4fd5283b124e931c9e71219f47270075176f84e2"
+        "xschem_sky130": "0597d6cd26ad460d3f4d689f9e6a11f33dc262ff",
+        "klayout_sky130": "44068ad98afa18001487177515cac16f3e61094a",
+        "precheck_sky130": "a1a22717e5618f8df329e0c714b43c08fd003543"
     }
 }
