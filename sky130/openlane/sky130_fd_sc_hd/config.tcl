@@ -36,8 +36,8 @@ set ::env(SYNTH_DRIVING_CELL_PIN) "Y"
 # update these
 set ::env(OUTPUT_CAP_LOAD) "33.442" ; # femtofarad __inv_16 pin A cap (https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hd/blob/main/cells/inv/sky130_fd_sc_hd__inv_16__tt_025C_1v80.lib.json)
 set ::env(SYNTH_MIN_BUF_PORT) "sky130_fd_sc_hd__buf_2 A X"
-set ::env(SYNTH_TIEHI_PORT) "sky130_fd_sc_hd__conb_1 HI"
-set ::env(SYNTH_TIELO_PORT) "sky130_fd_sc_hd__conb_1 LO"
+set ::env(SYNTH_TIEHI_PORT) "sky130_ef_sc_hd__conb_1 HI"
+set ::env(SYNTH_TIELO_PORT) "sky130_ef_sc_hd__conb_1 LO"
 
 # cts defaults
 set ::env(CTS_ROOT_BUFFER) sky130_fd_sc_hd__clkbuf_16
