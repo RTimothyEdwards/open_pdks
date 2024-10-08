@@ -54,6 +54,7 @@ planes
  p41
  p42
  p43
+ p44
 end
 
 types
@@ -128,6 +129,7 @@ types
  p41 CP1MADD,l68
  p42 BOUND,l69
  p43 RERAM,l71
+ p44 ESDID,l72
 end
 
 contact
@@ -206,6 +208,7 @@ styles
  l69   subcircuit
  l70   polysilicon
  l71   electrode_stripes
+ l72   cwell
  error_p	error_waffle
  error_s	error_waffle
  error_ps	error_waffle
@@ -515,6 +518,10 @@ style gdsii
  layer BOUND BOUND
  labels BOUND
  calma 235 4
+
+ layer ESDID ESDID
+ labels ESDID
+ calma 81 19
 end
 
 cifinput
@@ -591,6 +598,7 @@ style default
  layer l69 BOUND
  layer l70 POLYT
  layer l71 RERAM
+ layer l72 ESDID
  calma NWELL  64 20
  calma DNWELL 64 18
  calma DIFF   65 20
@@ -662,6 +670,7 @@ style default
  calma BOUND  235 4
  calma POLYT  66 16
  calma RERAM 201 20
+ calma ESDID 81 19
 end
  
 mzrouter
@@ -760,4 +769,5 @@ style default
  planeorder p41 40
  planeorder p42 41
  planeorder p43 42
+ planeorder p44 43
 end
