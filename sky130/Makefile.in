@@ -1221,10 +1221,13 @@ klayout-%: ${KLAYOUT_PATH}
 		rm -rf ${KLAYOUT_STAGING_$*} ; \
 		mkdir -p ${KLAYOUT_STAGING_$*} ; \
 		mkdir -p ${KLAYOUT_STAGING_$*}/tech ; \
+		mkdir -p ${KLAYOUT_STAGING_$*}/tech/xsect ; \
+		mkdir -p ${KLAYOUT_STAGING_$*}/d25 ; \
 		mkdir -p ${KLAYOUT_STAGING_$*}/drc ; \
 		mkdir -p ${KLAYOUT_STAGING_$*}/lvs ; \
-		mkdir -p ${KLAYOUT_STAGING_$*}/scripts ; \
+		mkdir -p ${KLAYOUT_STAGING_$*}/macros ; \
 		mkdir -p ${KLAYOUT_STAGING_$*}/pymacros ; \
+		mkdir -p ${KLAYOUT_STAGING_$*}/python ; \
 	fi
 	# Copy lvs and pymacro directories from the repository.  Other files
 	# are rearranged to the preferred structure.  Do not recursively copy
@@ -1232,12 +1235,16 @@ klayout-%: ${KLAYOUT_PATH}
 	# nonessential.
 	# Additionally, replace "sky130.lyp" with the pdk variant.
 	if test "x${KLAYOUT_PATH}" != "x" ; then \
-		cp -p ${KLAYOUT_PATH}/sky130_tech/tech/sky130/lvs/* ${KLAYOUT_STAGING_$*}/lvs/ ; \
-		cp -rp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/pymacros/* ${KLAYOUT_STAGING_$*}/pymacros/ ; \
-		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.lyp ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyp ; \
-		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.lyt ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyt ; \
-		cp ${KLAYOUT_PATH}/sky130_tech/tech/sky130/${TECH}.map ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.map ; \
+		cp ${KLAYOUT_PATH}/tech/sky130/${TECH}.lyp ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyp ; \
+		cp ${KLAYOUT_PATH}/tech/sky130/${TECH}.lyt ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyt ; \
+		cp ${KLAYOUT_PATH}/tech/sky130/${TECH}.map ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.map ; \
 		${SED} -i "s/sky130.lyp/${SKY130$*}.lyp/g" ${KLAYOUT_STAGING_$*}/tech/${SKY130$*}.lyt ; \
+		cp -p ${KLAYOUT_PATH}/tech/sky130/d25/* ${KLAYOUT_STAGING_$*}/d25/ ; \
+		cp -p ${KLAYOUT_PATH}/tech/sky130/lvs/* ${KLAYOUT_STAGING_$*}/lvs/ ; \
+		cp -p ${KLAYOUT_PATH}/tech/sky130/macros/* ${KLAYOUT_STAGING_$*}/macros/ ; \
+		cp -p ${KLAYOUT_PATH}/tech/sky130/pymacros/* ${KLAYOUT_STAGING_$*}/pymacros/ ; \
+		cp -rp ${KLAYOUT_PATH}/tech/sky130/python/* ${KLAYOUT_STAGING_$*}/python/ ; \
+		cp -p ${KLAYOUT_PATH}/tech/sky130/xsect/* ${KLAYOUT_STAGING_$*}/tech/xsect/ ; \
 	fi
 	# Copy original DRC deck from open_pdks (is this useful?)
 	cp klayout/sky130.lydrc ${KLAYOUT_STAGING_$*}/drc/${SKY130$*}.lydrc
