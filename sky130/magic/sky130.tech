@@ -387,7 +387,7 @@ aliases
   allfetsstd	   nfet,mvnfet,mvnfetesd,mvnnfet,nnfet,nfetlvt,pfet,mvpfet,mvpfetesd,pfethvt,pfetlvt,pfetmvt
   allfetsspecial   scnfet,scpfet,scpfethvt,scnfetlvt
   allfetscore	   npass,npd,nsonos,ppu,corenvar,corepvar
-  allfetsnolvt	   nfet,npass,npd,scnfet,scnfetlvt,mvnfet,mvnfetesd,mvnnfet,nnfet,nsonos,pfet,ppu,scpfet,scpfethvt,mvpfet,mvpfetesd,pfethvt,pfetmvt,varactor,mvvaractor,varhvt,corenvar
+  allfetsnolvt	   nfet,npass,npd,scnfet,mvnfet,mvnfetesd,mvnnfet,nnfet,nsonos,pfet,ppu,scpfet,scpfethvt,mvpfet,mvpfetesd,pfethvt,pfetmvt,varactor,mvvaractor,varhvt,corenvar
 
   allnactivenonfet *ndiff,*nsd,*ndiode,*nndiode,*mvndiff,*mvnsd,*mvndiode,*ndiodelvt
   allnactive	   allnactivenonfet,allnfets
@@ -952,7 +952,7 @@ style gdsii
 # LVTN
 #----------------------------------------------------------------
 
- layer LVTN  pfetlvt,nfetlvt,mvvar,mvnnfet,nnfet,nsonos,*pdiodelvt,*ndiodelvt,*nndiode
+ layer LVTN  pfetlvt,nfetlvt,scnfetlvt,mvvar,mvnnfet,nnfet,nsonos,*pdiodelvt,*ndiodelvt,*nndiode
         grow 180
 	bridge	380 380
 	grow	185
