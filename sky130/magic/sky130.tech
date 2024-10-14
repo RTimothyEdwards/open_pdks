@@ -47,6 +47,7 @@ end
 # sky130_fd_pr__special_nfet_latch npd		special nFET in SRAM cell
 # sky130_fd_pr__special_nfet_pass  npass	special nFET in SRAM cell
 # sky130_fd_pr__nfet_01v8_lvt	nfetlvt		low Vt nFET
+# sky130_fd_pr__nfet_01v8_lvt	scnfetlvt	low Vt nFET in standard cell**
 # sky130_fd_bs_flash__special_sonosfet_star nsonos SONOS nFET
 # sky130_fd_pr__pfet_01v8	pfet		standard pFET
 # sky130_fd_pr__pfet_01v8	scpfet		standard pFET in standard cell**
@@ -169,7 +170,6 @@ types
  -active npass,npassfet,srampassfet
   active pmos,ptransistor,pfet
  -active scpmos,scptransistor,scpfet
- -active scpmoshvt,scpfethvt
  -active ppu,ppufet,srampfet
   active nnmos,nntransistor,nnfet
   active mvnmos,mvntransistor,mvnfet
@@ -183,7 +183,9 @@ types
   active pmoslvt,pfetlvt
   active pmosmvt,pfetmvt
   active pmoshvt,pfethvt
+ -active scpmoshvt,scpfethvt
   active nmoslvt,nfetlvt
+ -active scnmoslvt,scnfetlvt
   active varactorhvt,varacthvt,varhvt
  -active nsonos,sonos
  -active sramnvar,corenvar,corenvaractor
@@ -379,13 +381,13 @@ aliases
   allwellplane     nwell
   allnwell	   nwell,obswell,pnp
 
-  allnfets	   nfet,npass,npd,scnfet,mvnfet,mvnfetesd,mvnnfet,nnfet,nfetlvt,nsonos
+  allnfets	   nfet,npass,npd,scnfet,mvnfet,mvnfetesd,mvnnfet,nnfet,nfetlvt,scnfetlvt,nsonos
   allpfets	   pfet,ppu,scpfet,scpfethvt,mvpfet,mvpfetesd,pfethvt,pfetlvt,pfetmvt
   allfets	   allnfets,allpfets,varactor,mvvaractor,varhvt,corenvar,corepvar
   allfetsstd	   nfet,mvnfet,mvnfetesd,mvnnfet,nnfet,nfetlvt,pfet,mvpfet,mvpfetesd,pfethvt,pfetlvt,pfetmvt
-  allfetsspecial   scnfet,scpfet,scpfethvt
+  allfetsspecial   scnfet,scpfet,scpfethvt,scnfetlvt
   allfetscore	   npass,npd,nsonos,ppu,corenvar,corepvar
-  allfetsnolvt	   nfet,npass,npd,scnfet,mvnfet,mvnfetesd,mvnnfet,nnfet,nsonos,pfet,ppu,scpfet,scpfethvt,mvpfet,mvpfetesd,pfethvt,pfetmvt,varactor,mvvaractor,varhvt,corenvar
+  allfetsnolvt	   nfet,npass,npd,scnfet,scnfetlvt,mvnfet,mvnfetesd,mvnnfet,nnfet,nsonos,pfet,ppu,scpfet,scpfethvt,mvpfet,mvpfetesd,pfethvt,pfetmvt,varactor,mvvaractor,varhvt,corenvar
 
   allnactivenonfet *ndiff,*nsd,*ndiode,*nndiode,*mvndiff,*mvnsd,*mvndiode,*ndiodelvt
   allnactive	   allnactivenonfet,allnfets
@@ -402,7 +404,7 @@ aliases
 
   allactiveres	   ndiffres,pdiffres,mvndiffres,mvpdiffres
 
-  allndifflv       *ndif,*nsd,*ndiode,ndiffres,nfet,npass,npd,scnfet,nfetlvt,nsonos
+  allndifflv       *ndif,*nsd,*ndiode,ndiffres,nfet,npass,npd,scnfet,scnfetlvt,nfetlvt,nsonos
   allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,ppu,scpfet,scpfethvt,pfetlvt,pfetmvt,pfethvt
   alldifflv        allndifflv,allpdifflv
   allndifflvnonfet *ndif,*nsd,*ndiode,*nndiode,ndiffres,*ndiodelvt
@@ -482,6 +484,7 @@ styles
   psd       pdiff_in_pwell
   nfet      ntransistor    ntransistor_stripes
   scnfet    ntransistor    ntransistor_stripes
+  scnfetlvt ntransistor    ntransistor_stripes implant1
   npass	    ntransistor	   ntransistor_stripes
   npd	    ntransistor	   ntransistor_stripes
   pfet      ptransistor    ptransistor_stripes
@@ -635,11 +638,12 @@ compose
   compose  pfet  poly  pdiff
   compose  var   poly  nsd
 
-  decompose npass   poly ndiff
-  decompose npd     poly ndiff
-  decompose scnfet  poly ndiff
-  decompose nfetlvt poly ndiff
-  decompose nsonos  poly ndiff
+  decompose npass     poly ndiff
+  decompose npd       poly ndiff
+  decompose scnfet    poly ndiff
+  decompose scnfetlvt poly ndiff
+  decompose nfetlvt   poly ndiff
+  decompose nsonos    poly ndiff
 
   decompose ppu       poly pdiff
   decompose scpfet    poly pdiff
@@ -1010,7 +1014,7 @@ style gdsii
 #----------------------------------------------------------------
 
  layer STDCELL scnfet
-	bloat-all scpfet,scpfethvt,scnfet CELLBOUND
+	bloat-all scpfet,scpfethvt,scnfet,scnfetlvt CELLBOUND
 	mask-hints STDCELL
 	calma 81 4
 
@@ -2784,6 +2788,18 @@ style  sky130 variants (),(vendor)
  and STDCELL
  labels DIFF
 
+ layer scnfetlvt DIFF,barediff
+ and POLY
+ or baretrans
+ and-not PSDM
+ and NSDM
+ and-not NWELL,nwelcheck
+ and-not HVI,hvcheck
+ and LVTN
+ and-not SONOS
+ and STDCELL
+ labels DIFF
+
  layer npass DIFF,barediff
  and POLY
  or baretrans
@@ -2824,6 +2840,7 @@ style  sky130 variants (),(vendor)
  and-not HVI,hvcheck
  and LVTN
  and-not SONOS
+ and-not STDCELL
  labels DIFF
 
  layer nsonos DIFF,barediff
@@ -4283,7 +4300,7 @@ drc
 # DIFF
 #-----------------------------
 
- width *ndiff,nfet,scnfet,npd,npass,*nsd,*ndiode,ndiffres,*pdiff,pfet,scpfet,scpfethvt,ppu,*psd,*pdiode,pdiffres,fomfill \
+ width *ndiff,nfet,scnfet,scnfetlvt,npd,npass,*nsd,*ndiode,ndiffres,*pdiff,pfet,scpfet,scpfethvt,ppu,*psd,*pdiode,pdiffres,fomfill \
 	150 "Diffusion width < %d (diff/tap.1)"
  width *mvndiff,mvnfet,mvnfetesd,mvnnfet,nnfet,*mvndiode,*nndiode,mvndiffres,*mvpdiff,mvpfet,mvpfetesd,*mvpdiode,mvpdiffres 290 \
 	"MV Diffusion width < %d (diff/tap.14)"
@@ -4403,7 +4420,7 @@ variants (fast),(full)
 	"poly spacing to Diffusion < %d (poly.4)"
  spacing npres *nsd 480 touching_illegal \
 	"poly resistor spacing to N-tap < %d (poly.9)"
- overhang *ndiff,rndiff nfet,scnfet,npd,npass,nsonos 250 "N-Diffusion overhang of nFET < %d (poly.7)"
+ overhang *ndiff,rndiff nfet,scnfet,scnfetlvt,npd,npass,nsonos 250 "N-Diffusion overhang of nFET < %d (poly.7)"
  overhang *mvndiff,mvrndiff mvnfet,mvnnfet,nnfet 250 \
 	"N-Diffusion overhang of nFET < %d (poly.7)"
  overhang *pdiff,rpdiff pfet,scpfet,ppu 250 "P-Diffusion overhang of pmos < %d (poly.7)"
@@ -4526,7 +4543,7 @@ variants *
 
  spacing ndc,pdc nfet,nfetlvt,pfet,pfethvt,pfetlvt,pfetmvt 55 touching_illegal \
 	"Diffusion contact to gate < %d (licon.11)"
- spacing ndc,pdc scnfet,scpfet,scpfethvt 50 touching_illegal \
+ spacing ndc,pdc scnfet,scpfet,scnfetlvt,scpfethvt 50 touching_illegal \
 	"Diffusion contact to standard cell gate < %d (licon.11)"
  spacing ndc,pdc npd,npass,ppu 40 touching_illegal \
 	"Diffusion contact to SRAM gate < %d (licon.11)"
@@ -4539,7 +4556,7 @@ variants *
  spacing mvnsc mvvar 250 touching_illegal \
 	"Diffusion contact to varactor gate < %d (licon.10)"
 
- surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt,rnd 40 absence_illegal \
+ surround ndc/a *ndiff,nfet,scnfet,scnfetlvt,npd,npass,nfetlvt,rnd 40 absence_illegal \
 	"N-diffusion overlap of N-diffusion contact < %d (licon.5a)"
  surround pdc/a *pdiff,pfet,scpfet,scpfethvt,ppu,pfethvt,pfetmvt,pfetlvt,rpd \
 	40 absence_illegal \
@@ -4554,7 +4571,7 @@ variants *
  spacing nsc/a allpactivenontap 60 touching_illegal \
 	"Min. space between N-tap contact and butting P diffusion < %d (licon.5b)"
 
- surround ndc/a *ndiff,nfet,scnfet,npd,npass,nfetlvt,rnd 60 directional \
+ surround ndc/a *ndiff,nfet,scnfet,scnfetlvt,npd,npass,nfetlvt,rnd 60 directional \
 	"N-diffusion overlap of N-diffusion contact < %d in one direction (licon.5c)"
  surround pdc/a *pdiff,pfet,scpfet,scpfethvt,ppu,pfethvt,pfetmvt,pfetlvt,rpd \
 	 60 directional \
@@ -4863,7 +4880,7 @@ variants (fast),(full)
  spacing allpolynonfet,polyfill *mvpsd 55 touching_illegal \
 	"poly spacing to diffusion tap < %d (poly.5)"
 
- edge4way *psd *ndiff 300 ~(nfet,npass,npd,scnfet,nfetlvt,nsonos)/a *psd 300 \
+ edge4way *psd *ndiff 300 ~(nfet,npass,npd,scnfet,scnfetlvt,nfetlvt,nsonos)/a *psd 300 \
 	"Butting P-tap spacing to NMOS gate < %d (poly.6)"
  edge4way *nsd *pdiff 300 ~(pfet,ppu,scpfet,scpfethvt,pfetlvt,pfetmvt)/a *nsd 300 \
 	"Butting N-tap spacing to PMOS gate < %d (poly.6)"
@@ -4876,7 +4893,7 @@ variants (fast),(full)
  spacing pfet,scpfet,scpfethvt,ppu,pfetlvt,pfetmvt,pfethvt,*pdiff *mvpdiff 360 touching_illegal \
 	"LV P-diffusion to MV P-diffusion < %d (diff/tap.23 + diff/tap.22)"
 
- spacing nfet,scnfet,npd,npass,nfetlvt,varactor,varhvt,*ndiff *mvndiff 360 touching_illegal \
+ spacing nfet,scnfet,scnfetlvt,npd,npass,nfetlvt,varactor,varhvt,*ndiff *mvndiff 360 touching_illegal \
 	"LV N-diffusion to MV N-diffusion < %d (diff/tap.23 + diff/tap.22)"
 
  # No HV FETs in LV diff
@@ -6483,7 +6500,7 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device msubcircuit sky130_fd_pr__special_nfet_pass npass \
 	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w \
 	a1=as p1=ps a2=ad p2=pd
- device msubcircuit sky130_fd_pr__nfet_01v8_lvt nfetlvt \
+ device msubcircuit sky130_fd_pr__nfet_01v8_lvt nfetlvt,scnfetlvt \
 	*ndiff,ndiffres *ndiff,ndiffres pwell,space/w error l=l w=w \
 	a1=as p1=ps a2=ad p2=pd
  device msubcircuit sky130_fd_bs_flash__special_sonosfet_star nsonos \
@@ -6627,7 +6644,7 @@ variants (),(si),(hrhc),(lrhc),(hrlc),(lrlc)
  device mosfet sky130_fd_pr__nfet_01v8 scnfet,nfet ndiff,ndiffres,ndc pwell,space/w
  device mosfet sky130_fd_pr__special_nfet_pass  npass ndiff,ndiffres,ndc pwell,space/w
  device mosfet sky130_fd_pr__special_nfet_latch npd ndiff,ndiffres,ndc pwell,space/w
- device mosfet sky130_fd_pr__nfet_01v8_lvt nfetlvt ndiff,ndiffres,ndc pwell,space/w
+ device mosfet sky130_fd_pr__nfet_01v8_lvt scnfetlvt,nfetlvt ndiff,ndiffres,ndc pwell,space/w
  device mosfet sky130_fd_bs_flash__special_sonosfet_star nsonos ndiff,ndiffres,ndc \
 	pwell,space/w
 
