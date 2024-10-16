@@ -1264,6 +1264,7 @@ xschem-%: ${XSCHEM_PATH}
 	# then remove the larger of the two example directories 
 	if test "x${XSCHEM_PATH}" != "x" ; then \
 		cp -rp ${XSCHEM_PATH}/* ${XSCHEM_STAGING_$*} ; \
+		chmod -R u+w ${XSCHEM_STAGING_$*}; \
 		rm -rf ${XSCHEM_STAGING_$*}/decred_hash_macro ; \
 	fi
 	# xschem setup is for sky130A.  Fix for the given target variant.

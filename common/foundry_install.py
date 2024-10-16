@@ -401,6 +401,7 @@ def vfilefilter(vfile):
         # File contents have been modified, so if this file was a symbolic
         # link, then remove it.  Otherwise, overwrite the file with the
         # modified contents.
+        makeuserwritable(vfile)
         if os.path.islink(vfile):
             os.unlink(vfile)
         with open(vfile, 'w') as ofile:

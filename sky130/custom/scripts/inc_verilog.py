@@ -13,6 +13,12 @@
 import re
 import os
 import sys
+import stat
+
+def makeuserwritable(filepath):
+    if os.path.exists(filepath):
+        st = os.stat(filepath)
+        os.chmod(filepath, st.st_mode | stat.S_IWUSR)
 
 def filter(inname, outname):
 
@@ -103,6 +109,7 @@ def filter(inname, outname):
             else:
                 os.unlink(outname)
         try:
+            makeuserwritable(outname)
             with open(outname, 'w') as outFile:
                 for i in fixedlines:
                     print(i, file=outFile)
