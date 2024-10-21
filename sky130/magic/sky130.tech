@@ -2603,6 +2603,7 @@ style  sky130 variants (),(vendor)
  and HVI,hvcheck
  labels DIFF
 
+ # Note: Not checking PSDM specifically, just lack of NSDM
  templayer mvpdiffarea DIFF,DIFFTXT,DIFFPIN,barediff
  and-not POLY
  and NWELL,nwelcheck
@@ -2610,7 +2611,6 @@ style  sky130 variants (),(vendor)
  and HVI,hvcheck
  and-not DIODE
  and-not DIFFRES
- and PSDM
  copyup mvpdifcheck
  labels DIFF
  labels DIFFPIN port
@@ -3471,12 +3471,13 @@ style  sky130 variants (),(vendor)
  or mvpdcnowell
  labels CONT
 
+ # Note: Not checking PSDM specifically, just lack of NSDM
  templayer mvpscbase CONT
  or barecont
  and LI
  or barelicont
  and DIFF,TAP
- and PSDM
+ and-not NSDM
  and-not NWELL,nwelcheck
  and-not mvpfetexpand
  and HVI,hvcheck
