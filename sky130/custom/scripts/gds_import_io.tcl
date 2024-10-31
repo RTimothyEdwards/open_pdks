@@ -65,3 +65,9 @@ gds flatglob *switch_levelshifter*
 gds flatglob *amuxsplitv2_switch_*
 gds flatglob *amuxsplitv2_hvsbt_nand*
 gds flatglob *amuxsplitv2_delay*
+
+### flatten parts of refgen_new, where there are subcells that are
+### spread across areas inside and outside of dnwell
+gds flatglob *refgen_ctl*
+gds flatglob *refgen_out*
+gds flatglob *__opamp_*

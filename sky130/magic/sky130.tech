@@ -3436,12 +3436,13 @@ style  sky130 variants (),(vendor)
  or mvnscbase
  labels CONT
 
+ # See note above:  Not checking PSDM
  templayer mvpdcbase CONT
  or barecont
  and LI
  or barelicont
  and DIFF
- and PSDM
+ and-not NSDM
  and NWELL,nwelcheck
  and HVI,hvcheck
 
