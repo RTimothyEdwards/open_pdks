@@ -3551,10 +3551,12 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  layer	fomfill  FOMFILL
- labels FOMFILL
+ or FOMFILLALT,DIFFFILLALT
+ labels FOMFILL,FOMFILLALT,DIFFFILLALT
 
  layer	polyfill POLYFILL
- labels POLYFILL
+ or POLYFILLALT
+ labels POLYFILL,POLYFILLALT
 
  layer coreli LI,LITXT,LIPIN
  and-not LIRES,LISHORT
@@ -3575,7 +3577,8 @@ style  sky130 variants (),(vendor)
  labels LIRES,LISHORT
 
  layer	lifill LIFILL
- labels LIFILL
+ or LIFILLALT
+ labels LIFILL,LIFILLALT
 
  layer mcon MCON
  grow 95
@@ -3596,7 +3599,8 @@ style  sky130 variants (),(vendor)
  labels MET1RES,MET1SHORT
 
  layer m1fill MET1FILL
- labels MET1FILL
+ or MET1FILLALT
+ labels MET1FILL,MET1FILLALT
 
 #ifdef MIM
  layer mimcap MET3
@@ -3664,7 +3668,8 @@ style  sky130 variants (),(vendor)
  labels MET2RES,MET2SHORT
 
  layer m2fill MET2FILL
- labels MET2FILL
+ or MET2FILLALT
+ labels MET2FILL,MET2FILLALT
 
  templayer m3cbase VIA2
  grow 40
@@ -3687,7 +3692,8 @@ style  sky130 variants (),(vendor)
  labels MET3RES,MET3SHORT
 
  layer m3fill MET3FILL
- labels MET3FILL
+ or MET3FILLALT
+ labels MET3FILL,MET3FILLALT
 
 #ifdef (METAL5)
 
@@ -3715,7 +3721,8 @@ style  sky130 variants (),(vendor)
  labels MET4RES,MET4SHORT
 
  layer m4fill MET4FILL
- labels MET4FILL
+ or MET4FILLALT
+ labels MET4FILL,MET4FILLALT
 
  layer m5 MET5,MET5TXT,MET5PIN
  and-not MET5RES,MET5SHORT
@@ -3728,7 +3735,8 @@ style  sky130 variants (),(vendor)
  labels MET5RES,MET5SHORT
 
  layer m5fill MET5FILL
- labels MET5FILL
+ or MET5FILLALT
+ labels MET5FILL,MET5FILLALT
 
  templayer via4base VIA4
 #ifdef MIM
@@ -4154,6 +4162,8 @@ style  sky130 variants (),(vendor)
  calma MET5RES 72 13
 #endif
 
+ calma FOMFILL	23 28
+ calma POLYFILL	28 28
  calma LIFILL   56 28
  calma MET1FILL 36 28
  calma MET2FILL 41 28
@@ -4199,22 +4209,30 @@ style  sky130 variants (),(vendor)
  calma CAPM2 97 44
 #endif (MIM)
 
+ # Obstruction (fill block) layers
+ calma FILLOBSFOM  22 24
+ calma FILLOBSPOLY 33 24
  calma FILLOBSM1  62  24
  calma FILLOBSM2  105 52
  calma FILLOBSM3  107 24
+#ifdef METAL5
  calma FILLOBSM4  112  4
  calma FILLOBSM5  117  4
- calma FILLOBSFOM  22 24
- calma FILLOBSPOLY 33 24
+#endif
 
- calma FOMFILL	  23  28
- calma POLYFILL	  28  28
- calma LIFILL	  56  28
- calma MET1FILL	  36  28
- calma MET2FILL	  41  28
- calma MET3FILL	  34  28
- calma MET4FILL	  51  28
- calma MET5FILL	  59  28
+ # Alternate layer purpose used for fill
+ # which uses the regular layer numbers.
+ calma FOMFILLALT  22 99
+ calma DIFFFILLALT 65 99
+ calma POLYFILLALT 66 99
+ calma LIFILLALT   67 99
+ calma MET1FILLALT 68 99
+ calma MET2FILLALT 69 99
+ calma MET3FILLALT 70 99
+#ifdef METAL5
+ calma MET4FILLALT 71 99
+ calma MET5FILLALT 72 99
+#endif
 
 #-----------------------------------------------------------------------
 

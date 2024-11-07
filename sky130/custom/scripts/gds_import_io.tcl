@@ -52,6 +52,8 @@ gds flatglob *sky130_fd_io__sio_pddrvr_strong*
 ### in nhvnative cell would avoid this issue.
 gds flatglob *reg_pu_nhvnative*
 gds flatglob *pu_natives*
+# Other flattening needed for SIO (possibly this could be more targeted)
+gds flatglob *__sio_hotswap*
 
 ### flatten parts of pwrdetv2, where there are devices in deep nwell
 ### that are in sibling cells, and resistors separated from HVI
@@ -69,5 +71,6 @@ gds flatglob *amuxsplitv2_delay*
 ### flatten parts of refgen_new, where there are subcells that are
 ### spread across areas inside and outside of dnwell
 gds flatglob *refgen_ctl*
-gds flatglob *refgen_out*
 gds flatglob *__opamp_*
+gds flatglob *refgen_vdda*
+gds flatglob *refgen_t_switch*
