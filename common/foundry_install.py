@@ -781,22 +781,23 @@ if __name__ == '__main__':
     # last path component.
 
     print('Searching for magic startup script.')
-    magic_techfile = targetdir + mag_current + pdkname + '.magicrc'
-    if not os.path.isfile(magic_techfile):
+    magic_startupfile = targetdir + mag_current + pdkname + '.magicrc'
+    if not os.path.isfile(magic_startupfile):
         magic_techdir = targetdir + mag_current
-        magic_techfile = glob.glob(magic_techdir + '*.magicrc')
-        if magic_techfile:
-            pdkpathname = os.path.splitext(magic_techfile)[0]
-            if pdkpathname != pdkpath:
+        magic_startupfile = glob.glob(magic_techdir + '*.magicrc')
+        if magic_startupfile:
+            # NOTE:  glob.glob() always returns a list.
+            pdkpathname = os.path.splitext(magic_startupfile[0])[0]
+            if pdkpathname != pdkname:
                 print('Directory path name is not the same as the tech name')
-                print('Changing the tech name from ' + pdkpath + ' to ' + pdkpathname)
-                pdkpath = pdkpathname
+                print('Changing the tech name from ' + pdkname + ' to ' + pdkpathname)
+                pdkname = pdkpathname
             else:
-                print('Found magic tech file at ' + magic_techfile)
+                print('Found magic startup script at ' + magic_startupfile)
         else:
-            print('Error:  No magic tech file found in ' + magic_techdir)
+            print('Error:  No magic startup script found in ' + magic_techdir)
     else:
-        print('Found magic tech file at ' + magic_techfile)
+        print('Found magic startup script at ' + magic_startupfile)
 
     # Do an initial pass through all of the options and determine what is being
     # installed, so that we know in advance which file formats are missing and
