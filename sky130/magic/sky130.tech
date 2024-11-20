@@ -1488,6 +1488,9 @@ style gdsii
  layer FILLOBSFOM  obsactive
 	calma	22 24
 
+ layer FILLOBSLI fillblock,obsli
+	calma	67 10
+
  layer FILLOBSM1 fillblock,obsm1
  	calma 	62 24
 
@@ -2424,7 +2427,6 @@ style  sky130 variants (),(vendor)
  ignore HVNTM
  ignore POLYMOD
  ignore LOWTAPDENSITY
- ignore MET5BLOCK
  ignore OUTLINE
  ignore POLYCUT
  ignore POLYGATE
@@ -3992,25 +3994,29 @@ style  sky130 variants (),(vendor)
  or obspoly
  labels FILLOBSFOM,FILLOBSPOLY
 
- layer obsm1 FILLOBSM1
+ layer obsli LIBLOCK
+ and-not LI
+ labels LIBLOCK
+
+ layer obsm1 FILLOBSM1,MET1BLOCK
  and-not MET1
- labels FILLOBSM1
+ labels FILLOBSM1,MET1BLOCK
 
- layer obsm2 FILLOBSM2
+ layer obsm2 FILLOBSM2,MET2BLOCK
  and-not MET2
- labels FILLOBSM2
+ labels FILLOBSM2,MET2BLOCK
 
- layer obsm3 FILLOBSM3
+ layer obsm3 FILLOBSM3,MET3BLOCK
  and-not MET3
- labels FILLOBSM3
+ labels FILLOBSM3,MET3BLOCK
 
- layer obsm4 FILLOBSM4
+ layer obsm4 FILLOBSM4,MET4BLOCK
  and-not MET4
- labels FILLOBSM4
+ labels FILLOBSM4,MET4BLOCK
 
- layer obsm5 FILLOBSM5
+ layer obsm5 FILLOBSM5,MET5BLOCK
  and-not MET5
- labels FILLOBSM5
+ labels FILLOBSM5,MET5BLOCK
 
 # MOS Varactor
 
@@ -4104,7 +4110,6 @@ style  sky130 variants (),(vendor)
  calma POLYGATE 66 9
  calma DIFFCUT 65 14
  calma HVNWELLID 81 63
- calma MET5BLOCK 72 10
  calma PADDIFFID 81 6
  calma PADMETALID 81 8
  calma PADCENTERID 81 20
@@ -4232,6 +4237,16 @@ style  sky130 variants (),(vendor)
 #ifdef METAL5
  calma MET4FILLALT 71 99
  calma MET5FILLALT 72 99
+#endif
+
+ # Alternate layer purpose used for obstruction (fill block)
+ calma LIBLOCK    67 10
+ calma MET1BLOCK  68 10
+ calma MET2BLOCK  69 10
+ calma MET3BLOCK  70 10
+#ifdef METAL5
+ calma MET4BLOCK  71 10
+ calma MET5BLOCK  72 10
 #endif
 
 #-----------------------------------------------------------------------

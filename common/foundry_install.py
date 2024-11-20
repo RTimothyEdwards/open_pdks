@@ -776,6 +776,28 @@ if __name__ == '__main__':
 
                 optionlist.remove(option)
 
+    # Once the PDK tools have been installed, check the name of the tech file
+    # and use this for "pdkname" because it may not be the same as the last
+    # last path component.
+
+    print('Searching for magic startup script.')
+    magic_techfile = targetdir + mag_current + pdkname + '.magicrc'
+    if not os.path.isfile(magic_techfile):
+        magic_techdir = targetdir + mag_current
+        magic_techfile = glob.glob(magic_techdir + '*.magicrc')
+        if magic_techfile:
+            pdkpathname = os.path.splitext(magic_techfile)[0]
+            if pdkpathname != pdkpath:
+                print('Directory path name is not the same as the tech name')
+                print('Changing the tech name from ' + pdkpath + ' to ' + pdkpathname)
+                pdkpath = pdkpathname
+            else:
+                print('Found magic tech file at ' + magic_techfile)
+        else:
+            print('Error:  No magic tech file found in ' + magic_techdir)
+    else:
+        print('Found magic tech file at ' + magic_techfile)
+
     # Do an initial pass through all of the options and determine what is being
     # installed, so that we know in advance which file formats are missing and
     # need to be generated.
@@ -1814,8 +1836,9 @@ if __name__ == '__main__':
             elif not have_mag_8_2:
                 print('The installer is not able to run magic.')
             else:
-                print("Master PDK magic startup file not found.  Did you install")
-                print("PDK tech files before PDK vendor files?")
+                print("Master PDK magic startup file not found.")
+                print('(' + targetdir + mag_current + pdkname + '.magicrc)')
+                print("Did you install PDK tech files before PDK vendor files?")
 
     if have_lefanno:
         # LEF files were used for annotation.  If "compile" or "compile-only"
