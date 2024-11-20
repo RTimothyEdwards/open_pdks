@@ -787,11 +787,11 @@ if __name__ == '__main__':
         magic_startupfile = glob.glob(magic_techdir + '*.magicrc')
         if magic_startupfile:
             # NOTE:  glob.glob() always returns a list.
-            pdkpathname = os.path.splitext(magic_startupfile[0])[0]
-            if pdkpathname != pdkname:
+            pdktestname = os.path.splitext(os.path.split(magic_startupfile[0])[1])[0]
+            if pdktestname != pdkname:
                 print('Directory path name is not the same as the tech name')
-                print('Changing the tech name from ' + pdkname + ' to ' + pdkpathname)
-                pdkname = pdkpathname
+                print('Changing the tech name from ' + pdkname + ' to ' + pdktestname)
+                pdkname = pdktestname
             else:
                 print('Found magic startup script at ' + magic_startupfile)
         else:
