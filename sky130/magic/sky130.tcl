@@ -1052,6 +1052,10 @@ proc sky130::diode_dialog {device parameters} {
 
     magic::add_dependency sky130::diode_recalc $device sky130 l w area peri
 
+    if {[dict exists $parameters addports]} {
+	magic::add_checkbox doports "Add ports" $parameters
+    }
+
     # magic::add_checkbox dummy "Add dummy" $parameters
 }
 
@@ -1172,7 +1176,7 @@ proc sky130::sky130_fd_pr__diode_pw2nd_05v5_defaults {} {
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
 	sky130_fd_pr__diode_pw2nd_05v5_nvt sky130_fd_pr__diode_pw2nd_11v0} \
-	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__diode_pw2nd_05v5_lvt_defaults {} {
@@ -1181,7 +1185,7 @@ proc sky130::sky130_fd_pr__diode_pw2nd_05v5_lvt_defaults {} {
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
 	sky130_fd_pr__diode_pw2nd_05v5_nvt sky130_fd_pr__diode_pw2nd_11v0} \
-	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__diode_pw2nd_05v5_nvt_defaults {} {
@@ -1190,7 +1194,7 @@ proc sky130::sky130_fd_pr__diode_pw2nd_05v5_nvt_defaults {} {
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
 	sky130_fd_pr__diode_pw2nd_05v5_nvt sky130_fd_pr__diode_pw2nd_11v0} \
-	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__diode_pw2nd_11v0_defaults {} {
@@ -1199,7 +1203,7 @@ proc sky130::sky130_fd_pr__diode_pw2nd_11v0_defaults {} {
 	elc 1 erc 1 etc 1 ebc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pw2nd_05v5 sky130_fd_pr__diode_pw2nd_05v5_lvt \
 	sky130_fd_pr__diode_pw2nd_05v5_nvt sky130_fd_pr__diode_pw2nd_11v0} \
-	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__photodiode_defaults {} {
@@ -1213,7 +1217,7 @@ proc sky130::sky130_fd_pr__diode_pd2nw_05v5_defaults {} {
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
 	sky130_fd_pr__diode_pd2nw_05v5_hvt sky130_fd_pr__diode_pd2nw_11v0} \
-	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__diode_pd2nw_05v5_lvt_defaults {} {
@@ -1223,7 +1227,7 @@ proc sky130::sky130_fd_pr__diode_pd2nw_05v5_lvt_defaults {} {
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
 	sky130_fd_pr__diode_pd2nw_05v5_hvt sky130_fd_pr__diode_pd2nw_11v0} \
-	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__diode_pd2nw_05v5_hvt_defaults {} {
@@ -1233,7 +1237,7 @@ proc sky130::sky130_fd_pr__diode_pd2nw_05v5_hvt_defaults {} {
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
 	sky130_fd_pr__diode_pd2nw_05v5_hvt sky130_fd_pr__diode_pd2nw_11v0} \
-	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 
 
@@ -1244,7 +1248,7 @@ proc sky130::sky130_fd_pr__diode_pd2nw_11v0_defaults {} {
 	glc 1 grc 1 gtc 1 gbc 1 doverlap 0 \
 	compatible {sky130_fd_pr__diode_pd2nw_05v5 sky130_fd_pr__diode_pd2nw_05v5_lvt \
 	sky130_fd_pr__diode_pd2nw_05v5_hvt sky130_fd_pr__diode_pd2nw_11v0} \
-	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0}
+	full_metal 1 vias 1 viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 
 #----------------------------------------------------------------
@@ -1370,8 +1374,12 @@ proc sky130::diode_device {parameters} {
     set eps  0.0005
 
     # Set local default values if they are not in parameters
+    set doports 0	;# no port labels by default
     set dev_surround 0
     set dev_sub_type ""
+
+    set term_d ""	;# diffusion
+    set term_s ""	;# substrate/well
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -1406,6 +1414,12 @@ proc sky130::diode_device {parameters} {
     dict set guardparams grc $erc
     dict set guardparams gtc $etc
     dict set guardparams gbc $ebc
+
+    if {$term_s != ""} {
+	dict set guardparams bulk $term_s
+    } else {
+	dict unset guardparams bulk
+    }
     set cext [sky130::guard_ring $gx $gy $guardparams]
 
     pushbox
@@ -1424,6 +1438,13 @@ proc sky130::diode_device {parameters} {
 	paint ${dev_sub_type}
     }
     popbox
+
+    # Diffusion port label
+    if {$term_d != ""} {
+	label $term_d c $dev_type
+	select area label
+	port make
+    }
 
     if {${w} < ${l}} {
 	set orient vert
@@ -1468,6 +1489,7 @@ proc sky130::diode_draw {parameters} {
     set doverlap 0	;# overlap diodes at contacts
     set guard 0		;# draw a guard ring
     set prohibit_overlap false  ;# don't prohibit overlaps
+    set doports 0
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -1527,6 +1549,7 @@ proc sky130::diode_draw {parameters} {
 	set gy [+ $corey [* 2.0 [+ $diff_spacing $diff_surround]] $contact_size]
 
 	# Draw the guard ring first, because diode may occupy well/substrate plane
+	if {$doports} {dict set parameters bulk B}
 	sky130::guard_ring $gx $gy $parameters
     }
 
@@ -1546,6 +1569,22 @@ proc sky130::diode_draw {parameters} {
     for {set xp 0} {$xp < $nx} {incr xp} {
 	pushbox
 	for {set yp 0} {$yp < $ny} {incr yp} {
+	    if {$doports} {
+		if {($ny == 1) && ($nx == 1)} {
+		    dict set parameters term_d D1
+		} elseif {$ny == 1} {
+		    dict set parameters term_d D1_$xp
+		} elseif {$nx == 1} {
+		    dict set parameters term_d D1_$yp
+		} else {
+		    dict set parameters term_d D1_${xp}_$yp
+		}
+		if {($xp == 0) && ($yp == 0)} {
+		    dict set parameters term_s D2
+		} else {
+		    dict set parameters term_s ""
+		}
+	    }
 	    sky130::diode_device $parameters
             box move n ${dy}um
         }
@@ -1563,6 +1602,8 @@ proc sky130::diode_draw {parameters} {
 #----------------------------------------------------------------
 
 proc sky130::photodiode_device {parameters} {
+
+    set doports 0	;# no port labels by default
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -1953,13 +1994,13 @@ proc sky130::sky130_fd_pr__cap_mim_m3_1_defaults {} {
     return {w 2.00 l 2.00 val 8.0 carea 2.00 cperi 0.19 class capacitor \
 		nx 1 ny 1 dummy 0 square 0 lmin 2.00 wmin 2.00 \
 		lmax 30.0 wmax 30.0 dc 0 bconnect 1 tconnect 1 \
-		ccov 100}
+		ccov 100 stack 1 doports 1}
 }
 proc sky130::sky130_fd_pr__cap_mim_m3_2_defaults {} {
     return {w 2.00 l 2.00 val 8.0 carea 2.00 cperi 0.19 class capacitor \
 		nx 1 ny 1 dummy 0 square 0 lmin 2.00 wmin 2.00 \
 		lmax 30.0 wmax 30.0 dc 0 bconnect 1 tconnect 1 \
-		ccov 100}
+		ccov 100 doports 1}
 }
 #endif (MIM)
 
@@ -2074,8 +2115,15 @@ proc sky130::cap_dialog {device parameters} {
     if {[dict exists $parameters guard]} {
 	magic::add_checkbox guard "Add guard ring" $parameters
     }
+    if {[dict exists $parameters stack]} {
+	magic::add_checkbox stack "Stacked cap compatibility" $parameters
+    }
 
     magic::add_dependency sky130::cap_recalc $device sky130 l w val
+
+    if {[dict exists $parameters addports]} {
+	magic::add_checkbox doports "Add ports" $parameters
+    }
 
     # magic::add_checkbox dummy "Add dummy" $parameters
 }
@@ -2113,6 +2161,7 @@ proc sky130::cap_device {parameters} {
     set eps  0.0005
 
     # Set local default values if they are not in parameters
+    set doports 0	;# no port labels by default
     set cap_surround 0
     set bot_surround 0
     set top_surround 0
@@ -2123,6 +2172,9 @@ proc sky130::cap_device {parameters} {
     set top_metal_width 0   ;# top metal minimum width
     set contact_size 0	    ;# cap contact minimum size
     set ccov 100	    ;# amount of contact coverage
+
+    set term_t ""
+    set term_b ""
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -2239,9 +2291,21 @@ proc sky130::cap_device {parameters} {
     set cext [sky130::unionbox $cext [sky130::draw_contact 0 ${cl} \
 		${end_surround} ${metal_surround} ${contact_size} \
 		${bot_type} ${top_contact_type} ${top_type} full]]
+    # Bottom plate port label
+    if {$term_b != ""} {
+	label $term_b c $bot_type
+	select area label
+	port make
+    }
     popbox
     popbox
 
+    # Top plate port label
+    if {$term_t != ""} {
+	label $term_t c $top_type
+	select area label
+	port make
+    }
     return $cext
 
     # cl shrinks top and bottom to accomodate larger bottom metal
@@ -2254,6 +2318,8 @@ proc sky130::cap_device {parameters} {
 #----------------------------------------------------------------
 
 proc sky130::sandwich_cap_device {parameters} {
+
+    set doports 0	;# no port labels by default
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -2475,12 +2541,14 @@ proc sky130::cap_draw {parameters} {
     set wide_cap_spacing 0  ;# additional spacing for wide metal rule
     set wide_cap_width 0
     set end_spacing 0
+    set extra_spacing 0
     set end_surround 0
     set bot_surround 0
     set top_metal_width 0
     set bconnect 0	;# connect bottom plates in array
     set tconnect 0	;# connect top plates in array
     set top_type ""
+    set doports 0
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -2526,7 +2594,7 @@ proc sky130::cap_draw {parameters} {
         set dy [- $fh [+ $end_surround $end_surround $contact_size]]
     }
     # Contact is placed on right so spacing is determined by end_spacing.
-    set dx [+ $fw $end_spacing $dwide]
+    set dx [+ $fw $end_spacing $extra_spacing $dwide]
 
     # Determine core width and height
     set corex [+ [* [- $nx 1] $dx] $fw]
@@ -2540,6 +2608,7 @@ proc sky130::cap_draw {parameters} {
 	set gy [+ $corey [* 2.0 [+ $end_spacing $diff_surround]] $contact_size]
 
 	# Draw the guard ring first.
+	if {$doports} {dict set parameters bulk B}
 	sky130::guard_ring $gx $gy $parameters
     }
 
@@ -2557,6 +2626,41 @@ proc sky130::cap_draw {parameters} {
     for {set xp 0} {$xp < $nx} {incr xp} {
 	pushbox
 	for {set yp 0} {$yp < $ny} {incr yp} {
+	    if {$doports} {
+		if {($ny == 1) && ($nx == 1)} {
+		    dict set parameters term_t C1
+		    dict set parameters term_b C2
+		} elseif {$ny == 1} {
+		    dict set parameters term_t C1_$xp
+		    dict set parameters term_b C2_$xp
+		} elseif {$nx == 1} {
+		    if {$tconnect} {
+			dict set parameters term_t C1
+		    } else {
+			dict set parameters term_t C1_$yp
+		    }
+		    if {$bconnect} {
+			dict set parameters term_b C2
+		    } else {
+			dict set parameters term_b C2_$yp
+		    }
+		} else {
+		    if {$tconnect} {
+		    	dict set parameters term_t C1_$xp
+		    } else {
+		    	dict set parameters term_t C1_${xp}_$yp
+		    }
+		    if {$bconnect} {
+		    	dict set parameters term_b C2_$xp
+		    } else {
+		    	dict set parameters term_b C2_${xp}_$yp
+		    }
+		}
+		if {$yp > 0} {
+		    if {$tconnect} {dict set parameters term_t ""}
+		    if {$bconnect} {dict set parameters term_b ""}
+		}
+	    }
 	    if {$sandwich == 1} {
 		sky130::sandwich_cap_device $parameters
 	    } else {
@@ -2593,6 +2697,23 @@ proc sky130::cap_draw {parameters} {
 
 #ifdef MIM
 proc sky130::sky130_fd_pr__cap_mim_m3_1_draw {parameters} {
+    set stack 0
+
+    # Set a local variable for each parameter
+    foreach key [dict keys $parameters] {
+        set $key [dict get $parameters $key]
+    }
+    if {$stack} {
+	# For cap stacking, dimensions are increased to match the mim2 device
+	set capspace 1.6
+	set capextra 1.83
+	set endspace 1.5
+    } else {
+	set capspace 1.2
+	set capextra 0.0
+	set endspace 1.2
+    }
+
     set newdict [dict create \
 	    top_type 		m4 \
 	    top_contact_type	via3 \
@@ -2600,11 +2721,12 @@ proc sky130::sky130_fd_pr__cap_mim_m3_1_draw {parameters} {
 	    cap_contact_type	mimcc \
 	    bot_type 		m3 \
 	    bot_surround	0.2 \
-	    cap_spacing		1.2 \
+	    cap_spacing		${capspace} \
+	    extra_spacing	${capextra} \
 	    cap_surround	0.2 \
 	    top_surround	0.005 \
 	    end_surround	0.1 \
-	    end_spacing		1.2 \
+	    end_spacing		${endspace} \
 	    contact_size	0.32 \
 	    metal_surround	0.08 \
     ]
@@ -2764,7 +2886,7 @@ proc sky130::sky130_fd_pr__res_iso_pw_defaults {} {
     return {w 2.650 l 26.50 m 1 nx 1 wmin 2.650 lmin 26.50 class resistor \
 	 	rho 3050 val 30502 dummy 0 dw 0.25 term 1.0 \
 		guard 1 endcov 100 full_metal 1 vias 1 \
-		viagb 0 viagt 0 viagl 0 viagr 0}
+		viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 
 #----------------------------------------------------------------
@@ -2778,7 +2900,7 @@ proc sky130::sky130_fd_pr__res_generic_po_defaults {} {
 		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
 		full_metal 1 hv_guard 0 n_guard 0 vias 1 \
-		viagb 0 viagt 0 viagl 0 viagr 0}
+		viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 
 # "term" is rho * 0.06, the distance between xpc edge and CONT.
@@ -2790,7 +2912,7 @@ proc sky130::sky130_fd_pr__res_high_po_0p35_defaults {} {
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
 		snake 0 full_metal 1 wmax 0.350 vias 1 n_guard 0 hv_guard 0 \
-		viagb 0 viagt 0 viagl 0 viagr 0}
+		viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 proc sky130::sky130_fd_pr__res_high_po_0p69_defaults {} {
     return {w 0.690 l 1.00 m 1 nx 1 wmin 0.690 lmin 0.50 class resistor \
@@ -2800,7 +2922,7 @@ proc sky130::sky130_fd_pr__res_high_po_0p69_defaults {} {
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
 		snake 0 full_metal 1 wmax 0.690 n_guard 0 hv_guard 0 vias 1 \
-		viagb 0 viagt 0 viagl 0 viagr 0}
+		viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 proc sky130::sky130_fd_pr__res_high_po_1p41_defaults {} {
     return {w 1.410 l 2.00 m 1 nx 1 wmin 1.410 lmin 0.50 class resistor \
@@ -2810,7 +2932,7 @@ proc sky130::sky130_fd_pr__res_high_po_1p41_defaults {} {
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
 		snake 0 full_metal 1 wmax 1.410 n_guard 0 hv_guard 0 vias 1 \
-		viagb 0 viagt 0 viagl 0 viagr 0}
+		viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 proc sky130::sky130_fd_pr__res_high_po_2p85_defaults {} {
     return {w 2.850 l 3.00 m 1 nx 1 wmin 2.850 lmin 0.50 class resistor \
@@ -2820,7 +2942,7 @@ proc sky130::sky130_fd_pr__res_high_po_2p85_defaults {} {
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
 		snake 0 full_metal 1 wmax 2.850 n_guard 0 hv_guard 0 vias 1 \
-		viagb 0 viagt 0 viagl 0 viagr 0}
+		viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 proc sky130::sky130_fd_pr__res_high_po_5p73_defaults {} {
     return {w 5.730 l 6.00 m 1 nx 1 wmin 5.730 lmin 0.50 class resistor \
@@ -2830,7 +2952,7 @@ proc sky130::sky130_fd_pr__res_high_po_5p73_defaults {} {
 		sky130_fd_pr__res_high_po_0p69 sky130_fd_pr__res_high_po_1p41 \
 		sky130_fd_pr__res_high_po_2p85 sky130_fd_pr__res_high_po_5p73} \
 		snake 0 full_metal 1 wmax 5.730 n_guard 0 hv_guard 0 vias 1 \
-		viagb 0 viagt 0 viagl 0 viagr 0}
+		viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 
 # "term" is rho * 0.06, the distance between xpc edge and CONT.
@@ -2843,7 +2965,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p35_defaults {} {
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
 		snake 0 full_metal 1 n_guard 0 hv_guard 0 vias 1 \
-		viagb 0 viagt 0 viagl 0 viagr 0}
+		viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_0p69_defaults {} {
     return {w 0.690 l 1.00 m 1 nx 1 wmin 0.690 lmin 0.50 class resistor \
@@ -2854,7 +2976,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_0p69_defaults {} {
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
 		snake 0 full_metal 1 n_guard 0 hv_guard 0 vias 1 \
-		viagb 0 viagt 0 viagl 0 viagr 0}
+		viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_1p41_defaults {} {
     return {w 1.410 l 2.00 m 1 nx 1 wmin 1.410 lmin 0.50 class resistor \
@@ -2865,7 +2987,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_1p41_defaults {} {
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
 		snake 0 full_metal 1 n_guard 0 hv_guard 0 vias 1 \
-		viagb 0 viagt 0 viagl 0 viagr 0}
+		viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_2p85_defaults {} {
     return {w 2.850 l 3.00 m 1 nx 1 wmin 2.850 lmin 0.50 class resistor \
@@ -2876,7 +2998,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_2p85_defaults {} {
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
 		snake 0 full_metal 1 n_guard 0 hv_guard 0 vias 1 \
-		viagb 0 viagt 0 viagl 0 viagr 0}
+		viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 proc sky130::sky130_fd_pr__res_xhigh_po_5p73_defaults {} {
     return {w 5.730 l 6.00 m 1 nx 1 wmin 5.730 lmin 0.50 class resistor \
@@ -2887,7 +3009,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_5p73_defaults {} {
 		sky130_fd_pr__res_xhigh_po_0p69 sky130_fd_pr__res_xhigh_po_1p41 \
 		sky130_fd_pr__res_xhigh_po_2p85 sky130_fd_pr__res_xhigh_po_5p73} \
 		snake 0 full_metal 1 n_guard 0 hv_guard 0 vias 1 \
-		viagb 0 viagt 0 viagl 0 viagr 0}
+		viagb 0 viagt 0 viagl 0 viagr 0 doports 1}
 }
 
 #----------------------------------------------------------------
@@ -2900,7 +3022,7 @@ proc sky130::sky130_fd_pr__res_generic_nd_defaults {} {
 		rho 120 val 600.0 dummy 0 dw 0.05 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
-		full_metal 1 vias 1 \
+		full_metal 1 vias 1 doports 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
@@ -2909,7 +3031,7 @@ proc sky130::sky130_fd_pr__res_generic_nd__hv_defaults {} {
 		rho 120 val 600.0 dummy 0 dw 0.02 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
-		full_metal 1 vias 1 \
+		full_metal 1 vias 1 doports 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
@@ -2923,7 +3045,7 @@ proc sky130::sky130_fd_pr__res_generic_pd_defaults {} {
 		rho 197 val 985.0 dummy 0 dw 0.02 term 0.0 \
 		sterm 0.0 caplen 0.60 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
-		full_metal 1 vias 1 \
+		full_metal 1 vias 1 doports 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
@@ -2932,7 +3054,7 @@ proc sky130::sky130_fd_pr__res_generic_pd__hv_defaults {} {
 		rho 197 val 985.0 dummy 0 dw 0.02 term 0.0 \
 		sterm 0.0 caplen 0.60 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
-		full_metal 1 vias 1 \
+		full_metal 1 vias 1 doports 1 \
 		viagb 0 viagt 0 viagl 0 viagr 0}
 }
 
@@ -2944,7 +3066,7 @@ proc sky130::sky130_fd_pr__res_generic_pd__hv_defaults {} {
 proc sky130::sky130_fd_pr__res_generic_l1_defaults {} {
     return {w 0.170 l 0.170 m 1 nx 1 wmin 0.17 lmin 0.17 class resistor \
 		rho 12.8 val 12.8 dummy 0 dw 0.0 term 0.0 snake 0 \
-		roverlap 0}
+		roverlap 0 doports 1}
 }
 
 #----------------------------------------------------------------
@@ -2955,7 +3077,7 @@ proc sky130::sky130_fd_pr__res_generic_l1_defaults {} {
 proc sky130::sky130_fd_pr__res_generic_m1_defaults {} {
     return {w 0.140 l 0.140 m 1 nx 1 wmin 0.14 lmin 0.14 class resistor \
 		rho 0.125 val 0.125 dummy 0 dw 0.0 term 0.0 \
-		roverlap 0}
+		roverlap 0 doports 1}
 }
 
 #----------------------------------------------------------------
@@ -2966,7 +3088,7 @@ proc sky130::sky130_fd_pr__res_generic_m1_defaults {} {
 proc sky130::sky130_fd_pr__res_generic_m2_defaults {} {
     return {w 0.140 l 0.140 m 1 nx 1 wmin 0.14 lmin 0.14 class resistor \
 		rho 0.125 val 0.125 dummy 0 dw 0.0 term 0.0 \
-		roverlap 0}
+		roverlap 0 doports 1}
 }
 
 #----------------------------------------------------------------
@@ -2977,7 +3099,7 @@ proc sky130::sky130_fd_pr__res_generic_m2_defaults {} {
 proc sky130::sky130_fd_pr__res_generic_m3_defaults {} {
     return {w 0.300 l 0.300 m 1 nx 1 wmin 0.30 lmin 0.30 class resistor \
 		rho 0.047 val 0.047 dummy 0 dw 0.0 term 0.0 \
-		roverlap 0}
+		roverlap 0 doports 1}
 }
 
 #----------------------------------------------------------------
@@ -2989,12 +3111,12 @@ proc sky130::sky130_fd_pr__res_generic_m3_defaults {} {
 proc sky130::sky130_fd_pr__res_generic_m4_defaults {} {
     return {w 0.300 l 0.300 m 1 nx 1 wmin 0.30 lmin 0.30 class resistor \
 		rho 0.047 val 0.047 dummy 0 dw 0.0 term 0.0 \
-		roverlap 0}
+		roverlap 0 doports 1}
 }
 proc sky130::sky130_fd_pr__res_generic_m5_defaults {} {
     return {w 1.600 l 1.600 m 1 nx 1 wmin 1.60 lmin 1.60 class resistor \
 		rho 0.029 val 0.029 dummy 0 dw 0.0 term 0.0 \
-		roverlap 0}
+		roverlap 0 doports 1}
 }
 #endif (METAL5)
 
@@ -3185,6 +3307,10 @@ proc sky130::res_dialog {device parameters} {
     } else {
        magic::add_dependency sky130::res_recalc $device sky130 l w val nx
     }
+
+    if {[dict exists $parameters addports]} {
+	magic::add_checkbox doports "Add ports" $parameters
+    }
 }
 
 #----------------------------------------------------------------
@@ -3279,6 +3405,7 @@ proc sky130::res_device {parameters} {
     set eps  0.0005
 
     # Set local default values if they are not in parameters
+    set doports 0		;# no port labels by default
     set endcov 0	 	;# percent coverage of end contacts
     set roverlap 0		;# overlap resistors at end contacts
     set well_res_overlap 0 	;# not a well resistor
@@ -3287,6 +3414,9 @@ proc sky130::res_device {parameters} {
     set vias 0			;# add vias over contacts
     set l_delta 0		;# delta between measured and drawn length
     set res_idtype none
+
+    set term_t ""
+    set term_b ""
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -3384,6 +3514,11 @@ proc sky130::res_device {parameters} {
     set cext [sky130::unionbox $cext [sky130::getbox]]
     popbox
 
+    if {$term_t != ""} {
+	label $term_t c $end_type
+	select area label
+	port make
+    }
     if {${end_contact_type} != ""} {
 	# Draw via over contact first
 	if {$vias != 0} {
@@ -3420,6 +3555,11 @@ proc sky130::res_device {parameters} {
     set cext [sky130::unionbox $cext [sky130::getbox]]
     popbox
 
+    if {$term_b != ""} {
+	label $term_b c $end_type
+	select area label
+	port make
+    }
     if {${end_contact_type} != ""} {
 	# Draw via over contact first
 	if {$vias != 0} {
@@ -3456,10 +3596,15 @@ proc sky130::res_snake_device {nf parameters} {
     set eps  0.0005
 
     # Set local default values if they are not in parameters
+    set doports 0		;# no port labels by default
     set endcov 100	 	;# percent coverage of end contacts
+    set vias 0			;# add vias over terminal contacts
     set well_res_overlap 0 	;# not a well resistor
     set end_contact_type ""	;# no contacts for metal resistors
     set mask_clearance 0	;# additional length to clear mask
+
+    set term_t ""
+    set term_b ""
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -3514,7 +3659,26 @@ proc sky130::res_snake_device {nf parameters} {
     set cext [sky130::getbox]
     popbox
 
+    if {$term_t != ""} {
+	label $term_t c $end_type
+	select area label
+	port make
+    }
     if {${end_contact_type} != ""} {
+	# Draw via over contact first
+	if {$vias != 0} {
+            pushbox
+            set ch $res_to_endcont
+    	    if {$ch < $via_size} {set ch $via_size}
+    	    set cw $epl
+    	    if {$cw < $via_size} {set cw $via_size}
+	    box grow n [- $ch [/ $via_size 2]]um
+	    box grow s [/ $via_size 2]um
+	    box grow w [/ $cw 2]um
+	    box grow e [/ $cw 2]um
+            sky130::mcon_draw
+            popbox
+    	}
 	set cext [sky130::draw_contact ${cpl} 0 \
 		${end_surround} ${metal_surround} ${end_contact_size} \
 		${end_type} ${end_contact_type} li horz]
@@ -3607,7 +3771,31 @@ proc sky130::res_snake_device {nf parameters} {
     set cext [sky130::unionbox $cext [sky130::getbox]]
     popbox
 
+    if {$term_b != ""} {
+	label $term_b c $end_type
+	select area label
+	port make
+    }
     if {${end_contact_type} != ""} {
+	# Draw via over contact first
+	if {$vias != 0} {
+            pushbox
+            set ch $res_to_endcont
+    	    if {$ch < $via_size} {set ch $via_size}
+    	    set cw $epl
+    	    if {$cw < $via_size} {set cw $via_size}
+	    if {$dir == "n"} {
+		box grow n [/ $via_size 2]um
+		box grow s [- $ch [/ $via_size 2]]um
+	    } else {
+		box grow n [- $ch [/ $via_size 2]]um
+		box grow s [/ $via_size 2]um
+	    }
+	    box grow w [/ $cw 2]um
+	    box grow e [/ $cw 2]um
+            sky130::mcon_draw
+            popbox
+    	}
 	set cext [sky130::unionbox $cext [sky130::draw_contact ${cpl} 0 \
 		${end_surround} ${metal_surround} ${end_contact_size} \
 		${end_type} ${end_contact_type} li horz]]
@@ -3656,6 +3844,7 @@ proc sky130::res_draw {parameters} {
     set well_res_overlap 0	;# additional well extension behind contact
     set res_diff_spacing 0	;# spacing from resistor to diffusion
     set res_idtype  none
+    set doports 0
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -3734,6 +3923,7 @@ proc sky130::res_draw {parameters} {
 	set gy [+ $corey [* 2.0 [+ $end_spacing $guard_diff_surround]] $contact_size]
 
 	# Draw the guard ring first, because well resistors are on the substrate plane
+	if {$doports} {dict set parameters bulk B}
 	sky130::guard_ring $gx $gy $parameters
     }
 
@@ -3744,6 +3934,21 @@ proc sky130::res_draw {parameters} {
     for {set xp 0} {$xp < $nx} {incr xp} {
 	pushbox
 	for {set yp 0} {$yp < $m} {incr yp} {
+	    if {$doports} {
+		if {($m == 1) && ($nx == 1)} {
+		     dict set parameters term_t R1
+		     dict set parameters term_b R2
+		} elseif {$m == 1} {
+		     dict set parameters term_t R1_$xp
+		     dict set parameters term_b R2_$xp
+		} elseif {$nx == 1} {
+		     dict set parameters term_t R1_$yp
+		     dict set parameters term_b R2_$yp
+		} else {
+		     dict set parameters term_t R1_${xp}_$yp
+		     dict set parameters term_b R2_${xp}_$yp
+		}
+	    }
 	    if {$snake == 1} {
 		sky130::res_snake_device $nf $parameters
 	    } else {
@@ -5223,7 +5428,7 @@ proc sky130::sky130_fd_pr__pfet_01v8_defaults {} {
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
 		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
 		viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__pfet_01v8_lvt_defaults {} {
@@ -5234,7 +5439,7 @@ proc sky130::sky130_fd_pr__pfet_01v8_lvt_defaults {} {
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
 		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
 		viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__pfet_01v8_hvt_defaults {} {
@@ -5245,7 +5450,7 @@ proc sky130::sky130_fd_pr__pfet_01v8_hvt_defaults {} {
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
 		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
 		viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__pfet_g5v0d10v5_defaults {} {
@@ -5256,7 +5461,7 @@ proc sky130::sky130_fd_pr__pfet_g5v0d10v5_defaults {} {
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
 		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
 		viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__pfet_g5v0d16v0_defaults {} {
@@ -5264,7 +5469,7 @@ proc sky130::sky130_fd_pr__pfet_g5v0d16v0_defaults {} {
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 0 lmin 1.050 wmin 5.00 \
 		class mosfet full_metal 1 viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
 #----------------------------------------------------------------
@@ -5282,7 +5487,7 @@ proc sky130::sky130_fd_pr__nfet_01v8_defaults {} {
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
 		sky130_fd_pr__nfet_03v3_nvt} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__nfet_01v8_lvt_defaults {} {
@@ -5295,7 +5500,7 @@ proc sky130::sky130_fd_pr__nfet_01v8_lvt_defaults {} {
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
 		sky130_fd_pr__nfet_03v3_nvt} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
 proc sky130::sky130_fd_bs_flash__special_sonosfet_star_defaults {} {
@@ -5308,7 +5513,7 @@ proc sky130::sky130_fd_bs_flash__special_sonosfet_star_defaults {} {
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
 		sky130_fd_pr__nfet_03v3_nvt} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__nfet_g5v0d10v5_defaults {} {
@@ -5321,7 +5526,7 @@ proc sky130::sky130_fd_pr__nfet_g5v0d10v5_defaults {} {
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
 		sky130_fd_pr__nfet_03v3_nvt} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__nfet_05v0_nvt_defaults {} {
@@ -5334,7 +5539,7 @@ proc sky130::sky130_fd_pr__nfet_05v0_nvt_defaults {} {
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
 		sky130_fd_pr__nfet_03v3_nvt} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__nfet_03v3_nvt_defaults {} {
@@ -5347,7 +5552,7 @@ proc sky130::sky130_fd_pr__nfet_03v3_nvt_defaults {} {
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
 		sky130_fd_pr__nfet_03v3_nvt} \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
 proc sky130::sky130_fd_pr__nfet_g5v0d16v0_defaults {} {
@@ -5355,7 +5560,7 @@ proc sky130::sky130_fd_pr__nfet_g5v0d16v0_defaults {} {
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 0 lmin 1.050 wmin 5.00 \
 		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
-		viagb 0 viagr 0 viagl 0 viagt 0}
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
 #----------------------------------------------------------------
@@ -5557,6 +5762,12 @@ proc sky130::mos_dialog {device parameters} {
     magic::add_entry viagt "Top guard ring via coverage \[+/-\](%)" $parameters
     magic::add_entry viagr "Right guard ring via coverage \[+/-\](%)" $parameters
     magic::add_entry viagl "Left guard ring via coverage \[+/-\](%)" $parameters
+
+    if {[dict exists $parameters addports]} {
+	magic::add_checkbox doports "Add ports" $parameters
+    }
+
+    # magic::add_checkbox dummy "Add dummy" $parameters
 }
 
 #----------------------------------------------------------------
@@ -5752,6 +5963,7 @@ proc sky130::guard_ring {gw gh parameters} {
     set plus_diff_type   nsd	;# guard ring diffusion type
     set plus_contact_type nsc	;# guard ring diffusion contact type
     set sub_type	 pwell	;# substrate type
+    set bulk ""		;# Default no port label
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -5799,6 +6011,7 @@ proc sky130::guard_ring {gw gh parameters} {
     popbox
     pushbox
     box move s ${hh}um
+    pushbox
     box grow n ${hdifft}um
     box grow s ${hdifft}um
     box grow e ${hdiffw}um
@@ -5807,6 +6020,13 @@ proc sky130::guard_ring {gw gh parameters} {
     if {$guard_sub_surround > 0} {
 	box grow c ${guard_sub_surround}um
 	paint $guard_sub_type
+    }
+    popbox
+    # At guard ring bottom center, place a port if requested
+    if {$bulk != ""} {
+	label $bulk c $plus_diff_type
+	select area label
+	port make
     }
     popbox
     pushbox
@@ -6201,6 +6421,7 @@ proc sky130::mos_device {parameters} {
     set eps  0.0005
 
     # Set local default values if they are not in parameters
+    set doports 0	;# no port labels by default
     set diffcov 100	;# percent coverage of diffusion contact
     set polycov 100	;# percent coverage of poly contact
     set topc 1		;# draw top poly contact
@@ -6215,6 +6436,10 @@ proc sky130::mos_device {parameters} {
     set diff_overlap_cont 0	;# extra overlap of end contact by diffusion
     set gshield 0	;# no metal shield over gate (used for varactors)
     set drain_proc {}	;# no special procedure to draw the drain
+
+    set drain ""
+    set source ""
+    set gate ""
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -6353,6 +6578,7 @@ proc sky130::mos_device {parameters} {
 	dict set parameters cdwfull $cdwfull
 	dict set parameters dside $dside
 	dict set parameters sside $sside
+	dict set parameters doports $doports
 	set cext [sky130::unionbox $cext [eval $drain_proc {$parameters}]]
     } else {
 	# Drain diffusion contact
@@ -6386,6 +6612,11 @@ proc sky130::mos_device {parameters} {
 	set cext [sky130::unionbox $cext [sky130::draw_contact 0 ${cdw} \
 		${diff_surround} ${metal_surround} ${contact_size}\
 		${diff_type} ${diff_contact_type} li vert]]
+	if {$drain != ""} {
+	    label $drain c $diff_contact_type
+	    select area label
+	    port make
+	}
 	popbox
     }
 
@@ -6420,6 +6651,11 @@ proc sky130::mos_device {parameters} {
     set cext [sky130::unionbox $cext [sky130::draw_contact 0 ${cdw} \
 		${diff_surround} ${metal_surround} ${contact_size} \
 		${diff_type} ${diff_contact_type} li vert]]
+    if {$source != ""} {
+	label $source c $diff_contact_type
+	select area label
+	port make
+    }
     set diffarea $cext
     popbox
     # Gate shield (only on varactors)
@@ -6474,6 +6710,11 @@ proc sky130::mos_device {parameters} {
        set cext [sky130::unionbox $cext [sky130::draw_contact ${cpl} 0 \
 		${poly_surround} ${metal_surround} ${contact_size} \
 		${poly_type} ${poly_contact_type} li horz]]
+       if {$gate != ""} {
+	   label $gate c $poly_contact_type
+	   select area label
+	   port make
+       }
        popbox
     }
     # Bottom poly contact
@@ -6507,6 +6748,11 @@ proc sky130::mos_device {parameters} {
        set cext [sky130::unionbox $cext [sky130::draw_contact ${cpl} 0 \
 		${poly_surround} ${metal_surround} ${contact_size} \
 		${poly_type} ${poly_contact_type} li horz]]
+       if {($gate != "") && ($topc == 0)} {
+	   label $gate c $poly_contact_type
+	   select area label
+	   port make
+       }
        popbox
     }
 
@@ -6564,6 +6810,7 @@ proc sky130::mos_draw {parameters} {
     set id_surround 0	;# amount of surround on above type
     set id2_type ""	;# additional type covering everything
     set id2_surround 0	;# amount of surround on above type
+    set doports 0	;# no port labels unless requested
 
     set set_x_to_guard ""	;# override x distance to guard ring
     set set_y_to_guard ""	;# override y distance to guard ring
@@ -6724,6 +6971,7 @@ proc sky130::mos_draw {parameters} {
 	}
     }
     if {$guard != 0} {
+	if {$doports} {dict set parameters bulk B}
 	# Draw the guard ring first, as MOS well may interact with guard ring substrate
 	sky130::guard_ring $gx $gy $parameters
     }
@@ -6760,6 +7008,56 @@ proc sky130::mos_draw {parameters} {
 	    set saveeo $evenodd
 	}
         for {set yp 0} {$yp < $m} {incr yp} {
+	    # Apply rules for source/drain/gate port labeling
+	    if {$doports && ($m == 1)} {
+		if {$nf == 1} {
+		    dict set parameters drain D
+		    dict set parameters source S
+		    dict set parameters gate G
+		} else {
+		    if {$doverlap && $evens && ($xp > 0)} {
+			dict set parameters drain ""
+		    } else {
+			dict set parameters drain D$xp
+		    }
+		    if {$doverlap  && ($evens == 0) && ($xp < $nf-1)} {
+			dict set parameters source ""
+		    } else {
+			dict set parameters source S$xp
+		    }
+		    dict set parameters gate G$xp
+		}
+	    } elseif {$doports} {		
+		if {$nf == 1} {
+		    dict set parameters drain D$yp
+		    dict set parameters source S$yp
+		    if {$poverlap && ($yp == 0)} {
+			dict set parameters gate G
+		    } elseif {$poverlap} {
+			dict set parameters gate ""
+		    } else {
+			dict set parameters gate G$yp
+		    }
+		} else {
+		    if {$doverlap && $evens && ($xp > 0)} {
+			dict set parameters drain ""
+		    } else {
+			dict set parameters drain D${xp}_$yp
+		    }
+		    if {$doverlap && ($evens == 0) && ($xp < $nf-1)} {
+			dict set parameters source ""
+		    } else {
+			dict set parameters source S${xp}_$yp
+		    }
+		    if {$poverlap && ($yp == 0)} {
+			dict set parameters gate G$xp
+		    } elseif {$poverlap} {
+			dict set parameters gate ""
+		    } else {
+			dict set parameters gate G${xp}_$yp
+		    }
+		}
+	    }
             if {$evens != 0} {box move e ${xoffset}um}
             sky130::mos_device $parameters
             if {$evens != 0} {box move w ${xoffset}um}
@@ -6948,6 +7246,7 @@ proc sky130::sky130_fd_pr__nfet_g5v0d10v5_draw {parameters} {
 	    diff_spacing	0.31 \
 	    diff_tap_space	0.38 \
 	    diff_gate_space	0.38 \
+	    set_x_to_guard	0.535 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::mos_draw $drawdict]
