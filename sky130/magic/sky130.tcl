@@ -1549,7 +1549,7 @@ proc sky130::diode_draw {parameters} {
 	set gy [+ $corey [* 2.0 [+ $diff_spacing $diff_surround]] $contact_size]
 
 	# Draw the guard ring first, because diode may occupy well/substrate plane
-	if {$doports} {dict set parameters bulk B}
+	# (NOTE:  Diode models have no bulk terminal, so do not create a port)
 	sky130::guard_ring $gx $gy $parameters
     }
 
