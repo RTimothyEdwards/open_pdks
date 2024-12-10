@@ -2,9 +2,9 @@ VERSION 5.7 ;
   NOWIREEXTENSIONATPIN ON ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
-MACRO sky130_ef_sc_hd__fill_12
+MACRO sky130_ef_sc_hd__decap_20_12
   CLASS CORE SPACER ;
-  FOREIGN sky130_ef_sc_hd__fill_12 ;
+  FOREIGN sky130_ef_sc_hd__decap_20_12 ;
   ORIGIN 0.000 0.000 ;
   SIZE 5.520 BY 2.720 ;
   SYMMETRY X Y R90 ;
@@ -74,6 +74,6 @@ MACRO sky130_ef_sc_hd__fill_12
         RECT 4.745 -0.085 4.915 0.085 ;
         RECT 5.205 -0.085 5.375 0.085 ;
   END
-END sky130_ef_sc_hd__fill_12
+END sky130_ef_sc_hd__decap_20_12
 END LIBRARY
 
