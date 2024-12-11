@@ -94,15 +94,15 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "8c312fd9be7c9a9a2821c0821d1421c00e13d139",
-        "magic": "b7942cffe6de3bac78bef3ee745097ecd72c689f",
+        "open_pdks": "a67574f86dc944797c17229e94fd8fc9d6fbf949",
+        "magic": "dc87a8c6936e89a557a3a84e6acc4c8321b9079e",
         "sky130_fd_pr": "514d4dc1d67632015e1de2cb7de60e21653cd94c",
         "sky130_fd_io": "d3b662d017ce4fb5d4e3c3922ac81f744111e010",
         "sky130_fd_sc_hs": "9a855e97aa75f8a14be7eadc365c28d50045d5fc",
         "sky130_fd_sc_ms": "26d0047c0e2dbe28fe4950f171411f6e8b3d0564",
         "sky130_fd_sc_ls": "8e7040bfc58a17386e3d900c0e3b9c9163545c4a",
         "sky130_fd_sc_lp": "b93a1a75fa1b864872ebb0b078f6a2dd6e318d7c",
-        "sky130_fd_sc_hd": "4dbe3954e308edb6d65a15d1683ddca6eabdc369",
+        "sky130_fd_sc_hd": "5a42fd01a0eeb2338340438443c7062e198d97a4",
         "sky130_fd_sc_hdll": "d48faa83ef2d8573d85384c4eb019ab78295db0b",
         "sky130_fd_sc_hvl": "5f544a6d5b9385ac563811e7a455b050eea5fb70",
         "sky130_osu_sc_t12": "ac90ef0c622a9377a16b5218d9da3ac4169eeaaf",
@@ -114,6 +114,6 @@
         "sky130_ml_xx_hd": "6eb3b0718552b034f1bf1870285ff135e3fb2dcb",
         "xschem_sky130": "0597d6cd26ad460d3f4d689f9e6a11f33dc262ff",
         "klayout_sky130": "68b8aa87c129191f642da662d348e9ca6930581b",
-        "precheck_sky130": "a1a22717e5618f8df329e0c714b43c08fd003543"
+        "precheck_sky130": "0941bdc1b62b5c3f99c8683bd11199d330af2ef3"
     }
 }
