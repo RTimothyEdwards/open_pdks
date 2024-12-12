@@ -6446,6 +6446,11 @@ proc sky130::mos_device {parameters} {
         set $key [dict get $parameters $key]
     }
 
+    # "topc" and "botc" may be modified for alternating top-bottom gate
+    # contacts.  If so, original values are in "oldtopc" and "oldbotc".
+    if {![dict exists $parameters oldtopc]} {set oldtopc $topc}
+    if {![dict exists $parameters oldbotc]} {set oldbotc $botc}
+
     # Draw the diffusion and poly
     pushbox
     box size 0 0
@@ -6680,7 +6685,7 @@ proc sky130::mos_device {parameters} {
 	popbox
     }
     # Top poly contact
-    if {$topc} {
+    if {$topc && $oldtopc} {
        pushbox
        box move n ${hw}um
        box move n ${gate_to_polycont}um
@@ -6718,7 +6723,7 @@ proc sky130::mos_device {parameters} {
        popbox
     }
     # Bottom poly contact
-    if {$botc} {
+    if {$botc && $oldbotc} {
        pushbox
        box move s ${hw}um
        box move s ${gate_to_polycont}um
@@ -6852,6 +6857,8 @@ proc sky130::mos_draw {parameters} {
     if {$nf > 1 && $l < $min_allc} {
 	set intc 1
 	set evenodd 1
+	dict set parameters oldtopc $topc
+	dict set parameters oldbotc $botc
 	set topc 1
 	set botc 1
 	dict set parameters topc 1
