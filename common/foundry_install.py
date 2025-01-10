@@ -251,10 +251,7 @@ def usage():
 #   %l :  substitute the library name
 #   %% :  substitute the percent character verbatim
 
-try:
-    from setuptools.distutils.version import LooseVersion
-except:
-    from distutils.version import LooseVersion
+from packaging import version
 
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
@@ -327,7 +324,7 @@ def substitute(pathname, library):
         else:
             for vlib in vlibs[1:]:
                 vtest = vlib[len(vglob)-1:]
-                if LooseVersion(vtest) > LooseVersion(vstr):
+                if version.parse(vtest) > version.parse(vstr):
                     vstr = vtest
             newpathname = re.sub('%v', vstr, newpathname)
 

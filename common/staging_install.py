@@ -76,11 +76,15 @@ import filecmp
 import subprocess
 
 # NOTE:  This version of copy_tree from distutils works like shutil.copytree()
-# in Python 3.8 and up ONLY using "dirs_exist_ok=True".
-try:
-    from setuptools.distutils.dir_util import copy_tree
-except:
-    from distutils.dir_util import copy_tree
+# in Python 3.8 and up ONLY using "dirs_exist_ok=True".  Since
+# distutils.dir_util has been deprecated and there are very few systems any
+# more using Python versions from 3.7 and earlier, I am removing this call
+# in favor of the shutil version.
+
+# try:
+#     from setuptools.distutils.dir_util import copy_tree
+# except:
+#     from distutils.dir_util import copy_tree
 
 def makeuserwritable(filepath):
     if os.path.exists(filepath):
@@ -464,8 +468,8 @@ if __name__ == '__main__':
     remove_target(stagingdir, writedir)
 
     print('Copying staging files to target')
-    # print('Diagnostic:  copy_tree ' + stagingdir + ' ' + writedir)
-    copy_tree(stagingdir, writedir, preserve_symlinks=True, verbose=debug)
+    # print('Diagnostic:  copytree ' + stagingdir + ' ' + writedir)
+    shutil.copytree(stagingdir, writedir, preserve_symlinks=True, verbose=debug, dirs_exist_ok=True)
     print('Done.')
 
     # Magic and qflow setup files have references to the staging area that have
