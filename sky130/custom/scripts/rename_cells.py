@@ -40,8 +40,8 @@ def filter(inname, outname):
     for line in spilines:
 
         # These substitutions are for files originating from cells/*/*.spice
-        fixedline = re.sub('\.\./\.\./models/', '../../../libs.tech/ngspice/', line)
-        fixedline = re.sub('\.\./[^/\.]+/', '', fixedline)
+        fixedline = re.sub(r'\.\./\.\./models/', '../../../libs.tech/ngspice/', line)
+        fixedline = re.sub(r'\.\./[^/\.]+/', '', fixedline)
         fixedlines.append(fixedline)
         if fixedline != line:
             modified = True
