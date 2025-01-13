@@ -469,7 +469,7 @@ if __name__ == '__main__':
 
     print('Copying staging files to target')
     # print('Diagnostic:  copytree ' + stagingdir + ' ' + writedir)
-    shutil.copytree(stagingdir, writedir, preserve_symlinks=True, verbose=debug, dirs_exist_ok=True)
+    shutil.copytree(stagingdir, writedir, symlinks=True, dirs_exist_ok=True)
     print('Done.')
 
     # Magic and qflow setup files have references to the staging area that have
