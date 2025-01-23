@@ -251,8 +251,6 @@ def usage():
 #   %l :  substitute the library name
 #   %% :  substitute the percent character verbatim
 
-from packaging import version
-
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 
@@ -307,6 +305,64 @@ def makeuserwritable(filepath):
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 
+def parse_version_number(vstring):
+    verex1 = re.compile('[^0-9]*([0-9]+)')
+    verex2 = re.compile('[^0-9]*([0-9]+)[^0-9]*([0-9]+)')
+    verex3 = re.compile('[^0-9]*([0-9]+)[^0-9]*([0-9]+)[^0-9]*([0-9]+)')
+    major = 0
+    minor = 0
+    revision = 0
+    try:
+        vnums = verex3.match(vstring)
+    except:
+        try:
+            vnums = verex2.match(vstring)
+        except:
+            try:
+                vnums = verex1.match(vstring)
+            except:
+                print('Error:  String ' + vstring + ' cannot be parsed as '
+				+ 'a version number.')
+            else:
+                major = int(vnums.group(1))
+        else:
+            major = int(vnums.group(1))
+            minor = int(vnums.group(2))
+    else:
+        major = int(vnums.group(1))
+        minor = int(vnums.group(2))
+        revision = int(vnums.group(3))
+
+    return [major, minor, revision]
+
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+
+def version_compare(vlist1, vlist2):
+    major1 = vlist1[0]
+    major2 = vlist2[0]
+    minor1 = vlist1[1]
+    minor2 = vlist2[1]
+    revision1 = vlist1[2]
+    revision2 = vlist2[2]
+    if major1 > major2:
+        return True
+    elif major1 < major2:
+        return False
+    else:
+        if minor1 > minor2:
+            return True
+        elif minor1 < minor2:
+            return False
+        else:
+            if revision1 > revision2:
+                return True
+            else:
+                return False
+
+#----------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+
 def substitute(pathname, library):
     if library:
         # Do %l substitution
@@ -324,7 +380,8 @@ def substitute(pathname, library):
         else:
             for vlib in vlibs[1:]:
                 vtest = vlib[len(vglob)-1:]
-                if version.parse(vtest) > version.parse(vstr):
+                if version_compare(parse_version_number(vtest),
+				parse_version_number(vstr)):
                     vstr = vtest
             newpathname = re.sub('%v', vstr, newpathname)
 

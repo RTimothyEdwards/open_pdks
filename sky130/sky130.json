@@ -94,10 +94,10 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "a67574f86dc944797c17229e94fd8fc9d6fbf949",
-        "magic": "dc87a8c6936e89a557a3a84e6acc4c8321b9079e",
-        "sky130_fd_pr": "514d4dc1d67632015e1de2cb7de60e21653cd94c",
-        "sky130_fd_io": "d3b662d017ce4fb5d4e3c3922ac81f744111e010",
+        "open_pdks": "c10a581884a4373c1a48b18ea3fc02c19d8d5c88",
+        "magic": "4445663cb1b2de1eb9818cfe89f60ed7659335f3",
+        "sky130_fd_pr": "1232782c1b9fab3aacda74d67ce7c92bf7da8105",
+        "sky130_fd_io": "b9c10d039816c4026f9a10cf8a200b9b5caa1b63",
         "sky130_fd_sc_hs": "9a855e97aa75f8a14be7eadc365c28d50045d5fc",
         "sky130_fd_sc_ms": "26d0047c0e2dbe28fe4950f171411f6e8b3d0564",
         "sky130_fd_sc_ls": "8e7040bfc58a17386e3d900c0e3b9c9163545c4a",
