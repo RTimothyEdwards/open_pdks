@@ -1,0 +1,58 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    strategy:
+      matrix:
+        os:
+          [
+            {
+              name: "macOS 14",
+              family: "macOS",
+              runner: "macos-14",
+              archs: "arm64",
+            },
+          ]
+        pdk: [sky130, gf180mcu]
+    name: Build ${{ matrix.pdk }} with Volare | ${{ matrix.os.name }} | ${{ matrix.os.archs }}
+    runs-on: ${{ matrix.os.runner }}
+    steps:
+      - name: Clear Build Space
+        run: |
+          echo "== Before =="
+          df -h
+          for xcode in /Applications/Xcode*; do
+            echo "== Removing $xcode … =="
+            rm -rf $xcode
+          done
+          echo "== After =="
+          df -h
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: |
+            extra-substituters = https://openlane.cachix.org
+            extra-trusted-public-keys = openlane.cachix.org-1:qqdwh+QMNGmZAuyeQJTH9ErW57OWSvdtuwfBKdS254E=
+      - name: Install Magic, Volare
+        run: nix profile install github:efabless/nix-eda/3d8f596ec8831538acdd61889d056378b5bea16b#magic-vlsi github:efabless/volare/0.20.6
+      - name: Set PDK root
+        run: |
+          mkdir -p root
+          echo "PDK_ROOT=$PWD/root" >> $GITHUB_ENV
+      - name: Build with Volare
+        run: |
+          volare build --include-libraries all --pdk ${{ matrix.pdk }} --use-repo-at open_pdks=$PWD --jobs $(sysctl -n hw.logicalcpu) --clear-build-artifacts $(git rev-parse HEAD)
+      - name: Push if New Tag
+        if: github.ref_type == 'tag'
+        run: |
+          if [ "${{ secrets.BOT_GH_TOKEN }}" != "" ]; then
+            volare push --pre --token ${{ secrets.BOT_GH_TOKEN }} --pdk ${{ matrix.pdk }} $(git rev-parse HEAD)
+          else
+            echo "Secret BOT_GH_TOKEN unset. Not attempting to push."
+          fi
