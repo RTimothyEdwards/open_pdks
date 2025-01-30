@@ -39,8 +39,12 @@ jobs:
           extra-conf: |
             extra-substituters = https://openlane.cachix.org
             extra-trusted-public-keys = openlane.cachix.org-1:qqdwh+QMNGmZAuyeQJTH9ErW57OWSvdtuwfBKdS254E=
-      - name: Install Magic, Volare
-        run: nix profile install github:efabless/nix-eda/3d8f596ec8831538acdd61889d056378b5bea16b#magic-vlsi github:efabless/volare/0.20.6
+      - name: Install Magic, Volare, GHR
+        run: |
+          nix profile install github:efabless/nix-eda/3d8f596ec8831538acdd61889d056378b5bea16b#{ghr,magic-vlsi} github:efabless/volare/0.20.6
+          volare --version
+          magic --version
+          ghr --version
       - name: Set PDK root
         run: |
           mkdir -p root
