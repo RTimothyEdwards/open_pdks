@@ -66,6 +66,9 @@ def run_antenna(layout_name, output_file):
         elif 'PDK_PATH' in myenv:
             rcpathroot = myenv['PDKPATH'] + '/libs.tech/magic'
             rcfile = glob.glob(rcpathroot + '/*.magicrc')[0]
+        elif 'PDK_ROOT' in myenv and 'PDK' in myenv:
+            rcpathroot = myenv['PDK_ROOT'] + '/' + myenv['PDK'] + '/libs.tech/magic'
+            rcfile = glob.glob(rcpathroot + '/*.magicrc')[0]
         else:
             print('Error: Cannot get magic rcfile for the technology!')
             return
