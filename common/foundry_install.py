@@ -394,7 +394,7 @@ def substitute(pathname, library):
 #----------------------------------------------------------------------------
 
 def get_gds_properties(magfile):
-    proprex = re.compile('^[ \t]*string[ \t]+(GDS_[^ \t]+)[ \t]+([^ \t]+)$')
+    proprex = re.compile(r'^[ \t]*string[ \t]+(GDS_[^ \t]+)[ \t]+([^ \t]+)$')
     proplines = []
     if os.path.isfile(magfile):
         with open(magfile, 'r') as ifile:
@@ -415,10 +415,10 @@ def get_gds_properties(magfile):
 def get_subckt_ports(cdlfile, subname):
     portdict = {}
     pidx = 1
-    portrex = re.compile('^\.subckt[ \t]+([^ \t]+)[ \t]+(.*)$', flags=re.IGNORECASE)
+    portrex = re.compile(r'^\.subckt[ \t]+([^ \t]+)[ \t]+(.*)$', flags=re.IGNORECASE)
     with open(cdlfile, 'r') as ifile:
         cdltext = ifile.read()
-        cdllines = cdltext.replace('\n+', ' ').splitlines()
+        cdllines = cdltext.replace(r'\n+', ' ').splitlines()
         for line in cdllines:
             lmatch = portrex.match(line)
             if lmatch:
@@ -449,7 +449,7 @@ def vfilefilter(vfile):
     # case that has been seen seems to work under the assumption that leading
     # whitespace is ignored up to the amount used by the last indentation.
 
-    vlines = re.sub('\\\\\n[ \t]*', '', vtext)
+    vlines = re.sub(r'\\\\\n[ \t]*', '', vtext)
 
     if vlines != vtext:
         # File contents have been modified, so if this file was a symbolic
@@ -1026,7 +1026,7 @@ if __name__ == '__main__':
 
                 # Regular expression catches filename "a.b.c", handling any
                 # leading dots (such as "../") and returns string "a.b"
-                basenamerex = re.compile('(\.?\.?[^.]+\..+)\.+')
+                basenamerex = re.compile(r'(\.?\.?[^.]+\..+)\.+')
                 baseliblist = []
                 splitfiles = {}
                 for libfile in liblist:
@@ -1549,9 +1549,9 @@ if __name__ == '__main__':
                 print('Searching for supported devices in PDK script ' + pdkscript + '.')
 
                 if os.path.isfile(pdkscript):
-                    librex = re.compile('^[ \t]*set[ \t]+PDKNAMESPACE[ \t]+([^ \t]+)$')
-                    devrex = re.compile('^[ \t]*proc[ \t]+([^ :\t]+)::([^ \t_]+)_defaults')
-                    fixrex = re.compile('^[ \t]*return[ \t]+\[([^ :\t]+)::fixed_draw[ \t]+([^ \t]+)[ \t]+')
+                    librex = re.compile(r'^[ \t]*set[ \t]+PDKNAMESPACE[ \t]+([^ \t]+)$')
+                    devrex = re.compile(r'^[ \t]*proc[ \t]+([^ :\t]+)::([^ \t_]+)_defaults')
+                    fixrex = re.compile(r'^[ \t]*return[ \t]+\[([^ :\t]+)::fixed_draw[ \t]+([^ \t]+)[ \t]+')
                     devlist = []
                     fixedlist = []
                     with open(pdkscript, 'r') as ifile:
@@ -1702,7 +1702,7 @@ if __name__ == '__main__':
                                     print('catch {readspice ' + netdir + '/' + netfile
 						+ '}', file=ofile)
 
-                    # print('cellname delete \(UNNAMED\)', file=ofile)
+                    # print(r'cellname delete \(UNNAMED\)', file=ofile)
                     print('puts stdout "Writing all magic database files"', file=ofile)
                     print('writeall force', file=ofile)
 
@@ -1741,7 +1741,7 @@ if __name__ == '__main__':
                                 ltext = ifile.read()
                                 llines = ltext.splitlines()
                                 for lline in llines:
-                                    ltok = re.split(' |\t|\(', lline)
+                                    ltok = re.split(r' |\t|\(', lline)
                                     if ltok[0] == 'MACRO':
                                         lefmacros.append(ltok[1])
                     elif have_lef:
@@ -1770,7 +1770,7 @@ if __name__ == '__main__':
                                 vtext = ifile.read()
                                 vlines = vtext.splitlines()
                                 for vline in vlines:
-                                    vtok = re.split(' |\t|\(', vline)
+                                    vtok = re.split(r' |\t|\(', vline)
                                     try:
                                         if vtok[0] == 'module':
                                             if vtok[1] not in lefmacros:
@@ -1974,7 +1974,7 @@ if __name__ == '__main__':
                         ltext = ifile.read()
                         llines = ltext.splitlines()
                         for lline in llines:
-                            ltok = re.split(' |\t|\(', lline)
+                            ltok = re.split(r' |\t|\(', lline)
                             if ltok[0] == 'MACRO':
                                 lefmacros.append(ltok[1])
 
@@ -2063,7 +2063,7 @@ if __name__ == '__main__':
                     # an error message.
                     if len(lefmacros) > 0:
                         print('load ' + lefmacros[0], file=ofile)
-                        # print('cellname delete \(UNNAMED\)', file=ofile)
+                        # print(r'cellname delete \(UNNAMED\)', file=ofile)
                     else:
                         err_no_macros = True
                     print('writeall force', file=ofile)
@@ -2143,9 +2143,9 @@ if __name__ == '__main__':
 
                     proprex = re.compile('<< properties >>')
                     endrex = re.compile('<< end >>')
-                    rlabrex = re.compile('rlabel[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+([^ \t]+)')
-                    flabrex = re.compile('flabel[ \t]+.*[ \t]+([^ \t]+)[ \t]*')
-                    portrex = re.compile('port[ \t]+([^ \t]+)[ \t]+(.*)')
+                    rlabrex = re.compile(r'rlabel[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+[^ \t]+[ \t]+([^ \t]+)')
+                    flabrex = re.compile(r'flabel[ \t]+.*[ \t]+([^ \t]+)[ \t]*')
+                    portrex = re.compile(r'port[ \t]+([^ \t]+)[ \t]+(.*)')
                     gcellrex = re.compile('string gencell')
                     portnum = -1
 
@@ -2414,7 +2414,7 @@ if __name__ == '__main__':
                 else:
                     gdslibroot = os.path.split(allgdslibname)[1]
                     print('load ' + os.path.splitext(gdslibroot)[0], file=ofile)
-                print('catch {cellname delete \(UNNAMED\)}', file=ofile)
+                print(r'catch {cellname delete \(UNNAMED\)}', file=ofile)
 
                 print('ext2spice lvs', file=ofile)
 
