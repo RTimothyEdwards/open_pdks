@@ -56,7 +56,7 @@ def makegds(file, rcfile):
 		'-dnull',
 		'-noconsole',
 		'-rcfile', rcfile,
-		'generate_fill_dist.tcl',
+		layoutpath + '/generate_fill_dist.tcl',
 		filename]
 
     mproc = subprocess.run(magic_run_opts,
@@ -225,6 +225,7 @@ if __name__ == '__main__':
         print('cif ostyle wafflefill(tiled)', file=ofile)
     print('', file=ofile)
     # Use FIXED_BBOX as the boundary if it exists
+    print('select top cell', file=ofile)
     print('catch {box values {*}[property FIXED_BBOX]}', file=ofile)
     print('set fullbox [box values]', file=ofile)
     print('set xmax [lindex $fullbox 2]', file=ofile)
@@ -383,7 +384,7 @@ if __name__ == '__main__':
 		'-dnull',
 		'-noconsole',
 		'-rcfile', rcfile_path,
-		'generate_fill.tcl']
+		layoutpath + '/generate_fill.tcl']
 
         if debugmode:
             print('Running: ' + ' '.join(magic_run_opts))
@@ -429,7 +430,7 @@ if __name__ == '__main__':
 			'-dnull',
 			'-noconsole',
 			'-rcfile', rcfile_path,
-			'generate_fill_final.tcl']
+			layoutpath + '/generate_fill_final.tcl']
 
             mproc = subprocess.run(magic_run_opts,
 			stdin = subprocess.DEVNULL,
