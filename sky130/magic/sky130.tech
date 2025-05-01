@@ -2105,12 +2105,24 @@ style wafflefill variants (),(tiled)
 # LI fill
 # Note requirement that LI fill may not overlap (non-fill)
 # diff or poly.
+#
+# Important note:  sky130 does not define an LI mask fill
+# blockage layer, because LI fill requirements were added
+# to the process after the open PDK was made.  While
+# obstruction layers can be used in magic to block LI
+# fill, this does not translate into GDS, so running fill
+# on a GDS top level cell will result in LI fill shapes
+# being placed in the corner and under the seal ring.  To
+# work around this, I have added obsm1 to the layers that
+# obstruct LI, which is a bit of a hack but should not
+# cause issues in practice.
 #---------------------------------------------------------
 
  templayer      obstruct_li_coarse allli,obsli,lifill,fillblock
         grow    2800
 	or	alldiff,allpoly
 	grow	200
+	or	obsm1
  templayer	lifill_coarse topbox
         # slots   0 3000 650 0 3000 650 700 0
         slots   0 3000 900 0 3000 900 700 0
@@ -2125,6 +2137,7 @@ style wafflefill variants (),(tiled)
 	grow	300
 	or	alldiff,allpoly
         grow    200
+	or	obsm1
  templayer	lifill_medium topbox
         slots   0 1500 500 0 1500 500 700 0
         and-not obstruct_li_medium
@@ -2137,6 +2150,7 @@ style wafflefill variants (),(tiled)
 	grow	300
 	or	alldiff,allpoly
         grow    200
+	or	obsm1
  templayer	lifill_fine topbox
         slots   0 580 500 0 580 500 700 0
         and-not obstruct_li_fine
