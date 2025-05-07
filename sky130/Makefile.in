@@ -303,24 +303,25 @@ else
 endif
 
 EF_URL = https://github.com/efabless
+FOSSI_URL = https://github.com/fossi-foundation
 GOOGLE_URL = https://foss-eda-tools.googlesource.com
 
 # Names of library repositories
-PDK_LIB_PR = ${EF_URL}/skywater-pdk-libs-sky130_fd_pr
-PDK_LIB_IO = ${EF_URL}/skywater-pdk-libs-sky130_fd_io
-PDK_LIB_SC_HD = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_hd
-PDK_LIB_SC_HDLL = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_hdll
-PDK_LIB_SC_LP = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_lp
-PDK_LIB_SC_HS = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_hs
-PDK_LIB_SC_MS = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_ms
-PDK_LIB_SC_LS = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_ls
-PDK_LIB_SC_HVL = ${EF_URL}/skywater-pdk-libs-sky130_fd_sc_hvl
+PDK_LIB_PR = ${FOSSI_URL}/skywater-pdk-libs-sky130_fd_pr
+PDK_LIB_IO = ${FOSSI_URL}/skywater-pdk-libs-sky130_fd_io
+PDK_LIB_SC_HD = ${FOSSI_URL}/skywater-pdk-libs-sky130_fd_sc_hd
+PDK_LIB_SC_HDLL = ${FOSSI_URL}/skywater-pdk-libs-sky130_fd_sc_hdll
+PDK_LIB_SC_LP = ${FOSSI_URL}/skywater-pdk-libs-sky130_fd_sc_lp
+PDK_LIB_SC_HS = ${FOSSI_URL}/skywater-pdk-libs-sky130_fd_sc_hs
+PDK_LIB_SC_MS = ${FOSSI_URL}/skywater-pdk-libs-sky130_fd_sc_ms
+PDK_LIB_SC_LS = ${FOSSI_URL}/skywater-pdk-libs-sky130_fd_sc_ls
+PDK_LIB_SC_HVL = ${FOSSI_URL}/skywater-pdk-libs-sky130_fd_sc_hvl
 
 ALPHA_URL =    https://github.com/PaulSchulz/sky130_pschulz_xx_hd
 XSCHEM_URL =   https://github.com/StefanSchippers/xschem_sky130
 KLAYOUT_URL =  ${EF_URL}/sky130_klayout_pdk
 PRECHECK_URL = ${EF_URL}/mpw_precheck
-SRAM_URL =     ${EF_URL}/sky130_sram_macros
+SRAM_URL =     ${FOSSI_URL}/sky130_sram_macros
 SRAM_SPACE_URL = ${GOOGLE_URL}/skywater-pdk/libs/sky130_fd_bd_sram
 RERAM_URL =    ${GOOGLE_URL}/skywater-pdk/libs/sky130_fd_pr_reram
 OSU_T12_URL =  ${GOOGLE_URL}/skywater-pdk/libs/sky130_osu_sc_t12
