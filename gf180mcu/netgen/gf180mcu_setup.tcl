@@ -137,7 +137,9 @@ foreach dev $devices {
 set devices {}
 lappend devices nfet_03v3
 lappend devices pfet_03v3
+lappend devices nfet_05v0
 lappend devices nfet_06v0
+lappend devices pfet_05v0
 lappend devices pfet_06v0
 lappend devices nfet_06v0_nvt
 
