@@ -28,8 +28,8 @@ def filter(inname, outname):
     fixedlines = []
     modified = False
 
-    resrex = re.compile('^R', re.IGNORECASE)
-    caprex = re.compile('^C', re.IGNORECASE)
+    resrex = re.compile(r'^R', re.IGNORECASE)
+    caprex = re.compile(r'^C', re.IGNORECASE)
 
     for line in spilines:
         fixedline = line
@@ -40,14 +40,14 @@ def filter(inname, outname):
         # 1) Lines starting with R, C, or M --> change to X
         fixedline = re.sub('^[RCM]', 'X', fixedline, flags=re.IGNORECASE)
         # 2) Names in $[...] --> remove the delimiter
-        fixedline = re.sub(' \$\[', ' ', fixedline, flags=re.IGNORECASE)
-        fixedline = re.sub('\] ', ' ', fixedline, flags=re.IGNORECASE)
+        fixedline = re.sub(r' \$\[', ' ', fixedline, flags=re.IGNORECASE)
+        fixedline = re.sub(r'\] ', ' ', fixedline, flags=re.IGNORECASE)
         # 3) Remove $SUB=
-        fixedline = re.sub('\$SUB=', '', fixedline, flags=re.IGNORECASE)
+        fixedline = re.sub(r'\$SUB=', '', fixedline, flags=re.IGNORECASE)
         # 4) Handle $W and $L for resistors
         if isres:
-            fixedline = re.sub('\$W', 'r_width', fixedline, flags=re.IGNORECASE)
-            fixedline = re.sub('\$L', 'r_length', fixedline, flags=re.IGNORECASE)
+            fixedline = re.sub(r'\$W', 'r_width', fixedline, flags=re.IGNORECASE)
+            fixedline = re.sub(r'\$L', 'r_length', fixedline, flags=re.IGNORECASE)
         if iscap:
             fixedline = re.sub('w=', 'c_width=', fixedline, flags=re.IGNORECASE)
             fixedline = re.sub('l=', 'c_length=', fixedline, flags=re.IGNORECASE)

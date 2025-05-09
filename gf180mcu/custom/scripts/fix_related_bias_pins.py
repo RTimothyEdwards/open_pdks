@@ -37,8 +37,8 @@ def filter(inname, outname):
     power_types = ['primary_power', 'primary_ground', 'backup_power',
 		   'internal_power', 'internal_ground']
 
-    pg_re = re.compile('\s*pg_pin\s*\(\s*"?([^\s]+)"?\s*\)\s*{')
-    well_re = re.compile('\s*pg_type\s*:\s*"?([^\s]+)"?\s*;')
+    pg_re = re.compile(r'\s*pg_pin\s*\(\s*"?([^\s]+)"?\s*\)\s*{')
+    well_re = re.compile(r'\s*pg_type\s*:\s*"?([^\s]+)"?\s*;')
 
     for line in slines:
         pmatch = pg_re.match(line)

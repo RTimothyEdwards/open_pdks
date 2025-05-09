@@ -34,11 +34,11 @@ def filter(inname, outname):
     modified = False
     inpin = False
 
-    macrorex = re.compile('^MACRO[ \t]+([^ \t\n]+)')
-    pinrex = re.compile('^[ \t]*PIN[ \t]+[PG]_CORE')
-    endrex = re.compile('[ \t]*END[ \t]+[PG]_CORE')
-    rectrex = re.compile('^[ \t]*RECT[ \t]+[0-9.]+[ \t]+([0-9.]+)[ \t]+')
-    rect2rex = re.compile('^[ \t]*RECT[ \t]+[0-9.]+[ \t]+([0-9.]+)[ \t]+[0-9.]+[ \t]+([0-9.]+)[ \t]+')
+    macrorex = re.compile(r'^MACRO[ \t]+([^ \t\n]+)')
+    pinrex = re.compile(r'^[ \t]*PIN[ \t]+[PG]_CORE')
+    endrex = re.compile(r'[ \t]*END[ \t]+[PG]_CORE')
+    rectrex = re.compile(r'^[ \t]*RECT[ \t]+[0-9.]+[ \t]+([0-9.]+)[ \t]+')
+    rect2rex = re.compile(r'^[ \t]*RECT[ \t]+[0-9.]+[ \t]+([0-9.]+)[ \t]+[0-9.]+[ \t]+([0-9.]+)[ \t]+')
     macroname = None
 
     for line in llines:

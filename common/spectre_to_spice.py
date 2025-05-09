@@ -30,13 +30,13 @@ def is_number(s):
 def parse_param_line(line, inparam, insub, iscall, ispassed, inmod, linenum):
 
     # Regexp patterns
-    parm1rex = re.compile('[ \t]*parameters[ \t]*(.*)')
-    parm2rex = re.compile('[ \t]*params:[ \t]*(.*)')
-    parm3rex = re.compile('[ \t]*\+[ \t]*(.*)')
-    parm4rex = re.compile('[ \t]*([^= \t]+)[ \t]*=[ \t]*([^ \t]+)[ \t]*(.*)')
-    parm5rex = re.compile('[ \t]*([^= \t]+)[ \t]*(.*)')
-    parm6rex = re.compile('[ \t]*([^= \t]+)[ \t]*=[ \t]*([\'{][^\'}]+[\'}])[ \t]*(.*)')
-    rtok = re.compile('([^ \t\n]+)[ \t]*(.*)')
+    parm1rex = re.compile(r'[ \t]*parameters[ \t]*(.*)')
+    parm2rex = re.compile(r'[ \t]*params:[ \t]*(.*)')
+    parm3rex = re.compile(r'[ \t]*\+[ \t]*(.*)')
+    parm4rex = re.compile(r'[ \t]*([^= \t]+)[ \t]*=[ \t]*([^ \t]+)[ \t]*(.*)')
+    parm5rex = re.compile(r'[ \t]*([^= \t]+)[ \t]*(.*)')
+    parm6rex = re.compile(r'[ \t]*([^= \t]+)[ \t]*=[ \t]*([\'{][^\'}]+[\'}])[ \t]*(.*)')
+    rtok = re.compile(r'([^ \t\n]+)[ \t]*(.*)')
 
     fmtline = []
 
@@ -73,7 +73,7 @@ def parse_param_line(line, inparam, insub, iscall, ispassed, inmod, linenum):
         # Parameter expression given with no braces or quotes around
         # the expression.  Fix the expression by removing the spaces
         # around '*'.
-        rest = re.sub('[ \t]*([\*\+\-])[ \t]*', '\g<1>', rest)
+        rest = re.sub(r'[ \t]*([\*\+\-])[ \t]*', '\g<1>', rest)
 
         pmatch = parm4rex.match(rest)
         if pmatch:
@@ -173,20 +173,20 @@ def parse_param_line(line, inparam, insub, iscall, ispassed, inmod, linenum):
     # ngspice does not understand round(), so replace it with the equivalent
     # floor() expression.
 
-    finalline = re.sub('round\(', 'floor(0.5+', finalline)
+    finalline = re.sub(r'round\(', 'floor(0.5+', finalline)
 
     # use of "no" and "yes" as parameter values is not allowed in ngspice.
 
-    finalline = re.sub('sw_et[ \t]*=[ \t]*{no}', 'sw_et=0', finalline)
-    finalline = re.sub('sw_et[ \t]*=[ \t]*{yes}', 'sw_et=1', finalline)
-    finalline = re.sub('isnoisy[ \t]*=[ \t]*{no}', 'isnoisy=0', finalline)
-    finalline = re.sub('isnoisy[ \t]*=[ \t]*{yes}', 'isnoisy=1', finalline)
+    finalline = re.sub(r'sw_et[ \t]*=[ \t]*{no}', 'sw_et=0', finalline)
+    finalline = re.sub(r'sw_et[ \t]*=[ \t]*{yes}', 'sw_et=1', finalline)
+    finalline = re.sub(r'isnoisy[ \t]*=[ \t]*{no}', 'isnoisy=0', finalline)
+    finalline = re.sub(r'isnoisy[ \t]*=[ \t]*{yes}', 'isnoisy=1', finalline)
 
     # Use of "m" in parameters is forbidden.  Specifically look for "{N*m}".
     # e.g., replace "mult = {2*m}" with "mult = 2".  Note that this usage
     # is most likely an error in the source.
 
-    finalline = re.sub('\{([0-9]+)\*[mM]\}', r'\1', finalline)
+    finalline = re.sub(r'\{([0-9]+)\*[mM]\}', r'\1', finalline)
 
     return finalline, ispassed
 
@@ -198,7 +198,7 @@ def get_param_names(line):
     # model name.  There are only a few instances of this, so this
     # routine is not rigorously checking all parameters, just entries
     # on lines with ".param".
-    parmrex = re.compile('[ \t]*([^= \t]+)[ \t]*=[ \t]*([^ \t]+)[ \t]*(.*)')
+    parmrex = re.compile(r'[ \t]*([^= \t]+)[ \t]*=[ \t]*([^ \t]+)[ \t]*(.*)')
     rest = line
     paramnames = []
     while rest != '':
@@ -214,7 +214,7 @@ def get_param_names(line):
 # binned model
 
 def addmodel(modellines, linenum):
-    typerex = re.compile('([ \t]*type[ \t]*=[ \t]*)([^ \t]+)[ \t]*', re.IGNORECASE)
+    typerex = re.compile(r'([ \t]*type[ \t]*=[ \t]*)([^ \t]+)[ \t]*', re.IGNORECASE)
   
     # 'ZYXW' was left as a placeholder for the device type
     if len(modellines) > 0:
@@ -249,31 +249,31 @@ def addmodel(modellines, linenum):
 def convert_file(in_file, out_file):
 
     # Regexp patterns
-    statrex = re.compile('[ \t]*statistics[ \t]*\{(.*)')
-    simrex = re.compile('[ \t]*simulator[ \t]+([^= \t]+)[ \t]*=[ \t]*(.+)')
-    insubrex = re.compile('[ \t]*inline[ \t]+subckt[ \t]+([^ \t\(]+)[ \t]*\(([^)]*)')
-    cdlsubrex = re.compile('\.?subckt[ \t]+([^ \t\(]+)[ \t]*\(([^)]*)')
-    endsubrex = re.compile('[ \t]*ends[ \t]+(.+)')
-    endonlysubrex = re.compile('[ \t]*ends[ \t]*')
-    modelrex = re.compile('[ \t]*model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+\{(.*)')
-    cdlmodelrex = re.compile('[ \t]*model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)')
-    binrex = re.compile('[ \t]*([0-9]+):[ \t]*(.*)')
-    shincrex = re.compile('\.inc[ \t]+')
-    isexprrex = re.compile('[^0-9a-zA-Z_]')
-    paramrex = re.compile('\.param[ \t]+(.*)')
+    statrex = re.compile(r'[ \t]*statistics[ \t]*\{(.*)')
+    simrex = re.compile(r'[ \t]*simulator[ \t]+([^= \t]+)[ \t]*=[ \t]*(.+)')
+    insubrex = re.compile(r'[ \t]*inline[ \t]+subckt[ \t]+([^ \t\(]+)[ \t]*\(([^)]*)')
+    cdlsubrex = re.compile(r'\.?subckt[ \t]+([^ \t\(]+)[ \t]*\(([^)]*)')
+    endsubrex = re.compile(r'[ \t]*ends[ \t]+(.+)')
+    endonlysubrex = re.compile(r'[ \t]*ends[ \t]*')
+    modelrex = re.compile(r'[ \t]*model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+\{(.*)')
+    cdlmodelrex = re.compile(r'[ \t]*model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)')
+    binrex = re.compile(r'[ \t]*([0-9]+):[ \t]*(.*)')
+    shincrex = re.compile(r'\.inc[ \t]+')
+    isexprrex = re.compile(r'[^0-9a-zA-Z_]')
+    paramrex = re.compile(r'\.param[ \t]+(.*)')
 
-    stdsubrex = re.compile('\.?subckt[ \t]+([^ \t]+)[ \t]+(.*)')
-    stdmodelrex = re.compile('\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)')
-    stdendsubrex = re.compile('\.ends[ \t]+(.+)')
-    stdendonlysubrex = re.compile('\.ends[ \t]*')
+    stdsubrex = re.compile(r'\.?subckt[ \t]+([^ \t]+)[ \t]+(.*)')
+    stdmodelrex = re.compile(r'\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)')
+    stdendsubrex = re.compile(r'\.ends[ \t]+(.+)')
+    stdendonlysubrex = re.compile(r'\.ends[ \t]*')
 
     # Devices (resistor, capacitor, subcircuit as resistor or capacitor)
-    caprex = re.compile('c([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*capacitor[ \t]*(.*)', re.IGNORECASE)
-    resrex = re.compile('r([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*resistor[ \t]*(.*)', re.IGNORECASE)
-    cdlrex = re.compile('[ \t]*([npcrdlmqx])([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
-    stddevrex = re.compile('[ \t]*([crd])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
-    stddev2rex = re.compile('[ \t]*([crd])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t\'{]+[\'{][^\'}]+[\'}])[ \t]*(.*)', re.IGNORECASE)
-    stddev3rex = re.compile('[ \t]*([npcrdlmqx])([^ \t]+)[ \t]+(.*)', re.IGNORECASE)
+    caprex = re.compile(r'c([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*capacitor[ \t]*(.*)', re.IGNORECASE)
+    resrex = re.compile(r'r([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*resistor[ \t]*(.*)', re.IGNORECASE)
+    cdlrex = re.compile(r'[ \t]*([npcrdlmqx])([^ \t]+)[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
+    stddevrex = re.compile(r'[ \t]*([crd])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
+    stddev2rex = re.compile(r'[ \t]*([crd])([^ \t]+)[ \t]+([^ \t]+[ \t]+[^ \t]+)[ \t]+([^ \t\'{]+[\'{][^\'}]+[\'}])[ \t]*(.*)', re.IGNORECASE)
+    stddev3rex = re.compile(r'[ \t]*([npcrdlmqx])([^ \t]+)[ \t]+(.*)', re.IGNORECASE)
 
     with open(in_file, 'r') as ifile:
         try:
@@ -287,7 +287,7 @@ def convert_file(in_file, out_file):
     # because any subcircuit call could be a forward reference.
     #---------------------------------------------------------------
 
-    allsubrex = re.compile('.*subckt[ \t]+([^ \t\(]+)')
+    allsubrex = re.compile(r'.*subckt[ \t]+([^ \t\(]+)')
     subnames = []
     for line in speclines:
         testline = line.strip()
@@ -492,9 +492,9 @@ def convert_file(in_file, out_file):
                 ispassed = True
                 subname = imatch.group(1)
                 if isspectre:
-                    devrex = re.compile('[ \t]*' + subname + '[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
+                    devrex = re.compile(r'[ \t]*' + subname + r'[ \t]*\(([^)]*)\)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
                 else:
-                    devrex = re.compile('[ \t]*' + subname + '[ \t]*([^ \t]+)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
+                    devrex = re.compile(r'[ \t]*' + subname + r'[ \t]*([^ \t]+)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
                 # If there is no close-parenthesis then we should expect it on
                 # a continuation line
                 inpinlist = True if ')' not in line else False
@@ -795,20 +795,20 @@ def convert_file(in_file, out_file):
     # (NOTE:  Need more generic handling here, as perimeter parameter
     # could be in a continuation line)
 
-    perimrex = re.compile('perim([ \t]*=[ \t]*)', re.IGNORECASE)
+    perimrex = re.compile(r'perim([ \t]*=[ \t]*)', re.IGNORECASE)
     for j in range(len(spicelines)):
         line = spicelines[j]
         if len(line) > 1 and line[0].lower() == 'd':
-            spicelines[j] = perimrex.sub('pj\g<1>', line)
+            spicelines[j] = perimrex.sub(r'pj\g<1>', line)
 
     # Catching the spectre use of "m" is difficult, so do another pass
     # on "spicelines" to catch which subcircuits use "*m" expressions,
     # then for those subcircuits, add "mult=1" to the subcircuit
     # parameters.  (NOTE:  Need a more generic regular expression here)
 
-    sqrtrex = re.compile('.*(sqrt\([ \t]*[^ \t]+[ \t]*\*[ \t]*)m[ \t]*\)', re.IGNORECASE)
-    sqsubrex = re.compile('(sqrt\([ \t]*[^ \t]+[ \t]*\*[ \t]*)m[ \t]*\)', re.IGNORECASE)
-    subrex = re.compile('\.subckt[ \t]+([^ \t\(]+)[ \t]*', re.IGNORECASE)
+    sqrtrex = re.compile(r'.*(sqrt\([ \t]*[^ \t]+[ \t]*\*[ \t]*)m[ \t]*\)', re.IGNORECASE)
+    sqsubrex = re.compile(r'(sqrt\([ \t]*[^ \t]+[ \t]*\*[ \t]*)m[ \t]*\)', re.IGNORECASE)
+    subrex = re.compile(r'\.subckt[ \t]+([^ \t\(]+)[ \t]*', re.IGNORECASE)
     needmult = []
     for j in range(len(spicelines)):
         line = spicelines[j]
@@ -817,7 +817,7 @@ def convert_file(in_file, out_file):
             cursub = smatch.group(1)
         smatch = sqrtrex.match(line)
         if smatch:
-            spicelines[j] = sqsubrex.sub('\g<1>mult)', line)
+            spicelines[j] = sqsubrex.sub(r'\g<1>mult)', line)
             needmult.append(cursub)
 
     # Now add "mult=1" parameter to any subcircuit in the "needmult" list
@@ -828,12 +828,12 @@ def convert_file(in_file, out_file):
             spicelines[j] = line + ' mult=1'
 
     # Check for resistor models using "tc1r" and "tc2r"
-    rmodrex = re.compile('.*[ \t]+tc[12]r[ \t]+=', re.IGNORECASE)
+    rmodrex = re.compile(r'.*[ \t]+tc[12]r[ \t]+=', re.IGNORECASE)
     for j in range(len(spicelines)):
         line = spicelines[j]
         rmatch = rmodrex.match(line)
         if rmatch:
-            spicelines[j] = re.sub('([ \t]+tc[12])r([ \t])', '\g<1>\g<2>', line)
+            spicelines[j] = re.sub(r'([ \t]+tc[12])r([ \t])', '\g<1>\g<2>', line)
 
     # Output the result to out_file.
     with open(out_file, 'w') as ofile:

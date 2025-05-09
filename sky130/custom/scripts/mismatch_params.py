@@ -36,8 +36,8 @@ elif len(arguments) > 0:
 
 mismatch_params = []
 
-mmrex = re.compile('^\*[ \t]*mismatch[ \t]*\{')
-endrex = re.compile('^\*[ \t]*\}')
+mmrex = re.compile(r'^\*[ \t]*mismatch[ \t]*\{')
+endrex = re.compile(r'^\*[ \t]*\}')
 
 filelist = []
 
@@ -70,7 +70,7 @@ for dirpath, dirnames, filenames in os.walk(walkpath):
                         state = 'after_mismatch'
                     else:
                         # Make sure all "A = B" syntax closes up around the equal sign.
-                        newline = re.sub('[ \t]*=[ \t]*', '=', line)
+                        newline = re.sub(r'[ \t]*=[ \t]*', '=', line)
                         tokens = newline.split()
                         if 'vary' in tokens:
                             if ('dist=gauss' in tokens) or ('gauss' in tokens):
@@ -116,11 +116,11 @@ print('')
 # a number of places in the models.
 #--------------------------------------------------------------------
 
-gaussrex = re.compile('\'[ \t]+dev\/gauss=\'', re.IGNORECASE)
+gaussrex = re.compile(r'\'[ \t]+dev\/gauss=\'', re.IGNORECASE)
 
 # Same as above, for parameters that are not already expressions.
 
-gauss2rex = re.compile('=[ \t]*([^ \t]+)[ \t]+dev\/gauss=\'', re.IGNORECASE)
+gauss2rex = re.compile(r'=[ \t]*([^ \t]+)[ \t]+dev\/gauss=\'', re.IGNORECASE)
 
 #--------------------------------------------------------------------
 # Step 2.  Make replacements
@@ -152,7 +152,7 @@ for infile_name in filelist:
 
         gmatch = gauss2rex.search(newline)
         if gmatch:
-            newline = gauss2rex.sub("='\g<1>+" + mm_switch_param + '*AGAUSS(0,1.0,1)*', newline)
+            newline = gauss2rex.sub(r"='\g<1>+" + mm_switch_param + '*AGAUSS(0,1.0,1)*', newline)
             replaced_something = True
             print("  Line {}: Found PSPICE dev/gauss and replaced.".format(line_number))
 

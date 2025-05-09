@@ -42,9 +42,9 @@ elif len(arguments) > 0:
 
 process_params = []
 
-parmrex = re.compile('^\.param[ \t]+')
-prrex = re.compile('^\*[ \t]*process[ \t]*\{')
-endrex = re.compile('^\*[ \t]*\}')
+parmrex = re.compile(r'^\.param[ \t]+')
+prrex = re.compile(r'^\*[ \t]*process[ \t]*\{')
+endrex = re.compile(r'^\*[ \t]*\}')
 
 filelist = []
 
@@ -77,7 +77,7 @@ for dirpath, dirnames, filenames in os.walk(walkpath):
                         state = 'after_process'
                     else:
                         # Make sure all "A = B" syntax closes up around the equal sign.
-                        newline = re.sub('[ \t]*=[ \t]*', '=', line)
+                        newline = re.sub(r'[ \t]*=[ \t]*', '=', line)
                         tokens = newline.split()
                         if 'vary' in tokens:
                             if ('dist=gauss' in tokens) or ('gauss' in tokens):

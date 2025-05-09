@@ -133,21 +133,21 @@ def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=F
 def create_blackboxes(ntext):
     updated = []
 
-    modrex = re.compile('^[ \t]*module[ \t\n]+')
-    endrex = re.compile('^[ \t]*endmodule[ \t\n]+')
-    inrex = re.compile('^[ \t]*input[ \t\n]+')
-    outrex = re.compile('^[ \t]*output[ \t\n]+')
-    inoutrex = re.compile('^[ \t]*inout[ \t\n]+')
-    ifrex = re.compile('^[ \t]*`if')
-    elsrex = re.compile('^[ \t]*`els')
-    endifrex = re.compile('^[ \t]*`end')
-    suprex = re.compile('^[ \t]*supply')
+    modrex = re.compile(r'^[ \t]*module[ \t\n]+')
+    endrex = re.compile(r'^[ \t]*endmodule[ \t\n]+')
+    inrex = re.compile(r'^[ \t]*input[ \t\n]+')
+    outrex = re.compile(r'^[ \t]*output[ \t\n]+')
+    inoutrex = re.compile(r'^[ \t]*inout[ \t\n]+')
+    ifrex = re.compile(r'^[ \t]*`if')
+    elsrex = re.compile(r'^[ \t]*`els')
+    endifrex = re.compile(r'^[ \t]*`end')
+    suprex = re.compile(r'^[ \t]*supply')
 
     in_mod = False
     depth = 0
     for line in ntext.splitlines():
         # Strip any comments from line before checking
-        nocline = re.sub('[ \t]*//.*', '', line)
+        nocline = re.sub(r'[ \t]*//.*', '', line)
         if not in_mod:
             mmatch = modrex.match(nocline)
             if mmatch:

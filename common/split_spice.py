@@ -26,11 +26,11 @@ def usage():
 def convert_file(in_file, out_path, out_file):
 
     # Regexp patterns
-    paramrex = re.compile('\.param[ \t]+(.*)')
-    subrex = re.compile('\.subckt[ \t]+([^ \t]+)[ \t]+([^ \t]*)')
-    modelrex = re.compile('\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+(.*)')
-    endsubrex = re.compile('\.ends[ \t]+(.+)')
-    increx = re.compile('\.include[ \t]+')
+    paramrex = re.compile(r'\.param[ \t]+(.*)')
+    subrex = re.compile(r'\.subckt[ \t]+([^ \t]+)[ \t]+([^ \t]*)')
+    modelrex = re.compile(r'\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+(.*)')
+    endsubrex = re.compile(r'\.ends[ \t]+(.+)')
+    increx = re.compile(r'\.include[ \t]+')
 
     with open(in_file, 'r') as ifile:
         inplines = ifile.read().splitlines()
@@ -115,7 +115,7 @@ def convert_file(in_file, out_path, out_file):
             if imatch:
                 insubckt = True
                 subname = imatch.group(1)
-                devrex = re.compile(subname + '[ \t]*([^ \t]+)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
+                devrex = re.compile(subname + r'[ \t]*([^ \t]+)[ \t]*([^ \t]+)[ \t]*(.*)', re.IGNORECASE)
                 inpinlist = True
                 subcktlines.append(line)
                 continue

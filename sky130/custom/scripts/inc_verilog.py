@@ -41,10 +41,10 @@ def filter(inname, outname):
 
     fixedlines = []
     modified = False
-    increx = re.compile('[ \t]*`include[ \t]+"?([^ \t\n"]+)"?')
-    ddotrex = re.compile('[^\.]+\.[^\.]+\.v')
-    tdotrex = re.compile('[^\.]+\.[^\.]+\.[^\.]+\.v')
-    endrex = re.compile('[ \t]*endmodule')
+    increx = re.compile(r'[ \t]*`include[ \t]+"?([^ \t\n"]+)"?')
+    ddotrex = re.compile(r'[^\.]+\.[^\.]+\.v')
+    tdotrex = re.compile(r'[^\.]+\.[^\.]+\.[^\.]+\.v')
+    endrex = re.compile(r'[ \t]*endmodule')
     inpath = os.path.split(inname)[0]
 
     for line in vlines:

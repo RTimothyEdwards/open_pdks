@@ -302,7 +302,6 @@ else
     REFERENCE_JSON =
 endif
 
-EF_URL = https://github.com/efabless
 FOSSI_URL = https://github.com/fossi-foundation
 GOOGLE_URL = https://foss-eda-tools.googlesource.com
 
@@ -319,8 +318,8 @@ PDK_LIB_SC_HVL = ${FOSSI_URL}/skywater-pdk-libs-sky130_fd_sc_hvl
 
 ALPHA_URL =    https://github.com/PaulSchulz/sky130_pschulz_xx_hd
 XSCHEM_URL =   https://github.com/StefanSchippers/xschem_sky130
-KLAYOUT_URL =  ${EF_URL}/sky130_klayout_pdk
-PRECHECK_URL = ${EF_URL}/mpw_precheck
+KLAYOUT_URL =  ${FOSSI_URL}/sky130_klayout_pdk
+PRECHECK_URL = ${FOSSI_URL}/mpw_precheck
 SRAM_URL =     ${FOSSI_URL}/sky130_sram_macros
 SRAM_SPACE_URL = ${GOOGLE_URL}/skywater-pdk/libs/sky130_fd_bd_sram
 RERAM_URL =    ${GOOGLE_URL}/skywater-pdk/libs/sky130_fd_pr_reram

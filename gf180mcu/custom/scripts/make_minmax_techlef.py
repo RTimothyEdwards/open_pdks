@@ -54,10 +54,10 @@ elif len(arguments) > 0:
 tlefbase = 'gf180mcu_fd_sc_mcu' + lib + '__'
 tlefnom  = tlefbase + 'nom.tlef'
 
-resrex1  = re.compile('^[ \t]*RESISTANCE RPERSQ')
-resrex2  = re.compile('^[ \t]*ARRAYSPACING')
-layerrex = re.compile('^[ \t]*LAYER ([^ \t\n]+)')
-caprex   = re.compile('^[ \t]*CAPACITANCE CPERSQDIST')
+resrex1  = re.compile(r'^[ \t]*RESISTANCE RPERSQ')
+resrex2  = re.compile(r'^[ \t]*ARRAYSPACING')
+layerrex = re.compile(r'^[ \t]*LAYER ([^ \t\n]+)')
+caprex   = re.compile(r'^[ \t]*CAPACITANCE CPERSQDIST')
 
 #--------------------------------------------------------------------
 # Resistance values, by layer

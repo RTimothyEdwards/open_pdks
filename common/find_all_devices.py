@@ -207,8 +207,8 @@ def find_everything(pathtop):
 
     allcells = os.listdir(cellspath)
 
-    subcktrex = re.compile('\.subckt[ \t]+([^ \t]+)[ \t]+', re.IGNORECASE)
-    includerex = re.compile('\.include[ \t]+([^ \t]+)', re.IGNORECASE)
+    subcktrex = re.compile(r'\.subckt[ \t]+([^ \t]+)[ \t]+', re.IGNORECASE)
+    includerex = re.compile(r'\.include[ \t]+([^ \t]+)', re.IGNORECASE)
 
     filesdict  = {}
     subcktdict  = {}
@@ -291,7 +291,7 @@ def do_find_all_devices(pathtop, sourcefile, cellname=None, feol='tt', beol='tt'
         # of all primitive devices used in the file by cross-checking against
         # the dictionary of subcircuits.
 
-        devrex = re.compile('x([^ \t]+)[ \t]+(.*)', re.IGNORECASE)
+        devrex = re.compile(r'x([^ \t]+)[ \t]+(.*)', re.IGNORECASE)
         incfiles = []
 
         with open(sourcefile, 'r') as ifile:

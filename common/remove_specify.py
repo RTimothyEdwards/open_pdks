@@ -34,10 +34,10 @@ def remove_specify(vfile, outfile):
     # case that has been seen seems to work under the assumption that leading
     # whitespace is ignored up to the amount used by the last indentation.
 
-    vlines = re.sub('\\\\\n[ \t]*', '', vtext)
+    vlines = re.sub(r'\\\\\n[ \t]*', '', vtext)
 
-    specrex = re.compile('\n[ \t]*specify[ \t\n]+')
-    endspecrex = re.compile('\n[ \t]*endspecify')
+    specrex = re.compile(r'\n[ \t]*specify[ \t\n]+')
+    endspecrex = re.compile(r'\n[ \t]*endspecify')
     smatch = specrex.search(vlines)
     while smatch:
         specstart = smatch.start()

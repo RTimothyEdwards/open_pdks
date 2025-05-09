@@ -21,9 +21,9 @@ def usage():
 
 def parse_pins(line, debug):
     # Regexp patterns
-    subrex = re.compile('\.subckt[ \t]+[^ \t]+[ \t]+(.*)')
-    parm1rex = re.compile('([^= \t]+)[ \t]*=[ \t]*[^ \t]+[ \t]*(.*)')
-    parm2rex = re.compile('([^= \t]+)[ \t]*(.*)')
+    subrex = re.compile(r'\.subckt[ \t]+[^ \t]+[ \t]+(.*)')
+    parm1rex = re.compile(r'([^= \t]+)[ \t]*=[ \t]*[^ \t]+[ \t]*(.*)')
+    parm2rex = re.compile(r'([^= \t]+)[ \t]*(.*)')
 
     params = []
 
@@ -58,10 +58,10 @@ def parse_pins(line, debug):
 
 def param_parse(line, debug):
     # Regexp patterns
-    parm1rex = re.compile('\.param[ \t]+(.*)')
-    parm2rex = re.compile('\+[ \t]*(.*)')
-    parm3rex = re.compile('([^= \t]+)[ \t]*=[ \t]*[^ \t]+[ \t]*(.*)')
-    parm4rex = re.compile('([^= \t]+)[ \t]*(.*)')
+    parm1rex = re.compile(r'\.param[ \t]+(.*)')
+    parm2rex = re.compile(r'\+[ \t]*(.*)')
+    parm3rex = re.compile(r'([^= \t]+)[ \t]*=[ \t]*[^ \t]+[ \t]*(.*)')
+    parm4rex = re.compile(r'([^= \t]+)[ \t]*(.*)')
 
     if debug:
         print('Diagnostic:  param line in = "' + line + '"')
@@ -97,11 +97,11 @@ def param_parse(line, debug):
 def parse_file(in_file, debug):
 
     # Regexp patterns
-    paramrex = re.compile('\.param[ \t]+(.*)')
-    subrex = re.compile('\.subckt[ \t]+([^ \t]+)[ \t]+([^ \t]*)')
-    modelrex = re.compile('\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+(.*)')
-    endsubrex = re.compile('\.ends[ \t]+(.+)')
-    increx = re.compile('\.include[ \t]+')
+    paramrex = re.compile(r'\.param[ \t]+(.*)')
+    subrex = re.compile(r'\.subckt[ \t]+([^ \t]+)[ \t]+([^ \t]*)')
+    modelrex = re.compile(r'\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+(.*)')
+    endsubrex = re.compile(r'\.ends[ \t]+(.+)')
+    increx = re.compile(r'\.include[ \t]+')
 
     with open(in_file, 'r') as ifile:
         inplines = ifile.read().splitlines()

@@ -83,8 +83,8 @@ def runsubs(keys, defines, inputfile, outputfile):
         print("Error:  Cannot open file " + outputfile + " for writing.\n", file=sys.stderr)
         return
 
-    keyrex = re.compile('[ \t]*"([^"]+)":[ \t]*"[^"]+"')
-    valuerex = re.compile('[ \t]*"[^"]+":[ \t]*"([a-z0-9]+)"')
+    keyrex = re.compile(r'[ \t]*"([^"]+)":[ \t]*"[^"]+"')
+    valuerex = re.compile(r'[ \t]*"[^"]+":[ \t]*"([a-z0-9]+)"')
     distdefs = {}
     defs = []
 

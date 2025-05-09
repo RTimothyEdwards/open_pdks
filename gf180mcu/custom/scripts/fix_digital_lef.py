@@ -29,8 +29,8 @@ def filter(inname, outname):
     fixedlines = []
     modified = False
 
-    endrex = re.compile('[ \t]*END[ \t]+VSS')
-    macrorex = re.compile('^MACRO[ \t]+([^ \t\n]+)')
+    endrex = re.compile(r'[ \t]*END[ \t]+VSS')
+    macrorex = re.compile(r'^MACRO[ \t]+([^ \t\n]+)')
     macroname = None
 
     for line in llines:

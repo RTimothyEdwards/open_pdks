@@ -46,8 +46,8 @@ def filter(inname):
     for line in slines:
 
         # remove 'u' suffix from 'l' and 'w' parameters
-        newline = re.sub('([ \t][lL]=[0-9\.]*)u', r'\1', line)
-        newline = re.sub('([ \t][wW]=[0-9\.]*)u', r'\1', newline)
+        newline = re.sub(r'([ \t][lL]=[0-9\.]*)u', r'\1', line)
+        newline = re.sub(r'([ \t][wW]=[0-9\.]*)u', r'\1', newline)
 
         # reverse bus indices - NOTE: Only works if all ports are on the subckt line
         if newline.startswith(".subckt ") or newline.startswith(".SUBCKT "):

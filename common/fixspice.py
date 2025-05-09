@@ -74,14 +74,14 @@ def filter(inname, outname, debug=False):
     modified = False
 
     # Regular expression to find 'agauss(a,b,c)' lines and record a, b, and c
-    grex = re.compile('[^{]agauss\(([^,]*),([^,]*),([^)]*)\)', re.IGNORECASE)
+    grex = re.compile(r'[^{]agauss\(([^,]*),([^,]*),([^)]*)\)', re.IGNORECASE)
 
     # Regular expression to determine if the line is a .PARAM card    
-    paramrex = re.compile('^\.param', re.IGNORECASE)
+    paramrex = re.compile(r'^\.param', re.IGNORECASE)
     # Regular expression to determine if the line is a .MODEL card    
-    modelrex = re.compile('^\.model', re.IGNORECASE)
+    modelrex = re.compile(r'^\.model', re.IGNORECASE)
     # Regular expression to detect a .SUBCKT card
-    subcktrex = re.compile('^\.subckt', re.IGNORECASE)
+    subcktrex = re.compile(r'^\.subckt', re.IGNORECASE)
 
     for line in spilines:
         devtype = line[0].upper() if len(line) > 0 else 0
@@ -130,21 +130,21 @@ def filter(inname, outname, debug=False):
                 # Fixes related specifically to MOS models:
 
                 # Fix: Look for hspver=98.2 in FET model
-                altered = re.sub(' hspver[ ]*=[ ]*98\.2', ' ', fixedline, flags=re.IGNORECASE)
+                altered = re.sub(r' hspver[ ]*=[ ]*98\.2', ' ', fixedline, flags=re.IGNORECASE)
                 if altered != fixedline:
                     fixedline = altered
                     if debug:
                         print('Removed hspver=98.2 from ' + modeltype + ' model')
 
                 # Fix:  Change level 53 FETs to level 49
-                altered = re.sub(' (level[ ]*=[ ]*)53', ' \g<1>49', fixedline, flags=re.IGNORECASE)
+                altered = re.sub(r' (level[ ]*=[ ]*)53', ' \g<1>49', fixedline, flags=re.IGNORECASE)
                 if altered != fixedline:
                     fixedline = altered
                     if debug:
                         print('Changed level 53 ' + modeltype + ' to level 49')
 
                 # Fix: Look for version=4.3 or 4.5 FETs, change to 4.8.0 per recommendations
-                altered = re.sub(' (version[ ]*=[ ]*)4\.[35]', ' \g<1>4.8.0',
+                altered = re.sub(r' (version[ ]*=[ ]*)4\.[35]', ' \g<1>4.8.0',
 					fixedline, flags=re.IGNORECASE)
                 if altered != fixedline:
                     fixedline = altered
@@ -209,7 +209,7 @@ def filter(inname, outname, debug=False):
                     print('Removed tref= from ' + modeltype + ' model')
 
             # Fix: Look for double-dot model binning and replace with single dot
-            altered = re.sub('\.\.([0-9]+)', '.\g<1>', fixedline, flags=re.IGNORECASE)
+            altered = re.sub(r'\.\.([0-9]+)', '.\g<1>', fixedline, flags=re.IGNORECASE)
             if altered != fixedline:
                 fixedline = altered
                 if debug:
@@ -220,30 +220,30 @@ def filter(inname, outname, debug=False):
         # usual numeric assignments.
 
         if devtype == 'M':
-            altered = re.sub(' nf=[^ \'\t]+', ' ', fixedline, flags=re.IGNORECASE)
-            altered = re.sub(' nf=\'[^\'\t]+\'', ' ', altered, flags=re.IGNORECASE)
+            altered = re.sub(r' nf=[^ \'\t]+', ' ', fixedline, flags=re.IGNORECASE)
+            altered = re.sub(r' nf=\'[^\'\t]+\'', ' ', altered, flags=re.IGNORECASE)
             if altered != fixedline:
                 fixedline = altered
                 if debug:
                     print('Removed nf= from MOSFET device instance')
 
-            altered = re.sub(' mulu0=[^ \'\t]+', ' ', fixedline, flags=re.IGNORECASE)
-            altered = re.sub(' mulu0=\'[^\'\t]+\'', ' ', altered, flags=re.IGNORECASE)
+            altered = re.sub(r' mulu0=[^ \'\t]+', ' ', fixedline, flags=re.IGNORECASE)
+            altered = re.sub(r' mulu0=\'[^\'\t]+\'', ' ', altered, flags=re.IGNORECASE)
             if altered != fixedline:
                 fixedline = altered
                 if debug:
                     print('Removed mulu0= from MOSFET device instance')
 
-            altered = re.sub(' s[abcd]=[^ \'\t]+', ' ', fixedline, flags=re.IGNORECASE)
-            altered = re.sub(' s[abcd]=\'[^\'\t]+\'', ' ', altered, flags=re.IGNORECASE)
+            altered = re.sub(r' s[abcd]=[^ \'\t]+', ' ', fixedline, flags=re.IGNORECASE)
+            altered = re.sub(r' s[abcd]=\'[^\'\t]+\'', ' ', altered, flags=re.IGNORECASE)
             if altered != fixedline:
                 fixedline = altered
                 if debug:
                     print('Removed s[abcd]= from MOSFET device instance')
 
         # Remove tref= from all device type instances
-        altered = re.sub(' tref=[^ \'\t]+', ' ', fixedline, flags=re.IGNORECASE)
-        altered = re.sub(' tref=\'[^\'\t]+\'', ' ', altered, flags=re.IGNORECASE)
+        altered = re.sub(r' tref=[^ \'\t]+', ' ', fixedline, flags=re.IGNORECASE)
+        altered = re.sub(r' tref=\'[^\'\t]+\'', ' ', altered, flags=re.IGNORECASE)
         if altered != fixedline:
             fixedline = altered
             if debug:

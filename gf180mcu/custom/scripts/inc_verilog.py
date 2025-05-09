@@ -44,8 +44,8 @@ def filter(inname, outname):
 
     fixedlines = []
     modified = False
-    increx = re.compile('[ \t]*`include[ \t]+"?([^ \t\n"]+)"?')
-    endrex = re.compile('[ \t]*endmodule')
+    increx = re.compile(r'[ \t]*`include[ \t]+"?([^ \t\n"]+)"?')
+    endrex = re.compile(r'[ \t]*endmodule')
     inpath = os.path.split(inname)[0]
 
     for line in vlines:

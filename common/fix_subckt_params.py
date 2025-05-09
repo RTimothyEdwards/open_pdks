@@ -38,10 +38,10 @@ def usage():
 
 def param_split(line, params, debug):
     # Regexp patterns
-    parm1rex = re.compile('(\.param[ \t]+)(.*)')
-    parm2rex = re.compile('(\+[ \t]*)(.*)')
-    parm3rex = re.compile('([^= \t]+)([ \t]*=[ \t]*[^ \t]+[ \t]*)(.*)')
-    parm4rex = re.compile('([^= \t]+)([ \t]*)(.*)')
+    parm1rex = re.compile(r'(\.param[ \t]+)(.*)')
+    parm2rex = re.compile(r'(\+[ \t]*)(.*)')
+    parm3rex = re.compile(r'([^= \t]+)([ \t]*=[ \t]*[^ \t]+[ \t]*)(.*)')
+    parm4rex = re.compile(r'([^= \t]+)([ \t]*)(.*)')
 
     part1 = ''
     part2 = ''
@@ -95,11 +95,11 @@ def param_split(line, params, debug):
 def convert_file(in_file, out_path, params, debug):
 
     # Regexp patterns
-    paramrex = re.compile('\.param[ \t]+(.*)')
-    subrex = re.compile('\.subckt[ \t]+([^ \t]+)[ \t]+([^ \t]*)')
-    modelrex = re.compile('\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+(.*)')
-    endsubrex = re.compile('\.ends[ \t]+(.+)')
-    increx = re.compile('\.include[ \t]+')
+    paramrex = re.compile(r'\.param[ \t]+(.*)')
+    subrex = re.compile(r'\.subckt[ \t]+([^ \t]+)[ \t]+([^ \t]*)')
+    modelrex = re.compile(r'\.model[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+(.*)')
+    endsubrex = re.compile(r'\.ends[ \t]+(.+)')
+    increx = re.compile(r'\.include[ \t]+')
 
     with open(in_file, 'r') as ifile:
         inplines = ifile.read().splitlines()

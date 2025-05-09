@@ -27,7 +27,7 @@ def filter(inname, outname):
     fixedlines = []
     modified = False
 
-    layerrex = re.compile('[ \t]*LAYER ([^ \t\n]+)') 
+    layerrex = re.compile(r'[ \t]*LAYER ([^ \t\n]+)') 
 
     for line in llines:
 

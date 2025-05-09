@@ -42,10 +42,10 @@ def filter(inname, outname):
     fixedlines = []
     modified = False
 
-    macrorex = re.compile('[ \t]*MACRO[ \t]+([^ \t\n]+)')
-    pinrex = re.compile('[ \t]*PIN[ \t]+([^ \t\n]+)')
-    userex = re.compile('[ \t]*USE[ \t]+([^ \t\n]+)')
-    endrex = re.compile('[ \t]*END[ \t]+([^ \t\n]+)')
+    macrorex = re.compile(r'[ \t]*MACRO[ \t]+([^ \t\n]+)')
+    pinrex = re.compile(r'[ \t]*PIN[ \t]+([^ \t\n]+)')
+    userex = re.compile(r'[ \t]*USE[ \t]+([^ \t\n]+)')
+    endrex = re.compile(r'[ \t]*END[ \t]+([^ \t\n]+)')
 
     macroidx = -1
     pinidx = -1
