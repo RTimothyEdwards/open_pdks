@@ -4779,6 +4779,8 @@ variants *
 #  pfet_03v3		mosfet
 #  nfet_06v0		mosfet (thick oxide)
 #  pfet_06v0		mosfet (thick oxide)
+#  nfet_05v0		mosfet (thick oxide, short gate)*
+#  pfet_05v0		mosfet (thick oxide, short gate)*
 #  nfet_06v0_nvt	mosfet (native Vt)
 #  nfet_03v3_dss	mosfet (unsalicided drain)
 #  pfet_03v3_dss	mosfet (unsalicided drain)
@@ -4803,7 +4805,7 @@ variants *
 #  npolyf_u		resistor (N+ poly, unsalicided)
 #  ppolyf_u		resistor (P+ poly, unsalicided)
 #  ppolyf_u_1k		resistor (high res resistor)*
-#  ppolyf_u_1k_6p0	resistor (high res resistor, high voltage)*
+#  ppolyf_u_1k_6p0	resistor (high res resistor, high voltage)**
 #  nplus_u		resistor (N+ diffusion, unsalicided)
 #  pplus_u		resistor (P+ diffusion, unsalicided)
 #  npolyf_s		resistor (N+ poly, salicided)
@@ -4816,7 +4818,7 @@ variants *
 #  rm3			resistor (metal3)
 #  rm4			resistor (metal4)
 #  rm5			resistor (metal5)
-#  tm6k			resistor (top metal, 0.6um thick (standard))**
+#  tm6k			resistor (top metal, 0.6um thick (standard))***
 #  tm9k			resistor (top metal, 0.9um thick)
 #  tm11k		resistor (top metal, 1.1um thick)
 #  tm30k		resistor (top metal, 3.0um thick)
@@ -4830,25 +4832,34 @@ variants *
 #  cap_nmos_06v0_b	mosfet   (n-varactor, high voltage)
 #  cap_pmos_06v0_b	mosfet   (p-varactor, high voltage)
 #
-#  cap_mim_2f0fF	capacitor (MiM)*,**
+#  cap_mim_2f0fF	capacitor (MiM)**,***
 #
 #  efuse		fuse
 
+# *Note that the "5V" and "6V" devices are the same device and have the same
+#  device model.  However, a slightly shorter gate length is allowed when
+#  operating at 5V.  The GF standard cell sets use the 5V length.  Magic
+#  will extract the shortest gate length as a "5V" type and everything else
+#  as "6V", which should allow for clean LVS when using the standard cells.
 #
-# *Note that there are multiple mutually exclusive process options for the
+# **Note that there are multiple mutually exclusive process options for the
 #  high sheet rho resistor and MiM capacitor.  This tech file assumes the
 #  options 1kOhm/sq for the resistor and 2fF/um for the MiM capacitor.
 #
-# **The top metal may be any of metal3 to metaltp, depending on the stackup
+# ***The top metal may be any of metal3 to metaltp, depending on the stackup
 
  device msubcircuit pfet_03v3 pfet pdiff,pdc pdiff,pdc allnwell error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit nfet_03v3 nfet ndiff,ndc ndiff,ndc allpsub error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit pfet_06v0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error \
-	l=l w=w a1=as p1=ps a2=ad p2=pd
+	l>=5.5e-7 l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit pfet_05v0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error \
+	l<5.5e-7 l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit nfet_06v0 mvnfet mvndiff,mvndc mvndiff,mvndc allpsub error \
-	l=l w=w a1=as p1=ps a2=ad p2=pd
+	l>=7e-7 l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit nfet_05v0 mvnfet mvndiff,mvndc mvndiff,mvndc allpsub error \
+	l<7e-7 l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit pfet_03v3_dss pfet pdiffres pdiffres allnwell error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
  device msubcircuit nfet_03v3_dss nfet ndiffres ndiffres allpsub error \
