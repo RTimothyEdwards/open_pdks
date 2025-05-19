@@ -191,8 +191,11 @@ if __name__ == '__main__':
 
         print('select top cell', file=ofile)
         print('expand', file=ofile)
-        print('set fullbox [box values]', file=ofile)
         # Override with FIXED_BBOX, if it is defined
+        print('set fullbox [property FIXED_BBOX]', file=ofile)
+        print('if {$fullbox == ""} {', file=ofile)
+        print('    set fullbox [box values]', file=ofile)
+        print('}', file=ofile)
         print('catch {set fullbox [property FIXED_BBOX]}', file=ofile)
         print('set xmax [lindex $fullbox 2]', file=ofile)
         print('set xmin [lindex $fullbox 0]', file=ofile)
