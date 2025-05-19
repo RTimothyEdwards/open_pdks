@@ -1737,8 +1737,7 @@ style drc
  # edge-based rules.  Only mvwell to lvdiff needs a CIF rule.
  templayer difftap_near_mvnwell mvnwell
  grow 430
- and alldifflv
-
+ and alldifflv,*mvpsd
 
  # Simple spacing checks to lvnwell must use CIF-DRC rule
  # Note that HVI may *abut* lvnwell;  this can only be handled
