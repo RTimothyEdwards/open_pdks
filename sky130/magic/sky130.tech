@@ -1732,6 +1732,14 @@ style drc
  grow-min 840
  bridge	700 600
 
+ # Diffusion spacing to mvnwell.  Note:  mvdiff to any well
+ # (mv or lv) is the same rule and can be checked by regular
+ # edge-based rules.  Only mvwell to lvdiff needs a CIF rule.
+ templayer difftap_near_mvnwell mvnwell
+ grow 430
+ and alldifflv
+
+
  # Simple spacing checks to lvnwell must use CIF-DRC rule
  # Note that HVI may *abut* lvnwell;  this can only be handled
  # with mask-hints layers.
@@ -4369,14 +4377,16 @@ drc
 	"MV Diffusion spacing < %d (diff/tap.15a)"
  spacing alldiffmv *mvnsd,*mvpsd 270 touching_ok \
 	"MV Diffusion to MV tap spacing < %d (diff/tap.3)"
- spacing *mvndiff,mvnfet,mvnfetesd,mvnnfet,nnfet,*mvndiode,*nndiode,mvndiffres,mvvar *mvpsd 370 \
-	touching_ok "MV P-Diffusion to MV N-tap spacing < %d (diff/tap.15b)"
- spacing *mvnsd,*mvpdiff,mvpfet,mvpfetesd,mvvar,*mvpdiode *mvpsd,*psd 760 touching_illegal \
+ spacing *mvndiff,mvnfet,mvnfetesd,mvnnfet,nnfet,*mvndiode,*nndiode,mvndiffres,mvvar \
+	*mvpsd 370 touching_ok \
+	"MV P-Diffusion to MV N-tap spacing < %d (diff/tap.15b)"
+ spacing *mvnsd,*mvpdiff,mvpfet,mvpfetesd,mvvar,*mvpdiode *mvpsd,*psd 760 \
+	touching_illegal \
 	"MV Diffusion in N-well to P-tap spacing < %d (diff/tap.20 + diff/tap.17,19)"
  spacing *ndiff,*ndiode,nfet allnwell 340 touching_illegal \
 	"N-Diffusion spacing to N-well < %d (diff/tap.9)"
- spacing *mvndiff,*mvndiode,mvnfet,mvnnfet,nnfet allnwell 340 touching_illegal \
-	"N-Diffusion spacing to N-well < %d (diff/tap.9)"
+ spacing *mvndiff,*mvndiode,mvnfet,mvnnfet,nnfet allnwell 430 touching_illegal \
+	"N-Diffusion spacing to N-well < %d (diff/tap.24)"
  spacing *psd allnwell 130 touching_illegal \
 	"P-tap spacing to N-well < %d (diff/tap.11)"
  spacing *mvpsd allnwell 130 touching_illegal \
@@ -4399,6 +4409,8 @@ variants (full)
 	"MV diffusion to LV nwell spacing < %d (hvi.5 + nsd/psd.5)"
  cifspacing nwell_or_hvi nwell_or_hvi 700 touching_ok \
 	"HVI to HVI or LV nwell spacing < %d (hvi.5)"
+ cifmaxwidth difftap_near_mvnwell 0 bend_illegal \
+	"Spacing of N-Diffusion or P-tap to MV nwell < 0.43um (diff/tap.18,20)"
 variants (fast),(full)
 
  spacing allnfets allpactivenonfet 270 touching_illegal \
