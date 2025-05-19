@@ -1727,15 +1727,17 @@ style drc
  and allpdifflv,allpdiffmv
 
  # MV nwell must be 2um from any other nwell
- templayer mvnwell
+ templayer mvnwell_simple
  bloat-all alldiffmv nwell
+
+ templayer mvnwell mvnwell_simple
  grow-min 840
  bridge	700 600
 
  # Diffusion spacing to mvnwell.  Note:  mvdiff to any well
  # (mv or lv) is the same rule and can be checked by regular
  # edge-based rules.  Only mvwell to lvdiff needs a CIF rule.
- templayer difftap_near_mvnwell mvnwell
+ templayer difftap_near_mvnwell mvnwell_simple
  grow 430
  and alldifflv,*mvpsd
 
