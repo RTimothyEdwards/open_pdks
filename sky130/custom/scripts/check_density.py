@@ -196,7 +196,6 @@ if __name__ == '__main__':
         print('if {$fullbox == ""} {', file=ofile)
         print('    set fullbox [box values]', file=ofile)
         print('}', file=ofile)
-        print('catch {set fullbox [property FIXED_BBOX]}', file=ofile)
         print('set xmax [lindex $fullbox 2]', file=ofile)
         print('set xmin [lindex $fullbox 0]', file=ofile)
         print('set fullwidth [expr {$xmax - $xmin}]', file=ofile)
