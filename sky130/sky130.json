@@ -94,7 +94,7 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "ca4dc508d0b95eb84e4b6d79ae7011b849063a18",
+        "open_pdks": "168187b63c5d574b0822badd06e8cc41fd05242f",
         "magic": "02669de267fb4b658306946d36323b6601df639d",
         "sky130_fd_pr": "1232782c1b9fab3aacda74d67ce7c92bf7da8105",
         "sky130_fd_io": "b9c10d039816c4026f9a10cf8a200b9b5caa1b63",
