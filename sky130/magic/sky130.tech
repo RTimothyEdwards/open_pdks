@@ -1746,15 +1746,23 @@ style drc
  # with mask-hints layers.
 
  templayer drawn_hvi
-	mask-hints HVI
+ mask-hints HVI
 
  templayer allmvdiffnowell *mvndiff,*mvpsd
  and-not drawn_hvi
 
- templayer nwell_or_hvi nwell,drawn_hvi
-
  templayer lvnwell nwell
  and-not mvnwell
+
+ templayer hvi_abut_lvnwell lvnwell
+ grow 5
+ and drawn_hvi
+ grow 695
+
+ templayer hvi_to_lvnwell drawn_hvi
+ and-not hvi_abut_lvnwell
+ grow 700
+ and lvnwell
 
  # Check for low-voltage diffusion in high-voltage well
  templayer lvdiff_in_mvnwell *pdiff,*pdiode,pdiffres,*nsd
@@ -4408,8 +4416,10 @@ drc
 variants (full)
  cifspacing allmvdiffnowell lvnwell 825 touching_illegal \
 	"MV diffusion to LV nwell spacing < %d (hvi.5 + nsd/psd.5)"
- cifspacing nwell_or_hvi nwell_or_hvi 700 touching_ok \
-	"HVI to HVI or LV nwell spacing < %d (hvi.5)"
+ cifspacing drawn_hvi drawn_hvi 700 touching_ok \
+	"HVI to HVI spacing < %d (hvi.5)"
+ cifmaxwidth hvi_to_lvnwell 0 bend_illegal \
+	"HVI to LV nwell spacing < 0.7um (hvi.5)"
  cifmaxwidth difftap_near_mvnwell 0 bend_illegal \
 	"Spacing of N-Diffusion or P-tap to MV nwell < 0.43um (diff/tap.18,20)"
 variants (fast),(full)

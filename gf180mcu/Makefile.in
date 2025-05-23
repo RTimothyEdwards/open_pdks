@@ -164,8 +164,10 @@ USE_REFERENCE = @USE_REFERENCE@
 
 ifeq (${USE_REFERENCE}, 1)
     REFERENCE_JSON = ${TECH}.json
-else
+else ifeq (${USE_REFERENCE}, 0)
     REFERENCE_JSON =
+else
+    REFERENCE_JSON = ${USE_REFERENCE}
 endif
 
 # Path to GF180MCU library sources
