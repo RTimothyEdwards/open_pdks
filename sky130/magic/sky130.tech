@@ -759,7 +759,7 @@ end
 cifoutput
 
 #----------------------------------------------------------------
-style gdsii
+style gdsii variants (),(origfill)
 # NOTE: This section is used for actual GDS output
 #----------------------------------------------------------------
  scalefactor 10  nanometers
@@ -1056,10 +1056,9 @@ style gdsii
 
  layer RPM
 	bloat-all xhrpoly xpc
-	grow 200
-	grow-min 1270
-	grow 420
+	grow 620
 	shrink 420
+	mask-hints RPM
 	calma 86 20
 
 #----------------------------------------------------------------
@@ -1068,10 +1067,9 @@ style gdsii
 
  layer URPM
 	bloat-all uhrpoly xpc
-	grow 200
-	grow-min 1270
-	grow 420
+	grow 620
 	shrink 420
+	mask-hints URPM
 	calma 79 20
 
 #----------------------------------------------------------------
@@ -1083,6 +1081,7 @@ style gdsii
 	grow 185
  	grow 	345
  	shrink 	345
+	mask-hints LDNTM
 	calma 11 44
 
 #----------------------------------------------------------------
@@ -1485,6 +1484,8 @@ style gdsii
 #----------------------------------------------------------------
 # FILLBLOCK
 #----------------------------------------------------------------
+ variants (origfill)
+
  layer FILLOBSFOM  obsactive
 	calma	22 24
 
@@ -1500,11 +1501,42 @@ style gdsii
  layer FILLOBSM3 fillblock,obsm3
  	calma 	107 24
 
+#ifdef METAL5
  layer FILLOBSM4 fillblock,obsm4
  	calma 	112 4
 
  layer FILLOBSM5 fillblock,obsm5
 	calma	117 4
+#endif
+
+ variants ()
+
+ layer FILLOBSFOM  obsactive
+	calma	65 98
+
+ # NOTE: should there be an "obspoly" layer?
+
+ layer FILLOBSLI fillblock,obsli
+	calma	67 98
+
+ layer FILLOBSM1 fillblock,obsm1
+ 	calma 	68 98
+
+ layer FILLOBSM2 fillblock,obsm2
+ 	calma 	69 98
+
+ layer FILLOBSM3 fillblock,obsm3
+ 	calma 	70 98
+
+#ifdef METAL5
+ layer FILLOBSM4 fillblock,obsm4
+ 	calma 	71 98
+
+ layer FILLOBSM5 fillblock,obsm5
+	calma	72 98
+#endif
+
+ variants *
 
  render	DNWELL 	cwell       -0.1    0.1
  render	NWELL	nwell        0.0    0.2062
@@ -1802,12 +1834,17 @@ style drc
  and-not hvntm_block
 
  # RPM spacing checks require recreating RPM
+ templayer rpm_block *psd,*mvpsd
+	grow 185
+
+ # Check RPM spacing across a p-tap
  templayer rpm_generate
  bloat-all xhrpoly,uhrpoly xpc
- grow 200
- grow-min 1270
- grow 420
+ grow 620
  shrink 420
+ mask-hints RPM
+ mask-hints URPM
+ and-not rpm_block
 
  # Check distance RPM to NSDM
  templayer rpm_nsd_check rpm_generate
@@ -1936,6 +1973,10 @@ style wafflefill variants (),(tiled)
 #----------------------------------------------------------------
 # Style used by scripts for automatically generating fill layers
 # NOTE: Be sure to generate output on flattened layout.
+# Also note:  This fill generator script uses the older GDS
+# layer assignments for fill layers.  The generator script that
+# uses the sky130gds.tech (e.g., sky130A-GDS.tech) technology file
+# is preferred.
 #----------------------------------------------------------------
  scalefactor 10  nanometers
  options calma-permissive-labels
@@ -4271,13 +4312,13 @@ style  sky130 variants (),(vendor)
 #endif
 
  # Alternate layer purpose used for obstruction (fill block)
- calma LIBLOCK    67 10
- calma MET1BLOCK  68 10
- calma MET2BLOCK  69 10
- calma MET3BLOCK  70 10
+ calma LIBLOCK    67 98
+ calma MET1BLOCK  68 98
+ calma MET2BLOCK  69 98
+ calma MET3BLOCK  70 98
 #ifdef METAL5
- calma MET4BLOCK  71 10
- calma MET5BLOCK  72 10
+ calma MET4BLOCK  71 98
+ calma MET5BLOCK  72 98
 #endif
 
 #-----------------------------------------------------------------------
@@ -4569,6 +4610,17 @@ variants (full)
  cifwidth hvntm_generate 700 "Width of HVNTM < %d (hvntm.1)"
  cifspacing hvntm_generate hvntm_generate 700 touching_ok \
 	"HVNTM spacing < %d (hvntm.2)"
+variants *
+
+#--------------------------------------------------------------------
+# RPM, URPM
+#--------------------------------------------------------------------
+
+variants (full)
+ # This requires extra spacing of poly resistors if a ptap is in between
+ cifwidth rpm_generate 1270 "Width of RPM/URPM < %d (rpm.1)"
+ cifspacing rpm_generate rpm_generate 840 touching_ok \
+	"RPM spacing < %d (rpm.2)"
 variants *
 
 #--------------------------------------------------------------------

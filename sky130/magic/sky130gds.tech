@@ -1,4 +1,3 @@
-#undef RERAM
 tech
     format 32
     TECHNAME-GDS
@@ -6,253 +5,409 @@ end
 
 version
     version REVISION
-    description "SkyWater SKY130: Vendor GDS layers and supplementary DRC"
+    description "Google/SkyWater SKY130: Vendor GDS layers and supplementary DRC"
     requires magic-8.3.124
 end
 
+#------------------------------------------------------------------------------
+# This tech file represents all GDS layers exactly in magic with no boolean
+# transforms to generated layer types.  It can be used to manipulate GDS and
+# is better for some DRC checks and for fill pattern generation.  However, it
+# does not properly understand connectivity and cannot be used for extraction.
+#------------------------------------------------------------------------------
+
 planes
- p1
- p2
- p3
- p4
- p5
- p6
- p7
- p8
- p9
- p10
- p11
- p12
- p13
- p14
- p15
- p16
- p17
- p18
- p19
- p20
- p21
- p22
- p23
- p24
- p25
- p26
- p27
- p28
- p29
- p30
- p31
- p32
- p33
- p34
- p35
- p36
- p37
- p38
- p39
- p40
- p41
- p42
- p43
- p44
+ dnwell,dw
+ well,w
+ implant1,i1
+ implant2,i2
+ implant3,i3
+ implant4,i4
+ implant5,i5
+ implant6,i6
+ implant7,i7
+ implant8,i8
+ active,a
+ poly,p
+ mcon,mc
+ locali,li1,li
+ licon,lc
+ metal1,m1
+#ifdef RERAM
+ reram,rr
+#endif
+ via1,v1
+ metal2,m2
+ via2,v2
+ metal3,m3
+ cap1,c1
+ via3,v3
+ metal4,m4
+ cap2,c2
+ via4,v4
+ metal5,m5
+ glass,g
+ blockd,bd
+ blockp,bp
+ blockl,bl
+ block1,b1
+ block2,b2
+ block3,b3
+ block4,b4
+ block5,b5
+ ident1,id1
+ ident2,id2
+ ident3,id3
+ ident4,id4
+ ident5,id5
+ ident6,id6
+ ident7,id7
+ ident8,id8
+ ident9,id9
+ comment,c 
+ error,e
 end
 
 types
- p1  NWELL,l1
- p1  NWELLT,l60
- p1  NWELLP,l62
- p2  DNWELL,l2
- p3  DIFF,l3
- p3  TAP,l4
- p4  LVTN,l5
- p4  HVTP,l6
- p5  HVI,l7
- p6  TUNM,l8
- p7  POLY,l9
- p7  POLYP,l63
- p7  POLYT,l70
- p8  NPC,l10
- p9  PSDM,l11
- p9  NSDM,l12
- p10 LICON1,l13
- p11 LI1,l14
- p11 LI1T,l15
- p11 LI1P,l16
- p12 MCON,l17
- p12 MET1,l18
- p12 MET1T,l19
- p12 MET1P,l20
- p13 VIA1,l21
- p13 MET2,l22
- p13 MET2T,l23
- p13 MET2P,l24
- p14 VIA2,l25
- p14 MET3,l26
- p14 MET3T,l27
- p14 MET3P,l28
- p15 VIA3,l29
- p15 MET4,l30
- p15 MET4T,l31
- p15 MET4P,l32
- p16 VIA4,l33
- p16 MET5,l34
- p16 MET5T,l35
- p16 MET5P,l36
- p17 PAD,l37
- p17 PADT,l38
- p17 PADP,l39
- p18 AREAID,l40
- p19 TEXT,l41
- p20 HVTR,l42
- p21 NCM,l43
- p22 RPM,l44
- p23 NSM,l45
- p24 RDL,l46
- p25 VHVI,l47
- p26 LDNTM,l48
- p26 HVNTM,l49
- p27 PMM,l50
- p28 PNP,l51
- p29 CAP,l52
- p30 IND,l53
- p31 PWRES,l54
- p32 POLYRES,l55
- p33 DIFFRES,l56
- p34 DIODE,l57
- p35 POLYM,l58
- p36 COREID,l59
- p37 PWELLT,l61
- p37 PWELLP,l64
- p38 CFOMDROP,l65
- p39 CLI1MADD,l66
- p40 CNTMADD,l67
- p41 CP1MADD,l68
- p42 BOUND,l69
- p43 RERAM,l71
- p44 ESDID,l72
+ dw  DNWELL
+
+ w   NWELL
+ w   NWELLTXT
+ w   NWELLPIN
+ w   PWELL
+ w   PWELLTXT
+ w   PWELLPIN
+ w   PWELLRES
+
+ a   TAP
+ a   DIFF
+ a   DIFFTXT
+ a   DIFFPIN
+ a   DIFFRES
+ a   DIFFCUT
+ a   DIFFFILL
+
+ i1  LVTN
+ i1  HVTP
+ i1  TUNM
+ i1  NCM
+ i2  THKOX
+ i3  NPC
+ i4  PSDM,PPLUS
+ i5  NSDM,NPLUS
+ i6  HVTR
+ i6  RPM
+ i6  URPM
+ i7  LDNTM
+ i8  HVNTM
+
+ p   POLY
+ p   POLYPIN
+ p   POLYTXT
+ p   POLYRES
+ p   POLYMOD
+ p   POLYCUT
+ p   POLYGATE
+ p   POLYFILL
+ p   POLYSHORT
+
+ mc  MCON
+
+ li  LI1,LI
+ li  LI1TXT,LITXT
+ li  LI1PIN,LIPIN
+ li  LI1RES,LIRES
+ li  LI1FILL,LIFILL
+ li  LI1SHORT,LISHORT
+
+ lc  LICON1,LICON
+
+ m1  MET1
+ m1  MET1TXT
+ m1  MET1PIN
+ m1  MET1RES
+ m1  MET1FILL
+ m1  MET1SHORT
+
+ v1  VIA1
+#ifdef RERAM
+#undef RERAM
+ rr  RERAM
+#define RERAM 1
+#endif
+
+ m2  MET2
+ m2  MET2TXT
+ m2  MET2PIN
+ m2  MET2RES
+ m2  MET2FILL
+ m2  MET2SHORT
+
+ v2  VIA2
+
+ m3  MET3
+ m3  MET3TXT
+ m3  MET3PIN
+ m3  MET3RES
+ m3  MET3FILL
+ m3  MET3SHORT
+
+ c1  CAPM
+ v3  VIA3
+
+ m4  MET4
+ m4  MET4TXT
+ m4  MET4PIN
+ m4  MET4RES
+ m4  MET4FILL
+ m4  MET4SHORT
+
+ c2  CAPM2,CAP2M
+ v4  VIA4
+
+ m5  MET5
+ m5  MET5TXT
+ m5  MET5PIN
+ m5  MET5RES
+ m5  MET5FILL
+ m5  MET5SHORT
+
+ g   PAD
+ g   PADTXT
+ g   PADPIN
+
+ id1 SUBCUT
+ id2 COREID
+ id2 HVNWELLID
+ id3 STDCELLID
+ id4 ESDID
+ id5 BOUND
+ id5 BOUND2
+ id6 PNPID,PNP
+ id6 NPNID,NPN
+ id6 DIODEID,DIODE
+ id6 PHOTOID,PHOTO
+ id6 SEALID,SEAL
+ id6 PADDIFFID
+ id6 LVID,LOWVOLTAGE
+ id7 INDID,IND
+ id7 EDID,EXTDRAINID
+ id7 CAPID,CAP
+ id7 PADMETALID
+ id8 LOWTAPDENSITY
+ id8 PADCENTERID
+ id8 OUTLINE
+ id9 V5
+ id9 V12
+ id9 V20
+
+ bd  DIFFBLOCK
+ bp  POLYBLOCK
+ bl  LIBLOCK
+ b1  MET1BLOCK
+ b2  MET2BLOCK
+ b3  MET3BLOCK
+ b4  MET4BLOCK
+ b5  MET5BLOCK
+
+ bp CP1MADD
+ bp CP1MDROP
+ bd CFOMDROP
+ bl CLI1MADD
+ bl CLI1MDROP
+ id7 CNTMADD
+
+ c   TEXT
+ c   LVSTEXT
+ c   COMMENT
+ c   UNKNOWN1
+ c   UNKNOWN2
+ c   UNKNOWN3
+
+ e   ERROR
+
 end
 
 contact
 end
 
+aliases
+ ALLNWELL  NWELL,NWELLTXT,NWELLPIN
+ ALLPWELL  PWELL,PWELLTXT,PWELLPIN,PWELLRES
+ ALLDIFF  TAP,DIFF,DIFFTXT,DIFFPIN,DIFFRES,DIFFCUT
+ ALLPOLY  POLY,POLYTXT,POLYPIN,POLYRES,POLYMOD,POLYCUT,POLYGATE
+ ALLLI  LI1,LI1TXT,LI1PIN,LI1RES
+ ALLM1  MET1,MET1TXT,MET1PIN,MET1RES
+ ALLM2  MET2,MET2TXT,MET2PIN,MET2RES
+ ALLM3  MET3,MET3TXT,MET3PIN,MET3RES
+ ALLM4  MET4,MET4TXT,MET4PIN,MET4RES
+ ALLM5  MET5,MET5TXT,MET5PIN,MET5RES
+ ALLPAD PAD,PADTXT,PADPIN
+end
+
 styles
-    styletype	mos
- l1   nwell
- l2   cwell
- l3   ndiffusion
- l4   pdiffusion
- l5   implant1
- l6   implant2
- l7   implant3
- l8   subcircuit
- l9    polysilicon
- l10   implant4
- l11   pdop_stripes
- l12   ndop_stripes
- l13   obsmetal1 contact_X'es
- l14   metal1
- l15   metal1
- l16   metal1
- l17   metal1 metal2 via1
- l18   metal2
- l19   metal2
- l20   metal2
- l21   metal2 metal3 via2
- l22   metal3
- l23   metal3
- l24   metal3
- l25   metal3 metal4 via3
- l26   metal4
- l27   metal4
- l28   metal4
- l29   metal4 metal5 via4
- l30   metal5
- l31   metal5
- l32   metal5
- l33   metal5 metal6 via5
- l34   metal6
- l35   metal6
- l36   metal6
- l37   overglass
- l38   overglass
- l39   overglass
- l40   subcircuit
- l41   comment
- l42   implant1
- l43   mim_top
- l44   mim_bottom
- l45   ntransistor_stripes
- l46   metal7
- l47   electrode
- l48   nwell_field_implant
- l49   hvndiff_mask
- l50   poly_light
- l51   mvpdiff
- l52   mvndiff
- l53   hvpdiff
- l54   cwellnsc
- l55   poly_resist poly_resist_stripes
- l56   ptransistor_stripes
- l57   hvpdiff_mask
- l58   poly_resist
- l59   subcircuit
- l60   nwell
- l61   pwell
- l62   nwell
- l63   polysilicon
- l64   pwell
- l65   implant1
- l66   implant2
- l67   implant3
- l68   implant4
- l69   subcircuit
- l70   polysilicon
- l71   electrode_stripes
- l72   cwell
+ styletype	mos
+
+ NWELL    nwell
+ NWELLTXT nwell
+ NWELLPIN nwell
+ PWELL    pwell
+ PWELLTXT pwell
+ PWELLPIN pwell
+ PWELLRES pwell poly_resist_stripes
+ DNWELL   cwell
+ TAP      pdiffusion
+ DIFF     ndiffusion
+ DIFFTXT  ndiffusion
+ DIFFPIN  ndiffusion
+ DIFFFILL ndiffusion
+ DIFFCUT  ndiffusion
+ DIFFRES  ndiffusion poly_resist_stripes
+ BOUND    subcircuit
+ BOUND2   subcircuit
+ OUTLINE  subcircuit
+ POLY     polysilicon
+ POLYTXT   polysilicon
+ POLYPIN   polysilicon
+ POLYRES   poly_resist poly_resist_stripes
+ POLYCUT   polysilicon
+ POLYSHORT polysilicon
+ POLYFILL polysilicon
+ POLYGATE polysilicon
+ POLYMOD  polysilicon
+ PSDM   pdop_stripes
+ NSDM   ndop_stripes
+ MCON	contact_X'es
+ LI1      metal1
+ LI1TXT   metal1
+ LI1PIN   metal1
+ LI1FILL  metal1
+ LI1RES   metal1 poly_resist_stripes
+ LI1SHORT metal1
+ LICON   metal1 metal2 via1
+ MET1   metal2
+ MET1TXT   metal2
+ MET1PIN   metal2
+ MET1FILL  metal2
+ MET1RES   metal2 poly_resist_stripes
+ MET1SHORT metal2
+ VIA1   metal2 metal3 via2
+ MET2   metal3
+ MET2TXT   metal3
+ MET2PIN   metal3
+ MET2FILL  metal3
+ MET2RES   metal3 poly_resist_stripes
+ MET2SHORT metal3
+ VIA2   metal3 metal4 via3
+ MET3   metal4
+ MET3TXT   metal4
+ MET3PIN   metal4
+ MET3FILL  metal4
+ MET3RES   metal4 poly_resist_stripes
+ MET3SHORT metal4
+ CAPM     mim_top
+ VIA3   metal4 metal5 via4
+ MET4   metal5
+ MET4TXT   metal5
+ MET4PIN   metal5
+ MET4FILL  metal5
+ MET4SHORT metal5
+ MET4RES   metal5 poly_resist_stripes
+ CAP2M    mim_bottom
+ VIA4   metal5 metal6 via5
+ MET5   metal6
+ MET5TXT   metal6
+ MET5PIN   metal6
+ MET5FILL  metal6
+ MET5RES   metal6 poly_resist_stripes
+ MET5SHORT metal6
+ PAD   overglass
+ PADTXT   overglass
+ PADPIN   overglass
+ THKOX    implant1
+ NPC      implant2
+ RPM      implant3
+ URPM	  implant3
+ LVTN     implant4
+ LVTN	  implant1
+ HVTP	  implant2
+ TUNM	  implant3
+ NCM	  implant4
+ V5	  subcircuit
+ V12	  subcircuit
+ V20	  subcircuit
+ HVTR	  implant1
+ LDNTM	  implant2
+ HVNTM	  implant3
+ SUBCUT	  subcircuit
+ STDCELLID subcircuit
+ DIFFBLOCK poly_resist_stripes
+ POLYBLOCK poly_resist_stripes
+ LIBLOCK   poly_resist_stripes
+ MET1BLOCK poly_resist_stripes
+ MET2BLOCK poly_resist_stripes
+ MET3BLOCK poly_resist_stripes
+ MET4BLOCK poly_resist_stripes
+ MET5BLOCK poly_resist_stripes
+ TEXT	  electrode
+ LVSTEXT  electrode
+ COMMENT	comment
+ ERROR		error_waffle
  error_p	error_waffle
  error_s	error_waffle
  error_ps	error_waffle
 end
 
 compose
-   paint  MCON    MET1  MCON
-   paint  VIA1    MET2  VIA1
-   paint  VIA2    MET3  VIA2
-   paint  VIA3    MET4  VIA3
-   paint  VIA4    MET5  VIA4
-
-   paint  MCON    MET1P  MCON
-   paint  VIA1    MET2P  VIA1
-   paint  VIA2    MET3P  VIA2
-   paint  VIA3    MET4P  VIA3
-   paint  VIA4    MET5P  VIA4
-
-   paint  MCON    MET1T  MCON
-   paint  VIA1    MET2T  VIA1
-   paint  VIA2    MET3T  VIA2
-   paint  VIA3    MET4T  VIA3
-   paint  VIA4    MET5T  VIA4
 end
 
 connect
+  # This is a very primitive connection table, and may not be useful.
+  # It does not correctly handle ReRAM or MiM caps.
+  DIFF MCON
+  TAP  MCON
+  POLY MCON
+  MCON LI1
+  LI1  LICON
+  LICON MET1
+  MET1 VIA1
+  VIA1 MET2
+  MET2 VIA2
+  VIA2 MET3
+  MET3 VIA3
+  VIA3 MET4
+  MET4 VIA4
+  VIA4 MET5
 end
 
 cifoutput
-style gdsii
+style sky130 variants (),(altfill)
   scalefactor 10 nanometers
   options calma-permissive-labels
   gridlimit 1
 
- layer  NWELL NWELL,NWELLT,NWELLP
+ layer  NWELL ALLNWELL
  calma 64 20
 
- layer NWELLT
- labels NWELLT noport
+ layer NWELLTXT
+ labels NWELLTXT noport
  calma 64 16
 
- layer NWELLP
- labels NWELLP port
+ layer NWELLPIN
+ labels NWELLPIN port
  calma 64 5
+
+ layer PWELL PWELL
+ labels PWELL
+ calma 81 53
+
+ layer PWELLTXT PWELLTXT
+ labels PWELLTXT noport
+ calma 122 16
+
+ layer PWELLPIN PWELLPIN
+ labels PWELLPIN port
+ calma 64 59
 
  layer  DNWELL DNWELL
  labels DNWELL 
@@ -262,20 +417,52 @@ style gdsii
  labels DIFF 
  calma 65 20
 
+ layer  DIFFTXT
+ labels DIFFTXT noport
+ calma  65 6
+
+ layer  DIFFPIN
+ labels DIFFPIN noport
+ calma  65 16
+
+ layer DIFFRES DIFFRES
+ labels DIFFRES
+ calma 65 13
+
+ layer DIFFCUT DIFFCUT
+ labels DIFFCUT
+ calma 65 14
+
  layer  TAP TAP
  labels TAP 
  calma 65 44
 
- layer  POLY POLY,POLYP,POLYT
+ layer  POLY ALLPOLY
  calma 66 20
 
- layer POLYT
- labels POLYT noport
+ layer POLYTTXT
+ labels POLYTXT noport
  calma 66 16
 
- layer POLYP
- labels POLYP port
+ layer POLYPIN
+ labels POLYPIN port
  calma 66 5
+
+ layer POLYCUT POLYCUT
+ labels POLYCUT
+ calma 66 14
+
+ layer POLYGATE POLYGATE
+ labels POLYGATE
+ calma 66 9
+
+ layer POLYMOD POLYMOD
+ labels POLYMOD
+ calma 66 83
+
+ layer POLYSHORT POLYSHORT
+ labels POLYSHORT
+ calma 66 15
 
  layer  LVTN LVTN
  labels LVTN 
@@ -285,8 +472,8 @@ style gdsii
  labels HVTP 
  calma 78 44
 
- layer  HVI HVI
- labels HVI 
+ layer  HVI THKOX
+ labels  THKOX
  calma 75 20
 
  layer  TUNM TUNM
@@ -296,6 +483,10 @@ style gdsii
  layer  NPC NPC
  labels NPC 
  calma 95 20
+
+ layer  NCM NCM
+ labels NCM
+ calma 92 44
 
  layer  PSDM PSDM
  labels PSDM 
@@ -309,110 +500,121 @@ style gdsii
  labels LICON1 
  calma 66 44
 
- # Note: LICON1 not on LI1 plane, may not be coincident with LI1.
- layer  LI1 LI1,LI1T,LI1P
+ layer  LI1 ALLLI
  calma 67 20
 
- layer  LI1T
- labels LI1T noport
+ layer  LI1TXT
+ labels LI1TXT noport
  calma 67 16
 
- layer  LI1P
- labels LI1P port
+ layer  LI1PIN
+ labels LI1PIN port
  calma 67 5
 
- layer  MET1 MET1,MET1T,MET1P,MCON
+ layer  MET1 ALLM1
  calma 68 20
 
- layer  MET1T
- labels MET1T noport
+ layer  MET1TXT
+ labels MET1TXT noport
  calma 68 16
 
- layer  MET1P
- labels MET1P port
+ layer  MET1PIN
+ labels MET1PIN port
  calma 68 5
 
  layer  MCON MCON
  labels MCON 
  calma 67 44
 
- layer  MET2 MET2,MET2T,MET2P,VIA1
+ layer  MET2 ALLM2
  calma 69 20
 
- layer  MET2T
- labels MET2T noport
+ layer  MET2TXT
+ labels MET2TXT noport
  calma 69 16
 
- layer  MET2P
- labels MET2P port
+ layer  MET2PIN
+ labels MET2PIN port
  calma 69 5
 
  layer  VIA1 VIA1
  labels VIA1 
  calma 68 44
 
+#ifdef RERAM
+#undef RERAM
  layer  RERAM RERAM
  labels RERAM
  calma 201 20
+#define RERAM 1
+#endif
 
- layer  MET3 MET3,MET3T,MET3P,VIA2
+ layer  MET3 ALLM3
  calma 70 20
 
- layer  MET3T
- labels MET3T noport
+ layer  MET3TXT
+ labels MET3TXT noport
  calma 70 16
 
- layer  MET3P
- labels MET3P port
+ layer  MET3PIN
+ labels MET3PIN port
  calma 70 5
 
  layer  VIA2 VIA2
  labels VIA2 
  calma 69 44
 
- layer  MET4 MET4,MET4T,MET4P,VIA3
+ layer  CAPM CAPM
+ labels CAPM
+ calma 89 44
+
+ layer  MET4 ALLM4
  calma 71 20
 
- layer  MET4T
- labels MET4T noport
+ layer  MET4TXT
+ labels MET4TXT noport
  calma 71 16
 
- layer  MET4P
- labels MET4P port
+ layer  MET4PIN
+ labels MET4PIN port
  calma 71 5
 
  layer  VIA3 VIA3
  labels VIA3 
  calma 70 44
 
- layer  MET5 MET5,MET5T,MET5P,VIA4
+ layer  CAP2M CAP2M
+ labels CAP2M
+ calma 97 44
+
+ layer  MET5 ALLM5
  calma 72 20
 
- layer  MET5T
- labels MET5T noport
+ layer  MET5TXT
+ labels MET5TXT noport
  calma 72 16
 
- layer  MET5P
- labels MET5P port
+ layer  MET5PIN
+ labels MET5PIN port
  calma 72 5
 
  layer  VIA4 VIA4
  labels VIA4 
  calma 71 44
 
- layer  PAD PAD,PADT,PADP
+ layer  PAD ALLPAD
  calma 76 20
 
- layer  PADT
- labels PADT noport
+ layer  PADTXT
+ labels PADTXT noport
  calma 76 16
 
- layer  PADP
- labels PADP port
+ layer  PADPIN
+ labels PADPIN port
  calma 76 5
 
- layer  AREAID AREAID
- labels AREAID
+ layer  STDCELLID STDCELLID
+ labels STDCELLID
  calma 81 4
 
  layer  TEXT TEXT
@@ -423,25 +625,13 @@ style gdsii
  labels HVTR
  calma 18 20
 
- layer NCM NCM
- labels NCM
- calma 92 44
-
  layer RPM RPM
  labels RPM
  calma 86 20
 
- layer NSM NSM
- labels NSM
- calma 61 20
-
- layer RDL RDL
- labels RDL
- calma 74 20
-
- layer VHVI VHVI
- labels VHVI
- calma 74 21
+ layer URPM URPM
+ labels URPM
+ calma 79 20
 
  layer LDNTM LDNTM
  labels LDNTM
@@ -451,13 +641,13 @@ style gdsii
  labels HVNTM
  calma 125 20
 
- layer PMM PMM
- labels PMM
- calma 85 44
-
  layer PNP PNP
  labels PNP
  calma 82 44
+
+ layer NPN NPN
+ labels NPN
+ calma 82 20
 
  layer CAP CAP
  labels CAP
@@ -467,37 +657,17 @@ style gdsii
  labels IND
  calma 82 24
 
- layer PWRES PWRES
- labels PWRES
- calma 64 13
+ layer LVID LVID
+ labels LVID
+ calma 81 60
 
- layer POLYRES POLYRES
- labels POLYRES
- calma 66 13
+ layer CP1MADD CP1MADD
+ labels CP1MADD
+ calma 33 43 
 
- layer DIFFRES DIFFRES
- labels DIFFRES
- calma 65 13
-
- layer DIODE DIODE
- labels DIODE
- calma 81 23
-
- layer POLYM POLYM
- labels POLYM
- calma 66 83
-
- layer COREID COREID
- labels COREID
- calma 81 2
-
- layer PWELLT PWELLT
- labels PWELLT noport
- calma 122 16
-
- layer PWELLP PWELLP
- labels PWELLP port
- calma 64 59
+ layer CP1MDROP CP1MDROP
+ labels CP1MDROP
+ calma 33 42 
 
  layer CFOMDROP CFOMDROP
  labels CFOMDROP
@@ -507,99 +677,923 @@ style gdsii
  labels CLI1MADD
  calma 115 43
 
+ layer CLI1MDROP CLI1MDROP
+ labels CLI1MDROP
+ calma 115 42
+
  layer CNTMADD CNTMADD
  labels CNTMADD
  calma 22 21
 
- layer CP1MADD CP1MADD
- labels CP1MADD
- calma 33 43
+ layer PWELLRES PWELLRES
+ labels PWELLRES
+ calma 64 13
 
+ layer POLYRES POLYRES
+ labels POLYRES
+ calma 66 13
+
+ layer DIODE DIODE
+ labels DIODE
+ calma 81 23
+
+ layer COREID COREID
+ labels COREID
+ calma 81 2
+
+ # Is BOUND2 preferable here?
  layer BOUND BOUND
  labels BOUND
  calma 235 4
 
+ layer BOUND2 BOUND2
+ labels BOUND2
+ calma 235 0
+
+ layer OUTLINE OUTLINE
+ labels OUTLINE
+ calma 236 0
+
  layer ESDID ESDID
  labels ESDID
  calma 81 19
+
+ layer UNKNOWN1 UNKNOWN1
+ labels UNKNOWN1
+ calma 230 241
+
+ layer UNKNOWN2 UNKNOWN2
+ labels UNKNOWN2
+ calma 230 242
+
+ layer UNKNOWN3 UNKNOWN3
+ labels UNKNOWN3
+ calma 64 44
+
+ variants ()
+
+ layer DIFFFILL DIFFFILL
+ labels DIFFFILL
+ calma 23 28
+
+ layer POLYFILL POLYFILL
+ labels POLYFILL
+ calma 28 28
+
+ layer LI1FILL LI1FILL
+ labels LI1FILL
+ calma 56 28
+
+ layer MET1FILL MET1FILL
+ labels MET1FILL
+ calma 36 28
+
+ layer MET2FILL MET2FILL
+ labels MET2FILL
+ calma 41 28
+
+ layer MET3FILL MET3FILL
+ labels MET3FILL
+ calma 34 28
+
+ layer MET4FILL MET4FILL
+ labels MET4FILL
+ calma 51 28
+
+ layer MET5FILL MET5FILL
+ labels MET5FILL
+ calma 59 28
+
+ variants (altfill)
+
+ layer DIFFFILL DIFFFILL
+ labels DIFFFILL
+ calma 65 99
+
+ layer POLYFILL POLYFILL
+ labels POLYFILL
+ calma 66 99
+
+ layer LI1FILL LI1FILL
+ labels LI1FILL
+ calma 67 99
+
+ layer MET1FILL MET1FILL
+ labels MET1FILL
+ calma 68 99
+
+ layer MET2FILL MET2FILL
+ labels MET2FILL
+ calma 69 99
+
+ layer MET3FILL MET3FILL
+ labels MET3FILL
+ calma 70 99
+
+ layer MET4FILL MET4FILL
+ labels MET4FILL
+ calma 71 99
+
+ layer MET5FILL MET5FILL
+ labels MET5FILL
+ calma 72 99
+
+ variants *
+
+ layer DIFFBLOCK DIFFBLOCK
+ labels DIFFBLOCK
+ calma 22 24
+
+ layer POLYBLOCK POLYBLOCK
+ labels POLYBLOCK
+ calma 33 24
+
+ layer MET1BLOCK MET1BLOCK
+ labels MET1BLOCK
+ calma 62 24
+
+ layer MET2BLOCK MET2BLOCK
+ labels MET2BLOCK
+ calma 105 52
+
+ layer MET3BLOCK MET3BLOCK
+ labels MET3BLOCK
+ calma 107 24
+
+ layer MET4BLOCK MET4BLOCK
+ labels MET4BLOCK
+ calma 112 4
+
+ layer MET5BLOCK MET5BLOCK
+ labels MET5BLOCK
+ calma 117 4
+
+ layer  LISHORT LISHORT
+ labels LISHORT
+ calma 67 15
+
+ layer  MET1SHORT MET1SHORT
+ labels MET1SHORT
+ calma 68 15
+
+ layer  MET2SHORT MET2SHORT
+ labels MET2SHORT
+ calma 69 15
+
+ layer  MET3SHORT MET3SHORT
+ labels MET3SHORT
+ calma 70 15
+
+ layer  MET4SHORT MET4SHORT
+ labels MET4SHORT
+ calma 71 15
+
+ layer  MET5SHORT MET5SHORT
+ labels MET5SHORT
+ calma 72 15
+
+ layer  MET1RES MET1RES
+ labels MET1RES
+ calma 68 13
+
+ layer  MET2RES MET2RES
+ labels MET2RES
+ calma 69 13
+
+ layer  MET3RES MET3RES
+ labels MET3RES
+ calma 70 13
+
+ layer  MET4RES MET4RES
+ labels MET4RES
+ calma 71 13
+
+ layer  MET5RES MET5RES
+ labels MET5RES
+ calma 72 13
+
+#----------------------------------------------------------------
+style wafflefill variants (),(tiled)
+#----------------------------------------------------------------
+# Style used by scripts for automatically generating fill layers
+# NOTE: Be sure to generate output on flattened layout.
+#----------------------------------------------------------------
+ scalefactor 10  nanometers
+ options calma-permissive-labels
+ gridlimit 5
+
+#----------------------------------------------------------------
+# Generate and retain a layer representing the bounding box.
+#
+# For variant ():
+# The bounding box is the full extent of geometry on the top level
+# cell.
+#
+# For variant (tiled):
+# Use with a script that breaks layout into flattened tiles and runs
+# fill individually on each.  The tiles should be larger than the
+# step size, and each should draw a layer "COMMENT" the size of the
+# step box.
+#----------------------------------------------------------------
+
+ variants ()
+     templayer	topbox
+	 bbox	top
+
+ variants (tiled)
+     templayer	topbox COMMENT
+	 # Each tile imposes the full keepout distance rule of
+	 # 3um on all sides.
+	 shrink 1500
+
+ variants *
+
+#----------------------------------------------------------------
+# Generate guard-band around nwells to keep FOM from crossing
+# Spacing from LV nwell = Diff/Tap 9 = 0.34um
+# Spacing from HV nwell = Diff/Tap 18 = 0.43um (= 0.18 + 0.25)
+# Enclosure by nwell = Diff/Tap 8 = 0.18um
+#----------------------------------------------------------------
+
+ templayer alldiffmv ALLDIFF
+	and THKOX
+	
+ templayer mvnwell
+ 	bloat-all alldiffmv ALLNWELL
+
+ templayer lvnwell ALLNWELL
+	and-not mvnwell
+
+ templayer	well_shrink mvnwell
+	shrink 	250
+	or lvnwell
+	shrink	180
+
+ templayer	well_guardband ALLNWELL
+	grow	340
+	and-not	well_shrink
+
+# Generate guard-band around THKOX edge to keep FOM from crossing
+# spacing from THKOX to diff 0.18um
+
+ templayer	hvi_shrink THKOX
+	shrink	180
+
+ templayer	hvi_guardband THKOX
+	grow	180
+	and-not	hvi_shrink
+
+#---------------------------------------------------
+# Diffusion and poly keep-out areas
+#---------------------------------------------------
+ templayer      obstruct_fom ALLDIFF,ALLPOLY,DIFFFILL,POLYFILL,DIFFBLOCK,POLYBLOCK
+	or	PWELLRES,PNP,NPN
+        grow    500
+	or	well_guardband,hvi_guardband,NSDM,PSDM
+
+ templayer      obstruct_poly ALLDIFF,ALLPOLY,DIFFFILL,POLYFILL,DIFFBLOCK,POLYBLOCK
+	or	PWELLRES,PNP,NPN
+	grow	1000
+	or	NSDM,PSDM
+
+#---------------------------------------------------
+# FOM and POLY fill
+#---------------------------------------------------
+ templayer	fomfill_pass1 topbox
+        slots   0 4080 1600 0 4080 1600 1360 0
+        and-not obstruct_fom
+	and	topbox
+	orthogonal remove
+        shrink  2035
+        grow    2035
+
+#---------------------------------------------------
+
+ templayer      obstruct_poly_pass1 fomfill_pass1
+        grow    300
+	or	obstruct_poly
+ templayer	polyfill_pass1 topbox
+        slots   0 720 360 0 720 360 240 0
+        and-not obstruct_poly_pass1
+	and	topbox
+	orthogonal remove
+        shrink  355
+        grow    355
+
+#---------------------------------------------------
+
+ templayer      obstruct_fom_pass2 fomfill_pass1
+        grow    1290
+	or	polyfill_pass1
+        grow    300
+	or	obstruct_fom
+ templayer	fomfill_pass2 topbox
+        slots   0 2500 1320 0 2500 1320 1360 0
+        and-not obstruct_fom_pass2
+	and	topbox
+	orthogonal remove
+        shrink  1245
+        grow    1245
+
+#---------------------------------------------------
+
+ templayer      obstruct_poly_coarse polyfill_pass1
+	grow	60
+	or	fomfill_pass1,fomfill_pass2
+	grow	300
+	or	obstruct_poly
+ templayer	polyfill_coarse topbox
+        slots   0 720 360 0 720 360 240 120
+        and-not obstruct_poly_coarse
+	and	topbox
+	orthogonal remove
+        shrink  355
+        grow    355
+
+#---------------------------------------------------
+ templayer      obstruct_poly_medium polyfill_pass1,polyfill_coarse
+	grow	60
+	or	fomfill_pass1,fomfill_pass2
+        grow    300
+	or	obstruct_poly
+ templayer	polyfill_medium topbox
+        slots   0 540 360 0 540 360 240 100
+        and-not obstruct_poly_medium
+	and	topbox
+	orthogonal remove
+        shrink  265
+        grow    265
+
+#---------------------------------------------------
+ templayer      obstruct_poly_fine polyfill_pass1,polyfill_coarse,polyfill_medium
+	grow	60
+	or	fomfill_pass1,fomfill_pass2
+	grow	300
+	or	obstruct_poly
+ templayer	polyfill_fine topbox
+        slots   0 480 360 0 480 360 240 200
+        and-not obstruct_poly_fine
+	and	topbox
+	orthogonal remove
+        shrink  235
+        grow    235
+
+#---------------------------------------------------
+
+ templayer      obstruct_fom_coarse fomfill_pass1,fomfill_pass2
+        grow    1290
+	or	polyfill_pass1,polyfill_coarse,polyfill_medium,polyfill_fine
+	grow	300
+	or	obstruct_fom
+ templayer	fomfill_coarse topbox
+        slots   0 1500 1320 0 1500 1320 1360 0
+        and-not obstruct_fom_coarse
+	and	topbox
+	orthogonal remove
+        shrink  745
+        grow    745
+
+#---------------------------------------------------
+
+ templayer      obstruct_fom_fine fomfill_pass1,fomfill_pass2,fomfill_coarse
+        grow    1290
+	or	polyfill_pass1,polyfill_coarse,polyfill_medium,polyfill_fine
+	grow	300
+	or	obstruct_fom
+ templayer	fomfill_fine topbox
+        slots   0 500 400 0 500 400 160 0
+        and-not obstruct_fom_fine
+	and	topbox
+	orthogonal remove
+        shrink  245
+        grow    245
+
+#---------------------------------------------------
+ layer  FOMFILL fomfill_pass1 
+	or	fomfill_pass2
+	or	fomfill_coarse
+	or	fomfill_fine
+ 	# calma 	23 28
+ 	calma 65 99
+
+ layer	POLYFILL polyfill_pass1 
+	or	 polyfill_coarse
+	or	 polyfill_medium
+	or	 polyfill_fine
+ 	# calma 	28 28
+	calma 66 99
+
+#---------------------------------------------------------
+# LI fill
+# Note requirement that LI fill may not overlap (non-fill)
+# diff or poly.
+#
+# Important note:  sky130 does not define an LI mask fill
+# blockage layer, because LI fill requirements were added
+# to the process after the open PDK was made.  While
+# obstruction layers can be used in magic to block LI
+# fill, this does not translate into GDS, so running fill
+# on a GDS top level cell will result in LI fill shapes
+# being placed in the corner and under the seal ring.  To
+# work around this, I have added obsm1 to the layers that
+# obstruct LI, which is a bit of a hack but should not
+# cause issues in practice.
+#---------------------------------------------------------
+
+ templayer      obstruct_li_coarse ALLLI,LI1FILL,LIBLOCK
+        grow    2800
+	or	ALLDIFF,ALLPOLY
+	grow	200
+	or	MET1BLOCK
+ templayer	lifill_coarse topbox
+        # slots   0 3000 650 0 3000 650 700 0
+        slots   0 3000 900 0 3000 900 700 0
+        and-not obstruct_li_coarse
+	and	topbox
+	orthogonal remove
+        shrink  1495
+        grow    1495
+
+ templayer      obstruct_li_medium ALLLI,LI1FILL,LIBLOCK
+        grow    2500
+	or	lifill_coarse
+	grow	300
+	or	ALLDIFF,ALLPOLY
+        grow    200
+	or	MET1BLOCK
+ templayer	lifill_medium topbox
+        slots   0 1500 500 0 1500 500 700 0
+        and-not obstruct_li_medium
+	and	topbox
+	orthogonal remove
+        shrink  745
+        grow    745
+
+ templayer      obstruct_li_fine ALLLI,LI1FILL,LIBLOCK
+	or	lifill_coarse,lifill_medium
+	grow	300
+	or	ALLDIFF,ALLPOLY
+        grow    200
+	or	MET1BLOCK
+ templayer	lifill_fine topbox
+        slots   0 580 500 0 580 500 700 0
+        and-not obstruct_li_fine
+	and	topbox
+	orthogonal remove
+        shrink  285
+        grow    285
+
+ layer	LIFILL  lifill_coarse
+	or	lifill_medium
+	or	lifill_fine
+ 	# calma 	56 28
+	calma 67 99
+
+#---------------------------------------------------
+# MET1 fill
+#---------------------------------------------------
+
+ templayer      obstruct_m1_coarse ALLM1,PAD,MET1FILL,MET1BLOCK
+        grow    3000
+ templayer	met1fill_coarse topbox
+        # slots   0 2000 200 0 2000 200 700 0
+        slots   0 2000 800 0 2000 800 700 350
+        and-not obstruct_m1_coarse
+	and	topbox
+	orthogonal remove
+        shrink  995
+        grow    995
+
+ templayer      obstruct_m1_medium ALLM1,PAD,MET1FILL,MET1BLOCK
+        grow    2800
+	or	met1fill_coarse
+        grow    200
+ templayer	met1fill_medium topbox
+        slots   0 1000 200 0 1000 200 700 0
+        and-not obstruct_m1_medium
+	and	topbox
+	orthogonal remove
+        shrink  495
+        grow    495
+
+ templayer      obstruct_m1_fine ALLM1,PAD,MET1FILL,MET1BLOCK
+        grow    300
+	or	met1fill_coarse,met1fill_medium
+        grow    200
+ templayer	met1fill_fine topbox
+        slots   0 580 200 0 580 200 700 0
+        and-not obstruct_m1_fine
+	and	topbox
+	orthogonal remove
+        shrink  285
+        grow    285
+
+ templayer      obstruct_m1_veryfine ALLM1,PAD,MET1FILL,MET1BLOCK
+        grow    100
+	or	met1fill_coarse,met1fill_medium,met1fill_fine
+        grow    200
+ templayer	met1fill_veryfine topbox
+        slots   0 300 200 0 300 200 100 50
+        and-not obstruct_m1_veryfine
+	and	topbox
+	orthogonal remove
+        shrink  145
+        grow    145
+
+ layer	MET1FILL met1fill_coarse
+	or	met1fill_medium
+	or	met1fill_fine
+	or	met1fill_veryfine
+ 	# calma 	36 28
+ 	calma 	68 99
+
+#---------------------------------------------------
+# MET2 fill
+#---------------------------------------------------
+ templayer      obstruct_m2 ALLM2,PAD,MET2FILL,MET2BLOCK
+        grow    3000
+ templayer	met2fill_coarse topbox
+        # slots   0 2000 200 0 2000 200 700 350
+        slots   0 2000 800 0 2000 800 700 350
+        and-not obstruct_m2
+	and	topbox
+	orthogonal remove
+        shrink  995
+        grow    995
+
+ templayer      obstruct_m2_medium ALLM2,PAD,MET2FILL,MET2BLOCK
+        grow    2800
+	or	met2fill_coarse
+        grow    200
+ templayer	met2fill_medium topbox
+        slots   0 1000 200 0 1000 200 700 350
+        and-not obstruct_m2_medium
+	and	topbox
+	orthogonal remove
+        shrink  495
+        grow    495
+
+ templayer      obstruct_m2_fine ALLM2,PAD,MET2FILL,MET2BLOCK
+        grow    300
+	or	met2fill_coarse,met2fill_medium
+        grow    200
+ templayer	met2fill_fine topbox
+        slots   0 580 200 0 580 200 700 350
+        and-not obstruct_m2_fine
+	and	topbox
+	orthogonal remove
+        shrink  285
+        grow    285
+
+ templayer      obstruct_m2_veryfine ALLM2,PAD,MET2FILL,MET2BLOCK
+        grow    100
+	or	met2fill_coarse,met2fill_medium,met2fill_fine
+        grow    200
+ templayer	met2fill_veryfine topbox
+        slots   0 300 200 0 300 200 100 100
+        and-not obstruct_m2_veryfine
+	and	topbox
+	orthogonal remove
+        shrink  145
+        grow    145
+
+ layer	MET2FILL met2fill_coarse
+	or met2fill_medium
+	or met2fill_fine
+	or met2fill_veryfine
+ 	# calma 	41 28
+ 	calma 69 99
+
+#---------------------------------------------------
+# MET3 fill
+#---------------------------------------------------
+ templayer      obstruct_m3 ALLM3,PAD,MET3FILL,MET3BLOCK
+        grow    3000
+ templayer	met3fill_coarse topbox
+        # slots   0 2000 300 0 2000 300 700 700
+        slots   0 2000 800 0 2000 800 700 350
+        and-not obstruct_m3
+	and	topbox
+	orthogonal remove
+        shrink  995
+        grow    995
+
+ templayer      obstruct_m3_medium ALLM3,PAD,MET3FILL,MET3BLOCK
+        grow    2700
+	or	met3fill_coarse
+        grow    300
+ templayer	met3fill_medium topbox
+        slots   0 1000 300 0 1000 300 700 700
+        and-not obstruct_m3_medium
+	and	topbox
+	orthogonal remove
+        shrink  495
+        grow    495
+
+ templayer      obstruct_m3_fine CAPM
+	grow	840
+	or	ALLM3,PAD,MET3FILL,MET3BLOCK
+        grow    200
+	or	met3fill_coarse,met3fill_medium
+        grow    300
+ templayer	met3fill_fine topbox
+        slots   0 580 300 0 580 300 700 700
+        and-not obstruct_m3_fine
+	and	topbox
+	orthogonal remove
+        shrink  285
+        grow    285
+
+ templayer      obstruct_m3_veryfine CAPM
+	grow	940
+	or	ALLM3,PAD,MET3FILL,MET3BLOCK
+	# Note: Adding 0.1 to waffle rule to clear wide spacing rule
+        grow    100
+	or	met3fill_coarse,met3fill_medium,met3fill_fine
+        grow    300
+ templayer	met3fill_veryfine topbox
+        slots   0 500 300 0 500 300 150 200
+        and-not obstruct_m3_veryfine
+	and	topbox
+	orthogonal remove
+        shrink  245
+        grow    245
+
+ layer	MET3FILL met3fill_coarse
+	or	met3fill_medium
+	or	met3fill_fine
+	or	met3fill_veryfine
+ 	# calma 	34 28
+ 	calma 70 99
+
+#---------------------------------------------------
+# MET4 fill
+#---------------------------------------------------
+ templayer      obstruct_m4 PAD
+	grow	2500
+ 	or	ALLM4,MET4FILL,MET4BLOCK
+        grow    3000
+ templayer	met4fill_coarse topbox
+        # slots   0 2000 300 0 2000 300 700 1050
+        slots   0 2000 800 0 2000 800 700 350
+        and-not obstruct_m4
+	and	topbox
+	orthogonal remove
+        shrink  995
+        grow    995
+
+ templayer	obstruct_m4_medium PAD
+	grow	2500
+	or	ALLM4,MET4FILL,MET4BLOCK
+        grow    2700
+	or	met4fill_coarse
+        grow    300
+ templayer	met4fill_medium topbox
+        slots   0 1000 300 0 1000 300 700 1050
+        and-not obstruct_m4_medium
+	and	topbox
+	orthogonal remove
+        shrink  495
+        grow    495
+
+ templayer      obstruct_m4_fine PAD
+	grow	4160
+	or	CAPM2
+	grow	840
+ 	or	ALLM4,MET4FILL,MET4BLOCK
+        grow    200
+	or	met4fill_coarse,met4fill_medium
+        grow    300
+ templayer	met4fill_fine topbox
+        slots   0 580 300 0 580 300 700 1050
+        and-not obstruct_m4_fine
+	and	topbox
+	orthogonal remove
+        shrink  285
+        grow    285
+
+ templayer      obstruct_m4_veryfine PAD
+	grow	4160
+	or	CAPM2
+	grow	940
+	or	ALLM4,MET4FILL,MET4BLOCK
+	# Note: Adding 0.1 to waffle rule to clear wide spacing rule
+        grow    100
+	or	met4fill_coarse,met4fill_medium,met4fill_fine
+        grow    300
+ templayer	met4fill_veryfine topbox
+        slots   0 500 300 0 500 300 150 300
+        and-not obstruct_m4_veryfine
+	and	topbox
+	orthogonal remove
+        shrink  245
+        grow    245
+
+ layer	MET4FILL met4fill_coarse
+	or	met4fill_medium
+	or	met4fill_fine
+	or	met4fill_veryfine
+ 	# calma 	51 28
+	calma 71 99
+
+#---------------------------------------------------
+# MET5 fill
+#---------------------------------------------------
+ templayer      obstruct_m5 ALLM5,PAD,MET5FILL,MET5BLOCK
+        grow    3000
+ templayer	met5fill_coarse topbox
+        slots   0 5000 1600 0 5000 1600 1000 100
+        and-not obstruct_m5
+	and	topbox
+	orthogonal remove
+        shrink  2495
+        grow    2495
+
+ templayer      obstruct_m5_medium ALLM5,PAD,MET5FILL,MET5BLOCK
+        grow    1400
+	or	met5fill_coarse
+        grow    1600
+ templayer	met5fill_medium topbox
+        slots   0 3000 1600 0 3000 1600 1000 100
+        and-not obstruct_m5_medium
+	and	topbox
+	orthogonal remove
+        shrink  1495
+        grow    1495
+
+ layer	MET5FILL met5fill_coarse
+	or	met5fill_medium
+ 	# calma 	59 28
+	calma 72 99
 end
 
 cifinput
-style default
+style sky130
  scalefactor 10 nanometers
- layer l1  NWELL
- layer l2  DNWELL
- layer l3  DIFF
- layer l4  TAP
- layer l5  LVTN
- layer l6  HVTP
- layer l7  HVI
- layer l8  TUNM
- layer l9  POLY
- layer l10 NPC
- layer l11 PSDM
- layer l12 NSDM
- layer l13 LICON1
- layer l14 LI1
- layer l15 LI1T
- layer l16 LI1P
- layer l17 MCON
- layer l18 MET1
- layer l19 MET1T
- layer l20 MET1P
- layer l21 VIA1
- layer l22 MET2
- layer l23 MET2T
- layer l24 MET2P
- layer l25 VIA2
- layer l26 MET3
- layer l27 MET3T
- layer l28 MET3P
- layer l29 VIA3
- layer l30 MET4
- layer l31 MET4T
- layer l32 MET4P
- layer l33 VIA4
- layer l34 MET5
- layer l35 MET5T
- layer l36 MET5P
- layer l37 PAD
- layer l38 PADT
- layer l39 PADP
- layer l40 AREAID
- layer l41 TEXT
- layer l42 HVTR
- layer l43 NCM
- layer l44 RPM
- layer l45 NSM
- layer l46 RDL
- layer l47 VHVI
- layer l48 LDNTM
- layer l49 HVNTM
- layer l50 PMM
- layer l51 PNP
- layer l52 CAP
- layer l53 IND
- layer l54 PWRES
- layer l55 POLYRES
- layer l56 DIFFRES
- layer l57 DIODE
- layer l58 POLYM
- layer l59 COREID
- layer l60 NWELLT
- layer l61 PWELLT
- layer l62 NWELLP
- layer l63 POLYP
- layer l64 PWELLP
- layer l65 CFOMDROP
- layer l66 CLI1MADD
- layer l67 CNTMADD
- layer l68 CP1MADD
- layer l69 BOUND
- layer l70 POLYT
- layer l71 RERAM
- layer l72 ESDID
+ layer DNWELL  DNWELL
+
+ layer NWELL  NWELL,NWELLTXT,NWELLPIN
+ labels NWELL
+ labels NWELLPIN port
+ labels NWELLTXT text
+
+ layer PWELL  PWELL,PWELLTXT,PWELLPIN
+ labels PWELL
+ labels PWELLPIN port
+ labels PWELLTXT text
+
+ layer LVTN  LVTN
+ layer HVTP  HVTP
+ layer THKOX HVI
+ layer TUNM  TUNM
+
+ layer DIFF  DIFF,TAP,DIFFTXT,DIFFPIN
+ labels DIFF
+ labels DIFFPIN port
+ labels DIFFTXT text
+
+ layer DIFFCUT DIFFCUT
+ layer DIFFRES DIFFRES
+ layer DIFFFILL DIFFFILL,ALTDIFFFILL
+ layer DIFFBLOCK DIFFBLOCK
+
+ layer POLY  POLY,POLYTXT,POLYPIN
+ labels POLY
+ labels POLYPIN port
+ labels POLYTXT text
+
+ layer POLYMOD POLYMOD
+ layer POLYRES POLYRES
+ layer POLYCUT POLYCUT
+ layer POLYGATE POLYGATE
+ layer POLYFILL POLYFILL,ALTPOLYFILL
+ layer POLYBLOCK POLYBLOCK
+ layer POLYSHORT POLYSHORT
+
+ layer NPC NPC
+ layer NCM NCM
+ layer PSDM PSDM
+ layer NSDM NSDM
+
+ layer LICON LICON1
+
+ layer LI1 LI1,LI1TXT,LI1PIN
+ labels LI1
+ labels LI1PIN port
+ labels LI1TXT text
+
+ layer LI1RES LI1RES
+ layer LI1FILL LI1FILL,ALTLI1FILL
+ layer LIBLOCK LIBLOCK
+ layer LISHORT LISHORT
+
+ layer MCON MCON
+
+ layer MET1 MET1,MET1TXT,MET1PIN
+ labels MET1
+ labels MET1PIN port
+ labels MET1TXT text
+
+ layer MET1RES MET1RES
+ layer MET1FILL MET1FILL,ALTMET1FILL
+ layer MET1BLOCK MET1BLOCK
+ layer MET1SHORT MET1SHORT
+
+ layer VIA1 VIA1
+
+ layer MET2 MET2,MET2TXT,MET2PIN
+ labels MET2
+ labels MET2PIN port
+ labels MET2TXT text
+
+ layer MET2RES MET2RES
+ layer MET2FILL MET2FILL,ALTMET2FILL
+ layer MET2BLOCK MET2BLOCK
+ layer MET2SHORT MET2SHORT
+
+ layer VIA2 VIA2
+
+ layer MET3 MET3,MET3TXT,MET3PIN
+ labels MET3
+ labels MET3PIN port
+ labels MET3TXT text
+
+ layer MET3RES MET3RES
+ layer MET3FILL MET3FILL,ALTMET3FILL
+ layer MET3BLOCK MET3BLOCK
+ layer MET3SHORT MET3SHORT
+
+ layer VIA3 VIA3
+
+ layer MET4 MET4,MET4TXT,MET4PIN
+ labels MET4
+ labels MET4PIN port
+ labels MET4TXT text
+
+ layer MET4RES MET4RES
+ layer MET4FILL MET4FILL,ALTMET4FILL
+ layer MET4BLOCK MET4BLOCK
+ layer MET4SHORT MET4SHORT
+
+ layer VIA4 VIA4
+
+ layer MET5 MET5,MET5TXT,MET5PIN
+ labels MET5
+ labels MET5PIN port
+ labels MET5TXT text
+
+ layer MET5RES MET5RES
+ layer MET5FILL MET5FILL,ALTMET5FILL
+ layer MET5BLOCK MET5BLOCK
+ layer MET5SHORT MET5SHORT
+
+ layer PAD PAD,PADTXT,PADPIN
+ labels PAD
+ labels PADPIN port
+ labels PADTXT text
+
+ layer STDCELLID STDCELLID
+ layer COREID COREID
+ layer TEXT TEXT
+ layer HVTR HVTR
+ layer RPM RPM
+ layer URPM URPM
+ layer LDNTM LDNTM
+ layer HVNTM HVNTM
+ layer PNP PNP
+ layer NPN NPN
+ layer CAP CAP
+ layer LVID LVID
+ layer IND IND
+ layer ESD ESDID
+ layer DIODE DIODE
+ layer BOUND BOUND
+ layer BOUND2 BOUND2
+ layer OUTLINE OUTLINE
+#ifdef RERAM
+#undef RERAM
+ layer RERAM RERAM
+#define RERAM 1
+#endif
+ layer CAPM  CAPM
+ layer CAP2M  CAP2M
+ layer PWELLRES PWELLRES
+ layer LOWTAPDENSITY LOWTAPDENSITY
+ layer PADDIFFID PADDIFFID
+ layer PADMETALID PADMETALID
+ layer PADCENTERID PADCENTERID
+ layer CP1MADD CP1MADD
+ layer CP1MDROP CP1MDROP
+ layer CNTMADD CNTMADD
+ layer CLI1MADD CLI1MADD
+ layer CLI1MDROP CLI1MDROP
+ layer CFOMDROP CFOMDROP
+ layer UNKNOWN1 UNKNOWN1
+ layer UNKNOWN2 UNKNOWN2
+ layer UNKNOWN3 UNKNOWN3
+
  calma NWELL  64 20
+ calma PWELL  81 53
  calma DNWELL 64 18
  calma DIFF   65 20
  calma TAP    65 44
@@ -609,68 +1603,125 @@ style default
  calma TUNM   80 20
  calma POLY   66 20
  calma NPC    95 20
+ calma NCM    92 44
  calma PSDM   94 20
  calma NSDM   93 44
  calma LICON1 66 44
  calma LI1    67 20
- calma LI1T   67 16
- calma LI1P   67 5
+ calma LI1TXT 67 16
+ calma LI1PIN 67 5
  calma MCON   67 44
  calma MET1   68 20
- calma MET1T  68 16
- calma MET1P  68 5
+ calma MET1TXT  68 16
+ calma MET1PIN  68 5
  calma VIA1   68 44
+#ifdef RERAM
+#undef RERAM
+ calma RERAM 201 20
+#define RERAM 1
+#endif
  calma MET2   69 20
- calma MET2T  69 16
- calma MET2P  69 5
+ calma MET2TXT  69 16
+ calma MET2PIN  69 5
  calma VIA2   69 44
  calma MET3   70 20
- calma MET3T  70 16
- calma MET3P  70 5
+ calma MET3TXT  70 16
+ calma MET3PIN  70 5
+ calma CAPM	89 44
  calma VIA3   70 44
  calma MET4   71 20
- calma MET4T  71 16
- calma MET4P  71 5
+ calma MET4TXT  71 16
+ calma MET4PIN  71 5
+ calma CAP2M	97 44
  calma VIA4   71 44
  calma MET5   72 20
- calma MET5T  72 16
- calma MET5P  72 5
+ calma MET5TXT  72 16
+ calma MET5PIN  72 5
  calma PAD    76 20
- calma PADT   76 16
- calma PADP   76 5
- calma AREAID 81 4
+ calma PADTXT 76 16
+ calma PADPIN 76 5
+ calma STDCELLID 81 4
  calma TEXT   83 44
  calma HVTR   18 20
- calma NCM    92 44
  calma RPM    86 20
- calma NSM    61 20
- calma RDL    74 20
- calma VHVI   74 21
+ calma URPM   79 20
  calma LDNTM  11 44
  calma HVNTM 125 20
- calma PMM    85 44
  calma PNP    82 44
+ calma NPN    82 20
  calma CAP    82 64
+ calma LVID   81 60
  calma IND    82 24
- calma PWRES  64 13
+ calma LOWTAPDENSITY 81 14
+ calma PWELLRES  64 13
  calma POLYRES 66 13
+ calma POLYGATE 66 9
+ calma POLYCUT 66 14
  calma DIFFRES 65 13
+ calma DIFFCUT 65 14
  calma DIODE  81 23
- calma POLYM  66 83
+ calma POLYMOD 66 83
  calma COREID 81 2
- calma NWELLT  64 16
- calma PWELLT 122 16
- calma NWELLP  64 5
- calma POLYP  66 5
- calma PWELLP 64 59
- calma CFOMDROP 22 22
+ calma PADDIFFID 81 6
+ calma PADMETALID 81 8
+ calma PADCENTERID 81 20
+ calma CP1MADD 33 43
+ calma CP1MDROP 33 42
+ calma CNTMADD 22 21
  calma CLI1MADD 115 43
- calma CNTMADD  22 21
- calma CP1MADD  33 43
+ calma CLI1MDROP 115 42
+ calma CFOMDROP 22 22
+ calma UNKNOWN1 230 241
+ calma UNKNOWN2 230 242
+ calma UNKNOWN3 64 44
+ calma NWELLTXT  64 16
+ calma PWELLTXT 122 16
+ calma NWELLPIN  64 5
+ calma POLYTXT  66 16
+ calma POLYPIN  66 5
+ calma PWELLPIN 64 59
  calma BOUND  235 4
- calma POLYT  66 16
- calma RERAM 201 20
+ calma BOUND2 235 0
+ calma OUTLINE 236 0
  calma ESDID 81 19
+ calma DIFFBLOCK 22 24
+ calma POLYBLOCK 33 24
+ calma LIBLOCK 67 10
+ calma MET1BLOCK 62 24
+ calma MET2BLOCK 105 52
+ calma MET3BLOCK 107 24
+ calma MET4BLOCK 112 4
+ calma MET5BLOCK 117 4
+ calma DIFFFILL 23 28
+ calma POLYFILL 28 28
+ calma LI1FILL  56 28
+ calma MET1FILL 36 28
+ calma MET2FILL 41 28
+ calma MET3FILL 34 28
+ calma MET4FILL 51 28
+ calma MET5FILL 59 28
+ calma POLYSHORT 66 15
+ calma LISHORT 67 15
+ calma MET1SHORT 68 15
+ calma MET2SHORT 69 15
+ calma MET3SHORT 70 15
+ calma MET4SHORT 71 15
+ calma MET5SHORT 72 15
+ calma LI1RES 67 13
+ calma MET1RES 68 13
+ calma MET2RES 69 13
+ calma MET3RES 70 13
+ calma MET4RES 71 13
+ calma MET5RES 72 13
+ calma ALTDIFFFILL 65 99
+ calma ALTPOLYFILL 66 99
+ calma ALTLI1FILL  67 99
+ calma ALTMET1FILL 68 99
+ calma ALTMET2FILL 69 99
+ calma ALTMET3FILL 70 99
+ calma ALTMET4FILL 71 99
+ calma ALTMET5FILL 72 99
+
 end
  
 mzrouter
@@ -700,13 +1751,13 @@ drc
  angles HVTP 45 "Only 45 degree angles allowed on HVTP (X.3)"
  off_grid HVTP 5 "HVTP shape not on %d grid (X.1b)"
 
- # HVI rules
+ # THKOX rules
 
- width HVI 600 "HVI width < %d (HVI.1)"
- spacing HVI HVI 700 touching_ok "HVI to HVI spacing < %d (HVI.2)"
- spacing HVI NWELL 700 surround_ok "HVI to NWELL spacint < %d (HVI.5)"
- no_overlap HVI TUNM
- off_grid HVI 5 "HVI shape not on %d grid (X.1b)"
+ width THKOX 600 "HVI width < %d (HVI.1)"
+ spacing THKOX THKOX 700 touching_ok "THKOX to THKOX spacing < %d (HVI.2)"
+ spacing THKOX NWELL 700 surround_ok "THKOX to NWELL spacint < %d (HVI.5)"
+ no_overlap THKOX TUNM
+ off_grid THKOX 5 "THKOX shape not on %d grid (X.1b)"
 
  # NSDM rules
 
@@ -726,48 +1777,85 @@ end
 
 extract
 style default
- planeorder p1 0
- planeorder p2 1
- planeorder p3 2
- planeorder p4 3
- planeorder p5 4
- planeorder p6 5
- planeorder p7 6
- planeorder p8 7
- planeorder p9 8
- planeorder p10 9
- planeorder p11 10
- planeorder p12 11
- planeorder p13 12
- planeorder p14 13
- planeorder p15 14
- planeorder p16 15
- planeorder p17 16
- planeorder p18 17
- planeorder p19 18
- planeorder p20 19
- planeorder p21 20
- planeorder p22 21
- planeorder p23 22
- planeorder p24 23
- planeorder p25 24
- planeorder p26 25
- planeorder p27 26
- planeorder p28 27
- planeorder p29 28
- planeorder p30 29
- planeorder p31 30
- planeorder p32 31
- planeorder p33 32
- planeorder p34 33
- planeorder p35 34
- planeorder p36 35
- planeorder p37 36
- planeorder p38 37
- planeorder p39 38
- planeorder p40 39
- planeorder p41 40
- planeorder p42 41
- planeorder p43 42
- planeorder p44 43
+ planeorder dw  0
+ planeorder w   1
+ planeorder i1  2
+ planeorder i2  3
+ planeorder i3  4
+ planeorder i4  5
+ planeorder i5  6
+ planeorder i6  7
+ planeorder i7  8
+ planeorder i8  9
+ planeorder a   10
+ planeorder p   11
+ planeorder mc  12
+ planeorder li  13
+ planeorder lc  14
+#ifdef RERAM
+ planeorder rr  15
+ planeorder m1  16
+ planeorder v1  17
+ planeorder m2  18
+ planeorder v2  19
+ planeorder m3  20
+ planeorder c1  21
+ planeorder v3  22
+ planeorder m4  23
+ planeorder c2  24
+ planeorder v4  25
+ planeorder m5  26
+ planeorder g   27
+ planeorder bd  28
+ planeorder bp  29
+ planeorder bl  30
+ planeorder b1  31
+ planeorder b2  32
+ planeorder b3  33
+ planeorder b4  34
+ planeorder b5  35
+ planeorder id1 36
+ planeorder id2 37
+ planeorder id3 38
+ planeorder id4 39
+ planeorder id5 40
+ planeorder id6 41
+ planeorder id7 42
+ planeorder id8 43
+ planeorder id9 44
+ planeorder c 	45
+ planeorder e	46
+#else
+ planeorder m1  15
+ planeorder v1  16
+ planeorder m2  17
+ planeorder v2  18
+ planeorder m3  19
+ planeorder c1  20
+ planeorder v3  21
+ planeorder m4  22
+ planeorder c2  23
+ planeorder v4  24
+ planeorder m5  25
+ planeorder g   26
+ planeorder bd  27
+ planeorder bp  28
+ planeorder bl  29
+ planeorder b1  30
+ planeorder b2  31
+ planeorder b3  32
+ planeorder b4  33
+ planeorder b5  34
+ planeorder id1 35
+ planeorder id2 36
+ planeorder id3 37
+ planeorder id4 38
+ planeorder id5 39
+ planeorder id6 40
+ planeorder id7 41
+ planeorder id8 42
+ planeorder id9 43
+ planeorder c 	44
+ planeorder e	45
+#endif
 end

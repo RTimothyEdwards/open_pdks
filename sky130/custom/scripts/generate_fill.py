@@ -17,7 +17,7 @@
 #
 # generate_fill.py ---
 #
-#    Run the fill generation on a layout top level.
+#    Run the fill generation on a layout top level GDS file.
 #
 
 import sys
@@ -33,14 +33,14 @@ def usage():
     print("generate_fill.py <layout_name> [-keep] [-test] [-dist]")
     print("")
     print("where:")
-    print("    <layout_name> is the path to the .mag or .gds file to be filled.")
+    print("    <layout_name> is the path to the GDS file to be filled.")
     print("")
     print("  If '-keep' is specified, then keep the generation script.")
     print("  If '-test' is specified, then create but do not run the generation script.")
     print("  If '-dist' is specified, then run distributed (multi-processing).")
     return 0
 
-def makegds(file, rcfile):
+def makegds(file, techfile):
     # Procedure for multiprocessing only:  Run the distributed processing
     # script to load a .mag file of one flattened square area of the layout,
     # and run the fill generator to produce a .gds file output from it.
@@ -55,7 +55,7 @@ def makegds(file, rcfile):
 		'magic',
 		'-dnull',
 		'-noconsole',
-		'-rcfile', rcfile,
+		'-T', techfile,
 		layoutpath + '/generate_fill_dist.tcl',
 		filename]
 
@@ -141,7 +141,7 @@ if __name__ == '__main__':
             proj_extension = '.' + layoutfiles[0].split(os.extsep, 1)[1]
             user_project_path = layoutfiles[0]
         elif len(layoutfiles) == 0:
-            print('Error:  Project is not a magic database or GDS file!')
+            print('Error:  Project is not a GDS file!')
             sys.exit(1)
         else:
             print('Error:  Project name is ambiguous!')
@@ -149,15 +149,12 @@ if __name__ == '__main__':
     else:
         proj_extension = '.' + project[1]
 
-    is_mag = False
     is_gds = False
 
-    if proj_extension == '.mag' or proj_extension == '.mag.gz':
-        is_mag = True
-    elif proj_extension == '.gds' or proj_extension == '.gds.gz':
+    if proj_extension == '.gds' or proj_extension == '.gds.gz':
         is_gds = True
     else:
-        print('Error:  Project is not a magic database or GDS file!')
+        print('Error:  Project is not a GDS file!')
         sys.exit(1)
 
     if not os.path.isfile(user_project_path):
@@ -168,22 +165,25 @@ if __name__ == '__main__':
     # path where the magic startup script resides, for the same PDK
     scriptpath = os.path.dirname(os.path.realpath(__file__))
 
-    # Search for magic startup script.  Order of precedence:
-    #  1. PDK_ROOT environment variable
-    #  2. Local .magicrc
-    #  3. The location of this script
+    # The PDK should be found via the PDK_ROOT environment variable.  If not,
+    # then flag this as a warning.
+    # NOTES:
+    # 1) There are three or so "standard" locations for the PDK root directory
+    #    that should be checked in the absence of a PDK_ROOT environment variable,
+    #    and/or it should be possible to specify the PDK root directory from the
+    #    command line.
+    # 2) The PDK variant defaults to "sky130B" because it is a superset of sky130A.
+    # 3) This script uses sky130B-GDS.tech (sky130A-GDS.tech) which exactly
+    #    represents all layout layers without conversion to generated layers,
+    #    which is preferable for doing fill generation.
 
     if os.environ.get('PDK'):
         pdk_name = os.environ.get('PDK')
     else:
-        pdk_name = 'sky130A'
+        pdk_name = 'sky130B'
 
     if os.environ.get('PDK_ROOT'):
-        rcfile_path = os.environ.get('PDK_ROOT') + '/' + pdk_name + '/libs.tech/magic/' + pdk_name + '.magicrc'
-    elif os.path.isfile(layoutpath + '/.magicrc'):
-        rcfile_path = layoutpath + '/.magicrc'
-    elif os.path.isfile(scriptpath + '/' + pdk_name + '.magicrc'):
-        rcfile_path = scriptpath + '/' + pdk_name + '.magicrc'
+        techfile_path = os.environ.get('PDK_ROOT') + '/' + pdk_name + '/libs.tech/magic/' + pdk_name + '-GDS.tech'
     else:
         print('Unknown path to magic startup script.  Please set $PDK_ROOT')
         sys.exit(1)
@@ -203,7 +203,9 @@ if __name__ == '__main__':
     print('#!/usr/bin/env wish', file=ofile)
     print('drc off', file=ofile)
     print('crashbackups stop', file=ofile)
+    print('locking disable', file=ofile)
     print('tech unlock *', file=ofile)
+    print('scalegrid 1 2', file=ofile)
     print('snap internal', file=ofile)
     print('box values 0 0 0 0', file=ofile)
     print('box size 700um 700um', file=ofile)
@@ -214,8 +216,8 @@ if __name__ == '__main__':
     print('set starttime [orig_clock format [orig_clock seconds] -format "%D %T"]', file=ofile)
     print('puts stdout "Started: $starttime"', file=ofile)
     print('', file=ofile)
-    if is_gds:
-        print('gds read ' + project_file, file=ofile)
+    print('gds rescale false', file=ofile)
+    print('gds read ' + project_file, file=ofile)
     # NOTE:  No guarantee that the filename matches the top level cell name;
     # might want to query using "cellname list top"
     print('load ' + project + ' -dereference', file=ofile)
@@ -263,12 +265,12 @@ if __name__ == '__main__':
 
     # Remove any GDS_FILE reference (there should not be any?)
     print('        property GDS_FILE ""', file=ofile)
-    # Set boundary using comment layer, to the size of the step box
+    # Set boundary using COMMENT layer, to the size of the step box
     # This corresponds to the "topbox" rule in the wafflefill(tiled) style
     print('        select top cell', file=ofile)
-    print('        erase comment', file=ofile)
+    print('        erase COMMENT', file=ofile)
     print('        box values $xlo $ylo $xhi $yhi', file=ofile)
-    print('        paint comment', file=ofile)
+    print('        paint COMMENT', file=ofile)
 
     if not distmode:
         print('        puts stdout "Writing GDS. . . "', file=ofile)
@@ -306,6 +308,7 @@ if __name__ == '__main__':
             print('#!/usr/bin/env wish', file=ofile)
             print('drc off', file=ofile)
             print('tech unlock *', file=ofile)
+            print('scalegrid 1 2', file=ofile)
             print('snap internal', file=ofile)
             print('box values 0 0 0 0', file=ofile)
             print('set filename [file root [lindex $argv $argc-1]]', file=ofile)
@@ -318,6 +321,7 @@ if __name__ == '__main__':
         print('#!/usr/bin/env wish', file=ofile)
         print('drc off', file=ofile)
         print('tech unlock *', file=ofile)
+        print('scalegrid 1 2', file=ofile)
         print('snap internal', file=ofile)
         print('box values 0 0 0 0', file=ofile)
 
@@ -342,7 +346,7 @@ if __name__ == '__main__':
     print('        set yhi [expr $ylo + $stepheight]', file=ofile)
     print('        load ' + project + '_fill_pattern_${x}_$y -silent', file=ofile)
     print('        box values $xlo $ylo $xhi $yhi', file=ofile)
-    print('        paint comment', file=ofile)
+    print('        paint COMMENT', file=ofile)
     print('        property FIXED_BBOX "$xlo $ylo $xhi $yhi"', file=ofile)
     print('        property GDS_FILE ' + project + '_fill_pattern_${x}_${y}.gds', file=ofile)
     print('        property GDS_START 0', file=ofile)
@@ -383,7 +387,7 @@ if __name__ == '__main__':
 		'magic',
 		'-dnull',
 		'-noconsole',
-		'-rcfile', rcfile_path,
+		'-T', techfile_path,
 		layoutpath + '/generate_fill.tcl']
 
         if debugmode:
@@ -417,7 +421,7 @@ if __name__ == '__main__':
             # try to read it from the command line as well as passing it as an
             # argument to the script.  We only want it passed as an argument.
             magxfiles = list(item + 'x' for item in magfiles)
-            makegdsfunc = functools.partial(makegds, rcfile=rcfile_path)
+            makegdsfunc = functools.partial(makegds, techfile=techfile_path)
             pool.map(makegdsfunc, magxfiles)
 
             # If using distributed mode, then remove all of the temporary .mag files
@@ -429,7 +433,7 @@ if __name__ == '__main__':
 			'magic',
 			'-dnull',
 			'-noconsole',
-			'-rcfile', rcfile_path,
+			'-T', techfile_path,
 			layoutpath + '/generate_fill_final.tcl']
 
             mproc = subprocess.run(magic_run_opts,
