@@ -729,6 +729,7 @@ klayout-%: ${GF180MCU_PV_PATH} ${GF180MCU_PR_PATH}
 	mkdir ${KLAYOUT_STAGING_$*}/drc
 	mkdir ${KLAYOUT_STAGING_$*}/lvs
 	mkdir ${KLAYOUT_STAGING_$*}/tech
+	mkdir ${KLAYOUT_STAGING_$*}/tech/macros
 	mkdir ${KLAYOUT_STAGING_$*}/tech/pymacros
 	mkdir ${KLAYOUT_STAGING_$*}/tech/pymacros/cells
 
@@ -736,6 +737,8 @@ klayout-%: ${GF180MCU_PV_PATH} ${GF180MCU_PR_PATH}
 		${KLAYOUT_STAGING_$*}/drc
 	cp -rp ${GF180MCU_PV_PATH}/klayout/lvs/* \
 		${KLAYOUT_STAGING_$*}/lvs
+	cp -rp ${GF180MCU_PR_PATH}/rules/klayout/macros/* \
+		${KLAYOUT_STAGING_$*}/tech/macros
 	cp -rp ${GF180MCU_PR_PATH}/cells/klayout/pymacros/cells/* \
 		${KLAYOUT_STAGING_$*}/tech/pymacros/cells
 	cp -rp ${GF180MCU_PR_PATH}/tech/klayout/* \
