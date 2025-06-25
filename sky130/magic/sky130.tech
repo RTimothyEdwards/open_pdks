@@ -3625,8 +3625,8 @@ style  sky130 variants (),(vendor)
  labels CONT
 
  layer	fomfill  FOMFILL
- or FOMFILLALT,DIFFFILLALT
- labels FOMFILL,FOMFILLALT,DIFFFILLALT
+ or DIFFFILLALT
+ labels FOMFILL,DIFFFILLALT
 
  layer	polyfill POLYFILL
  or POLYFILLALT
@@ -4058,13 +4058,14 @@ style  sky130 variants (),(vendor)
 # and FILLOBSM1,FILLOBSM2,FILLOBSM3,FILLOBSM4
 
 # Use the obstruction types for fill block on individual layers
- templayer obspoly FILLOBSPOLY
+ templayer obspoly FILLOBSPOLY,POLYBLOCK
  and-not POLY
+ labels FILLOBSPOLY
 
- layer obsactive FILLOBSFOM
+ layer obsactive FILLOBSFOM,DIFFBLOCK
  and-not DIFF,TAP
  or obspoly
- labels FILLOBSFOM,FILLOBSPOLY
+ labels FILLOBSFOM
 
  layer obsli LIBLOCK
  and-not LI
@@ -4299,7 +4300,6 @@ style  sky130 variants (),(vendor)
 
  # Alternate layer purpose used for fill
  # which uses the regular layer numbers.
- calma FOMFILLALT  22 99
  calma DIFFFILLALT 65 99
  calma POLYFILLALT 66 99
  calma LIFILLALT   67 99
@@ -4312,6 +4312,8 @@ style  sky130 variants (),(vendor)
 #endif
 
  # Alternate layer purpose used for obstruction (fill block)
+ calma DIFFBLOCK  65 98
+ calma POLYBLOCK  66 98
  calma LIBLOCK    67 98
  calma MET1BLOCK  68 98
  calma MET2BLOCK  69 98

@@ -217,6 +217,7 @@ if __name__ == '__main__':
     print('puts stdout "Started: $starttime"', file=ofile)
     print('', file=ofile)
     print('gds rescale false', file=ofile)
+    print('gds drccheck no', file=ofile)
     print('gds read ' + project_file, file=ofile)
     # NOTE:  No guarantee that the filename matches the top level cell name;
     # might want to query using "cellname list top"

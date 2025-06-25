@@ -24,6 +24,9 @@ for line in xlines:
     if skipnext == 0:
         if 'trying to find' in line:
             skipnext = 2
+        elif '/models/ngspice' in line:
+            # Path matches library source structure;  change to open_pdks structure
+            line = line.replace('/models/', '/' + tech_name + '/libs.tech/')
         outlines.append(line)
     else:
         skipnext -= 1
@@ -36,6 +39,7 @@ for line in xlines:
 outlines.append('')
 outlines.append('# open_pdks-specific')
 outlines.append('set XSCHEM_START_WINDOW ${PDK_ROOT}/' + tech_name + '/libs.tech/xschem/tests/0_top.sch')
+outlines.append('append XSCHEM_LIBRARY_PATH :${PDK_ROOT}/' + tech_name + '/libs.tech/xschem/tests')
 outlines.append('append XSCHEM_LIBRARY_PATH :${PDK_ROOT}/' + tech_name + '/libs.tech/xschem')
 outlines.append('')
 outlines.append('# allow a user-specific path add-on')

@@ -1,129 +1,167 @@
 magic
 tech sky130A
 magscale 1 2
-timestamp 1636574685
-use sky130_ef_io__vccd_lvc_clamped3_pad  sky130_ef_io__vccd_lvc_clamped3_pad_0
-timestamp 1636574685
-transform 1 0 -2456 0 1 -60530
-box 0 -2177 17187 39593
-use sky130_ef_io__vssd_lvc_clamped3_pad  sky130_ef_io__vssd_lvc_clamped3_pad_0
-timestamp 1636574685
-transform 1 0 25051 0 1 -59702
-box 0 -2184 17187 39593
-use sky130_ef_io__vddio_hvc_clamped_pad  sky130_ef_io__vddio_hvc_clamped_pad_0
-timestamp 1617120349
-transform 1 0 -778 0 1 -5714
-box 0 -434 15000 39593
-use sky130_ef_io__vssio_hvc_clamped_pad  sky130_ef_io__vssio_hvc_clamped_pad_0
-timestamp 1617120349
-transform 1 0 19004 0 1 -5606
-box 0 -434 15000 39593
-use sky130_ef_io__vdda_hvc_clamped_pad  sky130_ef_io__vdda_hvc_clamped_pad_0
-timestamp 1617120349
-transform 1 0 39000 0 1 -5606
-box 0 -434 15000 39593
-use sky130_ef_io__vssa_hvc_clamped_pad  sky130_ef_io__vssa_hvc_clamped_pad_0
-timestamp 1617120349
-transform 1 0 58346 0 1 -5496
-box 0 -434 15000 39593
-use sky130_ef_io__vccd_lvc_clamped_pad  sky130_ef_io__vccd_lvc_clamped_pad_0
-timestamp 1617120349
-transform 1 0 77366 0 1 -5822
-box 0 -2107 17239 39593
-use sky130_ef_io__vssd_lvc_clamped_pad  sky130_ef_io__vssd_lvc_clamped_pad_0
-timestamp 1617120349
-transform 1 0 98450 0 1 -6148
-box 0 -2107 17239 39593
-use sky130_ef_io__vccd_lvc_clamped2_pad  sky130_ef_io__vccd_lvc_clamped2_pad_0
-timestamp 1617120349
-transform 1 0 118340 0 1 -5714
-box -2195 -2184 17228 39593
-use sky130_ef_io__vssd_lvc_clamped2_pad  sky130_ef_io__vssd_lvc_clamped2_pad_0
-timestamp 1617120349
-transform 1 0 141083 0 1 -5048
-box 0 -46 15000 39593
-use sky130_ef_io__top_power_hvc  sky130_ef_io__top_power_hvc_0
-timestamp 1624544534
-transform 1 0 163508 0 1 -6325
-box 0 -434 33800 39593
-use sky130_ef_io__vssd_lvc_pad  sky130_ef_io__vssd_lvc_pad_0
-timestamp 1617120349
-transform 1 0 -480 0 1 46173
-box 0 -46 15000 39593
-use sky130_ef_io__vssd_hvc_pad  sky130_ef_io__vssd_hvc_pad_0
-timestamp 1617120349
-transform 1 0 18134 0 1 46741
-box 0 -434 15000 39593
-use sky130_ef_io__vssa_hvc_pad  sky130_ef_io__vssa_hvc_pad_0
-timestamp 1617120349
-transform 1 0 37912 0 1 46935
-box 0 -434 15000 39593
-use sky130_ef_io__vssa_lvc_pad  sky130_ef_io__vssa_lvc_pad_0
-timestamp 1617120349
-transform 1 0 60016 0 1 44427
-box 0 -46 15000 39593
-use sky130_ef_io__vssio_lvc_pad  sky130_ef_io__vssio_lvc_pad_0
-timestamp 1617120349
-transform 1 0 79018 0 1 44233
-box 0 -7 15000 39593
-use sky130_ef_io__vssio_hvc_pad  sky130_ef_io__vssio_hvc_pad_0
-timestamp 1617120349
-transform 1 0 100540 0 1 44967
-box 0 -407 15000 39593
-use sky130_ef_io__corner_pad  sky130_ef_io__corner_pad_0
-timestamp 1609343739
-transform 1 0 123795 0 1 46420
-box -271 -204 40000 40800
-use sky130_ef_io__com_bus_slice_20um  sky130_ef_io__com_bus_slice_20um_0
-timestamp 1602609570
-transform 1 0 177444 0 1 45996
-box 0 0 4000 39593
-use sky130_ef_io__com_bus_slice_10um  sky130_ef_io__com_bus_slice_10um_0
-timestamp 1602609491
-transform 1 0 172732 0 1 45576
-box 0 0 2000 39593
-use sky130_ef_io__com_bus_slice_5um  sky130_ef_io__com_bus_slice_5um_0
-timestamp 1602609416
-transform 1 0 169366 0 1 45408
-box 0 0 1000 39593
+timestamp 1682359614
+<< checkpaint >>
+rect -2128 90664 15392 132784
+rect 18426 90804 35946 133324
+rect 36846 89888 54366 132008
+rect 55266 89668 72786 132188
+rect 75818 90638 93338 133158
+rect 95788 91052 113308 133172
+rect 117892 90921 136689 133577
+rect 138834 91192 156581 133712
+rect 159580 91133 190391 133951
+rect -1740 44906 15780 87026
+rect 16874 45047 34394 87594
+rect 36652 45268 54172 87788
+rect 58756 43160 76276 85280
+rect 77758 42966 95278 85086
+rect 99280 43300 116800 85820
+rect 122535 45227 165055 88480
+rect -2038 -7381 15482 35139
+rect 17744 -7273 35264 35247
+rect 37740 -7273 55260 35247
+rect 57086 -7163 74606 35357
+rect 76106 -7089 93626 35031
+rect 97190 -7415 114710 34705
+rect 114885 -9158 136828 35139
+rect 139823 -6315 157343 35805
+rect 171648 -7992 189168 34528
+rect -3716 -63967 15991 -19677
+rect 23791 -63146 43498 -18849
+rect 50756 -62783 68276 -20663
+rect 71702 -62672 89222 -20513
+use sky130_fd_io__top_gpio_ovtv2  sky130_ef_fd__top_gpio_ovtv2_0 $PDKPATH/libs.ref/sky130_fd_io/mag
+timestamp 1681316767
+transform 1 0 160920 0 1 92540
+box -80 -147 28211 40151
 use sky130_ef_io__com_bus_slice_1um  sky130_ef_io__com_bus_slice_1um_0
 timestamp 1576684134
 transform 1 0 167600 0 1 45744
 box 0 0 200 39593
-use sky130_ef_io__vdda_hvc_pad  sky130_ef_io__vdda_hvc_pad_0
-timestamp 1617120349
-transform 1 0 19686 0 1 92471
-box 0 -434 15000 39593
-use sky130_ef_io__vdda_lvc_pad  sky130_ef_io__vdda_lvc_pad_0
-timestamp 1617120349
-transform 1 0 -868 0 1 91931
-box 0 -46 15000 39593
-use sky130_ef_io__vccd_lvc_pad  sky130_ef_io__vccd_lvc_pad_0
-timestamp 1617120349
-transform 1 0 38106 0 1 91155
-box 0 -46 15000 39593
+use sky130_ef_io__com_bus_slice_5um  sky130_ef_io__com_bus_slice_5um_0
+timestamp 1602609416
+transform 1 0 169366 0 1 45408
+box 0 0 1000 39593
+use sky130_ef_io__com_bus_slice_10um  sky130_ef_io__com_bus_slice_10um_0
+timestamp 1602609491
+transform 1 0 172732 0 1 45576
+box 0 0 2000 39593
+use sky130_ef_io__com_bus_slice_20um  sky130_ef_io__com_bus_slice_20um_0
+timestamp 1602609570
+transform 1 0 177444 0 1 45996
+box 0 0 4000 39593
+use sky130_ef_io__corner_pad  sky130_ef_io__corner_pad_0
+timestamp 1609343739
+transform 1 0 123795 0 1 46420
+box -271 -204 40000 40800
+use sky130_ef_io__gpiov2_pad  sky130_ef_io__gpiov2_pad_0
+timestamp 1602597384
+transform 1 0 119295 0 1 92724
+box -143 -515 16134 39593
+use sky130_ef_io__top_power_hvc  sky130_ef_io__top_power_hvc_0
+timestamp 1624544534
+transform 1 0 163508 0 1 -6325
+box 0 -407 33800 39593
 use sky130_ef_io__vccd_hvc_pad  sky130_ef_io__vccd_hvc_pad_0
 timestamp 1617120349
 transform 1 0 56526 0 1 91335
-box 0 -434 15000 39593
+box 0 -407 15000 39593
+use sky130_ef_io__vccd_lvc_clamped2_pad  sky130_ef_io__vccd_lvc_clamped2_pad_0
+timestamp 1636578979
+transform 1 0 118340 0 1 -5714
+box -2195 -2184 17228 39593
+use sky130_ef_io__vccd_lvc_clamped3_pad  sky130_ef_io__vccd_lvc_clamped3_pad_0
+timestamp 1637024123
+transform 1 0 -2456 0 1 -60530
+box 0 -2177 17187 39593
+use sky130_ef_io__vccd_lvc_clamped_pad  sky130_ef_io__vccd_lvc_clamped_pad_0
+timestamp 1617120349
+transform 1 0 77366 0 1 -5822
+box 0 -2107 17239 39593
+use sky130_ef_io__vccd_lvc_pad  sky130_ef_io__vccd_lvc_pad_0
+timestamp 1617120349
+transform 1 0 38106 0 1 91155
+box 0 -13 15000 39593
+use sky130_ef_io__vdda_hvc_clamped_pad  sky130_ef_io__vdda_hvc_clamped_pad_0
+timestamp 1617120349
+transform 1 0 39000 0 1 -5606
+box 0 -407 15000 39593
+use sky130_ef_io__vdda_hvc_pad  sky130_ef_io__vdda_hvc_pad_0
+timestamp 1617120349
+transform 1 0 19686 0 1 92471
+box 0 -407 15000 39593
+use sky130_ef_io__vdda_lvc_pad  sky130_ef_io__vdda_lvc_pad_0
+timestamp 1617120349
+transform 1 0 -868 0 1 91931
+box 0 -13 15000 39593
+use sky130_ef_io__vddio_hvc_clamped_pad  sky130_ef_io__vddio_hvc_clamped_pad_0
+timestamp 1617120349
+transform 1 0 -778 0 1 -5714
+box 0 -407 15000 39593
 use sky130_ef_io__vddio_hvc_pad  sky130_ef_io__vddio_hvc_pad_0
 timestamp 1617120349
 transform 1 0 77078 0 1 92305
 box 0 -407 15000 39593
+use sky130_ef_io__vddio_lvc_clamped_pad  sky130_ef_io__vddio_lvc_clamped_pad_0
+timestamp 1682358349
+transform 1 0 72962 0 1 -61366
+box 0 -13 15000 39593
 use sky130_ef_io__vddio_lvc_pad  sky130_ef_io__vddio_lvc_pad_0
 timestamp 1617120349
 transform 1 0 97048 0 1 92319
-box 0 -7 15000 39593
-use sky130_ef_io__gpiov2_pad  sky130_ef_io__gpiov2_pad_0
-timestamp 1602597384
-transform 1 0 119295 0 1 92724
-box -143 -543 16134 39593
+box 0 -13 15000 39593
+use sky130_ef_io__vssa_hvc_clamped_pad  sky130_ef_io__vssa_hvc_clamped_pad_0
+timestamp 1617120349
+transform 1 0 58346 0 1 -5496
+box 0 -407 15000 39593
+use sky130_ef_io__vssa_hvc_pad  sky130_ef_io__vssa_hvc_pad_0
+timestamp 1617120349
+transform 1 0 37912 0 1 46935
+box 0 -407 15000 39593
+use sky130_ef_io__vssa_lvc_pad  sky130_ef_io__vssa_lvc_pad_0
+timestamp 1617120349
+transform 1 0 60016 0 1 44427
+box 0 -13 15000 39593
+use sky130_ef_io__vssd_hvc_pad  sky130_ef_io__vssd_hvc_pad_0
+timestamp 1636578979
+transform 1 0 18134 0 1 46741
+box 0 -407 15000 39593
+use sky130_ef_io__vssd_lvc_clamped2_pad  sky130_ef_io__vssd_lvc_clamped2_pad_0
+timestamp 1617120349
+transform 1 0 141083 0 1 -5048
+box 0 -13 15000 39593
+use sky130_ef_io__vssd_lvc_clamped3_pad  sky130_ef_io__vssd_lvc_clamped3_pad_0
+timestamp 1636578979
+transform 1 0 25051 0 1 -59702
+box 0 -2177 17187 39593
+use sky130_ef_io__vssd_lvc_clamped_pad  sky130_ef_io__vssd_lvc_clamped_pad_0
+timestamp 1617120349
+transform 1 0 98450 0 1 -6148
+box 0 -2107 17239 39593
+use sky130_ef_io__vssd_lvc_pad  sky130_ef_io__vssd_lvc_pad_0
+timestamp 1617120349
+transform 1 0 -480 0 1 46173
+box 0 -13 15000 39593
+use sky130_ef_io__vssio_hvc_clamped_pad  sky130_ef_io__vssio_hvc_clamped_pad_0
+timestamp 1617120349
+transform 1 0 19004 0 1 -5606
+box 0 -407 15000 39593
+use sky130_ef_io__vssio_hvc_pad  sky130_ef_io__vssio_hvc_pad_0
+timestamp 1617120349
+transform 1 0 100540 0 1 44967
+box 0 -407 15000 39593
+use sky130_ef_io__vssio_lvc_clamped_pad  sky130_ef_io__vssio_lvc_clamped_pad_0
+timestamp 1682357748
+transform 1 0 52016 0 1 -61516
+box 0 -13 15000 39593
+use sky130_ef_io__vssio_lvc_pad  sky130_ef_io__vssio_lvc_pad_0
+timestamp 1617120349
+transform 1 0 79018 0 1 44233
+box 0 -13 15000 39593
 use sky130_fd_io__top_xres4v2  sky130_fd_io__top_xres4v2_0 $PDKPATH/libs.ref/sky130_fd_io/mag
-timestamp 1636165381
+timestamp 1681316767
 transform 1 0 140197 0 1 92452
 box -103 0 15124 40000
-use sky130_fd_io__top_gpio_ovtv2  sky130_ef_fd__top_gpio_ovtv2_0 $PDKPATH/libs.ref/sky130_fd_io/mag
-timestamp 1636165381
-transform 1 0 160920 0 1 92540
-box -80 -147 28211 40151
 << end >>
