@@ -1130,7 +1130,7 @@ digital-osu-%:
 		-target ${STAGING_PATH}/${GF180MCU$*} \
 		-techlef tlef/gf180mcu_osu_sc_gp9t3v3.tlef \
 			rename=gf180mcu_osu_sc_gp9t3v3__nom.tlef \
-		-lib lib/gf180mcu_osu_sc_gp9t3v3_TT_3P3_25C.ccs.lib \
+		-lib lib/gf180mcu_osu_sc_gp9t3v3_TT_25C.ccs.lib \
 			rename=gf180mcu_osu_sc_gp9t3v3__tt_025C_3v30 \
 		-verilog cells/*/*.v compile-only \
 		-lef cells/*/*.lef compile-only \
