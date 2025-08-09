@@ -5426,7 +5426,7 @@ proc sky130::sky130_fd_pr__pfet_01v8_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
 		class mosfet compatible {sky130_fd_pr__pfet_01v8 \
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
-		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
+		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 conn_gates 0 \
 		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
@@ -5437,7 +5437,7 @@ proc sky130::sky130_fd_pr__pfet_01v8_lvt_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.35 wmin 0.42 \
 		class mosfet compatible {sky130_fd_pr__pfet_01v8 \
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
-		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
+		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 conn_gates 0 \
 		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
@@ -5448,7 +5448,7 @@ proc sky130::sky130_fd_pr__pfet_01v8_hvt_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.15 wmin 0.42 \
 		class mosfet compatible {sky130_fd_pr__pfet_01v8 \
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
-		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
+		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 conn_gates 0 \
 		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
@@ -5459,7 +5459,7 @@ proc sky130::sky130_fd_pr__pfet_g5v0d10v5_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.50 wmin 0.42 \
 		class mosfet compatible {sky130_fd_pr__pfet_01v8 \
 		sky130_fd_pr__pfet_01v8_lvt sky130_fd_pr__pfet_01v8_hvt \
-		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 \
+		sky130_fd_pr__pfet_g5v0d10v5} full_metal 1 conn_gates 0 \
 		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
@@ -5468,7 +5468,8 @@ proc sky130::sky130_fd_pr__pfet_g5v0d16v0_defaults {} {
     return {w 5.00 l 1.050 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 0 lmin 1.050 wmin 5.00 \
-		class mosfet full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		class mosfet full_metal 1 conn_gates 0 \
+		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
@@ -5485,8 +5486,8 @@ proc sky130::sky130_fd_pr__nfet_01v8_defaults {} {
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
-		sky130_fd_pr__nfet_03v3_nvt} \
-		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		sky130_fd_pr__nfet_03v3_nvt} full_metal 1 conn_gates 0 \
+		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
@@ -5498,8 +5499,8 @@ proc sky130::sky130_fd_pr__nfet_01v8_lvt_defaults {} {
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
-		sky130_fd_pr__nfet_03v3_nvt} \
-		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		sky130_fd_pr__nfet_03v3_nvt} full_metal 1 conn_gates 0 \
+		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
@@ -5511,8 +5512,8 @@ proc sky130::sky130_fd_bs_flash__special_sonosfet_star_defaults {} {
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
-		sky130_fd_pr__nfet_03v3_nvt} \
-		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		sky130_fd_pr__nfet_03v3_nvt} full_metal 1 conn_gates 0 \
+		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
@@ -5524,8 +5525,8 @@ proc sky130::sky130_fd_pr__nfet_g5v0d10v5_defaults {} {
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
-		sky130_fd_pr__nfet_03v3_nvt} \
-		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		sky130_fd_pr__nfet_03v3_nvt} full_metal 1 conn_gates 0 \
+		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
@@ -5537,8 +5538,8 @@ proc sky130::sky130_fd_pr__nfet_05v0_nvt_defaults {} {
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
-		sky130_fd_pr__nfet_03v3_nvt} \
-		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		sky130_fd_pr__nfet_03v3_nvt} full_metal 1 conn_gates 0 \
+		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
@@ -5550,8 +5551,8 @@ proc sky130::sky130_fd_pr__nfet_03v3_nvt_defaults {} {
 		compatible {sky130_fd_pr__nfet_01v8 sky130_fd_pr__nfet_01v8_lvt \
 		sky130_fd_bs_flash__special_sonosfet_star \
 		sky130_fd_pr__nfet_g5v0d10v5 sky130_fd_pr__nfet_05v0_nvt \
-		sky130_fd_pr__nfet_03v3_nvt} \
-		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		sky130_fd_pr__nfet_03v3_nvt} full_metal 1 conn_gates 0 \
+		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
@@ -5559,7 +5560,8 @@ proc sky130::sky130_fd_pr__nfet_g5v0d16v0_defaults {} {
     return {w 5.00 l 1.055 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 1 gbc 1 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 0 lmin 1.050 wmin 5.00 \
-		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		full_metal 1 conn_gates 0 \
+		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 doports 1}
 }
 
@@ -5584,7 +5586,8 @@ proc sky130::sky130_fd_pr__cap_var_hvt_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.18 wmin 1.0 \
 		class mosfet compatible {sky130_fd_pr__cap_var_lvt \
 		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} \
-		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		full_metal 1 conn_gates 0 \
+		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 gshield 1}
 }
 
@@ -5594,7 +5597,8 @@ proc sky130::sky130_fd_pr__cap_var_defaults {} {
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.50 wmin 1.0 \
 		class mosfet compatible {sky130_fd_pr__cap_var_lvt \
 		sky130_fd_pr__cap_var_hvt sky130_fd_pr__cap_var} \
-		full_metal 1 viasrc 100 viadrn 100 viagate 100 \
+		full_metal 1 conn_gates 0 \
+		viasrc 100 viadrn 100 viagate 100 \
 		viagb 0 viagr 0 viagl 0 viagt 0 gshield 1}
 }
 
@@ -5739,6 +5743,9 @@ proc sky130::mos_dialog {device parameters} {
     magic::add_checkbox doverlap "Overlap at diffusion contact" $parameters
     magic::add_checkbox topc "Add top gate contact" $parameters
     magic::add_checkbox botc "Add bottom gate contact" $parameters
+    if {[dict exists $parameters conn_gates]} {
+	magic::add_checkbox conn_gates "Connect gates together" $parameters
+    }
 
     magic::add_checkbox guard "Add guard ring" $parameters
     magic::add_checkbox full_metal "Full metal guard ring" $parameters
@@ -6435,6 +6442,8 @@ proc sky130::mos_device {parameters} {
     set min_effl 0	;# gate length below which finger pitch must be stretched
     set diff_overlap_cont 0	;# extra overlap of end contact by diffusion
     set gshield 0	;# no metal shield over gate (used for varactors)
+    set conn_gates 0	;# do not extend metal to connect to neighboring gates
+    set poly_merge 0	;# do not extend poly to connect to neighboring gates
     set drain_proc {}	;# no special procedure to draw the drain
 
     set drain ""
@@ -6710,11 +6719,35 @@ proc sky130::mos_device {parameters} {
 	       box grow w [/ $cw 2]um
 	   }
            sky130::mcon_draw horz
-           popbox
+	   popbox
+	   pushbox
+
+	   if {$conn_gates == 1} {
+	       box grow n [/ $ch 2]um
+	       box grow s [/ $ch 2]um
+	       box grow w [+ ${he} ${gate_to_diffcont}]um
+	       box grow e [+ ${he} ${gate_to_diffcont}]um
+	       paint m1
+	   }
+	   popbox
        }
        set cext [sky130::unionbox $cext [sky130::draw_contact ${cpl} 0 \
 		${poly_surround} ${metal_surround} ${contact_size} \
 		${poly_type} ${poly_contact_type} li horz]]
+       if {$conn_gates == 1} {
+	   pushbox
+	   box grow n [/ $contact_size 2]um
+	   box grow s [/ $contact_size 2]um
+	   box grow w [+ ${he} ${gate_to_diffcont}]um
+	   box grow e [+ ${he} ${gate_to_diffcont}]um
+	   paint li 
+	   if {$poly_merge == 1} {
+	      box grow n ${poly_surround}um
+	      box grow s ${poly_surround}um
+	      paint poly 
+	   }
+	   popbox
+       }
        if {$gate != ""} {
 	   label $gate c $poly_contact_type
 	   select area label
@@ -6749,10 +6782,34 @@ proc sky130::mos_device {parameters} {
 	   }
            sky130::mcon_draw horz
            popbox
+	   pushbox
+
+	   if {$conn_gates == 1} {
+	       box grow n [/ $ch 2]um
+	       box grow s [/ $ch 2]um
+	       box grow w [+ ${he} ${gate_to_diffcont}]um
+	       box grow e [+ ${he} ${gate_to_diffcont}]um
+	       paint m1
+	   }
+	   popbox
        }
        set cext [sky130::unionbox $cext [sky130::draw_contact ${cpl} 0 \
 		${poly_surround} ${metal_surround} ${contact_size} \
 		${poly_type} ${poly_contact_type} li horz]]
+       if {$conn_gates == 1} {
+	   pushbox
+	   box grow n [/ $contact_size 2]um
+	   box grow s [/ $contact_size 2]um
+	   box grow w [+ ${he} ${gate_to_diffcont}]um
+	   box grow e [+ ${he} ${gate_to_diffcont}]um
+	   paint li 
+	   if {$poly_merge == 1} {
+	      box grow n ${poly_surround}um
+	      box grow s ${poly_surround}um
+	      paint poly 
+	   }
+	   popbox
+       }
        if {($gate != "") && ($topc == 0)} {
 	   label $gate c $poly_contact_type
 	   select area label
@@ -6815,6 +6872,8 @@ proc sky130::mos_draw {parameters} {
     set id_surround 0	;# amount of surround on above type
     set id2_type ""	;# additional type covering everything
     set id2_surround 0	;# amount of surround on above type
+    set conn_gates 0	;# do not connect multiple gates together
+    set poly_merge 0	;# do not merge poly between gates
     set doports 0	;# no port labels unless requested
 
     set set_x_to_guard ""	;# override x distance to guard ring
@@ -6851,22 +6910,33 @@ proc sky130::mos_draw {parameters} {
     box values 0 0 0 0
 
     # If dx < (poly contact space + poly contact width), then there is not
-    # enough room for a row of contacts, so force alternating contacts
+    # enough room for a row of contacts, so force alternating contacts;
+    # However, if conn_gates is set, just set a flag noting that poly
+    # needs to be drawn over all of the gates, connecting them together,
+    # but the positions will not alternate.
 
     set evens 1
     if {$nf > 1 && $l < $min_allc} {
-	set intc 1
-	set evenodd 1
-	dict set parameters oldtopc $topc
-	dict set parameters oldbotc $botc
-	set topc 1
-	set botc 1
-	dict set parameters topc 1
-	dict set parameters botc 1
-	set poverlap 0
+	if {$conn_gates == 1 } {
+	    set intc 0
+	    set poly_merge 1
+	} else {
+	    set intc 1
+	    set evenodd 1
+	    dict set parameters oldtopc $topc
+	    dict set parameters oldbotc $botc
+	    set topc 1
+	    set botc 1
+	    dict set parameters topc 1
+	    dict set parameters botc 1
+	    set poverlap 0
+	    set poly_merge 0
+	}
     } else {
 	set intc 0
+	set poly_merge 0
     }
+    dict set parameters poly_merge $poly_merge
 
     # Determine the base device dimensions by drawing one device
     # while all layers are locked (nothing drawn).  This allows the
@@ -6999,6 +7069,7 @@ proc sky130::mos_draw {parameters} {
     pushbox
     box move w ${corellx}um
     box move s ${corelly}um
+
     for {set xp 0} {$xp < $nf} {incr xp} {
 	dict set parameters evens $evens
 	set evens [- 1 $evens]
@@ -7032,7 +7103,11 @@ proc sky130::mos_draw {parameters} {
 		    } else {
 			dict set parameters source S$xp
 		    }
-		    dict set parameters gate G$xp
+		    if {$conn_gates == 0} {
+			dict set parameters gate G$xp
+		    } else {
+			dict set parameters gate G
+		    }
 		}
 	    } elseif {$doports} {		
 		if {$nf == 1} {
@@ -7057,11 +7132,19 @@ proc sky130::mos_draw {parameters} {
 			dict set parameters source S${xp}_$yp
 		    }
 		    if {$poverlap && ($yp == 0)} {
-			dict set parameters gate G$xp
+			if {$conn_gates == 0} {
+			    dict set parameters gate G$xp
+			} else {
+			    dict set parameters gate G
+			}
 		    } elseif {$poverlap} {
 			dict set parameters gate ""
 		    } else {
-			dict set parameters gate G${xp}_$yp
+			if {$conn_gates == 0} {
+			    dict set parameters gate G${xp}_$yp
+			} else {
+			    dict set parameters gate G$yp
+			}
 		    }
 		}
 	    }
