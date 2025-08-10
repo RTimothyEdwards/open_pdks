@@ -17,8 +17,8 @@ jobs:
               archs: "arm64",
             },
           ]
-        pdk: [sky130, gf180mcu]
-    name: Build ${{ matrix.pdk }} with Volare | ${{ matrix.os.name }} | ${{ matrix.os.archs }}
+        pdk-family: [sky130, gf180mcu]
+    name: Build ${{ matrix.pdk-family }} with Ciel | ${{ matrix.os.name }} | ${{ matrix.os.archs }}
     runs-on: ${{ matrix.os.runner }}
     steps:
       - name: Clear Build Space
@@ -37,26 +37,26 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
         with:
           extra-conf: |
-            extra-substituters = https://openlane.cachix.org
-            extra-trusted-public-keys = openlane.cachix.org-1:qqdwh+QMNGmZAuyeQJTH9ErW57OWSvdtuwfBKdS254E=
-      - name: Install Magic, Volare, GHR
+            extra-substituters = https://nix-cache.fossi-foundation.org
+            extra-trusted-public-keys = nix-cache.fossi-foundation.org:3+K59iFwXqKsL7BNu6Guy0v+uTlwsxYQxjspXzqLYQs=
+      - name: Install Magic, Ciel, GHR
         run: |
-          nix profile install github:efabless/nix-eda/3d8f596ec8831538acdd61889d056378b5bea16b#{ghr,magic-vlsi} github:efabless/volare/0.20.6
-          volare --version
+          nix profile install github:fossi-foundation/nix-eda#{ghr,magic-vlsi} github:fossi-foundation/ciel
+          ciel --version
           magic --version
           ghr --version
       - name: Set PDK root
         run: |
           mkdir -p root
           echo "PDK_ROOT=$PWD/root" >> $GITHUB_ENV
-      - name: Build with Volare
+      - name: Build with Ciel
         run: |
-          volare build --include-libraries all --pdk ${{ matrix.pdk }} --use-repo-at open_pdks=$PWD --jobs $(sysctl -n hw.logicalcpu) --clear-build-artifacts $(git rev-parse HEAD)
+          ciel build --include-libraries all --pdk-family ${{ matrix.pdk-family }} --use-repo-at open_pdks=$PWD --jobs $(sysctl -n hw.logicalcpu) --clear-build-artifacts $(git rev-parse HEAD)
       - name: Push if New Tag
         if: github.ref_type == 'tag'
         run: |
           if [ "${{ secrets.BOT_GH_TOKEN }}" != "" ]; then
-            volare push --pre --token ${{ secrets.BOT_GH_TOKEN }} --pdk ${{ matrix.pdk }} $(git rev-parse HEAD)
+            ciel push --pre --token ${{ secrets.BOT_GH_TOKEN }} --pdk ${{ matrix.pdk-family }} $(git rev-parse HEAD)
           else
             echo "Secret BOT_GH_TOKEN unset. Not attempting to push."
           fi
