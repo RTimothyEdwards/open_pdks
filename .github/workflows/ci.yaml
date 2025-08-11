@@ -56,7 +56,7 @@ jobs:
         if: github.ref_type == 'tag'
         run: |
           if [ "${{ secrets.BOT_GH_TOKEN }}" != "" ]; then
-            volare push --pre --token ${{ secrets.BOT_GH_TOKEN }} --pdk ${{ matrix.pdk }} $(git rev-parse HEAD)
+            volare push --token ${{ secrets.BOT_GH_TOKEN }} --pdk ${{ matrix.pdk }} $(git rev-parse HEAD)
           else
             echo "Secret BOT_GH_TOKEN unset. Not attempting to push."
           fi
