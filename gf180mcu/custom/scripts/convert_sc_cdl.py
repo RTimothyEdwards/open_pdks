@@ -33,8 +33,11 @@ def filter(inname, outname):
 
         # 1) Lines starting with M --> change to X
         fixedline = re.sub('^M', 'X', fixedline, flags=re.IGNORECASE)
-        # 2) 5V transistor models --> change to 6V
-        fixedline = re.sub('_05v0', '_06v0', fixedline, flags=re.IGNORECASE)
+        ## 2) 5V transistor models --> change to 6V
+	## TO DO:  This should only be done when transitor length exceeds the minimum.
+	## Otherwise, the _05v0 model has been implemented as a limited-range copy of
+	## the _06v0 model.
+        ## fixedline = re.sub('_05v0', '_06v0', fixedline, flags=re.IGNORECASE)
 	# 3) Uppercase diode "d" for consistency
         fixedline = re.sub('^d', 'D', fixedline)
 	# 4) Convert $m to M
