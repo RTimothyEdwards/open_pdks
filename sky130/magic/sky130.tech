@@ -1833,18 +1833,13 @@ style drc
  shrink  345
  and-not hvntm_block
 
- # RPM spacing checks require recreating RPM
- templayer rpm_block *psd,*mvpsd
-	grow 185
-
- # Check RPM spacing across a p-tap
+ # Generate RPM for DRC checks
  templayer rpm_generate
  bloat-all xhrpoly,uhrpoly xpc
  grow 620
  shrink 420
  mask-hints RPM
  mask-hints URPM
- and-not rpm_block
 
  # Check distance RPM to NSDM
  templayer rpm_nsd_check rpm_generate
