@@ -1563,12 +1563,12 @@ style drc
  and dnwell
  and-not pwell
 
- templayer pdiff_missing_pwell *ndiff,*ndiode,ndiffres,nfet
+ templayer ndiff_missing_pwell *ndiff,*ndiode,ndiffres,nfet
  grow 430
  and dnwell
  and-not pwell
 
- templayer mvpdiff_missing_pwell *mvndiff,mvndiffres,mvnfet
+ templayer mvndiff_missing_pwell *mvndiff,mvndiffres,mvnfet
  grow 600
  and dnwell
  and-not pwell

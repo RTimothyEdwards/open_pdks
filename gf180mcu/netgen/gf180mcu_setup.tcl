@@ -306,9 +306,7 @@ foreach dev $devices {
 }
 
 #-----------------------------------------------
-# Fixed-layout devices
-# NPN bipolar transistors,
-# sandwich (MoM) capacitors, and MiM capacitors
+# NPN and PNP bipolar transistors
 #-----------------------------------------------
 
 set devices {}
@@ -322,6 +320,29 @@ lappend devices pnp_10p00x00p42
 lappend devices pnp_05p00x00p42
 lappend devices pnp_10p00x10p00
 lappend devices pnp_05p00x05p00
+
+foreach dev $devices {
+    if {[lsearch $cells1 $dev] >= 0} {
+	property "-circuit1 $dev" parallel enable
+	# Ignore these properties
+	property "-circuit1 $dev" delete par1
+    }
+    if {[lsearch $cells2 $dev] >= 0} {
+	property "-circuit2 $dev" parallel enable
+	# Ignore these properties
+	property "-circuit2 $dev" delete par1
+    }
+}
+
+#-----------------------------------------------
+# MiM capacitors
+#-----------------------------------------------
+
+set devices {}
+# NOTE: cap_mim_2f0fF is a generic version of the
+# "noshield" names;  they are the same model, given
+# the specific metal stack.
+lappend devices cap_mim_2f0fF
 
 #ifdef MIM
 #ifdef METALS3
@@ -341,15 +362,38 @@ lappend devices cap_mim_2f0_m5m6_noshield
 foreach dev $devices {
     if {[lsearch $cells1 $dev] >= 0} {
 	property "-circuit1 $dev" parallel enable
+	property "-circuit1 $dev" tolerance {c_width 0.01} {c_length 0.01}
 	# Ignore these properties
 	property "-circuit1 $dev" delete par1
     }
     if {[lsearch $cells2 $dev] >= 0} {
 	property "-circuit2 $dev" parallel enable
+	property "-circuit2 $dev" tolerance {c_width 0.01} {c_length 0.01}
 	# Ignore these properties
 	property "-circuit2 $dev" delete par1
     }
 }
+
+#ifdef MIM
+# Ensure that the specific MiM cap model and non-specific MiM cap model will
+# be matched if they differ in the two netlists.
+#ifdef METALS3
+equate classes "-circuit1 cap_mim_2f0_m2m3_noshield" "-circuit2 cap_mim_2f0fF"
+equate classes "-circuit1 cap_mim_2f0fF" "-circuit2 cap_mim_2f0_m2m3_noshield"
+#endif (METALS3)
+#ifdef METALS4
+equate classes "-circuit1 cap_mim_2f0_m3m4_noshield" "-circuit2 cap_mim_2f0fF"
+equate classes "-circuit1 cap_mim_2f0fF" "-circuit2 cap_mim_2f0_m3m4_noshield"
+#endif (METALS4)
+#ifdef METALS5
+equate classes "-circuit1 cap_mim_2f0_m4m5_noshield" "-circuit2 cap_mim_2f0fF"
+equate classes "-circuit1 cap_mim_2f0fF" "-circuit2 cap_mim_2f0_m4m5_noshield"
+#endif (METALS5)
+#ifdef METALS6
+equate classes "-circuit1 cap_mim_2f0_m5m6_noshield" "-circuit2 cap_mim_2f0fF"
+equate classes "-circuit1 cap_mim_2f0fF" "-circuit2 cap_mim_2f0_m5m6_noshield"
+#endif (METALS6)
+#endif (MIM)
 
 #---------------------------------------------------------------
 # Digital cells (ignore decap, fill, and tap cells)
