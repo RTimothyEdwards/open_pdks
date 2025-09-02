@@ -56,7 +56,7 @@ def create_lef_library(destlibdir, destlib, do_compile_only=False, excludelist=[
         llist = glob.glob(destlibdir + '/*.lef')
         llist = natural_sort.natural_sort(llist)
 
-    if alllibname in llist:
+    if alllibname in llist and len(llist) != 1:
         llist.remove(alllibname)
 
     # Create exclude list with glob-style matching using fnmatch

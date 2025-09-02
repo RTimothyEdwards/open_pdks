@@ -77,7 +77,7 @@ def create_spice_library(destlibdir, destlib, spiext, do_compile_only=False, do_
 
         slist = natural_sort.natural_sort(slist)
 
-    if alllibname in slist:
+    if alllibname in slist and len(slist) != 1:
         slist.remove(alllibname)
 
     if allstubname in slist:

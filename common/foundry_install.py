@@ -89,7 +89,7 @@
 #	stub :	   Remove contents of subcircuits from CDL or SPICE
 #		    netlist files.
 #
-#	priv :	   Mark the contents being installed as privleged, and
+#	priv :	   Mark the contents being installed as privileged, and
 #		    put them in a separate root directory libs.priv
 #		    where they can be given additional read/write
 #		    restrictions.

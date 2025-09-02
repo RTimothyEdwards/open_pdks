@@ -65,7 +65,7 @@ def create_verilog_library(destlibdir, destlib, do_compile_only=False, do_stub=F
         vlist = glob.glob(destlibdir + '/*.v')
         vlist = natural_sort.natural_sort(vlist)
 
-    if alllibname in vlist:
+    if alllibname in vlist and len(vlist) != 1:
         vlist.remove(alllibname)
 
     # Create exclude list with glob-style matching using fnmatch

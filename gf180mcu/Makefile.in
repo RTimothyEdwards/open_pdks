@@ -1132,11 +1132,11 @@ digital-osu-%:
 			rename=gf180mcu_osu_sc_gp9t3v3__nom.tlef \
 		-lib lib/gf180mcu_osu_sc_gp9t3v3_TT_25C.ccs.lib \
 			rename=gf180mcu_osu_sc_gp9t3v3__tt_025C_3v30 \
-		-verilog cells/*/*.v compile-only \
-		-lef cells/*/*.lef compile-only \
-		-gds cells/*/*.gds compile-only \
-		-spice cells/*/*.spice compile-only \
-		-xschem cells/*/*.sch \
+		-verilog verilog/*.v rename=gf180mcu_osu_sc_gp9t3v3.v \
+		-lef lef/*.lef \
+		-gds gds/*.gds compile-only \
+		-spice spice/*.spice \
+		-xschem xschem/*.sch compile-only \
 		-library digital gf180mcu_osu_sc_gp9t3v3 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
 
@@ -1146,11 +1146,11 @@ digital-osu-%:
 			rename=gf180mcu_osu_sc_gp12t3v3__nom.tlef \
 		-lib lib/gf180mcu_osu_sc_gp12t3v3_TT_25C.ccs.lib \
 			rename=gf180mcu_osu_sc_gp12t3v3__tt_025C_3v30 \
-		-verilog cells/*/*.v compile-only \
-		-lef cells/*/*.lef compile-only \
-		-gds cells/*/*.gds compile-only \
-		-spice cells/*/*.spice compile-only \
-		-xschem cells/*/*.sch \
+		-verilog verilog/*.v rename=gf180mcu_osu_sc_gp12t3v3.v \
+		-lef lef/*.lef \
+		-gds gds/*.gds compile-only \
+		-spice spice/*.spice \
+		-xschem xschem/*.sch \
 		-library digital gf180mcu_osu_sc_gp12t3v3 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
 

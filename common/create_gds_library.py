@@ -66,7 +66,7 @@ def create_gds_library(destlibdir, destlib, startup_script, do_compile_only=Fals
         
         glist = natural_sort.natural_sort(glist)
 
-    if alllibname in glist:
+    if alllibname in glist and len(glist) != 1:
         glist.remove(alllibname)
 
     # Create exclude list with glob-style matching using fnmatch
