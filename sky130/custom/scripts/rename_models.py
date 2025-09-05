@@ -49,7 +49,7 @@ def filter(inname, outname, ef_format = True):
     for line in spilines:
 
         # Modify: Replace "../cells/<name>/" with "../../libs.ref/sky130_fd_pr/spice/"
-        fixedline = re.sub('\.\./cells/[^/]+/', '../../libs.ref/' + libpath, line)
+        fixedline = re.sub(r'\.\./cells/[^/]+/', '../../libs.ref/' + libpath, line)
         fixedlines.append(fixedline)
         if fixedline != line:
             modified = True

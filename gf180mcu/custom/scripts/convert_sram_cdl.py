@@ -36,10 +36,10 @@ def filter(inname, outname):
         # 2) 5V transistor models --> change to 6V
         fixedline = re.sub('_05v0', '_06v0', fixedline, flags=re.IGNORECASE)
         # 3) Remove $X, $Y, $D, and $T parameters
-        fixedline = re.sub('\$X=-?[0-9]+', '', fixedline, flags=re.IGNORECASE)
-        fixedline = re.sub('\$Y=-?[0-9]+', '', fixedline, flags=re.IGNORECASE)
-        fixedline = re.sub('\$D=-?[0-9]+', '', fixedline, flags=re.IGNORECASE)
-        fixedline = re.sub('\$T=-?[0-9]+ -?[0-9]+ -?[0-9]+ -?[0-9]+', '',
+        fixedline = re.sub(r'\$X=-?[0-9]+', '', fixedline, flags=re.IGNORECASE)
+        fixedline = re.sub(r'\$Y=-?[0-9]+', '', fixedline, flags=re.IGNORECASE)
+        fixedline = re.sub(r'\$D=-?[0-9]+', '', fixedline, flags=re.IGNORECASE)
+        fixedline = re.sub(r'\$T=-?[0-9]+ -?[0-9]+ -?[0-9]+ -?[0-9]+', '',
 			fixedline, flags=re.IGNORECASE)
 
         if line != fixedline:

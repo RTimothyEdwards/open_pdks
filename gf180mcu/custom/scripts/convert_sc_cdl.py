@@ -41,7 +41,7 @@ def filter(inname, outname):
 	# 3) Uppercase diode "d" for consistency
         fixedline = re.sub('^d', 'D', fixedline)
 	# 4) Convert $m to M
-        fixedline = re.sub('\$m=', 'M=', fixedline, flags=re.IGNORECASE)
+        fixedline = re.sub(r'\$m=', 'M=', fixedline, flags=re.IGNORECASE)
 	# 5) Fix incorrect endcap (endcap does not have VNW VPW)
         fixedline = re.sub('endcap VDD VNW VPW', 'endcap VDD', fixedline, flags=re.IGNORECASE)
 	# 6) Fix incorrect diode properties in antenna cell (missing key)
