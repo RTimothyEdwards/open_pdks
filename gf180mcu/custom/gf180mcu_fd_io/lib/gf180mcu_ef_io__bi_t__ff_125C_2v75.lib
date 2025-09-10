@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-	cell ("gf180mcu_fd_io__bi_t") {
+	cell ("gf180mcu_ef_io__bi_t") {
 		scaling_factors : "gf_factors";
 		area : 26250.000000;
 		pad_cell : true;
