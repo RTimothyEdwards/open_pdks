@@ -305,17 +305,6 @@ How to make or update an open PDK:
 	    -library <type> <name>
 			    The install target is an IP library with
 			    name <name>.
-	    -ef_format
-			    Use the original efabless format for file
-			    installs.  This has several differences from
-			    then no-efabless install.  The most important
-			    is that the order of directories for IP libraries
-			    is <file_format>/<library_name> instead of
-			    <library_name>/<file_format>.  As the efabless
-			    platform migrates to the open_pdks developing
-			    standard, this use should eventually be
-			    deprecated.  In open_pdks, the option is set
-			    from the EF_FORMAT variable setting in the Makefile.
 
 	 All other options represent installation into specific directories.
 	 The primary rule is that if foundry_install.py is passed an option

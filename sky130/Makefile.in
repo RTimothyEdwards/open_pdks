@@ -172,7 +172,6 @@
 #
 # The variables below are substituted from the configuration options:
 #
-#	EF_STYLE: 1 for efabless style, 0 otherwise
 #	LINK_TARGETS_A: If "source", link back to source when possible
 #	ENABLED_VARIANTS: If not "all", then compile/install only the specified variants
 #
@@ -222,14 +221,6 @@ TECH = sky130
 # happen with PDK_ROOT, so avoid that as well.
 unexport PDKPATH 
 unexport PDK_ROOT 
-
-# If EF_STYLE is set to 1, then efabless naming conventions are
-# used, otherwise the generic naming conventions are used.
-# Mainly, the hierarchy of library names and file types is reversed
-# (e.g., sky130_fd_sc_hd/lef vs. lef/sky130_fd_sc_hd).
-
-# EF_STYLE = 0 | 1
-EF_STYLE = @EF_STYLE@
 
 # Normally it's fine to keep the staging path in a local directory,
 # although /tmp or a dedicated staging area are also fine, as long
@@ -332,13 +323,8 @@ OSU_T18_URL =  ${GOOGLE_URL}/skywater-pdk/libs/sky130_osu_sc_t18
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
 #
-ifeq (${EF_STYLE}, 1)
-    CONFIG_DIR = .ef-config
-    REV_DIR = ${REVISION}
-else
-    CONFIG_DIR = .config
-    REV_DIR = .
-endif
+CONFIG_DIR = .config
+REV_DIR = .
 
 # EF process nodes created from the master sources
 SKY130A = sky130A
@@ -474,14 +460,6 @@ COMMIT_DEFS += -DMAGIC_COMMIT=$(shell magic -dnull -noconsole --commit)
 COMMIT_DEFS += -DMAGIC_VERSION=$(shell magic -dnull -noconsole --version)
 COMMIT_DEFS += -DOPEN_PDKS_VERSION=$(shell cat ../VERSION)
 
-ifeq (${EF_STYLE}, 1)
-    EF_FORMAT = -ef_format
-    SKY130A_DEFS += -DEF_FORMAT
-    SKY130B_DEFS += -DEF_FORMAT
-else
-    EF_FORMAT = -std_format
-endif
-
 MAGICTOP = libs.tech/magic
 NETGENTOP = libs.tech/netgen
 IRSIMTOP = libs.tech/irsim
@@ -492,13 +470,8 @@ XSCHEMTOP = libs.tech/xschem
 XCIRCUITTOP = libs.tech/xcircuit
 NGSPICETOP = libs.tech/ngspice
 
-ifeq (${EF_STYLE}, 1)
-    MAGICPATH = ${MAGICTOP}/${REVISION}
-    MAGICCURRENT = ${MAGICTOP}/current
-else
-    MAGICPATH = ${MAGICTOP}
-    MAGICCURRENT = ${MAGICTOP}
-endif
+MAGICPATH = ${MAGICTOP}
+MAGICCURRENT = ${MAGICTOP}
 
 # Currently, netgen, qflow, irsim, and klayout do not use revisioning (needs to change!)
 NETGENPATH = ${NETGENTOP}
@@ -568,16 +541,16 @@ CPP   = ../common/preproc.py
 
 # The following script in the ../common directory does most of the work of
 # copying or linking the foundry vendor files to the target directory.
-STAGE = set -f ; ../common/foundry_install.py ${EF_FORMAT} ${TIMESTAMP_OPT}
+STAGE = set -f ; ../common/foundry_install.py -std_format ${TIMESTAMP_OPT}
 ifneq ($(DESTDIR), )
-INSTALL = ../common/staging_install.py -writeto $(DESTDIR) ${EF_FORMAT}
+INSTALL = ../common/staging_install.py -writeto $(DESTDIR) -std_format
 else
-INSTALL = ../common/staging_install.py ${EF_FORMAT}
+INSTALL = ../common/staging_install.py -std_format
 endif
 
 # The script(s) below are used for custom changes to the vendor PDK files
-ADDPROP = ../common/insert_property.py ${EF_FORMAT}
-ADDLAYER = ../common/insert_layer.py ${EF_FORMAT}
+ADDPROP = ../common/insert_property.py -std_format
+ADDLAYER = ../common/insert_layer.py -std_format
 
 # List the EDA tools to install local setup files for
 TOOLS = 
@@ -630,46 +603,24 @@ ifneq (${XCIRCUIT_DISABLED}, 1)
         TOOLS += xcircuit
 endif
 
-# These definitions depend on the setting of EF_STYLE
-ifeq (${EF_STYLE}, 1)
-	IO_VERILOG = verilog/sky130_fd_io
-	IO_GDS = gds/sky130_fd_io
-	HD_VERILOG = verilog/sky130_fd_sc_hd
-	HDLL_VERILOG = verilog/sky130_fd_sc_hdll
-	HVL_VERILOG = verilog/sky130_fd_sc_hvl
-	HS_VERILOG = verilog/sky130_fd_sc_hs
-	MS_VERILOG = verilog/sky130_fd_sc_ms
-	LS_VERILOG = verilog/sky130_fd_sc_ls
-	LP_VERILOG = verilog/sky130_fd_sc_lp
-	HD_TECHLEF = techLEF/sky130_fd_sc_hd
-	HDLL_TECHLEF = techLEF/sky130_fd_sc_hdll
-	MLXX_SCRIPTS = scripts/sky130_ml_xx_hd
-	PR_SPICE = spi/sky130_fd_pr
-	HVL_SPICE = spi/sky130_fd_sc_hvl
-	HD_SPICE = spi/sky130_fd_sc_hd
-	HVL_PATCH4 = 4b
-	HVL_CDL = cdl/sky130_fd_sc_hvl
-	SPIEXT = spi
-else
-	IO_VERILOG = sky130_fd_io/verilog
-	IO_GDS = sky130_fd_io/gds
-	HD_VERILOG = sky130_fd_sc_hd/verilog
-	HDLL_VERILOG = sky130_fd_sc_hdll/verilog
-	HVL_VERILOG = sky130_fd_sc_hvl/verilog
-	HS_VERILOG = sky130_fd_sc_hs/verilog
-	MS_VERILOG = sky130_fd_sc_ms/verilog
-	LS_VERILOG = sky130_fd_sc_ls/verilog
-	LP_VERILOG = sky130_fd_sc_lp/verilog
-	HD_TECHLEF = sky130_fd_sc_hd/techlef
-	HDLL_TECHLEF = sky130_fd_sc_hdll/techlef
-	MLXX_SCRIPTS = sky130_ml_xx_hd/scripts
-	PR_SPICE = sky130_fd_pr/spice
-	HVL_SPICE = sky130_fd_sc_hvl/spice
-	HD_SPICE = sky130_fd_sc_hd/spice
-	HVL_PATCH4 = 4
-	HVL_CDL = sky130_fd_sc_hvl/cdl
-	SPIEXT = spice
-endif
+IO_VERILOG = sky130_fd_io/verilog
+IO_GDS = sky130_fd_io/gds
+HD_VERILOG = sky130_fd_sc_hd/verilog
+HDLL_VERILOG = sky130_fd_sc_hdll/verilog
+HVL_VERILOG = sky130_fd_sc_hvl/verilog
+HS_VERILOG = sky130_fd_sc_hs/verilog
+MS_VERILOG = sky130_fd_sc_ms/verilog
+LS_VERILOG = sky130_fd_sc_ls/verilog
+LP_VERILOG = sky130_fd_sc_lp/verilog
+HD_TECHLEF = sky130_fd_sc_hd/techlef
+HDLL_TECHLEF = sky130_fd_sc_hdll/techlef
+MLXX_SCRIPTS = sky130_ml_xx_hd/scripts
+PR_SPICE = sky130_fd_pr/spice
+HVL_SPICE = sky130_fd_sc_hvl/spice
+HD_SPICE = sky130_fd_sc_hd/spice
+HVL_PATCH4 = 4
+HVL_CDL = sky130_fd_sc_hvl/cdl
+SPIEXT = spice
 
 all: $(foreach var, ${VARIANTS}, all-$(var))
 
@@ -1074,9 +1025,6 @@ magic-%: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${
 	rm -f ${MAGIC_STAGING_$*}/${SKY130$*}.tcl
 	rm -f ${MAGIC_STAGING_$*}/${SKY130$*}-BindKeys
 	rm -f ${MAGIC_STAGING_$*}/magicrc
-	if test "${EF_STYLE}" == "1" ; then \
-	    (cd ${MAGICTOP_STAGING_$*} ; ln -s ${REV_DIR} current) ; \
-	fi
 	cp -rp custom/scripts/seal_ring_generator ${MAGIC_STAGING_$*}/.
 	cp -rp custom/scripts/bump_bond_generator ${MAGIC_STAGING_$*}/.
 	cp custom/scripts/run_standard_drc.py ${MAGIC_STAGING_$*}/.
@@ -1545,7 +1493,7 @@ primitive-%:
 
 	# Run the add_properties.py script to add extraction information to layout
 	# cells for which the intended device cannot be extracted.
-	./custom/scripts/add_properties.py ${EF_FORMAT} -variant=${SKY130$*} \
+	./custom/scripts/add_properties.py -std_format -variant=${SKY130$*} \
 		2>&1 | tee -a ${SKY130$*}_make.log || true
 
 io-%:

@@ -28,7 +28,6 @@ for item in sys.argv[1:]:
     else:
         arguments.append(item)
 
-ef_format = False
 variant = 'sky130A'
 magpath = variant + '/libs.ref/sky130_fd_pr/mag'
 maglefpath = variant + '/libs.ref/sky130_fd_pr/maglef'
@@ -41,12 +40,6 @@ if len(options) > 0:
     magpath = variant + '/libs.ref/sky130_fd_pr/mag'
     maglefpath = variant + '/libs.ref/sky130_fd_pr/maglef'
     spicepath = variant + '/libs.ref/sky130_fd_pr/spice'
-    for option in options:
-        if option == 'ef_format':
-            ef_format = True
-            magpath = variant + '/libs.ref/mag/sky130_fd_pr'
-            maglefpath = variant + '/libs.ref/maglef/sky130_fd_pr'
-            spicepath = variant + '/libs.ref/spice/sky130_fd_pr'
 elif len(arguments) > 0:
     magpath = arguments[0]
     maglefpath = magpath.replace('/mag/', '/maglef/')
@@ -309,8 +302,6 @@ for idx, device in enumerate(devlist):
 
         propcmd = ['../common/insert_property.py', variant, 'sky130_fd_pr',
 		device, 'device primitive']
-        if ef_format:
-            propcmd.append('-ef_format')
 
         # Just call the insert_property.py script
         subprocess.run(propcmd, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
@@ -375,8 +366,6 @@ for idx, device in enumerate(dev2list):
 
         propcmd = ['../common/insert_property.py', variant, 'sky130_fd_pr',
 		device, 'gencell ' + gencell]
-        if ef_format:
-            propcmd.append('-ef_format')
 
         # Just call the insert_property.py script
         subprocess.run(propcmd, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)

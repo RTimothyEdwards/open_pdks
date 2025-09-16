@@ -1,15 +1,9 @@
 set current_folder [file dirname [file normalize [info script]]]
 # Technology lib
 
-#ifdef EF_FORMAT
-set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(STD_CELL_LIBRARY)/sky130_osu_sc_TT_1P8_25C.lib"
-set ::env(LIB_FASTEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(STD_CELL_LIBRARY)/sky130_osu_sc_FF_1P8_25C.lib"
-set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/lib/$::env(STD_CELL_LIBRARY)/sky130_osu_sc_SS_1p8_25C.lib"
-#else (!EF_FORMAT)
 set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_osu_sc_TT_1P8_25C.lib"
 set ::env(LIB_FASTEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_osu_sc_FF_1P8_25C.lib"
 set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_osu_sc_SS_1P8_25C.lib"
-#endif (!EF_FORMAT)
 
 set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
 

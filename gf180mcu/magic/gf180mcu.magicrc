@@ -52,21 +52,10 @@ if {[catch {set MAGTYPE $env(MAGTYPE)}]} {
 }
 
 # add path to reference cells
-if {[file isdir ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}]} {
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/gf180mcu_fd_pr
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/gf180mcu_mcu7t5v0
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/gf180mcu_mcu9t5v0
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/gf180mcu_fd_io
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/gf180mcu_fd_ip_sram
-} else {
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_fd_pr/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_fd_sc_mcu7t5v0/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_fd_sc_mcu9t5v0/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_fd_io/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_fd_ip_sram/${MAGTYPE}
-}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_fd_pr/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_fd_sc_mcu7t5v0/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_fd_sc_mcu9t5v0/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_fd_io/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_fd_ip_sram/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_as_sc_mcu7t3v3/${MAGTYPE}
 
-# add path to IP from catalog.  This procedure defined in the PDK script.
-catch {magic::query_mylib_ip}
-# add path to local IP from user design space.  Defined in the PDK script.
-catch {magic::query_my_projects}

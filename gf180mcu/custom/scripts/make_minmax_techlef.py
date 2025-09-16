@@ -14,7 +14,6 @@
 #
 #    make_minmax_techlef.py -variant=gf180mcuA|gf180mcuB|gf180mcuC
 #		-library=7t5v0|9t5v0
-#		[-ef_format]
 #
 # Given the PDK variant and library name, finds the technology
 # LEF file in the staging area with the nominal corner values,
@@ -45,9 +44,6 @@ if len(options) > 0:
         elif option.startswith('library'):
             lib = option.split('=')[1]
     tlefpath = variant + '/libs.ref/gf180mcu_fd_sc_mcu' + lib + '/techlef'
-    for option in options:
-        if option == 'ef_format':
-            tlefpath = variant + '/libs.ref/techLEF/gf180mcu_fd_sc_mcu' + lib
 elif len(arguments) > 0:
     tlefpath = arguments[0]
 

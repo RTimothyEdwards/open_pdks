@@ -58,9 +58,6 @@ Less common options:
 
                      Default "none" (copy all files from source)
 
-  -ef_format         Use efabless naming (libs.ref/techLEF),
-                     otherwise use generic naming (libs.tech/lef)
-
   -verbose           Output more information about the install process.
 
 If <target> is unspecified then <name> is used for the target.
@@ -124,6 +121,8 @@ def filter_recursive(tooldir, stagingdir, finaldir):
     if not os.path.exists(tooldir):
         return 0
     elif os.path.islink(tooldir):
+        return 0
+    elif not os.path.isdir(tooldir):
         return 0
 
     toolfiles = os.listdir(tooldir)
@@ -268,11 +267,19 @@ def replace_all_with_symlinks(libdir, srclibdir, checklibdir):
         print('Cannot list directory ' + libdir)
         print('Called: replace_all_with_symlinks(' + libdir + ', ' + srclibdir + ', ' + checklibdir + ')')
         return total
+    except NotADirectoryError:
+        print('File entry ' + libdir + ' is not a directory.')
+        print('Called: replace_all_with_symlinks(' + libdir + ', ' + srclibdir + ', ' + checklibdir + ')')
+        return total
 
     try:
         checkfiles = os.listdir(checklibdir)
     except FileNotFoundError:
         print('Cannot list check directory ' + checklibdir)
+        print('Called: replace_all_with_symlinks(' + libdir + ', ' + srclibdir + ', ' + checklibdir + ')')
+        return total
+    except NotADirectoryError:
+        print('File entry ' + checklibdir + ' is not a directory.')
         print('Called: replace_all_with_symlinks(' + libdir + ', ' + srclibdir + ', ' + checklibdir + ')')
         return total
 
@@ -319,7 +326,6 @@ if __name__ == '__main__':
     writedir = None  # Directory to write the files to.
     finaldir = None  # Directory files will end up installed to.
 
-    ef_format = False
     do_install = True
 
     # Break arguments into groups where the first word begins with "-".
@@ -339,14 +345,13 @@ if __name__ == '__main__':
     if newopt != []:
         optionlist.append(newopt)
 
-    # Check for option "ef_format" or "std_format"
+    # Check for option "uninstall" or "debug"
     for option in optionlist[:]:
+        # Options "ef_format" or "std_format" are deprecated
         if option[0] == 'ef_naming' or option[0] == 'ef_names' or option[0] == 'ef_format':
             optionlist.remove(option)
-            ef_format = True
         elif option[0] == 'std_naming' or option[0] == 'std_names' or option[0] == 'std_format':
             optionlist.remove(option)
-            ef_format = False
         elif option[0] == 'uninstall':
             optionlist.remove(option)
             do_install = False
@@ -445,12 +450,7 @@ if __name__ == '__main__':
     else:
         has_priv = False
 
-    # Path to magic techfile depends on ef_format
-
-    if ef_format == True:
-        mag_current = '/libs.tech/magic/current/'
-    else:
-        mag_current = '/libs.tech/magic/'
+    mag_current = '/libs.tech/magic/'
 
     # First install everything by direct copy.  Keep the staging files
     # as they will be used to reference the target area to know which
@@ -547,32 +547,17 @@ if __name__ == '__main__':
     if has_priv:
         refdirs.append('/libs.priv/')
 
-    if ef_format:
-        print('Part 2:  Formats')
-        for refdir in refdirs:
+    print('Part 2:  Libraries')
+    for refdir in refdirs:
+        libraries = os.listdir(writedir + refdir)
+        for library in libraries:
+            print('   ' + library)
             for filetype in needcheck:
-                print('   ' + filetype)
-                filedir = writedir + refdir + filetype
-                if os.path.isdir(filedir):
-                    libraries = os.listdir(filedir)
-                    for library in libraries:
-                        libdir = filedir + '/' + library
-                        total = filter_recursive(libdir, stagingdir, localname)
-                        if total > 0:
-                            substr = 'substitutions' if total > 1 else 'substitution'
-                            print('      ' + library + ' (' + str(total) + ' ' + substr + ')')
-    else:
-        print('Part 2:  Libraries')
-        for refdir in refdirs:
-            libraries = os.listdir(writedir + refdir)
-            for library in libraries:
-                print('   ' + library)
-                for filetype in needcheck:
-                    filedir = writedir + refdir + library + '/' + filetype
-                    total = filter_recursive(filedir, stagingdir, localname)
-                    if total > 0:
-                        substr = 'substitutions' if total > 1 else 'substitution'
-                        print('      ' + filetype + ' (' + str(total) + ' ' + substr + ')')
+                filedir = writedir + refdir + library + '/' + filetype
+                total = filter_recursive(filedir, stagingdir, localname)
+                if total > 0:
+                    substr = 'substitutions' if total > 1 else 'substitution'
+                    print('      ' + filetype + ' (' + str(total) + ' ' + substr + ')')
 
     # If "link_from" is "source", then check all files against the source
     # directory, and replace the file with a symbolic link if the file
@@ -583,46 +568,25 @@ if __name__ == '__main__':
     if link_from == 'source':
         print('Replacing files with symbolic links to source where possible.')
         for refdir in refdirs:
-            if ef_format:
-                filedirs = os.listdir(writedir + refdir)
+            libraries = os.listdir(writedir + refdir)
+            for library in libraries:
+                print('   ' + library)
+                filedirs = os.listdir(writedir + refdir + library)
                 for filedir in filedirs:
-                    print('   ' + filedir)
-                    dirpath = writedir + refdir + filedir
-                    if os.path.isdir(dirpath):
-                        libraries = os.listdir(dirpath)
-                        for library in libraries:
-                            libdir = writedir + refdir + filedir + '/' + library
-                            libfiles = os.listdir(libdir)
-                            if 'sources.txt' in libfiles:
-                                libfiles = glob.glob(libdir + '/*')
-                                libfiles.remove(libdir + '/sources.txt')
-                                with open(libdir + '/sources.txt') as ifile:
-                                    sources = ifile.read().splitlines()
-                                sourcelist = make_source_list(sources)
-                                total = replace_with_symlinks(libfiles, sourcelist)
-                                if total > 0:
-                                    symstr = 'symlinks' if total > 1 else 'symlink'
-                                    print('      ' + library + ' (' + str(total) + ' ' + symstr + ')')
-            else:
-                libraries = os.listdir(writedir + refdir)
-                for library in libraries:
-                    print('   ' + library)
-                    filedirs = os.listdir(writedir + refdir + library)
-                    for filedir in filedirs:
-                        libdir = writedir + refdir + library + '/' + filedir
-                        if os.path.isdir(libdir):
-                            libfiles = os.listdir(libdir)
-                            if 'sources.txt' in libfiles:
-                                # List again, but with full paths.
-                                libfiles = glob.glob(libdir + '/*')
-                                libfiles.remove(libdir + '/sources.txt')
-                                with open(libdir + '/sources.txt') as ifile:
-                                    sources = ifile.read().splitlines()
-                                sourcelist = make_source_list(sources)
-                                total = replace_with_symlinks(libfiles, sourcelist)
-                                if total > 0:
-                                    symstr = 'symlinks' if total > 1 else 'symlink'
-                                    print('      ' + filedir + ' (' + str(total) + ' ' + symstr + ')')
+                    libdir = writedir + refdir + library + '/' + filedir
+                    if os.path.isdir(libdir):
+                        libfiles = os.listdir(libdir)
+                        if 'sources.txt' in libfiles:
+                            # List again, but with full paths.
+                            libfiles = glob.glob(libdir + '/*')
+                            libfiles.remove(libdir + '/sources.txt')
+                            with open(libdir + '/sources.txt') as ifile:
+                                sources = ifile.read().splitlines()
+                            sourcelist = make_source_list(sources)
+                            total = replace_with_symlinks(libfiles, sourcelist)
+                            if total > 0:
+                                symstr = 'symlinks' if total > 1 else 'symlink'
+                                print('      ' + filedir + ' (' + str(total) + ' ' + symstr + ')')
 
     # Otherwise, if "link_from" is another PDK, then check all files against
     # the files in the other PDK, and replace the file with a symbolic link
@@ -637,42 +601,22 @@ if __name__ == '__main__':
             print('Replacing files with symbolic links to ' + link_from + ' where possible.')
 
             for refdir in refdirs:
-                if ef_format:
-                    filedirs = os.listdir(writedir + refdir)
+                libraries = os.listdir(writedir + refdir)
+                for library in libraries:
+                    print('   ' + library)
+                    filedirs = os.listdir(writedir + refdir + library)
                     for filedir in filedirs:
-                        print('   ' + filedir)
-                        dirpath = writedir + refdir + filedir
-                        if os.path.isdir(dirpath):
-                            libraries = os.listdir(dirpath)
-                            for library in libraries:
-                                libdir = writedir + refdir + filedir + '/' + library
-                                srclibdir = link_from + refdir + filedir + '/' + library
-                                if checkdir != '':
-                                    checklibdir = checkdir + refdir + filedir + '/' + library
-                                else:
-                                    checklibdir = srclibdir
-                                if os.path.exists(libdir):
-                                    total = replace_all_with_symlinks(libdir, srclibdir, checklibdir)
-                                    if total > 0:
-                                        symstr = 'symlinks' if total > 1 else 'symlink'
-                                        print('      ' + library + ' (' + str(total) + ' ' + symstr + ')')
-                else:
-                    libraries = os.listdir(writedir + refdir)
-                    for library in libraries:
-                        print('   ' + library)
-                        filedirs = os.listdir(writedir + refdir + library)
-                        for filedir in filedirs:
-                            libdir = writedir + refdir + library + '/' + filedir
-                            srclibdir = link_from + refdir + library + '/' + filedir
-                            if checkdir != '':
-                                checklibdir = checkdir + refdir + library + '/' + filedir
-                            else:
-                                checklibdir = srclibdir
-                            if os.path.exists(libdir):
-                                total = replace_all_with_symlinks(libdir, srclibdir, checklibdir)
-                                if total > 0:
-                                    symstr = 'symlinks' if total > 1 else 'symlink'
-                                    print('      ' + filedir + ' (' + str(total) + ' ' + symstr + ')')
+                        libdir = writedir + refdir + library + '/' + filedir
+                        srclibdir = link_from + refdir + library + '/' + filedir
+                        if checkdir != '':
+                            checklibdir = checkdir + refdir + library + '/' + filedir
+                        else:
+                            checklibdir = srclibdir
+                        if os.path.exists(libdir):
+                            total = replace_all_with_symlinks(libdir, srclibdir, checklibdir)
+                            if total > 0:
+                                symstr = 'symlinks' if total > 1 else 'symlink'
+                                print('      ' + filedir + ' (' + str(total) + ' ' + symstr + ')')
 
     # Remove temporary files:  Magic generation scripts, sources.txt
     # file, and magic extract files.
@@ -680,68 +624,37 @@ if __name__ == '__main__':
     print('Removing temporary files from destination.')
 
     for refdir in refdirs:
-        if ef_format:
-            filedirs = os.listdir(writedir + refdir)
+        libraries = os.listdir(writedir + refdir)
+        for library in libraries:
+            filedirs = os.listdir(writedir + refdir + library)
             for filedir in filedirs:
-                if os.path.islink(filedir):
+                filepath = writedir + refdir + library + '/' + filedir
+                if os.path.islink(filepath):
                     continue
-                elif os.path.isdir(filedir):
-                    libraries = os.listdir(writedir + refdir + filedir)
-                    for library in libraries:
-                        libdir = writedir + refdir + filedir + '/' + library
-                        libfiles = os.listdir(libdir)
-                        for libfile in libfiles:
-                            filepath = libdir + '/' + libfile
-                            if os.path.islink(filepath):
-                                realpath = os.path.realpath(filepath)
-                                if realpath.startswith(stagingdir):
-                                    if libfile == '.magicrc':
-                                        if debug:
-                                            print('Removing unused .magicrc file from' +
-							filepath)
-                                        os.remove(filepath)
-                            elif libfile == 'sources.txt':
-                                os.remove(filepath)
-                            elif libfile == 'generate_magic.tcl':
-                                os.remove(filepath)
-                            elif os.path.splitext(libfile)[1] == '.ext':
-                                os.remove(filepath)
-                            elif os.path.splitext(libfile)[1] == '.swp':
-                                os.remove(filepath)
-                            elif os.path.splitext(libfile)[1] == '.orig':
-                                os.remove(filepath)
-        else:
-            libraries = os.listdir(writedir + refdir)
-            for library in libraries:
-                filedirs = os.listdir(writedir + refdir + library)
-                for filedir in filedirs:
-                    filepath = writedir + refdir + library + '/' + filedir
-                    if os.path.islink(filepath):
-                        continue
-                    elif os.path.isdir(filepath):
-                        libfiles = os.listdir(filepath)
-                        for libfile in libfiles:
-                            libfilepath = filepath + '/' + libfile
-                            if os.path.islink(libfilepath):
-                                # NOTE:  This could be used to move symbolic links
-                                # from staging to destination.  At the moment there
-                                # are none except the .magicrc file, which doesn't
-                                # belong in the destination path.
-                                realpath = os.path.realpath(libfilepath)
-                                if realpath.startswith(stagingdir):
-                                    if libfile == '.magicrc':
-                                        if debug:
-                                            print('Removing unused .magicrc file ' +
-							'from ' + libfilepath)
-                                        os.remove(libfilepath)
-                            elif libfile == 'sources.txt':
-                                os.remove(libfilepath)
-                            elif libfile == 'generate_magic.tcl':
-                                os.remove(libfilepath)
-                            elif os.path.splitext(libfile)[1] == '.ext':
-                                os.remove(libfilepath)
-                            elif os.path.splitext(libfile)[1] == '.orig':
-                                os.remove(libfilepath)
+                elif os.path.isdir(filepath):
+                    libfiles = os.listdir(filepath)
+                    for libfile in libfiles:
+                        libfilepath = filepath + '/' + libfile
+                        if os.path.islink(libfilepath):
+                            # NOTE:  This could be used to move symbolic links
+                            # from staging to destination.  At the moment there
+                            # are none except the .magicrc file, which doesn't
+                            # belong in the destination path.
+                            realpath = os.path.realpath(libfilepath)
+                            if realpath.startswith(stagingdir):
+                                if libfile == '.magicrc':
+                                    if debug:
+                                        print('Removing unused .magicrc file ' +
+			'from ' + libfilepath)
+                                    os.remove(libfilepath)
+                        elif libfile == 'sources.txt':
+                            os.remove(libfilepath)
+                        elif libfile == 'generate_magic.tcl':
+                            os.remove(libfilepath)
+                        elif os.path.splitext(libfile)[1] == '.ext':
+                            os.remove(libfilepath)
+                        elif os.path.splitext(libfile)[1] == '.orig':
+                            os.remove(libfilepath)
 
     print('Done with PDK migration.')
     sys.exit(0)

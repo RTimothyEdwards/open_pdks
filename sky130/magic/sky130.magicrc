@@ -64,72 +64,18 @@ if {[catch {set MAGTYPE $env(MAGTYPE)}]} {
 }
 
 # add path to reference cells
-if {[file isdir ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}]} {
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_pr
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_io
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_hd
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_hdll
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_hs
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_hvl
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_lp
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_ls
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_sc_ms
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_osu_sc
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_osu_sc_t18
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_ml_xx_hd
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_fd_bd_sram
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/${MAGTYPE}/sky130_sram_macros
-} else {
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_pr/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_io/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hd/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hdll/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hs/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hvl/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_lp/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_ls/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_ms/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_osu_sc/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_osu_sc_t18/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_ml_xx_hd/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_bd_sram/${MAGTYPE}
-    addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_sram_macros/${MAGTYPE}
-}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_pr/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_io/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hd/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hdll/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hs/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hvl/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_lp/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_ls/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_ms/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_osu_sc/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_osu_sc_t18/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_ml_xx_hd/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_bd_sram/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/sky130_sram_macros/${MAGTYPE}
 
-# add path to GDS cells
-#ifdef FULLTECH
-if {[file isdir ${PDK_ROOT}/TECHNAME/libs.ref/gds]} {
-    path cell ${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_pr
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_io
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_hd
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_hdll
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_hs
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_hvl
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_lp
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_ls
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_fd_sc_ms
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_osu130
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_osu130_t18
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_ml_xx_hd
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/gds/sky130_sram_macros
-} else {
-    path cell ${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_pr/gds
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_io/gds
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hd/gds
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hdll/gds
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hs/gds
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_hvl/gds
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_lp/gds
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_ls/gds
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_fd_sc_ms/gds
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_osu130/gds
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_osu130_t18/gds
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_ml_xx_hd/gds
-    path cell +${PDK_ROOT}/TECHNAME/libs.ref/sky130_sram_macros/gds
-}
-#endif (FULLTECH)
-
-# add path to IP from catalog.  This procedure defined in the PDK script.
-catch {magic::query_mylib_ip}
-# add path to local IP from user design space.  Defined in the PDK script.
-catch {magic::query_my_projects}

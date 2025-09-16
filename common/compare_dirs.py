@@ -5,8 +5,6 @@
 #
 # Compare the format subdirectories of <path> and report on which files do not appear
 # in all of them.  If a directory has no files in it, then it is ignored.
-#
-# NOTE:  This script was not designed for files in the "ef_format" file structure.
 
 import os
 import sys

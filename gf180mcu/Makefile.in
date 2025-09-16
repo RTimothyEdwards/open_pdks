@@ -100,14 +100,6 @@ TECH = gf180mcu
 unexport PDKPATH
 unexport PDK_ROOT
 
-# If EF_STYLE is set to 1, then efabless naming conventions are
-# used, otherwise the generic naming conventions are used.
-# Mainly this has to do with where the technology LEF files are
-# put (libs.tech/lef/ vs. libs.ref/techLEF).
-
-# EF_STYLE = 0 | 1
-EF_STYLE = @EF_STYLE@
-
 # Normally it's fine to keep the staging path in a local directory,
 # although /tmp or a dedicated staging area are also fine, as long
 # as the install process can write to the path.
@@ -159,6 +151,7 @@ GF180MCU_SC_7T5V0_PATH = @GF180MCU_FD_SC_MCU7T5V0_PATH@
 GF180MCU_SC_9T5V0_PATH = @GF180MCU_FD_SC_MCU9T5V0_PATH@
 GF180MCU_SRAM_PATH = @GF180MCU_FD_IP_SRAM_PATH@
 GF180MCU_OSU_SC_PATH = @GF180MCU_OSU_SC_PATH@
+GF180MCU_AS_SC_PATH = @GF180MCU_AS_SC_PATH@
 
 USE_REFERENCE = @USE_REFERENCE@
 
@@ -173,6 +166,7 @@ endif
 # Path to GF180MCU library sources
 PDK_URL = https://github.com/google
 OSU_URL = https://github.com/stineje
+AVALON_URL = https://github.com/AvalonSemiconductors
 FOSSI_URL = https://github.com/fossi-foundation
 
 # Names of library repositories
@@ -185,17 +179,13 @@ PDK_LIB_SC_7T5V0 = ${FOSSI_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu7t5v0
 PDK_LIB_SC_9T5V0 = ${FOSSI_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu9t5v0
 PDK_LIB_SRAM =     ${PDK_URL}/globalfoundries-pdk-ip-gf180mcu_fd_ip_sram
 PDK_LIB_OSU_SC =   ${OSU_URL}/globalfoundries-pdk-libs-gf180mcu_osu_sc
+PDK_LIB_AS_SC = ${AVALON_URL}/gf180mcu_as_sc_mcu7t3v3
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
 #
-ifeq (${EF_STYLE}, 1)
-    CONFIG_DIR = .ef-config
-    REV_DIR = ${REVISION}
-else
-    CONFIG_DIR = .config
-    REV_DIR = .
-endif
+CONFIG_DIR = .config
+REV_DIR = .
 
 # Process nodes created from the master sources
 GF180MCUA = gf180mcuA
@@ -273,20 +263,15 @@ ifeq (${GF180MCU_OSU_SC_PATH},)
 else
     COMMIT_DEFS += -DOSU_SC_COMMIT=$(shell cd ${GF180MCU_OSU_SC_PATH} ; git rev-parse HEAD)
 endif
+ifeq (${GF180MCU_AS_SC_PATH},)
+    COMMIT_DEFS += -DAS_SC_MCU7T3V3_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DAS_SC_MCU7T3V3_COMMIT=$(shell cd ${GF180MCU_AS_SC_PATH} ; git rev-parse HEAD)
+endif
 
 COMMIT_DEFS += -DMAGIC_COMMIT=$(shell magic -dnull -noconsole --commit)
 COMMIT_DEFS += -DMAGIC_VERSION=$(shell magic -dnull -noconsole --version)
 COMMIT_DEFS += -DOPEN_PDKS_VERSION=$(shell cat ${SCRIPTSDIR}/VERSION)
-
-ifeq (${EF_STYLE}, 1)
-    EF_FORMAT = -ef_format
-    GF180MCUA_DEFS += -DEF_FORMAT
-    GF180MCUB_DEFS += -DEF_FORMAT
-    GF180MCUC_DEFS += -DEF_FORMAT
-    GF180MCUD_DEFS += -DEF_FORMAT
-else
-    EF_FORMAT = -std_format
-endif
 
 MAGICTOP = libs.tech/magic
 NETGENTOP = libs.tech/netgen
@@ -298,13 +283,8 @@ XSCHEMTOP = libs.tech/xschem
 XCIRCUITTOP = libs.tech/xcircuit
 NGSPICETOP = libs.tech/ngspice
 
-ifeq (${EF_STYLE}, 1)
-    MAGICPATH = ${MAGICTOP}/${REVISION}
-    MAGIC_CURRENT = ${MAGICTOP}/current
-else
-    MAGICPATH = ${MAGICTOP}
-    MAGIC_CURRENT = ${MAGICTOP}
-endif
+MAGICPATH = ${MAGICTOP}
+MAGIC_CURRENT = ${MAGICTOP}
 
 NETGENPATH = ${NETGENTOP}
 IRSIMPATH = ${IRSIMTOP}
@@ -423,18 +403,18 @@ CPP   = ${SCRIPTSDIR}/common/preproc.py
 
 # The following script in the ${SCRIPTSDIR}/common directory does most of the work of
 # copying or linking the foundry vendor files to the target directory.
-STAGE = set -f ; ${SCRIPTSDIR}/common/foundry_install.py ${EF_FORMAT} ${TIMESTAMP_OPT}
+STAGE = set -f ; ${SCRIPTSDIR}/common/foundry_install.py -std_format ${TIMESTAMP_OPT}
 ifneq ($(DESTDIR), )
-INSTALL = ${SCRIPTSDIR}/common/staging_install.py -writeto $(DESTDIR) ${EF_FORMAT}
+INSTALL = ${SCRIPTSDIR}/common/staging_install.py -writeto $(DESTDIR) -std_format
 else
-INSTALL = ${SCRIPTSDIR}/common/staging_install.py ${EF_FORMAT}
+INSTALL = ${SCRIPTSDIR}/common/staging_install.py -std_format
 endif
 
 # The script(s) below are used for custom changes to the vendor PDK files
-PORTORDER = ../common/port_order.py ${EF_FORMAT}
-ADDPROP = ../common/insert_property.py ${EF_FORMAT}
-ADDLAYER = ../common/insert_layer.py ${EF_FORMAT}
-REMOVELAB = ../common/remove_label.py ${EF_FORMAT}
+PORTORDER = ../common/port_order.py -std_format
+ADDPROP = ../common/insert_property.py -std_format
+ADDLAYER = ../common/insert_layer.py -std_format
+REMOVELAB = ../common/remove_label.py -std_format
 
 # List the EDA tools to install local setup files for
 TOOLS =
@@ -487,12 +467,7 @@ ifneq (${XCIRCUIT_DISABLED}, 1)
         TOOLS += xcircuit
 endif
 
-# This definition depends on the setting of EF_STYLE
-ifeq (${EF_STYLE}, 1)
-	IO_GDS = gds/gf180mcu_fd_io
-else
-	IO_GDS = gf180mcu_fd_io/gds
-endif
+IO_GDS = gf180mcu_fd_io/gds
 
 all: $(foreach var, ${VARIANTS}, all-$(var))
 
@@ -505,7 +480,7 @@ reference: ${TECH}.json
 	../common/save_commit_refs.py ${COMMIT_DEFS} ${TECH}.json
 
 # Handle prerequisites
-prerequisites: pr-repo pv-repo io-repo sc-7t-repo sc-9t-repo sram-repo osu-sc-repo
+prerequisites: pr-repo pv-repo io-repo sc-7t-repo sc-9t-repo sram-repo osu-sc-repo avalon-sc-repo
 
 pr-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
@@ -598,8 +573,21 @@ osu-sc-repo:
 		fi ; \
 	fi
 
+avalon-sc-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		AS_SC_MCU7T3V3_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_as_sc_mcu7t3v3 | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi ; \
+	if test "x${GF180MCU_AS_SC_PATH}" != "x" ; then \
+		if test -d "${GF180MCU_AS_SC_PATH}" ; then \
+			echo "Using existing installation of Avalon Semiconductors 3.3V standard cell library from ${GF180MCU_AS_SC_PATH}" ; \
+		else \
+			echo "Downloading Avalon Semiconductors 3.3V standard cell library from ${GF180MCU_AS_SC_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_AS_SC} ${GF180MCU_AS_SC_PATH} $${AS_SC_MCU7T3V3_COMMIT} ; \
+		fi ; \
+	fi
+
 # Update prerequisites
-update: update-pr-repo update-pv-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-osu-sc-repo
+update: update-pr-repo update-pv-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-osu-sc-repo update-avalon-sc-repo
 
 update-pr-repo:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
@@ -643,6 +631,12 @@ update-osu-sc-repo:
 		../scripts/update.sh ${GF180MCU_OSU_SC_PATH} ; \
 	fi
 
+update-avalon-sc-repo:
+	if test "x${GF180MCU_AS_SC_PATH}" != "x" ; then \
+		echo "Updating GF180MCU Avalon Semiconductors 3.3V standard cell library from ${PDK_LIB_AS_SC}" ; \
+		../scripts/update.sh ${GF180MCU_AS_SC_PATH} ; \
+	fi
+
 all-%: prerequisites
 	echo "Starting gf180mcu$* PDK staging on "`date` > ${GF180MCU$*}_make.log
 	${MAKE} general-$*
@@ -673,9 +667,6 @@ magic-%: magic/${TECH}.tech magic/${TECH}gds.tech magic/${TECH}.magicrc magic/${
 	rm -f ${MAGIC_STAGING_$*}/${GF180MCU$*}.tcl
 	rm -f ${MAGIC_STAGING_$*}/${GF180MCU$*}-BindKeys
 	rm -f ${MAGIC_STAGING_$*}/magicrc
-	if test "${EF_STYLE}" == "1" ; then \
-            (cd ${MAGICTOP_STAGING_$*} ; ln -f -s ${REV_DIR} current) ; \
-	fi
 
 	${CPP} ${GF180MCU$*_DEFS} magic/${TECH}.tech \
 		${MAGIC_STAGING_$*}/${GF180MCU$*}.tech
@@ -818,13 +809,13 @@ openlane-%: openlane/config.tcl openlane/gf180mcu_fd_sc_mcu7t5v0/config.tcl open
 		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max ;\
 	fi
 
-vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A sram-build-A digital-osu-build-A
+vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A sram-build-A digital-osu-build-A digital-avalon-build-A
 
-vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B sram-build-B digital-osu-build-B
+vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B sram-build-B digital-osu-build-B digital-avalon-build-B
 
-vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C sram-build-C digital-osu-build-C
+vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C sram-build-C digital-osu-build-C digital-avalon-build-C
 
-vendor-D: primitive-build-D digital-7t5v0-build-D digital-9t5v0-build-D io-build-D sram-build-D digital-osu-build-D
+vendor-D: primitive-build-D digital-7t5v0-build-D digital-9t5v0-build-D io-build-D sram-build-D digital-osu-build-D digital-avalon-build-D
 
 primitive-build-%:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
@@ -871,6 +862,14 @@ digital-osu-build-%:
 		if test -d ${GF180MCU_OSU_SC_PATH} ; then \
 			echo "Building OSU 3.3V digital standard cell libraries" ;\
 			make digital-osu-$* ;\
+		fi ;\
+	fi
+
+digital-avalon-build-%:
+	if test "x${GF180MCU_AS_SC_PATH}" != "x" ; then \
+		if test -d ${GF180MCU_AS_SC_PATH} ; then \
+			echo "Building Avalon Semiconductor 3.3V digital standard cell libraries" ;\
+			make digital-avalon-$* ;\
 		fi ;\
 	fi
 
@@ -1036,7 +1035,7 @@ digital-9t5v0-%:
 		-library digital gf180mcu_fd_sc_mcu9t5v0 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
 	# Create minimum/maximum technology LEF files
-	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${GF180MCU$*} \
+	./custom/scripts/make_minmax_techlef.py -std_format -variant=${GF180MCU$*} \
 		-library=9t5v0 2>&1 | tee -a ${GF180MCU$*}_make.log || true
 
 digital-7t5v0-%:
@@ -1120,7 +1119,7 @@ digital-7t5v0-%:
 		-library digital gf180mcu_fd_sc_mcu7t5v0 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
 	# Create minimum/maximum technology LEF files
-	./custom/scripts/make_minmax_techlef.py ${EF_FORMAT} -variant=${GF180MCU$*} \
+	./custom/scripts/make_minmax_techlef.py -std_format -variant=${GF180MCU$*} \
 		-library=7t5v0 2>&1 | tee -a ${GF180MCU$*}_make.log || true
 
 digital-osu-%:
@@ -1153,6 +1152,43 @@ digital-osu-%:
 		-xschem xschem/*.sch \
 		-library digital gf180mcu_osu_sc_gp12t3v3 2>&1 | \
 		tee -a ${GF180MCU$*}_make.log
+
+digital-avalon-%: AVALON_TECH_SOURCE := ${GF180MCU_AS_SC_PATH}/pdk/libs.tech
+digital-avalon-%: AVALON_REF_SOURCE := ${GF180MCU_AS_SC_PATH}/pdk/libs.ref/gf180mcu_as_sc_mcu7t3v3
+
+digital-avalon-%:
+        # Install Avalon Semiconductors 3.3V digital standard cells from vendor files
+	# NOTE: The repository is in open_pdks format and mainly just needs to
+	# be copied, not built.
+	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/lib
+	mkdir -p ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/lib
+	cp -rp ${AVALON_REF_SOURCE}/lib ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3
+	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/mag
+	mkdir -p ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/mag
+	cp -rp ${AVALON_REF_SOURCE}/mag ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3
+	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/gds
+	mkdir ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/gds
+	# Remove the "_merged" suffix from the GDS library
+	cp ${AVALON_REF_SOURCE}/gf180mcu_as_sc_mcu7t3v3__merged.gds ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/gds/gf180mcu_as_sc_mcu7t3v3.gds
+	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/lef
+	mkdir -p ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/lef
+	cp -rp ${AVALON_REF_SOURCE}/lef ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3
+	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/techlef
+	mkdir -p ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/techlef
+	cp -rp ${AVALON_REF_SOURCE}/techlef ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3
+	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/verilog
+	mkdir -p ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/verilog
+	cp -rp ${AVALON_REF_SOURCE}/verilog ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3
+
+	# This library is done the right way and has its own openlane setup.
+	mkdir -p ${OPENLANETOP_STAGING_$*}
+	mkdir -p ${OPENLANE_STAGING_$*}
+	rm -rf ${OPENLANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
+	mkdir ${OPENLANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
+	cp -rp ${AVALON_TECH_SOURCE}/openlane/gf180mcu_as_sc_mcu7t3v3 ${OPENLANE_STAGING_$*}
+	# drc_exclude.cells is called out in the config and needs to exist
+	# even though it is an empty file
+	touch ${OPENLANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3/drc_exclude.cells
 
 io-%:
 	# Install custom additions to the I/O pad library

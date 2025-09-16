@@ -252,7 +252,6 @@ class SoCFloorplanner(ttk.Frame):
         self.stderr = None
 
         self.keep_cfg = False
-        self.ef_format = False
         self.use_console = False
 
     def init_padframe(self):
@@ -322,28 +321,6 @@ class SoCFloorplanner(ttk.Frame):
 
         projectroot = os.path.split(projectpath)[0]
         projectdirname = os.path.split(projectpath)[1]
-
-        # Check for efabless format.  This is probably more complicated than
-        # it deserves to be.  Option -ef_format is the best way to specify
-        # efabless format.  However, if it is not specified, then check the
-        # technology PDK directory and the project directory for the tell-tale
-        # ".ef-config" (efabless format) directory vs. ".config" (not efabless
-        # format).
-
-        if not self.ef_format:
-            if os.path.exists(projectpath + '/.ef-config'):
-                self.ef_format = True
-            elif self.techpath:
-                if os.path.exists(self.techpath + '/.ef-config'):
-                    self.ef_format = True
-        else:
-            # Do a quick consistency check.  Honor the -ef_format option but warn if
-            # there is an apparent inconsistency.
-            if os.path.exists(projectpath + '/.config'):
-                self.print('Warning:  -ef_format used in apparently non-efabless setup.')
-            elif self.techpath:
-                if os.path.exists(self.techpath + '/.config'):
-                    self.print('Warning:  -ef_format used in apparently non-efabless setup.')
 
         # Check for project.json
 
@@ -1326,10 +1303,7 @@ class SoCFloorplanner(ttk.Frame):
 
     def vlogimport(self):
 
-        if self.ef_format:
-            config_dir = '/.ef-config'
-        else:
-            config_dir = '/.config'
+        config_dir = '/.config'
 
         # First find the process PDK name for this project.  Read the nodeinfo.json
         # file and find the list of I/O cell libraries.  
@@ -1355,10 +1329,7 @@ class SoCFloorplanner(ttk.Frame):
                     for iolib in itop['iocells']:
                         if '/' in iolib:
                             # Entries <lib>/<cell> refer to specific files
-                            if self.ef_format:
-                                iolibpath = pdkpath + '/libs.ref/lef/' + iolib
-                            else:
-                                iolibpath = pdkpath + '/libs.ref/' + iolib
+                            iolibpath = pdkpath + '/libs.ref/' + iolib
                             if os.path.splitext(iolib)[1] == '':
                                 if not os.path.exists(iolibpath):
                                     iolibpath = iolibpath + '.lib'
@@ -1367,10 +1338,7 @@ class SoCFloorplanner(ttk.Frame):
                             ioleflist.append(iolibpath)
                         else:
                             # All other entries refer to everything in the directory.
-                            if self.ef_format:
-                                iolibpath = pdkpath + '/libs.ref/lef/' + iolib
-                            else:
-                                iolibpath = pdkpath + '/libs.ref/' + iolib + '/lef/'
+                            iolibpath = pdkpath + '/libs.ref/' + iolib + '/lef/'
                             iolibfiles = glob.glob(iolibpath + '/*.lef')
                             if len(iolibfiles) == 0:
                                 self.print('Warning: nodeinfo.json bad I/O library path ' + iolibpath)
@@ -1381,10 +1349,7 @@ class SoCFloorplanner(ttk.Frame):
 
         # Fallback behavior:  List everything in libs.ref/lef/ beginning with "IO"
         if len(ioleflist) == 0:
-            if self.ef_format:
-                ioleflist = glob.glob(pdkpath + '/libs.ref/lef/IO*/*.lef')
-            else:
-                ioleflist = glob.glob(pdkpath + '/libs.ref/IO*/lef/*.lef')
+            ioleflist = glob.glob(pdkpath + '/libs.ref/IO*/lef/*.lef')
 
         if len(ioleflist) == 0:
             self.print('Cannot find any I/O cell libraries for this technology')
@@ -2602,7 +2567,6 @@ if __name__ == '__main__':
     # is otherwise auto-detected by checking for .config vs. .ef-config in
     # the project space.
 
-    app.ef_format = True if '-ef_format' in options else False
     app.keep_cfg = True if '-cfg' in options else False
 
     app.padring_path = None

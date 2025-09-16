@@ -7,8 +7,6 @@
 # should be a staging area, not a place where files are kept permanently.
 #
 # Options:
-#    -ef_format		Use efabless naming (libs.ref/techLEF),
-#			otherwise use generic naming (libs.tech/lef)
 #    -timestamp <value>	Pass a timestamp to use for stamping GDS and MAG files
 #    -clean		Clear out and remove target directory before starting
 #    -source <path>	Path to source data top level directory
@@ -58,13 +56,11 @@
 # 	-liberty x/y/z/PVT_*/*.lib
 #
 # would install all .lib files directly into libs.ref/<libname>/liberty/*.lib
-# (if "-ef_format" option specified, then: libs.ref/<libname>/liberty/*.lib)
 # while
 #
 # 	-liberty x/y/z/PVT_*/*.lib up=1
 #
 # would install all .lib files into libs.ref/liberty/<libname>/PVT_*/*.lib
-# (if "-ef_format" option specified, then: libs.ref/<libname>/liberty/PVT_*/*.lib)
 #
 # Please note that the INSTALL variable in the Makefile starts with "set -f"
 # to suppress the OS from doing wildcard substitution;  otherwise the
@@ -212,7 +208,6 @@ from create_verilog_library import create_verilog_library
 def usage():
     print("foundry_install.py [options...]")
     print("   -copy             Copy files from source to target (default)")
-    print("   -ef_format        Use efabless naming conventions for local directories")
     print("   -timestamp <value> Use <value> for timestamping files")
     print("")
     print("   -source <path>    Path to top of source directory tree")
@@ -482,7 +477,7 @@ def vfilter(targetroot):
 # script using the "filter" option.
 #----------------------------------------------------------------------------
 
-def tfilter(targetroot, filterscript, ef_format=False, outfile=[]):
+def tfilter(targetroot, filterscript, outfile=[]):
     filterroot = os.path.split(filterscript)[1]
     if os.path.isfile(targetroot):
         print('   Filtering file ' + targetroot + ' with ' + filterroot)
@@ -494,8 +489,6 @@ def tfilter(targetroot, filterscript, ef_format=False, outfile=[]):
             makeuserwritable(outfile)
 
         arguments = [filterscript, targetroot, outfile]
-        if ef_format:
-            arguments.append('-ef_format')
 
         subprocess_run('filter', arguments)
 
@@ -524,7 +517,6 @@ if __name__ == '__main__':
     sourcedir = None
     targetdir = None
 
-    ef_format = False
     do_timestamp = False
     timestamp_value = 0
     do_clean = False
@@ -563,14 +555,13 @@ if __name__ == '__main__':
             optionlist.remove(option)
             libraries.append(option[1:]) 
 
-    # Check for option "ef_format" or "std_format" or "clean"
+    # Check for option "clean" or "timestamp".
     for option in optionlist[:]:
+        #  These options are deprecated.
         if option[0] == 'ef_naming' or option[0] == 'ef_names' or option[0] == 'ef_format':
             optionlist.remove(option)
-            ef_format = True
         elif option[0] == 'std_naming' or option[0] == 'std_names' or option[0] == 'std_format':
             optionlist.remove(option)
-            ef_format = False
         elif option[0] == 'timestamp':
             optionlist.remove(option)
             if len(option) > 1:
@@ -647,12 +638,7 @@ if __name__ == '__main__':
     os.makedirs(targetdir + '/libs.tech', exist_ok=True)
     os.makedirs(targetdir + '/libs.ref', exist_ok=True)
 
-    # Path to magic techfile depends on ef_format
-
-    if ef_format == True:
-        mag_current = '/libs.tech/magic/current/'
-    else:
-        mag_current = '/libs.tech/magic/'
+    mag_current = '/libs.tech/magic/'
 
     # Check for magic version and set flag if it does not exist or if
     # it has the wrong version.
@@ -729,10 +715,7 @@ if __name__ == '__main__':
                     if item.split('=')[0] == 'filter':
                         filter_scripts.append(item.split('=')[1])
 
-                if ef_format:
-                    techlefdir = targetdir + '/libs.ref/' + 'techLEF'
-                else:
-                    techlefdir = targetdir + '/libs.tech/lef'
+                techlefdir = targetdir + '/libs.tech/lef'
 
                 os.makedirs(techlefdir, exist_ok=True)
                 # All techlef files should be copied, so use "glob" on the wildcards
@@ -749,7 +732,7 @@ if __name__ == '__main__':
 
                     for filter_script in filter_scripts:
                         # Apply filter script to all files in the target directory
-                        tfilter(targname, filter_script, ef_format)
+                        tfilter(targname, filter_script)
 
                 optionlist.remove(option)
 
@@ -810,7 +793,7 @@ if __name__ == '__main__':
 
                             for filter_script in filter_scripts:
                                 # Apply filter script to all files in the target directory
-                                tfilter(subtargname, filter_script, ef_format)
+                                tfilter(subtargname, filter_script)
 
                     else:
                         # Remove any existing file
@@ -826,7 +809,7 @@ if __name__ == '__main__':
 
                         for filter_script in filter_scripts:
                             # Apply filter script to all files in the target directory
-                            tfilter(targname, filter_script, ef_format)
+                            tfilter(targname, filter_script)
 
                 optionlist.remove(option)
 
@@ -888,17 +871,6 @@ if __name__ == '__main__':
 
         if option[0] == 'lef' and have_lefanno:
             print("LEF files used for annotation only.  Temporary install.")
-
-        # For ef_format:  always make techlef -> techLEF and spice -> spi
-
-        if ef_format:
-            if option[0] == 'techlef':
-                option[0] = 'techLEF'
-            elif option[0] == 'spice':
-                option[0] = 'spi'
-
-            destdir = targetdir + '/libs.ref/' + option[0]
-            os.makedirs(destdir, exist_ok=True)
 
         # If the option is followed by the keyword "up" and a number, then
         # the source should be copied (or linked) from <number> levels up
@@ -995,11 +967,8 @@ if __name__ == '__main__':
             else:
                 destlib = library[1]
 
-            if ef_format:
-                destlibdir = destdir + '/' + destlib
-            else:
-                destdir = targetdir + '/libs.ref/' + destlib + '/' + option[0]
-                destlibdir = destdir
+            destdir = targetdir + '/libs.ref/' + destlib + '/' + option[0]
+            destlibdir = destdir
 
             os.makedirs(destlibdir, exist_ok=True)
 
@@ -1124,7 +1093,7 @@ if __name__ == '__main__':
                 elif option[0] == 'liberty' or option[0] == 'lib':
                     fileext = '.lib'
                 elif option[0] == 'spice' or option[0] == 'spi':
-                    fileext = '.spice' if not ef_format else '.spi'
+                    fileext = '.spice'
                 elif option[0] == 'techlef':
                     fileext = '.lef'
                 else:
@@ -1207,7 +1176,7 @@ if __name__ == '__main__':
 
                 for filter_script in local_filter_scripts:
                     # Apply filter script to all files in the target directory
-                    tfilter(targname, filter_script, ef_format)
+                    tfilter(targname, filter_script)
 
                 destfilelist.append(os.path.split(targname)[1])
 
@@ -1288,7 +1257,7 @@ if __name__ == '__main__':
                     # then compile one, because one does not want to have to have
                     # an include line for every single cell used in a design.
 
-                    spiext = '.spice' if not ef_format else '.spi'
+                    spiext = '.spice'
                     create_spice_library(destlibdir, compname, spiext, do_compile_only, do_stub, excludelist)
 
                 elif option[0] == 'cdl':
@@ -1344,21 +1313,14 @@ if __name__ == '__main__':
             # Diagnostic
             print("Install option: " + str(option[0]))
 
-            if ef_format == True:
-                os.makedirs(targetdir + '/libs.priv', exist_ok=True)
-
             for library in libraries:
                 if len(library) == 3:
                     destlib = library[2]
                 else:
                     destlib = library[1]
 
-                if ef_format:
-                    srclibdir = targetdir + '/libs.ref/' + option[0] + '/' + destlib
-                    destlibdir = targetdir + '/libs.priv/' + option[0] + '/' + destlib
-                else:
-                    srclibdir = targetdir + '/libs.ref/' + destlib + '/' + option[0]
-                    destlibdir = targetdir + '/libs.priv/' + destlib + '/' + option[0]
+                srclibdir = targetdir + '/libs.ref/' + destlib + '/' + option[0]
+                destlibdir = targetdir + '/libs.priv/' + destlib + '/' + option[0]
 
                 if not os.path.exists(destlibdir):
                     os.makedirs(destlibdir)
@@ -1505,15 +1467,6 @@ if __name__ == '__main__':
     if have_gds and not no_gds_convert:
         print("Migrating GDS files to layout.")
 
-        if ef_format:
-            destdir = targetdir + gds_reflib + 'mag'
-            srcdir = targetdir + gds_reflib + 'gds'
-            vdir = targetdir + '/libs.ref/' + 'verilog'
-            cdir = targetdir + cdl_reflib + 'cdl'
-            sdir = targetdir + cdl_reflib + 'spi'
-
-            os.makedirs(destdir, exist_ok=True)
-
         # For each library, create the library subdirectory
         for library in libraries:
             if len(library) == 3:
@@ -1521,23 +1474,16 @@ if __name__ == '__main__':
             else:
                 destlib = library[1]
 
-            if ef_format:
-                destlibdir = destdir + '/' + destlib
-                srclibdir = srcdir + '/' + destlib
-                vlibdir = vdir + '/' + destlib
-                clibdir = cdir + '/' + destlib
-                slibdir = sdir + '/' + destlib
-            else:
-                destdir = targetdir + gds_reflib + destlib + '/mag'
-                srcdir = targetdir + gds_reflib + destlib + '/gds'
-                vdir = targetdir + '/libs.ref/' + destlib + '/verilog'
-                cdir = targetdir + cdl_reflib + destlib + '/cdl'
-                sdir = targetdir + cdl_reflib + destlib + '/spice'
-                destlibdir = destdir
-                srclibdir = srcdir
-                vlibdir = vdir
-                clibdir = cdir
-                slibdir = sdir
+            destdir = targetdir + gds_reflib + destlib + '/mag'
+            srcdir = targetdir + gds_reflib + destlib + '/gds'
+            vdir = targetdir + '/libs.ref/' + destlib + '/verilog'
+            cdir = targetdir + cdl_reflib + destlib + '/cdl'
+            sdir = targetdir + cdl_reflib + destlib + '/spice'
+            destlibdir = destdir
+            srclibdir = srcdir
+            vlibdir = vdir
+            clibdir = cdir
+            slibdir = sdir
 
             os.makedirs(destlibdir, exist_ok=True)
 
@@ -1659,12 +1605,8 @@ if __name__ == '__main__':
                             lefdirname = 'lef'
 
                             # Find LEF file names in the source
-                            if ef_format:
-                                lefsrcdir = targetdir + lef_reflib + lefdirname
-                                lefsrclibdir = lefsrcdir + '/' + destlib
-                            else:
-                                lefsrcdir = targetdir + lef_reflib + destlib + '/' + lefdirname
-                                lefsrclibdir = lefsrcdir
+                            lefsrcdir = targetdir + lef_reflib + destlib + '/' + lefdirname
+                            lefsrclibdir = lefsrcdir
 
                             leffiles = os.listdir(lefsrclibdir)
                             leffiles = list(item for item in leffiles if os.path.splitext(item)[1] == '.lef')
@@ -1710,12 +1652,8 @@ if __name__ == '__main__':
                     lefmacros = []
                     if have_lefanno:
                         # Find LEF file names in the source
-                        if ef_format:
-                            lefsrcdir = targetdir + lef_reflib + 'lef'
-                            lefsrclibdir = lefsrcdir + '/' + destlib
-                        else:
-                            lefsrcdir = targetdir + lef_reflib + destlib + '/lef'
-                            lefsrclibdir = lefsrcdir
+                        lefsrcdir = targetdir + lef_reflib + destlib + '/lef'
+                        lefsrclibdir = lefsrcdir
 
                         leffiles = os.listdir(lefsrclibdir)
                         leffiles = list(item for item in leffiles if os.path.splitext(item)[1] == '.lef')
@@ -1911,12 +1849,11 @@ if __name__ == '__main__':
 
     if have_lef and not no_lef_convert:
         print("Migrating LEF files to layout.")
-        if ef_format:
-            destdir = targetdir + '/libs.ref/' + 'maglef'
-            srcdir = targetdir + lef_reflib + 'lef'
-            magdir = targetdir + gds_reflib + 'mag'
-            cdldir = targetdir + cdl_reflib + 'cdl'
-            os.makedirs(destdir, exist_ok=True)
+        destdir = targetdir + '/libs.ref/' + 'maglef'
+        srcdir = targetdir + lef_reflib + 'lef'
+        magdir = targetdir + gds_reflib + 'mag'
+        cdldir = targetdir + cdl_reflib + 'cdl'
+        os.makedirs(destdir, exist_ok=True)
 
         # For each library, create the library subdirectory
         for library in libraries:
@@ -1925,27 +1862,19 @@ if __name__ == '__main__':
             else:
                 destlib = library[1]
 
-            if ef_format:
-                destlibdir = destdir + '/' + destlib
-                srclibdir = srcdir + '/' + destlib
-                maglibdir = magdir + '/' + destlib
-                cdllibdir = cdldir + '/' + destlib
-                clibdir = cdir + '/' + destlib
-                slibdir = sdir + '/' + destlib
-            else:
-                destdir = targetdir + '/libs.ref/' + destlib + '/maglef'
-                srcdir = targetdir + lef_reflib + destlib + '/lef'
-                magdir = targetdir + gds_reflib + destlib + '/mag'
-                cdldir = targetdir + cdl_reflib + destlib + '/cdl'
-                cdir = targetdir + cdl_reflib + destlib + '/cdl'
-                sdir = targetdir + cdl_reflib + destlib + '/spice'
+            destdir = targetdir + '/libs.ref/' + destlib + '/maglef'
+            srcdir = targetdir + lef_reflib + destlib + '/lef'
+            magdir = targetdir + gds_reflib + destlib + '/mag'
+            cdldir = targetdir + cdl_reflib + destlib + '/cdl'
+            cdir = targetdir + cdl_reflib + destlib + '/cdl'
+            sdir = targetdir + cdl_reflib + destlib + '/spice'
 
-                destlibdir = destdir
-                srclibdir = srcdir
-                maglibdir = magdir
-                cdllibdir = cdldir
-                clibdir = cdir
-                slibdir = sdir
+            destlibdir = destdir
+            srclibdir = srcdir
+            maglibdir = magdir
+            cdllibdir = cdldir
+            clibdir = cdir
+            slibdir = sdir
 
             os.makedirs(destlibdir, exist_ok=True)
 
@@ -2228,22 +2157,12 @@ if __name__ == '__main__':
     # a form that can be used by ngspice, using the cdl2spi.py script 
 
     if have_spice:
-        if ef_format:
-            if not os.path.isdir(targetdir + cdl_reflib + 'spi'):
-                os.makedirs(targetdir + cdl_reflib + 'spi', exist_ok=True)
+        pass
 
     elif have_cdl and not no_cdl_convert:
-        if ef_format:
-            if not os.path.isdir(targetdir + cdl_reflib + 'spi'):
-                os.makedirs(targetdir + cdl_reflib + 'spi', exist_ok=True)
 
         print("Migrating CDL netlists to SPICE.")
         sys.stdout.flush()
-
-        if ef_format:
-            destdir = targetdir + cdl_reflib + 'spi'
-            srcdir = targetdir + cdl_reflib + 'cdl'
-            os.makedirs(destdir, exist_ok=True)
 
         # For each library, create the library subdirectory
         for library in libraries:
@@ -2252,15 +2171,11 @@ if __name__ == '__main__':
             else:
                 destlib = library[1]
 
-            if ef_format:
-                destlibdir = destdir + '/' + destlib
-                srclibdir = srcdir + '/' + destlib
-            else:
-                destdir = targetdir + cdl_reflib + destlib + '/spice'
-                srcdir = targetdir + cdl_reflib + destlib + '/cdl'
+            destdir = targetdir + cdl_reflib + destlib + '/spice'
+            srcdir = targetdir + cdl_reflib + destlib + '/cdl'
 
-                destlibdir = destdir
-                srclibdir = srcdir
+            destlibdir = destdir
+            srclibdir = srcdir
 
             os.makedirs(destlibdir, exist_ok=True)
 
@@ -2282,10 +2197,7 @@ if __name__ == '__main__':
 
             # Run cdl2spi.py script to read in the CDL file and write out SPICE
             for cdlfile in cdlfiles:
-                if ef_format:
-                    spiname = os.path.splitext(cdlfile)[0] + '.spi'
-                else:
-                    spiname = os.path.splitext(cdlfile)[0] + '.spice'
+                spiname = os.path.splitext(cdlfile)[0] + '.spice'
                 procopts = [scriptdir + '/cdl2spi.py', srclibdir + '/' + cdlfile, destlibdir + '/' + spiname]
                 if do_cdl_scaleu:
                     procopts.append('-dscale=u')
@@ -2303,13 +2215,6 @@ if __name__ == '__main__':
         # then the port numbering is arbitrary, and becomes whatever the
         # output of this script makes it.
 
-        if ef_format:
-            destdir = targetdir + cdl_reflib + 'spi'
-            srcdir = targetdir + gds_reflib + 'gds'
-            lefdir = targetdir + lef_reflib + 'lef'
-            cdldir = targetdir + cdl_reflib + 'cdl'
-            os.makedirs(destdir, exist_ok=True)
-
         # For each library, create the library subdirectory
         for library in libraries:
             if len(library) == 3:
@@ -2317,21 +2222,15 @@ if __name__ == '__main__':
             else:
                 destlib = library[1]
 
-            if ef_format:
-                destlibdir = destdir + '/' + destlib
-                srclibdir = srcdir + '/' + destlib
-                leflibdir = lefdir + '/' + destlib
-                cdllibdir = cdldir + '/' + destlib
-            else:
-                destdir = targetdir + cdl_reflib + destlib + '/spice'
-                srcdir = targetdir + gds_reflib + destlib + '/gds'
-                lefdir = targetdir + lef_reflib + destlib + '/lef'
-                cdldir = targetdir + cdl_reflib + destlib + '/cdl'
+            destdir = targetdir + cdl_reflib + destlib + '/spice'
+            srcdir = targetdir + gds_reflib + destlib + '/gds'
+            lefdir = targetdir + lef_reflib + destlib + '/lef'
+            cdldir = targetdir + cdl_reflib + destlib + '/cdl'
 
-                destlibdir = destdir
-                srclibdir = srcdir
-                leflibdir = lefdir
-                cdllibdir = cdldir
+            destlibdir = destdir
+            srclibdir = srcdir
+            leflibdir = lefdir
+            cdllibdir = cdldir
 
             os.makedirs(destlibdir, exist_ok=True)
 
@@ -2475,7 +2374,7 @@ if __name__ == '__main__':
             # create a similar SPICE library of all cells.
 
             if os.path.isfile(allgdslibname):
-                spiext = '.spice' if not ef_format else '.spi'
+                spiext = '.spice'
                 create_spice_library(destlibdir, destlib, spiext, do_compile_only, do_stub, excludelist)
 
     # Remove any files/directories that were marked for removal

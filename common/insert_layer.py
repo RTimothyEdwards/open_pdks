@@ -97,8 +97,6 @@ if __name__ == '__main__':
 
     fail = 0
 
-    efformat = True if '-ef_format' in options else False
-
     domag = True
     domaglef = True
     if '-mag' in options and '-maglef' not in options:
@@ -107,10 +105,7 @@ if __name__ == '__main__':
         domag = False
 
     if domag:
-        if efformat:
-            filename = source + '/libs.ref/mag/' + libname + '/' + cellname + '.mag'
-        else:
-            filename = source + '/libs.ref/' + libname + '/mag/' + cellname + '.mag'
+        filename = source + '/libs.ref/' + libname + '/mag/' + cellname + '.mag'
 
         if os.path.isfile(filename):
             addlayer(filename, layer, geometry)
@@ -120,10 +115,7 @@ if __name__ == '__main__':
         fail += 1
 
     if domaglef:
-        if efformat:
-            filename = source + '/libs.ref/maglef/' + libname + '/' + cellname + '.mag'
-        else:
-            filename = source + '/libs.ref/' + libname + '/maglef/' + cellname + '.mag'
+        filename = source + '/libs.ref/' + libname + '/maglef/' + cellname + '.mag'
 
         if os.path.isfile(filename):
             addlayer(filename, layer, geometry)
@@ -134,10 +126,6 @@ if __name__ == '__main__':
 
     if fail == 2:
         print('Error:  No layout file in either mag/ or maglef/', file=sys.stderr)
-        if efformat:
-            print('(' + source + '/libs.ref/mag[lef]/' + libname +
-		    '/' + cellname + '.mag)', file=sys.stderr)
-        else:
-            print('(' + source + '/libs.ref/' + libname + '/mag[lef]/'
-		    + cellname + '.mag)', file=sys.stderr)
+        print('(' + source + '/libs.ref/' + libname + '/mag[lef]/'
+		+ cellname + '.mag)', file=sys.stderr)
 

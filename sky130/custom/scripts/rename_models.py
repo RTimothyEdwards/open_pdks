@@ -19,12 +19,9 @@ def makeuserwritable(filepath):
         st = os.stat(filepath)
         os.chmod(filepath, st.st_mode | stat.S_IWUSR)
 
-def filter(inname, outname, ef_format = True):
+def filter(inname, outname):
 
-    if ef_format:
-        libpath = 'spi/sky130_fd_pr/'
-    else:
-        libpath = 'sky130_fd_pr/spice/'
+    libpath = 'sky130_fd_pr/spice/'
 
     # Read input
     try:
@@ -95,7 +92,7 @@ if __name__ == '__main__':
     if len(arguments) > 0:
         infilename = arguments[0]
     else:
-        print('Usage: rename_models.py <filename> [<outfilename>] [-ef_format]')
+        print('Usage: rename_models.py <filename> [<outfilename>]')
         sys.exit(1)
 
     if len(arguments) > 1:
@@ -103,10 +100,5 @@ if __name__ == '__main__':
     else:
         outfilename = None
 
-    ef_format = False
-    if len(options) > 0:
-        if options[0] == 'ef_format':
-            ef_format = True
-
-    result = filter(infilename, outfilename, ef_format)
+    result = filter(infilename, outfilename)
     sys.exit(result)

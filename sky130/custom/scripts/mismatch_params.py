@@ -28,9 +28,6 @@ if len(options) > 0:
         if option.startswith('variant'):
             variant = option.split('=')[1]
     walkpath = variant + '/libs.ref/sky130_fd_pr/spice'
-    for option in options: 
-        if option == 'ef_format':
-            walkpath = variant + '/libs.ref/spi/sky130_fd_pr'
 elif len(arguments) > 0:
     walkpath = arguments[0]
 
