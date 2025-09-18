@@ -3240,15 +3240,23 @@ proc gf180mcu::pfet_03v3_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
 		class mosfet full_metal 1 \
-		compatible {pfet_03v3 pfet_06v0}}
+		compatible {pfet_03v3 pfet_05v0 pfet_06v0}}
 }
 
-proc gf180mcu::pfet_06v0_defaults {} {
+proc gf180mcu::pfet_05v0_defaults {} {
     return {w 0.3 l 0.5 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.5 wmin 0.3 \
+		lmax 0.595 class mosfet full_metal 1 \
+		compatible {pfet_03v3 pfet_05v0 pfet_06v0}}
+}
+
+proc gf180mcu::pfet_06v0_defaults {} {
+    return {w 0.3 l 0.55 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.55 wmin 0.3 \
 		class mosfet full_metal 1 \
-		compatible {pfet_03v3 pfet_06v0}}
+		compatible {pfet_03v3 pfet_05v0 pfet_06v0}}
 }
 
 proc gf180mcu::pfet_03v3_dss_defaults {} {
@@ -3256,7 +3264,7 @@ proc gf180mcu::pfet_03v3_dss_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
 		class mosfet full_metal 1 \
-		compatible {pfet_03v3_dss pfet_06v0_dss}}
+		compatible {pfet_03v3_dss pfet_05v0 pfet_06v0_dss}}
 }
 
 proc gf180mcu::pfet_06v0_dss_defaults {} {
@@ -3276,15 +3284,23 @@ proc gf180mcu::nfet_03v3_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
 		class mosfet full_metal 1 \
-		compatible {nfet_03v3 nfet_06v0 nfet_06v0_nvt}}
+		compatible {nfet_03v3 nfet_05v0 nfet_06v0 nfet_06v0_nvt}}
+}
+
+proc gf180mcu::nfet_05v0_defaults {} {
+    return {w 0.3 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.7 wmin 0.3 \
+		lmax 0.695 class mosfet full_metal 1 \
+		compatible {nfet_03v3 nfet_05v0 nfet_06v0 nfet_06v0_nvt}}
 }
 
 proc gf180mcu::nfet_06v0_defaults {} {
-    return {w 0.3 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
+    return {w 0.3 l 0.7 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 0.3 \
 		class mosfet full_metal 1 \
-		compatible {nfet_03v3 nfet_06v0 nfet_06v0_nvt}}
+		compatible {nfet_03v3 nfet_05v0 nfet_06v0 nfet_06v0_nvt}}
 }
 
 proc gf180mcu::nfet_06v0_nvt_defaults {} {
@@ -3292,7 +3308,7 @@ proc gf180mcu::nfet_06v0_nvt_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 1.8 wmin 0.8 \
 		class mosfet full_metal 1 \
-		compatible {nfet_03v3 nfet_06v0 nfet_06v0_nvt}}
+		compatible {nfet_03v3 nfet_05v0 nfet_06v0 nfet_06v0_nvt}}
 }
 
 proc gf180mcu::nfet_10v0_asym_defaults {} {
@@ -3412,6 +3428,10 @@ proc gf180mcu::nfet_03v3_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
+proc gf180mcu::nfet_05v0_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
 proc gf180mcu::nfet_06v0_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
@@ -3421,6 +3441,10 @@ proc gf180mcu::nfet_06v0_nvt_convert {parameters} {
 }
 
 proc gf180mcu::pfet_03v3_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
+proc gf180mcu::pfet_05v0_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
@@ -3511,6 +3535,10 @@ proc gf180mcu::nfet_03v3_dialog {parameters} {
     gf180mcu::mos_dialog nfet_03v3 $parameters
 }
 
+proc gf180mcu::nfet_05v0_dialog {parameters} {
+    gf180mcu::mos_dialog nfet_05v0 $parameters
+}
+
 proc gf180mcu::nfet_06v0_dialog {parameters} {
     gf180mcu::mos_dialog nfet_06v0 $parameters
 }
@@ -3521,6 +3549,10 @@ proc gf180mcu::nfet_06v0_nvt_dialog {parameters} {
 
 proc gf180mcu::pfet_03v3_dialog {parameters} {
     gf180mcu::mos_dialog pfet_03v3 $parameters
+}
+
+proc gf180mcu::pfet_05v0_dialog {parameters} {
+    gf180mcu::mos_dialog pfet_05v0 $parameters
 }
 
 proc gf180mcu::pfet_06v0_dialog {parameters} {
@@ -4228,6 +4260,30 @@ proc gf180mcu::pfet_03v3_draw {parameters} {
 }
 
 #-------------------
+# pMOS 5.0V
+#-------------------
+
+proc gf180mcu::pfet_05v0_draw {parameters} {
+    set newdict [dict create \
+	    diff_poly_space	0.30 \
+	    diff_gate_space	0.30 \
+	    diff_spacing	0.36 \
+	    gate_type		mvpfet \
+	    diff_type 		mvpdiff \
+	    diff_contact_type	mvpdc \
+	    plus_diff_type	mvnsd \
+	    plus_contact_type	mvnsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_surround	0.16 \
+	    dev_surround	0.43 \
+	    sub_type		nwell \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
+
+#-------------------
 # pMOS 6.0V
 #-------------------
 
@@ -4246,6 +4302,29 @@ proc gf180mcu::pfet_06v0_draw {parameters} {
 	    sub_surround	0.16 \
 	    dev_surround	0.43 \
 	    sub_type		nwell \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
+
+#-------------------
+# nMOS 5.0V
+#-------------------
+
+proc gf180mcu::nfet_05v0_draw {parameters} {
+    set newdict [dict create \
+	    diff_poly_space	0.30 \
+	    diff_gate_space	0.30 \
+	    diff_spacing	0.36 \
+	    gate_type		mvnfet \
+	    diff_type 		mvndiff \
+	    diff_contact_type	mvndc \
+	    plus_diff_type	mvpsd \
+	    plus_contact_type	mvpsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		pwell \
+	    sub_surround	0.16 \
     ]
     set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
     return [gf180mcu::mos_draw $drawdict]
@@ -4326,7 +4405,7 @@ proc gf180mcu::pfet_03v3_dss_draw {parameters} {
 }
 
 #-------------------
-# pMOS 6.0V
+# pMOS 6.0V dss
 #-------------------
 
 proc gf180mcu::pfet_06v0_dss_draw {parameters} {
@@ -4471,6 +4550,7 @@ proc gf180mcu::nmoscap_6p0_draw {parameters} {
 #----------------------------------------------------------------
 
 proc gf180mcu::mos_check {parameters} {
+    set lmax 0
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -4505,6 +4585,11 @@ proc gf180mcu::mos_check {parameters} {
     if {$l < $lmin} {
 	puts stderr "Mos length must be >= $lmin um"
         dict set parameters l $lmin
+    } 
+    if {($lmax > 0) && ($l > $lmax)} {
+	puts stderr "MOS length must be <= $lmax"
+	dict set parameters l $lmax
+	set l $lmax
     } 
     if {$w < $wmin} {
 	puts stderr "Mos width must be >= $wmin um"
@@ -4580,6 +4665,10 @@ proc gf180mcu::nfet_03v3_check {parameters} {
    return [gf180mcu::mos_check $parameters]
 }
 
+proc gf180mcu::nfet_05v0_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
 proc gf180mcu::nfet_06v0_check {parameters} {
    return [gf180mcu::mos_check $parameters]
 }
@@ -4589,6 +4678,10 @@ proc gf180mcu::nfet_06v0_nvt_check {parameters} {
 }
 
 proc gf180mcu::pfet_03v3_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::pfet_05v0_check {parameters} {
    return [gf180mcu::mos_check $parameters]
 }
 

@@ -4853,13 +4853,13 @@ variants *
  device msubcircuit nfet_03v3 nfet ndiff,ndc ndiff,ndc allpsub error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit pfet_06v0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error \
-	l>=5.5e-7 l=l w=w a1=as p1=ps a2=ad p2=pd
+	l>=0.55 l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit pfet_05v0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error \
-	l<5.5e-7 l=l w=w a1=as p1=ps a2=ad p2=pd
+	l<0.55 l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit nfet_06v0 mvnfet mvndiff,mvndc mvndiff,mvndc allpsub error \
-	l>=7e-7 l=l w=w a1=as p1=ps a2=ad p2=pd
+	l>=0.7 l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit nfet_05v0 mvnfet mvndiff,mvndc mvndiff,mvndc allpsub error \
-	l<7e-7 l=l w=w a1=as p1=ps a2=ad p2=pd
+	l<0.7 l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit pfet_03v3_dss pfet pdiffres pdiffres allnwell error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
  device msubcircuit nfet_03v3_dss nfet ndiffres ndiffres allpsub error \

@@ -1186,9 +1186,6 @@ digital-avalon-%:
 	rm -rf ${OPENLANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
 	mkdir ${OPENLANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
 	cp -rp ${AVALON_TECH_SOURCE}/openlane/gf180mcu_as_sc_mcu7t3v3 ${OPENLANE_STAGING_$*}
-	# drc_exclude.cells is called out in the config and needs to exist
-	# even though it is an empty file
-	touch ${OPENLANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3/drc_exclude.cells
 
 io-%:
 	# Install custom additions to the I/O pad library
@@ -1268,6 +1265,8 @@ io-%:
 		-lef cells/*/*_${$*_STACK}.lef \
 			annotate lefopts=-hide \
 			filter=custom/scripts/fix_io_lef.py \
+		-xschem cells/*/*.sym \
+			filter=custom/scripts/make_primitive.py \
 		-verilog cells/*/*.v compile-only \
 		-library general gf180mcu_fd_io 2>&1 | tee -a ${GF180MCU$*}_make.log
 
