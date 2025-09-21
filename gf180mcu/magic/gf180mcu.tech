@@ -1594,7 +1594,8 @@ style drc
  bloat-all alldiffmv nwell
 
  templayer bad_nwell
- bloat-all alldifflv,schottky nwell
+ # All low-voltage diffusion except tap diffusion (nsd, psd)
+ bloat-all *ndif,*ndiode,*nndiode,ndiffres,nfet,nnfet,ncap,*pdif,*pdiode,pdiffres,pfet,pcap,schottky nwell
  and mv_nwell
 
  # Check for nwell resistor in deep nwell
@@ -3044,9 +3045,9 @@ drc
  spacing allactiveres allactiveres 400 touching_ok \
 	"Diffusion resistor spacing < %d (NDRES.2)
 
- spacing allactiveres allactive 450 touching_ok \
+ spacing allactiveres allactive 440 touching_ok \
 	"Diffusion resistor spacing to unrelated diffusion < %d (NDRES.3)"
- spacing allactiveres allpoly 450 touching_ok \
+ spacing allactiveres allpoly 440 touching_ok \
 	"Diffusion resistor spacing to unrelated poly < %d (NDRES.4)"
 
 #-----------------------------

@@ -1192,7 +1192,6 @@ io-%:
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${GF180MCU$*} \
 		-verilog %l/verilog/*.v compile-only rename=gf180mcu_ef_io \
 		-spice %l/spice/*.spice compile-only rename=gf180mcu_ef_io \
-		-lib %l/lib/*.lib \
 		-gds %l/gds/*_${$*_STACK}.gds compile-only \
 			rename=gf180mcu_ef_io \
 			options=custom/scripts/gds_import_io.tcl \

@@ -1845,6 +1845,7 @@ if __name__ == '__main__':
                 os.remove(lef_savelibname)
 
         if lef_compile or lef_compile_only:
+            lefsrclibdir = targetdir + lef_reflib + destlib + '/lef'
             create_lef_library(lefsrclibdir, destlib, lef_compile_only, lef_exclude)
 
     if have_lef and not no_lef_convert:
