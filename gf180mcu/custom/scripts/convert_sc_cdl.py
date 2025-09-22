@@ -42,9 +42,7 @@ def filter(inname, outname):
         fixedline = re.sub('^d', 'D', fixedline)
 	# 4) Convert $m to M
         fixedline = re.sub(r'\$m=', 'M=', fixedline, flags=re.IGNORECASE)
-	# 5) Fix incorrect endcap (endcap does not have VNW VPW)
-        fixedline = re.sub('endcap VDD VNW VPW', 'endcap VDD', fixedline, flags=re.IGNORECASE)
-	# 6) Fix incorrect diode properties in antenna cell (missing key)
+	# 5) Fix incorrect diode properties in antenna cell (missing key)
         fixedline = re.sub('0.2052p 1.86u', 'AREA=0.2052p PJ=1.86u', fixedline, flags=re.IGNORECASE)
         fixedline = re.sub('0.2034p 1.85u', 'AREA=0.2034p PJ=1.85u', fixedline, flags=re.IGNORECASE)
 
