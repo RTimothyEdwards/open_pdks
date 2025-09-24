@@ -1444,7 +1444,7 @@ style metfill
 	shrink 	500
 	grow 	500
 
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  templayer 	obstruct_mtp allmtp,allpad,fillmtp,obsmtp
 	grow 	2010
 	shrink 	500
@@ -3184,7 +3184,7 @@ variants *
  surround v2/m3 *m3 240 directional \
 	"Thick Metal3 overlap of Via2 < %d in one direction (MT30.6 - V2.4)"
 
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  surround v2/m3 *m3 50 30 directional \
 	"Metal3 overlap of Via2 < %d in one direction (V2.4i - V2.4)"
 
@@ -3251,7 +3251,7 @@ variants *
  surround v3/m4 *m4 240 directional \
 	"Thick Metal4 overlap of Via3 < %d in one direction (MT30.6 - V3.4)"
 
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  surround v3/m4 *m4 50 30 directional \
 	"Metal4 overlap of Via3 < %d in one direction (V3.4i - V3.4)"
 
@@ -3314,7 +3314,7 @@ variants *
  surround v4/m5 *m5 240 directional \
 	"Metal5 overlap of Via4 < %d in one direction (MT30.6 - V4.4)"
 
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  surround v4/m4 *m4 50 30 directional \
 	"Metal4 overlap of Via4 < %d in one direction (V4.3i - V4.3)"
  surround v4/m5 *m5 50 30 directional \
@@ -3388,7 +3388,7 @@ variants *
  surround vtp/mtp *mtp 240 directional \
 	"Thick Top Metal overlap of ViaTP < %d in one direction (MT30.6 - VTP.4)"
 
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  surround vtp/mtp *mtp 80 absence_illegal \
 	"Top Metal overlap of ViaTP < %d (VT.4 - VT.3)"
  width allmtp 440 "Top Metal width < %d (MT.1)"
@@ -3792,7 +3792,7 @@ variants ()
 #ifdef METALS3
 #ifdef THICKMET3P0
  resist (allm3)/metal3  	    10
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  resist (allm3)/metal3  	    40
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
  resist (allm3)/metal3  	    60
@@ -3805,7 +3805,7 @@ variants ()
 #ifdef METALS4
 #ifdef THICKMET3P0
  resist (allm4)/metal4  	    10
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  resist (allm4)/metal4  	    40
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
  resist (allm4)/metal4  	    60
@@ -3818,7 +3818,7 @@ variants ()
 #ifdef METALS5
 #ifdef THICKMET3P0
  resist (allm5)/metal5  	    10
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  resist (allm5)/metal5  	    40
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
  resist (allm5)/metal5  	    60
@@ -3831,7 +3831,7 @@ variants ()
 #ifdef METALS6
 #ifdef THICKMET3P0
  resist (allmtp)/metaltp  	   10
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  resist (allmtp)/metaltp  	    40
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
  resist (allmtp)/metaltp  	    60
@@ -3896,7 +3896,7 @@ variants (hrhc),(hrlc)
 #ifdef METALS3
 #ifdef THICKMET3P0
  resist (allm3)/metal3  	    15
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  resist (allm3)/metal3  	    49
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
  resist (allm3)/metal3  	    70
@@ -3909,7 +3909,7 @@ variants (hrhc),(hrlc)
 #ifdef METALS4
 #ifdef THICKMET3P0
  resist (allm4)/metal4  	    14
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  resist (allm4)/metal4  	    49
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
  resist (allm4)/metal4  	    70
@@ -3922,7 +3922,7 @@ variants (hrhc),(hrlc)
 #ifdef METALS5
 #ifdef THICKMET3P0
  resist (allm5)/metal5  	    14
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  resist (allm5)/metal5  	    49
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
  resist (allm5)/metal5  	    70
@@ -3935,7 +3935,7 @@ variants (hrhc),(hrlc)
 #ifdef METALS6
 #ifdef THICKMET3P0
  resist (allmtp)/metaltp  	    14
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  resist (allmtp)/metaltp  	    49
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
  resist (allmtp)/metaltp  	    70
@@ -4000,7 +4000,7 @@ variants (lrhc),(lrlc)
 #ifdef METALS3
 #ifdef THICKMET3P0
  resist (allm3)/metal3  	     6
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  resist (allm3)/metal3  	    31
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
  resist (allm3)/metal3  	    50
@@ -4013,7 +4013,7 @@ variants (lrhc),(lrlc)
 #ifdef METALS4
 #ifdef THICKMET3P0
  resist (allm4)/metal4  	     6
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  resist (allm4)/metal4  	    31
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
  resist (allm4)/metal4  	    50
@@ -4026,7 +4026,7 @@ variants (lrhc),(lrlc)
 #ifdef METALS5
 #ifdef THICKMET3P0
  resist (allm5)/metal5  	     6
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  resist (allm5)/metal5  	    31
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
  resist (allm5)/metal5  	    50
@@ -4039,7 +4039,7 @@ variants (lrhc),(lrlc)
 #ifdef METALS6
 #ifdef THICKMET3P0
  resist (allmtp)/metaltp  	     6
-#elseif defined(THICKMET0P9) || defined(THICKMET1P1)
+#elseif THICKMET0P9 || THICKMET1P1
  resist (allmtp)/metaltp  	    31
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
  resist (allmtp)/metaltp  	    50
