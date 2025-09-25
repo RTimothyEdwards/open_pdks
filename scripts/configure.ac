@@ -263,6 +263,7 @@ M4_GEN_INSTALLATION(gf180mcu_fd_ip_sram, sram-gf180mcu, ../sources)
 # GlobalFoundries gf180mcu optional
 M4_GEN_INSTALLATION(gf180mcu_osu_sc, osu-sc-gf180mcu, ../sources)
 M4_GEN_INSTALLATION(gf180mcu_as_sc, avalon-sc-gf180mcu, ../sources)
+M4_GEN_INSTALLATION(gf180mcu_ocd_io, ocd-io-gf180mcu, ../sources)
 
 AC_DEFUN([M4_GEN_WITH_TOOLS], [
     m4_foreach_w(tool, $1, [

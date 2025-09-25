@@ -152,6 +152,7 @@ GF180MCU_SC_9T5V0_PATH = @GF180MCU_FD_SC_MCU9T5V0_PATH@
 GF180MCU_SRAM_PATH = @GF180MCU_FD_IP_SRAM_PATH@
 GF180MCU_OSU_SC_PATH = @GF180MCU_OSU_SC_PATH@
 GF180MCU_AS_SC_PATH = @GF180MCU_AS_SC_PATH@
+GF180MCU_OCD_IO_PATH = @GF180MCU_OCD_IO_PATH@
 
 USE_REFERENCE = @USE_REFERENCE@
 
@@ -166,6 +167,7 @@ endif
 # Path to GF180MCU library sources
 PDK_URL = https://github.com/google
 OSU_URL = https://github.com/stineje
+OCD_URL = https://github.com/RTimothyEdwards
 AVALON_URL = https://github.com/AvalonSemiconductors
 FOSSI_URL = https://github.com/fossi-foundation
 
@@ -179,7 +181,8 @@ PDK_LIB_SC_7T5V0 = ${FOSSI_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu7t5v0
 PDK_LIB_SC_9T5V0 = ${FOSSI_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu9t5v0
 PDK_LIB_SRAM =     ${PDK_URL}/globalfoundries-pdk-ip-gf180mcu_fd_ip_sram
 PDK_LIB_OSU_SC =   ${OSU_URL}/globalfoundries-pdk-libs-gf180mcu_osu_sc
-PDK_LIB_AS_SC = ${AVALON_URL}/gf180mcu_as_sc_mcu7t3v3
+PDK_LIB_AS_SC =    ${AVALON_URL}/gf180mcu_as_sc_mcu7t3v3
+PDK_LIB_OCD_IO =   ${OCD_URL}/gf180mcu_ocd_io
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
@@ -268,6 +271,12 @@ ifeq (${GF180MCU_AS_SC_PATH},)
 else
     COMMIT_DEFS += -DAS_SC_MCU7T3V3_COMMIT=$(shell cd ${GF180MCU_AS_SC_PATH} ; git rev-parse HEAD)
 endif
+ifeq (${GF180MCU_OCD_IO_PATH},)
+    COMMIT_DEFS += -DOCD_IO_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DOCD_IO_COMMIT=$(shell cd ${GF180MCU_OCD_IO_PATH} ; git rev-parse HEAD)
+endif
+
 
 COMMIT_DEFS += -DMAGIC_COMMIT=$(shell magic -dnull -noconsole --commit)
 COMMIT_DEFS += -DMAGIC_VERSION=$(shell magic -dnull -noconsole --version)
@@ -480,7 +489,7 @@ reference: ${TECH}.json
 	../common/save_commit_refs.py ${COMMIT_DEFS} ${TECH}.json
 
 # Handle prerequisites
-prerequisites: pr-repo pv-repo io-repo sc-7t-repo sc-9t-repo sram-repo osu-sc-repo avalon-sc-repo
+prerequisites: pr-repo pv-repo io-repo sc-7t-repo sc-9t-repo sram-repo osu-sc-repo avalon-sc-repo ocd-io-repo
 
 pr-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
@@ -586,8 +595,21 @@ avalon-sc-repo:
 		fi ; \
 	fi
 
+ocd-io-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		OCD_IO_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_ocd_io | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi ; \
+	if test "x${GF180MCU_OCD_IO_PATH}" != "x" ; then \
+		if test -d "${GF180MCU_OCD_IO_PATH}" ; then \
+			echo "Using existing installation of Open Circuit Design dual-voltage I/O library from ${GF180MCU_OCD_IO_PATH}" ; \
+		else \
+			echo "Downloading Open Circuit Design dual-voltage I/O library from ${GF180MCU_OCD_IO_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_OCD_IO} ${GF180MCU_OCD_IO_PATH} $${OCD_IO_COMMIT} ; \
+		fi ; \
+	fi
+
 # Update prerequisites
-update: update-pr-repo update-pv-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-osu-sc-repo update-avalon-sc-repo
+update: update-pr-repo update-pv-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-osu-sc-repo update-avalon-sc-repo update-ocd-io-repo
 
 update-pr-repo:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
@@ -637,6 +659,13 @@ update-avalon-sc-repo:
 		../scripts/update.sh ${GF180MCU_AS_SC_PATH} ; \
 	fi
 
+update-ocd-io-repo:
+	if test "x${GF180MCU_OCD_IO_PATH}" != "x" ; then \
+		echo "Updating GF180MCU Open Circuit Design dual-voltage I/O library from ${PDK_LIB_OCD_IO}" ; \
+		../scripts/update.sh ${GF180MCU_OCD_IO_PATH} ; \
+	fi
+
+all-%: prerequisites
 all-%: prerequisites
 	echo "Starting gf180mcu$* PDK staging on "`date` > ${GF180MCU$*}_make.log
 	${MAKE} general-$*
@@ -809,13 +838,13 @@ openlane-%: openlane/config.tcl openlane/gf180mcu_fd_sc_mcu7t5v0/config.tcl open
 		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max ;\
 	fi
 
-vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A sram-build-A digital-osu-build-A digital-avalon-build-A
+vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A ocd-io-build-A sram-build-A digital-osu-build-A digital-avalon-build-A
 
-vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B sram-build-B digital-osu-build-B digital-avalon-build-B
+vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B ocd-io-build-B sram-build-B digital-osu-build-B digital-avalon-build-B
 
-vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C sram-build-C digital-osu-build-C digital-avalon-build-C
+vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C ocd-io-build-C sram-build-C digital-osu-build-C digital-avalon-build-C
 
-vendor-D: primitive-build-D digital-7t5v0-build-D digital-9t5v0-build-D io-build-D sram-build-D digital-osu-build-D digital-avalon-build-D
+vendor-D: primitive-build-D digital-7t5v0-build-D digital-9t5v0-build-D io-build-D ocd-io-build-D sram-build-D digital-osu-build-D digital-avalon-build-D
 
 primitive-build-%:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
@@ -830,6 +859,14 @@ io-build-%:
 		if test -d ${GF180MCU_IO_PATH} ; then \
 			echo "Building padframe I/O libraries" ;\
 			make io-$* ;\
+		fi ;\
+	fi
+
+ocd-io-build-%:
+	if test "x${GF180MCU_OCD_IO_PATH}" != "x" ; then \
+		if test -d ${GF180MCU_OCD_IO_PATH} ; then \
+			echo "Building dual-voltage padframe I/O libraries" ;\
+			make ocd-io-$* ;\
 		fi ;\
 	fi
 
@@ -1268,6 +1305,55 @@ io-%:
 			filter=custom/scripts/make_primitive.py \
 		-verilog cells/*/*.v compile-only \
 		-library general gf180mcu_fd_io 2>&1 | tee -a ${GF180MCU$*}_make.log
+
+ocd-io-%:
+	# Install the Open Circuit Design dual-voltage I/O library
+	${STAGE} -source ${GF180MCU_OCD_IO_PATH} \
+		-target ${STAGING_PATH}/${GF180MCU$*} \
+		-lib cells/*/*_ff_125C_2v75.lib compile-only \
+                        header=liberty/gf180mcu_ocd_io__ff_125C_2v75.lib \
+			rename=gf180mcu_ocd_io__ff_125C_2v75 \
+		-lib cells/*/*_ff_n40C_2v75.lib compile-only \
+                        header=liberty/gf180mcu_ocd_io__ff_n40C_2v75.lib \
+			rename=gf180mcu_ocd_io__ff_n40C_2v75 \
+		-lib cells/*/*_ff_125C_3v63.lib compile-only \
+                        header=liberty/gf180mcu_ocd_io__ff_125C_3v63.lib \
+			rename=gf180mcu_ocd_io__ff_125C_3v63 \
+		-lib cells/*/*_ff_n40C_3v63.lib compile-only \
+                        header=liberty/gf180mcu_ocd_io__ff_n40C_3v63.lib \
+			rename=gf180mcu_ocd_io__ff_n40C_3v63 \
+		-lib cells/*/*_ff_125C_5v50.lib compile-only \
+                        header=liberty/gf180mcu_ocd_io__ff_125C_5v50.lib \
+			rename=gf180mcu_ocd_io__ff_125C_5v50 \
+		-lib cells/*/*_ff_n40C_5v50.lib compile-only \
+                        header=liberty/gf180mcu_ocd_io__ff_n40C_5v50.lib \
+			rename=gf180mcu_ocd_io__ff_n40C_5v50 \
+		-lib cells/*/*_ss_125C_2v25.lib compile-only \
+                        header=liberty/gf180mcu_ocd_io__ss_125C_2v25.lib \
+			rename=gf180mcu_ocd_io__ss_125C_2v25 \
+		-lib cells/*/*_ss_125C_2v97.lib compile-only \
+                        header=liberty/gf180mcu_ocd_io__ss_125C_2v97.lib \
+			rename=gf180mcu_ocd_io__ss_125C_2v97 \
+		-lib cells/*/*_ss_125C_4v50.lib compile-only \
+                        header=liberty/gf180mcu_ocd_io__ss_125C_4v50.lib \
+			rename=gf180mcu_ocd_io__ss_125C_4v50 \
+		-lib cells/*/*_tt_025C_2v50.lib compile-only \
+                        header=liberty/gf180mcu_ocd_io__tt_025C_2v50.lib \
+			rename=gf180mcu_ocd_io__tt_025C_2v50 \
+		-lib cells/*/*_tt_025C_3v30.lib compile-only \
+                        header=liberty/gf180mcu_ocd_io__tt_025C_3v30.lib \
+			rename=gf180mcu_ocd_io__tt_025C_3v30 \
+		-lib cells/*/*_tt_025C_5v00.lib compile-only \
+                        header=liberty/gf180mcu_ocd_io__tt_025C_5v00.lib \
+			rename=gf180mcu_ocd_io__tt_025C_5v00 \
+		-spice netlist/layout/*.spice compile-only  \
+		-gds cells/*/*_${$*_STACK}.gds.gz compile-only \
+			options=custom/scripts/gds_import_io.tcl \
+		-lef cells/*/*_${$*_STACK}.lef compile-only \
+		-xschem cells/*/*.sym \
+			filter=custom/scripts/make_primitive.py \
+		-verilog cells/*/*.v compile-only \
+		-library general gf180mcu_ocd_io 2>&1 | tee -a ${GF180MCU$*}_make.log
 
 sram-%:
 	# Install SRAM macros from vendor files
