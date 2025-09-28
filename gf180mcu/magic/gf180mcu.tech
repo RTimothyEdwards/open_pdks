@@ -2954,6 +2954,11 @@ drc
 	"Diffusion spacing < %d (DF.3a)"
  spacing alldiffmv,mvnvar,mvpvar alldiffmv,mvnvar,mvpvar 360 touching_ok \
 	"Diffusion spacing < %d (DF.3a)"
+ # Low voltage tap cannot abut high voltage source/drain
+ spacing *mvpdiff,mvpvar *nsd 360 touching_illegal \
+	"Diffusion spacing to tap < %d (DF.3a)"
+ spacing *mvndiff,mvnvar *psd 360 touching_illegal \
+	 "Diffusion spacing to tap < %d (DF.3a)"
 
  spacing *ndiff,*ndiode,nfet,nnfet,ncap allnwell 430 touching_illegal \
 	"N-Diffusion spacing to N-well < %d (DF.8)"

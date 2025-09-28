@@ -259,6 +259,7 @@ M4_GEN_INSTALLATION(gf180mcu_fd_io, io-gf180mcu, ../sources)
 M4_GEN_INSTALLATION(gf180mcu_fd_sc_mcu7t5v0, sc-7t5v0-gf180mcu, ../sources)
 M4_GEN_INSTALLATION(gf180mcu_fd_sc_mcu9t5v0, sc-9t5v0-gf180mcu, ../sources)
 M4_GEN_INSTALLATION(gf180mcu_fd_ip_sram, sram-gf180mcu, ../sources)
+M4_GEN_INSTALLATION(gf180mcu_ocd_alpha, alpha-gf180mcu, ../sources)
 
 # GlobalFoundries gf180mcu optional
 M4_GEN_INSTALLATION(gf180mcu_osu_sc, osu-sc-gf180mcu, ../sources)

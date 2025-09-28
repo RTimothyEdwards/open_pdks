@@ -68,10 +68,10 @@
         "gf180mcu_osu_sc_gf12t3v3": "OSU_SC_COMMIT",
         "gf180mcu_osu_sc_gf9t3v3": "OSU_SC_COMMIT"
         "gf180mcu_as_sc_mcu7t3v3": "AS_SC_MCU7T3V3_COMMIT"
-        "gf180mcu_ocd_io": "OCD_IO_COMMIT"
     },
     "iocells": {
         "gf180mcu_fd_io": "FD_IO_COMMIT"
+        "gf180mcu_ocd_io": "OCD_IO_COMMIT"
     },
     "primitive": {
         "gf180mcu_fd_pr": "FD_PR_COMMIT"
@@ -81,6 +81,9 @@
     },
     "memory": {
         "gf180mcu_fd_ip_sram": "FD_IP_SRAM_COMMIT"
+    },
+    "other": {
+	"gf180mcu_ocd_alpha": "OCD_ALPHA_COMMIT"
     },
     "build": {
         "open_pdks": "OPEN_PDKS_VERSION",
@@ -102,6 +105,7 @@
         "gf180mcu_fd_ip_sram": "9c411928870ce15226228fa52ddb6ecc0ea4ffbe",
         "gf180mcu_as_sc_mcu7t3v3": "450f6039f6d7f556b47f74b456c010f424d9cfcd",
         "gf180mcu_ocd_io": "3c84d8ffd3fc9937a268ce44a6bea93e49bafee8",
+        "gf180mcu_ocd_alpha": "unknown",
         "gf180mcu_osu_sc_gf12t3v3": "aa2fa8cd1bcb8fe98669acd05c0b0c65879268b3",
         "gf180mcu_osu_sc_gf9t3v3": "aa2fa8cd1bcb8fe98669acd05c0b0c65879268b3"
     }

@@ -153,6 +153,7 @@ GF180MCU_SRAM_PATH = @GF180MCU_FD_IP_SRAM_PATH@
 GF180MCU_OSU_SC_PATH = @GF180MCU_OSU_SC_PATH@
 GF180MCU_AS_SC_PATH = @GF180MCU_AS_SC_PATH@
 GF180MCU_OCD_IO_PATH = @GF180MCU_OCD_IO_PATH@
+GF180MCU_OCD_ALPHA_PATH = @GF180MCU_OCD_ALPHA_PATH@
 
 USE_REFERENCE = @USE_REFERENCE@
 
@@ -183,6 +184,7 @@ PDK_LIB_SRAM =     ${PDK_URL}/globalfoundries-pdk-ip-gf180mcu_fd_ip_sram
 PDK_LIB_OSU_SC =   ${OSU_URL}/globalfoundries-pdk-libs-gf180mcu_osu_sc
 PDK_LIB_AS_SC =    ${AVALON_URL}/gf180mcu_as_sc_mcu7t3v3
 PDK_LIB_OCD_IO =   ${OCD_URL}/gf180mcu_ocd_io
+PDK_LIB_OCD_ALPHA =${OCD_URL}/gf180mcu_ocd_alpha
 
 # NOTE:  Install destination is the git repository of the technology platform.
 # Once updated in git, the git project can be distributed to all hosts.
@@ -489,7 +491,7 @@ reference: ${TECH}.json
 	../common/save_commit_refs.py ${COMMIT_DEFS} ${TECH}.json
 
 # Handle prerequisites
-prerequisites: pr-repo pv-repo io-repo sc-7t-repo sc-9t-repo sram-repo osu-sc-repo avalon-sc-repo ocd-io-repo
+prerequisites: pr-repo pv-repo io-repo sc-7t-repo sc-9t-repo sram-repo osu-sc-repo avalon-sc-repo ocd-io-repo ocd-alpha-repo
 
 pr-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
@@ -608,6 +610,20 @@ ocd-io-repo:
 		fi ; \
 	fi
 
+ocd-alpha-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		OCD_ALPHA_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_ocd_alpha | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi ; \
+	if test "x${GF180MCU_OCD_ALPHA_PATH}" != "x" ; then \
+		if test -d "${GF180MCU_OCD_ALPHA_PATH}" ; then \
+			echo "Using existing installation of Open Circuit Design alphanumeric library from ${GF180MCU_OCD_ALPHA_PATH}" ; \
+		else \
+			echo "Downloading Open Circuit Design alphanumeric library from ${GF180MCU_OCD_APHA_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_OCD_ALPHA} ${GF180MCU_OCD_ALPHA_PATH} $${OCD_ALPHA_COMMIT} ; \
+		fi ; \
+	fi
+
+
 # Update prerequisites
 update: update-pr-repo update-pv-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-osu-sc-repo update-avalon-sc-repo update-ocd-io-repo
 
@@ -665,7 +681,12 @@ update-ocd-io-repo:
 		../scripts/update.sh ${GF180MCU_OCD_IO_PATH} ; \
 	fi
 
-all-%: prerequisites
+update-ocd-apha-repo:
+	if test "x${GF180MCU_OCD_ALPHA_PATH}" != "x" ; then \
+		echo "Updating GF180MCU Open Circuit Design alphanumeric library from ${PDK_LIB_OCD_ALPHA}" ; \
+		../scripts/update.sh ${GF180MCU_OCD_ALPHA_PATH} ; \
+	fi
+
 all-%: prerequisites
 	echo "Starting gf180mcu$* PDK staging on "`date` > ${GF180MCU$*}_make.log
 	${MAKE} general-$*
@@ -838,13 +859,13 @@ openlane-%: openlane/config.tcl openlane/gf180mcu_fd_sc_mcu7t5v0/config.tcl open
 		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max ;\
 	fi
 
-vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A ocd-io-build-A sram-build-A digital-osu-build-A digital-avalon-build-A
+vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A ocd-io-build-A ocd-alpha-build-A sram-build-A digital-osu-build-A digital-avalon-build-A
 
-vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B ocd-io-build-B sram-build-B digital-osu-build-B digital-avalon-build-B
+vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B ocd-io-build-B ocd-alpha-build-B sram-build-B digital-osu-build-B digital-avalon-build-B
 
-vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C ocd-io-build-C sram-build-C digital-osu-build-C digital-avalon-build-C
+vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C ocd-io-build-C ocd-alpha-build-C sram-build-C digital-osu-build-C digital-avalon-build-C
 
-vendor-D: primitive-build-D digital-7t5v0-build-D digital-9t5v0-build-D io-build-D ocd-io-build-D sram-build-D digital-osu-build-D digital-avalon-build-D
+vendor-D: primitive-build-D digital-7t5v0-build-D digital-9t5v0-build-D io-build-D ocd-io-build-D ocd-alpha-build-D sram-build-D digital-osu-build-D digital-avalon-build-D
 
 primitive-build-%:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
@@ -867,6 +888,14 @@ ocd-io-build-%:
 		if test -d ${GF180MCU_OCD_IO_PATH} ; then \
 			echo "Building dual-voltage padframe I/O libraries" ;\
 			make ocd-io-$* ;\
+		fi ;\
+	fi
+
+ocd-alpha-build-%:
+	if test "x${GF180MCU_OCD_ALPHA_PATH}" != "x" ; then \
+		if test -d ${GF180MCU_OCD_ALPHA_PATH} ; then \
+			echo "Building alphanumeric layout libraries" ;\
+			make ocd-alpha-$* ;\
 		fi ;\
 	fi
 
@@ -1354,6 +1383,28 @@ ocd-io-%:
 			filter=custom/scripts/make_primitive.py \
 		-verilog cells/*/*.v compile-only \
 		-library general gf180mcu_ocd_io 2>&1 | tee -a ${GF180MCU$*}_make.log
+
+ocd-alpha-%:
+	# Install alphanumeric libraries.
+	${STAGE} -source ${GF180MCU_OCD_ALPHA_PATH} \
+		-target ${STAGING_PATH}/${GF180MCU$*} \
+		-mag small/magic/*.mag \
+		-library general gf180mcu_ocd_alpha_small \
+		2>&1 | tee -a ${GF180MCU$*}_make.log
+	${STAGE} -source ${GF180MCU_OCD_ALPHA_PATH} \
+		-target ${STAGING_PATH}/${GF180MCU$*} \
+		-mag large/magic/*.mag \
+		-library general gf180mcu_ocd_alpha_large \
+		2>&1 | tee -a ${GF180MCU$*}_make.log
+	${STAGE} -source ${GF180MCU_OCD_ALPHA_PATH} \
+		-target ${STAGING_PATH}/${GF180MCU$*} \
+		-mag misc/magic/*.mag \
+		-library general gf180mcu_ocd_alpha_misc \
+		2>&1 | tee -a ${GF180MCU$*}_make.log
+	# Install text2mag.py script for alphanumeric library
+	mkdir -p ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_ocd_alpha_small/scripts
+	cp ${GF180MCU_OCD_ALPHA_PATH}/small/scripts/text2mag.py \
+		${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_ocd_alpha_small/scripts
 
 sram-%:
 	# Install SRAM macros from vendor files

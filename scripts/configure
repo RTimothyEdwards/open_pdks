@@ -618,6 +618,7 @@ USE_REFERENCE
 GF180MCU_OCD_IO_PATH
 GF180MCU_AS_SC_PATH
 GF180MCU_OSU_SC_PATH
+GF180MCU_OCD_ALPHA_PATH
 GF180MCU_FD_IP_SRAM_PATH
 GF180MCU_FD_SC_MCU9T5V0_PATH
 GF180MCU_FD_SC_MCU7T5V0_PATH
@@ -751,6 +752,7 @@ enable_io_gf180mcu
 enable_sc_7t5v0_gf180mcu
 enable_sc_9t5v0_gf180mcu
 enable_sram_gf180mcu
+enable_alpha_gf180mcu
 enable_osu_sc_gf180mcu
 enable_avalon_sc_gf180mcu
 enable_ocd_io_gf180mcu
@@ -1489,6 +1491,9 @@ Optional Features:
                           will be downloaded. [default=enabled]
   --enable-sram-gf180mcu[=path]
                           Install gf180mcu_fd_ip_sram. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-alpha-gf180mcu[=path]
+                          Install gf180mcu_ocd_alpha. If path is omitted, the repository
                           will be downloaded. [default=enabled]
   --enable-osu-sc-gf180mcu[=path]
                           Install gf180mcu_osu_sc. If path is omitted, the repository
@@ -3942,6 +3947,50 @@ else case e in #(
             { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Package 'gf180mcu_fd_ip_sram' will be installed automatically during make." >&5
 printf "%s\n" "$as_me: Package 'gf180mcu_fd_ip_sram' will be installed automatically during make." >&6;}
 	    GF180MCU_FD_IP_SRAM_PATH=../sources/gf180mcu_fd_ip_sram
+
+     ;;
+esac
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    GF180MCU_OCD_ALPHA_PATH=""
+
+    # Check whether --enable-alpha-gf180mcu was given.
+if test ${enable_alpha_gf180mcu+y}
+then :
+  enableval=$enable_alpha_gf180mcu;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Package 'gf180mcu_ocd_alpha' will be installed automatically during make." >&5
+printf "%s\n" "$as_me: Package 'gf180mcu_ocd_alpha' will be installed automatically during make." >&6;}
+        	export GF180MCU_OCD_ALPHA_PATH=../sources/gf180mcu_ocd_alpha
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Disabling package 'gf180mcu_ocd_alpha'" >&5
+printf "%s\n" "$as_me: Disabling package 'gf180mcu_ocd_alpha'" >&6;}
+    		export GF180MCU_OCD_ALPHA_PATH=""
+            else
+                GF180MCU_OCD_ALPHA_PATH=$enableval
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Enabling package 'gf180mcu_ocd_alpha' at $GF180MCU_OCD_ALPHA_PATH" >&5
+printf "%s\n" "$as_me: Enabling package 'gf180mcu_ocd_alpha' at $GF180MCU_OCD_ALPHA_PATH" >&6;}
+            fi
+            GF180MCU_OCD_ALPHA_PATH=`realpath $GF180MCU_OCD_ALPHA_PATH`
+
+else case e in #(
+  e)
+            { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Package 'gf180mcu_ocd_alpha' will be installed automatically during make." >&5
+printf "%s\n" "$as_me: Package 'gf180mcu_ocd_alpha' will be installed automatically during make." >&6;}
+	    GF180MCU_OCD_ALPHA_PATH=../sources/gf180mcu_ocd_alpha
 
      ;;
 esac
