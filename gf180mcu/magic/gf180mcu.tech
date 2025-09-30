@@ -1740,6 +1740,10 @@ style  import
  ignore SOURCE
  ignore VTEXT
  ignore FILLOBS
+ ignore SCRIBE
+ ignore LATCHUP_ID
+ ignore IO_ID
+ ignore ESD_ID
 
  layer pwell PWELL,PWELLTXT
  and-not BJTDEF,BJTDRC
@@ -2865,6 +2869,10 @@ style  import
  calma DUALGATE 55 0
  calma SRAMDEF  108 5
  calma FET5VDEF 112 1
+ calma SCRIBE	167 5
+ calma LATCHUP_ID 137 5
+ calma IO_ID	119 5
+ calma ESD_ID	24 5
 
 end
 
