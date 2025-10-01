@@ -378,21 +378,27 @@ foreach dev $devices {
 # Ensure that the specific MiM cap model and non-specific MiM cap model will
 # be matched if they differ in the two netlists.
 #ifdef METALS3
-equate classes "-circuit1 cap_mim_2f0_m2m3_noshield" "-circuit2 cap_mim_2f0fF"
-equate classes "-circuit1 cap_mim_2f0fF" "-circuit2 cap_mim_2f0_m2m3_noshield"
+set dev1 cap_mim_2f0_m2m3_noshield
+set dev2 cap_mim_2f0fF
 #endif (METALS3)
 #ifdef METALS4
-equate classes "-circuit1 cap_mim_2f0_m3m4_noshield" "-circuit2 cap_mim_2f0fF"
-equate classes "-circuit1 cap_mim_2f0fF" "-circuit2 cap_mim_2f0_m3m4_noshield"
+set dev1 cap_mim_2f0_m3m4_noshield
+set dev2 cap_mim_2f0fF
 #endif (METALS4)
 #ifdef METALS5
-equate classes "-circuit1 cap_mim_2f0_m4m5_noshield" "-circuit2 cap_mim_2f0fF"
-equate classes "-circuit1 cap_mim_2f0fF" "-circuit2 cap_mim_2f0_m4m5_noshield"
+set dev1 cap_mim_2f0_m4m5_noshield
+set dev2 cap_mim_2f0fF
 #endif (METALS5)
 #ifdef METALS6
-equate classes "-circuit1 cap_mim_2f0_m5m6_noshield" "-circuit2 cap_mim_2f0fF"
-equate classes "-circuit1 cap_mim_2f0fF" "-circuit2 cap_mim_2f0_m5m6_noshield"
+set dev1 cap_mim_2f0_m5m6_noshield
+set dev2 cap_mim_2f0fF
 #endif (METALS6)
+if {[lsearch $cells1 $dev1] >= 0 && [lsearch $cells2 $dev2] >= 0} {
+    equate classes "-circuit1 $dev1" "-circuit2 $dev2"
+}
+if {[lsearch $cells1 $dev2] >= 0 && [lsearch $cells2 $dev1] >= 0} {
+    equate classes "-circuit1 $dev2" "-circuit2 $dev1"
+}
 #endif (MIM)
 
 #---------------------------------------------------------------

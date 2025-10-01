@@ -148,6 +148,7 @@ types
 
  -active filldiff
  -active fillpoly
+ -active fillfet
 
   metal1 metal1,m1,met1
   metal1 rmetal1,rm1,rmet1
@@ -575,6 +576,7 @@ styles
   obsactive implant4
   filldiff  ndiffusion
   fillpoly  polysilicon
+  fillfet   ntransistor
 
 #ifdef METALS3
   padl      metal3 via3 overglass
@@ -607,6 +609,8 @@ compose
   compose  mvpfet  poly  mvpdiff
   compose  mvnvar  poly  mvnsd
   compose  mvpvar  poly  mvpsd
+
+  compose  fillfet fillpoly filldiff
   
 #ifdef MIM
 #ifdef METALS3
@@ -769,8 +773,8 @@ style gdsii
  	labels 	alldiff,schottky
  	calma 	22 0
 
- layer DIFFFILL	filldiff
-	labels	filldiff
+ layer DIFFFILL	filldiff,fillfet
+	labels	filldiff,fillfet
 	calma	22 4
 
 #-----------------------------------------------------
@@ -963,8 +967,8 @@ style gdsii
 	labels  allpoly port
 	calma	30 10
 
- layer POLYFILL	fillpoly
-	labels	fillpoly
+ layer POLYFILL	fillpoly,fillfet
+	labels	fillpoly,fillfet
 	calma	30 4
 
  layer PLFUSE	efuse
@@ -3060,7 +3064,7 @@ drc
 
  spacing allactiveres allactive 440 touching_ok \
 	"Diffusion resistor spacing to unrelated diffusion < %d (NDRES.3)"
- spacing allactiveres allpoly 440 touching_ok \
+ spacing allactiveres allpoly 430 touching_ok \
 	"Diffusion resistor spacing to unrelated poly < %d (NDRES.4)"
 
 #-----------------------------
