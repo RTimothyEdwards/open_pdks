@@ -3140,7 +3140,7 @@ variants *
  area allm1,obsm1 144400 230 "Metal1 minimum area < %a (M1.3)"
 
 variants (fast),(full)
- widespacing allm1,obsm1 10000 allm1,obsm1  300 touching_ok \
+ widespacing allm1,obsm1 10005 allm1,obsm1  300 touching_ok \
 	"Metal1 > 10um spacing to unrelated m1 < %d (M1.2b)"
 
 variants *
@@ -3168,7 +3168,7 @@ variants *
  area allm2,obsm2 144400 280 "Metal2 minimum area < %a (M2.3)"
 
 variants (fast),(full)
- widespacing allm2,obsm2 10000 allm2,obsm2  300 touching_ok \
+ widespacing allm2,obsm2 10005 allm2,obsm2  300 touching_ok \
 	"Metal2 > 10um spacing to unrelated m2 < %d (M2.2b)"
 
 variants *
@@ -3210,7 +3210,7 @@ variants *
  area allm3,obsm3 562500 440 "Metal3 minimum area < %a (MT.4)"
 
 variants (fast),(full)
- widespacing allm3,obsm3 10000 allm3,obsm3  600 touching_ok \
+ widespacing allm3,obsm3 10005 allm3,obsm3  600 touching_ok \
 	"Metal3 > %c spacing to unrelated m3 < %d (MT.2b)"
 
 #else (!(THICKMET3P0 || THICKMET0P9 || THICKMET1P1))
@@ -3222,7 +3222,7 @@ variants (fast),(full)
  area allm3,obsm3 562500 360 "Metal3 minimum area < %a (MT.4)"
 
 variants (fast),(full)
- widespacing allm3,obsm3 10000 allm3,obsm3  500 touching_ok \
+ widespacing allm3,obsm3 10005 allm3,obsm3  500 touching_ok \
 	"Metal3 > %c spacing to unrelated m3 < %d (MT.2b)"
 #endif (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
 #else (!METALS3)
@@ -3234,7 +3234,7 @@ variants (fast),(full)
  area allm3,obsm3 144400 280 "Metal3 minimum area < %a (M3.3)"
 
 variants (fast),(full)
- widespacing allm3,obsm3 10000 allm3,obsm3  300 touching_ok \
+ widespacing allm3,obsm3 10005 allm3,obsm3  300 touching_ok \
 	"Metal3 > %c spacing to unrelated m3 < %d (M3.2b)"
 #endif (!METALS3)
 
@@ -3277,7 +3277,7 @@ variants *
  area allm4,obsm4 562500 440 "Metal4 minimum area < %a (MT.4)"
 
 variants (fast),(full)
- widespacing allm4,obsm4 10000 allm4,obsm4  600 touching_ok \
+ widespacing allm4,obsm4 10005 allm4,obsm4  600 touching_ok \
 	"Metal4 > %c spacing to unrelated m4 < %d (MT.2b)"
 #else (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
  surround v3/m4 *m4 50 30 directional \
@@ -3288,7 +3288,7 @@ variants (fast),(full)
  area allm4,obsm4 562500 360 "Metal4 minimum area < %a (MT.4)"
 
 variants (fast),(full)
- widespacing allm4,obsm4 10000 allm4,obsm4  500 touching_ok \
+ widespacing allm4,obsm4 10005 allm4,obsm4  500 touching_ok \
 	"Metal4 > %c spacing to unrelated m4 < %d (MT.2b)"
 #endif (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
 #else (!METALS4)
@@ -3300,7 +3300,7 @@ variants (fast),(full)
  area allm4,obsm4 144000 230 "Metal4 minimum area < %a (M4.3)"
 
 variants (fast),(full)
- widespacing allm4,obsm4 10000 allm4,obsm4  300 touching_ok \
+ widespacing allm4,obsm4 10005 allm4,obsm4  300 touching_ok \
 	"Metal4 > %c spacing to unrelated m4 < %d (M4.2b)"
 #endif (!METALS4)
 
@@ -3342,7 +3342,7 @@ variants *
  area allm5,obsm5 526500 440 "Metal5 minimum area < %a (MT.4)"
 
 variants (fast),(full)
- widespacing allm5,obsm5 10000 allm5,obsm5  600 touching_ok \
+ widespacing allm5,obsm5 10005 allm5,obsm5  600 touching_ok \
 	"Metal5 > %c spacing to unrelated m5 < %d (MT.2b)"
 #else (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
  surround v4/m4 *m4 50 30 directional \
@@ -3355,7 +3355,7 @@ variants (fast),(full)
  area allm5,obsm5 562500 360 "Metal5 minimum area < %a (MT.4)"
 
 variants (fast),(full)
- widespacing allm5,obsm5 10000 allm5,obsm5  500 touching_ok \
+ widespacing allm5,obsm5 10005 allm5,obsm5  500 touching_ok \
 	"Metal5 > %c spacing to unrelated m5 < %d (MT.2b)"
 #endif (!(THICK3UMET || THICKMET1P1 || THICKMET0P9))
 #else (!METALS5)
@@ -3369,7 +3369,7 @@ variants (fast),(full)
  area allm5,obsm5 144000 230 "Metal5 minimum area < %a (M5.3)"
 
 variants (fast),(full)
- widespacing allm5,obsm5 10000 allm5,obsm5  300 touching_ok \
+ widespacing allm5,obsm5 10005 allm5,obsm5  300 touching_ok \
 	"Metal5 > %c spacing to unrelated m5 < %d (M5.2b)"
 
 #endif (!METALS5)
@@ -3414,7 +3414,7 @@ variants *
  area allmtp 562500 440 "Top Metal minimum area < %a (MT.4)"
 
 variants (fast),(full)
- widespacing allmtp,obsmtp 10000 allmtp,obsmtp  600 touching_ok \
+ widespacing allmtp,obsmtp 10005 allmtp,obsmtp  600 touching_ok \
 	"Top Metal > %c spacing to unrelated Top Metal < %d (MT.2b)"
 
 #else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
@@ -3427,7 +3427,7 @@ variants (fast),(full)
  area allmtp 562500 360 "Top Metal minimum area < %a (MT.4)"
 
 variants (fast),(full)
- widespacing allmtp,obsmtp 10000 allmtp,obsmtp  500 touching_ok \
+ widespacing allmtp,obsmtp 10005 allmtp,obsmtp  500 touching_ok \
 	"Top Metal > %c spacing to unrelated Top Metal < %d (MT.2b)"
 
 #endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
