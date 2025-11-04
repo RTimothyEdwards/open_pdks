@@ -11,6 +11,7 @@ gds flatglob pmos_5p0*
 gds flatglob pmos_1p2*
 gds flatglob via1_*
 gds flatglob ypass_gate*
+gds flatglob G_ring_*
 # These additional cells must be flattened to get rid of 3.3V devices
 # (DUALGATE drawn into high-level cells)
 gds flatglob dcap_103*
@@ -24,5 +25,6 @@ gds flatglob xpredec*
 gds flatglob xdec8_*
 gds flatglob prexdec_*
 gds flatglob xdec32_*
+gds flatglob sa_*
 # Ensure unique cell names when reading multiple GDS files
 calma unique true
