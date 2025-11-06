@@ -2310,7 +2310,8 @@ if __name__ == '__main__':
 
                 # Load first file and remove the (UNNAMED) cell
                 if not os.path.isfile(allgdslibname):
-                    print('load ' + os.path.splitext(glist[0])[0], file=ofile)
+                    if len(glist) > 0:
+                        print('load ' + os.path.splitext(glist[0])[0], file=ofile)
                 else:
                     gdslibroot = os.path.split(allgdslibname)[1]
                     print('load ' + os.path.splitext(gdslibroot)[0], file=ofile)
