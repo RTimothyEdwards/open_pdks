@@ -3137,7 +3137,7 @@ drc
  spacing *mvndiff,mvnvar,*srammvndiff *psd 360 touching_illegal \
 	 "Diffusion spacing to tap < %d (DF.3a)"
 
- spacing (*ndiff,*sramndiff,*ndiode,nfet,nnfet,ncap)/a allnwell 430 touching_illegal \
+ spacing (*ndiff,*ndiode,nfet,nnfet,ncap)/a allnwell 430 touching_illegal \
 	"N-Diffusion spacing to N-well < %d (DF.8)"
  spacing (*mvndiff,*mvndiode,mvnfet,mvncap,mvnnfet)/a allnwell 600 touching_illegal \
 	"N-Diffusion spacing to N-well < %d (DF.8)"
