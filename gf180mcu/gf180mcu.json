@@ -94,13 +94,13 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "e3262351fb1f5a3cc262ced1c76ebe3f2a5218fb",
-        "magic": "c977e4cf766b441a364ae886200d099d0736583c",
+        "open_pdks": "9608f38a18c41de49402a7b91daaed6b69317398",
+        "magic": "969137d1e2cf6b99785cb320b882a05181cfca01",
         "gf180mcu_pdk": "a897aa30369d3bcec87d9d50ce9b01f320f854ef",
-        "gf180mcu_fd_pr": "9e18ebaf6e71702a618c6fb85f488af93ce773ad",
+        "gf180mcu_fd_pr": "739f508876db86bd7d3403f1fe056dedfeaabdab",
         "gf180mcu_fd_pv": "50cc2fe338c81925e24a6ac4907ddaab534c1312",
         "gf180mcu_fd_io": "545621fdbac44f55344834e6c03486310c0862d7",
-        "gf180mcu_fd_sc_mcu7t5v0": "8743b6f9641eb8707179c4e51703380d4dc90f16",
+        "gf180mcu_fd_sc_mcu7t5v0": "5641d172662a7d9086e5b99c5d54506c05e65cee",
         "gf180mcu_fd_sc_mcu9t5v0": "e0e80f5a6522f10b82165d3aeab9b8ee28e89849",
         "gf180mcu_fd_ip_sram": "9c411928870ce15226228fa52ddb6ecc0ea4ffbe",
         "gf180mcu_as_sc_mcu7t3v3": "51f4e2a6d9692f3f8982dffaf7c012272a4b4ca3",

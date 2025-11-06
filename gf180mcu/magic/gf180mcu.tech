@@ -32,6 +32,7 @@ planes
   dwell,dw
   well,w
   active,a
+  poly,p
   metal1,m1
   metal2,m2
 #ifdef METALS3 || METALS4 || METALS5 || METALS6
@@ -106,6 +107,12 @@ types
  -active srammvpdiff
  -active srammvndc
  -active srammvpdc
+ -active sramnfet 
+ -active srampfet 
+ -active sramndiff
+ -active srampdiff
+ -active sramndc
+ -active srampdc
 # Varactors
   active nvaractor,nvaract,nvar
   active pvaractor,pvaract,pvar
@@ -154,8 +161,9 @@ types
   active mvnndiodec,mvnndic
 
  -active filldiff
- -active fillpoly
- -active fillfet
+
+# Poly fill
+ -poly fillpoly
 
   metal1 metal1,m1,met1
   metal1 rmetal1,rm1,rmet1
@@ -259,6 +267,9 @@ contact
   srammvpdc srammvpdiff metal1
   srammvndc srammvndiff metal1
 
+  srampdc srampdiff metal1
+  sramndc sramndiff metal1
+
   ldndc ldndiff metal1
   ldpdc ldpdiff metal1
 
@@ -321,19 +332,19 @@ aliases
   # Allwells contains obstruction-on-well-plane but not space-on-well-plane
   allwells         allnwell,allpwell,obswell
 
-  allnfets	   nfet,mvnfet,nnfet,mvnnfet,ncap,mvncap,srammvnfet
-  allnfetsnonnat   nfet,mvnfet,ncap,mvncap,srammvnfet
-  allpfets	   pfet,mvpfet,pcap,mvpcap,srammvpfet
+  allnfets	   nfet,mvnfet,nnfet,mvnnfet,ncap,mvncap,srammvnfet,sramnfet
+  allnfetsnonnat   nfet,mvnfet,ncap,mvncap,srammvnfet,sramnfet
+  allpfets	   pfet,mvpfet,pcap,mvpcap,srammvpfet,srampfet
   allfets	   allnfets,allpfets,nvaractor,mvnvaractor,pvaractor,mvpvaractor
   allfetsnonnat	   allnfetsnonnat,allpfets,nvaractor,mvnvaractor,pvaractor,mvpvaractor
   allfetsmv	   mvnfet,mvpfet,mvnnfet,mvnvaractor,mvpvaractor,mvncap,mvpcap,srammvpfet,srammvnfet
 
-  alllvnactivenonfet *ndiff,*nsd,*ndiode,*nndiode
+  alllvnactivenonfet *ndiff,*nsd,*ndiode,*nndiode,*sramndiff
   allmvnactivenonfet *mvndiff,*mvnsd,*mvndiode,*mvnndiode,*ldndiff,*srammvndiff
   allnactivenonfet alllvnactivenonfet,allmvnactivenonfet
   allnactive	   allnactivenonfet,allnfets
 
-  alllvpactivenonfet *pdiff,*psd,*pdiode
+  alllvpactivenonfet *pdiff,*psd,*pdiode,*srampdiff
   allmvpactivenonfet *mvpdiff,*mvpsd,*mvpdiode,*ldpdiff,*srammvpdiff
   allpactivenonfet alllvpactivenonfet,allmvpactivenonfet
   allpactive	   allpactivenonfet,allpfets
@@ -345,11 +356,11 @@ aliases
 
   allactiveres	   ndiffres,pdiffres,mvndiffres,mvpdiffres
 
-  allndifflv       *ndif,*nsd,*ndiode,*nndiode,ndiffres,nfet,nnfet,ncap
-  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,pcap
+  allndifflv       *ndif,*nsd,*ndiode,*nndiode,ndiffres,nfet,nnfet,ncap,*sramndiff,sramnfet
+  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,pcap,*srampdiff,srampfet
   alldifflv        allndifflv,allpdifflv
-  allndifflvnonfet *ndif,*nsd,*ndiode,*nndiode,ndiffres
-  allpdifflvnonfet *pdif,*psd,*pdiode,pdiffres
+  allndifflvnonfet *ndif,*nsd,*ndiode,*nndiode,ndiffres,*sramndiff
+  allpdifflvnonfet *pdif,*psd,*pdiode,pdiffres,*srampdiff
   alldifflvnonfet  allndifflvnonfet,allpdifflvnonfet
 
   allndiffmv       *mvndif,*mvnsd,*mvndiode,mvndiffres,mvnfet,mvnnfet,mvnvaractor,*mvnndiode,mvncap,*ldndiff,*srammvndiff,srammvnfet
@@ -378,8 +389,8 @@ aliases
   allpoly	   allpolynonfet,allfets
   allpolynoncap	   *poly,allfets,allpolyres
 
-  allndiffcontlv   ndc,nsc,ndic,nndic
-  allpdiffcontlv   pdc,psc,pdic
+  allndiffcontlv   ndc,nsc,ndic,nndic,sramndc
+  allpdiffcontlv   pdc,psc,pdic,srampdc
   allndiffcontmv   mvndc,mvnsc,mvndic,mvnndic,srammvndc
   allpdiffcontmv   mvpdc,mvpsc,mvpdic,srammvpdc
   allndiffcont	   allndiffcontlv,allndiffcontmv
@@ -485,6 +496,13 @@ styles
   srammvpdc    pdiffusion    metal1  contact_X'es hvpdiff_mask
   srammvnfet   ntransistor   ntransistor_stripes
   srammvpfet   ptransistor   ptransistor_stripes
+
+  sramndiff  ndiffusion
+  srampdiff  pdiffusion
+  sramndc    ndiffusion    metal1  contact_X'es
+  srampdc    pdiffusion    metal1  contact_X'es
+  sramnfet   ntransistor   ntransistor_stripes
+  srampfet   ptransistor   ptransistor_stripes
 
   poly      polysilicon 
   pc        polysilicon    metal1  contact_X'es
@@ -593,7 +611,6 @@ styles
   obsactive implant4
   filldiff  ndiffusion
   fillpoly  polysilicon
-  fillfet   ntransistor
 
 #ifdef METALS3
   padl      metal3 via3 overglass
@@ -630,7 +647,8 @@ compose
   compose srammvpfet poly srammvpdiff
   compose srammvnfet poly srammvndiff
 
-  compose  fillfet fillpoly filldiff
+  compose srampfet poly srampdiff
+  compose sramnfet poly sramndiff
   
 #ifdef MIM
 #ifdef METALS3
@@ -793,8 +811,8 @@ style gdsii
  	labels 	alldiff,schottky
  	calma 	22 0
 
- layer DIFFFILL	filldiff,fillfet
-	labels	filldiff,fillfet
+ layer DIFFFILL	filldiff
+	labels	filldiff
 	calma	22 4
 
 #-----------------------------------------------------
@@ -878,7 +896,7 @@ style gdsii
 	grow 160
 
  layer NPLUS
-        bloat-or *ndif,*ndiode,*nndiode,ndiffres,*mvndif,*mvndiode,*mvnndiode,mvndiffres,*srammvndiff * 160 allpactivenonfet 0
+        bloat-or *ndif,*ndiode,*nndiode,ndiffres,*mvndif,*mvndiode,*mvnndiode,mvndiffres,*srammvndiff,*sramndiff * 160 allpactivenonfet 0
         # NOTE:  Rule CO.5a applies to butted contacts but Calibre rule is
 	# implemented for all contacts, so the Calibre rule is being followed.
         bloat-or nsc,mvnsc * 95
@@ -928,7 +946,7 @@ style gdsii
 	grow 200
 	and-not RESDEF
 #endif (HRPOLY1K)
-        bloat-or  *pdif,*pdiode,pdiffres,pfet,pcap,*mvpdif,*mvpdiode,mvpdiffres,mvpfet,mvpcap,*srammvpdiff,srammvpfet * 160 allnactivenonfet 0
+        bloat-or  *pdif,*pdiode,pdiffres,pfet,pcap,*mvpdif,*mvpdiode,mvpdiffres,mvpfet,mvpcap,*srammvpdiff,srammvpfet,*srampdiff,srampfet * 160 allnactivenonfet 0
         # NOTE:  Rule CO.5b applies to butted contacts but Calibre rule is
 	# implemented for all contacts, so the Calibre rule is being followed.
         bloat-or psc,mvpsc * 95
@@ -987,8 +1005,8 @@ style gdsii
 	labels  allpoly port
 	calma	30 10
 
- layer POLYFILL	fillpoly,fillfet
-	labels	fillpoly,fillfet
+ layer POLYFILL	fillpoly
+	labels	fillpoly
 	calma	30 4
 
  layer PLFUSE	efuse
@@ -1384,6 +1402,7 @@ style gdsii
 #----------------------------------------------------------------------
  layer SRAMDEF
  # bloat-all srammvpfet,srammvnfet,*srammvpdiff,*srammvndiff CELLBOUND
+ # bloat-all srampfet,sramnfet,*srampdiff,*sramndiff CELLBOUND
  mask-hints SRAMDEF
  calma 108 5
 
@@ -1583,7 +1602,7 @@ style drc
  gridlimit 5
 
  # Check that all p-diff and n-ohmic have either nwell or dnwell
- templayer missing_nwell *nsd,*mvnsd,*pdiff,*mvpdiff,*pdiode,pdiffres,mvpdiffres,pfet,mvpfet,srammvpfet,mvnvaractor
+ templayer missing_nwell *nsd,*mvnsd,*pdiff,*mvpdiff,*pdiode,pdiffres,mvpdiffres,pfet,mvpfet,srammvpfet,srampfet,mvnvaractor
  and-not dnwell,nwell
 
  # Check that all p-ohmic and n-diff have either pwell + dnwell
@@ -1599,7 +1618,7 @@ style drc
  and dnwell
  and-not pwell
 
- templayer ndiff_missing_pwell *ndiff,*ndiode,ndiffres,nfet
+ templayer ndiff_missing_pwell *ndiff,*ndiode,ndiffres,nfet,*sramndiff,sramnfet
  grow 430
  and dnwell
  and-not pwell
@@ -1642,14 +1661,14 @@ style drc
  # versions of the cifoutput rules.
 
  templayer check_pplus
-        bloat-or  *pdif,*pdiode,pdiffres,pfet,pcap,*mvpdif,*mvpdiode,mvpdiffres,mvpfet,mvpcap,srammvpfet * 160 allnactivenonfet 0
+        bloat-or  *pdif,*pdiode,pdiffres,pfet,pcap,*mvpdif,*mvpdiode,mvpdiffres,mvpfet,mvpcap,srammvpfet,srampfet * 160 allnactivenonfet 0
         bloat-or psc,mvpsc * 95
         bloat-or *psd,*mvpsd * 20 allnactivenonfet 0
 	grow	200
 	shrink	200
 
  templayer check_nplus
-        bloat-or *ndif,*ndiode,*nndiode,ndiffres,nfet,*mvndif,*mvndiode,*mvnndiode,mvndiffres,mvnfet,*srammvndiff,srammvnfet * 160 allpactivenonfet 0
+        bloat-or *ndif,*ndiode,*nndiode,ndiffres,nfet,*mvndif,*mvndiode,*mvnndiode,mvndiffres,mvnfet,*srammvndiff,srammvnfet,*sramndiff,sramnfet * 160 allpactivenonfet 0
         bloat-or nsc,mvnsc * 95
         bloat-or *nsd,*mvnsd * 20 allpactivenonfet 0
 	grow 	200 
@@ -1852,6 +1871,9 @@ style  import
  layer srammvndiff mvndiffarea
  and SRAMDEF
 
+ layer sramndiff ndiffarea
+ and SRAMDEF
+
  # Copy mvndiff areas up for contact checks
  templayer mvxndifcheck mvndifcheck
  copyup mvndifcheck
@@ -1989,6 +2011,11 @@ style  import
 
  layer pfet pfetarea
  and-not MOSCAP
+ and-not sramexpand
+
+ layer srampfet pfetarea
+ and-not MOSCAP
+ and sramexpand
 
  layer pcap pfetarea
  and MOSCAP
@@ -2046,6 +2073,14 @@ style  import
  and-not POLY
  and nwelldef
  and pfetexpand
+ and-not sramexpand
+
+ layer srampdiff DIFF
+ and-not DUALGATE
+ and-not NPLUS
+ and-not POLY
+ and nwelldef
+ and sramexpand
 
  layer pdiffres DIFF
  and-not POLY
@@ -2061,6 +2096,17 @@ style  import
  and NPLUS
  and-not NAT
  and-not MOSCAP
+ and-not sramexpand
+
+ layer sramnfet DIFF
+ and POLY
+ and-not PPLUS
+ and-not DUALGATE
+ and-not nwelldef
+ and NPLUS
+ and-not NAT
+ and-not MOSCAP
+ and sramexpand
 
  layer ncap DIFF
  and POLY
@@ -2324,6 +2370,18 @@ style  import
  and MET1
  and-not DUALGATE
  and-not DIODE
+ and-not sramexpand
+ grow 145
+ shrink 140
+
+ layer sramndc CONT
+ and DIFF
+ and NPLUS
+ and-not nwelldef
+ and MET1
+ and-not DUALGATE
+ and-not DIODE
+ and sramexpand
  grow 145
  shrink 140
 
@@ -2344,6 +2402,7 @@ style  import
  and MET1
  and-not DUALGATE
  and-not DIODE
+ and-not sramexpand
  grow 145
  shrink 140
 
@@ -2354,6 +2413,17 @@ style  import
  and-not DUALGATE
  and-not DIODE
  and pfetexpand
+ and-not sramexpand
+ grow 145
+ shrink 140
+
+ layer srampdc CONT
+ and DIFF
+ and PPLUS
+ and MET1
+ and-not DUALGATE
+ and-not DIODE
+ and sramexpand
  grow 145
  shrink 140
 
@@ -2450,17 +2520,6 @@ style  import
  grow 145
  shrink 140
 
- layer srammvpdc CONT
- and DIFF
- and PPLUS
- and MET1
- and DUALGATE
- and nwelldef
- and-not DIODE
- and sramexpand
- grow 145
- shrink 140
-
  layer mvpdc CONT
  and DIFF
  and PPLUS
@@ -2469,6 +2528,17 @@ style  import
  and-not DIODE
  and mvpfetexpand
  and-not sramexpand
+ grow 145
+ shrink 140
+
+ layer srammvpdc CONT
+ and DIFF
+ and PPLUS
+ and MET1
+ and DUALGATE
+ and nwelldef
+ and-not DIODE
+ and sramexpand
  grow 145
  shrink 140
 
@@ -3067,12 +3137,14 @@ drc
  spacing *mvndiff,mvnvar,*srammvndiff *psd 360 touching_illegal \
 	 "Diffusion spacing to tap < %d (DF.3a)"
 
- spacing (*ndiff,*ndiode,nfet,nnfet,ncap)/a allnwell 430 touching_illegal \
+ spacing (*ndiff,*sramndiff,*ndiode,nfet,nnfet,ncap)/a allnwell 430 touching_illegal \
 	"N-Diffusion spacing to N-well < %d (DF.8)"
  spacing (*mvndiff,*mvndiode,mvnfet,mvncap,mvnnfet)/a allnwell 600 touching_illegal \
 	"N-Diffusion spacing to N-well < %d (DF.8)"
  spacing *srammvndiff,srammvnfet allnwell 450 touching_illegal \
-	"N-Diffusion spacing to N-well in SRAM < %d (S.DF.8_MV)"
+	"N-Diffusion spacing to N-well in 5V SRAM < %d (S.DF.8_MV)"
+ spacing *sramndiff,sramnfet allnwell 400 touching_illegal \
+	"N-Diffusion spacing to N-well in 3.3V SRAM < %d (S.DF.16_LV)"
  spacing *psd allnwell 120 touching_illegal \
 	"P-Ohmic spacing to N-well < %d (DF.5)"
  spacing *mvpsd allnwell 160 touching_illegal \
@@ -3088,7 +3160,9 @@ drc
  surround *mvpdiff,*mvpdiode,mvpfet,mvpcap allnwell 600 absence_okay \
 	"N-well overlap of P-Diffusion < %d (DF.7)"
  surround srammvpfet allnwell 450 absence_okay \
-	"N-well overlap of P-Diffusion in SRAM < %d (S.DF.7_MV)"
+	"N-well overlap of P-Diffusion in 5V SRAM < %d (S.DF.7_MV)"
+ surround srampfet allnwell 400 absence_okay \
+	"N-well overlap of P-Diffusion in 3.3V SRAM < %d (S.DF.4c_LV)"
  surround *nsd dnwell 620 absence_okay \
 	"Deep N-well overlap of N-Ohmic < %d (DF.4b)"
  surround *mvnsd dnwell 660 absence_okay \
@@ -3131,7 +3205,10 @@ drc
 #-----------------------------
 
  width allpoly 180 "Poly width < %d (PL.1)"
+ width fillpoly 5600 "Poly fill width < %d (DPF.1)"
  spacing allpoly allpoly 240 touching_ok "Poly spacing < %d (PL.3a)"
+ spacing allpoly fillpoly 5000 touching_illegal "Poly fill spacing to poly < %d (DPF.5)"
+ spacing fillpoly fillpoly 2400 touching_ok "Poly fill spacing < %d (DPF.2a)"
  spacing allpolynonfet alldifflvnonfet 100 corner_ok allfets \
 	"Poly spacing to diffusion < %d (PL.5a)"
  # NOTE: Below, 2nd argument was alldiffmvnonfet, but needs to exclude sram diffusion.
@@ -3221,9 +3298,13 @@ drc
 	"MV P-Diffusion overlap of contact < %d (CO.4)"
 
  surround srammvndc *srammvndiff 35 absence_illegal \
-	"MV N-Diffusion overlap of contact in SRAM < %d (S.CO.4_MV)"
+	"MV N-Diffusion overlap of contact in 5V SRAM < %d (S.CO.4_MV)"
  surround srammvpdc/a *srammvpdiff 35 absence_illegal \
-	"MV P-Diffusion overlap of contact in SRAM < %d (S.CO.4_MV)"
+	"MV P-Diffusion overlap of contact in 5V SRAM < %d (S.CO.4_MV)"
+ surround sramndc *sramndiff 35 absence_illegal \
+	"MV N-Diffusion overlap of contact in 3.3V SRAM < %d (S.CO.3_LV)"
+ surround srampdc/a *srampdiff 35 absence_illegal \
+	"MV P-Diffusion overlap of contact in 3.3V SRAM < %d (S.CO.3_LV)"
 
  spacing allpdiffcont allndiffcont 240 touching_illegal \
 	"Diffusion contact spacing < %d (CO.2a - 2 * CO.6)"
@@ -3240,6 +3321,7 @@ drc
  exact_overlap (ndc,pdc,psc,nsc,pc,ndic,pdic)/a
  exact_overlap (mvndc,mvpdc,mvpsc,mvnsc,mvndic,mvnndic,mvpdic)/a
  exact_overlap (srammvndc,srammvpdc)/a
+ exact_overlap (sramndc,srampdc)/a
 
 variants *
 
@@ -3562,6 +3644,8 @@ variants *
 
  extend pfet,pcap *pdiff 280 exclusive "Transistor length < %d (PL.1a)"
  extend nfet,ncap *ndiff 280 exclusive "Transistor length < %d (PL.1a)"
+ extend srampfet *srampdiff 280 exclusive "Transistor length < %d (PL.1a)"
+ extend sramnfet *sramndiff 280 exclusive "Transistor length < %d (PL.1a)"
  width pfet,pcap 300 angles "Bent Transistor length < %d (PL.7)"
  width nfet,ncap 300 angles "Bent Transistor length < %d (PL.7)"
 
@@ -3788,30 +3872,31 @@ extract
  planeorder dwell	0
  planeorder well 	1
  planeorder active 	2
- planeorder metal1 	3
- planeorder metal2 	4
+ planeorder poly 	3
+ planeorder metal1 	4
+ planeorder metal2 	5
 #ifdef METALS3
- planeorder metal3 	5
- planeorder block       6
- planeorder comment     7
-#elseif defined(METALS4)
- planeorder metal3 	5
- planeorder metal4 	6
+ planeorder metal3 	6
  planeorder block       7
  planeorder comment     8
-#elseif defined(METALS5)
- planeorder metal3 	5
- planeorder metal4 	6
- planeorder metal5 	7
+#elseif defined(METALS4)
+ planeorder metal3 	6
+ planeorder metal4 	7
  planeorder block       8
  planeorder comment     9
-#elseif defined(METALS6)
- planeorder metal3 	5
- planeorder metal4 	6
- planeorder metal5 	7
- planeorder metaltp 	8
+#elseif defined(METALS5)
+ planeorder metal3 	6
+ planeorder metal4 	7
+ planeorder metal5 	8
  planeorder block       9
  planeorder comment     10
+#elseif defined(METALS6)
+ planeorder metal3 	6
+ planeorder metal4 	7
+ planeorder metal5 	8
+ planeorder metaltp 	9
+ planeorder block       10
+ planeorder comment     11
 #endif
 
  height dnwell	       -0.1	0.0	
@@ -3895,8 +3980,8 @@ variants ()
  resist (nwell,dnwell)/well      1000000
  resist (pwell,isosub)/well 	 3250000
 
- resist (*ndiff,nsd)/active 	  6300
- resist (*pdiff,*psd)/active	  7000
+ resist (*sramndiff,*ndiff,nsd)/active 	  6300
+ resist (*srampdiff,*pdiff,*psd)/active	  7000
  resist (*srammvndiff,*mvndiff,mvnsd)/active   6300
  resist (*srammvpdiff,*mvpdiff,*mvpsd)/active  7000
 
@@ -3999,8 +4084,8 @@ variants (hrhc),(hrlc)
  resist (nwell,dnwell)/well      1200000
  resist (pwell,isosub)/well 	 3250000
 
- resist (*ndiff,nsd)/active 	 15000
- resist (*pdiff,*psd)/active	 15000
+ resist (*sramndiff,*ndiff,nsd)/active 	 15000
+ resist (*srampdiff,*pdiff,*psd)/active	 15000
  resist (*srammvndiff,*mvndiff,mvnsd)/active  15000
  resist (*srammvpdiff,*mvpdiff,*mvpsd)/active 15000
 
@@ -4103,8 +4188,8 @@ variants (lrhc),(lrlc)
  resist (nwell,dnwell)/well       800000
  resist (pwell,isosub)/well 	 3250000
 
- resist (*ndiff,nsd)/active 	  1000
- resist (*pdiff,*psd)/active	  1000
+ resist (*sramndiff,*ndiff,nsd)/active 	  1000
+ resist (*srampdiff,*pdiff,*psd)/active	  1000
  resist (*srammvndiff,*mvndiff,mvnsd)/active   1000
  resist (*srammvpdiff,*mvpdiff,*mvpsd)/active  1000
 
@@ -4985,6 +5070,10 @@ variants *
 	l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit nfet_03v3 nfet ndiff,ndc ndiff,ndc allpsub error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit pfet_03v3 srampfet srampdiff,srampdc srampdiff,srampdc \
+	allnwell error l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit nfet_03v3 sramnfet sramndiff,sramndc sramndiff,sramndc \
+	allpsub error l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit pfet_06v0 srammvpfet srammvpdiff,srammvpdc \
 	srammvpdiff,srammvpdc allnwell error l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit pfet_06v0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error \
