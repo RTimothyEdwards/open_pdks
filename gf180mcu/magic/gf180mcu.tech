@@ -701,7 +701,9 @@ end
 connect
   nwell,*nsd,*mvnsd,nbase,dnwell nwell,*nsd,*mvnsd,nbase,dnwell
   pwell,*psd,*mvpsd,pbase,isosub  pwell,*psd,*mvpsd,pbase,isosub
-  *psd,*mvpsd  *psd,*mvpsd
+  # Note:  This connects butting taps even without a metal strap.
+  *nsd,*mvnsd	*pdiff,*mvpdiff
+  *psd,*mvpsd	*ndiff,*mvndiff
   *m1	*m1
   *m2	*m2
 #ifdef METALS3 || METALS4 || METALS5 || METALS6
