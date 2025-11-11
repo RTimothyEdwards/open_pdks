@@ -1547,7 +1547,7 @@ io-%:
 digital-hd-%:
 	# Install custom additions to standard cell libraries
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130$*} \
-		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
+		-gds %l/gds/*.gds options=custom/scripts/gds_import_sc.tcl \
 		-lef %l/lef/*.lef compile-only rename=sky130_ef_sc_hd.lef \
 		-verilog %l/verilog/*.v \
 		-library digital sky130_fd_sc_hd 2>&1 | tee -a ${SKY130$*}_make.log
@@ -1567,7 +1567,7 @@ digital-hd-%:
 		-lib timing/*.lib \
 		-gds cells/*/*.gds compile-only \
 			include=custom/sky130_fd_sc_hd/gds/sky130_ef*.gds \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 			sort=../common/sort_pdkfiles.py \
 		-verilog models/*/*.v compile-only \
 			exclude=*.*.v \
@@ -1616,7 +1616,7 @@ digital-hdll-%:
 		-lib timing/*.lib.part* collate \
 		-lib timing/*.lib \
 		-gds cells/*/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 			sort=../common/sort_pdkfiles.py \
 		-verilog models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
@@ -1638,7 +1638,7 @@ digital-hdll-%:
 
 digital-hvl-%:
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${SKY130$*} \
-		-gds %l/gds/*.gds options=custom/scripts/gds_import_setup.tcl \
+		-gds %l/gds/*.gds options=custom/scripts/gds_import_sc.tcl \
 		-library digital sky130_fd_sc_hvl 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install all SkyWater digital standard cells.
 	${STAGE} -source ${SKY130_SC_HVL_PATH} -target ${STAGING_PATH}/${SKY130$*} \
@@ -1654,7 +1654,7 @@ digital-hvl-%:
 		-lib timing/*.lib \
 		-gds cells/*/*.gds compile-only \
 			include=custom/sky130_fd_sc_hvl/gds/sky130_ef*.gds \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 			sort=../common/sort_pdkfiles.py \
 		-verilog models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
@@ -1693,7 +1693,7 @@ digital-lp-%:
 		-lib timing/*.lib.part* collate \
 		-lib timing/*.lib \
 		-gds cells/*/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 			sort=../common/sort_pdkfiles.py \
 		-verilog models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
@@ -1728,7 +1728,7 @@ digital-hs-%:
 		-lib timing/*.lib.part* collate \
 		-lib timing/*.lib \
 		-gds cells/*/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 			sort=../common/sort_pdkfiles.py \
 		-verilog models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
@@ -1763,7 +1763,7 @@ digital-ms-%:
 		-lib timing/*.lib.part* collate \
 		-lib timing/*.lib \
 		-gds cells/*/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 			sort=../common/sort_pdkfiles.py \
 		-verilog models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
@@ -1798,7 +1798,7 @@ digital-ls-%:
 		-lib timing/*.lib.part* collate \
 		-lib timing/*.lib \
 		-gds cells/*/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 			sort=../common/sort_pdkfiles.py \
 		-verilog models/*/*.v exclude=*.*.v compile-only \
 			rename=primitives filter=custom/scripts/inc_verilog.py \
@@ -1874,7 +1874,7 @@ osu-t12-%:
 		-lef 12T_hs/lef/*.lef \
 		-lib 12T_hs/lib/*.lib \
 		-gds 12T_hs/gds/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 		-library digital sky130_osu_sc_12t_hs 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install OSU T12 ms digital standard cells.
 	${STAGE} -source ${OSU_T12_PATH} -target ${STAGING_PATH}/${SKY130$*} \
@@ -1883,7 +1883,7 @@ osu-t12-%:
 		-lef 12T_ms/lef/*.lef \
 		-lib 12T_ms/lib/*.lib \
 		-gds 12T_ms/gds/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 		-library digital sky130_osu_sc_12t_ms 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install OSU T12 ls digital standard cells.
 	${STAGE} -source ${OSU_T12_PATH} -target ${STAGING_PATH}/${SKY130$*} \
@@ -1892,7 +1892,7 @@ osu-t12-%:
 		-lef 12T_ls/lef/*.lef \
 		-lib 12T_ls/lib/*.lib \
 		-gds 12T_ls/gds/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 		-library digital sky130_osu_sc_12t_ls 2>&1 | tee -a ${SKY130$*}_make.log
 
 osu-t15-%:
@@ -1903,7 +1903,7 @@ osu-t15-%:
 		-lef 15T_hs/lef/*.lef \
 		-lib 15T_hs/lib/*.lib \
 		-gds 15T_hs/gds/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 		-library digital sky130_osu_sc_15t_hs 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install OSU T15 ms digital standard cells.
 	${STAGE} -source ${OSU_T15_PATH} -target ${STAGING_PATH}/${SKY130$*} \
@@ -1912,7 +1912,7 @@ osu-t15-%:
 		-lef 15T_ms/lef/*.lef \
 		-lib 15T_ms/lib/*.lib \
 		-gds 15T_ms/gds/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 		-library digital sky130_osu_sc_15t_ms 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install OSU T15 ls digital standard cells.
 	${STAGE} -source ${OSU_T15_PATH} -target ${STAGING_PATH}/${SKY130$*} \
@@ -1921,7 +1921,7 @@ osu-t15-%:
 		-lef 15T_ls/lef/*.lef \
 		-lib 15T_ls/lib/*.lib \
 		-gds 15T_ls/gds/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 		-library digital sky130_osu_sc_15t_ls 2>&1 | tee -a ${SKY130$*}_make.log
 
 osu-t18-%:
@@ -1932,7 +1932,7 @@ osu-t18-%:
 		-lef 18T_hs/lef/*.lef \
 		-lib 18T_hs/lib/*.lib \
 		-gds 18T_hs/gds/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 		-library digital sky130_osu_sc_18t_hs 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install OSU T18 ms digital standard cells.
 	${STAGE} -source ${OSU_T18_PATH} -target ${STAGING_PATH}/${SKY130$*} \
@@ -1941,7 +1941,7 @@ osu-t18-%:
 		-lef 18T_ms/lef/*.lef \
 		-lib 18T_ms/lib/*.lib \
 		-gds 18T_ms/gds/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 		-library digital sky130_osu_sc_18t_ms 2>&1 | tee -a ${SKY130$*}_make.log
 	# Install OSU T18 ls digital standard cells.
 	${STAGE} -source ${OSU_T18_PATH} -target ${STAGING_PATH}/${SKY130$*} \
@@ -1950,7 +1950,7 @@ osu-t18-%:
 		-lef 18T_ls/lef/*.lef \
 		-lib 18T_ls/lib/*.lib \
 		-gds 18T_ls/gds/*.gds compile-only \
-			options=custom/scripts/gds_import_setup.tcl \
+			options=custom/scripts/gds_import_sc.tcl \
 		-library digital sky130_osu_sc_18t_ls 2>&1 | tee -a ${SKY130$*}_make.log
 
 install: $(foreach var, ${VARIANTS}, install-$(var))

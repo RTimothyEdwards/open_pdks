@@ -3210,7 +3210,9 @@ drc
  width fillpoly 5600 "Poly fill width < %d (DPF.1)"
  spacing allpoly allpoly 240 touching_ok "Poly spacing < %d (PL.3a)"
  spacing allpoly fillpoly 5000 touching_illegal "Poly fill spacing to poly < %d (DPF.5)"
- spacing fillpoly fillpoly 2400 touching_ok "Poly fill spacing < %d (DPF.2a)"
+ edge4way fillpoly space/poly 2400 ~(fillpoly)/poly 0 0 \
+	"Lateral spacing between poly fill shapes < %d (DPF.2a)"
+ spacing fillpoly fillpoly 1100 touching_ok "Poly fill spacing < %d (DPF.2b)"
  spacing allpolynonfet alldifflvnonfet 100 corner_ok allfets \
 	"Poly spacing to diffusion < %d (PL.5a)"
  # NOTE: Below, 2nd argument was alldiffmvnonfet, but needs to exclude sram diffusion.
