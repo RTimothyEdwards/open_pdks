@@ -36,17 +36,17 @@ R0 P_PAD P_CORE sky130_fd_pr__res_generic_m5 w=253 l=0.1
 + VDDIO VSWITCH VSSIO VDDA VCCD VCCHIB VSSIO_Q P_PAD
 R0 P_PAD P_CORE sky130_fd_pr__res_generic_m5 w=253 l=0.1
 
-D0 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
-D1 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
-D2 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
-D3 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
-D4 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
+XD0 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 perim=1.02e+08 area=5e+13
+XD1 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 perim=1.02e+08 area=5e+13
+XD2 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 perim=1.02e+08 area=5e+13
+XD3 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 perim=1.02e+08 area=5e+13
+XD4 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 perim=1.02e+08 area=5e+13
 
-D5 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
-D6 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
-D7 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
-D8 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
-D9 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
+XD5 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 perim=1.02e+08 area=5e+13
+XD6 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 perim=1.02e+08 area=5e+13
+XD7 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 perim=1.02e+08 area=5e+13
+XD8 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 perim=1.02e+08 area=5e+13
+XD9 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 perim=1.02e+08 area=5e+13
 .ends
 
 *---------------------------------------------------------------------------
@@ -59,8 +59,8 @@ D9 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
 + VSWITCH VSSIO VDDA VCCD VCCHIB VSSIO_Q P_PAD
 R0 P_PAD P_CORE sky130_fd_pr__res_generic_m5 w=253 l=0.1
 
-D0 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
-D1 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
+XD0 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 perim=1.02e+08 area=5e+13
+XD1 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 perim=1.02e+08 area=5e+13
 .ends
 
 *---------------------------------------------------------------------------
@@ -73,6 +73,6 @@ D1 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
 .subckt sky130_ef_io__analog_minesd_pad_short P_CORE VDDIO VSSIO P_PAD
 R0 P_PAD P_CORE sky130_fd_pr__res_generic_m5 w=253 l=0.1
 
-D0 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 pj=1.02e+08 area=5e+13
-D1 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 pj=1.02e+08 area=5e+13
+XD0 VSSIO P_CORE sky130_fd_pr__diode_pw2nd_11v0 perim=1.02e+08 area=5e+13
+XD1 P_CORE VDDIO sky130_fd_pr__diode_pd2nw_11v0 perim=1.02e+08 area=5e+13
 .ends
