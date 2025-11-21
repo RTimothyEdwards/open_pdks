@@ -5117,10 +5117,10 @@ variants *
  device msubcircuit npn_00p54x04p00 npn *ndiff dnwell space/w error a1>2.0 a1<2.2
  device msubcircuit npn_00p54x02p00 npn *ndiff dnwell space/w error a1>1.0 a1<1.2
 
- device msubcircuit pnp_10p00x00p42 pnp *pdiff pwell,space/w error a1>4.1 a1<4.3
- device msubcircuit pnp_05p00x00p42 pnp *pdiff pwell,space/w error a1>2.0 a1<2.2
- device msubcircuit pnp_10p00x10p00 pnp *pdiff pwell,space/w error a1>99.0 a1<101.0
- device msubcircuit pnp_05p00x05p00 pnp *pdiff pwell,space/w error a1>24.0 a1<26.0
+ device msubcircuit pnp_10p00x00p42 pnp pwell,space/w *pdiff error a2>4.1 a2<4.3
+ device msubcircuit pnp_05p00x00p42 pnp pwell,space/w *pdiff error a2>2.0 a2<2.2
+ device msubcircuit pnp_10p00x10p00 pnp pwell,space/w *pdiff error a2>99.0 a2<101.0
+ device msubcircuit pnp_05p00x05p00 pnp pwell,space/w *pdiff error a2>24.0 a2<26.0
 
  device msubcircuit nfet_10v0_asym mvnfet *mvndiff *ldndiff allpsub error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd
