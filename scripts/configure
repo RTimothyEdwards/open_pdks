@@ -615,6 +615,7 @@ OPENPDKS_TOP
 ENABLED_TECHS
 EF_STYLE
 USE_REFERENCE
+GF180MCU_OCD_IP_SRAM_PATH
 GF180MCU_OCD_IO_PATH
 GF180MCU_AS_SC_PATH
 GF180MCU_OSU_SC_PATH
@@ -756,6 +757,7 @@ enable_alpha_gf180mcu
 enable_osu_sc_gf180mcu
 enable_avalon_sc_gf180mcu
 enable_ocd_io_gf180mcu
+enable_ocd_sram_gf180mcu
 with_reference
 with_ef_style
 '
@@ -1503,6 +1505,9 @@ Optional Features:
                           will be downloaded. [default=enabled]
   --enable-ocd-io-gf180mcu[=path]
                           Install gf180mcu_ocd_io. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-ocd-sram-gf180mcu[=path]
+                          Install gf180mcu_ocd_ip_sram. If path is omitted, the repository
                           will be downloaded. [default=enabled]
 
 Optional Packages:
@@ -4125,6 +4130,50 @@ else case e in #(
             { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Package 'gf180mcu_ocd_io' will be installed automatically during make." >&5
 printf "%s\n" "$as_me: Package 'gf180mcu_ocd_io' will be installed automatically during make." >&6;}
 	    GF180MCU_OCD_IO_PATH=../sources/gf180mcu_ocd_io
+
+     ;;
+esac
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    GF180MCU_OCD_IP_SRAM_PATH=""
+
+    # Check whether --enable-ocd-sram-gf180mcu was given.
+if test ${enable_ocd_sram_gf180mcu+y}
+then :
+  enableval=$enable_ocd_sram_gf180mcu;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Package 'gf180mcu_ocd_ip_sram' will be installed automatically during make." >&5
+printf "%s\n" "$as_me: Package 'gf180mcu_ocd_ip_sram' will be installed automatically during make." >&6;}
+        	export GF180MCU_OCD_IP_SRAM_PATH=../sources/gf180mcu_ocd_ip_sram
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Disabling package 'gf180mcu_ocd_ip_sram'" >&5
+printf "%s\n" "$as_me: Disabling package 'gf180mcu_ocd_ip_sram'" >&6;}
+    		export GF180MCU_OCD_IP_SRAM_PATH=""
+            else
+                GF180MCU_OCD_IP_SRAM_PATH=$enableval
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Enabling package 'gf180mcu_ocd_ip_sram' at $GF180MCU_OCD_IP_SRAM_PATH" >&5
+printf "%s\n" "$as_me: Enabling package 'gf180mcu_ocd_ip_sram' at $GF180MCU_OCD_IP_SRAM_PATH" >&6;}
+            fi
+            GF180MCU_OCD_IP_SRAM_PATH=`realpath $GF180MCU_OCD_IP_SRAM_PATH`
+
+else case e in #(
+  e)
+            { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Package 'gf180mcu_ocd_ip_sram' will be installed automatically during make." >&5
+printf "%s\n" "$as_me: Package 'gf180mcu_ocd_ip_sram' will be installed automatically during make." >&6;}
+	    GF180MCU_OCD_IP_SRAM_PATH=../sources/gf180mcu_ocd_ip_sram
 
      ;;
 esac

@@ -154,6 +154,7 @@ GF180MCU_OSU_SC_PATH = @GF180MCU_OSU_SC_PATH@
 GF180MCU_AS_SC_PATH = @GF180MCU_AS_SC_PATH@
 GF180MCU_OCD_IO_PATH = @GF180MCU_OCD_IO_PATH@
 GF180MCU_OCD_ALPHA_PATH = @GF180MCU_OCD_ALPHA_PATH@
+GF180MCU_OCD_SRAM_PATH = @GF180MCU_OCD_IP_SRAM_PATH@
 
 USE_REFERENCE = @USE_REFERENCE@
 
@@ -184,6 +185,7 @@ PDK_LIB_SRAM =     ${PDK_URL}/globalfoundries-pdk-ip-gf180mcu_fd_ip_sram
 PDK_LIB_OSU_SC =   ${OSU_URL}/globalfoundries-pdk-libs-gf180mcu_osu_sc
 PDK_LIB_AS_SC =    ${AVALON_URL}/gf180mcu_as_sc_mcu7t3v3
 PDK_LIB_OCD_IO =   ${OCD_URL}/gf180mcu_ocd_io
+PDK_LIB_OCD_SRAM = ${OCD_URL}/gf180mcu_ocd_ip_sram
 PDK_LIB_OCD_ALPHA =${OCD_URL}/gf180mcu_ocd_alpha
 
 # NOTE:  Install destination is the git repository of the technology platform.
@@ -262,6 +264,11 @@ ifeq (${GF180MCU_SRAM_PATH},)
     COMMIT_DEFS += -DFD_IP_SRAM_COMMIT="unknown"
 else
     COMMIT_DEFS += -DFD_IP_SRAM_COMMIT=$(shell cd ${GF180MCU_SRAM_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${GF180MCU_OCD_SRAM_PATH},)
+    COMMIT_DEFS += -DOCD_IP_SRAM_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DOCD_IP_SRAM_COMMIT=$(shell cd ${GF180MCU_OCD_SRAM_PATH} ; git rev-parse HEAD)
 endif
 ifeq (${GF180MCU_OSU_SC_PATH},)
     COMMIT_DEFS += -DOSU_SC_COMMIT="unknown"
@@ -496,7 +503,7 @@ reference: ${TECH}.json
 	../common/save_commit_refs.py ${COMMIT_DEFS} ${TECH}.json
 
 # Handle prerequisites
-prerequisites: pr-repo pv-repo io-repo sc-7t-repo sc-9t-repo sram-repo osu-sc-repo avalon-sc-repo ocd-io-repo ocd-alpha-repo
+prerequisites: pr-repo pv-repo io-repo sc-7t-repo sc-9t-repo sram-repo ocd-sram-repo osu-sc-repo avalon-sc-repo ocd-io-repo ocd-alpha-repo
 
 pr-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
@@ -569,10 +576,23 @@ sram-repo:
 	fi ; \
 	if test "x${GF180MCU_SRAM_PATH}" != "x" ; then \
 		if test -d "${GF180MCU_SRAM_PATH}" ; then \
-			echo "Using existing installation of primitive library from ${GF180MCU_SRAM_PATH}" ; \
+			echo "Using existing installation of 5V SRAM library from ${GF180MCU_SRAM_PATH}" ; \
 		else \
-			echo "Downloading primitive library from ${GF180MCU_SRAM_PATH}" ; \
+			echo "Downloading 5V SRAM library from ${GF180MCU_SRAM_PATH}" ; \
 			../scripts/download.sh ${PDK_LIB_SRAM} ${GF180MCU_SRAM_PATH} $${FD_IP_SRAM_COMMIT}; \
+		fi ; \
+	fi
+
+ocd-sram-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		OCD_IP_SRAM_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_ocd_ip_sram | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi ; \
+	if test "x${GF180MCU_OCD_SRAM_PATH}" != "x" ; then \
+		if test -d "${GF180MCU_OCD_SRAM_PATH}" ; then \
+			echo "Using existing installation of 3.3V SRAM library from ${GF180MCU_OCD_SRAM_PATH}" ; \
+		else \
+			echo "Downloading 3.3V SRAM library from ${GF180MCU_OCD_SRAM_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_OCD_SRAM} ${GF180MCU_OCD_SRAM_PATH} $${OCD_IP_SRAM_COMMIT}; \
 		fi ; \
 	fi
 
@@ -630,7 +650,7 @@ ocd-alpha-repo:
 
 
 # Update prerequisites
-update: update-pr-repo update-pv-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-osu-sc-repo update-avalon-sc-repo update-ocd-io-repo
+update: update-pr-repo update-pv-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-ocd-sram-repo update-osu-sc-repo update-avalon-sc-repo update-ocd-io-repo
 
 update-pr-repo:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
@@ -664,8 +684,14 @@ update-sc-9t-repo:
 
 update-sram-repo:
 	if test "x${GF180MCU_SRAM_PATH}" != "x" ; then \
-		echo "Updating GF180MCU SRAM macro library from ${PDK_LIB_SRAM}" ; \
+		echo "Updating GF180MCU 5V SRAM macro library from ${PDK_LIB_SRAM}" ; \
 		../scripts/update.sh ${GF180MCU_SRAM_PATH} ; \
+	fi
+
+update-ocd-sram-repo:
+	if test "x${GF180MCU_OCD_SRAM_PATH}" != "x" ; then \
+		echo "Updating GF180MCU Open Circuit Design 3.3V SRAM macro library from ${PDK_LIB_OCD_SRAM}" ; \
+		../scripts/update.sh ${GF180MCU_OCD_SRAM_PATH} ; \
 	fi
 
 update-osu-sc-repo:
@@ -864,13 +890,13 @@ openlane-%: openlane/config.tcl openlane/gf180mcu_fd_sc_mcu7t5v0/config.tcl open
 		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max ;\
 	fi
 
-vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A ocd-io-build-A ocd-alpha-build-A sram-build-A digital-osu-build-A digital-avalon-build-A
+vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A ocd-io-build-A ocd-alpha-build-A sram-build-A ocd-sram-build-A digital-osu-build-A digital-avalon-build-A
 
-vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B ocd-io-build-B ocd-alpha-build-B sram-build-B digital-osu-build-B digital-avalon-build-B
+vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B ocd-io-build-B ocd-alpha-build-B sram-build-B ocd-sram-build-B digital-osu-build-B digital-avalon-build-B
 
-vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C ocd-io-build-C ocd-alpha-build-C sram-build-C digital-osu-build-C digital-avalon-build-C
+vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C ocd-io-build-C ocd-alpha-build-C sram-build-C ocd-sram-build-C digital-osu-build-C digital-avalon-build-C
 
-vendor-D: primitive-build-D digital-7t5v0-build-D digital-9t5v0-build-D io-build-D ocd-io-build-D ocd-alpha-build-D sram-build-D digital-osu-build-D digital-avalon-build-D
+vendor-D: primitive-build-D digital-7t5v0-build-D digital-9t5v0-build-D io-build-D ocd-io-build-D ocd-alpha-build-D sram-build-D ocd-sram-build-D digital-osu-build-D digital-avalon-build-D
 
 primitive-build-%:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
@@ -923,8 +949,16 @@ digital-7t5v0-build-%:
 sram-build-%:
 	if test "x${GF180MCU_SRAM_PATH}" != "x" ; then \
 		if test -d ${GF180MCU_SRAM_PATH} ; then \
-			echo "Building SRAM libraries" ;\
+			echo "Building 5V SRAM libraries" ;\
 			make sram-$* ;\
+		fi ;\
+	fi
+
+ocd-sram-build-%:
+	if test "x${GF180MCU_OCD_SRAM_PATH}" != "x" ; then \
+		if test -d ${GF180MCU_OCD_SRAM_PATH} ; then \
+			echo "Building Open Circuit Design 3.3V SRAM libraries" ;\
+			make ocd-sram-$* ;\
 		fi ;\
 	fi
 
@@ -1412,7 +1446,7 @@ ocd-alpha-%:
 		${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_ocd_alpha_small/scripts
 
 sram-%:
-	# Install SRAM macros from vendor files
+	# Install 5V SRAM macros from vendor files
 	${STAGE} -source ${GF180MCU_SRAM_PATH} \
 		-target ${STAGING_PATH}/${GF180MCU$*} \
 		-cdl cells/*/*.cdl noconvert \
@@ -1430,6 +1464,17 @@ sram-%:
 	# of the SRAMs without using "extract unique" will fail.
 	${REMOVELAB} ${STAGING_PATH}/${GF180MCU$*} gf180mcu_fd_ip_sram \
 		rarray4_\* BL\* -mag
+
+ocd-sram-%:
+	# Install Open Circuit Design 3.3V SRAM macros from vendor files
+	${STAGE} -source ${GF180MCU_OCD_SRAM_PATH} \
+		-target ${STAGING_PATH}/${GF180MCU$*} \
+		-lib cells/*/*.lib \
+		-spice cells/*/*.spice \
+		-gds cells/*/*.gds \
+		-lef cells/*/*.lef \
+		-verilog cells/*/*.v \
+		-library general gf180mcu_ocd_ip_sram 2>&1 | tee -a ${GF180MCU$*}_make.log
 
 install: $(foreach var, ${VARIANTS}, install-$(var))
 

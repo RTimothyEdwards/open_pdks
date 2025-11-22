@@ -59,4 +59,5 @@ addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_fd_io/${MAGTYPE}
 addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_fd_ip_sram/${MAGTYPE}
 addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_as_sc_mcu7t3v3/${MAGTYPE}
 addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_ocd_io/${MAGTYPE}
+addpath ${PDK_ROOT}/TECHNAME/libs.ref/gf180mcu_ocd_ip_sram/${MAGTYPE}
 
