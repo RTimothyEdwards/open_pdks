@@ -76,6 +76,8 @@ types
   active nnmos,nntransistor,nnfet
   active mvnmos,mvntransistor,mvnfet
   active mvpmos,mvptransistor,mvpfet
+  active hvnmos,hvntransistor,hvnfet
+  active hvpmos,hvptransistor,hvpfet
   active mvnnmos,mvnntransistor,mvnnfet
 # Diffusions
   active ndiff,ndiffusion,ndif
@@ -332,12 +334,12 @@ aliases
   # Allwells contains obstruction-on-well-plane but not space-on-well-plane
   allwells         allnwell,allpwell,obswell
 
-  allnfets	   nfet,mvnfet,nnfet,mvnnfet,ncap,mvncap,srammvnfet,sramnfet
-  allnfetsnonnat   nfet,mvnfet,ncap,mvncap,srammvnfet,sramnfet
-  allpfets	   pfet,mvpfet,pcap,mvpcap,srammvpfet,srampfet
+  allnfets	   nfet,hvnfet,mvnfet,nnfet,mvnnfet,ncap,mvncap,srammvnfet,sramnfet
+  allnfetsnonnat   nfet,hvnfet,mvnfet,ncap,mvncap,srammvnfet,sramnfet
+  allpfets	   pfet,hvpfet,mvpfet,pcap,mvpcap,srammvpfet,srampfet
   allfets	   allnfets,allpfets,nvaractor,mvnvaractor,pvaractor,mvpvaractor
   allfetsnonnat	   allnfetsnonnat,allpfets,nvaractor,mvnvaractor,pvaractor,mvpvaractor
-  allfetsmv	   mvnfet,mvpfet,mvnnfet,mvnvaractor,mvpvaractor,mvncap,mvpcap,srammvpfet,srammvnfet
+  allfetsmv	   hvnfet,mvnfet,hvpfet,mvpfet,mvnnfet,mvnvaractor,mvpvaractor,mvncap,mvpcap,srammvpfet,srammvnfet
 
   alllvnactivenonfet *ndiff,*nsd,*ndiode,*nndiode,*sramndiff
   allmvnactivenonfet *mvndiff,*mvnsd,*mvndiode,*mvnndiode,*ldndiff,*srammvndiff
@@ -363,8 +365,8 @@ aliases
   allpdifflvnonfet *pdif,*psd,*pdiode,pdiffres,*srampdiff
   alldifflvnonfet  allndifflvnonfet,allpdifflvnonfet
 
-  allndiffmv       *mvndif,*mvnsd,*mvndiode,mvndiffres,mvnfet,mvnnfet,mvnvaractor,*mvnndiode,mvncap,*ldndiff,*srammvndiff,srammvnfet
-  allpdiffmv       *mvpdif,*mvpsd,*mvpdiode,mvpdiffres,mvpfet,mvpvaractor,mvpcap,*ldpdiff,*srammvpdiff,srammvpfet
+  allndiffmv       *mvndif,*mvnsd,*mvndiode,mvndiffres,hvnfet,mvnfet,mvnnfet,mvnvaractor,*mvnndiode,mvncap,*ldndiff,*srammvndiff,srammvnfet
+  allpdiffmv       *mvpdif,*mvpsd,*mvpdiode,mvpdiffres,hvpfet,mvpfet,mvpvaractor,mvpcap,*ldpdiff,*srammvpdiff,srammvpfet
   alldiffmv        allndiffmv,allpdiffmv
   allndiffmvnonfet *mvndif,*mvnsd,*mvndiode,mvndiffres,*mvnndiode,*ldndiff,*srammvndiff
   allpdiffmvnonfet *mvpdif,*mvpsd,*mvpdiode,mvpdiffres,*ldpdiff,*srammvpdiff
@@ -475,8 +477,10 @@ styles
   mvnsd       ndiff_in_nwell hvndiff_mask
   mvpsd       pdiff_in_pwell hvpdiff_mask
   mvnfet      ntransistor    ntransistor_stripes hvndiff_mask
+  hvnfet      ntransistor    ntransistor_stripes hvndiff_mask
   mvnnfet     ntransistor    ndiff_in_nwell hvndiff_mask
-  mvpfet      ptransistor    ptransistor_stripes
+  mvpfet      ptransistor    ptransistor_stripes hvpdiff_mask
+  hvpfet      ptransistor    ptransistor_stripes hvpdiff_mask
   mvnvar      polysilicon    ndiff_in_nwell hvndiff_mask
   mvpvar      polysilicon    pdiff_in_pwell hvpdiff_mask
   ldndiff     hvndiff
@@ -649,6 +653,9 @@ compose
 
   compose srampfet poly srampdiff
   compose sramnfet poly sramndiff
+
+  decompose hvnfet poly mvndiff
+  decompose hvpfet poly mvndiff
   
 #ifdef MIM
 #ifdef METALS3
@@ -788,15 +795,15 @@ style gdsii
  # LDFETs cut the diffusion under the gate
  templayer ldbreak1 *ldndiff,*ldpdiff
 	grow 160
-	and mvnfet,mvpfet
+	and hvnfet,hvpfet,mvnfet,mvpfet
 
- templayer ldbreak mvnfet,mvpfet
+ templayer ldbreak hvnfet,hvpfet,mvnfet,mvpfet
 	grow 200
 	and ldndiff,ldpdiff
 	or ldbreak1
 
  # Additional cut-back of LD diffusion for implant
- templayer ldbreak2 mvnfet,mvpfet
+ templayer ldbreak2 hvnfet,hvpfet,mvnfet,mvpfet
 	grow 240
 	and ldndiff,ldpdiff
 
@@ -948,7 +955,7 @@ style gdsii
 	grow 200
 	and-not RESDEF
 #endif (HRPOLY1K)
-        bloat-or  *pdif,*pdiode,pdiffres,pfet,pcap,*mvpdif,*mvpdiode,mvpdiffres,mvpfet,mvpcap,*srammvpdiff,srammvpfet,*srampdiff,srampfet * 160 allnactivenonfet 0
+        bloat-or  *pdif,*pdiode,pdiffres,pfet,pcap,*mvpdif,*mvpdiode,mvpdiffres,hvpfet,mvpfet,mvpcap,*srammvpdiff,srammvpfet,*srampdiff,srampfet * 160 allnactivenonfet 0
         # NOTE:  Rule CO.5b applies to butted contacts but Calibre rule is
 	# implemented for all contacts, so the Calibre rule is being followed.
         bloat-or psc,mvpsc * 95
@@ -994,6 +1001,19 @@ style gdsii
 	grow 309
 	shrink 309
 	calma 5 0
+
+#-----------------------------------------------------
+# FET5VDEF
+#-----------------------------------------------------
+
+ # Ensure FET5VDEF surrounds all mv (5V) FET devices.
+ # This ensures that short length devices do not get
+ # flagged for DRC errors.
+
+ layer FET5VDEF
+	bloat-all mvnfet,mvpfet,srammvnfet,srammvpfet *mvndiff,*mvpdiff
+	grow 100
+	calma 112 1
 
 #-----------------------------------------------------
 # POLY
@@ -1321,8 +1341,8 @@ style gdsii
  layer SBLK
 	bloat-all rnd *nfet
 	bloat-all rpd *pfet
-	bloat-all mvrnd *mvnfet
-	bloat-all mvrpd *mvpfet
+	bloat-all mvrnd *mvnfet,*hvnfet
+	bloat-all mvrpd *mvpfet,*hvpfet
 	and allfets
 	grow 220
  	bloat-or allsblkdev * 0 space/a 220
@@ -1604,7 +1624,7 @@ style drc
  gridlimit 5
 
  # Check that all p-diff and n-ohmic have either nwell or dnwell
- templayer missing_nwell *nsd,*mvnsd,*pdiff,*mvpdiff,*pdiode,pdiffres,mvpdiffres,pfet,mvpfet,srammvpfet,srampfet,mvnvaractor
+ templayer missing_nwell *nsd,*mvnsd,*pdiff,*mvpdiff,*pdiode,pdiffres,mvpdiffres,pfet,hvpfet,mvpfet,srammvpfet,srampfet,mvnvaractor
  and-not dnwell,nwell
 
  # Check that all p-ohmic and n-diff have either pwell + dnwell
@@ -1625,7 +1645,7 @@ style drc
  and dnwell
  and-not pwell
 
- templayer mvndiff_missing_pwell *mvndiff,mvndiffres,mvnfet,*srammvndiff,srammvnfet
+ templayer mvndiff_missing_pwell *mvndiff,mvndiffres,hvnfet,mvnfet,*srammvndiff,srammvnfet
  grow 600
  and dnwell
  and-not pwell
@@ -1663,14 +1683,14 @@ style drc
  # versions of the cifoutput rules.
 
  templayer check_pplus
-        bloat-or  *pdif,*pdiode,pdiffres,pfet,pcap,*mvpdif,*mvpdiode,mvpdiffres,mvpfet,mvpcap,srammvpfet,srampfet * 160 allnactivenonfet 0
+        bloat-or  *pdif,*pdiode,pdiffres,pfet,pcap,*mvpdif,*mvpdiode,mvpdiffres,hvpfet,mvpfet,mvpcap,srammvpfet,srampfet * 160 allnactivenonfet 0
         bloat-or psc,mvpsc * 95
         bloat-or *psd,*mvpsd * 20 allnactivenonfet 0
 	grow	200
 	shrink	200
 
  templayer check_nplus
-        bloat-or *ndif,*ndiode,*nndiode,ndiffres,nfet,*mvndif,*mvndiode,*mvnndiode,mvndiffres,mvnfet,*srammvndiff,srammvnfet,*sramndiff,sramnfet * 160 allpactivenonfet 0
+        bloat-or *ndif,*ndiode,*nndiode,ndiffres,nfet,*mvndif,*mvndiode,*mvnndiode,mvndiffres,hvnfet,hvnfet,mvnfet,*srammvndiff,srammvnfet,*sramndiff,sramnfet * 160 allpactivenonfet 0
         bloat-or nsc,mvnsc * 95
         bloat-or *nsd,*mvnsd * 20 allpactivenonfet 0
 	grow 	200 
@@ -1790,7 +1810,6 @@ style  import
 
  options ignore-unknown-layer-labels
 
- ignore FET5VDEF
  ignore CAPDEF
  ignore EFUSE
  ignore SOURCE
@@ -2054,8 +2073,14 @@ style  import
  and-not NPLUS
  and POLY
 
+ layer hvpfet mvpfetarea
+ and-not MOSCAP
+ and-not FET5VDEF
+ and-not sramexpand
+
  layer mvpfet mvpfetarea
  and-not MOSCAP
+ and FET5VDEF
  and-not sramexpand
 
  layer srammvpfet mvpfetarea
@@ -3141,7 +3166,7 @@ drc
 
  spacing (*ndiff,*ndiode,nfet,nnfet,ncap)/a allnwell 430 touching_illegal \
 	"N-Diffusion spacing to N-well < %d (DF.8)"
- spacing (*mvndiff,*mvndiode,mvnfet,mvncap,mvnnfet)/a allnwell 600 touching_illegal \
+ spacing (*mvndiff,*mvndiode,hvnfet,mvnfet,mvncap,mvnnfet)/a allnwell 600 touching_illegal \
 	"N-Diffusion spacing to N-well < %d (DF.8)"
  spacing *srammvndiff,srammvnfet allnwell 450 touching_illegal \
 	"N-Diffusion spacing to N-well in 5V SRAM < %d (S.DF.8_MV)"
@@ -3159,7 +3184,7 @@ drc
 	"N-well overlap of N-Ohmic < %d (DF.4a)"
  surround *pdiff,*pdiode,pfet,pcap allnwell 430 absence_okay \
 	"N-well overlap of P-Diffusion < %d (DF.7)"
- surround *mvpdiff,*mvpdiode,mvpfet,mvpcap allnwell 600 absence_okay \
+ surround *mvpdiff,*mvpdiode,hvpfet,mvpfet,mvpcap allnwell 600 absence_okay \
 	"N-well overlap of P-Diffusion < %d (DF.7)"
  surround srammvpfet allnwell 450 absence_okay \
 	"N-well overlap of P-Diffusion in 5V SRAM < %d (S.DF.7_MV)"
@@ -3171,7 +3196,7 @@ drc
 	"Deep N-well overlap of N-Ohmic < %d (DF.4b)"
  surround *pdiff,*pdiode,pfet,pcap dnwell 930 absence_okay \
 	"Deep N-well overlap of P-Diffusion < %d (DF.4e)"
- surround *mvpdiff,*mvpdiode,mvpfet,mvpcap dnwell 1100 absence_okay \
+ surround *mvpdiff,*mvpdiode,hvpfet,mvpfet,mvpcap dnwell 1100 absence_okay \
 	"Deep N-well overlap of P-Diffusion < %d (DF.4e)"
 
 
@@ -3222,12 +3247,12 @@ drc
  spacing allpolynonfet *srammvndiff 120 corner_ok allfets \
 	"Poly spacing to MV diffusion in SRAM < %d (S.PL.5a_MV)"
  overhang *ndiff,rndiff nfet,nnfet,ncap 230 "N-Diffusion overhang of nmos < %d (DF.6)"
- overhang *mvndiff,mvrndiff mvnfet,mvncap,mvnnfet 230 \
+ overhang *mvndiff,mvrndiff hvnfet,mvnfet,mvncap,mvnnfet 230 \
 	"N-Diffusion overhang of nmos < %d (DF.6)"
  overhang *srammvndiff srammvnfet 230 \
 	"N-Diffusion overhang of nmos < %d (DF.6)"
  overhang *pdiff,rpdiff pfet,pcap 230 "P-Diffusion overhang of pmos < %d (DF.6)"
- overhang *mvpdiff,mvrpdiff mvpfet,mvpcap 230 "P-Diffusion overhang of pmos < %d (DF.6)"
+ overhang *mvpdiff,mvrpdiff hvpfet,mvpfet,mvpcap 230 "P-Diffusion overhang of pmos < %d (DF.6)"
  overhang *srammvpdiff srammvpfet 230 "P-Diffusion overhang of pmos < %d (DF.6)"
  overhang *poly allfetsnonnat 220 "Poly overhang of transistor < %d (PL.4)"
  overhang *poly nnfet,mvnnfet 350 "Poly overhang of NAT transistor < %d (NAT.6)"
@@ -3646,25 +3671,27 @@ variants *
  extend mvnnfet *mvndiff 1200 exclusive "MV nn Transistor length < %d (NAT.4)"
  width mvnnfet 400 "MV nn Transistor width < %d (DF.2c)"
 
- extend pfet,pcap *pdiff 280 exclusive "Transistor length < %d (PL.1a)"
- extend nfet,ncap *ndiff 280 exclusive "Transistor length < %d (PL.1a)"
- extend srampfet *srampdiff 280 exclusive "Transistor length < %d (PL.1a)"
- extend sramnfet *sramndiff 280 exclusive "Transistor length < %d (PL.1a)"
+ extend pfet,pcap *pdiff 280 exclusive "Transistor length < %d (PL.2)"
+ extend nfet,ncap *ndiff 280 exclusive "Transistor length < %d (PL.2)"
+ extend srampfet *srampdiff 280 exclusive "Transistor length < %d (PL.2)"
+ extend sramnfet *sramndiff 280 exclusive "Transistor length < %d (PL.2)"
  width pfet,pcap 300 angles "Bent Transistor length < %d (PL.7)"
  width nfet,ncap 300 angles "Bent Transistor length < %d (PL.7)"
 
- extend mvpfet,mvpcap *mvpdiff 500 exclusive "MV Transistor length < %d (PL.1a)"
- extend mvnfet,mvncap *mvndiff 600 exclusive "MV Transistor length < %d (PL.1a)"
- extend srammvpfet *srammvpdiff 500 exclusive "MV Transistor length < %d (PL.1a)"
- extend srammvnfet *srammvndiff 600 exclusive "MV Transistor length < %d (PL.1a)"
+ extend mvpfet,mvpcap *mvpdiff 500 exclusive "MV Transistor length < %d (PL.2)"
+ extend mvnfet,mvncap *mvndiff 600 exclusive "MV Transistor length < %d (PL.2)"
+ extend hvpfet *mvpdiff 550 exclusive "6V MV Transistor length < %d (PL.2)"
+ extend hvnfet *mvndiff 700 exclusive "6V MV Transistor length < %d (PL.2)"
+ extend srammvpfet *srammvpdiff 500 exclusive "MV Transistor length < %d (PL.2)"
+ extend srammvnfet *srammvndiff 600 exclusive "MV Transistor length < %d (PL.2)"
 
- width mvpfet,mvpcap 700 angles "Bent MV Transistor length < %d (PL.7)"
- width mvnfet,mvncap 700 angles "Bent MV Transistor length < %d (PL.7)"
+ width hvpfet,mvpfet,mvpcap 700 angles "Bent MV Transistor length < %d (PL.7)"
+ width hvnfet,mvnfet,mvncap 700 angles "Bent MV Transistor length < %d (PL.7)"
 
- edge4way pfet,pcap,mvpfet,mvpcap *poly/a 330 \
+ edge4way pfet,pcap,hvpfet,mvpfet,mvpcap *poly/a 330 \
 	~(*nsd,*mvnsd)/a (*pdiff,*mvpdiff)/a 300 \
 	"n-ohmic spacing to PMOS gate < %d (NP.4b + PP.4c)"
- edge4way nfet,ncap,nnfet,mvnnfet,mvnfet,mvncap *poly/a 330 \
+ edge4way nfet,ncap,nnfet,mvnnfet,hvnfet,mvnfet,mvncap *poly/a 330 \
 	~(*psd,*mvpsd)/a (*ndiff,*mvndiff)/a 300 \
 	"p-ohmic spacing to NMOS gate < %d (PP.4b + NP.4c)"
 
@@ -5078,25 +5105,27 @@ variants *
 	allnwell error l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit nfet_03v3 sramnfet sramndiff,sramndc sramndiff,sramndc \
 	allpsub error l=l w=w a1=as p1=ps a2=ad p2=pd
- device msubcircuit pfet_06v0 srammvpfet srammvpdiff,srammvpdc \
+ device msubcircuit pfet_05v0 srammvpfet srammvpdiff,srammvpdc \
 	srammvpdiff,srammvpdc allnwell error l=l w=w a1=as p1=ps a2=ad p2=pd
- device msubcircuit pfet_06v0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error \
-	l>=0.55 l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit pfet_06v0 hvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit pfet_05v0 mvpfet mvpdiff,mvpdc mvpdiff,mvpdc allnwell error \
-	l<0.55 l=l w=w a1=as p1=ps a2=ad p2=pd
- device msubcircuit nfet_06v0 srammvnfet srammvndiff,srammvndc \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit nfet_05v0 srammvnfet srammvndiff,srammvndc \
 	srammvndiff,srammvndc allpsub error l=l w=w a1=as p1=ps a2=ad p2=pd
- device msubcircuit nfet_06v0 mvnfet mvndiff,mvndc mvndiff,mvndc allpsub error \
-	l>=0.7 l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit nfet_05v0 srammvnfet srammvndiff,srammvndc \
+	srammvndiff,srammvndc allpsub error l=l w=w a1=as p1=ps a2=ad p2=pd
+ device msubcircuit nfet_06v0 hvnfet mvndiff,mvndc mvndiff,mvndc allpsub error \
+	l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit nfet_05v0 mvnfet mvndiff,mvndc mvndiff,mvndc allpsub error \
-	l<0.7 l=l w=w a1=as p1=ps a2=ad p2=pd
+	l=l w=w a1=as p1=ps a2=ad p2=pd
  device msubcircuit pfet_03v3_dss pfet pdiffres pdiffres allnwell error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
  device msubcircuit nfet_03v3_dss nfet ndiffres ndiffres allpsub error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
- device msubcircuit pfet_06v0_dss mvpfet mvpdiffres mvpdiffres allnwell error \
+ device msubcircuit pfet_06v0_dss hvpfet,mvpfet mvpdiffres mvpdiffres allnwell error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
- device msubcircuit nfet_06v0_dss mvnfet mvndiffres mvndiffres allpsub error \
+ device msubcircuit nfet_06v0_dss hvnfet,mvnfet mvndiffres mvndiffres allpsub error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd l1=s_sab l2=d_sab
  device msubcircuit nfet_06v0_nvt mvnnfet mvndiff,mvndiffres,mvndc \
 	mvndiff,mvndiffres,mvndc allpsub error \
@@ -5200,8 +5229,8 @@ variants *
  device rsubcircuit nwell rnw   nwell allpsub error l=r_length w=r_width
 
  # The following absorbs the source/drain resistor into a *_dss FET device
- device subcircuit Short mvndiffres *mvndiff mvnfet allpsub error
- device subcircuit Short mvpdiffres *mvpdiff mvpfet allnwell error
+ device subcircuit Short mvndiffres *mvndiff hvnfet allpsub error
+ device subcircuit Short mvpdiffres *mvpdiff hvpfet allnwell error
  device subcircuit Short ndiffres *ndiff nfet allpsub error
  device subcircuit Short pdiffres *pdiff pfet allnwell error
 

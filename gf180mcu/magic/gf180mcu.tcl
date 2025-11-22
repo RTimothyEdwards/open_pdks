@@ -4292,7 +4292,7 @@ proc gf180mcu::pfet_06v0_draw {parameters} {
 	    diff_poly_space	0.30 \
 	    diff_gate_space	0.30 \
 	    diff_spacing	0.36 \
-	    gate_type		mvpfet \
+	    gate_type		hvpfet \
 	    diff_type 		mvpdiff \
 	    diff_contact_type	mvpdc \
 	    plus_diff_type	mvnsd \
@@ -4339,7 +4339,7 @@ proc gf180mcu::nfet_06v0_draw {parameters} {
 	    diff_poly_space	0.30 \
 	    diff_gate_space	0.30 \
 	    diff_spacing	0.36 \
-	    gate_type		mvnfet \
+	    gate_type		hvnfet \
 	    diff_type 		mvndiff \
 	    diff_contact_type	mvndc \
 	    plus_diff_type	mvpsd \
@@ -4413,7 +4413,7 @@ proc gf180mcu::pfet_06v0_dss_draw {parameters} {
 	    diff_poly_space	0.30 \
 	    diff_gate_space	0.30 \
 	    diff_spacing	0.36 \
-	    gate_type		mvpfet \
+	    gate_type		hvpfet \
 	    diff_type 		mvpdiffres \
 	    diff_contact_type	mvpdc \
 	    plus_diff_type	mvnsd \
@@ -4437,7 +4437,7 @@ proc gf180mcu::nfet_06v0_dss_draw {parameters} {
 	    diff_poly_space	0.30 \
 	    diff_gate_space	0.30 \
 	    diff_spacing	0.36 \
-	    gate_type		mvnfet \
+	    gate_type		hvnfet \
 	    diff_type 		mvndiffres \
 	    diff_contact_type	mvndc \
 	    plus_diff_type	mvpsd \
