@@ -654,8 +654,8 @@ compose
   compose srampfet poly srampdiff
   compose sramnfet poly sramndiff
 
+  decompose hvpfet poly mvpdiff
   decompose hvnfet poly mvndiff
-  decompose hvpfet poly mvndiff
   
 #ifdef MIM
 #ifdef METALS3
@@ -2203,6 +2203,17 @@ style  import
  and SBLK
  and DUALGATE
 
+ layer hvnfet DIFF
+ and POLY
+ and-not PPLUS
+ and NPLUS
+ and-not NAT
+ and-not nwelldef
+ and DUALGATE
+ and-not MOSCAP
+ and-not FET5VDEF
+ and-not sramexpand
+
  layer mvnfet DIFF
  and POLY
  and-not PPLUS
@@ -2211,6 +2222,7 @@ style  import
  and-not nwelldef
  and DUALGATE
  and-not MOSCAP
+ and FET5VDEF
  and-not sramexpand
 
  layer srammvnfet DIFF
