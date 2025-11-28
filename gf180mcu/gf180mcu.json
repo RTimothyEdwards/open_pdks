@@ -95,7 +95,7 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "2873ebc687189850c9b754bb762fe8a35c917815",
+        "open_pdks": "a13da3736fe3f25ddc79297ca734e40d84f0c96c",
         "magic": "98aa2f760a8e8d51a83e85802077abf6d0e9587b",
         "gf180mcu_pdk": "a897aa30369d3bcec87d9d50ce9b01f320f854ef",
         "gf180mcu_fd_pr": "739f508876db86bd7d3403f1fe056dedfeaabdab",
@@ -105,7 +105,7 @@
         "gf180mcu_fd_sc_mcu9t5v0": "e0e80f5a6522f10b82165d3aeab9b8ee28e89849",
         "gf180mcu_fd_ip_sram": "9c411928870ce15226228fa52ddb6ecc0ea4ffbe",
         "gf180mcu_as_sc_mcu7t3v3": "51f4e2a6d9692f3f8982dffaf7c012272a4b4ca3",
-        "gf180mcu_ocd_io": "2fa4cdcd8c88c29590572a1b6750912a21413da9",
+        "gf180mcu_ocd_io": "806e055d0748500929483d69708b84eda3017a62",
         "gf180mcu_ocd_alpha": "076bab7ac11118e1aa810ccf75e5c297b5501fcc",
         "gf180mcu_ocd_ip_sram": "f91d74cc332f2947b7da10c96baab1b41d8529ae",
         "gf180mcu_osu_sc_gf12t3v3": "aa2fa8cd1bcb8fe98669acd05c0b0c65879268b3",
