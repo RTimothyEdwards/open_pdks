@@ -970,8 +970,10 @@ style gdsii
 # DUALGATE (thickox)
 #-----------------------------------------------------
 
- layer DUALGATE allfetsmv
-	bloat-all mvhires *poly
+ layer DUALGATE
+	# NOTE:  This rule requires satisfying PL.19;  poly cannot
+	# cross a DUALGATE boundary.
+	bloat-all mvhires,allfetsmv *poly
 	# Rule DV.8 (DUALGATE around poly)
 	grow 400
 	# Rule DV.6 (DUALGATE around diff, LV substrate tap excepted)
@@ -1011,7 +1013,8 @@ style gdsii
  # flagged for DRC errors.
 
  layer FET5VDEF
-	bloat-all mvnfet,mvpfet,srammvnfet,srammvpfet *mvndiff,*mvpdiff
+	bloat-all mvnfet,mvpfet,srammvnfet,srammvpfet \
+		*mvndiff,*mvpdiff,mvndiffres,mvpdiffres
 	grow 100
 	calma 112 1
 
@@ -1355,8 +1358,15 @@ style gdsii
 #-----------------------------------------------------
 # RESDEF MARK
 #-----------------------------------------------------
+# Identify unsalicided drain areas in I/O ESD structures.
+# These are not marked with RESDEF.
+ templayer esd_io
+	bloat-all mvndiffres *mvndiff,hvnfet,mvnfet
+	bloat-all mvpdiffres *mvpdiff,hvpfet,mvpfet
+
  layer RESDEF allres
- calma 110 5
+	and-not esd_io
+	calma 110 5
 
 #-----------------------------------------------------
 # METAL RESISTOR IDs
@@ -1427,6 +1437,17 @@ style gdsii
  # bloat-all srampfet,sramnfet,*srampdiff,*sramndiff CELLBOUND
  mask-hints SRAMDEF
  calma 108 5
+
+# I/O pads should have latchup and ESD markers;  these are not
+# recognized layers and must be handled with mask hints.
+
+ layer LATCHUP_ID esd_io
+ mask-hints LATCHUP_ID
+ calma 137 5
+
+ layer ESD_ID esd_io
+ mask-hints ESD_ID
+ calma 24 5
 
 #------------------------------------------------------------------------
 # FILLBLOCK (NOTE: two layers define this on active, then poly & metal)
@@ -3170,11 +3191,15 @@ drc
 	"Diffusion spacing < %d (DF.3a)"
  spacing alldiffmv,mvnvar,mvpvar alldiffmv,mvnvar,mvpvar 360 touching_ok \
 	"Diffusion spacing < %d (DF.3a)"
- # Low voltage tap cannot abut high voltage source/drain
- spacing *mvpdiff,mvpvar,*srammvpdiff *nsd 360 touching_illegal \
+ spacing *mvpdiff,mvpvar,*srammvpdiff *mvnsd 360 touching_illegal \
 	"Diffusion spacing to tap < %d (DF.3a)"
- spacing *mvndiff,mvnvar,*srammvndiff *psd 360 touching_illegal \
+ spacing *mvndiff,mvnvar,*srammvndiff *mvpsd 360 touching_illegal \
 	 "Diffusion spacing to tap < %d (DF.3a)"
+ # Low voltage tap to high voltage diffusion has to clear DUALGATE-to-COMP spacing
+ spacing *mvpdiff,mvpvar,*srammvpdiff *nsd 480 touching_illegal \
+	"5/6V Diffusion spacing to 3.3V tap < %d (DV.6 + DV.3)"
+ spacing *mvndiff,mvnvar,*srammvndiff *psd 480 touching_illegal \
+	 "5/6V Diffusion spacing to 3.3V tap < %d (DV.6 + DV.3)"
 
  spacing (*ndiff,*ndiode,nfet,nnfet,ncap)/a allnwell 430 touching_illegal \
 	"N-Diffusion spacing to N-well < %d (DF.8)"
@@ -5241,8 +5266,8 @@ variants *
  device rsubcircuit nwell rnw   nwell allpsub error l=r_length w=r_width
 
  # The following absorbs the source/drain resistor into a *_dss FET device
- device subcircuit Short mvndiffres *mvndiff hvnfet allpsub error
- device subcircuit Short mvpdiffres *mvpdiff hvpfet allnwell error
+ device subcircuit Short mvndiffres *mvndiff hvnfet,mvnfet allpsub error
+ device subcircuit Short mvpdiffres *mvpdiff hvpfet,mvpfet allnwell error
  device subcircuit Short ndiffres *ndiff nfet allpsub error
  device subcircuit Short pdiffres *pdiff pfet allnwell error
 
