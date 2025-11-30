@@ -828,7 +828,9 @@ klayout-%: ${GF180MCU_WS_KLAYOUT_PATH} ${GF180MCU_PR_PATH}
 	mkdir ${KLAYOUT_STAGING_$*}/tech
 
 	# This is a pre-built library;  just copy the entire thing.
-	cp -rp ${GF180MCU_WS_KLAYOUT_PATH}/${GF180MCU$*}/libs.tech/klayout/tech \
+	# NOTE: there is only one directory gf180mcuD in the repository.
+	# Copy the contents from this into all targets.
+	cp -rp ${GF180MCU_WS_KLAYOUT_PATH}/gf180mcuD/libs.tech/klayout/tech \
 		${KLAYOUT_STAGING_$*}
 
 xcircuit-%:
