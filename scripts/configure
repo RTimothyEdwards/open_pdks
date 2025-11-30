@@ -624,6 +624,7 @@ GF180MCU_FD_IP_SRAM_PATH
 GF180MCU_FD_SC_MCU9T5V0_PATH
 GF180MCU_FD_SC_MCU7T5V0_PATH
 GF180MCU_FD_IO_PATH
+GF180MCU_WS_KLAYOUT_PATH
 GF180MCU_FD_PV_PATH
 GF180MCU_FD_PR_PATH
 SKY130_OSU_T18_PATH
@@ -749,6 +750,7 @@ enable_osu_t15_sky130
 enable_osu_t18_sky130
 enable_primitive_gf180mcu
 enable_verification_gf180mcu
+enable_klayout_gf180mcu
 enable_io_gf180mcu
 enable_sc_7t5v0_gf180mcu
 enable_sc_9t5v0_gf180mcu
@@ -1481,6 +1483,9 @@ Optional Features:
                           will be downloaded. [default=enabled]
   --enable-verification-gf180mcu[=path]
                           Install gf180mcu_fd_pv. If path is omitted, the repository
+                          will be downloaded. [default=enabled]
+  --enable-klayout-gf180mcu[=path]
+                          Install gf180mcu_ws_klayout. If path is omitted, the repository
                           will be downloaded. [default=enabled]
   --enable-io-gf180mcu[=path]
                           Install gf180mcu_fd_io. If path is omitted, the repository
@@ -3776,6 +3781,50 @@ else case e in #(
             { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Package 'gf180mcu_fd_pv' will be installed automatically during make." >&5
 printf "%s\n" "$as_me: Package 'gf180mcu_fd_pv' will be installed automatically during make." >&6;}
 	    GF180MCU_FD_PV_PATH=../sources/gf180mcu_fd_pv
+
+     ;;
+esac
+fi
+
+
+
+
+
+
+
+
+
+
+
+
+    # echo target targetvar flag location
+
+    GF180MCU_WS_KLAYOUT_PATH=""
+
+    # Check whether --enable-klayout-gf180mcu was given.
+if test ${enable_klayout_gf180mcu+y}
+then :
+  enableval=$enable_klayout_gf180mcu;
+            if test "$enableval" == "yes" -o "$enableval" == "YES"; then
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Package 'gf180mcu_ws_klayout' will be installed automatically during make." >&5
+printf "%s\n" "$as_me: Package 'gf180mcu_ws_klayout' will be installed automatically during make." >&6;}
+        	export GF180MCU_WS_KLAYOUT_PATH=../sources/gf180mcu_ws_klayout
+            elif test "$enableval" == "no" -o "$enableval" == "NO"; then
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Disabling package 'gf180mcu_ws_klayout'" >&5
+printf "%s\n" "$as_me: Disabling package 'gf180mcu_ws_klayout'" >&6;}
+    		export GF180MCU_WS_KLAYOUT_PATH=""
+            else
+                GF180MCU_WS_KLAYOUT_PATH=$enableval
+                { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Enabling package 'gf180mcu_ws_klayout' at $GF180MCU_WS_KLAYOUT_PATH" >&5
+printf "%s\n" "$as_me: Enabling package 'gf180mcu_ws_klayout' at $GF180MCU_WS_KLAYOUT_PATH" >&6;}
+            fi
+            GF180MCU_WS_KLAYOUT_PATH=`realpath $GF180MCU_WS_KLAYOUT_PATH`
+
+else case e in #(
+  e)
+            { printf "%s\n" "$as_me:${as_lineno-$LINENO}: Package 'gf180mcu_ws_klayout' will be installed automatically during make." >&5
+printf "%s\n" "$as_me: Package 'gf180mcu_ws_klayout' will be installed automatically during make." >&6;}
+	    GF180MCU_WS_KLAYOUT_PATH=../sources/gf180mcu_ws_klayout
 
      ;;
 esac

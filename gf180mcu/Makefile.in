@@ -146,6 +146,7 @@ endif
 # library repositories must be subdirectories of this path.
 GF180MCU_PR_PATH = @GF180MCU_FD_PR_PATH@
 GF180MCU_PV_PATH = @GF180MCU_FD_PV_PATH@
+GF180MCU_WS_KLAYOUT_PATH = @GF180MCU_WS_KLAYOUT_PATH@
 GF180MCU_IO_PATH = @GF180MCU_FD_IO_PATH@
 GF180MCU_SC_7T5V0_PATH = @GF180MCU_FD_SC_MCU7T5V0_PATH@
 GF180MCU_SC_9T5V0_PATH = @GF180MCU_FD_SC_MCU9T5V0_PATH@
@@ -172,12 +173,14 @@ OSU_URL = https://github.com/stineje
 OCD_URL = https://github.com/RTimothyEdwards
 AVALON_URL = https://github.com/AvalonSemiconductors
 FOSSI_URL = https://github.com/fossi-foundation
+WAFERSPACE_URL = https://github.com/wafer-space
 
 # Names of library repositories
 # NOTE:  Switching PDK_LIB_PR and PDK_LIB_SC_7T5V0 to Efabless versions
 # having "quick fixes" under development.
 PDK_LIB_PR =       ${FOSSI_URL}/globalfoundries-pdk-libs-gf180mcu_fd_pr
 PDK_LIB_PV =       ${FOSSI_URL}/globalfoundries-pdk-libs-gf180mcu_fd_pv
+PDK_LIB_WS_KLAYOUT =  ${WAFERSPACE_URL}/gf180mcu
 PDK_LIB_IO =       ${FOSSI_URL}/globalfoundries-pdk-libs-gf180mcu_fd_io
 PDK_LIB_SC_7T5V0 = ${FOSSI_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu7t5v0
 PDK_LIB_SC_9T5V0 = ${FOSSI_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu9t5v0
@@ -254,6 +257,11 @@ ifeq (${GF180MCU_PV_PATH},)
     COMMIT_DEFS += -DFD_PV_COMMIT="unknown"
 else
     COMMIT_DEFS += -DFD_PV_COMMIT=$(shell cd ${GF180MCU_PV_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${GF180MCU_WS_KLAYOUT_PATH},)
+    COMMIT_DEFS += -DWS_KLAYOUT_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DWS_KLAYOUT_COMMIT=$(shell cd ${GF180MCU_WS_KLAYOUT_PATH} ; git rev-parse HEAD)
 endif
 ifeq (${GF180MCU_IO_PATH},)
     COMMIT_DEFS += -DFD_IO_COMMIT="unknown"
@@ -503,7 +511,7 @@ reference: ${TECH}.json
 	../common/save_commit_refs.py ${COMMIT_DEFS} ${TECH}.json
 
 # Handle prerequisites
-prerequisites: pr-repo pv-repo io-repo sc-7t-repo sc-9t-repo sram-repo ocd-sram-repo osu-sc-repo avalon-sc-repo ocd-io-repo ocd-alpha-repo
+prerequisites: pr-repo pv-repo klayout-repo io-repo sc-7t-repo sc-9t-repo sram-repo ocd-sram-repo osu-sc-repo avalon-sc-repo ocd-io-repo ocd-alpha-repo
 
 pr-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
@@ -528,6 +536,19 @@ pv-repo:
 		else \
 			echo "Downloading verification library from ${GF180MCU_PV_PATH}" ; \
 			../scripts/download.sh ${PDK_LIB_PV} ${GF180MCU_PV_PATH} $${FD_PV_COMMIT}; \
+		fi ; \
+	fi
+
+klayout-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		WS_KLAYOUT_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_klayout | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi ; \
+	if test "x${GF180MCU_WS_KLAYOUT_PATH}" != "x" ; then \
+		if test -d "${GF180MCU_WS_KLAYOUT_PATH}" ; then \
+			echo "Using existing installation of klayout libraries from ${GF180MCU_WS_KLAYOUT_PATH}" ; \
+		else \
+			echo "Downloading klayout library from ${GF180MCU_WS_KLAYOUT_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_WS_KLAYOUT} ${GF180MCU_WS_KLAYOUT_PATH} $${WS_KLAYOUT_COMMIT}; \
 		fi ; \
 	fi
 
@@ -650,7 +671,7 @@ ocd-alpha-repo:
 
 
 # Update prerequisites
-update: update-pr-repo update-pv-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-ocd-sram-repo update-osu-sc-repo update-avalon-sc-repo update-ocd-io-repo
+update: update-pr-repo update-pv-repo update-klayout-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-ocd-sram-repo update-osu-sc-repo update-avalon-sc-repo update-ocd-io-repo
 
 update-pr-repo:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
@@ -662,6 +683,12 @@ update-pv-repo:
 	if test "x${GF180MCU_PV_PATH}" != "x" ; then \
 		echo "Updating GF180MCU verification library from ${PDK_LIB_PV}" ; \
 		../scripts/update.sh ${GF180MCU_PV_PATH} ; \
+	fi
+
+update-klayout-repo:
+	if test "x${GF180MCU_WS_KLAYOUT_PATH}" != "x" ; then \
+		echo "Updating GF180MCU klayout libraries from ${PDK_LIB_WS_KLAYOUT}" ; \
+		../scripts/update.sh ${GF180MCU_WS_KLAYOUT_PATH} ; \
 	fi
 
 update-io-repo:
@@ -791,35 +818,18 @@ irsim-%:
 	mkdir -p ${IRSIMTOP_STAGING_$*}
 	mkdir -p ${IRSIM_STAGING_$*}
 
-klayout-%: ${GF180MCU_PV_PATH} ${GF180MCU_PR_PATH}
+klayout-%: ${GF180MCU_WS_KLAYOUT_PATH} ${GF180MCU_PR_PATH}
 	mkdir -p ${KLAYOUTTOP_STAGING_$*}
 	mkdir -p ${KLAYOUT_STAGING_$*}
 	rm -rf ${KLAYOUT_STAGING_$*}/drc
 	rm -rf ${KLAYOUT_STAGING_$*}/lvs
 	rm -rf ${KLAYOUT_STAGING_$*}/tech
 	rm -rf ${KLAYOUT_STAGING_$*}/pymacros
-	mkdir ${KLAYOUT_STAGING_$*}/drc
-	mkdir ${KLAYOUT_STAGING_$*}/lvs
 	mkdir ${KLAYOUT_STAGING_$*}/tech
-	mkdir ${KLAYOUT_STAGING_$*}/tech/macros
-	mkdir ${KLAYOUT_STAGING_$*}/tech/pymacros
-	mkdir ${KLAYOUT_STAGING_$*}/tech/pymacros/cells
-	mkdir ${KLAYOUT_STAGING_$*}/tech/pymacros/klayout_api_cells
 
-	cp -rp ${GF180MCU_PV_PATH}/klayout/drc/* \
-		${KLAYOUT_STAGING_$*}/drc
-	cp -rp ${GF180MCU_PV_PATH}/klayout/lvs/* \
-		${KLAYOUT_STAGING_$*}/lvs
-	cp -rp ${GF180MCU_PR_PATH}/rules/klayout/macros/* \
-		${KLAYOUT_STAGING_$*}/tech/macros
-	cp -rp ${GF180MCU_PR_PATH}/cells/klayout/pymacros/cells/* \
-		${KLAYOUT_STAGING_$*}/tech/pymacros/cells
-	cp -rp ${GF180MCU_PR_PATH}/cells/klayout/pymacros/klayout_api_cells/* \
-		${KLAYOUT_STAGING_$*}/tech/pymacros/klayout_api_cells
-	cp -rp ${GF180MCU_PR_PATH}/tech/klayout/* \
-		${KLAYOUT_STAGING_$*}/tech
-	cp -rp ${GF180MCU_PR_PATH}/cells/klayout/pymacros/*.lym \
-		${KLAYOUT_STAGING_$*}/tech/pymacros
+	# This is a pre-built library;  just copy the entire thing.
+	cp -rp ${GF180MCU_WS_KLAYOUT_PATH}/${GF180MCU$*}/libs.tech/klayout/tech \
+		${KLAYOUT_STAGING_$*}
 
 xcircuit-%:
 	rm -rf ${XCIRCUIT_STAGING_$*}
