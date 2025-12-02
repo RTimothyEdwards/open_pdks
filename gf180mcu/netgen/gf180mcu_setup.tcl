@@ -154,7 +154,7 @@ foreach dev $devices {
 	property "-circuit1 $dev" delete par1 NRD NRS par
 	property "-circuit1 $dev" delete sa sb sd par dtemp nf
 	property "-circuit1 $dev" delete as ad ps pd
-	property "-circuit1 $dev" \$D \$X \$Y
+	property "-circuit1 $dev" delete \$D \$X \$Y
     }
     if {[lsearch $cells2 $dev] >= 0} {
 	permute "-circuit2 $dev" 1 3
@@ -166,7 +166,7 @@ foreach dev $devices {
 	property "-circuit2 $dev" delete par1 NRD NRS par
 	property "-circuit2 $dev" delete sa sb sd par dtemp nf
 	property "-circuit2 $dev" delete as ad ps pd
-	property "-circuit2 $dev" \$D \$X \$Y
+	property "-circuit2 $dev" delete \$D \$X \$Y
     }
 }
 
