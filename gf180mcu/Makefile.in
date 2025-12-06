@@ -1003,10 +1003,6 @@ primitive-%:
 		-gds cells/klayout/pymacros/cells/*/*.gds noextract \
 		-library primitive gf180mcu_fd_pr \
 		2>&1 | tee -a ${GF180MCU$*}_make.log
-	# The klayout GUI prefers that drc/ and lvs/ exist under tech/,
-	# so make symbolic links.
-	(cd ${STAGING_PATH}/${GF180MCU$*}/libs.tech/klayout/tech ; \
-		ln -f -s ../lvs ; ln -f -s ../drc)
 	# Add "device primitive" property to the bipolar devices and
 	# order the ports correctly to match the subcircuit model.  This
 	# ensures that the bipolar layouts extract correctly.
