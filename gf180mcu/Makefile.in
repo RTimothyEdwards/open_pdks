@@ -1296,12 +1296,12 @@ digital-avalon-%:
 	mkdir -p ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/cdl
 	cp -rp ${AVALON_REF_SOURCE}/cdl ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3
 
-	# This library is done the right way and has its own openlane setup.
+	# This library is done the right way and has its own librelane setup.
 	mkdir -p ${OPENLANETOP_STAGING_$*}
 	mkdir -p ${OPENLANE_STAGING_$*}
 	rm -rf ${OPENLANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
 	mkdir ${OPENLANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
-	cp -rp ${AVALON_TECH_SOURCE}/openlane/gf180mcu_as_sc_mcu7t3v3 ${OPENLANE_STAGING_$*}
+	cp -rp ${AVALON_TECH_SOURCE}/librelane/gf180mcu_as_sc_mcu7t3v3 ${OPENLANE_STAGING_$*}
 
 io-%:
 	# Install custom additions to the I/O pad library
