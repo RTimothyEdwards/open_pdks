@@ -411,9 +411,6 @@ if {[lsearch $cells1 $dev2] >= 0 && [lsearch $cells2 $dev1] >= 0} {
 #---------------------------------------------------------------
 
 foreach cell $cells1 {
-#   if {[regexp {gf180mcu_fd_sc_[^_]+__fillcap_[[:digit:]]+} $cell match]} {
-#       ignore class "-circuit1 $cell"
-#   }
     if {[regexp {gf180mcu_fd_sc_[^_]+__endcap} $cell match]} {
         ignore class "-circuit1 $cell"
     }
@@ -426,9 +423,6 @@ foreach cell $cells1 {
 }
 
 foreach cell $cells2 {
-#   if {[regexp {gf180mcu_fd_sc_[^_]+__fillcap_[[:digit:]]+} $cell match]} {
-#       ignore class "-circuit2 $cell"
-#   }
     if {[regexp {gf180mcu_fd_sc_[^_]+__endcap} $cell match]} {
         ignore class "-circuit2 $cell"
     }
@@ -450,6 +444,20 @@ foreach cell $cells1 {
 
 foreach cell $cells2 {
     if {[regexp {gf180mcu_osu_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+        ignore class "-circuit2 $cell"
+    }
+}
+
+# And the Avalon Semiconductor cell libraries
+
+foreach cell $cells1 {
+    if {[regexp {gf180mcu_as_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+        ignore class "-circuit1 $cell"
+    }
+}
+
+foreach cell $cells2 {
+    if {[regexp {gf180mcu_as_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
         ignore class "-circuit2 $cell"
     }
 }
@@ -508,6 +516,32 @@ foreach cell $cells2 {
     }
 }
 
+# And do the same for the Avalon semiconductor 3.3V standard cell library.
+
+foreach cell $cells1 {
+    if {[regexp {gf180mcu_as_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+        property "-circuit1 $cell" parallel enable
+    }
+    if {[regexp {gf180mcu_as_sc_[^_]+__fillcap_[[:digit:]]+} $cell match]} {
+        property "-circuit1 $cell" parallel enable
+    }
+    if {[regexp {gf180mcu_as_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
+        property "-circuit1 $cell" parallel enable
+    }
+}
+
+foreach cell $cells2 {
+    if {[regexp {gf180mcu_as_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+        property "-circuit2 $cell" parallel enable
+    }
+    if {[regexp {gf180mcu_as_sc_[^_]+__fillcap_[[:digit:]]+} $cell match]} {
+        property "-circuit2 $cell" parallel enable
+    }
+    if {[regexp {gf180mcu_as_sc_[^_]+__decap_[[:digit:]]+} $cell match]} {
+        property "-circuit2 $cell" parallel enable
+    }
+}
+
 # Match pins on black-box cells if LVS is called with "-blackbox"
 if {[model blackbox]} {
     foreach cell $cells1 {
@@ -520,17 +554,4 @@ if {[model blackbox]} {
     }
 }
 
-# Allow parallel reduction of fillcap (decap fill) cells
-
-foreach cell $cells1 {
-    if {[regexp {.*gf180mcu_fd_sc_.*__fillcap_[[:digit:]]+} $cell match]} {
-	property "-circuit1 $cell" parallel enable
-    }
-}
-
-foreach cell $cells2 {
-    if {[regexp {gf180mcu_fd_sc_.*__fillcap_[[:digit:]]+} $cell match]} {
-	property "-circuit2 $cell" parallel enable
-    }
-}
 #---------------------------------------------------------------

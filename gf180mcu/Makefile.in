@@ -1295,6 +1295,9 @@ digital-avalon-%:
 	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/cdl
 	mkdir -p ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/cdl
 	cp -rp ${AVALON_REF_SOURCE}/cdl ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3
+	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/spice
+	mkdir -p ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/spice
+	cp -rp ${AVALON_REF_SOURCE}/spice ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3
 
 	# This library is done the right way and has its own librelane setup.
 	mkdir -p ${OPENLANETOP_STAGING_$*}
