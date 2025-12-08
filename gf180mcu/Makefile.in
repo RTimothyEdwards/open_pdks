@@ -1428,7 +1428,7 @@ ocd-io-%:
 		-lib cells/*/*_tt_025C_5v00.lib compile-only \
                         header=liberty/gf180mcu_ocd_io__tt_025C_5v00.lib \
 			rename=gf180mcu_ocd_io__tt_025C_5v00 \
-		-spice netlist/layout/*.spice compile-only  \
+		-spice netlist/schematic/*.spice compile-only  \
 		-gds cells/*/*_${$*_STACK}.gds.gz compile-only \
 			options=custom/scripts/gds_import_io.tcl \
 		-lef cells/*/*_${$*_STACK}.lef compile-only \
