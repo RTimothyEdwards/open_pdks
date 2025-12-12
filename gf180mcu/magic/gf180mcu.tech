@@ -3725,10 +3725,16 @@ variants *
  width hvpfet,mvpfet,mvpcap 700 angles "Bent MV Transistor length < %d (PL.7)"
  width hvnfet,mvnfet,mvncap 700 angles "Bent MV Transistor length < %d (PL.7)"
 
- edge4way pfet,pcap,hvpfet,mvpfet,mvpcap *poly/a 330 \
+ # The following two rules do not appear to be implemented correctly.
+ # Previously the distance was set to 330, whereas 320 seems to be the
+ # closest distance allowed, but not due to NP and PP spacing.  Also the
+ # rule numbers cited are wrong, which casts further suspicion on the
+ # rule implementation.
+
+ edge4way pfet,pcap,hvpfet,mvpfet,mvpcap *poly/a 320 \
 	~(*nsd,*mvnsd)/a (*pdiff,*mvpdiff)/a 300 \
 	"n-ohmic spacing to PMOS gate < %d (NP.4b + PP.4c)"
- edge4way nfet,ncap,nnfet,mvnnfet,hvnfet,mvnfet,mvncap *poly/a 330 \
+ edge4way nfet,ncap,nnfet,mvnnfet,hvnfet,mvnfet,mvncap *poly/a 320 \
 	~(*psd,*mvpsd)/a (*ndiff,*mvndiff)/a 300 \
 	"p-ohmic spacing to NMOS gate < %d (PP.4b + NP.4c)"
 

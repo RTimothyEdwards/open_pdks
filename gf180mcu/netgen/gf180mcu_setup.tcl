@@ -449,15 +449,23 @@ foreach cell $cells2 {
 }
 
 # And the Avalon Semiconductor cell libraries
+# Fill cells (not fillcap) are empty.  Tap cells connect well and substrate
+# but are already taken care of in the netlist.
 
 foreach cell $cells1 {
     if {[regexp {gf180mcu_as_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+        ignore class "-circuit1 $cell"
+    }
+    if {[regexp {gf180mcu_as_sc_[^_]+__tap_[[:digit:]]+} $cell match]} {
         ignore class "-circuit1 $cell"
     }
 }
 
 foreach cell $cells2 {
     if {[regexp {gf180mcu_as_sc_[^_]+__fill_[[:digit:]]+} $cell match]} {
+        ignore class "-circuit2 $cell"
+    }
+    if {[regexp {gf180mcu_as_sc_[^_]+__tap_[[:digit:]]+} $cell match]} {
         ignore class "-circuit2 $cell"
     }
 }
