@@ -23,3 +23,5 @@ make.log
 
 # can use this file to aid in local installations
 reconfigure.sh
+reconfigure_sky.sh
+reconfigure_gf.sh

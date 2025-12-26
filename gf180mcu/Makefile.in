@@ -1486,6 +1486,7 @@ ocd-sram-%:
 		-lib cells/*/*.lib \
 		-spice cells/*/*.spice \
 		-gds cells/*/*.gds \
+			options=custom/scripts/gds_import_ocd_sram.tcl \
 		-lef cells/*/*.lef \
 		-verilog cells/*/*.v \
 		-library general gf180mcu_ocd_ip_sram 2>&1 | tee -a ${GF180MCU$*}_make.log
