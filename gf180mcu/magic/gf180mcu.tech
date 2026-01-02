@@ -885,7 +885,7 @@ style gdsii
 	grow 180
 	grow 180
 	shrink 180
-	mask-hints NPLUS
+	close 350000
 	calma   32 0
 
  # standard generation of NPLUS
@@ -914,6 +914,7 @@ style gdsii
 	or shortntap,shortdntap
 	grow 	200 
 	shrink 200
+	close 350000
 	mask-hints NPLUS
 	calma   32 0
 
@@ -929,7 +930,7 @@ style gdsii
 	grow 180
 	grow 180
 	shrink 180
-	mask-hints PPLUS
+	close 350000
 	calma   31 0
 
  # standard generation of PPLUS, including hires resistors
@@ -964,6 +965,8 @@ style gdsii
 	or shortptap,shortdptap
 	grow	200
 	shrink	200
+	close 350000
+	mask-hints PPLUS
 	calma	31 0
 
 #-----------------------------------------------------
