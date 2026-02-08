@@ -54,8 +54,8 @@
 #	--disable-qflow
 #		Do not install setup files for the qflow synthesis flow.
 #
-#	--disable-openlane
-#		Do not install setup files for the openlane sythesis flow.
+#	--disable-librelane
+#		Do not install setup files for the librelane sythesis flow.
 #
 #	--disable-klayout
 #		Do not install setup files for the klayout layout tool.
@@ -465,7 +465,7 @@ NETGENTOP = libs.tech/netgen
 IRSIMTOP = libs.tech/irsim
 QFLOWTOP = libs.tech/qflow
 KLAYOUTTOP = libs.tech/klayout
-OPENLANETOP = libs.tech/openlane
+LIBRELANETOP = libs.tech/librelane
 XSCHEMTOP = libs.tech/xschem
 XCIRCUITTOP = libs.tech/xcircuit
 NGSPICETOP = libs.tech/ngspice
@@ -478,7 +478,7 @@ NETGENPATH = ${NETGENTOP}
 IRSIMPATH = ${IRSIMTOP}
 QFLOWPATH = ${QFLOWTOP}
 KLAYOUTPATH = ${KLAYOUTTOP}
-OPENLANEPATH = ${OPENLANETOP}
+LIBRELANEPATH = ${LIBRELANETOP}
 XSCHEMPATH = ${XSCHEMTOP}
 XCIRCUITPATH = ${XCIRCUITTOP}
 NGSPICEPATH = ${NGSPICETOP}
@@ -488,7 +488,7 @@ NETGENTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NETGENTOP}
 IRSIMTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${IRSIMTOP}
 QFLOWTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${QFLOWTOP}
 KLAYOUTTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${KLAYOUTTOP}
-OPENLANETOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${OPENLANETOP}
+LIBRELANETOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${LIBRELANETOP}
 XSCHEMTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XSCHEMTOP}
 XCIRCUITTOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XCIRCUITTOP}
 NGSPICETOP_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NGSPICETOP}
@@ -498,7 +498,7 @@ NETGEN_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NETGENPATH}
 IRSIM_STAGING_A = ${STAGING_PATH}/${SKY130A}/${IRSIMPATH}
 QFLOW_STAGING_A = ${STAGING_PATH}/${SKY130A}/${QFLOWPATH}
 KLAYOUT_STAGING_A = ${STAGING_PATH}/${SKY130A}/${KLAYOUTPATH}
-OPENLANE_STAGING_A = ${STAGING_PATH}/${SKY130A}/${OPENLANEPATH}
+LIBRELANE_STAGING_A = ${STAGING_PATH}/${SKY130A}/${LIBRELANEPATH}
 XSCHEM_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XSCHEMPATH}
 XCIRCUIT_STAGING_A = ${STAGING_PATH}/${SKY130A}/${XCIRCUITPATH}
 NGSPICE_STAGING_A = ${STAGING_PATH}/${SKY130A}/${NGSPICEPATH}
@@ -508,7 +508,7 @@ NETGENTOP_STAGING_B = ${STAGING_PATH}/${SKY130B}/${NETGENTOP}
 IRSIMTOP_STAGING_B = ${STAGING_PATH}/${SKY130B}/${IRSIMTOP}
 QFLOWTOP_STAGING_B = ${STAGING_PATH}/${SKY130B}/${QFLOWTOP}
 KLAYOUTTOP_STAGING_B = ${STAGING_PATH}/${SKY130B}/${KLAYOUTTOP}
-OPENLANETOP_STAGING_B = ${STAGING_PATH}/${SKY130B}/${OPENLANETOP}
+LIBRELANETOP_STAGING_B = ${STAGING_PATH}/${SKY130B}/${LIBRELANETOP}
 XSCHEMTOP_STAGING_B = ${STAGING_PATH}/${SKY130B}/${XSCHEMTOP}
 XCIRCUITTOP_STAGING_B = ${STAGING_PATH}/${SKY130B}/${XCIRCUITTOP}
 NGSPICETOP_STAGING_B = ${STAGING_PATH}/${SKY130B}/${NGSPICETOP}
@@ -518,7 +518,7 @@ NETGEN_STAGING_B = ${STAGING_PATH}/${SKY130B}/${NETGENPATH}
 IRSIM_STAGING_B = ${STAGING_PATH}/${SKY130B}/${IRSIMPATH}
 QFLOW_STAGING_B = ${STAGING_PATH}/${SKY130B}/${QFLOWPATH}
 KLAYOUT_STAGING_B = ${STAGING_PATH}/${SKY130B}/${KLAYOUTPATH}
-OPENLANE_STAGING_B = ${STAGING_PATH}/${SKY130B}/${OPENLANEPATH}
+LIBRELANE_STAGING_B = ${STAGING_PATH}/${SKY130B}/${LIBRELANEPATH}
 XSCHEM_STAGING_B = ${STAGING_PATH}/${SKY130B}/${XSCHEMPATH}
 XCIRCUIT_STAGING_B = ${STAGING_PATH}/${SKY130B}/${XCIRCUITPATH}
 NGSPICE_STAGING_B = ${STAGING_PATH}/${SKY130B}/${NGSPICEPATH}
@@ -526,11 +526,11 @@ NGSPICE_STAGING_B = ${STAGING_PATH}/${SKY130B}/${NGSPICEPATH}
 SKY130A_DEFS += -DMAGIC_CURRENT=${MAGICCURRENT}
 SKY130B_DEFS += -DMAGIC_CURRENT=${MAGICCURRENT}
 
-# Openlane has a number of files that are common to all digital
+# LibreLane has a number of files that are common to all digital
 # standard cell libraries, so these are collected in one definition
 # here:
-OPENLANE_COMMON = config.tcl tracks.info no_synth.cells drc_exclude.cells
-OPENLANE_COMMON += tribuff_map.v latch_map.v mux2_map.v mux4_map.v fa_map.v rca_map.v csa_map.v
+LIBRELANE_COMMON = config.tcl tracks.info no_synth.cells drc_exclude.cells
+LIBRELANE_COMMON += tribuff_map.v latch_map.v mux2_map.v mux4_map.v fa_map.v rca_map.v csa_map.v
 
 # Corners defined in IRSIM parameter files (wild-carded)
 IRSIM_CORNERS = `ls irsim/*.prm | cut -c14-`
@@ -561,10 +561,10 @@ ifneq (${KLAYOUT_DISABLED}, 1)
         TOOLS += klayout
 endif
 
-# OPENLANE_DISABLED = 0 | 1
-OPENLANE_DISABLED = @OPENLANE_DISABLED@
-ifneq (${OPENLANE_DISABLED}, 1)
-        TOOLS += openlane
+# LIBRELANE_DISABLED = 0 | 1
+LIBRELANE_DISABLED = @LIBRELANE_DISABLED@
+ifneq (${LIBRELANE_DISABLED}, 1)
+        TOOLS += librelane
 endif
 
 # QFLOW_DISABLED = 0 | 1
@@ -1247,114 +1247,114 @@ xschem-%: ${XSCHEM_PATH}
 		fi ; \
 	fi
 
-openlane-%: openlane/config.tcl openlane/sky130_fd_sc_hd/config.tcl openlane/sky130_fd_sc_hs/config.tcl openlane/sky130_fd_sc_ms/config.tcl openlane/sky130_fd_sc_ls/config.tcl openlane/sky130_fd_sc_hdll/config.tcl openlane/sky130_osu_sc_t18/config.tcl
-	mkdir -p ${OPENLANETOP_STAGING_$*}
-	mkdir -p ${OPENLANE_STAGING_$*}
-	rm -rf ${OPENLANE_STAGING_$*}/custom_cells/*
-	mkdir -p ${OPENLANE_STAGING_$*}/sky130_fd_sc_hd
-	mkdir -p ${OPENLANE_STAGING_$*}/sky130_fd_sc_hs
-	mkdir -p ${OPENLANE_STAGING_$*}/sky130_fd_sc_ls
-	mkdir -p ${OPENLANE_STAGING_$*}/sky130_fd_sc_ms
-	mkdir -p ${OPENLANE_STAGING_$*}/sky130_fd_sc_hdll
-	mkdir -p ${OPENLANE_STAGING_$*}/sky130_fd_sc_hvl
-	mkdir -p ${OPENLANE_STAGING_$*}/sky130_osu_sc_t18
-	rm -f ${OPENLANE_STAGING_$*}/common_pdn.info
-	rm -f ${OPENLANE_STAGING_$*}/config.tcl
-	for file in ${OPENLANE_COMMON} ; do \
-	    rm -f ${OPENLANE_STAGING_$*}/sky130_fd_sc_hd/$$file ; \
+librelane-%: librelane/config.tcl librelane/sky130_fd_sc_hd/config.tcl librelane/sky130_fd_sc_hs/config.tcl librelane/sky130_fd_sc_ms/config.tcl librelane/sky130_fd_sc_ls/config.tcl librelane/sky130_fd_sc_hdll/config.tcl librelane/sky130_osu_sc_t18/config.tcl
+	mkdir -p ${LIBRELANETOP_STAGING_$*}
+	mkdir -p ${LIBRELANE_STAGING_$*}
+	rm -rf ${LIBRELANE_STAGING_$*}/custom_cells/*
+	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hd
+	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hs
+	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_fd_sc_ls
+	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_fd_sc_ms
+	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hdll
+	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hvl
+	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_osu_sc_t18
+	rm -f ${LIBRELANE_STAGING_$*}/common_pdn.info
+	rm -f ${LIBRELANE_STAGING_$*}/config.tcl
+	for file in ${LIBRELANE_COMMON} ; do \
+	    rm -f ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hd/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-	    rm -f ${OPENLANE_STAGING_$*}/sky130_fd_sc_hs/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+	    rm -f ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hs/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-	    rm -f ${OPENLANE_STAGING_$*}/sky130_fd_sc_hdll/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+	    rm -f ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hdll/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-	    rm -f ${OPENLANE_STAGING_$*}/sky130_fd_sc_ls/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+	    rm -f ${LIBRELANE_STAGING_$*}/sky130_fd_sc_ls/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-	    rm -f ${OPENLANE_STAGING_$*}/sky130_fd_sc_ms/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+	    rm -f ${LIBRELANE_STAGING_$*}/sky130_fd_sc_ms/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-	    rm -f ${OPENLANE_STAGING_$*}/sky130_fd_sc_hvl/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+	    rm -f ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hvl/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-	    rm -f ${OPENLANE_STAGING_$*}/sky130_osu_sc_t18/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+	    rm -f ${LIBRELANE_STAGING_$*}/sky130_osu_sc_t18/$$file ; \
 	done
 
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.magic
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.magic
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.magic
+	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.min.magic
+	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.nom.magic
+	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.max.magic
 
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.spef_extractor
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.spef_extractor
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.spef_extractor
+	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.min.spef_extractor
+	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.nom.spef_extractor
+	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.max.spef_extractor
 
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.calibre
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.calibre
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.calibre
+	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.min.calibre
+	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.nom.calibre
+	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.max.calibre
 
-	cp -r openlane/custom_cells ${OPENLANE_STAGING_$*}
-	cp -r openlane/cvc ${OPENLANE_STAGING_$*}
-	${CPP} ${SKY130$*_DEFS} openlane/config.tcl ${OPENLANE_STAGING_$*}/config.tcl
+	cp -r librelane/custom_cells ${LIBRELANE_STAGING_$*}
+	cp -r librelane/cvc ${LIBRELANE_STAGING_$*}
+	${CPP} ${SKY130$*_DEFS} librelane/config.tcl ${LIBRELANE_STAGING_$*}/config.tcl
 
-	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.min.magic \
-		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.magic
-	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.nom.magic \
-		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.magic
-	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.max.magic \
-		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.magic
+	${CPP} ${SKY130$*_DEFS} librelane/rules.openrcx.sky130$*.min.magic \
+		${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.min.magic
+	${CPP} ${SKY130$*_DEFS} librelane/rules.openrcx.sky130$*.nom.magic \
+		${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.nom.magic
+	${CPP} ${SKY130$*_DEFS} librelane/rules.openrcx.sky130$*.max.magic \
+		${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.max.magic
 
-	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.min.spef_extractor \
-		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.spef_extractor
-	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.nom.spef_extractor \
-		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.spef_extractor
-	${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.max.spef_extractor \
-		${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.spef_extractor
+	${CPP} ${SKY130$*_DEFS} librelane/rules.openrcx.sky130$*.min.spef_extractor \
+		${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.min.spef_extractor
+	${CPP} ${SKY130$*_DEFS} librelane/rules.openrcx.sky130$*.nom.spef_extractor \
+		${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.nom.spef_extractor
+	${CPP} ${SKY130$*_DEFS} librelane/rules.openrcx.sky130$*.max.spef_extractor \
+		${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.max.spef_extractor
 
 	# Only install the calibre-derived rule files if they exist in the source
-	if test -f openlane/rules.openrcx.sky130$*.min.calibre ; then \
-		${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.min.calibre \
-			${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.min.calibre ;\
+	if test -f librelane/rules.openrcx.sky130$*.min.calibre ; then \
+		${CPP} ${SKY130$*_DEFS} librelane/rules.openrcx.sky130$*.min.calibre \
+			${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.min.calibre ;\
 	fi
-	if test -f openlane/rules.openrcx.sky130$*.nom.calibre ; then \
-		${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.nom.calibre \
-			${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.nom.calibre ;\
+	if test -f librelane/rules.openrcx.sky130$*.nom.calibre ; then \
+		${CPP} ${SKY130$*_DEFS} librelane/rules.openrcx.sky130$*.nom.calibre \
+			${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.nom.calibre ;\
 	fi
-	if test -f openlane/rules.openrcx.sky130$*.max.calibre ; then \
-		${CPP} ${SKY130$*_DEFS} openlane/rules.openrcx.sky130$*.max.calibre \
-			${OPENLANE_STAGING_$*}/rules.openrcx.sky130$*.max.calibre ;\
+	if test -f librelane/rules.openrcx.sky130$*.max.calibre ; then \
+		${CPP} ${SKY130$*_DEFS} librelane/rules.openrcx.sky130$*.max.calibre \
+			${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.max.calibre ;\
 	fi
 
-	for file in ${OPENLANE_COMMON} ; do \
-	    ${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_fd_sc_hd/$$file \
-		${OPENLANE_STAGING_$*}/sky130_fd_sc_hd/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+	    ${CPP} -quiet ${SKY130$*_DEFS} librelane/sky130_fd_sc_hd/$$file \
+		${LIBRELANE_STAGING_$*}/sky130_fd_sc_hd/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-	    ${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_fd_sc_hs/$$file \
-		${OPENLANE_STAGING_$*}/sky130_fd_sc_hs/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+	    ${CPP} -quiet ${SKY130$*_DEFS} librelane/sky130_fd_sc_hs/$$file \
+		${LIBRELANE_STAGING_$*}/sky130_fd_sc_hs/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-	    ${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_fd_sc_ms/$$file \
-		${OPENLANE_STAGING_$*}/sky130_fd_sc_ms/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+	    ${CPP} -quiet ${SKY130$*_DEFS} librelane/sky130_fd_sc_ms/$$file \
+		${LIBRELANE_STAGING_$*}/sky130_fd_sc_ms/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-	    ${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_fd_sc_ls/$$file \
-		${OPENLANE_STAGING_$*}/sky130_fd_sc_ls/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+	    ${CPP} -quiet ${SKY130$*_DEFS} librelane/sky130_fd_sc_ls/$$file \
+		${LIBRELANE_STAGING_$*}/sky130_fd_sc_ls/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-	    ${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_fd_sc_hdll/$$file \
-		${OPENLANE_STAGING_$*}/sky130_fd_sc_hdll/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+	    ${CPP} -quiet ${SKY130$*_DEFS} librelane/sky130_fd_sc_hdll/$$file \
+		${LIBRELANE_STAGING_$*}/sky130_fd_sc_hdll/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-	    ${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_fd_sc_hvl/$$file \
-		${OPENLANE_STAGING_$*}/sky130_fd_sc_hvl/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+	    ${CPP} -quiet ${SKY130$*_DEFS} librelane/sky130_fd_sc_hvl/$$file \
+		${LIBRELANE_STAGING_$*}/sky130_fd_sc_hvl/$$file ; \
 	done
 
-	${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_osu_sc_t18/config.tcl \
-		${OPENLANE_STAGING_$*}/sky130_osu_sc_t18/config.tcl
-	${CPP} -quiet ${SKY130$*_DEFS} openlane/sky130_osu_sc_t18/tracks.info \
-		${OPENLANE_STAGING_$*}/sky130_osu_sc_t18/tracks.info
+	${CPP} -quiet ${SKY130$*_DEFS} librelane/sky130_osu_sc_t18/config.tcl \
+		${LIBRELANE_STAGING_$*}/sky130_osu_sc_t18/config.tcl
+	${CPP} -quiet ${SKY130$*_DEFS} librelane/sky130_osu_sc_t18/tracks.info \
+		${LIBRELANE_STAGING_$*}/sky130_osu_sc_t18/tracks.info
 
 # NOTE: ReRAM is not in variant A so there is no reram-build-A.
 vendor-A: primitive-build-A io-build-A sram-build-A sram-space-build-A digital-hd-build-A digital-hvl-build-A digital-hdll-build-A digital-lp-build-A digital-hs-build-A digital-ms-build-A digital-ls-build-A alpha-build-A osu-t12-build-A osu-t15-build-A osu-t18-build-A

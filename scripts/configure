@@ -651,7 +651,7 @@ MAGIC
 XCIRCUIT_DISABLED
 XSCHEM_DISABLED
 QFLOW_DISABLED
-OPENLANE_DISABLED
+LIBRELANE_DISABLED
 IRSIM_DISABLED
 NETGEN_DISABLED
 MAGIC_DISABLED
@@ -725,7 +725,7 @@ enable_klayout
 enable_magic
 enable_netgen
 enable_irsim
-enable_openlane
+enable_librelane
 enable_qflow
 enable_xschem
 enable_xcircuit
@@ -1405,8 +1405,8 @@ Optional Features:
                 Enable or disable irsim setup [default=enabled]
 
 
-  --enable-openlane
-                Enable or disable openlane setup [default=enabled]
+  --enable-librelane
+                Enable or disable librelane setup [default=enabled]
 
 
   --enable-qflow
@@ -2623,8 +2623,8 @@ ALL_TECHS="gf180mcu sky130"
 # Set variables for tool setups
 
 
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: Found tools: klayout magic netgen irsim openlane qflow xschem xcircuit" >&5
-printf "%s\n" "$as_me: Found tools: klayout magic netgen irsim openlane qflow xschem xcircuit" >&6;}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: Found tools: klayout magic netgen irsim librelane qflow xschem xcircuit" >&5
+printf "%s\n" "$as_me: Found tools: klayout magic netgen irsim librelane qflow xschem xcircuit" >&6;}
 
 
 
@@ -2694,13 +2694,13 @@ fi
 
 
 
-        OPENLANE_DISABLED=0
-        # Check whether --enable-openlane was given.
-if test ${enable_openlane+y}
+        LIBRELANE_DISABLED=0
+        # Check whether --enable-librelane was given.
+if test ${enable_librelane+y}
 then :
-  enableval=$enable_openlane;
+  enableval=$enable_librelane;
                 if test "$enableval" == "no" -o "$enableval" == "NO"; then
-                    OPENLANE_DISABLED=1
+                    LIBRELANE_DISABLED=1
                 fi
 
 
@@ -4236,8 +4236,8 @@ fi
 
 
 
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow xschem xcircuit" >&5
-printf "%s\n" "$as_me: Tools enabled for PDK setup installation: klayout magic netgen irsim openlane qflow xschem xcircuit" >&6;}
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: Tools enabled for PDK setup installation: klayout magic netgen irsim librelane qflow xschem xcircuit" >&5
+printf "%s\n" "$as_me: Tools enabled for PDK setup installation: klayout magic netgen irsim librelane qflow xschem xcircuit" >&6;}
 
 # Check for "--with-reference"
 USE_REFERENCE=0

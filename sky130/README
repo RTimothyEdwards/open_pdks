@@ -368,7 +368,7 @@ Summary of the installation directories:
 		    netgen/		netgen setup file
 		    qflow/		qflow scripts and graywolf setup files.
 		    klayout/		setup files for klayout
-		    openlane/		setup and supplementary files for openlane
+		    librelane/		setup and supplementary files for librelane
 		    ngspice/		base model files and libraries for ngspice
 		    xschem/		setup files for xschem
 		    irsim/		setup and parameter files for IRSIM

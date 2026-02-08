@@ -2,7 +2,7 @@ klayout
 magic
 netgen
 irsim
-openlane
+librelane
 qflow
 xschem
 xcircuit

@@ -309,7 +309,7 @@ NETGENTOP = libs.tech/netgen
 QFLOWTOP = libs.tech/qflow
 IRSIMTOP = libs.tech/irsim
 KLAYOUTTOP = libs.tech/klayout
-OPENLANETOP = libs.tech/openlane
+LIBRELANETOP = libs.tech/librelane
 XSCHEMTOP = libs.tech/xschem
 XCIRCUITTOP = libs.tech/xcircuit
 NGSPICETOP = libs.tech/ngspice
@@ -321,7 +321,7 @@ NETGENPATH = ${NETGENTOP}
 IRSIMPATH = ${IRSIMTOP}
 QFLOWPATH = ${QFLOWTOP}
 KLAYOUTPATH = ${KLAYOUTTOP}
-OPENLANEPATH = ${OPENLANETOP}
+LIBRELANEPATH = ${LIBRELANETOP}
 XSCHEMPATH = ${XSCHEMTOP}
 XCIRCUITPATH = ${XCIRCUITTOP}
 NGSPICEPATH = ${NGSPICETOP}
@@ -331,7 +331,7 @@ NETGENTOP_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${NETGENTOP}
 IRSIMTOP_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${IRSIMTOP}
 QFLOWTOP_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${QFLOWTOP}
 KLAYOUTTOP_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${KLAYOUTTOP}
-OPENLANETOP_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${OPENLANETOP}
+LIBRELANETOP_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${LIBRELANETOP}
 XSCHEMTOP_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${XSCHEMTOP}
 XCIRCUITTOP_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${XCIRCUITTOP}
 NGSPICETOP_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${NGSPICETOP}
@@ -341,7 +341,7 @@ NETGEN_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${NETGENPATH}
 IRSIM_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${IRSIMPATH}
 QFLOW_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${QFLOWPATH}
 KLAYOUT_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${KLAYOUTPATH}
-OPENLANE_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${OPENLANEPATH}
+LIBRELANE_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${LIBRELANEPATH}
 XSCHEM_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${XSCHEMPATH}
 XCIRCUIT_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${XCIRCUITPATH}
 NGSPICE_STAGING_A = ${STAGING_PATH}/${GF180MCUA}/${NGSPICEPATH}
@@ -351,7 +351,7 @@ NETGENTOP_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${NETGENTOP}
 IRSIMTOP_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${IRSIMTOP}
 QFLOWTOP_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${QFLOWTOP}
 KLAYOUTTOP_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${KLAYOUTTOP}
-OPENLANETOP_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${OPENLANETOP}
+LIBRELANETOP_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${LIBRELANETOP}
 XSCHEMTOP_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${XSCHEMTOP}
 XCIRCUITTOP_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${XCIRCUITTOP}
 NGSPICETOP_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${NGSPICETOP}
@@ -361,7 +361,7 @@ NETGEN_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${NETGENPATH}
 IRSIM_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${IRSIMPATH}
 QFLOW_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${QFLOWPATH}
 KLAYOUT_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${KLAYOUTPATH}
-OPENLANE_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${OPENLANEPATH}
+LIBRELANE_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${LIBRELANEPATH}
 XSCHEM_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${XSCHEMPATH}
 XCIRCUIT_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${XCIRCUITPATH}
 NGSPICE_STAGING_B = ${STAGING_PATH}/${GF180MCUB}/${NGSPICEPATH}
@@ -371,7 +371,7 @@ NETGENTOP_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${NETGENTOP}
 IRSIMTOP_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${IRSIMTOP}
 QFLOWTOP_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${QFLOWTOP}
 KLAYOUTTOP_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${KLAYOUTTOP}
-OPENLANETOP_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${OPENLANETOP}
+LIBRELANETOP_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${LIBRELANETOP}
 XSCHEMTOP_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${XSCHEMTOP}
 XCIRCUITTOP_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${XCIRCUITTOP}
 NGSPICETOP_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${NGSPICETOP}
@@ -381,7 +381,7 @@ NETGEN_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${NETGENPATH}
 IRSIM_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${IRSIMPATH}
 QFLOW_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${QFLOWPATH}
 KLAYOUT_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${KLAYOUTPATH}
-OPENLANE_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${OPENLANEPATH}
+LIBRELANE_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${LIBRELANEPATH}
 XSCHEM_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${XSCHEMPATH}
 XCIRCUIT_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${XCIRCUITPATH}
 NGSPICE_STAGING_C = ${STAGING_PATH}/${GF180MCUC}/${NGSPICEPATH}
@@ -391,7 +391,7 @@ NETGENTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${NETGENTOP}
 IRSIMTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${IRSIMTOP}
 QFLOWTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${QFLOWTOP}
 KLAYOUTTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${KLAYOUTTOP}
-OPENLANETOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${OPENLANETOP}
+LIBRELANETOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${LIBRELANETOP}
 XSCHEMTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${XSCHEMTOP}
 XCIRCUITTOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${XCIRCUITTOP}
 NGSPICETOP_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${NGSPICETOP}
@@ -401,7 +401,7 @@ NETGEN_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${NETGENPATH}
 IRSIM_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${IRSIMPATH}
 QFLOW_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${QFLOWPATH}
 KLAYOUT_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${KLAYOUTPATH}
-OPENLANE_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${OPENLANEPATH}
+LIBRELANE_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${LIBRELANEPATH}
 XSCHEM_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${XSCHEMPATH}
 XCIRCUIT_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${XCIRCUITPATH}
 NGSPICE_STAGING_D = ${STAGING_PATH}/${GF180MCUD}/${NGSPICEPATH}
@@ -423,10 +423,10 @@ B_FULLSTACK = 4LM_1TM_11K
 C_FULLSTACK = 5LM_1TM_9K
 D_FULLSTACK = 5LM_1TM_11K
 
-# Openlane has a number of files that are common to all digital
+# LibreLane has a number of files that are common to all digital
 # standard cell libraries, so these are collected in one definition
 # here:
-OPENLANE_COMMON = config.tcl tracks.info no_synth.cells drc_exclude.cells
+LIBRELANE_COMMON = config.tcl tracks.info no_synth.cells drc_exclude.cells
 
 # Where cpp syntax is followed, this is equivalent to cpp, but it does not
 # mangle non-C source files under the belief that they are actually C code.
@@ -456,10 +456,10 @@ ifneq (${KLAYOUT_DISABLED}, 1)
         TOOLS += klayout
 endif
 
-# OPENLANE_DISABLED = 0 | 1
-OPENLANE_DISABLED = @OPENLANE_DISABLED@
-ifneq (${OPENLANE_DISABLED}, 1)
-        TOOLS += openlane
+# LIBRELANE_DISABLED = 0 | 1
+LIBRELANE_DISABLED = @LIBRELANE_DISABLED@
+ifneq (${LIBRELANE_DISABLED}, 1)
+        TOOLS += librelane
 endif
 
 # QFLOW_DISABLED = 0 | 1
@@ -849,57 +849,57 @@ xschem-%: ${GF180MCU_PR_PATH}
 	./custom/scripts/fix_xschemrc.py ${XSCHEM_STAGING_$*}/xschemrc \
 		${GF180MCU$*} 2>&1 | tee -a ${GF180MCU$*}_make.log || true
 
-openlane-%: openlane/config.tcl openlane/gf180mcu_fd_sc_mcu7t5v0/config.tcl openlane/gf180mcu_fd_sc_mcu9t5v0/config.tcl
-	mkdir -p ${OPENLANETOP_STAGING_$*}
-	mkdir -p ${OPENLANE_STAGING_$*}
-	rm -rf ${OPENLANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0
-	rm -rf ${OPENLANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0
-	mkdir ${OPENLANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0
-	mkdir ${OPENLANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0
-	for file in ${OPENLANE_COMMON} ; do \
-		rm -f ${OPENLANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0/$$file ; \
+librelane-%: librelane/config.tcl librelane/gf180mcu_fd_sc_mcu7t5v0/config.tcl librelane/gf180mcu_fd_sc_mcu9t5v0/config.tcl
+	mkdir -p ${LIBRELANETOP_STAGING_$*}
+	mkdir -p ${LIBRELANE_STAGING_$*}
+	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0
+	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0
+	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0
+	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0
+	for file in ${LIBRELANE_COMMON} ; do \
+		rm -f ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-		rm -f ${OPENLANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+		rm -f ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0/$$file ; \
 	done
-	${CPP} ${GF180MCU$*_DEFS} openlane/config.tcl ${OPENLANE_STAGING_$*}/config.tcl
+	${CPP} ${GF180MCU$*_DEFS} librelane/config.tcl ${LIBRELANE_STAGING_$*}/config.tcl
 
-	for file in ${OPENLANE_COMMON} ; do \
-		${CPP} -quiet ${GF180MCU$*_DEFS} openlane/gf180mcu_fd_sc_mcu7t5v0/$$file \
-			${OPENLANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+		${CPP} -quiet ${GF180MCU$*_DEFS} librelane/gf180mcu_fd_sc_mcu7t5v0/$$file \
+			${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0/$$file ; \
 	done
-	for file in ${OPENLANE_COMMON} ; do \
-		${CPP} -quiet ${GF180MCU$*_DEFS} openlane/gf180mcu_fd_sc_mcu9t5v0/$$file \
-			${OPENLANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0/$$file ; \
+	for file in ${LIBRELANE_COMMON} ; do \
+		${CPP} -quiet ${GF180MCU$*_DEFS} librelane/gf180mcu_fd_sc_mcu9t5v0/$$file \
+			${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0/$$file ; \
 	done
 
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.min.*
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.nom.*
-	rm -f ${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max.*
+	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.gf180mcu$*.min.*
+	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.gf180mcu$*.nom.*
+	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max.*
 
-	if test -f openlane/rules.openrcx.gf180mcu$*.min.magic ; then \
-		${CPP} ${GF180MCU$*_DEFS} openlane/rules.openrcx.gf180mcu$*.min.magic \
-		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.min.magic ;\
+	if test -f librelane/rules.openrcx.gf180mcu$*.min.magic ; then \
+		${CPP} ${GF180MCU$*_DEFS} librelane/rules.openrcx.gf180mcu$*.min.magic \
+		${LIBRELANE_STAGING_$*}/rules.openrcx.gf180mcu$*.min.magic ;\
 	fi
-	if test -f openlane/rules.openrcx.gf180mcu$*.nom.magic ; then \
-		${CPP} ${GF180MCU$*_DEFS} openlane/rules.openrcx.gf180mcu$*.nom.magic \
-		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.nom.magic ;\
+	if test -f librelane/rules.openrcx.gf180mcu$*.nom.magic ; then \
+		${CPP} ${GF180MCU$*_DEFS} librelane/rules.openrcx.gf180mcu$*.nom.magic \
+		${LIBRELANE_STAGING_$*}/rules.openrcx.gf180mcu$*.nom.magic ;\
 	fi
-	if test -f openlane/rules.openrcx.gf180mcu$*.max.magic ; then \
-		${CPP} ${GF180MCU$*_DEFS} openlane/rules.openrcx.gf180mcu$*.max.magic \
-		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max.magic ;\
+	if test -f librelane/rules.openrcx.gf180mcu$*.max.magic ; then \
+		${CPP} ${GF180MCU$*_DEFS} librelane/rules.openrcx.gf180mcu$*.max.magic \
+		${LIBRELANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max.magic ;\
 	fi
-	if test -f openlane/rules.openrcx.gf180mcu$*.min ; then \
-		${CPP} ${GF180MCU$*_DEFS} openlane/rules.openrcx.gf180mcu$*.min \
-		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.min ;\
+	if test -f librelane/rules.openrcx.gf180mcu$*.min ; then \
+		${CPP} ${GF180MCU$*_DEFS} librelane/rules.openrcx.gf180mcu$*.min \
+		${LIBRELANE_STAGING_$*}/rules.openrcx.gf180mcu$*.min ;\
 	fi
-	if test -f openlane/rules.openrcx.gf180mcu$*.nom ; then \
-		${CPP} ${GF180MCU$*_DEFS} openlane/rules.openrcx.gf180mcu$*.nom \
-		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.nom ;\
+	if test -f librelane/rules.openrcx.gf180mcu$*.nom ; then \
+		${CPP} ${GF180MCU$*_DEFS} librelane/rules.openrcx.gf180mcu$*.nom \
+		${LIBRELANE_STAGING_$*}/rules.openrcx.gf180mcu$*.nom ;\
 	fi
-	if test -f openlane/rules.openrcx.gf180mcu$*.max ; then \
-		${CPP} ${GF180MCU$*_DEFS} openlane/rules.openrcx.gf180mcu$*.max \
-		${OPENLANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max ;\
+	if test -f librelane/rules.openrcx.gf180mcu$*.max ; then \
+		${CPP} ${GF180MCU$*_DEFS} librelane/rules.openrcx.gf180mcu$*.max \
+		${LIBRELANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max ;\
 	fi
 
 vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A ocd-io-build-A ocd-alpha-build-A sram-build-A ocd-sram-build-A digital-osu-build-A digital-avalon-build-A
@@ -1300,11 +1300,11 @@ digital-avalon-%:
 	cp -rp ${AVALON_REF_SOURCE}/spice ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3
 
 	# This library is done the right way and has its own librelane setup.
-	mkdir -p ${OPENLANETOP_STAGING_$*}
-	mkdir -p ${OPENLANE_STAGING_$*}
-	rm -rf ${OPENLANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
-	mkdir ${OPENLANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
-	cp -rp ${AVALON_TECH_SOURCE}/librelane/gf180mcu_as_sc_mcu7t3v3 ${OPENLANE_STAGING_$*}
+	mkdir -p ${LIBRELANETOP_STAGING_$*}
+	mkdir -p ${LIBRELANE_STAGING_$*}
+	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
+	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
+	cp -rp ${AVALON_TECH_SOURCE}/librelane/gf180mcu_as_sc_mcu7t3v3 ${LIBRELANE_STAGING_$*}
 
 io-%:
 	# Install custom additions to the I/O pad library

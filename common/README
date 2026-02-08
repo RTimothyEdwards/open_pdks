@@ -69,7 +69,7 @@ Introduction:
 	netgen	    netgen
 	klayout	    klayout
 	qflow	    qflow
-	openlane    openlane
+	librelane    librelane
 		
     Current IP library file formats supported in this version of open_pdks*:
 	Format	    Directory name
