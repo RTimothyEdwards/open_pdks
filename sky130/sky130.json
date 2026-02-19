@@ -94,11 +94,11 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "54435919abffb937387ec956209f9cf5fd2dfbee",
-        "magic": "f998f8ee6ff8845ca3f46a353896a54e874a8ebf",
+        "open_pdks": "e5d3206cc72b7afaed1e6972d59ea556511deba4",
+        "magic": "2f00f6d8f1a94d08c058cbd4f224cc734f3cea6a",
         "sky130_fd_pr": "c996d0e7417d7574714079050e2768da70f7fdca",
         "sky130_fd_io": "e60737bf624df95c211fe99c007ddec78e3e081d",
-        "sky130_fd_sc_hs": "c4cfcd760f1964f1670a1ed99c71c7c12b7ad49f",
+        "sky130_fd_sc_hs": "346df89ffcf87b0d02d62b90f81fb99143cc50c3",
         "sky130_fd_sc_ms": "3b95b8068f09b0f6dec28ae8d13f22ce980972ae",
         "sky130_fd_sc_ls": "dfbb5b4ae9d80bcec3f0aad1dd5a47a2400df010",
         "sky130_fd_sc_lp": "b93a1a75fa1b864872ebb0b078f6a2dd6e318d7c",
