@@ -3194,9 +3194,9 @@ drc
 	"Diffusion spacing < %d (DF.3a)"
  spacing alldiffmv,mvnvar,mvpvar alldiffmv,mvnvar,mvpvar 360 touching_ok \
 	"Diffusion spacing < %d (DF.3a)"
- spacing *mvpdiff,mvpvar,*srammvpdiff *mvnsd 360 touching_illegal \
+ spacing *mvpdiff,mvpvar,*srammvpdiff *mvnsd 360 touching_ok \
 	"Diffusion spacing to tap < %d (DF.3a)"
- spacing *mvndiff,mvnvar,*srammvndiff *mvpsd 360 touching_illegal \
+ spacing *mvndiff,mvnvar,*srammvndiff *mvpsd 360 touching_ok \
 	 "Diffusion spacing to tap < %d (DF.3a)"
  # Low voltage tap to high voltage diffusion has to clear DUALGATE-to-COMP spacing
  spacing *mvpdiff,mvpvar,*srammvpdiff *nsd 480 touching_illegal \
