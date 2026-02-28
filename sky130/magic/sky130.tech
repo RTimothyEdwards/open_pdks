@@ -6860,6 +6860,7 @@ wiring
 #endif (METAL5)
 
  contact pc  170  poly 50 80 li 0 80
+ contact xpc 170 xpolyres 50 80 li 0 80
  contact pdc 170 pdiff 40 60 li 0 80
  contact ndc 170 ndiff 40 60 li 0 80
  contact psc 170   psd 40 60 li 0 80
