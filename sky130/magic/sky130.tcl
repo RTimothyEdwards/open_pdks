@@ -7228,6 +7228,7 @@ proc sky130::sky130_fd_bs_flash__special_sonosfet_star_draw {parameters} {
 	    id_surround		1.355 \
 	    min_effl		0.185 \
 	    min_allc		0.26 \
+	    gate_to_diffcont	0.158 \
     ]
     set drawdict [dict merge $sky130::ruleset $newdict $parameters]
     return [sky130::mos_draw $drawdict]
