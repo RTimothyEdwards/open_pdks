@@ -66,14 +66,19 @@ set ::env(CELL_SPICE_MODELS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env
 set ::env(CELL_CDLS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/cdl/$::env(STD_CELL_LIBRARY).cdl"
 
 # Pad cells
-set ::env(PAD_LEFS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lef/*.lef"]
+set ::env(PAD_LEFS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lef/sky130_ef_io.lef"
 set ::env(PAD_GDS) "\
-    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/gds/sky130_fd_io.gds \
-    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/gds/sky130_ef_io.gds \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/gds/sky130_fd_io.gds\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/gds/sky130_ef_io.gds\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/gds/sky130_ef_io__connect_vcchib_vccd_and_vswitch_vddio_slice_20um.gds\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/gds/sky130_ef_io__connect_vdda_vddio_and_vssa_vssio_slice_20um.gds\
 "
-set ::env(PAD_VERILOG_MODELS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/verilog/$::env(PAD_CELL_LIBRARY)__blackbox_pp.v"
-set ::env(PAD_SPICE_MODELS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/spice/$::env(PAD_CELL_LIBRARY).spice"
-set ::env(PAD_CDLS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/cdl/*.cdl"]
+set ::env(PAD_VERILOG_MODELS) "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/verilog/sky130_fd_io__blackbox_pp.v\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/verilog/sky130_ef_io.v\
+"
+#set ::env(PAD_SPICE_MODELS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/spice/$::env(PAD_CELL_LIBRARY).spice"
+set ::env(PAD_CDLS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/cdl/sky130_ef_io.cdl"
 
 # magic setup
 set ::env(MAGIC_MAGICRC) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/TECHNAME.magicrc"
@@ -129,27 +134,27 @@ if { [file exists "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrc
 }
 
 # Extra PDN configs
-set ::env(FP_PDN_RAIL_LAYER) met1
-set ::env(FP_PDN_VERTICAL_LAYER) met4
-set ::env(FP_PDN_HORIZONTAL_LAYER) met5
-set ::env(FP_PDN_RAIL_OFFSET) 0
-set ::env(FP_PDN_VWIDTH) 1.6
-set ::env(FP_PDN_HWIDTH) 1.6
-set ::env(FP_PDN_VSPACING) 1.7
-set ::env(FP_PDN_HSPACING) 1.7
-set ::env(FP_PDN_VOFFSET) 16.32
-set ::env(FP_PDN_VPITCH) 153.6
-set ::env(FP_PDN_HOFFSET) 16.65
-set ::env(FP_PDN_HPITCH) 153.18
+set ::env(PDN_RAIL_LAYER) met1
+set ::env(PDN_VERTICAL_LAYER) met4
+set ::env(PDN_HORIZONTAL_LAYER) met5
+set ::env(PDN_RAIL_OFFSET) 0
+set ::env(PDN_VWIDTH) 1.6
+set ::env(PDN_HWIDTH) 1.6
+set ::env(PDN_VSPACING) 1.7
+set ::env(PDN_HSPACING) 1.7
+set ::env(PDN_VOFFSET) 16.32
+set ::env(PDN_VPITCH) 153.6
+set ::env(PDN_HOFFSET) 16.65
+set ::env(PDN_HPITCH) 153.18
 
 
 # Core Ring PDN defaults
-set ::env(FP_PDN_CORE_RING_VWIDTH) 1.6
-set ::env(FP_PDN_CORE_RING_HWIDTH) 1.6
-set ::env(FP_PDN_CORE_RING_VSPACING) 1.7
-set ::env(FP_PDN_CORE_RING_HSPACING) 1.7
-set ::env(FP_PDN_CORE_RING_VOFFSET) 6
-set ::env(FP_PDN_CORE_RING_HOFFSET) 6
+set ::env(PDN_CORE_RING_VWIDTH) 1.6
+set ::env(PDN_CORE_RING_HWIDTH) 1.6
+set ::env(PDN_CORE_RING_VSPACING) 1.7
+set ::env(PDN_CORE_RING_HSPACING) 1.7
+set ::env(PDN_CORE_RING_VOFFSET) 6
+set ::env(PDN_CORE_RING_HOFFSET) 6
 
 # PDN Macro blockages list
 set ::env(MACRO_BLOCKAGES_LAYER) "li1 met1 met2 met3 met4"

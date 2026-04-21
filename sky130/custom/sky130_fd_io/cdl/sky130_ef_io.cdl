@@ -324,6 +324,18 @@ Xsky130_fd_io__top_ground_hvc_base
 .ENDS
 
 *----------------------------------------------------------
+* sky130_ef_io__connect_vdda_vddio_and_vssa_vssio_slice_20um
+* A 20um-wide padframe filler that connects VDDA and VDDIO as well as
+* VSSA and VSSIO
+*----------------------------------------------------------
+
+.SUBCKT sky130_ef_io__connect_vdda_vddio_and_vssa_vssio_slice_20um
++ AMUXBUS_A AMUXBUS_B
++ VSSA VDDA VDDIO_Q VDDIO VCCD VSSIO VSSD VSSIO_Q
+* Bus filler has no active circuitry
+.ENDS
+
+*----------------------------------------------------------
 * sky130_ef_io__disconnect_vdda_slice_5um
 * A 5um-wide padframe filler that doesn't connect VDDA
 * through it

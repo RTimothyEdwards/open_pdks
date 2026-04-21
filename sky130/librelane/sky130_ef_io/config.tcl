@@ -26,13 +26,28 @@ set ::env(PAD_FILLERS) "\
 # Technology lib
 set ::env(PAD_LIBS) [dict create]
 dict set ::env(PAD_LIBS) "*_tt_025C_1v80" "\
-    [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/$::env(PAD_CELL_LIBRARY)__*_tt_025C_1v80_3v30*.lib] \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__vccd_lvc_clamped_pad_tt_025C_1v80_3v30_3v30.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__vssd_lvc_clamped_pad_tt_025C_1v80_3v30.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__vddio_hvc_clamped_pad_tt_025C_1v80_3v30_3v30.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__vssio_hvc_clamped_pad_tt_025C_1v80_3v30_3v30.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__gpiov2_pad_tt_tt_025C_1v80_3v30.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/slices_stubs.lib \
 "
 dict set ::env(PAD_LIBS) "*_ff_n40C_1v95" "\
-    [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/$::env(PAD_CELL_LIBRARY)__*_ff_n40C_1v95_5v50*.lib] \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__vccd_lvc_clamped_pad_ff_n40C_1v95_5v50_5v50.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__vssd_lvc_clamped_pad_ff_n40C_1v95_5v50.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__vddio_hvc_clamped_pad_ff_n40C_1v95_5v50_5v50.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__vssio_hvc_clamped_pad_ff_n40C_1v95_5v50_5v50.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__gpiov2_pad_ff_ff_n40C_1v95_5v50.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/slices_stubs.lib \
 "
 dict set ::env(PAD_LIBS) "*_ss_100C_1v60" "\
-    [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/$::env(PAD_CELL_LIBRARY)__*_ss_100C_1v60_3v00*.lib] \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__vccd_lvc_clamped_pad_ss_100C_1v60_3v00_3v00.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__vssd_lvc_clamped_pad_ss_100C_1v60_3v00.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__vddio_hvc_clamped_pad_ss_100C_1v60_3v00_3v00.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__vssio_hvc_clamped_pad_ss_100C_1v60_3v00_3v00.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/sky130_ef_io__gpiov2_pad_ss_ss_100C_1v60_3v00.lib \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lib/slices_stubs.lib \
 "
 
 # Pad bondpad information (if needed)
@@ -44,12 +59,11 @@ dict set ::env(PAD_LIBS) "*_ss_100C_1v60" "\
 
 # Pad io terminals (if needed)
 set ::env(PAD_PLACE_IO_TERMINALS) "\
-    sky130_fd_io__top_gpiov2/PAD\
     sky130_ef_io__gpiov2_pad/PAD\
-    sky130_ef_io__vccd_lvc_pad/VCCD_PAD\
-    sky130_ef_io__vssd_lvc_pad/VSSD_PAD\
-    sky130_ef_io__vddio_lvc_pad/VDDIO_PAD\
-    sky130_ef_io__vssio_lvc_pad/VSSIO_PAD\
+    sky130_ef_io__vccd_lvc_clamped_pad/VCCD_PAD\
+    sky130_ef_io__vssd_lvc_clamped_pad/VSSD_PAD\
+    sky130_ef_io__vddio_hvc_clamped_pad/VDDIO_PAD\
+    sky130_ef_io__vssio_hvc_clamped_pad/VSSIO_PAD\
 "
 
 # Sealring is added afterwards

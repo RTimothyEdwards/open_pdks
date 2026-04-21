@@ -9,6 +9,28 @@
 // Written by Tim Edwards 
 //-----------------------------------------------------------------------
 
+module sky130_ef_io__connect_vcchib_vccd_and_vswitch_vddio_slice_20um(VCCHIB, VCCD, VSWITCH, VDDIO);
+  inout VCCHIB;
+  inout VCCD;
+  inout VSWITCH;
+  inout VDDIO;
+
+  assign VCCHIB = VCCD;
+  assign VSWITCH = VDDIO;
+
+endmodule
+
+module sky130_ef_io__connect_vdda_vddio_and_vssa_vssio_slice_20um(VDDA, VDDIO, VSSA, VSSIO);
+  inout VDDA;
+  inout VDDIO;
+  inout VSSA;
+  inout VSSIO;
+
+  assign VDDA = VDDIO;
+  assign VSSA = VSSIO;
+
+endmodule
+
 module sky130_ef_io__vccd_hvc_pad (AMUXBUS_A, AMUXBUS_B, DRN_HVC,
 	SRC_BDY_HVC, VSSA, VDDA, VSWITCH, VDDIO_Q, VCCHIB, VDDIO, VCCD,
 	VCCD_PAD, VSSIO, VSSD, VSSIO_Q
