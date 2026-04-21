@@ -134,7 +134,7 @@ library ("sky130_ef_io__gpiov2_pad_tt_tt_025C_1v80_3v30") {
 		variable_2 : "total_output_net_capacitance";
 		index_2("1, 2, 3, 4, 5, 6, 7");
 	}
-	 type (sky130_fd_io__top_gpiov2_DM_bus) {
+	 type (sky130_ef_io__gpiov2_pad_dm_bus) {
 		 base_type : array; 
 		 data_type : bit; 
 		 bit_width : 3 ; 
@@ -142,7 +142,7 @@ library ("sky130_ef_io__gpiov2_pad_tt_tt_025C_1v80_3v30") {
 		 bit_to    : 0; 
 		 downto    : true; 
 	 } 
-	cell ("sky130_ef_io__gpiov2_pad_wrapped") {
+	cell ("sky130_ef_io__gpiov2_pad") {
 			is_macro_cell : true;
 dont_use : true;
 		interface_timing : true;
@@ -223,10 +223,10 @@ dont_use : true;
 			value : "8.7157900";
 		}
 	bus(DM) { 
-		 bus_type           : sky130_fd_io__top_gpiov2_DM_bus;
+		 bus_type           : sky130_ef_io__gpiov2_pad_dm_bus;
 		 direction          : input; 
-		 related_power_pin  : vccd; 
-		 related_ground_pin : vssd; 
+		 related_power_pin  : VCCD; 
+		 related_ground_pin : VSSD; 
 		pin ("DM[2]") {
 			 input_voltage : GENERAL_CORE_VOLTAGE;
 			direction : "input";
@@ -615,7 +615,7 @@ dont_use : true;
 					values("0.0173449, 0.0173256, 0.0173064, 0.0172998, 0.0172935, 0.0172869, 0.0172803");
 				}
 			}
-			timing() { /* check skew between enable_vddio and ENABLE_H */ 
+			timing() { /* check skew between enable_vddio and enable_h */ 
 				related_pin : "ENABLE_H";
 				timing_type : non_seq_hold_falling;
 				fall_constraint (scalar) { 
@@ -982,7 +982,7 @@ dont_use : true;
 					values("0.0366676, 0.0366498, 0.0366320, 0.0365777, 0.0365256, 0.0364713, 0.0364170");
 				}
 			}
-			/* Copied from non_seq_hold_falling arc in pin DM[2] group */
+			/* Copied from non_seq_hold_falling arc in pin dm[2] group */
 			timing () {
 				related_pin : "DM[2]";
 				timing_type : "non_seq_setup_rising";
@@ -1000,7 +1000,7 @@ dont_use : true;
 					  "0.3700116, 0.5270450, 0.5767744, 0.6310783, 0.7081846, 0.6697884, 0.6778880");
 				}
 			}
-			/* Copied from non_seq_setup_falling arc in pin DM[2] group */
+			/* Copied from non_seq_setup_falling arc in pin dm[2] group */
 			timing () {
 				related_pin : "DM[2]";
 				timing_type : "non_seq_hold_rising";
@@ -1126,7 +1126,7 @@ dont_use : true;
 					  "0.3715375, 0.5205745, 0.5751562, 0.6264620, 0.6864348, 0.7101374, 0.7426776");
 				}
 			}
-			/* Copied from non_seq_setup_falling arc in pin DM[1] group */
+			/* Copied from non_seq_setup_falling arc in pin dm[1] group */
 			timing () {
 				related_pin : "DM[1]";
 				timing_type : "non_seq_hold_rising";
@@ -1144,7 +1144,7 @@ dont_use : true;
 					  "-0.1203450, -0.2643793, -0.3281175, -0.3754244, -0.4294044, -0.4165306, -0.4896010");
 				}
 			}
-			/* Copied from non_seq_hold_falling arc in pin DM[1] group */
+			/* Copied from non_seq_hold_falling arc in pin dm[1] group */
 			timing () {
 				related_pin : "DM[1]";
 				timing_type : "non_seq_setup_rising";
@@ -1234,7 +1234,7 @@ dont_use : true;
 					  "-0.1615437, -0.3208078, -0.3813414, -0.4097693, -0.4607976, -0.5221615, -0.5408909");
 				}
 			}
-			/* Copied from non_seq_hold_falling arc in pin DM[0] group */
+			/* Copied from non_seq_hold_falling arc in pin dm[0] group */
 			timing () {
 				related_pin : "DM[0]";
 				timing_type : "non_seq_setup_rising";
@@ -1252,7 +1252,7 @@ dont_use : true;
 					  "0.3791668, 0.5411765, 0.5849870, 0.6418756, 0.7173780, 0.7432944, 0.7135913");
 				}
 			}
-			/* Copied from non_seq_setup_falling arc in pin DM[0] group */
+			/* Copied from non_seq_setup_falling arc in pin dm[0] group */
 			timing () {
 				related_pin : "DM[0]";
 				timing_type : "non_seq_hold_rising";
@@ -1531,7 +1531,7 @@ dont_use : true;
 					values("0.9296213, 7.4737199, 14.0178180, 14.2378060, 14.4489940, 14.6689820, 14.8889700");
 				}
 			}
-			timing() { /* check skew between enable_vddio and ENABLE_H */ 
+			timing() { /* check skew between enable_vddio and enable_h */ 
 				related_pin : "ENABLE_VDDIO";
 				timing_type : non_seq_hold_rising;
 				rise_constraint (scalar) { 
@@ -1773,7 +1773,6 @@ dont_use : true;
 					  "4.1304273, 4.1417156, 4.1412004, 4.1439864, 4.1554633, 4.1365271, 4.1505120");
 				}
 			}
-/*  End merge */
 
 			internal_power () {
 				related_pin : "PAD";
@@ -1852,9 +1851,6 @@ dont_use : true;
 					  "3.1965313, 3.2443095, 3.3993604, 3.8396798, 4.4811615, 4.8252010, 4.9301422");
 				}
 			}
-/* Merged from 
-/* ./work_vcchib/sky130_fd_io__top_gpiov2_tt_tt_1p80v_x_3p30v_025C.lib 
-*/
 			timing () {
 				related_pin : "PAD";
 				timing_type : "combinational";
@@ -1926,7 +1922,6 @@ dont_use : true;
 					  "0.0948169, 0.1066484, 0.1309796, 0.1769919, 0.2656168, 0.4628710, 0.9293984");
 				}
 			}
-/*  End merge */
 
 			timing () {
 				related_pin : "PAD";
@@ -2129,9 +2124,6 @@ dont_use : true;
 			function : "(PAD&!INP_DIS)";
 			max_capacitance : 1.28175;
 			max_transition : 3.754211;
-/* Merged from 
-/* ./work_vcchib/sky130_fd_io__top_gpiov2_tt_tt_1p80v_x_3p30v_025C.lib 
-*/
 			internal_power () {
 				related_pin : "PAD";
 				when : "(  IB_MODE_SEL )";
@@ -2158,7 +2150,6 @@ dont_use : true;
 					  "4.1234303, 4.1428909, 4.1097802, 4.0876877, 4.0769974, 4.0656727, 4.0679135");
 				}
 			}
-/*  End merge */
 
 			internal_power () {
 				related_pin : "PAD";
@@ -2237,9 +2228,6 @@ dont_use : true;
 					  "4.4919471, 4.4430735, 4.4120670, 4.4289212, 4.5174259, 4.5002504, 4.4669988");
 				}
 			}
-/* Merged from 
-/* ./work_vcchib/sky130_fd_io__top_gpiov2_tt_tt_1p80v_x_3p30v_025C.lib 
-*/
 			timing () {
 				related_pin : "PAD";
 				timing_type : "combinational";
@@ -2311,7 +2299,6 @@ dont_use : true;
 					  "0.1043101, 0.1149547, 0.1433221, 0.2157086, 0.4079931, 0.9745601, 2.6994091");
 				}
 			}
-/*  End merge */
 
 			timing () {
 				related_pin : "PAD";
