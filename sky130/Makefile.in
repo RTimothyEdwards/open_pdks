@@ -1247,7 +1247,7 @@ xschem-%: ${XSCHEM_PATH}
 		fi ; \
 	fi
 
-librelane-%: librelane/config.tcl librelane/sky130_fd_sc_hd/config.tcl librelane/sky130_fd_sc_hs/config.tcl librelane/sky130_fd_sc_ms/config.tcl librelane/sky130_fd_sc_ls/config.tcl librelane/sky130_fd_sc_hdll/config.tcl librelane/sky130_osu_sc_t18/config.tcl
+librelane-%: librelane/config.tcl librelane/sky130_fd_sc_hd/config.tcl librelane/sky130_fd_sc_hs/config.tcl librelane/sky130_fd_sc_ms/config.tcl librelane/sky130_fd_sc_ls/config.tcl librelane/sky130_fd_sc_hdll/config.tcl librelane/sky130_osu_sc_t18/config.tcl librelane/sky130_ef_io/config.tcl
 	mkdir -p ${LIBRELANETOP_STAGING_$*}
 	mkdir -p ${LIBRELANE_STAGING_$*}
 	rm -rf ${LIBRELANE_STAGING_$*}/custom_cells/*
@@ -1258,6 +1258,7 @@ librelane-%: librelane/config.tcl librelane/sky130_fd_sc_hd/config.tcl librelane
 	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hdll
 	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hvl
 	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_osu_sc_t18
+	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_ef_io
 	rm -f ${LIBRELANE_STAGING_$*}/common_pdn.info
 	rm -f ${LIBRELANE_STAGING_$*}/config.tcl
 	for file in ${LIBRELANE_COMMON} ; do \
@@ -1280,6 +1281,9 @@ librelane-%: librelane/config.tcl librelane/sky130_fd_sc_hd/config.tcl librelane
 	done
 	for file in ${LIBRELANE_COMMON} ; do \
 	    rm -f ${LIBRELANE_STAGING_$*}/sky130_osu_sc_t18/$$file ; \
+	done
+	for file in ${LIBRELANE_COMMON} ; do \
+	    rm -f ${LIBRELANE_STAGING_$*}/sky130_ef_io/$$file ; \
 	done
 
 	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.min.magic
@@ -1355,6 +1359,9 @@ librelane-%: librelane/config.tcl librelane/sky130_fd_sc_hd/config.tcl librelane
 		${LIBRELANE_STAGING_$*}/sky130_osu_sc_t18/config.tcl
 	${CPP} -quiet ${SKY130$*_DEFS} librelane/sky130_osu_sc_t18/tracks.info \
 		${LIBRELANE_STAGING_$*}/sky130_osu_sc_t18/tracks.info
+
+	${CPP} -quiet ${SKY130$*_DEFS} librelane/sky130_ef_io/config.tcl \
+		${LIBRELANE_STAGING_$*}/sky130_ef_io/config.tcl
 
 # NOTE: ReRAM is not in variant A so there is no reram-build-A.
 vendor-A: primitive-build-A io-build-A sram-build-A sram-space-build-A digital-hd-build-A digital-hvl-build-A digital-hdll-build-A digital-lp-build-A digital-hs-build-A digital-ms-build-A digital-ls-build-A alpha-build-A osu-t12-build-A osu-t15-build-A osu-t18-build-A

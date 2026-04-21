@@ -1,11 +1,32 @@
 set current_folder [file dirname [file normalize [info script]]]
 # Technology lib
 
-set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_osu_sc_TT_1P8_25C.lib"
-set ::env(LIB_FASTEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_osu_sc_FF_1P8_25C.lib"
-set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_osu_sc_SS_1P8_25C.lib"
+# Corners
+set ::env(STA_CORNERS) "\
+    nom_TT_1P8_25C \
+    nom_FF_1P8_25C \
+    nom_SS_1P8_25C \
+    min_TT_1P8_25C \
+    min_FF_1P8_25C \
+    min_SS_1P8_25C \
+    max_TT_1P8_25C \
+    max_FF_1P8_25C \
+    max_SS_1P8_25C \
+"
 
-set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
+set ::env(DEFAULT_CORNER) "nom_TT_1P8_25C"
+
+# Technology lib
+set ::env(CELL_LIBS) [dict create]
+dict set ::env(CELL_LIBS) "*_TT_1P8_25C" "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)_TT_1P8_25C.lib\
+"
+dict set ::env(CELL_LIBS) "*_FF_1P8_25C" "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)_FF_1P8_25C.lib\
+"
+dict set ::env(CELL_LIBS) "*_SS_1P8_25C" "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)_SS_1P8_25C.lib\
+"
 
 # Placement site for core cells
 # This can be found in the technology lef (SITE)

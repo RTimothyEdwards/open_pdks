@@ -1,14 +1,35 @@
 set current_folder [file dirname [file normalize [info script]]]
 # Technology lib
 
-set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_fd_sc_hvl__tt_025C_3v30.lib"
-set ::env(LIB_FASTEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_fd_sc_hvl__ff_n40C_5v50.lib"
-set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/sky130_fd_sc_hvl__ss_150C_1v65.lib"
-
-set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
-
 set ::env(VDD_PIN_VOLTAGE) "3.30"
 set ::env(GND_PIN_VOLTAGE) "0.00"
+
+# Corners
+set ::env(STA_CORNERS) "\
+    nom_tt_025C_3v30 \
+    nom_ss_150C_1v65 \
+    nom_ff_n40C_5v50 \
+    min_tt_025C_3v30 \
+    min_ss_150C_1v65 \
+    min_ff_n40C_5v50 \
+    max_tt_025C_3v30 \
+    max_ss_150C_1v65 \
+    max_ff_n40C_5v50 \
+"
+
+set ::env(DEFAULT_CORNER) "nom_tt_025C_3v30"
+
+# Technology lib
+set ::env(CELL_LIBS) [dict create]
+dict set ::env(CELL_LIBS) "*_tt_025C_3v30" "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__tt_025C_3v30.lib\
+"
+dict set ::env(CELL_LIBS) "*_ff_n40C_5v50" "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__ff_n40C_5v50.lib\
+"
+dict set ::env(CELL_LIBS) "*_ss_150C_1v65" "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__ss_150C_1v65.lib\
+"
 
 # MUX4 mapping
 set ::env(SYNTH_MUX4_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/mux4_map.v"
