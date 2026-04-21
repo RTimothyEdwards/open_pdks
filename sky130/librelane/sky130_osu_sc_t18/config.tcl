@@ -57,9 +57,6 @@ set ::env(GND_PIN) "gnd"
 set ::env(CTS_ROOT_BUFFER) CLKBUFX1
 set ::env(CELL_CLK_PORT) CK
 
-# Placement defaults
-set ::env(PL_LIB) $::env(LIB_TYPICAL)
-
 # Fillcell insertion - do decap cell
 set ::env(FILL_CELL) "FILLX"
 set ::env(DECAP_CELL) ""

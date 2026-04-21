@@ -31,9 +31,6 @@ set ::env(SYNTH_TIELO_PORT) "sky130_fd_sc_ls__conb_1 LO"
 set ::env(CTS_ROOT_BUFFER) sky130_fd_sc_ls__clkbuf_16
 set ::env(CELL_CLK_PORT) CLK
 
-# Placement defaults
-set ::env(PL_LIB) $::env(LIB_TYPICAL)
-
 # Fillcell insertion
 set ::env(FILL_CELL) "sky130_fd_sc_ls__fill*"
 set ::env(DECAP_CELL) "sky130_fd_sc_ls__decap*"
