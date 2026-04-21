@@ -5,8 +5,9 @@ set ::env(DEF_UNITS_PER_MICRON) 1000
 if { ![info exist ::env(STD_CELL_LIBRARY)] } {
 	set ::env(STD_CELL_LIBRARY) sky130_fd_sc_hd
 }
-if { ![info exist ::env(STD_CELL_LIBRARY_OPT)] } {
-	set ::env(STD_CELL_LIBRARY_OPT) sky130_fd_sc_hd
+
+if { ![info exist ::env(PAD_CELL_LIBRARY)] } {
+	set ::env(PAD_CELL_LIBRARY) sky130_ef_io
 }
 
 # Placement site for core cells
@@ -20,43 +21,59 @@ set ::env(GND_PIN_VOLTAGE) "0.00"
 set ::env(STD_CELL_POWER_PINS) "VPWR VPB"
 set ::env(STD_CELL_GROUND_PINS) "VGND VNB"
 
+
 # Technology LEF
-set ::env(TECH_LEF) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/$::env(STD_CELL_LIBRARY)__nom.tlef"
-set ::env(TECH_LEF_MIN) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/$::env(STD_CELL_LIBRARY)__min.tlef"
-set ::env(TECH_LEF_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/$::env(STD_CELL_LIBRARY)__max.tlef"
-set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lef/*.lef"]
-set ::env(GDS_FILES) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/gds/*.gds"]
-set ::env(STD_CELL_LIBRARY_CDL)	"$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/cdl/$::env(STD_CELL_LIBRARY).cdl"
+set ::env(TECH_LEFS) [dict create]
+dict set ::env(TECH_LEFS) "nom_*" [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/$::env(STD_CELL_LIBRARY)__nom.tlef"]
+dict set ::env(TECH_LEFS) "min_*" [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/$::env(STD_CELL_LIBRARY)__min.tlef"]
+dict set ::env(TECH_LEFS) "max_*" [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/$::env(STD_CELL_LIBRARY)__max.tlef"]
 
-set ::env(GPIO_PADS_LEF) "\
-	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lef/sky130_fd_io.lef\
-	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/lef/sky130_ef_io.lef\
+# Corners
+set ::env(STA_CORNERS) "\
+    nom_tt_025C_1v80 \
+    nom_ss_100C_1v60 \
+    nom_ff_n40C_1v95 \
+    min_tt_025C_1v80 \
+    min_ss_100C_1v60 \
+    min_ff_n40C_1v95 \
+    max_tt_025C_1v80 \
+    max_ss_100C_1v60 \
+    max_ff_n40C_1v95 \
 "
-# sky130_fd_io.v is not parsable by yosys, so it cannot be included it here just yet...
-set ::env(GPIO_PADS_VERILOG) "\
-	$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/verilog/sky130_ef_io.v
+
+set ::env(DEFAULT_CORNER) "nom_tt_025C_1v80"
+
+# Check all timing corners
+set ::env(TIMING_VIOLATION_CORNERS) "*"
+
+# Technology lib
+set ::env(CELL_LIBS) [dict create]
+dict set ::env(CELL_LIBS) "*_tt_025C_1v80" "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__tt_025C_1v80.lib\
+"
+dict set ::env(CELL_LIBS) "*_ff_n40C_1v95" "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__ff_n40C_1v95.lib\
+"
+dict set ::env(CELL_LIBS) "*_ss_100C_1v60" "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__ss_100C_1v60.lib\
 "
 
-set ::env(GPIO_PADS_PREFIX) "sky130_fd_io sky130_ef_io"
+# Standard cells
+set ::env(CELL_LEFS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lef/*.lef"]
+set ::env(CELL_GDS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/gds/*.gds"]
+set ::env(CELL_VERILOG_MODELS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/verilog/$::env(STD_CELL_LIBRARY).v"
+set ::env(CELL_SPICE_MODELS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/spice/*.spice"]
+set ::env(CELL_CDLS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/cdl/$::env(STD_CELL_LIBRARY).cdl"
 
-# Optimization library
-set ::env(TECH_LEF_OPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/techlef/$::env(STD_CELL_LIBRARY_OPT)__nom.tlef"
-set ::env(CELLS_LEF_OPT) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/lef/*.lef"]
-set ::env(GDS_FILES_OPT) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/gds/*.gds"]
-set ::env(STD_CELL_LIBRARY_OPT_CDL)	"$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY_OPT)/cdl/$::env(STD_CELL_LIBRARY_OPT).cdl"
-
-# Optimization library slowest corner
-set tmp $::env(STD_CELL_LIBRARY)
-set ::env(STD_CELL_LIBRARY) $::env(STD_CELL_LIBRARY_OPT)
-source "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY_OPT)/config.tcl"
-set ::env(LIB_SLOWEST_OPT) $::env(LIB_SLOWEST)
-set ::env(STD_CELL_LIBRARY) $tmp
-source "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/config.tcl"
-
-set ::env(GPIO_PADS_LEF_CORE_SIDE) "\
-	$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/custom_cells/lef/sky130_fd_io_core.lef\
-	$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/custom_cells/lef/sky130_ef_io_core.lef\
+# Pad cells
+set ::env(PAD_LEFS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lef/*.lef"]
+set ::env(PAD_GDS) "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/gds/sky130_fd_io.gds \
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/gds/sky130_ef_io.gds \
 "
+set ::env(PAD_VERILOG_MODELS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/verilog/$::env(PAD_CELL_LIBRARY)__blackbox_pp.v"
+set ::env(PAD_SPICE_MODELS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/spice/$::env(PAD_CELL_LIBRARY).spice"
+set ::env(PAD_CDLS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/cdl/*.cdl"]
 
 # magic setup
 set ::env(MAGIC_MAGICRC) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/TECHNAME.magicrc"
@@ -100,9 +117,6 @@ set ::env(NO_SYNTH_CELL_LIST) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/
 
 # Default DRC Exclude List
 set ::env(DRC_EXCLUDE_CELL_LIST) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/drc_exclude.cells"
-
-# DRC Exclude List for Optimization library
-set ::env(DRC_EXCLUDE_CELL_LIST_OPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY_OPT)/drc_exclude.cells"
 
 # Open-RCX Rules File
 set ::env(RCX_RULES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).nom.spef_extractor"
