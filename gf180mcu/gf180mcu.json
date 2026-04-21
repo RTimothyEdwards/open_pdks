@@ -96,7 +96,7 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "228083a99d4b9963c256f39d8d323deb8fd463ac",
+        "open_pdks": "bb56b62f00efee618141e8373b7ebad721a3b45b",
         "magic": "67c6ed939514e537773f9f01cc2ecca5c3400c44",
         "gf180mcu_pdk": "a897aa30369d3bcec87d9d50ce9b01f320f854ef",
         "gf180mcu_fd_pr": "216e518bf74c8bbcce31ba06802000de998fe3f0",
