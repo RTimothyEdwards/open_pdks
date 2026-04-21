@@ -13,31 +13,68 @@ set ::env(STD_CELL_GROUND_PINS) "VSS VPW"
 if { ![info exist ::env(STD_CELL_LIBRARY)] } {
     set ::env(STD_CELL_LIBRARY) gf180mcu_fd_sc_mcu7t5v0
 }
-if { ![info exist ::env(STD_CELL_LIBRARY_OPT)] } {
-    set ::env(STD_CELL_LIBRARY_OPT) gf180mcu_fd_sc_mcu7t5v0
+
+if { ![info exist ::env(PAD_CELL_LIBRARY)] } {
+    set ::env(PAD_CELL_LIBRARY) gf180mcu_fd_io
 }
 
-# Lib Files
-set ::env(LIB_SYNTH) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__tt_025C_5v00.lib"
-set ::env(LIB_FASTEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__ff_n40C_5v50.lib"
-set ::env(LIB_SLOWEST) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__ss_125C_4v50.lib"
 
-set ::env(LIB_TYPICAL) $::env(LIB_SYNTH)
+# Technology lib
+set ::env(LIB) [dict create]
+dict set ::env(LIB) *_tt_025C_5v00 "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__tt_025C_5v00.lib\
+    [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/*__tt_025C_5v00.lib]\
+"
+dict set ::env(LIB) *_ff_n40C_5v50 "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__ff_n40C_5v50.lib\
+    [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/*__ff_n40C_5v50.lib]\
+"
+dict set ::env(LIB) *_ss_125C_4v50 "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__ss_125C_4v50.lib\
+    [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/*__ss_125C_4v50.lib]\
+"
+
+# Corners
+set ::env(STA_CORNERS) "\
+nom_tt_025C_5v00 \
+nom_ss_125C_4v50 \
+nom_ff_n40C_5v50 \
+min_tt_025C_5v00 \
+min_ss_125C_4v50 \
+min_ff_n40C_5v50 \
+max_tt_025C_5v00 \
+max_ss_125C_4v50 \
+max_ff_n40C_5v50 \
+"
+
+set ::env(DEFAULT_CORNER) "nom_tt_025C_5v00"
+
+set ::env(TIMING_VIOLATION_CORNERS) "*tt*"
 
 # Technology LEF
-set ::env(TECH_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*__nom.tlef"]
-set ::env(TECH_LEF_MIN)  [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*__min.tlef"]
-set ::env(TECH_LEF_MAX)  [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*__max.tlef"]
-set ::env(CELLS_LEF) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lef/*.lef"]
-set ::env(GDS_FILES) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/gds/*.gds"]
-set ::env(STD_CELL_LIBRARY_CDL)	"$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/cdl/$::env(STD_CELL_LIBRARY).cdl"
-set ::env(GPIO_PADS_LEF) "\
-    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/gf180mcu_io/lef/GF018green_ipio_5p0c_75_5lm.lef
-"
-set ::env(GPIO_PADS_VERILOG) "\
-    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/gf180mcu_io/verilog/GF018green_ipio_5p0c_75_5lm.v
-"
+set ::env(TECH_LEFS) [dict create]
+dict set ::env(TECH_LEFS) nom_* [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*__nom.tlef"]
+dict set ::env(TECH_LEFS) min_* [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*__min.tlef"]
+dict set ::env(TECH_LEFS) max_* [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/techlef/*__max.tlef"]
 
+# Standard cells
+set ::env(CELL_LEFS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lef/*.lef"]
+set ::env(CELL_GDS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/gds/*.gds"]
+set ::env(CELL_VERILOG_MODELS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/verilog/$::env(STD_CELL_LIBRARY).v"
+set ::env(CELL_SPICE_MODELS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/spice/$::env(STD_CELL_LIBRARY).spice"
+set ::env(CELL_CDLS)	"$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/cdl/$::env(STD_CELL_LIBRARY).cdl"
+
+# Pad cells
+set ::env(PAD_LEFS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lef/*.lef"]
+# Unfortunately, the foundry library must be read in before the ef or ws library (ghost cell)
+set ::env(PAD_GDS) "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/gds/gf180mcu_fd_io.gds\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/gds/gf180mcu_ef_io.gds\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/gds/gf180mcu_ws_io.gds\
+"
+set ::env(PAD_VERILOG_MODELS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/verilog/*__blackbox.v"]
+set ::env(PAD_SPICE_MODELS) [glob "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/spice/*.spice"]
+set ::env(PAD_CDLS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/cdl/$::env(PAD_CELL_LIBRARY).cdl"
 
 # Latch mapping
 set ::env(SYNTH_LATCH_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/latch_map.v"
@@ -55,34 +92,33 @@ set ::env(RIPPLE_CARRY_ADDER_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librel
 set ::env(CARRY_SELECT_ADDER_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/csa_map.v"
 
 # Default No Synth List
-set ::env(NO_SYNTH_CELL_LIST) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/no_synth.cells"
+set ::env(SYNTH_EXCLUDED_CELL_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/synth_exclude.cells"
 
 # Default DRC Exclude List
-set ::env(DRC_EXCLUDE_CELL_LIST) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/drc_exclude.cells"
-
-# DRC Exclude List for Optimization library
-set ::env(DRC_EXCLUDE_CELL_LIST_OPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY_OPT)/drc_exclude.cells"
+set ::env(PNR_EXCLUDED_CELL_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/pnr_exclude.cells"
 
 # Open-RCX Rules File
 set ::env(RCX_RULES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rcx_rules.info"
 
 # Floorplanning
-## Layer Info
+
+# I/O Layer info
 set ::env(FP_IO_HLAYER) "Metal3"
 set ::env(FP_IO_VLAYER) "Metal2"
-set ::env(FP_PDN_RAIL_LAYER) "Metal1"
-set ::env(FP_PDN_VERTICAL_LAYER) "Metal4"
-set ::env(FP_PDN_HORIZONTAL_LAYER) "Metal5"
+
+# PDN Macro blockages list
 set ::env(MACRO_BLOCKAGES_LAYER) "Metal1 Metal2 Metal3 Metal4 Metal5"
-set ::env(DATA_WIRE_RC_LAYER) "Metal2"
-set ::env(CLOCK_WIRE_RC_LAYER) "Metal4"
 
 ## Tap Cell Dist
 set ::env(FP_TAPCELL_DIST) 20
 
-## Extra PDN configs
-
+# Extra PDN configs
+set ::env(FP_PDN_RAIL_LAYER) "Metal1"
 set ::env(FP_PDN_RAIL_OFFSET) 0
+
+set ::env(FP_PDN_VERTICAL_LAYER) "Metal4"
+set ::env(FP_PDN_HORIZONTAL_LAYER) "Metal5"
+
 set ::env(FP_PDN_VWIDTH) 1.6
 set ::env(FP_PDN_HWIDTH) 1.6
 set ::env(FP_PDN_VSPACING) 1.7
@@ -123,23 +159,73 @@ set ::env(MAGIC_TECH_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/$::env(
 ## Klayout
 set ::env(KLAYOUT_TECH) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/gf180mcu.lyt"
 set ::env(KLAYOUT_PROPERTIES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/gf180mcu.lyp"
-set ::env(KLAYOUT_DRC_TECH_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/drc/gf180mcu.drc"
 set ::env(KLAYOUT_DEF_LAYER_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/gf180mcu.map"
+
+set ::env(KLAYOUT_DRC_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/drc/gf180mcu.drc"
+set ::env(KLAYOUT_DRC_OPTIONS) [dict create]
+dict set ::env(KLAYOUT_DRC_OPTIONS) feol true
+dict set ::env(KLAYOUT_DRC_OPTIONS) beol true
+dict set ::env(KLAYOUT_DRC_OPTIONS) dummy true
+dict set ::env(KLAYOUT_DRC_OPTIONS) dummy_no_sub_prev true
+dict set ::env(KLAYOUT_DRC_OPTIONS) offgrid true
+dict set ::env(KLAYOUT_DRC_OPTIONS) conn_drc true
+dict set ::env(KLAYOUT_DRC_OPTIONS) wedge true
+dict set ::env(KLAYOUT_DRC_OPTIONS) run_mode "deep"
+
+set ::env(KLAYOUT_DENSITY_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/drc/rule_decks/density.drc"
+set ::env(KLAYOUT_DENSITY_OPTIONS) [dict create]
+dict set ::env(KLAYOUT_DENSITY_OPTIONS) run_mode "tiling"
+
+set ::env(KLAYOUT_ANTENNA_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/drc/rule_decks/antenna.drc"
+set ::env(KLAYOUT_ANTENNA_OPTIONS) [dict create]
+dict set ::env(KLAYOUT_ANTENNA_OPTIONS) run_mode "deep"
+
+set ::env(KLAYOUT_FILLER_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/drc/filler_generation/fill_all.rb"
+set ::env(KLAYOUT_FILLER_OPTIONS) [dict create]
+
+set ::env(KLAYOUT_LVS_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/lvs/gf180mcu.lvs"
+set ::env(KLAYOUT_LVS_OPTIONS) [dict create run_mode deep]
 
 ## Netgen
 set ::env(NETGEN_SETUP_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/netgen/$::env(PDK)_setup.tcl"
 
-# # Temporary Override(s) Because OpenROAD can't read techlefs properly
-# # Layer RC Values
-# set ::env(LAYERS_RC) "\
-#     Metal1 0.090000 0.0000394,\
-#     Metal2 0.090000 0.0000394,\
-#     Metal3 0.090000 0.0000394,\
-#     Metal4 0.090000 0.0000394,\
-#     Metal5 0.090000 0.0000394"
+# Used for parasitics estimation, IR drop analysis, etc
+set ::env(LAYERS_RC) [dict create]
 
-# set ::env(VIAS_RC) "\
-#     Via1 4.500,\
-#     Via2 4.500,\
-#     Via3 4.500,\
-#     Via4 4.500"
+# RC fit from OpenROAD
+# https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/blob/master/flow/platforms/gf180/setRC.tcl
+dict set ::env(LAYERS_RC) "*" Metal2 res 3.85861E-04
+dict set ::env(LAYERS_RC) "*" Metal2 cap 1.35357E-04
+dict set ::env(LAYERS_RC) "*" Metal3 res 2.06673E-04
+dict set ::env(LAYERS_RC) "*" Metal3 cap 1.46141E-04
+dict set ::env(LAYERS_RC) "*" Metal4 res 1.68609E-04
+dict set ::env(LAYERS_RC) "*" Metal4 cap 1.50688E-04
+dict set ::env(LAYERS_RC) "*" Metal5 res 7.92778E-05
+dict set ::env(LAYERS_RC) "*" Metal5 cap 1.55595E-04
+
+set ::env(VIAS_R) [dict create]
+
+# Best case (and used for nom)
+dict set ::env(VIAS_R) "*" Via1 res 4.23
+dict set ::env(VIAS_R) "*" Via2 res 4.23
+dict set ::env(VIAS_R) "*" Via3 res 4.23
+dict set ::env(VIAS_R) "*" Via4 res 4.23
+
+# Worst case (last one wins)
+dict set ::env(VIAS_R) "max_*" Via1 res 16.845
+dict set ::env(VIAS_R) "max_*" Via2 res 16.845
+dict set ::env(VIAS_R) "max_*" Via3 res 16.845
+dict set ::env(VIAS_R) "max_*" Via4 res 16.845
+
+set ::env(SIGNAL_WIRE_RC_LAYERS) "Metal2 Metal3 Metal4"
+set ::env(CLOCK_WIRE_RC_LAYERS) "Metal2 Metal3 Metal4"
+
+# Base SDC
+
+# in ns
+set ::env(CLOCK_UNCERTAINTY_CONSTRAINT) 0.25
+set ::env(CLOCK_TRANSITION_CONSTRAINT) 0.15
+
+# Percentage
+set ::env(TIME_DERATING_CONSTRAINT) 5
+set ::env(IO_DELAY_CONSTRAINT) 20

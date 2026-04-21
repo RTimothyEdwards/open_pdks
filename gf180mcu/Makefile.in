@@ -426,7 +426,7 @@ D_FULLSTACK = 5LM_1TM_11K
 # LibreLane has a number of files that are common to all digital
 # standard cell libraries, so these are collected in one definition
 # here:
-LIBRELANE_COMMON = config.tcl tracks.info no_synth.cells drc_exclude.cells
+LIBRELANE_COMMON = config.tcl tracks.info no_synth.cells drc_exclude.cells pnr_exclude.cells synth_exclude.cells latch_map.v mux2_map.v
 
 # Where cpp syntax is followed, this is equivalent to cpp, but it does not
 # mangle non-C source files under the belief that they are actually C code.
@@ -849,18 +849,38 @@ xschem-%: ${GF180MCU_PR_PATH}
 	./custom/scripts/fix_xschemrc.py ${XSCHEM_STAGING_$*}/xschemrc \
 		${GF180MCU$*} 2>&1 | tee -a ${GF180MCU$*}_make.log || true
 
-librelane-%: librelane/config.tcl librelane/gf180mcu_fd_sc_mcu7t5v0/config.tcl librelane/gf180mcu_fd_sc_mcu9t5v0/config.tcl
+librelane-%: librelane/config.tcl librelane/gf180mcu_fd_sc_mcu7t5v0/config.tcl librelane/gf180mcu_fd_sc_mcu9t5v0/config.tcl librelane/gf180mcu_as_sc_mcu7t3v3/config.tcl librelane/gf180mcu_osu_sc_gp9t3v3/config.tcl librelane/gf180mcu_osu_sc_gp12t3v3/config.tcl librelane/gf180mcu_fd_io/config.tcl
 	mkdir -p ${LIBRELANETOP_STAGING_$*}
 	mkdir -p ${LIBRELANE_STAGING_$*}
 	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0
 	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0
+	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
+	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp9t3v3
+	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp12t3v3
+	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_fd_io
 	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0
 	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0
+	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
+	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp9t3v3
+	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp12t3v3
+	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_fd_io
 	for file in ${LIBRELANE_COMMON} ; do \
 		rm -f ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0/$$file ; \
 	done
 	for file in ${LIBRELANE_COMMON} ; do \
 		rm -f ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0/$$file ; \
+	done
+	for file in ${LIBRELANE_COMMON} ; do \
+		rm -f ${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3/$$file ; \
+	done
+	for file in ${LIBRELANE_COMMON} ; do \
+		rm -f ${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp9t3v3/$$file ; \
+	done
+	for file in ${LIBRELANE_COMMON} ; do \
+		rm -f ${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp12t3v3/$$file ; \
+	done
+	for file in ${LIBRELANE_COMMON} ; do \
+		rm -f ${LIBRELANE_STAGING_$*}/gf180mcu_fd_io/$$file ; \
 	done
 	${CPP} ${GF180MCU$*_DEFS} librelane/config.tcl ${LIBRELANE_STAGING_$*}/config.tcl
 
@@ -872,6 +892,21 @@ librelane-%: librelane/config.tcl librelane/gf180mcu_fd_sc_mcu7t5v0/config.tcl l
 		${CPP} -quiet ${GF180MCU$*_DEFS} librelane/gf180mcu_fd_sc_mcu9t5v0/$$file \
 			${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0/$$file ; \
 	done
+	for file in ${LIBRELANE_COMMON} ; do \
+		${CPP} -quiet ${GF180MCU$*_DEFS} librelane/gf180mcu_as_sc_mcu7t3v3/$$file \
+			${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3/$$file ; \
+	done
+	for file in ${LIBRELANE_COMMON} ; do \
+		${CPP} -quiet ${GF180MCU$*_DEFS} librelane/gf180mcu_osu_sc_gp9t3v3/$$file \
+			${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp9t3v3/$$file ; \
+	done
+		for file in ${LIBRELANE_COMMON} ; do \
+		${CPP} -quiet ${GF180MCU$*_DEFS} librelane/gf180mcu_osu_sc_gp12t3v3/$$file \
+			${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp12t3v3/$$file ; \
+	done
+
+	${CPP} -quiet ${GF180MCU$*_DEFS} librelane/gf180mcu_fd_io/config.tcl \
+		${LIBRELANE_STAGING_$*}/gf180mcu_fd_io/config.tcl
 
 	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.gf180mcu$*.min.*
 	rm -f ${LIBRELANE_STAGING_$*}/rules.openrcx.gf180mcu$*.nom.*
