@@ -76,21 +76,21 @@ Prerequisites:
     Obtain sources for the SkyWater sky130 130nm process from the git repository
     at the following location:
 
-	 https://github.com/efabless/
+	 https://github.com/fossi-foundation/
 
     As of open_pdks version 1.0.428, the Sky130 sources are no longer under
     a single umbrella repository, so each core library must be downloaded
     individually.  The individual core repositories are:
 
-	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_pr
-	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_io
-	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hd
-	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hdll
-	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_lp
-	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hs
-	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_ms
-	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_ls
-	 https://github.com/efabless/skywater-pdk-libs-sky130_fd_sc_hvl
+	 https://github.com/fossi-foundation/skywater-pdk-libs-sky130_fd_pr
+	 https://github.com/fossi-foundation/skywater-pdk-libs-sky130_fd_io
+	 https://github.com/fossi-foundation/skywater-pdk-libs-sky130_fd_sc_hd
+	 https://github.com/fossi-foundation/skywater-pdk-libs-sky130_fd_sc_hdll
+	 https://github.com/fossi-foundation/skywater-pdk-libs-sky130_fd_sc_lp
+	 https://github.com/fossi-foundation/skywater-pdk-libs-sky130_fd_sc_hs
+	 https://github.com/fossi-foundation/skywater-pdk-libs-sky130_fd_sc_ms
+	 https://github.com/fossi-foundation/skywater-pdk-libs-sky130_fd_sc_ls
+	 https://github.com/fossi-foundation/skywater-pdk-libs-sky130_fd_sc_hvl
 
     This repositories may go in any convenient location.  To keep the overhead
     low, you may install only the repositories that you need.  At a minimum, the
