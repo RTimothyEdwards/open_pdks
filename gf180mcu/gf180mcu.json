@@ -43,23 +43,23 @@
     "description": "DESCRIPTION OPTION1 OPTION2 OPTION3 OPTION4 OPTION5",
     "options": [
 #ifdef THICKMET3P0
-	"THICKMET",
+        "THICKMET",
 #endif
 #ifdef MIM
 #undef MIM
-	"MIM_2P0",
+        "MIM_2P0",
 #endif
 #ifdef HRES1K
-	"HIRES_POLY_1K",
+        "HIRES_POLY_1K",
 #endif
 #ifdef METALS3
-	"METAL3"
+        "METAL3"
 #elseif defined (METALS4)
-	"METAL4"
+        "METAL4"
 #elseif defined (METALS5)
-	"METAL5"
+        "METAL5"
 #elseif defined (METALS6)
-	"METAL6"
+        "METAL6"
 #endif
     ],
     "stdcells": {
@@ -83,9 +83,10 @@
     "memory": {
         "gf180mcu_fd_ip_sram": "FD_IP_SRAM_COMMIT"
         "gf180mcu_ocd_ip_sram": "OCD_IP_SRAM_COMMIT"
+        "gf180mcu_re_efuse": "RE_EFUSE_COMMIT"
     },
     "other": {
-	"gf180mcu_ocd_alpha": "OCD_ALPHA_COMMIT"
+        "gf180mcu_ocd_alpha": "OCD_ALPHA_COMMIT"
     },
     "build": {
         "open_pdks": "OPEN_PDKS_VERSION",
@@ -107,6 +108,7 @@
         "gf180mcu_fd_sc_mcu9t5v0": "e0e80f5a6522f10b82165d3aeab9b8ee28e89849",
         "gf180mcu_fd_ip_sram": "9c411928870ce15226228fa52ddb6ecc0ea4ffbe",
         "gf180mcu_as_sc_mcu7t3v3": "94449964567d710e3dab608f1a932f87c718d4f3",
+        "gf180mcu_re_efuse": "9941e38e7670a12f3f3a744bea4f9d2f04e6a669",
         "gf180mcu_ocd_io": "a559ee0bbc5744fdb64a9f75d3ab9415a5315e09",
         "gf180mcu_ocd_alpha": "0597ebd5732987dbcd149e02c38525c1c5bf2a58",
         "gf180mcu_ocd_ip_sram": "2c2a6019df7f2404cc0794dd3b2302d85d917688",

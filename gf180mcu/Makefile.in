@@ -153,6 +153,7 @@ GF180MCU_SC_9T5V0_PATH = @GF180MCU_FD_SC_MCU9T5V0_PATH@
 GF180MCU_SRAM_PATH = @GF180MCU_FD_IP_SRAM_PATH@
 GF180MCU_OSU_SC_PATH = @GF180MCU_OSU_SC_PATH@
 GF180MCU_AS_SC_PATH = @GF180MCU_AS_SC_PATH@
+GF180MCU_RE_EFUSE_PATH = @GF180MCU_RE_EFUSE_PATH@
 GF180MCU_OCD_IO_PATH = @GF180MCU_OCD_IO_PATH@
 GF180MCU_OCD_ALPHA_PATH = @GF180MCU_OCD_ALPHA_PATH@
 GF180MCU_OCD_SRAM_PATH = @GF180MCU_OCD_IP_SRAM_PATH@
@@ -172,6 +173,7 @@ PDK_URL = https://github.com/google
 OSU_URL = https://github.com/stineje
 OCD_URL = https://github.com/RTimothyEdwards
 AVALON_URL = https://github.com/AvalonSemiconductors
+EGORXE_URL = https://github.com/egorxe
 FOSSI_URL = https://github.com/fossi-foundation
 WAFERSPACE_URL = https://github.com/wafer-space
 
@@ -187,6 +189,7 @@ PDK_LIB_SC_9T5V0 = ${FOSSI_URL}/globalfoundries-pdk-libs-gf180mcu_fd_sc_mcu9t5v0
 PDK_LIB_SRAM =     ${PDK_URL}/globalfoundries-pdk-ip-gf180mcu_fd_ip_sram
 PDK_LIB_OSU_SC =   ${OSU_URL}/globalfoundries-pdk-libs-gf180mcu_osu_sc
 PDK_LIB_AS_SC =    ${AVALON_URL}/gf180mcu_as_sc_mcu7t3v3
+PDK_LIB_RE_EFUSE = ${EGORXE_URL}/gf180mcu_re_efuse
 PDK_LIB_OCD_IO =   ${OCD_URL}/gf180mcu_ocd_io
 PDK_LIB_OCD_SRAM = ${OCD_URL}/gf180mcu_ocd_ip_sram
 PDK_LIB_OCD_ALPHA =${OCD_URL}/gf180mcu_ocd_alpha
@@ -287,6 +290,11 @@ ifeq (${GF180MCU_AS_SC_PATH},)
     COMMIT_DEFS += -DAS_SC_MCU7T3V3_COMMIT="unknown"
 else
     COMMIT_DEFS += -DAS_SC_MCU7T3V3_COMMIT=$(shell cd ${GF180MCU_AS_SC_PATH} ; git rev-parse HEAD)
+endif
+ifeq (${GF180MCU_RE_EFUSE_PATH},)
+    COMMIT_DEFS += -DRE_EFUSE_COMMIT="unknown"
+else
+    COMMIT_DEFS += -DRE_EFUSE_COMMIT=$(shell cd ${GF180MCU_RE_EFUSE_PATH} ; git rev-parse HEAD)
 endif
 ifeq (${GF180MCU_OCD_IO_PATH},)
     COMMIT_DEFS += -DOCD_IO_COMMIT="unknown"
@@ -511,7 +519,7 @@ reference: ${TECH}.json
 	../common/save_commit_refs.py ${COMMIT_DEFS} ${TECH}.json
 
 # Handle prerequisites
-prerequisites: pr-repo pv-repo klayout-repo io-repo sc-7t-repo sc-9t-repo sram-repo ocd-sram-repo osu-sc-repo avalon-sc-repo ocd-io-repo ocd-alpha-repo
+prerequisites: pr-repo pv-repo klayout-repo io-repo sc-7t-repo sc-9t-repo sram-repo ocd-sram-repo osu-sc-repo avalon-sc-repo re-efuse-repo ocd-io-repo ocd-alpha-repo
 
 pr-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
@@ -643,6 +651,19 @@ avalon-sc-repo:
 		fi ; \
 	fi
 
+re-efuse-repo:
+	if test "x${REFERENCE_JSON}" != "x"; then \
+		RE_EFUSE_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_re_efuse | grep -v COMMIT | cut -d'"' -f4` ; \
+	fi ; \
+	if test "x${GF180MCU_RE_EFUSE_PATH}" != "x" ; then \
+		if test -d "${GF180MCU_RE_EFUSE_PATH}" ; then \
+			echo "Using existing installation of eFuse non-volatile memory macros library from ${GF180MCU_RE_EFUSE_PATH}" ; \
+		else \
+			echo "Downloading eFuse non-volatile memory macros library from ${GF180MCU_RE_EFUSE_PATH}" ; \
+			../scripts/download.sh ${PDK_LIB_RE_EFUSE} ${GF180MCU_RE_EFUSE_PATH} $${RE_EFUSE_COMMIT} ; \
+		fi ; \
+	fi
+
 ocd-io-repo:
 	if test "x${REFERENCE_JSON}" != "x"; then \
 		OCD_IO_COMMIT=`cat ${REFERENCE_JSON} | grep gf180mcu_ocd_io | grep -v COMMIT | cut -d'"' -f4` ; \
@@ -671,7 +692,7 @@ ocd-alpha-repo:
 
 
 # Update prerequisites
-update: update-pr-repo update-pv-repo update-klayout-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-ocd-sram-repo update-osu-sc-repo update-avalon-sc-repo update-ocd-io-repo
+update: update-pr-repo update-pv-repo update-klayout-repo update-io-repo update-sc-7t-repo update-sc-9t-repo update-sram-repo update-ocd-sram-repo update-osu-sc-repo update-avalon-sc-repo update-re-efuse-repo update-ocd-io-repo
 
 update-pr-repo:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
@@ -731,6 +752,12 @@ update-avalon-sc-repo:
 	if test "x${GF180MCU_AS_SC_PATH}" != "x" ; then \
 		echo "Updating GF180MCU Avalon Semiconductors 3.3V standard cell library from ${PDK_LIB_AS_SC}" ; \
 		../scripts/update.sh ${GF180MCU_AS_SC_PATH} ; \
+	fi
+
+update-re-efuse-repo:
+	if test "x${GF180MCU_RE_EFUSE_PATH}" != "x" ; then \
+		echo "Updating GF180MCU Avalon Semiconductors 3.3V standard cell library from ${PDK_LIB_RE_EFUSE}" ; \
+		../scripts/update.sh ${GF180MCU_RE_EFUSE_PATH} ; \
 	fi
 
 update-ocd-io-repo:
@@ -937,13 +964,13 @@ librelane-%: librelane/config.tcl librelane/gf180mcu_fd_sc_mcu7t5v0/config.tcl l
 		${LIBRELANE_STAGING_$*}/rules.openrcx.gf180mcu$*.max ;\
 	fi
 
-vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A ocd-io-build-A ocd-alpha-build-A sram-build-A ocd-sram-build-A digital-osu-build-A digital-avalon-build-A
+vendor-A: primitive-build-A digital-7t5v0-build-A digital-9t5v0-build-A io-build-A ocd-io-build-A ocd-alpha-build-A sram-build-A ocd-sram-build-A digital-osu-build-A digital-avalon-build-A digital-efuse-build-A
 
-vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B ocd-io-build-B ocd-alpha-build-B sram-build-B ocd-sram-build-B digital-osu-build-B digital-avalon-build-B
+vendor-B: primitive-build-B digital-7t5v0-build-B digital-9t5v0-build-B io-build-B ocd-io-build-B ocd-alpha-build-B sram-build-B ocd-sram-build-B digital-osu-build-B digital-avalon-build-B digital-efuse-build-B
 
-vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C ocd-io-build-C ocd-alpha-build-C sram-build-C ocd-sram-build-C digital-osu-build-C digital-avalon-build-C
+vendor-C: primitive-build-C digital-7t5v0-build-C digital-9t5v0-build-C io-build-C ocd-io-build-C ocd-alpha-build-C sram-build-C ocd-sram-build-C digital-osu-build-C digital-avalon-build-C digital-efuse-build-C
 
-vendor-D: primitive-build-D digital-7t5v0-build-D digital-9t5v0-build-D io-build-D ocd-io-build-D ocd-alpha-build-D sram-build-D ocd-sram-build-D digital-osu-build-D digital-avalon-build-D
+vendor-D: primitive-build-D digital-7t5v0-build-D digital-9t5v0-build-D io-build-D ocd-io-build-D ocd-alpha-build-D sram-build-D ocd-sram-build-D digital-osu-build-D digital-avalon-build-D digital-efuse-build-D
 
 primitive-build-%:
 	if test "x${GF180MCU_PR_PATH}" != "x" ; then \
@@ -1022,6 +1049,14 @@ digital-avalon-build-%:
 		if test -d ${GF180MCU_AS_SC_PATH} ; then \
 			echo "Building Avalon Semiconductor 3.3V digital standard cell libraries" ;\
 			make digital-avalon-$* ;\
+		fi ;\
+	fi
+
+digital-efuse-build-%:
+	if test "x${GF180MCU_RE_EFUSE_PATH}" != "x" ; then \
+		if test -d ${GF180MCU_RE_EFUSE_PATH} ; then \
+			echo "Building eFuse non-volatile memory macros libraries" ;\
+			make digital-efuse-$* ;\
 		fi ;\
 	fi
 
@@ -1340,6 +1375,33 @@ digital-avalon-%:
 	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
 	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
 	cp -rp ${AVALON_TECH_SOURCE}/librelane/gf180mcu_as_sc_mcu7t3v3 ${LIBRELANE_STAGING_$*}
+
+digital-efuse-%:
+        # Install eFuse non-volatile memory macros from vendor files
+	# NOTE: The repository is in open_pdks format and mainly just needs to
+	# be copied, not built.
+	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse/lib
+	mkdir -p ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse/lib
+	cp -rp ${GF180MCU_RE_EFUSE_PATH}/lib ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse
+	
+	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse/gds
+	mkdir ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse/gds
+	cp -rp ${GF180MCU_RE_EFUSE_PATH}/gds ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse
+	
+	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse/lef
+	mkdir ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse/lef
+	cp -rp ${GF180MCU_RE_EFUSE_PATH}/lef ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse
+	
+	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse/spice
+	mkdir ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse/spice
+	cp -rp ${GF180MCU_RE_EFUSE_PATH}/spice ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse
+	
+	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse/verilog
+	mkdir ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse/verilog
+	cp -rp ${GF180MCU_RE_EFUSE_PATH}/verilog ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse
+
+	cp ${GF180MCU_RE_EFUSE_PATH}/README.md ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse/
+	cp ${GF180MCU_RE_EFUSE_PATH}/LICENSE ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_re_efuse/
 
 io-%:
 	# Install custom additions to the I/O pad library
