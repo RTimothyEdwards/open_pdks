@@ -1836,7 +1836,9 @@ style drc
  # Generate RPM for DRC checks
  templayer rpm_generate
  bloat-all xhrpoly,uhrpoly xpc
- grow 620
+ grow 200
+ grow-min 1270
+ grow 420
  shrink 420
  mask-hints RPM
  mask-hints URPM
