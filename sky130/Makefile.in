@@ -1251,6 +1251,7 @@ librelane-%: librelane/config.tcl librelane/sky130_fd_sc_hd/config.tcl librelane
 	mkdir -p ${LIBRELANETOP_STAGING_$*}
 	mkdir -p ${LIBRELANE_STAGING_$*}
 	rm -rf ${LIBRELANE_STAGING_$*}/custom_cells/*
+	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_fd_sc_lp
 	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hd
 	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hs
 	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_fd_sc_ls
@@ -1261,6 +1262,9 @@ librelane-%: librelane/config.tcl librelane/sky130_fd_sc_hd/config.tcl librelane
 	mkdir -p ${LIBRELANE_STAGING_$*}/sky130_ef_io
 	rm -f ${LIBRELANE_STAGING_$*}/common_pdn.info
 	rm -f ${LIBRELANE_STAGING_$*}/config.tcl
+	for file in ${LIBRELANE_COMMON} ; do \
+	    rm -f ${LIBRELANE_STAGING_$*}/sky130_fd_sc_lp/$$file ; \
+	done
 	for file in ${LIBRELANE_COMMON} ; do \
 	    rm -f ${LIBRELANE_STAGING_$*}/sky130_fd_sc_hd/$$file ; \
 	done
@@ -1330,6 +1334,10 @@ librelane-%: librelane/config.tcl librelane/sky130_fd_sc_hd/config.tcl librelane
 			${LIBRELANE_STAGING_$*}/rules.openrcx.sky130$*.max.calibre ;\
 	fi
 
+	for file in ${LIBRELANE_COMMON} ; do \
+	    ${CPP} -quiet ${SKY130$*_DEFS} librelane/sky130_fd_sc_lp/$$file \
+		${LIBRELANE_STAGING_$*}/sky130_fd_sc_lp/$$file ; \
+	done
 	for file in ${LIBRELANE_COMMON} ; do \
 	    ${CPP} -quiet ${SKY130$*_DEFS} librelane/sky130_fd_sc_hd/$$file \
 		${LIBRELANE_STAGING_$*}/sky130_fd_sc_hd/$$file ; \
