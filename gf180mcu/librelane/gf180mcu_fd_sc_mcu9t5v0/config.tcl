@@ -22,9 +22,6 @@ set ::env(SYNTH_MIN_BUF_PORT) "$::env(STD_CELL_LIBRARY)__buf_1 I Z"
 set ::env(SYNTH_TIEHI_PORT) "$::env(STD_CELL_LIBRARY)__tieh Z"
 set ::env(SYNTH_TIELO_PORT) "$::env(STD_CELL_LIBRARY)__tiel ZN"
 
-# Placement defaults
-set ::env(PL_LIB) $::env(LIB_TYPICAL)
-
 # Fillcell insertion
 set ::env(FILL_CELL) "$::env(STD_CELL_LIBRARY)__fill_*"
 set ::env(DECAP_CELL) "$::env(STD_CELL_LIBRARY)__fillcap_*"
