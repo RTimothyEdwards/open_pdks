@@ -44,7 +44,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 45.865 -2.035 46.195 34.770 ;
+        RECT 45.865 -2.035 46.195 0.000 ;
     END
   END ANALOG_POL
   PIN ANALOG_SEL
@@ -52,7 +52,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 30.750 -2.035 31.010 0.230 ;
+        RECT 30.750 -2.035 31.010 0.000 ;
     END
   END ANALOG_SEL
   PIN DM[2]
@@ -60,7 +60,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 28.490 -2.035 28.750 2.035 ;
+        RECT 28.490 -2.035 28.750 0.000 ;
     END
   END DM[2]
   PIN DM[1]
@@ -92,7 +92,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 38.390 -2.035 38.650 1.055 ;
+        RECT 38.390 -2.035 38.650 0.000 ;
     END
   END ENABLE_INP_H
   PIN ENABLE_VDDA_H
@@ -100,7 +100,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 12.755 -2.035 13.015 3.315 ;
+        RECT 12.755 -2.035 13.015 0.000 ;
     END
   END ENABLE_VDDA_H
   PIN ENABLE_VDDIO
@@ -108,7 +108,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 78.580 -2.035 78.910 182.740 ;
+        RECT 78.580 -2.035 78.910 0.000 ;
     END
   END ENABLE_VDDIO
   PIN ENABLE_VSWITCH_H
@@ -116,7 +116,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 16.310 -2.035 16.570 0.285 ;
+        RECT 16.310 -2.035 16.570 0.000 ;
     END
   END ENABLE_VSWITCH_H
   PIN HLD_H_N
@@ -124,7 +124,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 31.815 -2.035 32.075 1.305 ;
+        RECT 31.815 -2.035 32.075 0.000 ;
     END
   END HLD_H_N
   PIN HLD_OVR
@@ -132,7 +132,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 26.600 -2.035 26.860 0.670 ;
+        RECT 26.600 -2.035 26.860 0.000 ;
     END
   END HLD_OVR
   PIN IB_MODE_SEL
@@ -140,7 +140,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 5.420 -2.035 5.650 2.440 ;
+        RECT 5.420 -2.035 5.650 0.000 ;
     END
   END IB_MODE_SEL
   PIN IN
@@ -148,7 +148,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 79.240 -2.035 79.570 187.525 ;
+        RECT 79.240 -2.035 79.570 0.000 ;
     END
   END IN
   PIN IN_H
@@ -156,7 +156,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 0.400 -2.035 1.020 176.450 ;
+        RECT 0.400 -2.035 1.020 0.000 ;
     END
   END IN_H
   PIN INP_DIS
@@ -164,7 +164,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 45.245 -2.035 45.505 3.055 ;
+        RECT 45.245 -2.035 45.505 0.000 ;
     END
   END INP_DIS
   PIN OE_N
@@ -172,7 +172,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 3.375 -2.035 3.605 2.440 ;
+        RECT 3.375 -2.035 3.605 0.000 ;
     END
   END OE_N
   PIN OUT
@@ -180,7 +180,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 22.355 -2.035 22.615 4.390 ;
+        RECT 22.355 -2.035 22.615 0.000 ;
     END
   END OUT
   PIN PAD
@@ -196,7 +196,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 76.280 -2.035 76.920 0.020 ;
+        RECT 76.280 -2.035 76.920 0.000 ;
     END
   END PAD_A_ESD_0_H
   PIN PAD_A_ESD_1_H
@@ -204,7 +204,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 68.275 -2.035 68.925 0.235 ;
+        RECT 68.275 -2.035 68.925 0.000 ;
     END
   END PAD_A_ESD_1_H
   PIN PAD_A_NOESD_H
@@ -212,7 +212,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met3 ;
-        RECT 62.820 -2.035 63.890 7.670 ;
+        RECT 62.820 -2.035 63.890 0.000 ;
     END
   END PAD_A_NOESD_H
   PIN SLOW
@@ -236,7 +236,7 @@ MACRO sky130_ef_io__gpiov2_pad
     USE SIGNAL ;
     PORT
       LAYER met2 ;
-        RECT 79.715 -2.035 79.915 175.835 ;
+        RECT 79.715 -2.035 79.915 0.000 ;
     END
   END TIE_LO_ESD
   PIN VCCD
