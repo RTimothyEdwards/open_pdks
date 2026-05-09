@@ -10,6 +10,32 @@ set ::env(PAD_FAKE_SITES) [dict create]
 dict set ::env(PAD_FAKE_SITES) "GF_IO_Site" "0.1, 355"
 dict set ::env(PAD_FAKE_SITES) "GF_COR_Site" "355, 355"
 
+# Technology lib
+set ::env(PAD_LIBS) [dict create]
+dict set ::env(PAD_LIBS) *_tt_025C_5v00 "\
+    [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/*__tt_025C_5v00.lib]\
+"
+dict set ::env(PAD_LIBS) *_ff_n40C_5v50 "\
+    [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/*__ff_n40C_5v50.lib]\
+"
+dict set ::env(PAD_LIBS) *_ss_125C_4v50 "\
+    [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/*__ss_125C_4v50.lib]\
+"
+
+# These corners are for 3.3V SCL libraries
+dict set ::env(PAD_LIBS) *_tt_025C_3v30 "\
+    [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/*__tt_025C_3v30.lib]\
+"
+dict set ::env(PAD_LIBS) *_ff_n40C_3v60 "\
+    [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/*__ff_n40C_3v63.lib]\
+"
+
+# Override
+set ::env(PAD_GDS) "\
+    $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/gds/$::env(PAD_CELL_LIBRARY).gds\
+"
+set ::env(PAD_CDLS) ""
+
 # Pad cells
 set ::env(PAD_CORNER) "$::env(PAD_CELL_LIBRARY)__cor"
 set ::env(PAD_FILLERS) "\
@@ -18,14 +44,6 @@ set ::env(PAD_FILLERS) "\
     $::env(PAD_CELL_LIBRARY)__fill1\
     $::env(PAD_CELL_LIBRARY)__fillnc\
 "
-
-# Pad bondpad information (if needed)
-# Note: bondpads are integrated in GF180MCU
-#set ::env(PAD_BONDPAD_NAME) "bondpad_70x70"
-#set ::env(PAD_BONDPAD_WIDTH) "70"
-#set ::env(PAD_BONDPAD_HEIGHT) "70"
-#set ::env(PAD_BONDPAD_OFFSETS) [dict create]
-#dict set ::env(PAD_BONDPAD_OFFSETS) "instance*" "5.0, -70.0"
 
 # Pad io terminals (if needed)
 set ::env(PAD_PLACE_IO_TERMINALS) "\
@@ -36,11 +54,9 @@ set ::env(PAD_PLACE_IO_TERMINALS) "\
     $::env(PAD_CELL_LIBRARY)__in_s/PAD\
     $::env(PAD_CELL_LIBRARY)__dvss/DVSS\
     $::env(PAD_CELL_LIBRARY)__dvdd/DVDD\
-    gf180mcu_ws_io__dvss/DVSS\
-    gf180mcu_ws_io__dvdd/DVDD\
+    $::env(PAD_CELL_LIBRARY)__vss/VSS\
+    $::env(PAD_CELL_LIBRARY)__vdd/VDD\
 "
 
 # Pad sites to edge offset
 set ::env(PAD_EDGE_SPACING) "26"
-
-set ::env(KLAYOUT_SEALRING_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/scripts/sealring.py"
