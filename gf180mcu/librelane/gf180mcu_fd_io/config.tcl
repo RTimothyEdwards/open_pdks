@@ -29,6 +29,9 @@ dict set ::env(PAD_LIBS) *_tt_025C_3v30 "\
 dict set ::env(PAD_LIBS) *_ff_n40C_3v60 "\
     [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/*__ff_n40C_3v63.lib]\
 "
+dict set ::env(PAD_LIBS) *_ss_125C_3v00 "\
+    [glob $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(PAD_CELL_LIBRARY)/lib/*__ss_125C_2v97.lib]\
+"
 
 # Pad cells
 set ::env(PAD_CORNER) "$::env(PAD_CELL_LIBRARY)__cor"
