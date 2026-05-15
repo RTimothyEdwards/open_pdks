@@ -1,5 +1,4 @@
 /*
- * $Id: $
  * Copyright 2022 GlobalFoundries PDK Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,24 +12,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * Project:             018 5VGREEN SRAM
- * Author:              GlobalFoundries PDK Authors
- * Data Created:        05-06-2014
- * Revision:		0.0	
- *
- * Description:         gf180mcu_fd_ip_sram__sram256x8m8wm1 Simulation Model
  */
 
-module gf180mcu_fd_ip_sram__sram256x8m8wm1 (
-  input           CLK,
-  input           CEN,    //Chip Enable Negative
-  input           GWEN,   //Global Write Enable Negative
-  input   [7:0]   WEN,    //Write Enable Negative
-  input   [7:0]   A,
-  input   [7:0]   D,
-  output  [7:0]   Q,
-  inout           VDD,
-  inout           VSS
-);
+(* blackbox *)
+module gf180mcu_ef_io__bi_t (CS, SL, IE, OE, PU, PD, A, ANA, PDRV0, PDRV1, PAD, Y, DVDD, DVSS, VDD, VSS);
+	input	CS;
+	input	SL;
+	input	IE;
+	input	OE;
+	input	PU;
+	input	PD;
+	input	A;
+	inout	ANA;
+	input	PDRV0;
+	input	PDRV1;
+	inout	PAD;
+	output	Y;
+	inout	DVDD;
+	inout	DVSS;
+	inout	VDD;
+	inout	VSS;
 endmodule

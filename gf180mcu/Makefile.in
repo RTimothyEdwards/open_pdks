@@ -1415,10 +1415,10 @@ io-%:
 	# Install custom additions to the I/O pad library
 	${STAGE} -source ./custom -target ${STAGING_PATH}/${GF180MCU$*} \
 		-verilog %l/verilog/gf180mcu_ef_io__bi_t.v compile-only rename=gf180mcu_ef_io \
-		-verilog %l/verilog/gf180mcu_ef_io__bi_t_blackbox_pp.v \
-			compile-only rename=gf180mcu_ef_io__blackbox_pp.v \
-		-verilog %l/verilog/gf180mcu_fd_io__blackbox_pp.v \
-			compile-only \
+		-verilog %l/verilog/gf180mcu_ef_io__bi_t__blackbox.v \
+			compile-only rename=gf180mcu_ef_io__blackbox \
+		-verilog %l/verilog/gf180mcu_ef_io__bi_t__blackbox_pp.v \
+			compile-only rename=gf180mcu_ef_io__blackbox_pp \
 		-spice %l/spice/gf180mcu_ef_io__bi_t.spice compile-only rename=gf180mcu_ef_io \
 		-gds %l/gds/*_${$*_STACK}.gds compile-only \
 			rename=gf180mcu_ef_io \
@@ -1493,17 +1493,12 @@ io-%:
 			annotate lefopts=-hide \
 		-xschem cells/*/*.sym \
 			filter=custom/scripts/make_primitive.py \
-		-verilog cells/*/*.v compile-only \
+		-verilog cells/*/*.v exclude=*__blackbox*.v compile-only \
+		-verilog cells/*/*__blackbox.v compile-only rename=gf180mcu_fd_io__blackbox \
+		-verilog cells/*/*__blackbox_pp.v compile-only rename=gf180mcu_fd_io__blackbox_pp \
 		-library general gf180mcu_fd_io 2>&1 | tee -a ${GF180MCU$*}_make.log
 
 ocd-io-%:
-	# Install custom additions to the I/O pad library
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${GF180MCU$*} \
-		-verilog %l/verilog/gf180mcu_ocd_io__blackbox_pp.v \
-			compile-only \
-		-library general gf180mcu_ocd_io 2>&1 | \
-		tee -a ${GF180MCU$*}_make.log
-
 	# Install the Open Circuit Design dual-voltage I/O library
 	${STAGE} -source ${GF180MCU_OCD_IO_PATH} \
 		-target ${STAGING_PATH}/${GF180MCU$*} \
@@ -1549,7 +1544,9 @@ ocd-io-%:
 		-lef cells/*/*_${$*_STACK}.lef compile-only \
 		-xschem cells/*/*.sym \
 			filter=custom/scripts/make_primitive.py \
-		-verilog cells/*/*.v compile-only \
+		-verilog cells/*/*.v exclude=*__blackbox*.v compile-only \
+		-verilog cells/*/*__blackbox.v rename=gf180mcu_ocd_io__blackbox.v compile-only \
+		-verilog cells/*/*__blackbox_pp.v rename=gf180mcu_ocd_io__blackbox_pp.v compile-only \
 		-library general gf180mcu_ocd_io 2>&1 | tee -a ${GF180MCU$*}_make.log
 
 ocd-alpha-%:
@@ -1575,15 +1572,6 @@ ocd-alpha-%:
 		${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_ocd_alpha_small/scripts
 
 sram-%:
-	# Install custom additions to the 5V SRAM macros
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${GF180MCU$*} \
-		-verilog %l/verilog/gf180mcu_fd_ip_sram__sram512x8m8wm1_blackbox.v \
-		-verilog %l/verilog/gf180mcu_fd_ip_sram__sram256x8m8wm1_blackbox.v \
-		-verilog %l/verilog/gf180mcu_fd_ip_sram__sram128x8m8wm1_blackbox.v \
-		-verilog %l/verilog/gf180mcu_fd_ip_sram__sram64x8m8wm1_blackbox.v \
-		-library general gf180mcu_fd_ip_sram 2>&1 | \
-		tee -a ${GF180MCU$*}_make.log
-
 	# Install 5V SRAM macros from vendor files
 	${STAGE} -source ${GF180MCU_SRAM_PATH} \
 		-target ${STAGING_PATH}/${GF180MCU$*} \
@@ -1596,7 +1584,9 @@ sram-%:
 			options=custom/scripts/gds_import_sram.tcl \
 			filter=custom/scripts/fix_sram_gds.py \
 		-lef cells/*/*.lef annotate lefopts="-hide 5um" \
-		-verilog cells/*/*.v \
+		-verilog cells/*/*.v exclude=*__blackbox*.v \
+		-verilog cells/*/*__blackbox.v \
+		-verilog cells/*/*__blackbox_pp.v \
 		-library general gf180mcu_fd_ip_sram 2>&1 | tee -a ${GF180MCU$*}_make.log
 	# Remove "BL" labels from the rarray4_* cells, otherwise extraction
 	# of the SRAMs without using "extract unique" will fail.
@@ -1604,14 +1594,6 @@ sram-%:
 		rarray4_\* BL\* -mag
 
 ocd-sram-%:
-	# Install custom additions to the 5V SRAM macros
-	${STAGE} -source ./custom -target ${STAGING_PATH}/${GF180MCU$*} \
-		-verilog %l/verilog/gf180mcu_ocd_ip_sram__sram1024x8m8wm1_blackbox.v \
-		-verilog %l/verilog/gf180mcu_ocd_ip_sram__sram512x8m8wm1_blackbox.v \
-		-verilog %l/verilog/gf180mcu_ocd_ip_sram__sram256x8m8wm1_blackbox.v \
-		-library general gf180mcu_ocd_ip_sram 2>&1 | \
-		tee -a ${GF180MCU$*}_make.log
-
 	# Install Open Circuit Design 3.3V SRAM macros from vendor files
 	${STAGE} -source ${GF180MCU_OCD_SRAM_PATH} \
 		-target ${STAGING_PATH}/${GF180MCU$*} \
@@ -1620,7 +1602,9 @@ ocd-sram-%:
 		-gds cells/*/*.gds \
 			options=custom/scripts/gds_import_ocd_sram.tcl \
 		-lef cells/*/*.lef \
-		-verilog cells/*/*.v \
+		-verilog cells/*/*.v exclude=*__blackbox*.v \
+		-verilog cells/*/*__blackbox.v \
+		-verilog cells/*/*__blackbox_pp.v \
 		-library general gf180mcu_ocd_ip_sram 2>&1 | tee -a ${GF180MCU$*}_make.log
 
 install: $(foreach var, ${VARIANTS}, install-$(var))
