@@ -6907,7 +6907,7 @@ plot
      draw nwell cwell
 
   style postscript
-    # --- Stipple Pattern Matrices (8 words x 32-bits) ---
+    # --- Stipple Pattern Matrices (16*16 pixels) ---
      1 30003000 00000000 03C003C0 00000000 03C003C0 00000000 00000000 00000000
      2 F0F0F0F0 F0F0F0F0 00000000 00000000 0F0F0F0F 0F0F0F0F 00000000 00000000
      3 FCFCFCFC 3F3F3F3F CFCFCFCF F3F3F3F3 FCFCFCFC 3F3F3F3F CFCFCFCF F3F3F3F3
@@ -7032,9 +7032,10 @@ plot
     mimcap,mimcc,mimcap2,mim2cc              13   12
     m3c,metal3,m3fill,rm3,obsm3,mimcap2,mim2cc,via3 13   21
     m3c,rotate                               7    2
-    m2c,metal2,m2fill,rm2,obsm2,m3c,mimcap,mimcc 33   5
+    reram                                    15   19
+    m2c,reram,metal2,m2fill,rm2,obsm2,m3c,mimcap,mimcc 33   5
     m2c                                      33   36
-    mcon,obsmcon,metal1,m1fill,rm1,obsm1,m2c 11   12
+    mcon,obsmcon,metal1,m1fill,rm1,obsm1,m2c,reram 11   12
     mcon,obsmcon                             23   35
     ppolyres,xpc,rmp,pdiode,pdiodec,pdiodelvt,pdiodehvt,pdilvtc,pdihvtc,mvpdiode,mvpdiodec,rli,rm1,rm2,rm3,rm4,rm5,mrp1 4    7
     npolyres,ppolyres,xhrpoly                22   7
@@ -7045,7 +7046,7 @@ plot
     mvndiff,mvnsd,mvnfet,mvnfetesd,mvnnfet,mvvar,mvndc,mvnsc,mvndiode,mvndiodec,nndiodec,mvndiffres 6    22
     pfetmvt,nsonos,nndiode,mrdlc,metalrdl,obsmrdl,pi2 18   5
     ndc,pdc,nsc,psc,mvndc,mvpdc,mvnsc,mvpsc,pc,xpc,pdiodec,ndiodec,pdilvtc,pdihvtc,ndilvtc,mvpdiodec,mvndiodec,nndiodec,locali,lifill,coreli,rli,mcon,obsli,obsmcon 9    16
-    ndc,pdc,nsc,psc,mvndc,mvpdc,mvnsc,mvpsc,pc,xpc,pdiodec,ndiodec,pdilvtc,pdihvtc,ndilvtc,mvpdiodec,mvndiodec,nndiodec,mimcc,mim2cc 15   X
+    ndc,pdc,nsc,psc,mvndc,mvpdc,mvnsc,mvpsc,pc,xpc,pdiodec,ndiodec,pdilvtc,pdihvtc,ndilvtc,mvpdiodec,mvndiodec,nndiodec,reram,mimcc,mim2cc 15   X
     var,corenvar,corepvar,varhvt,mvvar,poly,polyfill,pc,npolyres,ppolyres,xpc,rmp 2    14
     scpfethvt,pfethvt,varhvt,pdiodehvt,pdihvtc 28   5
     pfet,scpfet,scpfethvt,ppu,pfetlvt,pfetmvt,pfethvt,mvpfet,mvpfetesd 6    14
