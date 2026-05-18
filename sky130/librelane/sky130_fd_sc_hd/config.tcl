@@ -18,7 +18,7 @@ set ::env(ENDCAP_CELL) "$::env(STD_CELL_LIBRARY)__decap_3"
 # defaults (can be overridden by designs):
 set ::env(SYNTH_DRIVING_CELL) "$::env(STD_CELL_LIBRARY)__inv_2/Y"
 #capacitance : 0.017653;
-#set ::env(SYNTH_CLK_DRIVING_CELL) "$::env(STD_CELL_LIBRARY)__clkinv_2/Y"
+set ::env(SYNTH_CLK_DRIVING_CELL) "$::env(STD_CELL_LIBRARY)__clkinv_2/Y"
 # update these
 set ::env(OUTPUT_CAP_LOAD) "33.442" ; # femtofarad __inv_16 pin A cap (https://github.com/google/skywater-pdk-libs-sky130_fd_sc_hd/blob/main/cells/inv/sky130_fd_sc_hd__inv_16__tt_025C_1v80.lib.json)
 set ::env(SYNTH_BUFFER_CELL) "$::env(STD_CELL_LIBRARY)__buf_2/A/X"
