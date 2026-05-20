@@ -1,0 +1,6 @@
+sky130_fd_sc_hvl__decap*
+sky130_fd_sc_hvl__fill*
+sky130_fd_sc_hvl__lsbuf*
+sky130_fd_sc_hvl__probe*
+sky130_fd_sc_hvl__schmittbuf*
+sky130_fd_sc_hvl__s*
