@@ -1,6 +1,11 @@
+# tap/decap/fill (PNR) (there are no tap cells)
 sky130_fd_sc_hvl__decap*
 sky130_fd_sc_hvl__fill*
+# level-shift buffers
 sky130_fd_sc_hvl__lsbuf*
+# probe
 sky130_fd_sc_hvl__probe*
+# schmitt trigger buffer
 sky130_fd_sc_hvl__schmittbuf*
+# scan chain cells (used for DFT)
 sky130_fd_sc_hvl__s*
