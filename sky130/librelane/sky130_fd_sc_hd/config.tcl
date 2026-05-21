@@ -30,7 +30,7 @@ set ::env(CTS_ROOT_BUFFER) "$::env(STD_CELL_LIBRARY)__clkbuf_16"
 
 # fill/decap cell insertion
 set ::env(FILL_CELLS) "$::env(STD_CELL_LIBRARY)__fill*"
-set ::env(DECAP_CELLS) "$::env(STD_CELL_LIBRARY)__decap_3"
+set ::env(DECAP_CELLS) "$::env(STD_CELL_LIBRARY)__decap*"
 
 # diode insertion
 set ::env(DIODE_CELL) "$::env(STD_CELL_LIBRARY)__diode_2/DIODE"
