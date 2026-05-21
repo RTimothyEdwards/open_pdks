@@ -1,8 +1,4 @@
 set current_folder [file dirname [file normalize [info script]]]
-# Technology lib
-
-set ::env(VDD_PIN_VOLTAGE) "3.30"
-set ::env(GND_PIN_VOLTAGE) "0.00"
 
 # Corners
 set ::env(STA_CORNERS) "\
