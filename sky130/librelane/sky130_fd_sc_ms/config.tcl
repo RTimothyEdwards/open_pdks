@@ -48,4 +48,4 @@ set ::env(MAX_CAPACITANCE_CONSTRAINT) 0.2
 
 set ::env(PDN_RAIL_WIDTH) 0.48
 
-set ::env(TRISTATE_CELLS) "$::env(STD_CELL_LIBRARY)__ebuf*"
+set ::env(TRISTATE_CELLS) "$::env(STD_CELL_LIBRARY)__ebuf* $::env(STD_CELL_LIBRARY)__einv*"
