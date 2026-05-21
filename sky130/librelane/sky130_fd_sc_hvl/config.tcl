@@ -62,7 +62,7 @@ set ::env(DIODE_CELL) "$::env(STD_CELL_LIBRARY)__diode_2/DIODE"
 
 set ::env(GPL_CELL_PADDING) {0}
 set ::env(DPL_CELL_PADDING) {0}
-set ::env(CELL_PAD_EXCLUDE) "$::env(STD_CELL_LIBRARY)__tap* $::env(STD_CELL_LIBRARY)__decap* $::env(STD_CELL_LIBRARY)__fill*"
+set ::env(CELL_PAD_EXCLUDE) "$::env(STD_CELL_LIBRARY)__decap* $::env(STD_CELL_LIBRARY)__fill*"
 
 # Clk Buffers info CTS data
 set ::env(CTS_CLK_BUFFERS) "$::env(STD_CELL_LIBRARY)__buf_8 $::env(STD_CELL_LIBRARY)__buf_4 $::env(STD_CELL_LIBRARY)__buf_2"
