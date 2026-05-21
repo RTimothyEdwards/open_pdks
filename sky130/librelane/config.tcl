@@ -10,16 +10,13 @@ if { ![info exist ::env(PAD_CELL_LIBRARY)] } {
 	set ::env(PAD_CELL_LIBRARY) sky130_ef_io
 }
 
-# Placement site for core cells
-# This can be found in the technology lef
+# PDK power/ground pins
 set ::env(VDD_PIN) "VPWR"
 set ::env(GND_PIN) "VGND"
 
-set ::env(VDD_PIN_VOLTAGE) "1.80"
-set ::env(GND_PIN_VOLTAGE) "0.00"
-
-set ::env(STD_CELL_POWER_PINS) "VPWR VPB"
-set ::env(STD_CELL_GROUND_PINS) "VGND VNB"
+# SCL power/ground pins
+set ::env(SCL_POWER_PINS) "VPWR VPB"
+set ::env(SCL_GROUND_PINS) "VGND VNB"
 
 
 # Technology LEF
@@ -41,12 +38,13 @@ set ::env(STA_CORNERS) "\
     max_ff_n40C_1v95 \
 "
 
+# Default corner
 set ::env(DEFAULT_CORNER) "nom_tt_025C_1v80"
 
 # Check all timing corners
 set ::env(TIMING_VIOLATION_CORNERS) "*"
 
-# Technology lib
+# Liberty
 set ::env(CELL_LIBS) [dict create]
 dict set ::env(CELL_LIBS) "*_tt_025C_1v80" "\
     $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__tt_025C_1v80.lib\
@@ -82,8 +80,8 @@ set ::env(PAD_VERILOG_MODELS) "\
 set ::env(PAD_CDLS) "$::env(PDK_ROOT)/$::env(PDK)/libs.ref/sky130_fd_io/cdl/sky130_ef_io.cdl"
 
 # magic setup
-set ::env(MAGIC_MAGICRC) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/TECHNAME.magicrc"
-set ::env(MAGIC_TECH_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/TECHNAME.tech"
+set ::env(MAGICRC) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/TECHNAME.magicrc"
+set ::env(MAGIC_TECH) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/magic/TECHNAME.tech"
 
 # Klayout setup
 set ::env(KLAYOUT_TECH) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/$::env(PDK).lyt"
@@ -95,43 +93,44 @@ set ::env(KLAYOUT_DRC_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/dr
 #set ::env(KLAYOUT_DRC_TECH) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/$::env(PDK).lydrc"
 
 # netgen setup
-set ::env(NETGEN_SETUP_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/netgen/TECHNAME_setup.tcl"
+set ::env(NETGEN_SETUP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/netgen/TECHNAME_setup.tcl"
 # CTS luts
 
 set ::env(FP_TAPCELL_DIST) 13
 
 # Tracks info
-set ::env(TRACKS_INFO_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/tracks.info"
+set ::env(FP_TRACKS_INFO) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/tracks.info"
 
 # Latch mapping
 set ::env(SYNTH_LATCH_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/latch_map.v"
 
 # Tri-state buffer mapping
-set ::env(TRISTATE_BUFFER_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/tribuff_map.v"
+set ::env(SYNTH_TRISTATE_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/tribuff_map.v"
 
 # Full adder mapping
-set ::env(FULL_ADDER_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/fa_map.v"
+set ::env(SYNTH_FA_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/fa_map.v"
 
 # Ripple carry adder mapping
-set ::env(RIPPLE_CARRY_ADDER_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/rca_map.v"
+set ::env(SYNTH_RCA_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/rca_map.v"
 
 # Carry select adder mapping
-set ::env(CARRY_SELECT_ADDER_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/csa_map.v"
+set ::env(SYNTH_CSA_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/csa_map.v"
 
-# Default No Synth List
-set ::env(NO_SYNTH_CELL_LIST) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/no_synth.cells"
+# List of cells excluded from synthesis
+set ::env(SYNTH_EXCLUDED_CELL_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/synth_excluded.cells"
 
-# Default DRC Exclude List
-set ::env(DRC_EXCLUDE_CELL_LIST) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/drc_exclude.cells"
+# List of cells excluded from PNR steps (undesirable or bad)
+set ::env(PNR_EXCLUDED_CELL_FILE) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/pnr_excluded.cells"
 
 # Open-RCX Rules File
-set ::env(RCX_RULES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).nom.spef_extractor"
-set ::env(RCX_RULES_MIN) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).min.spef_extractor"
-set ::env(RCX_RULES_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).max.spef_extractor"
+set ::env(RCX_RULESETS) [dict create]
+dict set ::env(RCX_RULESETS) "nom_*" "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).nom.spef_extractor"
+dict set ::env(RCX_RULESETS) "min_*" "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).min.spef_extractor"
+dict set ::env(RCX_RULESETS) "max_*" "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).max.spef_extractor"
 if { [file exists "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).nom.calibre"] } {
-	set ::env(RCX_RULES) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).nom.calibre"
-	set ::env(RCX_RULES_MIN) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).min.calibre"
-	set ::env(RCX_RULES_MAX) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).max.calibre"
+	dict set ::env(RCX_RULESETS) "nom_*" "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).nom.calibre"
+	dict set ::env(RCX_RULESETS) "min_*" "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).min.calibre"
+	dict set ::env(RCX_RULESETS) "max_*" "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/rules.openrcx.$::env(PDK).max.calibre"
 }
 
 # Extra PDN configs
@@ -148,7 +147,6 @@ set ::env(PDN_VPITCH) 153.6
 set ::env(PDN_HOFFSET) 16.65
 set ::env(PDN_HPITCH) 153.18
 
-
 # Core Ring PDN defaults
 set ::env(PDN_CORE_RING_VWIDTH) 1.6
 set ::env(PDN_CORE_RING_HWIDTH) 1.6
@@ -157,16 +155,13 @@ set ::env(PDN_CORE_RING_HSPACING) 1.7
 set ::env(PDN_CORE_RING_VOFFSET) 6
 set ::env(PDN_CORE_RING_HOFFSET) 6
 
-# PDN Macro blockages list
-set ::env(MACRO_BLOCKAGES_LAYER) "li1 met1 met2 met3 met4"
-
 # Used for parasitics estimation, IR drop analysis, etc
-set ::env(DATA_WIRE_RC_LAYER) "met2"
+set ::env(SIGNAL_WIRE_RC_LAYERS) "met2"
 set ::env(CLOCK_WIRE_RC_LAYER) "met5"
 
 # I/O Layer info
-set ::env(FP_IO_HLAYER) "met3"
-set ::env(FP_IO_VLAYER) "met2"
+set ::env(IO_PIN_H_LAYER) "met3"
+set ::env(IO_PIN_V_LAYER) "met2"
 
 # Routing Layer Info
 set ::env(GRT_LAYER_ADJUSTMENTS) "0.99,0,0,0,0,0"
