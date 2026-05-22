@@ -1492,9 +1492,9 @@ io-%:
 			annotate lefopts=-hide \
 		-xschem cells/*/*.sym \
 			filter=custom/scripts/make_primitive.py \
-		-verilog cells/*/*.v exclude=*__blackbox*.v compile-only \
 		-verilog cells/*/*__blackbox.v compile-only rename=gf180mcu_fd_io__blackbox \
 		-verilog cells/*/*__blackbox_pp.v compile-only rename=gf180mcu_fd_io__blackbox_pp \
+		-verilog cells/*/*.v exclude=*__blackbox*.v compile-only \
 		-library general gf180mcu_fd_io 2>&1 | tee -a ${GF180MCU$*}_make.log
 
 ocd-io-%:
@@ -1543,9 +1543,9 @@ ocd-io-%:
 		-lef cells/*/*_${$*_STACK}.lef compile-only \
 		-xschem cells/*/*.sym \
 			filter=custom/scripts/make_primitive.py \
-		-verilog cells/*/*.v exclude=*__blackbox*.v compile-only \
 		-verilog cells/*/*__blackbox.v rename=gf180mcu_ocd_io__blackbox.v compile-only \
 		-verilog cells/*/*__blackbox_pp.v rename=gf180mcu_ocd_io__blackbox_pp.v compile-only \
+		-verilog cells/*/*.v exclude=*__blackbox*.v compile-only \
 		-library general gf180mcu_ocd_io 2>&1 | tee -a ${GF180MCU$*}_make.log
 
 ocd-alpha-%:
