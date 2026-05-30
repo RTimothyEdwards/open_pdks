@@ -3247,7 +3247,7 @@ proc gf180mcu::pfet_05v0_defaults {} {
     return {w 0.3 l 0.5 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.5 wmin 0.3 \
-		lmax 0.595 class mosfet full_metal 1 \
+		lmax 0.545 class mosfet full_metal 1 \
 		compatible {pfet_03v3 pfet_05v0 pfet_06v0}}
 }
 
@@ -3290,7 +3290,7 @@ proc gf180mcu::nfet_03v3_defaults {} {
 proc gf180mcu::nfet_05v0_defaults {} {
     return {w 0.3 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
-		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.7 wmin 0.3 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 0.3 \
 		lmax 0.695 class mosfet full_metal 1 \
 		compatible {nfet_03v3 nfet_05v0 nfet_06v0 nfet_06v0_nvt}}
 }
@@ -3298,7 +3298,7 @@ proc gf180mcu::nfet_05v0_defaults {} {
 proc gf180mcu::nfet_06v0_defaults {} {
     return {w 0.3 l 0.7 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
-		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 0.3 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.7 wmin 0.3 \
 		class mosfet full_metal 1 \
 		compatible {nfet_03v3 nfet_05v0 nfet_06v0 nfet_06v0_nvt}}
 }
