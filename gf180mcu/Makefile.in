@@ -869,19 +869,17 @@ xschem-%: ${GF180MCU_PR_PATH}
 	./custom/scripts/fix_xschemrc.py ${XSCHEM_STAGING_$*}/xschemrc \
 		${GF180MCU$*} 2>&1 | tee -a ${GF180MCU$*}_make.log || true
 
-librelane-%: librelane/config.tcl librelane/gf180mcu_fd_sc_mcu7t5v0/config.tcl librelane/gf180mcu_fd_sc_mcu9t5v0/config.tcl librelane/gf180mcu_as_sc_mcu7t3v3/config.tcl librelane/gf180mcu_osu_sc_gp9t3v3/config.tcl librelane/gf180mcu_osu_sc_gp12t3v3/config.tcl librelane/gf180mcu_fd_io/config.tcl librelane/gf180mcu_ocd_io/config.tcl
+librelane-%: librelane/config.tcl librelane/gf180mcu_fd_sc_mcu7t5v0/config.tcl librelane/gf180mcu_fd_sc_mcu9t5v0/config.tcl librelane/gf180mcu_osu_sc_gp9t3v3/config.tcl librelane/gf180mcu_osu_sc_gp12t3v3/config.tcl librelane/gf180mcu_fd_io/config.tcl librelane/gf180mcu_ocd_io/config.tcl
 	mkdir -p ${LIBRELANETOP_STAGING_$*}
 	mkdir -p ${LIBRELANE_STAGING_$*}
 	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0
 	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0
-	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
 	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp9t3v3
 	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp12t3v3
 	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_fd_io
 	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_ocd_io
 	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu7t5v0
 	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0
-	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
 	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp9t3v3
 	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp12t3v3
 	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_fd_io
@@ -891,9 +889,6 @@ librelane-%: librelane/config.tcl librelane/gf180mcu_fd_sc_mcu7t5v0/config.tcl l
 	done
 	for file in ${LIBRELANE_COMMON} ; do \
 		rm -f ${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0/$$file ; \
-	done
-	for file in ${LIBRELANE_COMMON} ; do \
-		rm -f ${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3/$$file ; \
 	done
 	for file in ${LIBRELANE_COMMON} ; do \
 		rm -f ${LIBRELANE_STAGING_$*}/gf180mcu_osu_sc_gp9t3v3/$$file ; \
@@ -916,10 +911,6 @@ librelane-%: librelane/config.tcl librelane/gf180mcu_fd_sc_mcu7t5v0/config.tcl l
 	for file in ${LIBRELANE_COMMON} ; do \
 		${CPP} -quiet ${GF180MCU$*_DEFS} librelane/gf180mcu_fd_sc_mcu9t5v0/$$file \
 			${LIBRELANE_STAGING_$*}/gf180mcu_fd_sc_mcu9t5v0/$$file ; \
-	done
-	for file in ${LIBRELANE_COMMON} ; do \
-		${CPP} -quiet ${GF180MCU$*_DEFS} librelane/gf180mcu_as_sc_mcu7t3v3/$$file \
-			${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3/$$file ; \
 	done
 	for file in ${LIBRELANE_COMMON} ; do \
 		${CPP} -quiet ${GF180MCU$*_DEFS} librelane/gf180mcu_osu_sc_gp9t3v3/$$file \
@@ -1385,6 +1376,13 @@ digital-avalon-%:
 	rm -rf ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/spice
 	mkdir -p ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3/spice
 	cp -rp ${AVALON_REF_SOURCE}/spice ${STAGING_PATH}/${GF180MCU$*}/libs.ref/gf180mcu_as_sc_mcu7t3v3
+
+	# This library is done the right way and has its own librelane setup.
+	mkdir -p ${LIBRELANETOP_STAGING_$*}
+	mkdir -p ${LIBRELANE_STAGING_$*}
+	rm -rf ${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
+	mkdir ${LIBRELANE_STAGING_$*}/gf180mcu_as_sc_mcu7t3v3
+	cp -rp ${AVALON_TECH_SOURCE}/librelane/gf180mcu_as_sc_mcu7t3v3 ${LIBRELANE_STAGING_$*}
 
 digital-efuse-%:
         # Install eFuse non-volatile memory macros from vendor files
