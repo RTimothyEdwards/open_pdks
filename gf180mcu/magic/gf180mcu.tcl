@@ -1796,7 +1796,7 @@ proc gf180mcu::nwell_defaults {} {
 
 proc gf180mcu::ppolyf_u_defaults {} {
     return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 class resistor \
-		rho 315 val 394 dummy 0 dw 0.07 term 0.0 \
+		rho 315 val 394 dummy 0 dw 0.057 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
@@ -1804,7 +1804,7 @@ proc gf180mcu::ppolyf_u_defaults {} {
 
 proc gf180mcu::npolyf_u_defaults {} {
     return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 class resistor \
-		rho 300 val 375 dummy 0 dw 0.09 term 0.0 \
+		rho 300 val 375 dummy 0 dw 0.053 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
@@ -1817,7 +1817,7 @@ proc gf180mcu::npolyf_u_defaults {} {
 
 proc gf180mcu::ppolyf_s_defaults {} {
     return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 class resistor \
-		rho 7 val 8.75 dummy 0 dw 0.01 term 0.0 \
+		rho 7 val 8.75 dummy 0 dw 0.0 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
@@ -1825,7 +1825,7 @@ proc gf180mcu::ppolyf_s_defaults {} {
 
 proc gf180mcu::npolyf_s_defaults {} {
     return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 class resistor \
-		rho 7 val 8.75 dummy 0 dw 0.01 term 0.0 \
+		rho 7 val 8.75 dummy 0 dw 0.0 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
@@ -1838,7 +1838,7 @@ proc gf180mcu::npolyf_s_defaults {} {
 
 proc gf180mcu::nplus_u_defaults {} {
     return {w 1.000 l 1.000 m 1 nx 1 wmin 1.00 lmin 1.00 class resistor \
-		rho 85 val 85.0 dummy 0 dw 0.05 term 0.0 \
+		rho 85 val 85.0 dummy 0 dw 0.01 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
@@ -1851,7 +1851,7 @@ proc gf180mcu::nplus_u_defaults {} {
 
 proc gf180mcu::pplus_u_defaults {} {
     return {w 1.000 l 1.000 m 1 nx 1 wmin 1.00 lmin 1.00 class resistor \
-		rho 128 val 128.0 dummy 0 dw 0.02 term 0.0 \
+		rho 128 val 128.0 dummy 0 dw 0.0055 term 0.0 \
 		sterm 0.0 caplen 0.60 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
@@ -1923,7 +1923,7 @@ proc gf180mcu::rmtp_defaults {} {
 
 proc gf180mcu::ppolyf_u_1k_defaults {} {
     return {w 1.000 l 2.000 m 1 nx 1 wmin 1.000 lmin 1.000 class resistor \
-		rho 1000 val 2000 dummy 0 dw 0.0 term 0.0 \
+		rho 1000 val 2000 dummy 0 dw 0.0296 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1 \
@@ -1932,7 +1932,7 @@ proc gf180mcu::ppolyf_u_1k_defaults {} {
 
 proc gf180mcu::ppolyf_u_1k_6p0_defaults {} {
     return {w 1.000 l 2.000 m 1 nx 1 wmin 1.000 lmin 1.000 class resistor \
-		rho 1000 val 2000 dummy 0 dw 0.0 term 0.0 \
+		rho 1000 val 2000 dummy 0 dw 0.0296 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1 \
