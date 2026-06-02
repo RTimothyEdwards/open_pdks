@@ -163,12 +163,12 @@ dict set ::env(KLAYOUT_DRC_OPTIONS) decks "all,-antenna,-density"
 
 set ::env(KLAYOUT_DENSITY_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/drc/gf180mcu.drc"
 set ::env(KLAYOUT_DENSITY_OPTIONS) [dict create]
-dict set ::env(KLAYOUT_DRC_OPTIONS) variant $::env(PDK)
+dict set ::env(KLAYOUT_DENSITY_OPTIONS) variant $::env(PDK)
 dict set ::env(KLAYOUT_DENSITY_OPTIONS) decks "density"
 
 set ::env(KLAYOUT_ANTENNA_RUNSET) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/drc/gf180mcu.drc"
 set ::env(KLAYOUT_ANTENNA_OPTIONS) [dict create]
-dict set ::env(KLAYOUT_DRC_OPTIONS) variant $::env(PDK)
+dict set ::env(KLAYOUT_ANTENNA_OPTIONS) variant $::env(PDK)
 dict set ::env(KLAYOUT_ANTENNA_OPTIONS) decks "antenna"
 
 set ::env(KLAYOUT_FILLER_SCRIPT) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/klayout/tech/scripts/fill_all.rb"
