@@ -3019,7 +3019,7 @@ proc sky130::sky130_fd_pr__res_xhigh_po_5p73_defaults {} {
 
 proc sky130::sky130_fd_pr__res_generic_nd_defaults {} {
     return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 class resistor \
-		rho 120 val 600.0 dummy 0 dw 0.05 term 0.0 \
+		rho 120 val 600.0 dummy 0 dw 0.0085 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
 		full_metal 1 vias 1 doports 1 \
@@ -3028,7 +3028,7 @@ proc sky130::sky130_fd_pr__res_generic_nd_defaults {} {
 
 proc sky130::sky130_fd_pr__res_generic_nd__hv_defaults {} {
     return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 class resistor \
-		rho 120 val 600.0 dummy 0 dw 0.02 term 0.0 \
+		rho 120 val 600.0 dummy 0 dw 0.0085 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
 		full_metal 1 vias 1 doports 1 \
@@ -3042,7 +3042,7 @@ proc sky130::sky130_fd_pr__res_generic_nd__hv_defaults {} {
 
 proc sky130::sky130_fd_pr__res_generic_pd_defaults {} {
     return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 class resistor \
-		rho 197 val 985.0 dummy 0 dw 0.02 term 0.0 \
+		rho 197 val 985.0 dummy 0 dw 0.002 term 0.0 \
 		sterm 0.0 caplen 0.60 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
 		full_metal 1 vias 1 doports 1 \
@@ -3051,7 +3051,7 @@ proc sky130::sky130_fd_pr__res_generic_pd_defaults {} {
 
 proc sky130::sky130_fd_pr__res_generic_pd__hv_defaults {} {
     return {w 0.420 l 2.100 m 1 nx 1 wmin 0.42 lmin 2.10 class resistor \
-		rho 197 val 985.0 dummy 0 dw 0.02 term 0.0 \
+		rho 197 val 985.0 dummy 0 dw 0.002 term 0.0 \
 		sterm 0.0 caplen 0.60 snake 0 guard 1 \
 		glc 1 grc 1 gtc 1 gbc 1 roverlap 0 endcov 100 \
 		full_metal 1 vias 1 doports 1 \
