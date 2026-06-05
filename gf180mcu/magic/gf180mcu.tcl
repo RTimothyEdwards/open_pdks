@@ -588,7 +588,7 @@ proc gf180mcu::diode_dialog {device parameters} {
         magic::add_checkbox ebc "Add bottom end contact" $parameters
     }
 
-    if {[dict exists $parameters guard]} {
+    if {[dict exists $parameters full_metal]} {
         magic::add_checkbox full_metal "Full metal guard ring" $parameters
     }
     if {[dict exists $parameters glc]} {
@@ -1797,7 +1797,7 @@ proc gf180mcu::nwell_defaults {} {
 proc gf180mcu::ppolyf_u_defaults {} {
     return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 class resistor \
 		rho 315 val 394 dummy 0 dw 0.057 term 0.0 \
-		sterm 0.0 caplen 0.4 snake 0 \
+		sterm 0.0 caplen 0.4 snake 0 guard 1 guard_type pwell \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
 }
@@ -1805,7 +1805,7 @@ proc gf180mcu::ppolyf_u_defaults {} {
 proc gf180mcu::npolyf_u_defaults {} {
     return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 class resistor \
 		rho 300 val 375 dummy 0 dw 0.053 term 0.0 \
-		sterm 0.0 caplen 0.4 snake 0 \
+		sterm 0.0 caplen 0.4 snake 0 guard 1 guard_type pwell \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
 }
@@ -1818,7 +1818,7 @@ proc gf180mcu::npolyf_u_defaults {} {
 proc gf180mcu::ppolyf_s_defaults {} {
     return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 class resistor \
 		rho 7 val 8.75 dummy 0 dw 0.0 term 0.0 \
-		sterm 0.0 caplen 0.4 snake 0 \
+		sterm 0.0 caplen 0.4 snake 0 guard 1 guard_type pwell \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
 }
@@ -1826,7 +1826,7 @@ proc gf180mcu::ppolyf_s_defaults {} {
 proc gf180mcu::npolyf_s_defaults {} {
     return {w 0.80 l 1.00 m 1 nx 1 wmin 0.80 lmin 1.00 class resistor \
 		rho 7 val 8.75 dummy 0 dw 0.0 term 0.0 \
-		sterm 0.0 caplen 0.4 snake 0 \
+		sterm 0.0 caplen 0.4 snake 0 guard 1 guard_type pwell \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
 }
@@ -1839,7 +1839,15 @@ proc gf180mcu::npolyf_s_defaults {} {
 proc gf180mcu::nplus_u_defaults {} {
     return {w 1.000 l 1.000 m 1 nx 1 wmin 1.00 lmin 1.00 class resistor \
 		rho 85 val 85.0 dummy 0 dw 0.01 term 0.0 \
-		sterm 0.0 caplen 0.4 snake 0 \
+		sterm 0.0 caplen 0.4 snake 0 guard 1 \
+		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
+		full_metal 1}
+}
+
+proc gf180mcu::nplus_u_6p0_defaults {} {
+    return {w 1.000 l 1.000 m 1 nx 1 wmin 1.00 lmin 1.00 class resistor \
+		rho 85 val 85.0 dummy 0 dw 0.01 term 0.0 \
+		sterm 0.0 caplen 0.4 snake 0 guard 1 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
 }
@@ -1852,7 +1860,15 @@ proc gf180mcu::nplus_u_defaults {} {
 proc gf180mcu::pplus_u_defaults {} {
     return {w 1.000 l 1.000 m 1 nx 1 wmin 1.00 lmin 1.00 class resistor \
 		rho 128 val 128.0 dummy 0 dw 0.0055 term 0.0 \
-		sterm 0.0 caplen 0.60 snake 0 \
+		sterm 0.0 caplen 0.60 snake 0 guard 1 \
+		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
+		full_metal 1}
+}
+
+proc gf180mcu::pplus_u_6p0_defaults {} {
+    return {w 1.000 l 1.000 m 1 nx 1 wmin 1.00 lmin 1.00 class resistor \
+		rho 128 val 128.0 dummy 0 dw 0.0055 term 0.0 \
+		sterm 0.0 caplen 0.60 snake 0 guard 1 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
 		full_metal 1}
 }
@@ -1863,8 +1879,8 @@ proc gf180mcu::pplus_u_defaults {} {
 #----------------------------------------------------------------
 
 proc gf180mcu::rm1_defaults {} {
-    return {w 0.160 l 0.160 m 1 nx 1 wmin 0.16 lmin 0.16 class resistor \
-		rho 0.076 val 0.076 dummy 0 dw 0.0 term 0.0 \
+    return {w 0.230 l 0.10 m 1 nx 1 wmin 0.23 lmin 0.1 class resistor \
+		rho 0.090 val 0.039 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
 
@@ -1874,8 +1890,8 @@ proc gf180mcu::rm1_defaults {} {
 #----------------------------------------------------------------
 
 proc gf180mcu::rm2_defaults {} {
-    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 class resistor \
-		rho 0.053 val 0.053 dummy 0 dw 0.0 term 0.0 \
+    return {w 0.280 l 0.10 m 1 nx 1 wmin 0.28 lmin 0.10 class resistor \
+		rho 0.090 val 0.032 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
 
@@ -1884,34 +1900,113 @@ proc gf180mcu::rm2_defaults {} {
 # the back-end metal stack.
 #----------------------------------------------------------------
 
-#ifdef METALS3 || METALS4 || METALS5 || METALS6
+#ifdef METALS3
+#ifdef THICKMET3P0
 proc gf180mcu::rm3_defaults {} {
-    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 class resistor \
-		rho 0.053 val 0.053 dummy 0 dw 0.0 term 0.0 \
+    return {w 1.800 l 0.100 m 1 nx 1 wmin 1.80 lmin 0.10 class resistor \
+		rho 0.0095 val 0.0005 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
-#endif (METALS3 || METALS4 || METALS5 || METALS6)
-
+#elseif (THICKMET1P1 || THICKMET0P9)
+proc gf180mcu::rm3_defaults {} {
+    return {w 0.440 l 0.100 m 1 nx 1 wmin 0.44 lmin 0.10 class resistor \
+		rho 0.040 val 0.009 dummy 0 dw 0.0 term 0.0 \
+		roverlap 0}
+}
+#else (!(THICKMET3P0 || THICKMET3P1 || THICKMET0P9))
+proc gf180mcu::rm3_defaults {} {
+    return {w 0.360 l 0.100 m 1 nx 1 wmin 0.36 lmin 0.10 class resistor \
+		rho 0.060 val 0.017 dummy 0 dw 0.0 term 0.0 \
+		roverlap 0}
+}
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS3)
 #ifdef METALS4 || METALS5 || METALS6
-proc gf180mcu::rm4_defaults {} {
-    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 class resistor \
-		rho 0.053 val 0.053 dummy 0 dw 0.0 term 0.0 \
+proc gf180mcu::rm3_defaults {} {
+    return {w 0.280 l 0.100 m 1 nx 1 wmin 0.28 lmin 0.10 class resistor \
+		rho 0.090 val 0.032 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
 #endif (METALS4 || METALS5 || METALS6)
+
+#ifdef METALS4
+#ifdef THICKMET3P0
+proc gf180mcu::rm4_defaults {} {
+    return {w 1.800 l 0.100 m 1 nx 1 wmin 1.80 lmin 0.10 class resistor \
+		rho 0.0095 val 0.0005 dummy 0 dw 0.0 term 0.0 \
+		roverlap 0}
+}
+#elseif (THICKMET1P1 || THICKMET0P9)
+proc gf180mcu::rm4_defaults {} {
+    return {w 0.440 l 0.100 m 1 nx 1 wmin 0.44 lmin 0.10 class resistor \
+		rho 0.040 val 0.009 dummy 0 dw 0.0 term 0.0 \
+		roverlap 0}
+}
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+proc gf180mcu::rm4_defaults {} {
+    return {w 0.360 l 0.100 m 1 nx 1 wmin 0.36 lmin 0.10 class resistor \
+		rho 0.060 val 0.017 dummy 0 dw 0.0 term 0.0 \
+		roverlap 0}
+}
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS4)
 #ifdef METALS5 || METALS6
-proc gf180mcu::rm5_defaults {} {
-    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 class resistor \
-		rho 0.053 val 0.053 dummy 0 dw 0.0 term 0.0 \
+proc gf180mcu::rm4_defaults {} {
+    return {w 0.280 l 0.100 m 1 nx 1 wmin 0.28 lmin 0.10 class resistor \
+		rho 0.090 val 0.032 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
 #endif (METALS5 || METALS6)
-#ifdef METALS6
-proc gf180mcu::rmtp_defaults {} {
-    return {w 0.200 l 0.200 m 1 nx 1 wmin 0.20 lmin 0.20 class resistor \
-		rho 0.053 val 0.053 dummy 0 dw 0.0 term 0.0 \
+
+#ifdef METALS5
+#ifdef THICKMET3P0
+proc gf180mcu::rm5_defaults {} {
+    return {w 1.800 l 0.100 m 1 nx 1 wmin 1.80 lmin 0.10 class resistor \
+		rho 0.0095 val 0.0005 dummy 0 dw 0.0 term 0.0 \
 		roverlap 0}
 }
+#elseif (THICKMET1P1 || THICKMET0P9)
+proc gf180mcu::rm5_defaults {} {
+    return {w 0.440 l 0.100 m 1 nx 1 wmin 0.44 lmin 0.10 class resistor \
+		rho 0.040 val 0.009 dummy 0 dw 0.0 term 0.0 \
+		roverlap 0}
+}
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+proc gf180mcu::rm5_defaults {} {
+    return {w 0.360 l 0.100 m 1 nx 1 wmin 0.36 lmin 0.10 class resistor \
+		rho 0.060 val 0.017 dummy 0 dw 0.0 term 0.0 \
+		roverlap 0}
+}
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+#endif (METALS5)
+#ifdef METALS6
+proc gf180mcu::rm5_defaults {} {
+    return {w 0.280 l 0.100 m 1 nx 1 wmin 0.28 lmin 0.10 class resistor \
+		rho 0.090 val 0.032 dummy 0 dw 0.0 term 0.0 \
+		roverlap 0}
+}
+#endif (METALS6)
+
+#ifdef METALS6
+#ifdef THICKMET3P0
+proc gf180mcu::rmtp_defaults {} {
+    return {w 1.800 l 0.100 m 1 nx 1 wmin 1.80 lmin 0.10 class resistor \
+		rho 0.0095 val 0.0005 dummy 0 dw 0.0 term 0.0 \
+		roverlap 0}
+}
+#elseif (THICKMET1P1 || THICKMET0P9)
+proc gf180mcu::rmtp_defaults {} {
+    return {w 0.440 l 0.100 m 1 nx 1 wmin 0.44 lmin 0.10 class resistor \
+		rho 0.040 val 0.009 dummy 0 dw 0.0 term 0.0 \
+		roverlap 0}
+}
+#else (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
+proc gf180mcu::rmtp_defaults {} {
+    return {w 0.360 l 0.100 m 1 nx 1 wmin 0.36 lmin 0.10 class resistor \
+		rho 0.060 val 0.017 dummy 0 dw 0.0 term 0.0 \
+		roverlap 0}
+}
+#endif (!(THICKMET3P0 || THICKMET1P1 || THICKMET0P9))
 #endif (METALS6)
 
 #ifdef HRPOLY1K
@@ -1926,7 +2021,7 @@ proc gf180mcu::ppolyf_u_1k_defaults {} {
 		rho 1000 val 2000 dummy 0 dw 0.0296 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
-		full_metal 1 \
+		full_metal 1 guard 1 guard_type pwell \
 		compatible {ppolyf_u_1k ppolyf_u_1k_6p0}}
 }
 
@@ -1935,7 +2030,7 @@ proc gf180mcu::ppolyf_u_1k_6p0_defaults {} {
 		rho 1000 val 2000 dummy 0 dw 0.0296 term 0.0 \
 		sterm 0.0 caplen 0.4 snake 0 \
 		glc 1 grc 1 gtc 0 gbc 0 roverlap 0 endcov 100 \
-		full_metal 1 \
+		full_metal 1 guard 1 guard_type pwell \
 		compatible {ppolyf_u_1k ppolyf_u_1k_6p0}}
 }
 #endif (HRPOLY1K)
@@ -2002,7 +2097,15 @@ proc gf180mcu::nplus_u_convert {parameters} {
     return [gf180mcu::res_convert $parameters]
 }
 
+proc gf180mcu::nplus_u_6p0_convert {parameters} {
+    return [gf180mcu::res_convert $parameters]
+}
+
 proc gf180mcu::pplus_u_convert {parameters} {
+    return [gf180mcu::res_convert $parameters]
+}
+
+proc gf180mcu::pplus_u_6p0_convert {parameters} {
     return [gf180mcu::res_convert $parameters]
 }
 
@@ -2087,18 +2190,29 @@ proc gf180mcu::res_dialog {device parameters} {
             magic::add_checkbox roverlap "Overlap at ends" $parameters
 	}
     }
-	magic::add_checkbox full_metal "Full metal guard ring" $parameters
-    if {[dict exists $parameters glc]} {
-	magic::add_checkbox glc "Add left guard ring contact" $parameters
-    }
-    if {[dict exists $parameters grc]} {
-	magic::add_checkbox grc "Add right guard ring contact" $parameters
-    }
-    if {[dict exists $parameters gtc]} {
-	magic::add_checkbox gtc "Add top guard ring contact" $parameters
-    }
-    if {[dict exists $parameters gbc]} {
-	magic::add_checkbox gbc "Add bottom guard ring contact" $parameters
+    if {[dict exists $parameters guard]} {
+	magic::add_checkbox guard "Add guard ring" $parameters
+
+	if {[dict exists $parameters guard_type]} {
+	    set sellist {nwell pwell}
+	    magic::add_selectlist guard_type "Guard ring type" $sellist $parameters pwell
+	}
+
+	if {[dict exists $parameters full_metal]} {
+	    magic::add_checkbox full_metal "Full metal guard ring" $parameters
+	}
+	if {[dict exists $parameters glc]} {
+	    magic::add_checkbox glc "Add left guard ring contact" $parameters
+	}
+	if {[dict exists $parameters grc]} {
+	    magic::add_checkbox grc "Add right guard ring contact" $parameters
+	}
+	if {[dict exists $parameters gtc]} {
+	    magic::add_checkbox gtc "Add top guard ring contact" $parameters
+	}
+	if {[dict exists $parameters gbc]} {
+	    magic::add_checkbox gbc "Add bottom guard ring contact" $parameters
+	}
     }
 
     if {[dict exists $parameters snake]} {
@@ -2134,7 +2248,15 @@ proc gf180mcu::nplus_u_dialog {parameters} {
     gf180mcu::res_dialog nplus_u $parameters
 }
 
+proc gf180mcu::nplus_u_6p0_dialog {parameters} {
+    gf180mcu::res_dialog nplus_u $parameters
+}
+
 proc gf180mcu::pplus_u_dialog {parameters} {
+    gf180mcu::res_dialog pplus_u $parameters
+}
+
+proc gf180mcu::pplus_u_6p0_dialog {parameters} {
     gf180mcu::res_dialog pplus_u $parameters
 }
 
@@ -2506,6 +2628,12 @@ proc gf180mcu::res_draw {parameters} {
 	set end_to_end_space $end_spacing
     }
 
+    # If device has a "guard_type" parameter, then use this to set sub_type,
+    # overriding any existing sub_type value.
+    if {[dict exists $parameters guard_type]} {
+	dict set parameters sub_type $guard_type
+    }
+
     # Normalize distance units to microns
     set w [magic::spice2float $w]
     set l [magic::spice2float $l]
@@ -2763,6 +2891,62 @@ proc gf180mcu::pplus_u_draw {parameters} {
 	    end_contact_type	pdc \
 	    plus_diff_type	nsd \
 	    plus_contact_type	nsc \
+	    sub_type		nwell \
+	    end_surround	$diff_surround \
+	    end_spacing		0.45 \
+	    res_to_endcont	0.45 \
+	    res_spacing		$diffres_spacing \
+	    res_diff_spacing	0.45 \
+	    mask_clearance	0.22 \
+	    overlap_compress	0.36 \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::res_draw $drawdict]
+}
+
+#----------------------------------------------------------------
+
+proc gf180mcu::nplus_u_6p0_draw {parameters} {
+
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $gf180mcu::ruleset] {
+        set $key [dict get $gf180mcu::ruleset $key]
+    }
+
+    set newdict [dict create \
+	    res_type		mvrnd \
+	    end_type 		mvndiff \
+	    end_contact_type	mvndc \
+	    plus_diff_type	mvpsd \
+	    plus_contact_type	mvpsc \
+	    sub_type		pwell \
+	    end_surround	$diff_surround \
+	    end_spacing		0.45 \
+	    res_to_endcont	0.45 \
+	    res_spacing		$diffres_spacing \
+	    res_diff_spacing	0.45 \
+	    mask_clearance	0.22 \
+	    overlap_compress	0.36 \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::res_draw $drawdict]
+}
+
+#----------------------------------------------------------------
+
+proc gf180mcu::pplus_u_6p0_draw {parameters} {
+
+    # Set a local variable for each rule in ruleset
+    foreach key [dict keys $gf180mcu::ruleset] {
+        set $key [dict get $gf180mcu::ruleset $key]
+    }
+
+    set newdict [dict create \
+	    res_type		mvrpd \
+	    end_type 		mvpdiff \
+	    end_contact_type	mvpdc \
+	    plus_diff_type	mvnsd \
+	    plus_contact_type	mvnsc \
 	    sub_type		nwell \
 	    end_surround	$diff_surround \
 	    end_spacing		0.45 \
@@ -3166,7 +3350,15 @@ proc gf180mcu::nplus_u_check {parameters} {
     return [gf180mcu::res_check nplus_u $parameters]
 }
 
+proc gf180mcu::nplus_u_6p0_check {parameters} {
+    return [gf180mcu::res_check nplus_u $parameters]
+}
+
 proc gf180mcu::pplus_u_check {parameters} {
+    return [gf180mcu::res_check pplus_u $parameters]
+}
+
+proc gf180mcu::pplus_u_6p0_check {parameters} {
     return [gf180mcu::res_check pplus_u $parameters]
 }
 
