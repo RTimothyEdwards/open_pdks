@@ -3558,9 +3558,9 @@ variants (fast),(full)
  surround v3/m4 *m4 50 30 directional \
 	"Metal4 overlap of Via3 < %d in one direction (V3.4i - V3.4)"
 
- width *m4,rm4 230 "Metal4 width < %d (M4.1)"
+ width *m4,rm4 280 "Metal4 width < %d (M4.1)"
  spacing allm4,obsm4  allm4,obsm4 280 touching_ok "Metal4 spacing < %d (M4.2a)"
- area allm4,obsm4 144000 230 "Metal4 minimum area < %a (M4.3)"
+ area allm4,obsm4 144000 280 "Metal4 minimum area < %a (M4.3)"
 
 variants (fast),(full)
  widespacing allm4,obsm4 10005 allm4,obsm4  300 touching_ok \
@@ -3627,9 +3627,9 @@ variants (fast),(full)
  surround v4/m5 *m5 50 30 directional \
 	"Metal5 overlap of Via4 < %d in one direction (V4.4i - V4.4)"
 
- width *m5,rm5 230 "Metal5 width < %d (M5.1)"
+ width *m5,rm5 280 "Metal5 width < %d (M5.1)"
  spacing allm5,obsm5  allm5,obsm5 280 touching_ok "Metal5 spacing < %d (M5.2a)"
- area allm5,obsm5 144000 230 "Metal5 minimum area < %a (M5.3)"
+ area allm5,obsm5 144000 280 "Metal5 minimum area < %a (M5.3)"
 
 variants (fast),(full)
  widespacing allm5,obsm5 10005 allm5,obsm5  300 touching_ok \
