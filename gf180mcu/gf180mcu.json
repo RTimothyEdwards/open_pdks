@@ -108,7 +108,7 @@
         "gf180mcu_fd_ip_sram": "b98653230f05be17867c70870ecacfa6a6bca7ff",
         "gf180mcu_as_sc_mcu7t3v3": "8f8c3c4e2eaefda6e408e9f92322431f7bedfbe2",
         "gf180mcu_re_efuse": "9941e38e7670a12f3f3a744bea4f9d2f04e6a669",
-        "gf180mcu_ocd_io": "53582c591ff7f2ca2529889e8e869f38ff4da39e",
+        "gf180mcu_ocd_io": "f06b365b763826856be080f23b46047c50467072",
         "gf180mcu_ocd_alpha": "0597ebd5732987dbcd149e02c38525c1c5bf2a58",
         "gf180mcu_ocd_ip_sram": "145d144b0158999e33826a7b3777fc3531f43977",
         "gf180mcu_osu_sc_gf12t3v3": "8a2f58f283a2eaa725314c9e1b8b7d1d343f23a3",
