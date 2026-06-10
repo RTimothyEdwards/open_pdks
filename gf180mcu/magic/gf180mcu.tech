@@ -5311,15 +5311,15 @@ end
 wiring
  scalefactor 50
 
- contact v1 200 m1 5 45 m2 0 45
+ contact v1 260 m1 0 60 m2 10 60
 #ifdef METALS3 || METALS4 || METALS5 || METALS6
- contact v2 200 m2 0 45 m3 0 45
+ contact v2 280 m2 0 50 m3 0 50
 #endif (METALS3 || METALS4 || METALS5 || METALS6)
 #ifdef METALS4 || METALS5 || METALS6
- contact v3 200 m3 0 45 m4 0 45
+ contact v3 280 m3 0 50 m4 0 50
 #endif (METALS4 || METALS5 || METALS6)
 #ifdef METALS5 || METALS6
- contact v4 200 m4 0 45 m5 0 45
+ contact v4 280 m4 0 50 m5 0 50
 #endif (METALS5 || METALS6)
 #ifdef METALS6
  contact vtp 370 m3 0 45 mtp 80 80
