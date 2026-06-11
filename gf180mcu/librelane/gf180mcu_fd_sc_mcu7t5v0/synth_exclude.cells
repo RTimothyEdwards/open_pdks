@@ -1,12 +1,14 @@
-gf180mcu_fd_sc_mcu7t5v0__sdffq_1
-gf180mcu_fd_sc_mcu7t5v0__sdffq_2
-gf180mcu_fd_sc_mcu7t5v0__sdffq_4
-gf180mcu_fd_sc_mcu7t5v0__sdffrnq_1
-gf180mcu_fd_sc_mcu7t5v0__sdffrnq_2
-gf180mcu_fd_sc_mcu7t5v0__sdffrnq_4
-gf180mcu_fd_sc_mcu7t5v0__sdffrsnq_1
-gf180mcu_fd_sc_mcu7t5v0__sdffrsnq_2
-gf180mcu_fd_sc_mcu7t5v0__sdffrsnq_4
-gf180mcu_fd_sc_mcu7t5v0__sdffsnq_1
-gf180mcu_fd_sc_mcu7t5v0__sdffsnq_2
-gf180mcu_fd_sc_mcu7t5v0__sdffsnq_4
+# clock buffers/invertes (used in CTS)
+gf180mcu_fd_sc_mcu7t5v0__clkbuf*
+gf180mcu_fd_sc_mcu7t5v0__clkinv*
+# signal delay buffers (used in PNR timing)
+gf180mcu_fd_sc_mcu7t5v0__dly*
+# tap/decap/fill (PNR)
+gf180mcu_fd_sc_mcu7t5v0__filltie
+gf180mcu_fd_sc_mcu7t5v0__endcap
+gf180mcu_fd_sc_mcu7t5v0__fillcap_*
+gf180mcu_fd_sc_mcu7t5v0__fill_*
+# diode
+gf180mcu_fd_sc_mcu7t5v0__antenna
+# scan chain cells (used for DFT)
+gf180mcu_fd_sc_mcu7t5v0__sdff*
