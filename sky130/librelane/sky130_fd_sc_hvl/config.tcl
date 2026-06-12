@@ -27,12 +27,6 @@ dict set ::env(CELL_LIBS) "*_ss_150C_1v65" "\
     $::env(PDK_ROOT)/$::env(PDK)/libs.ref/$::env(STD_CELL_LIBRARY)/lib/$::env(STD_CELL_LIBRARY)__ss_150C_1v65.lib\
 "
 
-# MUX4 mapping
-set ::env(SYNTH_MUX4_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/mux4_map.v"
-
-# MUX2 mapping
-set ::env(SYNTH_MUX_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/mux2_map.v"
-
 # Placement site for core cells
 # This can be found in the technology lef
 set ::env(PLACE_SITE) "unithv"

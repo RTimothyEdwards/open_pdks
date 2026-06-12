@@ -1,0 +1,23 @@
+# keep alive buffers/inverters (power domains)
+sky130_fd_sc_lp__bufkapwr_*
+sky130_fd_sc_lp__invkapwr_*
+# tristate bus driver/hold/receiver
+sky130_fd_sc_lp__busdriver*
+sky130_fd_sc_lp__bushold*
+sky130_fd_sc_lp__busreceiver*
+# input isolation cells
+sky130_fd_sc_lp__inputiso*
+# isolation cells
+sky130_fd_sc_lp__iso*
+# special buffer ???
+sky130_fd_sc_lp__lsbuf*
+# sleep ????
+sky130_fd_sc_lp__sleep_pargate_plv_*
+# scan chain cells (used for DFT)
+sky130_fd_sc_lp__sdf*
+sky130_fd_sc_lp__sdlclk*
+sky130_fd_sc_lp__sreg*
+# sleep ???
+sky130_fd_sc_lp__srdl*
+# scan + sleep
+sky130_fd_sc_lp__srsdf*

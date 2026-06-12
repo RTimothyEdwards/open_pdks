@@ -1,11 +1,4 @@
 set current_folder [file dirname [file normalize [info script]]]
-# Technology lib
-
-# MUX4 mapping
-set ::env(SYNTH_MUX4_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/mux4_map.v"
-
-# MUX2 mapping
-set ::env(SYNTH_MUX_MAP) "$::env(PDK_ROOT)/$::env(PDK)/libs.tech/librelane/$::env(STD_CELL_LIBRARY)/mux2_map.v"
 
 # Placement site for core cells
 # This can be found in the technology lef
