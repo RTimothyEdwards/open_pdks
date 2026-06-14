@@ -127,7 +127,10 @@ proc gf180mcu::addtechmenu {framename} {
    magic::add_toolkit_command $layoutframe "eFuse" "magic::gencell gf180mcu::eFuse" pdk1
 
    magic::add_toolkit_separator	$layoutframe pdk1
-   magic::add_toolkit_command $layoutframe "mos capacitor" "magic::gencell gf180mcu::nmoscap_3p3" pdk1
+   magic::add_toolkit_command $layoutframe "nMOS capacitor" "magic::gencell gf180mcu::nmoscap_3p3" pdk1
+   magic::add_toolkit_command $layoutframe "pMOS capacitor" "magic::gencell gf180mcu::pmoscap_3p3" pdk1
+   magic::add_toolkit_command $layoutframe "nMOS varactor" "magic::gencell gf180mcu::nvaractor_3p3" pdk1
+   magic::add_toolkit_command $layoutframe "pMOS varactor" "magic::gencell gf180mcu::pvaractor_3p3" pdk1
 
    magic::add_toolkit_menu $layoutframe "Devices 2" pdk2
 
@@ -3534,7 +3537,7 @@ proc gf180mcu::nfet_06v0_dss_defaults {} {
 }
 
 #----------------------------------------------------------------
-# mosvc: Specify all user-editable default values and those
+# moscap: Specify all user-editable default values and those
 # needed by nmoscap_3p3_check
 #----------------------------------------------------------------
 
@@ -3550,6 +3553,52 @@ proc gf180mcu::nmoscap_6p0_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.3 \
 		class mosfet full_metal 1 compatible {nmoscap_3p3 nmoscap_6p0}}
+}
+
+proc gf180mcu::pmoscap_3p3_defaults {} {
+    return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
+		class mosfet full_metal 1 compatible {pmoscap_3p3 pmoscap_6p0}}
+}
+
+proc gf180mcu::pmoscap_6p0_defaults {} {
+    return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.3 \
+		class mosfet full_metal 1 compatible {pmoscap_3p3 pmoscap_6p0}}
+}
+
+#----------------------------------------------------------------
+# Varactors (called moscaps by the foundry)
+#----------------------------------------------------------------
+
+proc gf180mcu::nvaractor_3p3_defaults {} {
+    return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
+		class mosfet full_metal 1 compatible {nvaractor_3p3 nvaractor_6p0}}
+}
+
+proc gf180mcu::nvaractor_6p0_defaults {} {
+    return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.3 \
+		class mosfet full_metal 1 compatible {nvaractor_3p3 nvaractor_6p0}}
+}
+
+proc gf180mcu::pvaractor_3p3_defaults {} {
+    return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
+		class mosfet full_metal 1 compatible {pvaractor_3p3 pvaractor_6p0}}
+}
+
+proc gf180mcu::pvaractor_6p0_defaults {} {
+    return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
+		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
+		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.3 \
+		class mosfet full_metal 1 compatible {pvaractor_3p3 pvaractor_6p0}}
 }
 
 #----------------------------------------------------------------
@@ -3649,6 +3698,30 @@ proc gf180mcu::nmoscap_3p3_convert {parameters} {
 }
 
 proc gf180mcu::nmoscap_6p0_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
+proc gf180mcu::pmoscap_3p3_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
+proc gf180mcu::pmoscap_6p0_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
+proc gf180mcu::nvaractor_3p3_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
+proc gf180mcu::nvaractor_6p0_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
+proc gf180mcu::pvaractor_3p3_convert {parameters} {
+    return [gf180mcu::mos_convert $parameters]
+}
+
+proc gf180mcu::pvaractor_6p0_convert {parameters} {
     return [gf180mcu::mos_convert $parameters]
 }
 
@@ -3757,6 +3830,30 @@ proc gf180mcu::nmoscap_3p3_dialog {parameters} {
 
 proc gf180mcu::nmoscap_6p0_dialog {parameters} {
     gf180mcu::mos_dialog nmoscap_6p0 $parameters
+}
+
+proc gf180mcu::pmoscap_3p3_dialog {parameters} {
+    gf180mcu::mos_dialog pmoscap_3p3 $parameters
+}
+
+proc gf180mcu::pmoscap_6p0_dialog {parameters} {
+    gf180mcu::mos_dialog pmoscap_6p0 $parameters
+}
+
+proc gf180mcu::nvaractor_3p3_dialog {parameters} {
+    gf180mcu::mos_dialog nvaractor_3p3 $parameters
+}
+
+proc gf180mcu::nvaractor_6p0_dialog {parameters} {
+    gf180mcu::mos_dialog nvaractor_6p0 $parameters
+}
+
+proc gf180mcu::pvaractor_3p3_dialog {parameters} {
+    gf180mcu::mos_dialog pvaractor_3p3 $parameters
+}
+
+proc gf180mcu::pvaractor_6p0_dialog {parameters} {
+    gf180mcu::mos_dialog pvaractor_6p0 $parameters
 }
 
 proc gf180mcu::nfet_10v0_asym_dialog {parameters} {
@@ -4693,12 +4790,97 @@ proc gf180mcu::pfet_10v0_asym_draw {parameters} {
 }
 
 #------------------------
-# MOS varactor (3.3V)
+# nMOS cap (3.3V)
 #------------------------
 
 proc gf180mcu::nmoscap_3p3_draw {parameters} {
     set newdict [dict create \
-	    gate_type		var \
+	    gate_type		ncap \
+	    diff_type 		ndiff \
+	    diff_contact_type	ndc \
+	    plus_diff_type	psd \
+	    plus_contact_type	psc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		pwell \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
+
+#------------------------
+# nMOS cap (6.0V)
+#------------------------
+
+proc gf180mcu::nmoscap_6p0_draw {parameters} {
+    set newdict [dict create \
+	    diff_poly_space	0.30 \
+	    diff_gate_space	0.30 \
+	    diff_spacing	0.36 \
+	    gate_type		mvncap \
+	    diff_type 		mvndiff \
+	    diff_contact_type	mvndc \
+	    plus_diff_type	mvpsd \
+	    plus_contact_type	mvpsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		pwell \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
+
+#------------------------
+# pMOS cap (3.3V)
+#------------------------
+
+proc gf180mcu::pmoscap_3p3_draw {parameters} {
+    set newdict [dict create \
+	    gate_type		pcap \
+	    diff_type 		pdiff \
+	    diff_contact_type	pdc \
+	    plus_diff_type	nsd \
+	    plus_contact_type	nsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		nwell \
+	    dev_surround	0.43 \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
+
+#------------------------
+# pMOS cap (6.0V)
+#------------------------
+
+proc gf180mcu::pmoscap_6p0_draw {parameters} {
+    set newdict [dict create \
+	    diff_poly_space	0.30 \
+	    diff_gate_space	0.30 \
+	    diff_spacing	0.36 \
+	    gate_type		mvpcap \
+	    diff_type 		mvpdiff \
+	    diff_contact_type	mvpdc \
+	    plus_diff_type	mvnsd \
+	    plus_contact_type	mvnsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		nwell \
+	    sub_surround	0.16 \
+	    dev_surround	0.60 \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
+
+#------------------------
+# n-varactor (3.3V)
+#------------------------
+
+proc gf180mcu::nvaractor_3p3_draw {parameters} {
+    set newdict [dict create \
+	    gate_type		nvar \
 	    diff_type 		nsd \
 	    diff_contact_type	nsc \
 	    plus_diff_type	psd \
@@ -4708,21 +4890,22 @@ proc gf180mcu::nmoscap_3p3_draw {parameters} {
 	    sub_type		pwell \
 	    dev_sub_type	nwell \
 	    dev_sub_dist	0.12 \
+	    dev_surround	-0.01 \
     ]
     set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
     return [gf180mcu::mos_draw $drawdict]
 }
 
 #------------------------
-# MOS varactor (6.0V)
+# n-varactor (6.0V)
 #------------------------
 
-proc gf180mcu::nmoscap_6p0_draw {parameters} {
+proc gf180mcu::nvaractor_6p0_draw {parameters} {
     set newdict [dict create \
 	    diff_poly_space	0.30 \
 	    diff_gate_space	0.30 \
 	    diff_spacing	0.36 \
-	    gate_type		mvvar \
+	    gate_type		mvnvar \
 	    diff_type 		mvnsd \
 	    diff_contact_type	mvnsc \
 	    plus_diff_type	mvpsd \
@@ -4732,6 +4915,56 @@ proc gf180mcu::nmoscap_6p0_draw {parameters} {
 	    sub_type		pwell \
 	    sub_surround	0.16 \
 	    dev_sub_type	nwell \
+	    dev_sub_dist	0.16 \
+	    dev_surround	-0.01 \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
+
+#------------------------
+# p-varactor (3.3V)
+#------------------------
+
+proc gf180mcu::pvaractor_3p3_draw {parameters} {
+    set newdict [dict create \
+	    gate_type		pvar \
+	    diff_type 		psd \
+	    diff_contact_type	psc \
+	    plus_diff_type	nsd \
+	    plus_contact_type	nsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		nwell \
+	    sub_surround	0.26 \
+	    dev_sub_type	pwell \
+	    dev_sub_dist	0.24 \
+	    dev_surround	-0.01 \
+    ]
+    set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
+    return [gf180mcu::mos_draw $drawdict]
+}
+
+#------------------------
+# p-varactor (6.0V)
+#------------------------
+
+proc gf180mcu::pvaractor_6p0_draw {parameters} {
+    set newdict [dict create \
+	    diff_poly_space	0.30 \
+	    diff_gate_space	0.30 \
+	    diff_spacing	0.36 \
+	    gate_type		mvpvar \
+	    diff_type 		mvpsd \
+	    diff_contact_type	mvpsc \
+	    plus_diff_type	mvnsd \
+	    plus_contact_type	mvnsc \
+	    poly_type		poly \
+	    poly_contact_type	pc \
+	    sub_type		nwell \
+	    sub_surround	0.20 \
+	    dev_sub_type	pwell \
+	    dev_surround	-0.01 \
     ]
     set drawdict [dict merge $gf180mcu::ruleset $newdict $parameters]
     return [gf180mcu::mos_draw $drawdict]
@@ -4886,6 +5119,30 @@ proc gf180mcu::nmoscap_3p3_check {parameters} {
 }
 
 proc gf180mcu::nmoscap_6p0_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::pmoscap_3p3_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::pmoscap_6p0_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::nvaractor_3p3_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::nvaractor_6p0_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::pvaractor_3p3_check {parameters} {
+   return [gf180mcu::mos_check $parameters]
+}
+
+proc gf180mcu::pvaractor_6p0_check {parameters} {
    return [gf180mcu::mos_check $parameters]
 }
 

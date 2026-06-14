@@ -115,7 +115,7 @@ types
  -active srampdiff
  -active sramndc
  -active srampdc
-# Varactors
+# Varactors.  NOTE:  GF does not provide varactor models.
   active nvaractor,nvaract,nvar
   active pvaractor,pvaract,pvar
   active mvnvaractor,mvnvaract,mvnvar
