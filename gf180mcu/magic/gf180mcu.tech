@@ -358,8 +358,8 @@ aliases
 
   allactiveres	   ndiffres,pdiffres,mvndiffres,mvpdiffres
 
-  allndifflv       *ndif,*nsd,*ndiode,*nndiode,ndiffres,nfet,nnfet,ncap,*sramndiff,sramnfet
-  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,pcap,*srampdiff,srampfet
+  allndifflv       *ndif,*nsd,*ndiode,*nndiode,ndiffres,nfet,nnfet,nvaractor,ncap,*sramndiff,sramnfet
+  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,pvaractor,pcap,*srampdiff,srampfet
   alldifflv        allndifflv,allpdifflv
   allndifflvnonfet *ndif,*nsd,*ndiode,*nndiode,ndiffres,*sramndiff
   allpdifflvnonfet *pdif,*psd,*pdiode,pdiffres,*srampdiff
