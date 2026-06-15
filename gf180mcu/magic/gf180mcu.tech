@@ -115,7 +115,7 @@ types
  -active srampdiff
  -active sramndc
  -active srampdc
-# Varactors
+# Varactors.  NOTE:  GF does not provide varactor models.
   active nvaractor,nvaract,nvar
   active pvaractor,pvaract,pvar
   active mvnvaractor,mvnvaract,mvnvar
@@ -358,8 +358,8 @@ aliases
 
   allactiveres	   ndiffres,pdiffres,mvndiffres,mvpdiffres
 
-  allndifflv       *ndif,*nsd,*ndiode,*nndiode,ndiffres,nfet,nnfet,ncap,*sramndiff,sramnfet
-  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,pcap,*srampdiff,srampfet
+  allndifflv       *ndif,*nsd,*ndiode,*nndiode,ndiffres,nfet,nnfet,nvaractor,ncap,*sramndiff,sramnfet
+  allpdifflv       *pdif,*psd,*pdiode,pdiffres,pfet,pvaractor,pcap,*srampdiff,srampfet
   alldifflv        allndifflv,allpdifflv
   allndifflvnonfet *ndif,*nsd,*ndiode,*nndiode,ndiffres,*sramndiff
   allpdifflvnonfet *pdif,*psd,*pdiode,pdiffres,*srampdiff
@@ -969,9 +969,11 @@ style gdsii
 	mask-hints PPLUS
 	calma	31 0
 
-#-----------------------------------------------------
+#------------------------------------------------------
 # DUALGATE (thickox)
-#-----------------------------------------------------
+# Note: Rule DV.5 cannot be violated when automatically
+# generated.
+#------------------------------------------------------
 
  layer DUALGATE
 	# NOTE:  This rule requires satisfying PL.19;  poly cannot
@@ -980,8 +982,7 @@ style gdsii
 	# Rule DV.8 (DUALGATE around poly)
 	grow 400
 	# Rule DV.6 (DUALGATE around diff, LV substrate tap excepted)
-	bloat-or allndiffmv * 240 *psd 0
-	bloat-or allpdiffmv * 240
+	bloat-or allndiffmv * 240 *mvpsd 0
 	grow 219
 	shrink 219
 	mask-hints DUALGATE
