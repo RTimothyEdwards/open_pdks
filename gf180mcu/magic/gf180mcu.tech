@@ -982,7 +982,8 @@ style gdsii
 	# Rule DV.8 (DUALGATE around poly)
 	grow 400
 	# Rule DV.6 (DUALGATE around diff, LV substrate tap excepted)
-	bloat-or allndiffmv * 240 *mvpsd 0
+	bloat-or allndiffmv * 240 *psd 0
+	bloat-or allpdiffmv * 240 *nsd 0
 	grow 219
 	shrink 219
 	mask-hints DUALGATE
@@ -1018,7 +1019,7 @@ style gdsii
 
  layer FET5VDEF
 	bloat-all mvnfet,mvpfet,srammvnfet,srammvpfet \
-		*mvndiff,*mvpdiff,mvndiffres,mvpdiffres
+		*mvndiff,*mvpdiff,mvndiffres,mvpdiffres,*mvnsd,*mvpsd
 	grow 100
 	calma 112 1
 
