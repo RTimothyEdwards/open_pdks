@@ -54,6 +54,8 @@ gds flatglob *reg_pu_nhvnative*
 gds flatglob *pu_natives*
 # Other flattening needed for SIO (possibly this could be more targeted)
 gds flatglob *__sio_hotswap*
+gds flatglob *__sio_pupredrvr_reg*
+gds flatglob *__sio_obpredrvr_reg*
 
 ### flatten parts of pwrdetv2, where there are devices in deep nwell
 ### that are in sibling cells, and resistors separated from HVI
