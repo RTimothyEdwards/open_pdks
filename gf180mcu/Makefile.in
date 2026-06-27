@@ -425,7 +425,7 @@ D_FULLSTACK = 5LM_1TM_11K
 # LibreLane has a number of files that are common to all digital
 # standard cell libraries, so these are collected in one definition
 # here:
-LIBRELANE_COMMON = config.tcl tracks.info pnr_exclude.cells synth_exclude.cells latch_map.v mux2_map.v
+LIBRELANE_COMMON = config.tcl tracks.info pnr_exclude.cells synth_exclude.cells latch_map.v
 
 # Where cpp syntax is followed, this is equivalent to cpp, but it does not
 # mangle non-C source files under the belief that they are actually C code.
