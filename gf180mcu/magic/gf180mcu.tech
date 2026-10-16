@@ -887,16 +887,12 @@ style gdsii
  # rnp  requires NPLUS surround 0.3um
  # rnd  requires NPLUS surround 0.18um
 
- layer NPLUS
+ templayer resnplus
  	bloat-all rnp  *poly
 	grow 120
  	bloat-all rnps *poly
  	bloat-all rnd  *ndiff
 	grow 180
-	grow 180
-	shrink 180
-	close 350000
-	calma   32 0
 
  # standard generation of NPLUS
 
@@ -922,6 +918,7 @@ style gdsii
         bloat-or *nsd,*mvnsd * 20 allpactivenonfet 0
 	bloat-or allnfets,nvar,mvnvar * 230
 	or shortntap,shortdntap
+	or resnplus
 	grow 	200 
 	shrink 200
 	close 350000
@@ -932,16 +929,12 @@ style gdsii
  # rpp  requires PPLUS surround 0.30um
  # rpd  requires PPLUS surround 0.18um
 
- layer PPLUS
+ templayer respplus
  	bloat-all rpp  *poly
 	grow 120
  	bloat-all rpps *poly
  	bloat-all rpd  *pdiff
 	grow 180
-	grow 180
-	shrink 180
-	close 350000
-	calma   31 0
 
  # standard generation of PPLUS, including hires resistors
 
@@ -973,6 +966,7 @@ style gdsii
         bloat-or *psd,*mvpsd * 20 allnactivenonfet 0
 	bloat-or allpfets,pvar,mvpvar * 230
 	or shortptap,shortdptap
+	or respplus
 	grow	200
 	shrink	200
 	close 350000
