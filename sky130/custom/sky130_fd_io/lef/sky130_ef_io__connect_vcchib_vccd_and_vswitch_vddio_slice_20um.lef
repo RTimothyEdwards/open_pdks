@@ -3,7 +3,7 @@ VERSION 5.7 ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
 MACRO sky130_ef_io__connect_vcchib_vccd_and_vswitch_vddio_slice_20um
-  CLASS PAD AREAIO ;
+  CLASS PAD SPACER ;
   FOREIGN sky130_ef_io__connect_vcchib_vccd_and_vswitch_vddio_slice_20um ;
   ORIGIN 0.000 0.000 ;
   SIZE 20.000 BY 197.965 ;

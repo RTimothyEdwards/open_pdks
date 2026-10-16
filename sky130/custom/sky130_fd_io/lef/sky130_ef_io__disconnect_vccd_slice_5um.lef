@@ -3,7 +3,7 @@ VERSION 5.7 ;
   DIVIDERCHAR "/" ;
   BUSBITCHARS "[]" ;
 MACRO sky130_ef_io__disconnect_vccd_slice_5um
-  CLASS PAD AREAIO ;
+  CLASS PAD SPACER ;
   FOREIGN sky130_ef_io__disconnect_vccd_slice_5um ;
   ORIGIN 0.000 0.000 ;
   SIZE 5.000 BY 197.965 ;
