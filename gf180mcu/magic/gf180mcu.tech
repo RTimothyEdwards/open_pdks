@@ -3248,6 +3248,12 @@ drc
  surround *mvpdiff,*mvpdiode,hvpfet,mvpfet,mvpcap dnwell 1100 absence_okay \
 	"Deep N-well overlap of P-Diffusion < %d (DF.4e)"
 
+ # Require enough diffusion width between a diffusion contact and a butted
+ # tap to satisfy CO.5a and CO.5b
+ edge4way *nsd,*mvnsd (*pdiff,*mvpdiff)/a 95 ~(pdc,mvpdc)/a ~(*nsd,*mvnsd)/a 95 \
+	"Contact spacing to butted tap edge < %d (CO.5b)"
+ edge4way *psd,*mvpsd (*ndiff,*mvndiff)/a 95 ~(ndc,mvndc)/a ~(*psd,*mvpsd)/a 95 \
+	"Contact spacing to butted tap edge < %d (CO.5a)"
 
  variants (full)
  # Use CIF-DRC rule to ensure that at least one exists.
