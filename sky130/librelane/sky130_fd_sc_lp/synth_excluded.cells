@@ -1,0 +1,41 @@
+# clock buffers/invertes (used in CTS)
+sky130_fd_sc_lp__clkbuf_*
+sky130_fd_sc_lp__clkbuflp_*
+sky130_fd_sc_lp__clkinv_*
+sky130_fd_sc_lp__clkinvlp_*
+# keep alive buffers/inverters (power domains)
+sky130_fd_sc_lp__bufkapwr_*
+sky130_fd_sc_lp__invkapwr_*
+# clock delay buffers (used in PNR timing)
+sky130_fd_sc_lp__clkdlybuf*
+# signal delay buffers (used in PNR timing)
+sky130_fd_sc_lp__dlybuf4s*
+sky130_fd_sc_lp__dlygate4s15*
+sky130_fd_sc_lp__dlymetal6s*
+# tap/decap/fill (PNR)
+sky130_fd_sc_lp__tap*
+sky130_fd_sc_lp__decap_*
+sky130_fd_sc_lp__decapkapwr_*
+sky130_fd_sc_lp__fill_*
+# diode
+sky130_fd_sc_lp__diode_*
+# tristate bus driver/hold/receiver
+sky130_fd_sc_lp__busdriver*
+sky130_fd_sc_lp__bushold*
+sky130_fd_sc_lp__busreceiver*
+# input isolation cells
+sky130_fd_sc_lp__inputiso*
+# isolation cells
+sky130_fd_sc_lp__iso*
+# special buffer ???
+sky130_fd_sc_lp__lsbuf*
+# sleep ????
+sky130_fd_sc_lp__sleep_pargate_plv_*
+# scan chain cells (used for DFT)
+sky130_fd_sc_lp__sdf*
+sky130_fd_sc_lp__sdlclk*
+sky130_fd_sc_lp__sreg*
+# sleep ???
+sky130_fd_sc_lp__srdl*
+# scan + sleep
+sky130_fd_sc_lp__srsdf*
