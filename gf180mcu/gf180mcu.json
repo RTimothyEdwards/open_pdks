@@ -67,7 +67,7 @@
         "gf180mcu_fd_sc_mcu7t5v0": "FD_SC_MCU7T5V0_COMMIT",
         "gf180mcu_osu_sc_gf12t3v3": "OSU_SC_COMMIT",
         "gf180mcu_osu_sc_gf9t3v3": "OSU_SC_COMMIT",
-	"gf180mcu_ocd_sc_rt12t3v3": "OCD_SC_COMMIT",
+        "gf180mcu_ocd_sc_rt12t3v3": "OCD_SC_COMMIT",
         "gf180mcu_as_sc_mcu7t3v3": "AS_SC_MCU7T3V3_COMMIT"
     },
     "iocells": {
@@ -98,21 +98,21 @@
         "magic": "MAGIC_COMMIT"
     },
     "reference": {
-        "open_pdks": "1a725397f00168b58e7087e423d339627a08329d",
+        "open_pdks": "af6f2e522fd4410a4585f6846ae7d5b0a2d24d14",
         "magic": "d157eea7f3c397271a0b6d1e5a98b06101284a13",
         "gf180mcu_pdk": "a897aa30369d3bcec87d9d50ce9b01f320f854ef",
-        "gf180mcu_fd_pr": "e11a8c98dfc905561d38813b1416e65a4b9280e9",
-        "gf180mcu_fd_pv": "035e6d1f4bf0acfb60606b056e7d2159cba30fef",
+        "gf180mcu_fd_pr": "4e132a23aea61dc035b9dbcd5f081dee23a7b691",
+        "gf180mcu_fd_pv": "82d1e6ea42d4c8a4b5f621694267f8a29f4b05e9",
         "gf180mcu_fd_io": "40cdef6d74ec5c9b7d596c147df94c98366afc5b",
         "gf180mcu_fd_sc_mcu7t5v0": "0ef8889a8df0acf959683fbe73013f342a2206a2",
         "gf180mcu_fd_sc_mcu9t5v0": "02b7af3f8d88c0b014d9af3db6a17f02aa983305",
         "gf180mcu_fd_ip_sram": "ef93217c7677975aa03c690889ae9f15bdb4b550",
-        "gf180mcu_as_sc_mcu7t3v3": "99772429b995338ae25412eacb28a93690303636",
+        "gf180mcu_as_sc_mcu7t3v3": "fb59310eb0065cdcc0f8c678a546f3806fd7b48d",
         "gf180mcu_re_efuse": "9941e38e7670a12f3f3a744bea4f9d2f04e6a669",
         "gf180mcu_ocd_io": "6e0e354a78793339a4a004a6d9c08990d0eee3e4",
         "gf180mcu_ocd_alpha": "0597ebd5732987dbcd149e02c38525c1c5bf2a58",
         "gf180mcu_ocd_ip_sram": "efdbf734d806c2ac3b858d281a5b832625a8e928",
-	"gf180mcu_ocd_sc_rt12t3v3": "c4c8cf2548f3d391163081c870b6410ae521b33d",
+        "gf180mcu_ocd_sc_rt12t3v3": "c678fddf1b2ea9ef44e38d90425818cb2c035ea2",
         "gf180mcu_osu_sc_gf12t3v3": "8a2f58f283a2eaa725314c9e1b8b7d1d343f23a3",
         "gf180mcu_osu_sc_gf9t3v3": "8a2f58f283a2eaa725314c9e1b8b7d1d343f23a3"
     }
