@@ -257,30 +257,47 @@ proc gf180mcu::importspice {} {
 }
 
 #----------------------------------------------------------------
+# Draw a via.  By default, metal1 extends horizontally while
+# metal2 extends vertically.  If argument "orient" is "vert",
+# then both metals extend vertically;  if "horz", both metals
+# extend horizontally, and if "rev", the metal1 extends
+# vertically while the metal2 extends horizontally.  The
+# default orientation matches standard digital routing.
+#----------------------------------------------------------------
 
-proc gf180mcu::via1_draw {} {
-   set w [magic::i2u [box width]]
-   set h [magic::i2u [box height]]
-   if {$w < 0.26} {
-      puts stderr "Via1 width must be at least 0.26um"
-      return
-   }
-   if {$h < 0.26} {
-      puts stderr "Via1 height must be at least 0.26um"
-      return
-   }
-   paint via1
-   pushbox
-   pushbox
-   box grow c 0.01um
-   box grow n 0.05um
-   box grow s 0.05um
-   paint m2
-   popbox
-   box grow e 0.06um
-   box grow w 0.06um
-   paint m1
-   popbox
+proc gf180mcu::via1_draw {{orient default}} {
+    set w [magic::i2u [box width]]
+    set h [magic::i2u [box height]]
+    if {$w < 0.26} {
+	puts stderr "Via1 width must be at least 0.26um"
+	return
+    }
+    if {$h < 0.26} {
+	puts stderr "Via1 height must be at least 0.26um"
+	return
+    }
+    paint via1
+    pushbox
+    pushbox
+    box grow c 0.01um
+    if {$orient == "horz" || $orient == "rev"} {
+	box grow e 0.05um
+	box grow w 0.05um
+    } else {
+	box grow n 0.05um
+	box grow s 0.05um
+    }
+    paint m2
+    popbox
+    if {$orient == "vert" || $orient == "rev"} {
+	box grow n 0.06um
+	box grow s 0.06um
+    } else {
+	box grow e 0.06um
+	box grow w 0.06um
+    }
+    paint m1
+    popbox
 }
 
 #ifdef METALS3 || METALS4 || METALS5 || METALS6
@@ -4496,7 +4513,7 @@ proc gf180mcu::mos_device {parameters} {
             box grow n [/ $ch 2]um
             box grow s [/ $ch 2]um
         }
-        gf180mcu::via1_draw
+        gf180mcu::via1_draw vert
         popbox
     }
     set cext [gf180mcu::unionbox $cext [gf180mcu::draw_contact 0 ${cdw} \
@@ -4534,7 +4551,7 @@ proc gf180mcu::mos_device {parameters} {
             box grow n [/ $ch 2]um
             box grow s [/ $ch 2]um
         }
-        gf180mcu::via1_draw
+        gf180mcu::via1_draw vert
         popbox
     }
     set cext [gf180mcu::unionbox $cext [gf180mcu::draw_contact 0 ${cdw} \
@@ -4572,8 +4589,9 @@ proc gf180mcu::mos_device {parameters} {
                box grow e [/ $cw 2]um
                box grow w [/ $cw 2]um
            }
+	   box move s 0.005um
 	   if {($poverlap == 0) && ($m > 1)} {
-	       box move s 0.06um
+	       box move s 0.055um
 	   }
            gf180mcu::via1_draw
            popbox
@@ -4613,8 +4631,9 @@ proc gf180mcu::mos_device {parameters} {
                box grow e [/ $cw 2]um
                box grow w [/ $cw 2]um
            }
+	   box move n 0.005um
 	   if {($poverlap == 0) && ($m > 1)} {
-	       box move n 0.06um
+	       box move n 0.055um
 	   }
            gf180mcu::via1_draw
            popbox
