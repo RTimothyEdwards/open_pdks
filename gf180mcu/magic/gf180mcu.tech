@@ -1658,7 +1658,7 @@ style drc
 
  # Check that all p-diff and n-ohmic have either nwell or dnwell
  templayer missing_nwell *nsd,*mvnsd,*pdiff,*mvpdiff,*pdiode,pdiffres,mvpdiffres,pfet,hvpfet,mvpfet,srammvpfet,srampfet,mvnvaractor
- and-not dnwell,nwell
+ and-not dnwell,nwell,pnp
 
  # Check that all p-ohmic and n-diff have either pwell + dnwell
  # or nothing.  Can check the pwell surround at the same time.
