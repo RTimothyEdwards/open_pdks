@@ -1658,7 +1658,7 @@ style drc
 
  # Check that all p-diff and n-ohmic have either nwell or dnwell
  templayer missing_nwell *nsd,*mvnsd,*pdiff,*mvpdiff,*pdiode,pdiffres,mvpdiffres,pfet,hvpfet,mvpfet,srammvpfet,srampfet,mvnvaractor
- and-not dnwell,nwell
+ and-not dnwell,nwell,pnp
 
  # Check that all p-ohmic and n-diff have either pwell + dnwell
  # or nothing.  Can check the pwell surround at the same time.
@@ -3248,6 +3248,12 @@ drc
  surround *mvpdiff,*mvpdiode,hvpfet,mvpfet,mvpcap dnwell 1100 absence_okay \
 	"Deep N-well overlap of P-Diffusion < %d (DF.4e)"
 
+ # Require enough diffusion width between a diffusion contact and a butted
+ # tap to satisfy CO.5a and CO.5b
+ edge4way *nsd,*mvnsd (*pdiff,*mvpdiff)/a 95 ~(pdc,mvpdc)/a ~(*nsd,*mvnsd)/a 95 \
+	"Contact spacing to butted tap edge < %d (CO.5b)"
+ edge4way *psd,*mvpsd (*ndiff,*mvndiff)/a 95 ~(ndc,mvndc)/a ~(*psd,*mvpsd)/a 95 \
+	"Contact spacing to butted tap edge < %d (CO.5a)"
 
  variants (full)
  # Use CIF-DRC rule to ensure that at least one exists.
@@ -5201,10 +5207,10 @@ variants *
  device msubcircuit npn_00p54x04p00 npn *ndiff dnwell space/w error a1>2.0 a1<2.2
  device msubcircuit npn_00p54x02p00 npn *ndiff dnwell space/w error a1>1.0 a1<1.2
 
- device msubcircuit pnp_10p00x00p42 pnp pwell,space/w *pdiff error a2>4.1 a2<4.3
- device msubcircuit pnp_05p00x00p42 pnp pwell,space/w *pdiff error a2>2.0 a2<2.2
- device msubcircuit pnp_10p00x10p00 pnp pwell,space/w *pdiff error a2>99.0 a2<101.0
- device msubcircuit pnp_05p00x05p00 pnp pwell,space/w *pdiff error a2>24.0 a2<26.0
+ device msubcircuit pnp_10p00x00p42 pnp pwell,space/w *pdiff None error a2>4.1 a2<4.3
+ device msubcircuit pnp_05p00x00p42 pnp pwell,space/w *pdiff None error a2>2.0 a2<2.2
+ device msubcircuit pnp_10p00x10p00 pnp pwell,space/w *pdiff None error a2>99.0 a2<101.0
+ device msubcircuit pnp_05p00x05p00 pnp pwell,space/w *pdiff None error a2>24.0 a2<26.0
 
  device msubcircuit nfet_10v0_asym mvnfet *mvndiff *ldndiff allpsub error \
 	l=l w=w a1=as p1=ps a2=ad p2=pd

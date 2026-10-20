@@ -1115,14 +1115,14 @@ primitive-%:
 		name=$$(basename $$file); \
 		rootname=$${name%.*}; \
 		(cd ${STAGING_PATH}/${GF180MCU$*}/libs.tech/ngspice ; \
-		ln -s $${rootname}.spice $${rootname}.ngspice ); \
+		ln -f -s $${rootname}.spice $${rootname}.ngspice ); \
 	done
 	# Similarly for the files formerly named ".xyce".
 	for file in ${STAGING_PATH}/${GF180MCU$*}/libs.tech/xyce/*.spice ; do \
 		name=$$(basename $$file); \
 		rootname=$${name%.*}; \
 		(cd ${STAGING_PATH}/${GF180MCU$*}/libs.tech/xyce ; \
-		ln -s $${rootname}.spice $${rootname}.xyce ); \
+		ln -f -s $${rootname}.spice $${rootname}.xyce ); \
 	done
 	# Add "device primitive" property to the bipolar devices and
 	# order the ports correctly to match the subcircuit model.  This

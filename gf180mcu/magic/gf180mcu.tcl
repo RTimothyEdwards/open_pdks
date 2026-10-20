@@ -242,7 +242,7 @@ proc gf180mcu::addtechmenu {framename} {
 
 #----------------------------------------------------------------
 # Menu callback function to read a SPICE netlist and generate an
-# initial layout using the SKYWATER sky130A gencells.
+# initial layout using the GF180MCU gf180mcu gencells.
 #----------------------------------------------------------------
 
 proc gf180mcu::importspice {} {
@@ -257,29 +257,47 @@ proc gf180mcu::importspice {} {
 }
 
 #----------------------------------------------------------------
+# Draw a via.  By default, metal1 extends horizontally while
+# metal2 extends vertically.  If argument "orient" is "vert",
+# then both metals extend vertically;  if "horz", both metals
+# extend horizontally, and if "rev", the metal1 extends
+# vertically while the metal2 extends horizontally.  The
+# default orientation matches standard digital routing.
+#----------------------------------------------------------------
 
-proc gf180mcu::via1_draw {} {
-   set w [magic::i2u [box width]]
-   set h [magic::i2u [box height]]
-   if {$w < 0.28} {
-      puts stderr "Via1 width must be at least 0.28um"
-      return
-   }
-   if {$h < 0.28} {
-      puts stderr "Via1 height must be at least 0.28um"
-      return
-   }
-   paint via1
-   box grow n 0.05um
-   box grow s 0.05um
-   paint m2
-   box grow n -0.05um
-   box grow s -0.05um
-   box grow e 0.05um
-   box grow w 0.05um
-   paint m1
-   box grow e -0.05um
-   box grow w -0.05um
+proc gf180mcu::via1_draw {{orient default}} {
+    set w [magic::i2u [box width]]
+    set h [magic::i2u [box height]]
+    if {$w < 0.26} {
+	puts stderr "Via1 width must be at least 0.26um"
+	return
+    }
+    if {$h < 0.26} {
+	puts stderr "Via1 height must be at least 0.26um"
+	return
+    }
+    paint via1
+    pushbox
+    pushbox
+    box grow c 0.01um
+    if {$orient == "horz" || $orient == "rev"} {
+	box grow e 0.05um
+	box grow w 0.05um
+    } else {
+	box grow n 0.05um
+	box grow s 0.05um
+    }
+    paint m2
+    popbox
+    if {$orient == "vert" || $orient == "rev"} {
+	box grow n 0.06um
+	box grow s 0.06um
+    } else {
+	box grow e 0.06um
+	box grow w 0.06um
+    }
+    paint m1
+    popbox
 }
 
 #ifdef METALS3 || METALS4 || METALS5 || METALS6
@@ -3435,6 +3453,8 @@ proc gf180mcu::pfet_03v3_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
 		class mosfet full_metal 1 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		compatible {pfet_03v3 pfet_05v0 pfet_06v0}}
 }
 
@@ -3443,6 +3463,8 @@ proc gf180mcu::pfet_05v0_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.5 wmin 0.3 \
 		class mosfet full_metal 1 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		compatible {pfet_03v3 pfet_05v0 pfet_06v0}}
 }
 
@@ -3451,6 +3473,8 @@ proc gf180mcu::pfet_06v0_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.55 wmin 0.3 \
 		class mosfet full_metal 1 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		compatible {pfet_03v3 pfet_05v0 pfet_06v0}}
 }
 
@@ -3459,6 +3483,8 @@ proc gf180mcu::pfet_03v3_dss_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
 		class mosfet full_metal 1 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		compatible {pfet_03v3_dss pfet_05v0 pfet_06v0_dss}}
 }
 
@@ -3467,6 +3493,8 @@ proc gf180mcu::pfet_06v0_dss_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.5 wmin 0.3 \
 		class mosfet full_metal 1 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		compatible {pfet_03v3_dss pfet_06v0_dss}}
 }
 #----------------------------------------------------------------
@@ -3479,6 +3507,8 @@ proc gf180mcu::nfet_03v3_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
 		class mosfet full_metal 1 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		compatible {nfet_03v3 nfet_05v0 nfet_06v0 nfet_06v0_nvt}}
 }
 
@@ -3487,6 +3517,8 @@ proc gf180mcu::nfet_05v0_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 0.3 \
 		class mosfet full_metal 1 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		compatible {nfet_03v3 nfet_05v0 nfet_06v0 nfet_06v0_nvt}}
 }
 
@@ -3495,6 +3527,8 @@ proc gf180mcu::nfet_06v0_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.7 wmin 0.3 \
 		class mosfet full_metal 1 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		compatible {nfet_03v3 nfet_05v0 nfet_06v0 nfet_06v0_nvt}}
 }
 
@@ -3510,6 +3544,8 @@ proc gf180mcu::nfet_10v0_asym_defaults {} {
     return {w 4.0 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 4.0 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		full_metal 1 }
 }
 
@@ -3517,6 +3553,8 @@ proc gf180mcu::pfet_10v0_asym_defaults {} {
     return {w 4.0 l 0.6 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 4.0 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		class mosfet full_metal 1 }
 }
 
@@ -3525,6 +3563,8 @@ proc gf180mcu::nfet_03v3_dss_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
 		class mosfet full_metal 1 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		compatible {nfet_03v3_dss nfet_06v0_dss}}
 }
 
@@ -3533,6 +3573,8 @@ proc gf180mcu::nfet_06v0_dss_defaults {} {
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.6 wmin 0.3 \
 		class mosfet full_metal 1 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		compatible {nfet_03v3_dss nfet_06v0_dss}}
 }
 
@@ -3545,6 +3587,8 @@ proc gf180mcu::nmoscap_3p3_defaults {} {
     return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		class mosfet full_metal 1 compatible {nmoscap_3p3 nmoscap_6p0}}
 }
 
@@ -3552,6 +3596,8 @@ proc gf180mcu::nmoscap_6p0_defaults {} {
     return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.3 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		class mosfet full_metal 1 compatible {nmoscap_3p3 nmoscap_6p0}}
 }
 
@@ -3559,6 +3605,8 @@ proc gf180mcu::pmoscap_3p3_defaults {} {
     return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		class mosfet full_metal 1 compatible {pmoscap_3p3 pmoscap_6p0}}
 }
 
@@ -3566,6 +3614,8 @@ proc gf180mcu::pmoscap_6p0_defaults {} {
     return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.3 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		class mosfet full_metal 1 compatible {pmoscap_3p3 pmoscap_6p0}}
 }
 
@@ -3577,6 +3627,8 @@ proc gf180mcu::nvaractor_3p3_defaults {} {
     return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		class mosfet full_metal 1 compatible {nvaractor_3p3 nvaractor_6p0}}
 }
 
@@ -3584,6 +3636,8 @@ proc gf180mcu::nvaractor_6p0_defaults {} {
     return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.3 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		class mosfet full_metal 1 compatible {nvaractor_3p3 nvaractor_6p0}}
 }
 
@@ -3591,6 +3645,8 @@ proc gf180mcu::pvaractor_3p3_defaults {} {
     return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.22 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		class mosfet full_metal 1 compatible {pvaractor_3p3 pvaractor_6p0}}
 }
 
@@ -3598,6 +3654,8 @@ proc gf180mcu::pvaractor_6p0_defaults {} {
     return {w 1.0 l 1.0 m 1 nf 1 diffcov 100 polycov 100 \
 		guard 1 glc 1 grc 1 gtc 0 gbc 0 tbcov 100 rlcov 100 \
 		topc 1 botc 1 poverlap 0 doverlap 1 lmin 0.28 wmin 0.3 \
+		viasrc 0 viadrn 0 viagate 0 \
+		viagb 0 viagr 0 viagl 0 viagt 0 doports 1 \
 		class mosfet full_metal 1 compatible {pvaractor_3p3 pvaractor_6p0}}
 }
 
@@ -3792,6 +3850,18 @@ proc gf180mcu::mos_dialog {device parameters} {
     if {[dict exists $parameters gtc]} {
 	magic::add_checkbox gtc "Add top guard ring contact" $parameters
     }
+
+    magic::add_entry viasrc "Source via coverage \[+/-\](%)" $parameters
+    magic::add_entry viadrn "Drain via coverage \[+/-\](%)" $parameters
+    magic::add_entry viagate "Gate via coverage \[+/-\](%)" $parameters
+    magic::add_entry viagb "Bottom guard ring via coverage \[+/-\](%)" $parameters
+    magic::add_entry viagt "Top guard ring via coverage \[+/-\](%)" $parameters
+    magic::add_entry viagr "Right guard ring via coverage \[+/-\](%)" $parameters
+    magic::add_entry viagl "Left guard ring via coverage \[+/-\](%)" $parameters
+
+    if {[dict exists $parameters doports]} {
+	magic::add_checkbox doports "Add ports" $parameters
+    }
 }
 
 #----------------------------------------------------------------
@@ -3983,6 +4053,12 @@ proc gf180mcu::guard_ring {gw gh parameters} {
     set gtc 0		;# Draw right side contact
     set gbc 0		;# Draw left side contact
     set full_metal 0	;# Draw full (continuous) metal ring
+    set viagb 0		;# Draw bottom side via
+    set viagt 0		;# Draw top side via
+    set viagr 0		;# Draw right side via
+    set viagl 0		;# Draw left side via
+
+    set bulk ""		;# Default no port label
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -4019,6 +4095,12 @@ proc gf180mcu::guard_ring {gw gh parameters} {
     box grow w ${hdiffw}um
     paint $plus_diff_type
     popbox
+    # At guard ring bottom center, place a port if requested
+    if {$bulk != ""} {
+        label $bulk c $plus_diff_type
+        select area label
+        port make
+    }
     pushbox
     box move e ${hw}um
     box grow e ${hdifft}um
@@ -4117,6 +4199,96 @@ proc gf180mcu::guard_ring {gw gh parameters} {
         }
     }
 
+    # Vias
+    if {$viagb != 0} {
+        pushbox
+        set ch $via_size
+        set cw [* [- $gw $via_size] [/ [expr abs($viagb)] 100.0]]
+        if {$cw < $via_size} {set cw $via_size}
+        box move s ${hh}um
+        box grow n [/ $ch 2]um
+        box grow s [/ $ch 2]um
+        set anchor [string index $viagb 0]
+        if {$anchor == "+"} {
+            box move w [/ [- $gw $via_size] 2]um
+            box grow e ${cw}um
+        } elseif {$anchor == "-"} {
+            box move e [/ [- $gw $via_size] 2]um
+            box grow w ${cw}um
+        } else {
+            box grow e [/ $cw 2]um
+            box grow w [/ $cw 2]um
+        }
+        gf180mcu::via1_draw
+        popbox
+    }
+    if {$viagt != 0} {
+        pushbox
+        set ch $via_size
+        set cw [* [- $gw $via_size] [/ [expr abs($viagt)] 100.0]]
+        if {$cw < $via_size} {set cw $via_size}
+        box move n ${hh}um
+        box grow n [/ $ch 2]um
+        box grow s [/ $ch 2]um
+        set anchor [string index $viagt 0]
+        if {$anchor == "+"} {
+            box move w [/ [- $gw $via_size] 2]um
+            box grow e ${cw}um
+        } elseif {$anchor == "-"} {
+            box move e [/ [- $gw $via_size] 2]um
+            box grow w ${cw}um
+        } else {
+            box grow e [/ $cw 2]um
+            box grow w [/ $cw 2]um
+        }
+        gf180mcu::via1_draw
+        popbox
+    }
+    if {$viagr != 0} {
+        pushbox
+        set ch [* [- $gh $via_size] [/ [expr abs($viagr)] 100.0]]
+        if {$ch < $via_size} {set ch $via_size}
+        set cw $via_size
+        box move e ${hw}um
+        box grow e [/ $cw 2]um
+        box grow w [/ $cw 2]um
+        set anchor [string index $viagr 0]
+        if {$anchor == "+"} {
+            box move s [/ [- $gh $via_size] 2]um
+            box grow n ${ch}um
+        } elseif {$anchor == "-"} {
+            box move n [/ [- $gh $via_size] 2]um
+            box grow s ${ch}um
+        } else {
+            box grow n [/ $ch 2]um
+            box grow s [/ $ch 2]um
+        }
+        gf180mcu::via1_draw
+        popbox
+    }
+    if {$viagl != 0} {
+        pushbox
+        set ch [* [- $gh $via_size] [/ [expr abs($viagl)] 100.0]]
+        if {$ch < $via_size} {set ch $via_size}
+        set cw $via_size
+        box move w ${hw}um
+        box grow e [/ $cw 2]um
+        box grow w [/ $cw 2]um
+        set anchor [string index $viagl 0]
+        if {$anchor == "+"} {
+            box move s [/ [- $gh $via_size] 2]um
+            box grow n ${ch}um
+        } elseif {$anchor == "-"} {
+            box move n [/ [- $gh $via_size] 2]um
+            box grow s ${ch}um
+        } else {
+            box grow n [/ $ch 2]um
+            box grow s [/ $ch 2]um
+        }
+        gf180mcu::via1_draw
+        popbox
+    }
+
     pushbox
     box grow e ${hw}um
     box grow w ${hw}um
@@ -4150,6 +4322,13 @@ proc gf180mcu::mos_device {parameters} {
     set botc 1		;# draw bottom poly contact
     set dev_sub_type ""	;# device substrate type (if different from guard ring)
     set evens 1		;# even or odd (evens = 1 means drain is on left)
+    set viasrc 0	;# don't draw source vias
+    set viadrn 0	;# don't draw drain vias
+    set viagate 0	;# don't draw gate vias
+
+    set drain ""
+    set source ""
+    set gate ""
 
     # Set a local variable for each parameter (e.g., $l, $w, etc.)
     foreach key [dict keys $parameters] {
@@ -4232,8 +4411,10 @@ proc gf180mcu::mos_device {parameters} {
     paint ${poly_type}
     set cext [gf180mcu::getbox]
     popbox
-    # gate_type need not be defined if poly over diff paints the right type.
-    catch {paint ${gate_type}}
+    # save gate area now and paint later, so that diffusion surrounding the
+    # contact does not paint over the gate area, in case the gate type is
+    # not part of a "compose" entry in the techfile.
+    set gaterect [box values]
     popbox
 
     # Adjust position of contacts for dogbone geometry
@@ -4295,6 +4476,10 @@ proc gf180mcu::mos_device {parameters} {
     set cdw [- ${w} [* ${diff_surround} 2]]     ;# diff contact height
     set cpl [- ${l} [* ${poly_surround} 2]]     ;# poly contact width
 
+    # Save the full diffusion (source/drain) and poly (gate) lengths
+    set cdwfull $cdw
+    set cplfull $cpl
+
     # Reduce by coverage percentage.  NOTE:  If overlapping multiple devices,
     # keep maximum poly contact coverage.
 
@@ -4307,38 +4492,169 @@ proc gf180mcu::mos_device {parameters} {
     pushbox
     box move $dside ${hl}um
     box move $dside ${gate_to_diffcont}um
+
+    # Drain via on top of contact
+    set viatype $viadrn
+    if {$viatype != 0} {
+        pushbox
+        set cw $via_size
+        set ch [* $cdwfull [/ [expr abs($viatype)] 100.0]]
+        if {$ch < $via_size} {set ch $via_size}
+        box grow $dside [/ $cw 2]um
+        box grow $sside [/ $cw 2]um
+        set anchor [string index $viatype 0]
+        if {$anchor == "+"} {
+            box move s [/ [- $cdwfull $via_size] 2]um
+            box grow n ${ch}um
+        } elseif {$anchor == "-"} {
+            box move n [/ [- $cdwfull $via_size] 2]um
+            box grow s ${ch}um
+        } else {
+            box grow n [/ $ch 2]um
+            box grow s [/ $ch 2]um
+        }
+        gf180mcu::via1_draw vert
+        popbox
+    }
     set cext [gf180mcu::unionbox $cext [gf180mcu::draw_contact 0 ${cdw} \
 		${diff_surround} ${metal_surround} ${contact_size}\
 		${drain_diff_type} ${drain_diff_contact_type} m1 ${diffcont_orient}]]
+    if {$drain != ""} {
+        label $drain c $diff_contact_type
+        select area label
+        port make
+    }
     popbox
+
     # Source diffusion contact
     pushbox
     box move $sside ${hl}um
     box move $sside ${gate_to_diffcont}um
+
+    # Source via on top of contact
+    set viatype $viasrc
+    if {$viatype != 0} {
+        pushbox
+        set cw $via_size
+        set ch [* $cdwfull [/ [expr abs($viatype)] 100.0]]
+        if {$ch < $via_size} {set ch $via_size}
+        box grow $sside [/ $cw 2]um
+        box grow $dside [/ $cw 2]um
+        set anchor [string index $viatype 0]
+        if {$anchor == "+"} {
+            box move s [/ [- $cdwfull $via_size] 2]um
+            box grow n ${ch}um
+        } elseif {$anchor == "-"} {
+            box move n [/ [- $cdwfull $via_size] 2]um
+            box grow s ${ch}um
+        } else {
+            box grow n [/ $ch 2]um
+            box grow s [/ $ch 2]um
+        }
+        gf180mcu::via1_draw vert
+        popbox
+    }
     set cext [gf180mcu::unionbox $cext [gf180mcu::draw_contact 0 ${cdw} \
 		${diff_surround} ${metal_surround} ${contact_size} \
 		${diff_type} ${diff_contact_type} m1 ${diffcont_orient}]]
+    if {$source != ""} {
+        label $source c $diff_contact_type
+        select area label
+        port make
+    }
     popbox
+
     # Top poly contact
     if {$topc} {
        pushbox
        box move n ${hw}um
        box move n ${gate_to_polycont}um
-       set cext [gf180mcu::unionbox $cext [gf180mcu::draw_contact ${cpl} 0 \
+
+       # Gate via on top of contact
+       if {$viagate != 0} {
+           pushbox
+           set ch $via_size
+           set cw [* $cplfull [/ [expr abs($viagate)] 100.0]]
+           if {$cw < $via_size} {set cw $via_size}
+           box grow n [/ $ch 2]um
+           box grow s [/ $ch 2]um
+           set anchor [string index $viagate 0]
+           if {$anchor == "+"} {
+               box move w [/ [- $cplfull $via_size] 2]um
+               box grow e ${cw}um
+           } elseif {$anchor == "-"} {
+               box move e [/ [- $cplfull $via_size] 2]um
+               box grow w ${cw}um
+           } else {
+               box grow e [/ $cw 2]um
+               box grow w [/ $cw 2]um
+           }
+	   box move s 0.005um
+	   if {($poverlap == 0) && ($m > 1)} {
+	       box move s 0.055um
+	   }
+           gf180mcu::via1_draw
+           popbox
+	}
+        set cext [gf180mcu::unionbox $cext [gf180mcu::draw_contact ${cpl} 0 \
 		${poly_surround} ${metal_surround} ${contact_size} \
 		${poly_type} ${poly_contact_type} m1 horz]]
-       popbox
+	if {$gate != ""} {
+	    label $gate c $poly_contact_type
+            select area label
+            port make
+	}
+        popbox
     }
     # Bottom poly contact
     if {$botc} {
        pushbox
        box move s ${hw}um
        box move s ${gate_to_polycont}um
-       set cext [gf180mcu::unionbox $cext [gf180mcu::draw_contact ${cpl} 0 \
+
+       # Gate via on top of contact
+       if {$viagate != 0} {
+           pushbox
+           set ch $via_size
+           set cw [* $cplfull [/ [expr abs($viagate)] 100.0]]
+           if {$cw < $via_size} {set cw $via_size}
+           box grow n [/ $ch 2]um
+           box grow s [/ $ch 2]um
+           set anchor [string index $viagate 0]
+           if {$anchor == "+"} {
+               box move w [/ [- $cplfull $via_size] 2]um
+               box grow e ${cw}um
+           } elseif {$anchor == "-"} {
+               box move e [/ [- $cplfull $via_size] 2]um
+               box grow w ${cw}um
+           } else {
+               box grow e [/ $cw 2]um
+               box grow w [/ $cw 2]um
+           }
+	   box move n 0.005um
+	   if {($poverlap == 0) && ($m > 1)} {
+	       box move n 0.055um
+	   }
+           gf180mcu::via1_draw
+           popbox
+	}
+        set cext [gf180mcu::unionbox $cext [gf180mcu::draw_contact ${cpl} 0 \
 		${poly_surround} ${metal_surround} ${contact_size} \
 		${poly_type} ${poly_contact_type} m1 horz]]
-       popbox
+	if {($gate != "") && ($topc == 0)} {
+            label $gate c $poly_contact_type
+            select area label
+            port make
+	}
+        popbox
     }
+
+    # Now draw the gate, after contacts have been drawn
+    pushbox
+    box values {*}${gaterect}
+    # gate_type need not be defined if poly over diff paints the right type.
+    catch {paint ${gate_type}}
+    popbox
 
     if {$dev_sub_type != ""} {
         # puts stdout "Diagnostic:  bounding box is $cext"
@@ -4496,6 +4812,56 @@ proc gf180mcu::mos_draw {parameters} {
 	set evens [- 1 $evens]
         pushbox
         for {set yp 0} {$yp < $m} {incr yp} {
+            # Apply rules for source/drain/gate port labeling
+            if {$doports && ($m == 1)} {
+                if {$nf == 1} {
+                    dict set parameters drain D
+                    dict set parameters source S
+                    dict set parameters gate G
+                } else {
+                    if {$doverlap && $evens && ($xp > 0)} {
+                        dict set parameters drain ""
+                    } else {
+                        dict set parameters drain D$xp
+                    }
+                    if {$doverlap  && ($evens == 0) && ($xp < $nf-1)} {
+                        dict set parameters source ""
+                    } else {
+                        dict set parameters source S$xp
+                    }
+		    dict set parameters gate G$xp
+                }
+            } elseif {$doports} {
+                if {$nf == 1} {
+                    dict set parameters drain D$yp
+                    dict set parameters source S$yp
+                    if {$poverlap && ($yp == 0)} {
+                        dict set parameters gate G
+                    } elseif {$poverlap} {
+                        dict set parameters gate ""
+                    } else {
+                        dict set parameters gate G$yp
+                    }
+                } else {
+                    if {$doverlap && $evens && ($xp > 0)} {
+                        dict set parameters drain ""
+                    } else {
+                        dict set parameters drain D${xp}_$yp
+                    }
+                    if {$doverlap && ($evens == 0) && ($xp < $nf-1)} {
+                        dict set parameters source ""
+                    } else {
+                        dict set parameters source S${xp}_$yp
+                    }
+                    if {$poverlap && ($yp == 0)} {
+                        dict set parameters gate G$xp
+                    } elseif {$poverlap} {
+                        dict set parameters gate ""
+                    } else {
+                        dict set parameters gate G${xp}_$yp
+                    }
+                }
+	    }
             gf180mcu::mos_device $parameters
             box move n ${dy}um
         }
